@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apostila Interativa — React Native com Snack</title>
+
+<link href="../css/reactnative.css" rel="stylesheet"/></head>
+<body>
+<header>
+<div class="header-left">
+<a class="portal-link" href="../index.html">← Mundo bit Byte</a>
+<h1>Apostila Interativa — React Native com Snack</h1>
+</div>
+<div class="brand">Professor Ronaldo Lavestein</div>
+</header>
+<div class="module-menu" id="moduleMenu"></div>
+<div class="layout">
+<nav id="menu">
+<h3>Etapas</h3>
+</nav>
+<main>
+<div class="top-row">
+<h2 id="stepTitle"></h2>
+<div class="objective" id="objective"></div>
+</div>
+<div class="workspace" id="workspace">
+<section class="code-card card" id="codeCard">
+<div class="panel-title">
+<span>Código completo — App.js</span>
+<button class="btn-copy" onclick="copyText('fullCode')">Copiar</button>
+</div>
+<pre id="fullCode"></pre>
+</section>
+<section class="result-card card" id="resultCard">
+<div class="panel-title">Resultado visual</div>
+<div class="preview-area">
+<div class="device">
+<div class="screen" id="preview"></div>
+</div>
+</div>
+<aside class="side-bottom" id="noteWrap">
+<div class="note" id="note"></div>
+</aside>
+</section>
+<section class="new-code card" id="newCodeCard">
+<div class="panel-title">
+<span>O que foi adicionado</span>
+<button class="btn-copy" onclick="copyText('newCode')">Copiar</button>
+</div>
+<pre id="newCode"></pre>
+</section>
+</div>
+</main>
+</div>
+
+<script src="../js/reactnative.js"></script></body>
+</html>

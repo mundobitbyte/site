@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mundo bit Byte — IA na Vida Real</title>
+
+<link href="../../css/ia-vida-real.css" rel="stylesheet"/></head>
+<body>
+<header class="topbar"><a href="index.html">← Voltar IA</a></header>
+<div class="layout">
+<aside>
+<div class="side-block">
+<div class="menu-label">Jornada prática</div>
+<a class="side-link active" href="#inicio">Início</a>
+<a class="side-link" href="#ideia">Ideia central</a>
+<a class="side-link" href="#fluxo">Fluxo de uso</a>
+<a class="side-link" href="#lab1">Lab 01 · Mensagem</a>
+<a class="side-link" href="#lab2">Lab 02 · E-mail</a>
+<a class="side-link" href="#lab3">Lab 03 · Revisão</a>
+<a class="side-link" href="#lab4">Lab 04 · Ideias</a>
+<a class="side-link" href="#lab5">Lab 05 · Linguagem</a>
+<a class="side-link" href="#lab6">Lab 06 · Imagem</a>
+<a class="side-link" href="#lab7">Lab 07 · Receita</a>
+<a class="side-link" href="#lab8">Lab 08 · Prompt</a>
+<a class="side-link" href="#lab9">Lab 09 · PDF</a>
+<a class="side-link" href="#configurar">Configurar a IA</a>
+<a class="side-link" href="#validacao">Validação humana</a>
+<a class="side-link" href="#reflexao">Reflexão final</a>
+<p class="side-hint">Cada laboratório mostra uma situação real, um texto ou necessidade concreta, um prompt completo para copiar e critérios para avaliar a resposta.</p>
+</div>
+</aside>
+<main>
+<section class="hero" id="inicio">
+<div class="hero-grid">
+<div>
+<span class="badge">Fase 2 · IA aplicada</span>
+<h1>IA na Vida Real</h1>
+<p class="lead">Agora você vai aprender a usar IA em situações concretas do cotidiano: escrever mensagens, responder e-mails, revisar textos, organizar ideias, criar imagens, montar receitas, entender PDFs e preparar prompts melhores. A regra principal é simples: a IA só ajuda bem quando recebe contexto real, objetivo claro e material suficiente para trabalhar.</p>
+<div class="hero-actions">
+<a class="button" href="#lab1">Começar laboratórios</a>
+<a class="button secondary" href="#fluxo">Entender o fluxo</a>
+</div>
+</div>
+<div aria-label="Resumo visual do uso real de IA" class="mini-panel">
+<div class="mini-title">Como usar IA na prática</div>
+<div class="mini-flow">
+<div class="mini-step"><span class="mini-dot"></span> Situação real</div>
+<div class="mini-step"><span class="mini-dot"></span> Material original</div>
+<div class="mini-step"><span class="mini-dot"></span> Intenção clara</div>
+<div class="mini-step"><span class="mini-dot"></span> Prompt completo</div>
+<div class="mini-step"><span class="mini-dot"></span> Validação humana</div>
+</div>
+</div>
+</div>
+</section>
+<section aria-label="Roteiro de aprendizagem" class="journey">
+<div class="journey-row">
+<div class="journey-item"><strong>Entender</strong><span>Perceber que IA não adivinha intenção.</span></div>
+<div class="journey-item"><strong>Fornecer</strong><span>Entregar texto, ideia, arquivo ou necessidade real.</span></div>
+<div class="journey-item"><strong>Orientar</strong><span>Dizer objetivo, tom, público e limites.</span></div>
+<div class="journey-item"><strong>Testar</strong><span>Copiar o prompt e usar em uma IA.</span></div>
+<div class="journey-item"><strong>Validar</strong><span>Conferir se a resposta serve para sua realidade.</span></div>
+</div>
+</section>
+<section class="content-card connector" id="ideia">
+<div class="section-kicker">Ideia central</div>
+<h2>1. A IA precisa de contexto, material e intenção</h2>
+<p>O erro mais comum não é apenas escrever pouco. É pedir para a IA “melhorar”, “fazer”, “resumir” ou “criar” sem explicar a situação real e sem mostrar o que se espera do resultado.</p>
+<p>Uma mesma mensagem pode parecer educada, fria, firme, agressiva, acolhedora ou irônica dependendo da situação. A IA não conhece essa intenção sozinha. Ela precisa que você explique o que quer transmitir.</p>
+<div class="grid-2">
+<div class="note bad">
+<h3>Uso fraco</h3>
+<p>Você cola uma mensagem, mas pede apenas:</p>
+<div class="prompt"><span class="prompt-text">Conserte essa mensagem:
+
+"Eu já falei que não posso resolver isso agora. Você precisa entender que eu também tenho minhas coisas."</span></div>
+<p style="margin-top:12px">A IA até pode trocar palavras, mas ainda não sabe se você quer ser mais firme, mais carinhoso, mais profissional ou apenas menos rude.</p>
+</div>
+<div class="note good">
+<h3>Uso inteligente</h3>
+<p>Você entrega texto, situação e intenção:</p>
+<div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Preciso melhorar esta mensagem para enviar no WhatsApp. A pessoa é próxima, mas costuma se magoar fácil. Quero colocar um limite com respeito, sem parecer frio nem agressivo.
+
+Mensagem original:
+"Eu já falei que não posso resolver isso agora. Você precisa entender que eu também tenho minhas coisas."
+
+Reescreva de forma mais calma, clara e respeitosa, mantendo o limite.</span></div>
+</div>
+</div>
+<div class="note idea" style="margin-top:16px">
+<h3>Frase para guardar</h3>
+<p>A IA não precisa apenas do texto. Ela precisa entender o que você quer fazer com esse texto.</p>
+</div>
+<div class="note warn" style="margin-top:16px">
+<h3>Contexto também é intenção</h3>
+<p>Antes de pedir ajuda, pergunte a si mesmo: quero acalmar, cobrar, pedir, recusar, explicar, corrigir, agradecer, orientar, convencer ou evitar conflito?</p>
+</div>
+</section>
+<section class="content-card connector" id="fluxo">
+<div class="section-kicker">Explicação visual</div>
+<h2>2. Fluxo prático de um bom pedido</h2>
+<p>Todo laboratório desta página segue o mesmo caminho. A ideia é ensinar o aluno a transformar uma situação real em um pedido completo para a IA.</p>
+<div class="flow-box">
+<button class="flow-step active" data-info="A situação real explica o problema: quem está envolvido, o que aconteceu e por que a resposta importa."><span class="num">1</span><strong>Situação</strong></button>
+<button class="flow-step" data-info="O material original é a matéria-prima: mensagem, e-mail, texto, ideia solta, arquivo, imagem desejada ou transcrição."><span class="num">2</span><strong>Material</strong></button>
+<button class="flow-step" data-info="O objetivo mostra o que você quer alcançar: informar, pedir, recusar, explicar, corrigir, criar ou organizar."><span class="num">3</span><strong>Objetivo</strong></button>
+<button class="flow-step" data-info="O tom orienta a comunicação: educado, profissional, firme, simples, acolhedor, visual, didático ou direto."><span class="num">4</span><strong>Tom</strong></button>
+<button class="flow-step" data-info="Os limites evitam problemas: não parecer rude, não inventar, não exagerar, não mudar sentido, não fugir dos ingredientes ou do arquivo."><span class="num">5</span><strong>Limites</strong></button>
+<button class="flow-step" data-info="A validação humana confere se o resultado ainda representa você, se está correto e se serve para a situação real."><span class="num">6</span><strong>Validação</strong></button>
+</div>
+<div class="flow-detail" id="flowDetail">A situação real explica o problema: quem está envolvido, o que aconteceu e por que a resposta importa.</div>
+</section>
+<section class="content-card connector" id="lab1">
+<div class="section-kicker">Laboratório 01 · Comunicação pessoal</div>
+<h2>3. Corrigir uma mensagem antes de enviar</h2>
+<p>Neste laboratório, o aluno percebe que não basta pedir “melhore”. Ele precisa mostrar a mensagem e explicar o que deseja transmitir.</p>
+<div class="note idea"><h3>Imagine esta situação</h3><p>Você precisa responder uma pessoa próxima. Quer colocar limite, mas sem gerar briga ou parecer indiferente.</p></div>
+<div class="grid-2">
+<div class="note warn"><h3>Mensagem original</h3><div class="prompt"><span class="prompt-text">Eu já falei que não posso resolver isso agora. Você precisa entender que eu também tenho minhas coisas.</span></div><p style="margin-top:12px">A ideia faz sentido, mas o tom pode soar duro.</p></div>
+<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Preciso melhorar uma mensagem para enviar no WhatsApp para uma pessoa da família. A situação é delicada: a pessoa costuma se magoar fácil, mas eu preciso colocar um limite com respeito.
+
+Mensagem original:
+"Eu já falei que não posso resolver isso agora. Você precisa entender que eu também tenho minhas coisas."
+
+Reescreva essa mensagem de forma mais calma, clara e respeitosa. Quero manter o limite, mas sem parecer grosso, frio ou indiferente.</span></div></div>
+</div>
+<div aria-label="Escolha uma IA para testar" class="tool-grid">
+<a class="tool-button" href="https://chat.openai.com/" rel="noopener" target="_blank">ChatGPT</a>
+<a class="tool-button" href="https://gemini.google.com/" rel="noopener" target="_blank">Gemini</a>
+<a class="tool-button" href="https://claude.ai/" rel="noopener" target="_blank">Claude</a>
+<a class="tool-button" href="https://copilot.microsoft.com/" rel="noopener" target="_blank">Copilot</a>
+<a class="tool-button" href="https://www.perplexity.ai/" rel="noopener" target="_blank">Perplexity</a>
+</div>
+<div class="note warn" style="margin-top:16px"><h3>O que observar</h3><p>A resposta manteve o limite? Ficou respeitosa? Ainda parece algo que você realmente diria?</p></div>
+</section>
+<section class="content-card connector" id="lab2">
+<div class="section-kicker">Laboratório 02 · E-mail profissional</div>
+<h2>4. Escrever um e-mail para remarcar uma reunião</h2>
+<p>A IA pode ajudar a transformar uma frase simples em um e-mail adequado, mas precisa entender o contexto profissional.</p>
+<div class="note idea"><h3>Imagine esta situação</h3><p>Você teve um imprevisto familiar e precisa remarcar uma reunião sem parecer irresponsável.</p></div>
+<div class="grid-2">
+<div class="note warn"><h3>Texto base</h3><div class="prompt"><span class="prompt-text">Não vou conseguir participar da reunião hoje porque surgiu um compromisso familiar. Podemos remarcar para amanhã ou outro horário?</span></div></div>
+<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Preciso escrever um e-mail profissional curto para remarcar uma reunião. Quero ser educado, direto e responsável, sem parecer desorganizado.
+
+O que eu quero dizer:
+"Não vou conseguir participar da reunião hoje porque surgiu um compromisso familiar. Podemos remarcar para amanhã ou outro horário?"
+
+Transforme isso em um e-mail profissional, com assunto, saudação e fechamento.</span></div></div>
+</div>
+<div aria-label="Escolha uma IA para testar" class="tool-grid">
+<a class="tool-button" href="https://chat.openai.com/" rel="noopener" target="_blank">ChatGPT</a>
+<a class="tool-button" href="https://gemini.google.com/" rel="noopener" target="_blank">Gemini</a>
+<a class="tool-button" href="https://claude.ai/" rel="noopener" target="_blank">Claude</a>
+<a class="tool-button" href="https://copilot.microsoft.com/" rel="noopener" target="_blank">Copilot</a>
+<a class="tool-button" href="https://www.perplexity.ai/" rel="noopener" target="_blank">Perplexity</a>
+</div>
+<div class="note good" style="margin-top:16px"><h3>Pergunta de validação</h3><p>O e-mail ficou claro e profissional sem inventar detalhes que você não informou?</p></div>
+</section>
+<section class="content-card connector" id="lab3">
+<div class="section-kicker">Laboratório 03 · Revisão de texto</div>
+<h2>5. Revisar um texto antes de enviar em grupo</h2>
+<p>Revisar não é apenas corrigir português. É ajustar clareza, tom e impacto da mensagem.</p>
+<div class="note idea"><h3>Imagine esta situação</h3><p>Você precisa cobrar respostas em um grupo, mas não quer parecer agressivo.</p></div>
+<div class="grid-2">
+<div class="note warn"><h3>Texto original</h3><div class="prompt"><span class="prompt-text">Pessoal, quem ainda não respondeu precisa responder logo, porque eu não vou ficar perguntando toda hora. Preciso fechar isso hoje.</span></div></div>
+<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Preciso revisar um texto antes de enviar em um grupo de WhatsApp. Quero que fique claro, educado e organizado, sem parecer cobrança agressiva.
+
+Texto original:
+"Pessoal, quem ainda não respondeu precisa responder logo, porque eu não vou ficar perguntando toda hora. Preciso fechar isso hoje."
+
+Reescreva mantendo a urgência, mas com um tom mais respeitoso e colaborativo.</span></div></div>
+</div>
+<div aria-label="Escolha uma IA para testar" class="tool-grid">
+<a class="tool-button" href="https://chat.openai.com/" rel="noopener" target="_blank">ChatGPT</a>
+<a class="tool-button" href="https://gemini.google.com/" rel="noopener" target="_blank">Gemini</a>
+<a class="tool-button" href="https://claude.ai/" rel="noopener" target="_blank">Claude</a>
+<a class="tool-button" href="https://copilot.microsoft.com/" rel="noopener" target="_blank">Copilot</a>
+<a class="tool-button" href="https://www.perplexity.ai/" rel="noopener" target="_blank">Perplexity</a>
+</div>
+<div class="note bad" style="margin-top:16px"><h3>Cuidado</h3><p>Se a IA deixar a mensagem educada demais, talvez ela perca a urgência. Ajuste o equilíbrio.</p></div>
+</section>
+<section class="content-card connector" id="lab4">
+<div class="section-kicker">Laboratório 04 · Organização cotidiana</div>
+<h2>6. Transformar ideias soltas em uma lista prática</h2>
+<p>Uma das maiores utilidades da IA é transformar bagunça mental em sequência de ação.</p>
+<div class="note idea"><h3>Imagine esta situação</h3><p>Você vai organizar um almoço de família, mas só tem ideias soltas na cabeça.</p></div>
+<div class="grid-2">
+<div class="note warn"><h3>Ideias soltas</h3><div class="prompt"><span class="prompt-text">churrasco, arroz, vinagrete, sobremesa, confirmar quem vai, comprar carvão, separar pratos, limpar a área, ver bebida, alguém levar gelo, horário 12h30</span></div></div>
+<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Tenho várias ideias soltas para organizar um almoço de família no domingo. Quero transformar isso em uma lista prática de tarefas, compras e prioridades.
+
+Ideias soltas:
+"churrasco, arroz, vinagrete, sobremesa, confirmar quem vai, comprar carvão, separar pratos, limpar a área, ver bebida, alguém levar gelo, horário 12h30"
+
+Organize em uma sequência simples: o que fazer antes, o que comprar e o que confirmar com as pessoas.</span></div></div>
+</div>
+<div aria-label="Escolha uma IA para testar" class="tool-grid">
+<a class="tool-button" href="https://chat.openai.com/" rel="noopener" target="_blank">ChatGPT</a>
+<a class="tool-button" href="https://gemini.google.com/" rel="noopener" target="_blank">Gemini</a>
+<a class="tool-button" href="https://claude.ai/" rel="noopener" target="_blank">Claude</a>
+<a class="tool-button" href="https://copilot.microsoft.com/" rel="noopener" target="_blank">Copilot</a>
+<a class="tool-button" href="https://www.perplexity.ai/" rel="noopener" target="_blank">Perplexity</a>
+</div>
+<div class="note good" style="margin-top:16px"><h3>Aprendizado</h3><p>Você não precisa chegar com tudo pronto. A IA pode ajudar justamente quando suas ideias ainda estão desorganizadas.</p></div>
+</section>
+<section class="content-card connector" id="lab5">
+<div class="section-kicker">Laboratório 05 · Adaptação de linguagem</div>
+<h2>7. Explicar algo técnico para uma pessoa leiga</h2>
+<p>A mesma informação precisa mudar conforme quem vai receber. Isso vale para família, clientes, alunos, colegas e usuários comuns.</p>
+<div class="note idea"><h3>Imagine esta situação</h3><p>Uma pessoa próxima acha que guardar tudo no celular já é seguro. Você precisa explicar backup de um jeito simples.</p></div>
+<div class="grid-2">
+<div class="note warn"><h3>Texto técnico</h3><div class="prompt"><span class="prompt-text">Backup é uma cópia de segurança dos dados armazenados em outro local para evitar perda em caso de falha, roubo, exclusão ou dano ao dispositivo.</span></div></div>
+<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Preciso explicar para uma pessoa leiga por que é importante fazer backup das fotos e documentos do celular. Ela não entende termos técnicos e acha que salvar tudo no celular já é suficiente.
+
+Texto base:
+"Backup é uma cópia de segurança dos dados armazenados em outro local para evitar perda em caso de falha, roubo, exclusão ou dano ao dispositivo."
+
+Reescreva em linguagem simples, com exemplo do dia a dia e sem assustar a pessoa.</span></div></div>
+</div>
+<div aria-label="Escolha uma IA para testar" class="tool-grid">
+<a class="tool-button" href="https://chat.openai.com/" rel="noopener" target="_blank">ChatGPT</a>
+<a class="tool-button" href="https://gemini.google.com/" rel="noopener" target="_blank">Gemini</a>
+<a class="tool-button" href="https://claude.ai/" rel="noopener" target="_blank">Claude</a>
+<a class="tool-button" href="https://copilot.microsoft.com/" rel="noopener" target="_blank">Copilot</a>
+<a class="tool-button" href="https://www.perplexity.ai/" rel="noopener" target="_blank">Perplexity</a>
+</div>
+<div class="note warn" style="margin-top:16px"><h3>O ponto crítico</h3><p>Simplificar não é distorcer. A resposta precisa ficar fácil sem ficar errada.</p></div>
+</section>
+<section class="content-card connector" id="lab6">
+<div class="section-kicker">Laboratório 06 · Criando imagem ou ilustração</div>
+<h2>8. Criar uma imagem para divulgar uma festa junina</h2>
+<p>Gerar imagem com IA não é apenas escrever “faça uma imagem bonita”. Quanto mais claro for o cenário, o objetivo e o estilo visual, melhor tende a ser o resultado.</p>
+<div class="note idea"><h3>Imagine esta situação</h3><p>Você precisa criar uma imagem para divulgar uma festa junina escolar no Instagram, mas não sabe como descrever bem a arte.</p></div>
+<div class="grid-2">
+<div class="note warn"><h3>Pedido fraco</h3><div class="prompt"><span class="prompt-text">Crie uma imagem de festa junina.</span></div></div>
+<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Crie um prompt detalhado para gerar uma imagem de divulgação de festa junina escolar.
+
+Contexto: a imagem será usada no Instagram da escola. Quero uma arte alegre, colorida, acolhedora e organizada, com bandeirinhas, comidas típicas, fogueira ao fundo, clima familiar e visual moderno. Não quero estética infantil demais nem poluída.
+
+Entregue um prompt pronto para copiar em uma IA de imagem.</span></div></div>
+</div>
+<div aria-label="Escolha uma IA para testar" class="tool-grid">
+<a class="tool-button" href="https://chat.openai.com/" rel="noopener" target="_blank">ChatGPT</a>
+<a class="tool-button" href="https://gemini.google.com/" rel="noopener" target="_blank">Gemini</a>
+<a class="tool-button" href="https://claude.ai/" rel="noopener" target="_blank">Claude</a>
+<a class="tool-button" href="https://copilot.microsoft.com/" rel="noopener" target="_blank">Copilot</a>
+<a class="tool-button" href="https://www.perplexity.ai/" rel="noopener" target="_blank">Perplexity</a>
+</div>
+<div class="note good" style="margin-top:16px"><h3>O que observar</h3><p>A imagem comunica o evento? Está limpa, legível e adequada ao público? O visual combina com a escola?</p></div>
+</section>
+<section class="content-card connector" id="lab7">
+<div class="section-kicker">Laboratório 07 · Criando receita com o que existe em casa</div>
+<h2>9. Usar IA na rotina fora do trabalho</h2>
+<p>A IA também serve para a nossa rotina comum. Sabe aquele dia em que você chega cansado, abre a geladeira e parece que não tem nada? Em vez de procurar uma receita aleatória, você pode informar exatamente o que tem em casa.</p>
+<div class="note idea"><h3>Imagine esta situação</h3><p>Você quer jantar algo simples, barato e rápido, usando apenas os ingredientes disponíveis.</p></div>
+<div class="grid-2">
+<div class="note warn"><h3>Ingredientes disponíveis</h3><div class="prompt"><span class="prompt-text">arroz, ovos, tomate, queijo, cebola e frango desfiado</span></div></div>
+<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Tenho arroz, ovos, tomate, queijo, cebola e frango desfiado. Cheguei cansado em casa e quero uma receita simples, rápida e barata para jantar.
+
+Crie uma receita passo a passo usando esses ingredientes. Dê também uma versão mais leve e uma sugestão para aproveitar sobras no dia seguinte. Não use ingredientes difíceis que eu não citei.</span></div></div>
+</div>
+<div aria-label="Escolha uma IA para testar" class="tool-grid">
+<a class="tool-button" href="https://chat.openai.com/" rel="noopener" target="_blank">ChatGPT</a>
+<a class="tool-button" href="https://gemini.google.com/" rel="noopener" target="_blank">Gemini</a>
+<a class="tool-button" href="https://claude.ai/" rel="noopener" target="_blank">Claude</a>
+<a class="tool-button" href="https://copilot.microsoft.com/" rel="noopener" target="_blank">Copilot</a>
+<a class="tool-button" href="https://www.perplexity.ai/" rel="noopener" target="_blank">Perplexity</a>
+</div>
+<div class="note warn" style="margin-top:16px"><h3>Validação prática</h3><p>A receita respeitou os ingredientes que você tem? O tempo de preparo faz sentido para sua realidade?</p></div>
+</section>
+<section class="content-card connector" id="lab8">
+<div class="section-kicker">Laboratório 08 · Criando prompt para outra IA</div>
+<h2>10. Usar uma IA para criar um prompt melhor</h2>
+<p>Essa estratégia é inteligente porque muitas ferramentas de imagem, vídeo ou áudio exigem descrições mais detalhadas. Uma IA de texto pode ajudar a organizar a linguagem técnica antes de você colar o resultado em outra IA.</p>
+<div class="note idea"><h3>Imagine esta situação</h3><p>Você quer gerar uma ilustração em uma IA de imagem, mas não sabe como escrever um prompt visual bem estruturado.</p></div>
+<div class="grid-2">
+<div class="note warn"><h3>Pedido inicial</h3><div class="prompt"><span class="prompt-text">Quero uma imagem de sala de aula moderna.</span></div></div>
+<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Quero usar uma IA de imagem, mas não sei escrever um bom prompt. Me ajude a criar um prompt profissional para gerar uma ilustração de uma sala de aula moderna, acolhedora e tecnológica, com alunos aprendendo com tablets, professor orientando e iluminação suave.
+
+Quero que o prompt descreva cenário, estilo visual, cores, composição, clima da imagem e o que deve ser evitado.</span></div></div>
+</div>
+<div aria-label="Escolha uma IA para testar" class="tool-grid">
+<a class="tool-button" href="https://chat.openai.com/" rel="noopener" target="_blank">ChatGPT</a>
+<a class="tool-button" href="https://gemini.google.com/" rel="noopener" target="_blank">Gemini</a>
+<a class="tool-button" href="https://claude.ai/" rel="noopener" target="_blank">Claude</a>
+<a class="tool-button" href="https://copilot.microsoft.com/" rel="noopener" target="_blank">Copilot</a>
+<a class="tool-button" href="https://www.perplexity.ai/" rel="noopener" target="_blank">Perplexity</a>
+</div>
+<div class="note good" style="margin-top:16px"><h3>Aprendizado</h3><p>Uma IA pode ajudar você a conversar melhor com outra IA. Isso não é truque: é organização de intenção, contexto e linguagem.</p></div>
+</section>
+<section class="content-card connector" id="lab9">
+<div class="section-kicker">Laboratório 09 · Entendendo um PDF ou transcrição longa</div>
+<h2>11. Transformar conteúdo longo em estudo organizado</h2>
+<p>Quando você recebe um PDF grande ou uma transcrição longa de vídeo, a IA pode ajudar a organizar o conteúdo. Para iniciantes, o caminho é simples: arraste o arquivo para o chat quando a ferramenta permitir, ou cole o texto da transcrição diretamente na conversa.</p>
+<div class="note idea"><h3>Imagine esta situação</h3><p>Você recebeu um material grande e não sabe por onde começar. O objetivo não é “resumir qualquer coisa”, mas entender os pontos principais com organização.</p></div>
+<div class="grid-2">
+<div class="note warn"><h3>Pedido fraco</h3><div class="prompt"><span class="prompt-text">Resuma esse PDF.</span></div></div>
+<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Vou enviar um PDF ou colar a transcrição de um vídeo longo. Quero que você me ajude a entender o conteúdo sem inventar informações.
+
+Tarefa:
+1. Identifique os principais assuntos.
+2. Organize em tópicos.
+3. Explique em linguagem simples.
+4. Destaque o que é mais importante.
+5. Crie 5 perguntas para eu verificar se entendi.
+6. Avise claramente se alguma parte estiver confusa ou depender de conferência.
+
+Texto ou arquivo:
+[COLE A TRANSCRIÇÃO AQUI OU ENVIE O PDF]</span></div></div>
+</div>
+<div aria-label="Escolha uma IA para testar" class="tool-grid">
+<a class="tool-button" href="https://chat.openai.com/" rel="noopener" target="_blank">ChatGPT</a>
+<a class="tool-button" href="https://gemini.google.com/" rel="noopener" target="_blank">Gemini</a>
+<a class="tool-button" href="https://claude.ai/" rel="noopener" target="_blank">Claude</a>
+<a class="tool-button" href="https://copilot.microsoft.com/" rel="noopener" target="_blank">Copilot</a>
+<a class="tool-button" href="https://www.perplexity.ai/" rel="noopener" target="_blank">Perplexity</a>
+</div>
+<div class="note bad" style="margin-top:16px"><h3>Ponto de atenção</h3><p>Se o conteúdo envolver contrato, saúde, lei, dinheiro ou decisão importante, use a IA como apoio de leitura — não como autoridade final.</p></div>
+</section>
+<section class="content-card connector" id="configurar">
+<div class="section-kicker">Configuração da relação com a IA</div>
+<h2>12. Você pode orientar como quer ser ajudado</h2>
+<p>O usuário precisa aprender que pode configurar a resposta da IA. Isso não é “prompt mágico”; é comunicação clara.</p>
+<div class="grid-2">
+<div class="note good"><h3>Instruções úteis</h3><ul class="mito-lista"><li><span class="ok">✓</span><span>Explique como se eu fosse iniciante.</span></li><li><span class="ok">✓</span><span>Não invente informações.</span></li><li><span class="ok">✓</span><span>Se não tiver certeza, diga claramente.</span></li><li><span class="ok">✓</span><span>Mostre riscos e pontos que preciso validar.</span></li></ul></div>
+<div class="note idea"><h3>Aprendizado</h3><p>A qualidade da experiência com IA melhora quando o usuário define nível, estilo, limites, objetivo e responsabilidade.</p></div>
+</div>
+</section>
+<section class="content-card connector" id="validacao">
+<div class="section-kicker">Validação humana</div>
+<h2>13. O resultado da IA é ponto de partida, não ponto final</h2>
+<p>Ao final de cada laboratório, a pergunta não é apenas “a IA respondeu?”. A pergunta é: “essa resposta serve para a minha situação real?”.</p>
+<div class="checklist">
+<div class="check">✓ Ainda representa o que eu queria dizer?</div>
+<div class="check">✓ A IA inventou algo?</div>
+<div class="check">✓ O tom ficou adequado?</div>
+<div class="check">✓ A informação está correta?</div>
+<div class="check">✓ Ficou artificial demais?</div>
+<div class="check">✓ Preciso adaptar antes de usar?</div>
+</div>
+</section>
+<section class="content-card final" id="reflexao">
+<div class="section-kicker">Reflexão final</div>
+<p class="frase">A IA ajuda melhor quando você entrega contexto, conteúdo real e intenção clara.</p>
+<p>O objetivo não é depender da IA. É aprender a pensar, escrever, organizar, criar, validar e decidir melhor usando IA como apoio.</p>
+<div class="footer-nav">
+<a class="button secondary" href="#inicio">Voltar ao início</a>
+<a class="button" href="#lab1">Refazer laboratórios</a>
+</div>
+</section>
+</main>
+</div>
+
+<script src="../../js/ia-vida-real.js"></script></body>
+</html>
