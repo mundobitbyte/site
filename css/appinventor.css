@@ -178,3 +178,31 @@ section[id]{
     height:120px;
   }
 }
+
+
+/* ===== Ajuste mobile: rolagem nas imagens dos exercícios ===== */
+@media(max-width:900px){
+  .exercise-showcase{
+    max-height:none;
+    overflow:visible;
+    touch-action:pan-y;
+  }
+
+  .exercise-tab{
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  .exercise-tab img{
+    pointer-events:none;
+  }
+
+  .exercise-detail{
+    touch-action:pan-y;
+  }
+
+  .exercise-detail figure,
+  .exercise-detail figure img{
+    pointer-events:none;
+  }
+}
