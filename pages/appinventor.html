@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Programação Mobile com App Inventor</title>
+<link rel="stylesheet" href="../css/appinventor.css"/>
+</head>
+<body>
+<header class="topbar">
+  <div class="header-left">
+    <a class="portal-link" href="../index.html">← Mundo bit Byte</a>
+    <h1>Programação Mobile com App Inventor</h1>
+  </div>
+  <div class="brand">Professor Ronaldo Lavestein</div>
+</header>
+
+<div class="layout">
+<nav class="side-nav">
+  <h3>Etapas</h3>
+  <a class="nav-btn active" href="#inicio">Início</a>
+  <a class="nav-btn" href="#fundamentos">1 — Fundamentos</a>
+  <a class="nav-btn" href="#problema">2 — Problema e solução</a>
+  <a class="nav-btn" href="#appinventor">3 — App Inventor</a>
+  <a class="nav-btn" href="#designer">4 — Designer</a>
+  <a class="nav-btn" href="#interface">5 — Interface</a>
+  <a class="nav-btn" href="#exercicios">99 — Exercícios</a>
+</nav>
+
+<main class="content">
+
+<section id="inicio" class="hero-card">
+  <span class="eyebrow">Programação Mobile</span>
+  <h2>Construindo um aplicativo Agenda de Contatos</h2>
+  <p>
+    Neste tutorial, vamos estudar os fundamentos da programação mobile e construir, passo a passo,
+    a interface de um aplicativo de agenda de contatos usando o App Inventor.
+  </p>
+  <div class="hero-grid">
+    <div>
+      <h3>O que será construído?</h3>
+      <p>
+        A primeira versão do projeto será focada na construção visual da interface,
+        utilizando a aba <strong>Designer</strong> do App Inventor.
+      </p>
+      <div class="flow-line"><span>Entender</span><b>→</b><span>Planejar</span><b>→</b><span>Organizar</span><b>→</b><span>Montar a interface</span></div>
+    </div>
+    <figure class="phone-preview">
+      <img src="../img/appinventor/etapa_tela_completa.png" alt="Tela final da Agenda de Contatos"/>
+      <figcaption>Resultado visual da interface que será construída.</figcaption>
+    </figure>
+  </div>
+  <div class="notice">
+    <strong>Importante:</strong> nesta primeira parte, vamos trabalhar apenas com o <strong>Designer</strong>.
+    A programação dos blocos será construída em uma etapa posterior.
+  </div>
+</section>
+
+<section id="fundamentos" class="section-card">
+  <div class="section-head"><span class="badge">1</span><div><h2>Fundamentos da Programação Mobile</h2><p>Antes de construir um aplicativo, é preciso entender o que ele é e por que ele existe.</p></div></div>
+
+  <div class="concept-grid">
+    <article><h3>O que é um app?</h3><p>Um aplicativo é um software criado para rodar em dispositivos móveis. Ele possui telas, comandos, dados e uma finalidade.</p></article>
+    <article><h3>Por que aplicativos existem?</h3><p>Aplicativos existem para resolver problemas, facilitar tarefas e atender necessidades de pessoas, empresas e serviços.</p></article>
+    <article><h3>Usuário x desenvolvedor</h3><p>O usuário utiliza o aplicativo. O desenvolvedor pensa em como o aplicativo será construído e como cada etapa funcionará.</p></article>
+  </div>
+
+  <div class="two-col">
+    <div class="text-panel">
+      <h3>Pensar em fluxo</h3>
+      <p>Ao criar um app, não basta pensar na aparência. É preciso entender o caminho: telas, ações, dados e resultados.</p>
+      <div class="mini-flow"><span>Problema</span><b>→</b><span>Fluxo</span><b>→</b><span>Telas</span><b>→</b><span>Ações</span></div>
+    </div>
+    <div class="text-panel blue">
+      <h3>Interface, lógica e dados</h3>
+      <p>Um aplicativo combina interface visual, lógica de funcionamento e dados que podem ser digitados, processados, salvos ou enviados.</p>
+    </div>
+  </div>
+
+  <div class="activity-box">
+    <h3>Exercício mental</h3>
+    <p>Escolha um aplicativo que você utiliza no dia a dia e responda:</p>
+    <ul>
+      <li>Que problema ele resolve?</li>
+      <li>Qual é a ação principal?</li>
+      <li>Quais telas aparecem?</li>
+      <li>Quais dados ele utiliza?</li>
+    </ul>
+  </div>
+</section>
+
+<section id="problema" class="section-card">
+  <div class="section-head"><span class="badge">2</span><div><h2>Do problema à solução</h2><p>Todo aplicativo começa com um problema que precisa ser compreendido.</p></div></div>
+
+  <div class="story-panel">
+    <h3>O problema da agenda em papel</h3>
+    <p>Uma agenda de contatos em papel pode funcionar, mas apresenta limitações: dificuldade para alterar dados, localizar contatos, organizar informações e evitar rasuras.</p>
+    <p>A solução proposta será transformar essa necessidade em um aplicativo simples de agenda de contatos.</p>
+  </div>
+
+  <div class="planning-grid">
+    <article><h3>1. Levantar requisitos</h3><p>Conversar com o usuário para entender o que o aplicativo precisa fazer.</p></article>
+    <article><h3>2. Planejar a tela</h3><p>Desenhar a interface antes de construir, usando um wireframe.</p></article>
+    <article><h3>3. Construir</h3><p>Montar a tela no Designer e, depois, adicionar comportamento com blocos.</p></article>
+  </div>
+
+  <div class="image-pair">
+    <figure class="compact-figure wireframe-figure">
+      <img src="../img/appinventor/wireframe.png" alt="Wireframe da Agenda de Contatos"/>
+      <figcaption>Wireframe: rascunho visual da interface antes da implementação.</figcaption>
+    </figure>
+    <figure class="compact-figure">
+      <img src="../img/appinventor/analise_sistema.png" alt="Planejamento e aplicativo"/>
+      <figcaption>Da ideia ao aplicativo: levantamento, desenho da solução e construção.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="appinventor" class="section-card">
+  <div class="section-head"><span class="badge">3</span><div><h2>Conhecendo o App Inventor</h2><p>O App Inventor permite construir aplicativos por meio de componentes visuais e blocos.</p></div></div>
+
+  <div class="two-col">
+    <div class="text-panel"><h3>Acesso ao ambiente</h3><ul><li><strong>ai2.appinventor.mit.edu</strong> — acesso com conta Google.</li><li><strong>code.appinventor.mit.edu</strong> — acesso por código, sem conta Google.</li></ul></div>
+    <div class="text-panel"><h3>Designer e Blocos</h3><p>O <strong>Designer</strong> monta a interface. Os <strong>Blocos</strong> programam o comportamento.</p><figure class="inline-figure"><img src="../img/appinventor/aba_designer_blocos.png" alt="Abas Designer e Blocos"/></figure></div>
+  </div>
+
+  <div class="toolbox">
+    <h3>Caixa de ferramentas usada neste projeto</h3>
+    <p>Nesta primeira versão, usaremos componentes das áreas Interface de Usuário e Organização.</p>
+    <div class="toolbox-grid">
+      <figure><img src="../img/appinventor/componentes_interface.png" alt="Interface de Usuário"/><figcaption>Interface de Usuário: botões, imagens, legendas e caixas de texto.</figcaption></figure>
+      <figure><img src="../img/appinventor/componentes_organizacao.png" alt="Organização"/><figcaption>Organização: componentes usados para estruturar a tela.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="designer" class="section-card">
+  <div class="section-head"><span class="badge">4</span><div><h2>Entendendo a estrutura do Designer</h2><p>Antes de montar a tela, precisamos entender como os componentes serão organizados.</p></div></div>
+
+  <figure class="compact-figure layout-figure">
+    <img src="../img/appinventor/layout_organizacoes.png" alt="Layout com organizações horizontais e verticais"/>
+    <figcaption>Organizações horizontais e verticais controlam a posição dos componentes na tela.</figcaption>
+  </figure>
+
+  <div class="hierarchy-box">
+    <h3>Árvore hierárquica da interface</h3>
+    <p>A interface é formada por componentes dentro de outros componentes.</p>
+    <pre><code>Screen1
+├─ OrgTopoTitulo
+│  └─ LegTitulo
+├─ OrgFotoDados
+│  ├─ OrgFoto
+│  │  └─ ImgFoto
+│  └─ OrgDadosPessoais
+│     ├─ LegNome
+│     ├─ CxTNome
+│     ├─ LegTelefone
+│     ├─ CxTTelefone
+│     ├─ LegEmail
+│     └─ CxTEmail
+├─ OrgBotoes1
+│  ├─ btWhatsApp
+│  ├─ btEmail
+│  ├─ btEndereco
+│  └─ btNotas
+├─ OrgCidadeEstado
+│  ├─ OrgCidade
+│  │  ├─ LegCidade
+│  │  └─ CxTCidade
+│  └─ OrgEstado
+│     ├─ LegEstado
+│     └─ CxTEstado
+└─ OrgBotoes2
+   ├─ btSalvar
+   └─ btCancelar</code></pre>
+  </div>
+</section>
+
+<section id="interface" class="section-card">
+  <div class="section-head"><span class="badge">5</span><div><h2>Construindo a interface da Agenda</h2><p>A tela será construída por etapas. Em cada etapa, veja o que inserir, quais propriedades alterar e qual será o resultado.</p></div></div>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 1</span>
+      <h3>Projeto recém-criado</h3>
+      <p>A tela inicial aparece vazia, com o título padrão <strong>Screen1</strong>.</p>
+      <div class="properties">
+        <h4>Estado inicial</h4>
+        <ul>
+          <li>Tela principal: <strong>Screen1</strong></li>
+          <li>Ainda sem componentes visuais</li>
+        </ul>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/screen_inicial.png" alt="Screen1 vazia"/></figure>
+  </article>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 2</span>
+      <h3>Configurando a Screen1</h3>
+      <p>Antes de inserir os componentes, configure a tela principal do aplicativo.</p>
+      <div class="howto">
+        <h4>Faça assim</h4>
+        <ol>
+          <li>Selecione <strong>Screen1</strong>.</li>
+          <li>Altere o título do aplicativo.</li>
+          <li>Ajuste o alinhamento e a orientação da tela.</li>
+        </ol>
+      </div>
+      <div class="properties">
+        <h4>Propriedades</h4>
+        <ul>
+          <li><strong>Título:</strong> Agenda de Contatos</li>
+          <li><strong>AlinhamentoHorizontal:</strong> Centro</li>
+          <li><strong>AlinhamentoVertical:</strong> Superior</li>
+          <li><strong>Rolável:</strong> falso</li>
+        </ul>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/screen_configurada.png" alt="Screen1 configurada"/></figure>
+  </article>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 3</span>
+      <h3>Inserindo OrgTopoTitulo</h3>
+      <p>Agora será criada a faixa superior da interface, onde aparece o título da agenda.</p>
+      <div class="howto">
+        <h4>Faça assim</h4>
+        <ol>
+          <li>Na aba <strong>Organização</strong>, arraste uma <strong>OrganizaçãoHorizontal</strong> para a Screen1.</li>
+          <li>Renomeie o componente para <strong>OrgTopoTitulo</strong>.</li>
+          <li>Na aba <strong>Interface de Usuário</strong>, arraste uma <strong>Legenda</strong> para dentro de OrgTopoTitulo.</li>
+          <li>Renomeie a legenda para <strong>LegTitulo</strong>.</li>
+        </ol>
+      </div>
+      <div class="properties">
+        <h4>Propriedades</h4>
+        <ul>
+          <li><strong>OrgTopoTitulo — Largura:</strong> Preencher principal</li>
+          <li><strong>OrgTopoTitulo — Altura:</strong> Automático</li>
+          <li><strong>OrgTopoTitulo — AlinhamentoHorizontal:</strong> Centro</li>
+          <li><strong>OrgTopoTitulo — AlinhamentoVertical:</strong> Centro</li>
+          <li><strong>LegTitulo — Texto:</strong> Agenda de Contatos</li>
+          <li><strong>LegTitulo — Largura:</strong> Preencher principal</li>
+          <li><strong>LegTitulo — AlinhamentoTexto:</strong> Centro</li>
+          <li><strong>LegTitulo — FonteNegrito:</strong> verdadeiro</li>
+          <li><strong>LegTitulo — TamanhoDaFonte:</strong> 20</li>
+          <li><strong>LegTitulo — CorDoTexto:</strong> azul escuro</li>
+        </ul>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/etapa_topo_titulo.png" alt="Topo com título"/></figure>
+  </article>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 4</span>
+      <h3>Inserindo OrgFotoDados</h3>
+      <p>Esta etapa cria a área principal da tela, dividindo foto e dados pessoais.</p>
+      <div class="howto">
+        <h4>Faça assim</h4>
+        <ol>
+          <li>Arraste uma <strong>OrganizaçãoHorizontal</strong> para a Screen1.</li>
+          <li>Renomeie para <strong>OrgFotoDados</strong>.</li>
+          <li>Dentro dela, insira duas organizações verticais: <strong>OrgFoto</strong> e <strong>OrgDadosPessoais</strong>.</li>
+          <li>Dentro de OrgFoto, insira uma <strong>Imagem</strong> e renomeie para <strong>ImgFoto</strong>.</li>
+          <li>Dentro de OrgDadosPessoais, insira as legendas e caixas de texto de Nome, Telefone e E-mail.</li>
+        </ol>
+      </div>
+      <div class="properties">
+        <h4>Propriedades principais</h4>
+        <ul>
+          <li><strong>OrgFotoDados — Largura:</strong> Preencher principal</li>
+          <li><strong>OrgFotoDados — Altura:</strong> Automático</li>
+          <li><strong>OrgFoto — Largura:</strong> 120 px</li>
+          <li><strong>OrgFoto — Altura:</strong> 120 px</li>
+          <li><strong>ImgFoto — Imagem:</strong> Foto.png</li>
+          <li><strong>ImgFoto — Largura:</strong> Preencher principal</li>
+          <li><strong>ImgFoto — Altura:</strong> Preencher principal</li>
+          <li><strong>ImgFoto — RedimensionarParaCaber:</strong> verdadeiro</li>
+          <li><strong>OrgDadosPessoais — Largura:</strong> Preencher principal</li>
+          <li><strong>LegNome — Texto:</strong> Nome:</li>
+          <li><strong>CxTNome — Largura:</strong> Preencher principal</li>
+          <li><strong>LegTelefone — Texto:</strong> Telefone:</li>
+          <li><strong>CxTTelefone — Largura:</strong> Preencher principal</li>
+          <li><strong>LegEmail — Texto:</strong> E-mail</li>
+          <li><strong>CxTEmail — Largura:</strong> Preencher principal</li>
+        </ul>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/etapa_foto_dados.png" alt="Foto e dados"/></figure>
+  </article>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 5</span>
+      <h3>Inserindo OrgBotoes1</h3>
+      <p>A primeira área de botões reúne ações rápidas do contato.</p>
+      <div class="added-box">
+        <h4>Componentes adicionados nesta etapa</h4>
+        <ul>
+          <li>OrgBotoes1</li>
+          <li>btWhatsApp</li>
+          <li>btEmail</li>
+          <li>btEndereco</li>
+          <li>btNotas</li>
+        </ul>
+      </div>
+      <div class="howto">
+        <h4>Faça assim</h4>
+        <ol>
+          <li>Insira uma <strong>OrganizaçãoHorizontal</strong> abaixo da área de foto e dados.</li>
+          <li>Renomeie para <strong>OrgBotoes1</strong>.</li>
+          <li>Dentro dela, insira quatro botões.</li>
+          <li>Renomeie os botões para <strong>btWhatsApp</strong>, <strong>btEmail</strong>, <strong>btEndereco</strong> e <strong>btNotas</strong>.</li>
+        </ol>
+      </div>
+      <div class="properties">
+        <h4>Propriedades</h4>
+        <ul>
+          <li><strong>OrgBotoes1 — Largura:</strong> Preencher principal</li>
+          <li><strong>btWhatsApp — Texto:</strong> WhatsApp</li>
+          <li><strong>btWhatsApp — Largura:</strong> Preencher principal</li>
+          <li><strong>btWhatsApp — Altura:</strong> Automático</li>
+          <li><strong>btWhatsApp — CorDoTexto:</strong> verde</li>
+          <li><strong>btEmail — Texto:</strong> E-Mail</li>
+          <li><strong>btEmail — Largura:</strong> Preencher principal</li>
+          <li><strong>btEndereco — Texto:</strong> Endereço</li>
+          <li><strong>btEndereco — Largura:</strong> Preencher principal</li>
+          <li><strong>btNotas — Texto:</strong> Notas</li>
+          <li><strong>btNotas — Largura:</strong> Preencher principal</li>
+        </ul>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/etapa_botoes_acao.png" alt="Botões de ação"/></figure>
+  </article>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 6</span>
+      <h3>Inserindo OrgCidadeEstado</h3>
+      <p>A área de cidade e estado é formada por uma organização horizontal com duas colunas verticais.</p>
+      <div class="added-box">
+        <h4>Componentes adicionados nesta etapa</h4>
+        <ul>
+          <li>OrgCidadeEstado</li>
+          <li>OrgCidade, LegCidade, CxTCidade</li>
+          <li>OrgEstado, LegEstado, CxTEstado</li>
+        </ul>
+      </div>
+      <div class="howto">
+        <h4>Faça assim</h4>
+        <ol>
+          <li>Insira uma <strong>OrganizaçãoHorizontal</strong> e renomeie para <strong>OrgCidadeEstado</strong>.</li>
+          <li>Dentro dela, insira duas <strong>OrganizaçõesVerticais</strong>.</li>
+          <li>Renomeie para <strong>OrgCidade</strong> e <strong>OrgEstado</strong>.</li>
+          <li>Em cada coluna, insira uma legenda e uma caixa de texto.</li>
+        </ol>
+      </div>
+      <div class="properties">
+        <h4>Propriedades</h4>
+        <ul>
+          <li><strong>OrgCidadeEstado — Largura:</strong> Preencher principal</li>
+          <li><strong>OrgCidade — Largura:</strong> 50%</li>
+          <li><strong>LegCidade — Texto:</strong> Cidade:</li>
+          <li><strong>LegCidade — FonteNegrito:</strong> verdadeiro</li>
+          <li><strong>CxTCidade — Largura:</strong> Preencher principal</li>
+          <li><strong>CxTCidade — Altura:</strong> Automático</li>
+          <li><strong>OrgEstado — Largura:</strong> 50%</li>
+          <li><strong>LegEstado — Texto:</strong> Estado:</li>
+          <li><strong>LegEstado — FonteNegrito:</strong> verdadeiro</li>
+          <li><strong>CxTEstado — Largura:</strong> Preencher principal</li>
+          <li><strong>CxTEstado — Altura:</strong> Automático</li>
+        </ul>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/etapa_cidade_estado.png" alt="Cidade e estado"/></figure>
+  </article>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 7</span>
+      <h3>Inserindo OrgBotoes2</h3>
+      <p>A última organização da interface contém os botões principais: Salvar e Cancelar.</p>
+      <div class="added-box">
+        <h4>Componentes adicionados nesta etapa</h4>
+        <ul>
+          <li>OrgBotoes2</li>
+          <li>btSalvar</li>
+          <li>btCancelar</li>
+        </ul>
+      </div>
+      <div class="howto">
+        <h4>Faça assim</h4>
+        <ol>
+          <li>Insira uma <strong>OrganizaçãoHorizontal</strong> e renomeie para <strong>OrgBotoes2</strong>.</li>
+          <li>Dentro dela, insira dois botões.</li>
+          <li>Renomeie para <strong>btSalvar</strong> e <strong>btCancelar</strong>.</li>
+        </ol>
+      </div>
+      <div class="properties">
+        <h4>Propriedades</h4>
+        <ul>
+          <li><strong>OrgBotoes2 — Largura:</strong> Preencher principal</li>
+          <li><strong>btSalvar — Texto:</strong> Salvar</li>
+          <li><strong>btSalvar — Largura:</strong> 50%</li>
+          <li><strong>btSalvar — Altura:</strong> 50 px</li>
+          <li><strong>btSalvar — CorDeFundo:</strong> verde</li>
+          <li><strong>btSalvar — CorDoTexto:</strong> branco</li>
+          <li><strong>btCancelar — Texto:</strong> Cancelar</li>
+          <li><strong>btCancelar — Largura:</strong> 50%</li>
+          <li><strong>btCancelar — Altura:</strong> 50 px</li>
+          <li><strong>btCancelar — CorDeFundo:</strong> vermelho</li>
+          <li><strong>btCancelar — CorDoTexto:</strong> branco</li>
+        </ul>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/etapa_tela_completa.png" alt="Tela completa"/></figure>
+  </article>
+
+  <div class="notice">Até aqui, a interface está montada. O aplicativo ainda não possui inteligência, pois a programação dos blocos será feita em outra etapa.</div>
+</section>
+
+<section id="exercicios" class="section-card">
+  <div class="section-head"><span class="badge">99</span><div><h2>Exercícios</h2><p>Atividades para reforçar fundamentos, planejamento e construção de interface.</p></div></div>
+  <div class="exercise-group"><h3>Parte 1 — Fundamentos</h3><ol><li>Explique com suas palavras o que é um aplicativo.</li><li>Escolha um app que você usa e diga qual problema ele resolve.</li><li>Identifique uma tela, uma ação e um dado usado por esse app.</li></ol></div>
+  <div class="exercise-group"><h3>Parte 2 — Planejamento</h3><ol><li>Liste três problemas de uma agenda de contatos em papel.</li><li>Escreva três requisitos funcionais para uma agenda digital.</li><li>Desenhe um wireframe simples de um app de contatos.</li></ol></div>
+  <div class="exercise-group"><h3>Parte 3 — Interface no Designer</h3><ol><li>Crie um projeto novo no App Inventor com o nome AgendaContatos.</li><li>Configure a Screen1 com título, orientação retrato e alinhamento superior.</li><li>Monte a estrutura visual usando organizações horizontais e verticais.</li><li>Renomeie os componentes usando nomes claros, como CxTNome e btSalvar.</li><li>Altere a cor dos botões Salvar e Cancelar.</li></ol></div>
+</section>
+
+</main>
+</div>
+<script src="../js/appinventor.js"></script>
+</body>
+</html>
