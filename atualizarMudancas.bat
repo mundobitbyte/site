@@ -1,0 +1,1 @@
+git status && git add . && git commit -m "Atualiza status dos módulos" && git push
