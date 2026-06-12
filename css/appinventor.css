@@ -180,25 +180,34 @@ section[id]{
 }
 
 
-/* ===== Ajuste mobile: rolagem nas imagens dos exercícios ===== */
+
+/* ===== Ajuste forte para mobile - exercícios visuais ===== */
 @media(max-width:900px){
-  .exercise-showcase{
-    max-height:none;
-    overflow:visible;
-    touch-action:pan-y;
+
+  .exercises-interface .exercise-showcase{
+    display:flex !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    gap:10px;
+    padding-bottom:6px;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x proximity;
   }
 
   .exercise-tab{
-    touch-action:manipulation;
-    -webkit-tap-highlight-color:transparent;
+    min-width:170px;
+    flex:0 0 auto;
+    scroll-snap-align:start;
+    touch-action:pan-x;
   }
 
   .exercise-tab img{
+    height:110px;
     pointer-events:none;
   }
 
   .exercise-detail{
-    touch-action:pan-y;
+    grid-template-columns:1fr !important;
   }
 
   .exercise-detail figure,
