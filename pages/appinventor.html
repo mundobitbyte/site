@@ -423,11 +423,180 @@
   <div class="notice">Até aqui, a interface está montada. O aplicativo ainda não possui inteligência, pois a programação dos blocos será feita em outra etapa.</div>
 </section>
 
-<section id="exercicios" class="section-card">
-  <div class="section-head"><span class="badge">99</span><div><h2>Exercícios</h2><p>Atividades para reforçar fundamentos, planejamento e construção de interface.</p></div></div>
-  <div class="exercise-group"><h3>Parte 1 — Fundamentos</h3><ol><li>Explique com suas palavras o que é um aplicativo.</li><li>Escolha um app que você usa e diga qual problema ele resolve.</li><li>Identifique uma tela, uma ação e um dado usado por esse app.</li></ol></div>
-  <div class="exercise-group"><h3>Parte 2 — Planejamento</h3><ol><li>Liste três problemas de uma agenda de contatos em papel.</li><li>Escreva três requisitos funcionais para uma agenda digital.</li><li>Desenhe um wireframe simples de um app de contatos.</li></ol></div>
-  <div class="exercise-group"><h3>Parte 3 — Interface no Designer</h3><ol><li>Crie um projeto novo no App Inventor com o nome AgendaContatos.</li><li>Configure a Screen1 com título, orientação retrato e alinhamento superior.</li><li>Monte a estrutura visual usando organizações horizontais e verticais.</li><li>Renomeie os componentes usando nomes claros, como CxTNome e btSalvar.</li><li>Altere a cor dos botões Salvar e Cancelar.</li></ol></div>
+<section id="exercicios" class="section-card exercises-interface">
+  <div class="section-head">
+    <span class="badge">99</span>
+    <div>
+      <h2>Exercícios de Interface</h2>
+      <p>Pratique a construção de telas no App Inventor usando organizações, componentes visuais e propriedades.</p>
+    </div>
+  </div>
+
+  <div class="exercise-showcase">
+    <button class="exercise-tab active" data-target="ex-tarefas">
+      <img src="../img/appinventor/ex_tarefas.png" alt="Interface Minhas Tarefas"/>
+      <span>1. Tarefas</span>
+    </button>
+    <button class="exercise-tab" data-target="ex-produtos">
+      <img src="../img/appinventor/ex_produtos.png" alt="Interface Cadastro de Produtos"/>
+      <span>2. Produtos</span>
+    </button>
+    <button class="exercise-tab" data-target="ex-gastos">
+      <img src="../img/appinventor/ex_gastos.png" alt="Interface Controle de Gastos"/>
+      <span>3. Gastos</span>
+    </button>
+    <button class="exercise-tab" data-target="ex-atendimento">
+      <img src="../img/appinventor/ex_atendimento.png" alt="Interface Agendar Atendimento"/>
+      <span>4. Atendimento</span>
+    </button>
+    <button class="exercise-tab" data-target="ex-biblioteca">
+      <img src="../img/appinventor/ex_biblioteca.png" alt="Interface Biblioteca Escolar"/>
+      <span>5. Biblioteca</span>
+    </button>
+  </div>
+
+  <article id="ex-tarefas" class="exercise-detail active">
+    <div class="exercise-text">
+      <div class="panel-title">Enunciado</div>
+      <h3>Minhas Tarefas</h3>
+      <p>Construa a interface de um aplicativo simples para registrar tarefas de estudo.</p>
+      <ul>
+        <li>Barra superior roxa com título.</li>
+        <li>Ícone de tarefa à esquerda.</li>
+        <li>Campos: Título, Categoria, Prioridade e Data Limite.</li>
+        <li>Campo maior para Descrição.</li>
+        <li>Botões: Adicionar, Editar e Excluir.</li>
+      </ul>
+      <div class="exercise-steps">
+        <div><strong>1. Observe</strong><br/>Analise o layout antes de montar.</div>
+        <div><strong>2. Divida</strong><br/>Identifique organizações horizontais e verticais.</div>
+        <div><strong>3. Construa</strong><br/>Monte uma parte por vez no Designer.</div>
+      </div>
+      <div class="challenge"><strong>Desafio:</strong> use uma organização horizontal para colocar imagem e campos lado a lado.</div>
+    </div>
+    <figure><img src="../img/appinventor/ex_tarefas.png" alt="Exercício Minhas Tarefas"/></figure>
+  </article>
+
+  <article id="ex-produtos" class="exercise-detail">
+    <div class="exercise-text">
+      <div class="panel-title">Enunciado</div>
+      <h3>Cadastro de Produtos</h3>
+      <p>Construa uma interface para cadastrar produtos de uma loja ou estoque.</p>
+      <ul>
+        <li>Barra superior azul com título.</li>
+        <li>Imagem de produto à esquerda.</li>
+        <li>Campos: Produto, Código, Preço e Qtd.</li>
+        <li>Área separada para Categoria e Fornecedor.</li>
+        <li>Botões: Novo, Salvar e Limpar.</li>
+      </ul>
+      <div class="exercise-steps">
+        <div><strong>1. Planeje</strong><br/>Separe dados principais e dados complementares.</div>
+        <div><strong>2. Organize</strong><br/>Use caixas agrupadas por assunto.</div>
+        <div><strong>3. Ajuste</strong><br/>Distribua os botões com larguras semelhantes.</div>
+      </div>
+      <div class="challenge"><strong>Desafio:</strong> crie grupos visuais usando bordas e cores diferentes.</div>
+    </div>
+    <figure><img src="../img/appinventor/ex_produtos.png" alt="Exercício Cadastro de Produtos"/></figure>
+  </article>
+
+  <article id="ex-gastos" class="exercise-detail">
+    <div class="exercise-text">
+      <div class="panel-title">Enunciado</div>
+      <h3>Controle de Gastos</h3>
+      <p>Construa uma interface para registrar gastos pessoais ou familiares.</p>
+      <ul>
+        <li>Barra superior verde com título.</li>
+        <li>Ícone de dinheiro à esquerda.</li>
+        <li>Campos: Descrição, Valor, Data e Tipo.</li>
+        <li>Área de Resumo com dois campos.</li>
+        <li>Botões: Registrar e Cancelar.</li>
+      </ul>
+      <div class="exercise-steps">
+        <div><strong>1. Agrupe</strong><br/>Separe entrada de dados e resumo.</div>
+        <div><strong>2. Compare</strong><br/>Veja o que fica em linha e o que fica em coluna.</div>
+        <div><strong>3. Finalize</strong><br/>Use dois botões grandes no rodapé.</div>
+      </div>
+      <div class="challenge"><strong>Desafio:</strong> mantenha o botão Registrar mais destacado que o Cancelar.</div>
+    </div>
+    <figure><img src="../img/appinventor/ex_gastos.png" alt="Exercício Controle de Gastos"/></figure>
+  </article>
+
+  <article id="ex-atendimento" class="exercise-detail">
+    <div class="exercise-text">
+      <div class="panel-title">Enunciado</div>
+      <h3>Agendar Atendimento</h3>
+      <p>Construa uma interface para agendar um atendimento, reunião ou consulta.</p>
+      <ul>
+        <li>Barra superior laranja com título.</li>
+        <li>Imagem de usuário à esquerda.</li>
+        <li>Campos: Nome, Telefone, Data e Horário.</li>
+        <li>Campo maior para Observações.</li>
+        <li>Botões: Agendar, Alterar e Cancelar.</li>
+      </ul>
+      <div class="exercise-steps">
+        <div><strong>1. Estruture</strong><br/>Monte a área de identificação.</div>
+        <div><strong>2. Destaque</strong><br/>Separe observações dos demais campos.</div>
+        <div><strong>3. Distribua</strong><br/>Coloque três botões no final.</div>
+      </div>
+      <div class="challenge"><strong>Desafio:</strong> deixe o botão Agendar com a mesma cor do cabeçalho.</div>
+    </div>
+    <figure><img src="../img/appinventor/ex_atendimento.png" alt="Exercício Agendar Atendimento"/></figure>
+  </article>
+
+  <article id="ex-biblioteca" class="exercise-detail">
+    <div class="exercise-text">
+      <div class="panel-title">Enunciado</div>
+      <h3>Biblioteca Escolar</h3>
+      <p>Construa uma interface para registrar livros e empréstimos de uma biblioteca.</p>
+      <ul>
+        <li>Barra superior escura com título.</li>
+        <li>Ícone de livros à esquerda.</li>
+        <li>Campos: Título, Autor, Código e Situação.</li>
+        <li>Área separada para Aluno / Turma.</li>
+        <li>Botões: Cadastrar, Emprestar e Devolver.</li>
+      </ul>
+      <div class="exercise-steps">
+        <div><strong>1. Identifique</strong><br/>Separe livro e aluno.</div>
+        <div><strong>2. Monte</strong><br/>Use organizações para criar blocos visuais.</div>
+        <div><strong>3. Revise</strong><br/>Confira alinhamentos e proporções.</div>
+      </div>
+      <div class="challenge"><strong>Desafio:</strong> use três botões com cores diferentes sem perder legibilidade.</div>
+    </div>
+    <figure><img src="../img/appinventor/ex_biblioteca.png" alt="Exercício Biblioteca Escolar"/></figure>
+  </article>
+
+  <div class="exercise-group">
+    <h3>Parte 1 — Fundamentos da Programação Mobile</h3>
+    <ol>
+      <li>Escolha três aplicativos que você utiliza e escreva qual problema cada um resolve.</li>
+      <li>Para cada aplicativo escolhido, identifique uma tela, uma ação do usuário e um dado utilizado.</li>
+      <li>Explique por que um desenvolvedor precisa pensar no fluxo do aplicativo.</li>
+    </ol>
+  </div>
+
+  <div class="exercise-group">
+    <h3>Parte 2 — Planejamento e wireframe</h3>
+    <ol>
+      <li>Escreva cinco requisitos funcionais para um aplicativo de tarefas, produtos, gastos, atendimento ou biblioteca.</li>
+      <li>Desenhe um wireframe simples para uma das interfaces propostas acima.</li>
+      <li>Compare o seu wireframe com a interface final escolhida e explique o que mudou.</li>
+    </ol>
+  </div>
+
+  <div class="exercise-group">
+    <h3>Parte 3 — Designer e organizações</h3>
+    <ol>
+      <li>Explique a diferença entre Organização Horizontal e Organização Vertical.</li>
+      <li>Escolha uma das interfaces acima e escreva sua árvore de componentes.</li>
+      <li>Monte a interface escolhida usando apenas o Designer do App Inventor.</li>
+      <li>Renomeie todos os componentes com nomes claros.</li>
+      <li>Altere cores, títulos e textos sem desorganizar o layout.</li>
+    </ol>
+  </div>
+
+  <div class="notice">
+    Estes exercícios trabalham apenas a construção visual da interface. A programação dos blocos será acrescentada em outra etapa.
+  </div>
 </section>
 
 </main>
