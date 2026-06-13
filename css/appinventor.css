@@ -325,17 +325,29 @@ section[id]{
     overflow-x:auto;
   }
 
-  .exercises-interface .exercise-showcase{
-    display:flex;
-    overflow-x:auto;
-    overflow-y:hidden;
-    gap:10px;
-    padding-bottom:6px;
-    max-width:100%;
-    -webkit-overflow-scrolling:touch;
-    scroll-snap-type:x proximity;
-    touch-action:pan-y;
-  }
+.exercises-interface .exercise-showcase{
+  display:flex;
+  overflow-x:auto;
+  overflow-y:hidden;
+  gap:10px;
+  padding-bottom:6px;
+  max-width:100%;
+
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x proximity;
+  touch-action:pan-y;
+
+  scrollbar-width:auto;
+}
+
+.exercises-interface .exercise-showcase::-webkit-scrollbar{
+  height:10px;
+}
+
+.exercises-interface .exercise-showcase::-webkit-scrollbar-thumb{
+  background:#1f6ed4;
+  border-radius:999px;
+}
 
   .exercise-tab{
     min-width:170px;
