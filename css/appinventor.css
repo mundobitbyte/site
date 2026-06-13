@@ -24,7 +24,7 @@ code{
 }
 
 section[id]{
-  scroll-margin-top:104px;
+  scroll-margin-top:16px;
 }
 
 .hero-card,
@@ -297,9 +297,11 @@ section[id]{
     font-size:26px;
   }
 
-  section[id]{
-    scroll-margin-top:132px;
+@media (max-width: 720px) {
+  section[id] {
+    scroll-margin-top: 12px;
   }
+}
 
   .wireframe-figure img{
     max-width:190px;
