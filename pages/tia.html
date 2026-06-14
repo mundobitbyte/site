@@ -2232,57 +2232,283 @@
     <span class="badge">10</span>
     <div>
       <h2>Banco de Dados para Gestão</h2>
-      <p>Entenda como os bancos de dados armazenam informações e apoiam a gestão das organizações.</p>
+      <p>Entenda como os dados são armazenados, processados e transformados em informações gerenciais.</p>
     </div>
   </div>
 
-  <!-- TODO O CONTEÚDO DO CAPÍTULO 10 -->
+  <div class="example-box">
+    <h3>Contextualização</h3>
+    <p>
+      Todos os sistemas estudados neste módulo dependem de dados organizados.
+      SPT, SIG, ERP, CRM, SCM e sistemas de e-commerce precisam armazenar clientes,
+      produtos, vendas, fornecedores, pagamentos e muitas outras informações.
+    </p>
+    <p>
+      O banco de dados é a estrutura que permite guardar, localizar, atualizar,
+      relacionar e consultar essas informações de forma organizada.
+    </p>
+  </div>
+
+  <div class="activity-box">
+    <h3>Situação-Problema</h3>
+    <p>
+      Uma empresa possui milhares de clientes, produtos, fornecedores e vendas registradas.
+      Porém, essas informações estão espalhadas em várias planilhas.
+    </p>
+    <ul>
+      <li>clientes aparecem duplicados;</li>
+      <li>produtos estão com preços diferentes em arquivos diferentes;</li>
+      <li>relatórios não batem;</li>
+      <li>é difícil saber o estoque correto;</li>
+      <li>as decisões ficam inseguras.</li>
+    </ul>
+    <p>
+      Como organizar essas informações para apoiar melhor a gestão?
+    </p>
+  </div>
+
+  <div class="concept-grid">
+    <article>
+      <h3>Banco de Dados</h3>
+      <p>
+        Conjunto organizado de informações relacionadas entre si, permitindo armazenamento,
+        consulta, atualização e recuperação de dados.
+      </p>
+    </article>
+
+    <article>
+      <h3>Gestão</h3>
+      <p>
+        Na Administração, os dados organizados ajudam a controlar operações,
+        gerar relatórios, acompanhar indicadores e apoiar decisões.
+      </p>
+    </article>
+
+    <article>
+      <h3>Sistemas</h3>
+      <p>
+        ERP, CRM, SCM, SIG, e-commerce e aplicativos dependem de bancos de dados
+        para funcionar corretamente.
+      </p>
+    </article>
+  </div>
+
+  <div class="example-box">
+    <h3>Entrada, Processamento, Saída e Feedback</h3>
+
+    <div class="flow-line">
+      <span>Entrada de Dados</span>
+      <b>→</b>
+      <span>Processamento</span>
+      <b>→</b>
+      <span>Saída de Informação</span>
+      <b>→</b>
+      <span>Feedback</span>
+    </div>
+
+    <div class="system-grid compact">
+      <article>
+        <h3>Entrada</h3>
+        <p>Cadastro de clientes, lançamento de vendas, entrada de produtos e registro de pagamentos.</p>
+      </article>
+
+      <article>
+        <h3>Processamento</h3>
+        <p>Organização, cálculo, cruzamento e atualização dos dados armazenados.</p>
+      </article>
+
+      <article>
+        <h3>Saída</h3>
+        <p>Relatórios, consultas, gráficos, indicadores e dashboards.</p>
+      </article>
+
+      <article>
+        <h3>Feedback</h3>
+        <p>Uso das informações para corrigir problemas, melhorar processos e tomar decisões.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="example-box">
+    <h3>Exemplo de Funcionamento</h3>
+
+    <div class="case-flow">
+      <span>Venda registrada</span>
+      <b>→</b>
+      <span>Dados entram no sistema</span>
+      <b>→</b>
+      <span>Banco armazena</span>
+      <b>→</b>
+      <span>Sistema processa</span>
+      <b>→</b>
+      <span>Relatório é gerado</span>
+      <b>→</b>
+      <span>Gestor decide</span>
+    </div>
+
+    <p>
+      Por exemplo: uma venda é registrada, o banco de dados armazena o produto,
+      a quantidade, o valor e a data. Depois, o sistema pode gerar um relatório
+      mostrando os produtos mais vendidos. Com isso, o gestor decide repor o estoque.
+    </p>
+  </div>
+
+  <div class="example-box">
+    <h3>Banco de Dados não é apenas uma tabela</h3>
+    <p>
+      Uma tabela armazena informações de um assunto, como clientes ou produtos.
+      Mas um banco de dados pode relacionar várias tabelas diferentes.
+    </p>
+
+    <div class="flow-line">
+      <span>Clientes</span>
+      <b>→</b>
+      <span>Vendas</span>
+      <b>→</b>
+      <span>Produtos</span>
+      <b>→</b>
+      <span>Fornecedores</span>
+    </div>
+
+    <p>
+      Essa relação permite responder perguntas importantes, como:
+    </p>
+
+    <ul>
+      <li>qual cliente comprou mais?</li>
+      <li>qual produto vendeu mais?</li>
+      <li>qual fornecedor está ligado aos produtos mais vendidos?</li>
+      <li>quais itens estão abaixo do estoque mínimo?</li>
+    </ul>
+  </div>
+
+  <div class="example-box">
+    <h3>Planilhas x Banco de Dados</h3>
+
+    <div class="two-col">
+      <div class="text-panel">
+        <h3>Planilhas</h3>
+        <ul>
+          <li>simples de criar;</li>
+          <li>boas para controles menores;</li>
+          <li>úteis para análises rápidas;</li>
+          <li>podem gerar erros quando crescem demais.</li>
+        </ul>
+      </div>
+
+      <div class="text-panel blue">
+        <h3>Banco de Dados</h3>
+        <ul>
+          <li>organiza grandes volumes;</li>
+          <li>reduz duplicações;</li>
+          <li>facilita consultas;</li>
+          <li>integra sistemas empresariais.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-box">
+    <h3>Exemplo Empresarial</h3>
+    <p>
+      Uma papelaria registra diariamente vendas, clientes, produtos e fornecedores.
+      Esses dados ficam armazenados em um banco de dados.
+    </p>
+    <p>
+      Depois, o gestor pode consultar produtos mais vendidos, clientes que mais compram,
+      fornecedores mais utilizados, faturamento mensal e itens com baixo estoque.
+    </p>
+    <p>
+      Assim, o banco de dados deixa de ser apenas armazenamento e passa a apoiar
+      diretamente a gestão da empresa.
+    </p>
+  </div>
+
+  <div class="activity-box">
+    <h3>Estudo de Caso</h3>
+    <p>
+      Uma loja possui cadastro de clientes, produtos, fornecedores e vendas.
+      O gestor deseja descobrir:
+    </p>
+
+    <ul>
+      <li>quais produtos são mais vendidos;</li>
+      <li>quais clientes compram com maior frequência;</li>
+      <li>quais fornecedores participam mais das operações;</li>
+      <li>quais produtos estão abaixo do estoque mínimo.</li>
+    </ul>
+
+    <p>Analise a situação e responda:</p>
+
+    <ol>
+      <li>Por que essas informações precisam estar organizadas?</li>
+      <li>Como um banco de dados ajuda a empresa?</li>
+      <li>Que problemas poderiam ocorrer usando apenas planilhas separadas?</li>
+      <li>Que decisões podem ser tomadas com base nesses dados?</li>
+      <li>Como os bancos de dados apoiam os sistemas gerenciais?</li>
+    </ol>
+  </div>
+
+  <div class="activity-box">
+    <h3>Atividade</h3>
+    <p>
+      Imagine uma clínica médica.
+    </p>
+
+    <ol>
+      <li>Quais informações precisam ser armazenadas?</li>
+      <li>Que tabelas poderiam existir?</li>
+      <li>Que relatórios poderiam ser gerados?</li>
+      <li>Como essas informações poderiam ajudar a gestão?</li>
+      <li>Como o feedback poderia melhorar os processos da clínica?</li>
+    </ol>
+  </div>
 
   <div class="example-box">
     <h3>Continue seus estudos</h3>
 
     <p>
-      Este capítulo apresentou apenas os conceitos necessários para compreender o papel dos bancos de dados na gestão das organizações.
+      Este capítulo apresentou apenas os conceitos necessários para compreender o papel
+      dos bancos de dados na gestão das organizações.
     </p>
 
     <p>
-      Se você deseja aprofundar seus conhecimentos, utilize os materiais complementares do Mundo bit Byte.
+      Para aprofundar seus conhecimentos, utilize os materiais complementares do Mundo bit Byte.
     </p>
 
     <div class="system-grid compact">
-
       <article>
         <h3>Módulo Completo de Banco de Dados</h3>
         <p>
-          Estude modelagem, tabelas, relacionamentos, SQL, consultas e diversos outros conceitos fundamentais de bancos de dados.
+          Estude modelagem, tabelas, relacionamentos, SQL, consultas e diversos outros
+          conceitos fundamentais de bancos de dados.
         </p>
-
-        <a class="call-link" href="bancodedados.html">
-          Abrir módulo →
-        </a>
+        <a class="call-link" href="bancodedados.html">Abrir módulo →</a>
       </article>
 
       <article>
         <h3>Gestão de Dados Comerciais</h3>
         <p>
-          Coloque os conceitos em prática analisando produtos, fornecedores, clientes, estoque e informações comerciais.
+          Coloque os conceitos em prática analisando produtos, fornecedores, categorias,
+          estoque e informações comerciais.
         </p>
-
-        <a class="call-link" href="bd_gestao.html">
-          Abrir atividade →
-        </a>
+        <a class="call-link" href="bd_gestao.html">Abrir atividade →</a>
       </article>
-
     </div>
 
     <div class="highlight">
-      Os bancos de dados são a base da maioria dos sistemas estudados neste módulo. Quanto melhor as informações são organizadas, maior será a qualidade dos relatórios, análises e decisões gerenciais.
+      Os bancos de dados são a base da maioria dos sistemas estudados neste módulo.
+      Quanto melhor as informações são organizadas, maior será a qualidade dos relatórios,
+      análises e decisões gerenciais.
     </div>
   </div>
 
   <div class="notice">
     <strong>Fechamento:</strong>
-    Os bancos de dados são a base da maioria dos sistemas utilizados pelas organizações modernas. Eles permitem armazenar, organizar, processar e disponibilizar informações que apoiam a operação, a gestão e a tomada de decisões.
+    Os bancos de dados são a base da maioria dos sistemas utilizados pelas organizações modernas.
+    Eles permitem armazenar, organizar, processar e disponibilizar informações que apoiam a operação,
+    a gestão e a tomada de decisões. Mais do que guardar dados, eles ajudam a transformar registros
+    do dia a dia em informações úteis para a administração das empresas.
   </div>
 </section>
 
