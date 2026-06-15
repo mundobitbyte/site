@@ -1455,7 +1455,7 @@ btnVermelho: {
           ...steps,
           {
             id: 'exercicios-interface',
-            menu: '99. Exercícios Interface',
+            menu: '99. Exercícios',
             title: '99. Exercícios Interface',
             objective: 'Praticar construção de interfaces em React Native.',
             exercisePage: true,
