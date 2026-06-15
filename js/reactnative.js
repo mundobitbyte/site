@@ -269,7 +269,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -368,7 +368,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -513,7 +513,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -672,7 +672,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -859,7 +859,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -1239,7 +1239,7 @@ Image
 // NOVO JSX
 <Image
   source={{
-    uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+    uri: '../img/reactnative/avatar.webp',
   }}
   style={styles.fotoAvatar}
 />
@@ -3698,7 +3698,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -4006,7 +4006,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -4322,7 +4322,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -4655,7 +4655,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -4975,7 +4975,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -5297,7 +5297,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -5631,7 +5631,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -5969,7 +5969,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -6313,7 +6313,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -6658,7 +6658,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -7015,7 +7015,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
@@ -7371,7 +7371,7 @@ export default function App() {
             <View style={styles.viewFoto}>
               <Image
                 source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                  uri: '../img/reactnative/avatar.webp',
                 }}
                 style={styles.fotoAvatar}
               />
