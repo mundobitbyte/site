@@ -571,5 +571,73 @@ Matriz digitada:
 media <- (nota1 + nota2) / 2</pre><div class="example-box"><strong>Exemplo ruim:</strong> variável chamada <code>x</code> para guardar nome do aluno.<br><strong>Exemplo melhor:</strong> variável chamada <code>nomeAluno</code>.</div><h4>12. Programação em par</h4><p>Dois alunos trabalham juntos: um escreve o código e o outro revisa, sugere melhorias e observa erros.</p><div class="example-box"><strong>Exemplo em sala:</strong> um aluno digita o algoritmo de média; o outro confere se as variáveis foram declaradas, se os parênteses estão corretos e se a saída faz sentido.</div><h4>13. Testes unitários</h4><p>Teste unitário verifica uma parte pequena do programa. Em VisuAlg, pode ser feito testando uma função ou trecho com valores conhecidos.</p><div class="example-box"><strong>Exemplo:</strong> se a função calculaDobro recebe 4, o resultado esperado é 8.</div><h4>Questionário de múltipla escolha</h4><div class="question"><strong>1. Para que serve a IDE?</strong><div class="answers">A) Guardar fotos<br>B) Escrever, executar e testar programas<br>C) Trocar peças do computador<br>D) Criar senhas</div></div><div class="question"><strong>2. O que é depuração?</strong><div class="answers">A) Procurar e corrigir erros no código<br>B) Pintar a tela<br>C) Apagar o programa<br>D) Criar uma variável</div></div><div class="question"><strong>3. O que é breakpoint?</strong><div class="answers">A) Um ponto de parada para analisar a execução<br>B) Um tipo de laço<br>C) Um operador lógico<br>D) Um arquivo de imagem</div></div><div class="question"><strong>4. O que é versionamento?</strong><div class="answers">A) Controlar versões do código<br>B) Aumentar a fonte<br>C) Converter real para inteiro<br>D) Executar o programa sem salvar</div></div><div class="question"><strong>5. Boa prática de programação é:</strong><div class="answers">A) Escrever tudo sem espaço<br>B) Usar nomes claros, indentação e comentários úteis<br>C) Nunca testar<br>D) Copiar sem entender</div></div><div class="question"><strong>6. O que é programação em par?</strong><div class="answers">A) Programar só com números pares<br>B) Dois programadores trabalhando juntos no mesmo problema<br>C) Usar duas telas obrigatoriamente<br>D) Criar dois algoritmos iguais</div></div><hr><br><strong>Gabarito:</strong> 1-B, 2-A, 3-A, 4-A, 5-B, 6-B.</div>`}
 ];
 const menu=document.getElementById('menu');steps.forEach(s=>{const b=document.createElement('button');b.className='nav-btn';b.textContent=s.menu;b.id='btn-'+s.id;b.onclick=()=>showStep(s.id);menu.appendChild(b)});
-function showStep(id){const s=steps.find(x=>x.id===id);document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+id).classList.add('active');document.getElementById('stepTitle').textContent=s.title;document.getElementById('objective').innerHTML='<strong>Objetivo:</strong> '+s.objective;const ws=document.getElementById('workspace');let intro=document.getElementById('introView');if(intro)intro.remove();const hideAll=()=>{['codeCard','resultCard','newCodeCard','noteWrap'].forEach(x=>document.getElementById(x).style.display='none')};if(id===0){hideAll();intro=document.createElement('section');intro.id='introView';intro.className='intro-view';intro.innerHTML=`<h3>Como usar esta apostila — versão revisada</h3><p><strong>Revisão aplicada:</strong> páginas teóricas com layout próprio, teoria final expandida e painel “O que foi trabalhado” com foco em conceitos e sintaxes.</p><p>Este material foi feito para alunos que nunca programaram. Em cada etapa prática, o aluno vê o código completo, copia para o VisuAlg, executa e observa a saída simulada.</p><div class="intro-grid"><div class="intro-box"><strong>1. Teoria quando necessário</strong><br>Alguns tópicos aparecem em página própria, sem código, para estudo conceitual.</div><div class="intro-box"><strong>2. Código completo</strong><br>Nos tópicos práticos, todo exemplo é funcional para copiar e colar.</div><div class="intro-box"><strong>3. Saída estilo VisuAlg</strong><br>A área da direita mostra uma simulação do que deve aparecer ao executar.</div></div><div class="quick"><h3>Primeiros passos no VisuAlg</h3><div class="quick-grid"><div class="quick-card"><strong>1. Abrir</strong><br>Abra o VisuAlg e crie um novo algoritmo.</div><div class="quick-card"><strong>2. Colar</strong><br>Copie o código da etapa e cole no editor.</div><div class="quick-card"><strong>3. Executar</strong><br>Use F9 ou o botão de executar.</div><div class="quick-card"><strong>4. Testar</strong><br>Quando o programa pedir dados, digite no console.</div><div class="quick-card"><strong>5. Corrigir</strong><br>Confira acentos, aspas, parênteses, fimse, fimpara e fimalgoritmo.</div><div class="quick-card"><strong>6. Salvar</strong><br>Salve cada exercício com nome organizado.</div></div></div>`;ws.appendChild(intro);return}if(s.theoryPage){hideAll();intro=document.createElement('section');intro.id='introView';intro.className='intro-view';intro.innerHTML=s.content;ws.appendChild(intro);return}['codeCard','resultCard','newCodeCard'].forEach(x=>document.getElementById(x).style.display='flex');document.getElementById('noteWrap').style.display='grid';document.getElementById('fullCode').textContent=s.code||'';document.getElementById('newCode').textContent=s.added||'';document.getElementById('preview').textContent=s.out||'';document.getElementById('note').innerHTML=s.note||''}
+function showStep(id){const s=steps.find(x=>x.id===id);document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+id).classList.add('active');document.getElementById('stepTitle').textContent=s.title;document.getElementById('objective').innerHTML='<strong>Objetivo:</strong> '+s.objective;const ws=document.getElementById('workspace');let intro=document.getElementById('introView');if(intro)intro.remove();const hideAll=()=>{['codeCard','resultCard','newCodeCard','noteWrap'].forEach(x=>document.getElementById(x).style.display='none')};if(id===0){hideAll();intro=document.createElement('section');intro.id='introView';intro.className='intro-view';intro.innerHTML=`
+
+<h3>Como utilizar esta apostila</h3>
+
+<p><strong>Versão revisada</strong></p>
+
+<p>Esta apostila foi desenvolvida para alunos que estão tendo o primeiro contato com a programação. O material apresenta os conceitos de forma gradual, combinando explicações teóricas e atividades práticas para facilitar a compreensão e o aprendizado.</p>
+
+<p>Nesta versão, as páginas teóricas possuem um layout próprio, os conteúdos conceituais foram ampliados e cada etapa conta com um painel <strong>“O que foi trabalhado”</strong>, destacando os principais conceitos, comandos e estruturas estudados.</p>
+
+<div class="intro-grid">
+
+<div class="intro-box">
+<strong>1. Estudo da teoria</strong><br>
+Alguns assuntos são apresentados em páginas exclusivas de teoria, sem exemplos de código. Essas seções têm o objetivo de explicar conceitos fundamentais antes da aplicação prática.
+</div>
+
+<div class="intro-box">
+<strong>2. Análise dos exemplos</strong><br>
+Nos tópicos práticos, cada exemplo apresenta um algoritmo completo e funcional. O aluno deve ler o código com atenção, compreender sua estrutura e identificar a finalidade de cada comando.
+</div>
+
+<div class="intro-box">
+<strong>3. Copiar e executar</strong><br>
+Todos os códigos foram preparados para serem copiados diretamente para o VisuAlg. Após colar o algoritmo no editor, basta executá-lo para observar seu funcionamento.
+</div>
+
+</div>
+
+<div class="quick">
+
+<h3>Primeiros passos no VisuAlg</h3>
+
+<div class="quick-grid">
+
+<div class="quick-card">
+<strong>1. Abrir o programa</strong><br>
+Inicie o VisuAlg e crie um novo algoritmo.
+</div>
+
+<div class="quick-card">
+<strong>2. Inserir o código</strong><br>
+Copie o código da etapa estudada e cole-o no editor do VisuAlg.
+</div>
+
+<div class="quick-card">
+<strong>3. Executar o algoritmo</strong><br>
+Utilize a tecla F9 ou clique em Executar.
+</div>
+
+<div class="quick-card">
+<strong>4. Informar os dados solicitados</strong><br>
+Quando o algoritmo solicitar informações, digite os valores no console e pressione Enter.
+</div>
+
+<div class="quick-card">
+<strong>5. Verificar possíveis erros</strong><br>
+Confira acentuação, aspas, parênteses, nomes de variáveis e comandos como fimse, fimpara e fimalgoritmo.
+</div>
+
+<div class="quick-card">
+<strong>6. Salvar os exercícios</strong><br>
+Salve cada atividade com um nome organizado para facilitar revisões futuras.
+</div>
+
+</div>
+</div>
+
+`;ws.appendChild(intro);return}if(s.theoryPage){hideAll();intro=document.createElement('section');intro.id='introView';intro.className='intro-view';intro.innerHTML=s.content;ws.appendChild(intro);return}['codeCard','resultCard','newCodeCard'].forEach(x=>document.getElementById(x).style.display='flex');document.getElementById('noteWrap').style.display='grid';document.getElementById('fullCode').textContent=s.code||'';document.getElementById('newCode').textContent=s.added||'';document.getElementById('preview').textContent=s.out||'';document.getElementById('note').innerHTML=s.note||''}
 function copyText(id){navigator.clipboard.writeText(document.getElementById(id).textContent)}showStep(0);
