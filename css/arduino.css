@@ -1019,6 +1019,10 @@ main{
     margin: 20px auto;
 }
 
+.fundamentos-img{
+    max-width: 80%;
+}
+
 @media (max-width: 768px){
 
     .fundamentos-img,
