@@ -24,6 +24,7 @@
   <a class="nav-btn" href="#appinventor">3 - App Inventor</a>
   <a class="nav-btn" href="#designer">4 - Designer</a>
   <a class="nav-btn" href="#interface">5 - Interface</a>
+  <a class="nav-btn" href="#execucao">6 - Executando o Aplicativo</a>
   <a class="nav-btn" href="#exercicios">99 - Exercícios</a>
 </nav>
 
@@ -41,7 +42,7 @@
       <h3>O que será construído?</h3>
       <p>
         A primeira versão do projeto será focada na construção visual da interface,
-        utilizando a aba <strong>Designer</strong> do App Inventor.
+        utilizando a aba <strong>Designer</strong> do App Inventor, e também no teste do aplicativo pelo celular.
       </p>
       <div class="flow-line"><span>Entender</span><b>→</b><span>Planejar</span><b>→</b><span>Organizar</span><b>→</b><span>Montar a interface</span></div>
     </div>
@@ -51,7 +52,8 @@
     </figure>
   </div>
   <div class="notice">
-    <strong>Importante:</strong> nesta primeira parte, vamos trabalhar apenas com o <strong>Designer</strong>.
+    <strong>Importante:</strong> nesta primeira parte, vamos montar a interface no <strong>Designer</strong>
+    e aprender a executar o aplicativo no celular usando o MIT AI2 Companion.
     A programação dos blocos será construída em uma etapa posterior.
   </div>
 </section>
@@ -420,7 +422,137 @@
     <figure><img src="../img/appinventor/etapa_tela_completa.webp" alt="Tela completa" loading="lazy" decoding="async"></figure>
   </article>
 
-  <div class="notice">Até aqui, a interface está montada. O aplicativo ainda não possui inteligência, pois a programação dos blocos será feita em outra etapa.</div>
+  <div class="notice">Até aqui, a interface está montada. O próximo passo é executar o aplicativo no celular usando o MIT AI2 Companion.</div>
+</section>
+
+<section id="execucao" class="section-card">
+  <div class="section-head"><span class="badge">6</span><div><h2>Executando o Aplicativo</h2><p>Depois de montar a interface, vamos testar o aplicativo diretamente no celular.</p></div></div>
+
+  <div class="story-panel">
+    <h3>Por que executar no celular?</h3>
+    <p>O App Inventor permite testar o aplicativo em tempo real usando o <strong>MIT AI2 Companion</strong>. Assim, o aluno consegue visualizar a tela criada no próprio smartphone, sem precisar gerar um arquivo APK a cada alteração.</p>
+    <p>Nesta etapa, o objetivo é apenas executar e observar o funcionamento visual do aplicativo. A programação dos blocos será feita na próxima etapa.</p>
+  </div>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 1</span>
+      <h3>Instalar o MIT AI2 Companion</h3>
+      <p>Antes de conectar o aplicativo ao App Inventor, é necessário instalar o <strong>MIT AI2 Companion</strong> diretamente no smartphone que será utilizado para os testes.</p>
+      <div class="notice">
+        <strong>Importante:</strong> o aplicativo deve ser instalado no celular, não no computador.
+        Usuários Android devem abrir a <strong>Play Store</strong> no próprio celular.
+        Usuários de iPhone devem verificar a disponibilidade do aplicativo na <strong>App Store</strong> e instalar diretamente pelo aparelho.
+      </div>
+      <div class="howto">
+        <h4>Faça assim</h4>
+        <ol>
+          <li>Abra a loja de aplicativos do seu celular.</li>
+          <li>Procure por <strong>MIT AI2 Companion</strong>.</li>
+          <li>Toque em <strong>Instalar</strong>.</li>
+          <li>Aguarde a conclusão da instalação.</li>
+          <li>Abra o aplicativo para confirmar que a instalação foi realizada corretamente.</li>
+        </ol>
+      </div>
+      <div class="properties">
+        <h4>Observação</h4>
+        <p>O MIT AI2 Companion funciona como uma ponte entre o App Inventor e o smartphone. Ele permite testar o aplicativo instantaneamente, sem precisar gerar um arquivo APK a cada alteração realizada no projeto.</p>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/ai2_companion_playstore.webp" alt="MIT AI2 Companion na Play Store" loading="lazy" decoding="async"><figcaption>Instalação do MIT AI2 Companion diretamente no celular.</figcaption></figure>
+  </article>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 2</span>
+      <h3>Conectar o projeto ao celular</h3>
+      <p>Com o aplicativo instalado, volte ao App Inventor e abra o projeto <strong>Agenda de Contatos</strong>.</p>
+      <div class="howto">
+        <h4>Faça assim</h4>
+        <ol>
+          <li>Clique no menu <strong>Conectar</strong>.</li>
+          <li>Escolha a opção <strong>Assistente AI</strong>.</li>
+          <li>Aguarde a abertura da janela de conexão.</li>
+        </ol>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/conectar_assistente_ai.webp" alt="Menu Conectar com a opção Assistente AI" loading="lazy" decoding="async"><figcaption>Opção usada para conectar o projeto ao celular.</figcaption></figure>
+  </article>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 3</span>
+      <h3>Ler o QR Code</h3>
+      <p>Após selecionar a opção <strong>Assistente AI</strong>, o App Inventor exibirá uma janela com um QR Code.</p>
+      <div class="howto">
+        <h4>Faça assim</h4>
+        <ol>
+          <li>Abra o aplicativo <strong>MIT AI2 Companion</strong> no celular.</li>
+          <li>Escolha a opção para ler QR Code.</li>
+          <li>Aponte a câmera do celular para o QR Code exibido pelo App Inventor.</li>
+          <li>Aguarde o início da conexão.</li>
+        </ol>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/qrcode_assistente_ai.webp" alt="Janela com QR Code do App Inventor" loading="lazy" decoding="async"><figcaption>O QR Code permite conectar o celular ao projeto aberto no App Inventor.</figcaption></figure>
+  </article>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 4</span>
+      <h3>Transferir o projeto</h3>
+      <p>Depois que o QR Code for reconhecido, o App Inventor iniciará o envio temporário do projeto para o celular.</p>
+      <div class="howto">
+        <h4>Faça assim</h4>
+        <ol>
+          <li>Aguarde a transferência dos arquivos.</li>
+          <li>Não feche o navegador nem o aplicativo Companion durante esse processo.</li>
+          <li>Espere até que o carregamento seja concluído.</li>
+        </ol>
+      </div>
+      <div class="properties">
+        <h4>Atenção</h4>
+        <p>O tempo de carregamento pode variar de acordo com a velocidade da internet, da rede da escola e do dispositivo utilizado.</p>
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/transferindo_projeto_companion.webp" alt="Barra de progresso da transferência do projeto" loading="lazy" decoding="async"><figcaption>O projeto é enviado temporariamente para o celular.</figcaption></figure>
+  </article>
+
+  <article class="step-card">
+    <div class="step-text">
+      <span class="step-label">Etapa 5</span>
+      <h3>Aplicativo em execução</h3>
+      <p>Após a transferência, o aplicativo será aberto automaticamente no celular.</p>
+      <div class="added-box">
+        <h4>Agora é possível</h4>
+        <ul>
+          <li>preencher os campos;</li>
+          <li>testar a aparência da interface;</li>
+          <li>observar o posicionamento dos componentes;</li>
+          <li>verificar se a tela ficou semelhante ao planejamento.</li>
+        </ul>
+      </div>
+      <div class="notice">
+        Nesta etapa, os botões ainda não possuem programação. O comportamento do aplicativo será criado depois, na etapa de blocos.
+      </div>
+    </div>
+    <figure><img src="../img/appinventor/app_agenda_execucao.webp" alt="Agenda de Contatos em execução no celular" loading="lazy" decoding="async"><figcaption>Aplicativo Agenda de Contatos sendo executado pelo MIT AI2 Companion.</figcaption></figure>
+  </article>
+
+  <div class="activity-box">
+    <h3>Conferência rápida</h3>
+    <p>Antes de continuar, verifique se:</p>
+    <ul>
+      <li>o MIT AI2 Companion foi instalado no celular;</li>
+      <li>o QR Code foi lido corretamente;</li>
+      <li>o aplicativo abriu no smartphone;</li>
+      <li>a interface aparece completa e organizada.</li>
+    </ul>
+  </div>
+
+  <div class="notice">
+    Parabéns! Seu aplicativo já está aparecendo no celular. Na próxima etapa, vamos programar os blocos para validar campos, exibir mensagens e simular ações de cadastro e consulta.
+  </div>
 </section>
 
 <section id="exercicios" class="section-card exercises-interface">
@@ -595,7 +727,7 @@
   </div>
 
   <div class="notice">
-    Estes exercícios trabalham apenas a construção visual da interface. A programação dos blocos será acrescentada em outra etapa.
+    Estes exercícios trabalham a construção visual da interface e a execução do aplicativo pelo Companion. A programação dos blocos será acrescentada em outra etapa.
   </div>
 </section>
 
