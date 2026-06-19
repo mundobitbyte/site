@@ -24,8 +24,6 @@
   <a class="nav-btn" href="#appinventor">3 - App Inventor</a>
   <a class="nav-btn" href="#designer">4 - Designer</a>
   <a class="nav-btn" href="#interface">5 - Interface</a>
-  <a class="nav-btn" href="#execucao">6 - Executando</a>
-  <a class="nav-btn" href="#blocos">7 - Blocos</a>
   <a class="nav-btn" href="#exercicios">99 - Exercícios</a>
 </nav>
 
@@ -53,8 +51,8 @@
     </figure>
   </div>
   <div class="notice">
-    <strong>Importante:</strong> primeiro vamos construir a interface no <strong>Designer</strong>. Depois,
-    aprenderemos a executar o aplicativo com o <strong>MIT AI2 Companion</strong> e a programar seu comportamento usando <strong>Blocos</strong>.
+    <strong>Importante:</strong> nesta primeira parte, vamos trabalhar apenas com o <strong>Designer</strong>.
+    A programação dos blocos será construída em uma etapa posterior.
   </div>
 </section>
 
@@ -422,286 +420,7 @@
     <figure><img src="../img/appinventor/etapa_tela_completa.webp" alt="Tela completa" loading="lazy" decoding="async"></figure>
   </article>
 
-  <div class="notice">Até aqui, a interface está montada. Antes de programar os blocos, vamos aprender a executar o aplicativo no celular usando o MIT AI2 Companion.</div>
-</section>
-
-
-<section id="execucao" class="section-card">
-  <div class="section-head">
-    <span class="badge">6</span>
-    <div>
-      <h2>Executando o Aplicativo</h2>
-      <p>Agora vamos testar a Agenda de Contatos no celular usando o MIT AI2 Companion.</p>
-    </div>
-  </div>
-
-  <div class="notice">
-    <strong>Importante:</strong> o MIT AI2 Companion deve ser instalado diretamente no celular que será usado para testar o aplicativo.
-    No Android, abra a <strong>Play Store no próprio celular</strong> e procure por <strong>MIT AI2 Companion</strong>.
-    No iPhone, verifique a disponibilidade do aplicativo na App Store e instale pelo próprio aparelho.
-  </div>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 1</span>
-      <h3>Instalar o MIT AI2 Companion</h3>
-      <p>O MIT AI2 Companion é o aplicativo que permite testar o projeto do App Inventor no celular sem gerar um APK a cada alteração.</p>
-      <div class="howto">
-        <h4>Faça assim</h4>
-        <ol>
-          <li>Abra a loja de aplicativos no celular.</li>
-          <li>Procure por <strong>MIT AI2 Companion</strong>.</li>
-          <li>Toque em <strong>Instalar</strong>.</li>
-          <li>Aguarde a instalação ser concluída.</li>
-        </ol>
-      </div>
-      <div class="notice">
-        O Companion funciona como uma ponte entre o App Inventor e o smartphone. Assim, o aluno consegue testar o aplicativo instantaneamente.
-      </div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 50%; max-width: 550px; min-width: 320px; height: auto;" src="../img/appinventor/transferindo_projeto_companion.webp" alt="MIT AI2 Companion na Play Store" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 2</span>
-      <h3>Abrir o Companion e chamar o Assistente AI</h3>
-      <p>Com o aplicativo instalado no celular, volte ao App Inventor no computador para iniciar a conexão.</p>
-      <div class="howto">
-        <h4>Faça assim</h4>
-        <ol>
-          <li>Abra o <strong>MIT AI2 Companion</strong> no celular.</li>
-          <li>No App Inventor, clique no menu <strong>Conectar</strong>.</li>
-          <li>Escolha a opção <strong>Assistente AI</strong>.</li>
-        </ol>
-      </div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 50%; max-width: 550px; min-width: 320px; height: auto;" src="../img/appinventor/ai2_companion_playstore.webp" alt="Menu Conectar e opção Assistente AI" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 3</span>
-      <h3>Ler o QR Code com o celular</h3>
-      <p>O App Inventor exibirá um QR Code. Esse código será lido pelo Companion para conectar o projeto ao celular.</p>
-      <div class="howto">
-        <h4>Faça assim</h4>
-        <ol>
-          <li>No celular, escolha a opção para ler o QR Code.</li>
-          <li>Aponte a câmera para o QR Code mostrado na tela do computador.</li>
-          <li>Aguarde o início da conexão.</li>
-        </ol>
-      </div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 50%; max-width: 550px; min-width: 320px; height: auto;" src="../img/appinventor/conectar_assistente_ai.webp" alt="QR Code do Assistente AI" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 4</span>
-      <h3>Aguardar terminar a execução da simulação</h3>
-      <p>Depois da leitura do QR Code, o App Inventor envia temporariamente o projeto para o celular.</p>
-      <div class="howto">
-        <h4>Faça assim</h4>
-        <ol>
-          <li>Aguarde a barra de progresso terminar.</li>
-          <li>Não feche o navegador durante esse processo.</li>
-          <li>Não feche o aplicativo Companion no celular.</li>
-        </ol>
-      </div>
-      <div class="notice">
-        O tempo de carregamento pode variar de acordo com a internet, o computador e o celular utilizados.
-      </div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 50%; max-width: 550px; min-width: 320px; height: auto;" src="../img/appinventor/qrcode_assistente_ai.webp" alt="Barra de progresso do projeto no Companion" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 5</span>
-      <h3>Aplicativo aberto no celular</h3>
-      <p>Quando a conexão terminar, a Agenda de Contatos aparecerá no celular.</p>
-      <div class="properties">
-        <h4>Agora você pode testar</h4>
-        <ul>
-          <li>Preencher os campos da tela.</li>
-          <li>Verificar o layout criado no Designer.</li>
-          <li>Observar se os botões aparecem na posição correta.</li>
-          <li>Preparar o aplicativo para receber os blocos de programação.</li>
-        </ul>
-      </div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 50%; max-width: 450px; min-width: 260px; height: auto;" src="../img/appinventor/app_agenda_execucao.webp" alt="Agenda de Contatos em execução no celular" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <div class="notice">
-    Com o aplicativo em execução, podemos avançar para a programação dos blocos. É nos blocos que a interface ganha comportamento.
-  </div>
-</section>
-
-<section id="blocos" class="section-card">
-  <div class="section-head">
-    <span class="badge">7</span>
-    <div>
-      <h2>Blocos da Agenda de Contatos</h2>
-      <p>Agora vamos programar o comportamento da interface usando eventos, validações, procedimentos e mensagens.</p>
-    </div>
-  </div>
-
-  <div class="notice">
-    <strong>Importante:</strong> nesta etapa, o aplicativo ainda não grava contatos em banco de dados e não abre aplicativos externos.
-    Os botões de E-mail, WhatsApp, Endereço, Notas e Salvar apenas simulam consultas e cadastro por meio de mensagens.
-    O objetivo é aprender a lógica dos blocos antes de avançar para recursos mais complexos.
-  </div>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 1</span>
-      <h3>Destacando o campo ativo</h3>
-      <p>Os eventos <strong>RecebeuFoco</strong> e <strong>PerdeuFoco</strong> mudam as cores dos campos enquanto o usuário digita.</p>
-      <div class="properties">
-        <h4>Funcionamento</h4>
-        <ul>
-          <li><strong>RecebeuFoco:</strong> muda o texto para azul e o fundo para amarelo claro.</li>
-          <li><strong>PerdeuFoco:</strong> volta o texto para preto e o fundo para branco.</li>
-          <li>A mesma lógica é aplicada aos campos Nome, Telefone, E-mail, Cidade e Estado.</li>
-        </ul>
-      </div>
-      <div class="challenge"><strong>Experimente:</strong> troque as cores usadas quando o campo recebe foco.</div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 100%; max-width: 1200px; min-width: 760px; height: auto;" src="../img/appinventor/blocos_foco_campos.webp" alt="Blocos RecebeuFoco e PerdeuFoco dos campos" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 2</span>
-      <h3>Botão Salvar: validação e confirmação</h3>
-      <p>O botão Salvar verifica os campos obrigatórios antes de simular o cadastro do contato.</p>
-      <div class="properties">
-        <h4>Funcionamento</h4>
-        <ul>
-          <li>Se o campo Nome estiver vazio, mostra uma mensagem de aviso.</li>
-          <li>Se o campo Telefone estiver vazio, mostra outra mensagem de aviso.</li>
-          <li>Se os dois campos estiverem preenchidos, mostra a mensagem de contato salvo com sucesso.</li>
-          <li>Ao final, chama o procedimento <strong>Limpar</strong>.</li>
-        </ul>
-      </div>
-      <div class="challenge"><strong>Experimente:</strong> acrescente a cidade na mensagem de confirmação.</div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 100%; max-width: 1200px; min-width: 760px; height: auto;" src="../img/appinventor/blocos_salvar.webp" alt="Blocos do botão Salvar" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 3</span>
-      <h3>Procedimento Limpar, E-mail e WhatsApp</h3>
-      <p>O procedimento Limpar evita repetição de blocos e deixa o aplicativo mais organizado.</p>
-      <div class="properties">
-        <h4>Funcionamento</h4>
-        <ul>
-          <li><strong>Limpar:</strong> apaga todos os campos e devolve o foco para Nome.</li>
-          <li><strong>E-mail:</strong> mostra o nome e o e-mail digitado.</li>
-          <li><strong>WhatsApp:</strong> mostra o nome e o telefone digitado.</li>
-        </ul>
-      </div>
-      <div class="notice">
-        Nesta versão, o botão E-mail não envia mensagens e o botão WhatsApp não abre o aplicativo. Eles apenas simulam consultas.
-      </div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 100%; max-width: 1200px; min-width: 760px; height: auto;" src="../img/appinventor/blocos_email_whatsapp_limpar.webp" alt="Blocos de E-mail, WhatsApp e procedimento Limpar" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 4</span>
-      <h3>Botão Endereço</h3>
-      <p>O botão Endereço exibe uma mensagem reunindo os dados de localização do contato.</p>
-      <div class="properties">
-        <h4>Funcionamento</h4>
-        <ul>
-          <li>Mostra o nome do contato.</li>
-          <li>Mostra a cidade.</li>
-          <li>Mostra o estado.</li>
-        </ul>
-      </div>
-      <div class="challenge"><strong>Experimente:</strong> altere a ordem das informações exibidas na mensagem.</div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 100%; max-width: 1200px; min-width: 760px; height: auto;" src="../img/appinventor/blocos_endereco.webp" alt="Blocos do botão Endereço" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 5</span>
-      <h3>Botão Notas</h3>
-      <p>O botão Notas informa que o contato ainda não possui nenhuma nota cadastrada.</p>
-      <div class="properties">
-        <h4>Funcionamento</h4>
-        <ul>
-          <li>Mostra o nome do contato.</li>
-          <li>Exibe uma mensagem simples sobre ausência de notas.</li>
-          <li>Não salva nem consulta informações em banco de dados nesta etapa.</li>
-        </ul>
-      </div>
-      <div class="challenge"><strong>Experimente:</strong> personalize a mensagem exibida no botão Notas.</div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 100%; max-width: 1200px; min-width: 760px; height: auto;" src="../img/appinventor/blocos_notas_corrigido.webp" alt="Blocos corrigidos do botão Notas" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <article class="step-card">
-    <div class="step-text">
-      <span class="step-label">Etapa 6</span>
-      <h3>Botão Cancelar</h3>
-      <p>O botão Cancelar mostra uma mensagem de cancelamento e limpa os campos da tela.</p>
-      <div class="properties">
-        <h4>Funcionamento</h4>
-        <ul>
-          <li>Mostra que o contato não será salvo.</li>
-          <li>Chama o procedimento <strong>Limpar</strong>.</li>
-          <li>Devolve o foco para o campo Nome.</li>
-        </ul>
-      </div>
-      <div class="challenge"><strong>Experimente:</strong> personalize a mensagem de cancelamento.</div>
-    </div>
-    <figure style="grid-column: 1 / -1; position: static; overflow-x: auto; text-align: center;">
-      <img style="width: 100%; max-width: 1200px; min-width: 760px; height: auto;" src="../img/appinventor/blocos_cancelar_notas.webp" alt="Blocos do botão Cancelar e versão anterior de Notas" loading="lazy" decoding="async">
-    </figure>
-  </article>
-
-  <div class="activity-box">
-    <h3>Desafios finais dos blocos</h3>
-    <ol>
-      <li>Adicione uma validação para o campo Cidade.</li>
-      <li>Adicione uma validação para o campo Estado.</li>
-      <li>Personalize todas as mensagens exibidas pelo Notificador.</li>
-      <li>Altere as cores dos campos quando recebem foco.</li>
-      <li>Explique por que o procedimento Limpar evita repetição de blocos.</li>
-    </ol>
-  </div>
-
-  <div class="notice">
-    Com os blocos, o aplicativo passa a reagir às ações do usuário. Ainda assim, esta é uma primeira versão funcional:
-    ela simula cadastro e consultas, mas ainda não armazena contatos de forma permanente.
-  </div>
+  <div class="notice">Até aqui, a interface está montada. O aplicativo ainda não possui inteligência, pois a programação dos blocos será feita em outra etapa.</div>
 </section>
 
 <section id="exercicios" class="section-card exercises-interface">
@@ -876,7 +595,7 @@
   </div>
 
   <div class="notice">
-    Estes exercícios reforçam a construção visual da interface. Para praticar a lógica do aplicativo, utilize também os desafios propostos no tópico 7 - Blocos.
+    Estes exercícios trabalham apenas a construção visual da interface. A programação dos blocos será acrescentada em outra etapa.
   </div>
 </section>
 
