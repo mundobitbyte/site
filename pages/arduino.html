@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
-<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Apostila Técnica Interativa — Arduino: Projetos Iniciais com Circuitos Reais</title>
-<link href="../css/arduino.css" rel="stylesheet"/></head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Apostila Técnica Interativa — Arduino: Projetos Iniciais com Circuitos Reais</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="layout"><nav><h3>Etapas</h3><a class="nav-btn" href="#intro">Fundamentos</a><a class="nav-btn" href="#p1">1 — LED protegido</a><a class="nav-btn" href="#p2">2 — Blink com LED externo</a><a class="nav-btn" href="#p3">3 — Botão com LED</a><a class="nav-btn" href="#p4">4 — Buzzer</a><a class="nav-btn" href="#p5">5 — Potenciômetro com PWM</a>
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Apostila Técnica Interativa — Arduino: 5 Projetos Iniciais com Circuitos Reais</title>
+<link href="../css/arduino.css" rel="stylesheet"/></head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Apostila Técnica Interativa — Arduino: 5 Projetos Iniciais com Circuitos Reais</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="layout"><nav><h3>Etapas</h3><a class="nav-btn" href="#intro">Fundamentos</a><a class="nav-btn" href="#p1">1 — LED protegido</a><a class="nav-btn" href="#p2">2 — Blink com LED externo</a><a class="nav-btn" href="#p3">3 — Botão com LED</a><a class="nav-btn" href="#p4">4 — Buzzer</a><a class="nav-btn" href="#p5">5 — Potenciômetro com PWM</a>
 <a class="nav-btn" href="#p6">6 — Fotoresistor (LDR)</a>
 <a class="nav-btn" href="#exercicios">99 — Exercícios</a></nav><main>
 <section class="fundamentos-premium" id="intro">
@@ -373,59 +373,24 @@ void loop() {
 </div>
 </section>
 <section class="project" id="p6">
-<div class="projectHead">
-<span class="badge">P6</span>
-<div>
-<h2>Projeto 6 — Fotoresistor (LDR)</h2>
-<p>O Arduino lê a luminosidade do ambiente pelo LDR e acende o LED automaticamente quando estiver escuro.</p>
-</div>
-</div>
-<div class="circuitPanel">
-<figure class="circuitFigure">
-<img alt="Projeto 6 — Fotoresistor LDR: Arduino Uno com LDR na entrada A0 e LED na porta digital 7." class="circuitPhoto" decoding="async" height="612" loading="lazy" src="../img/arduino/ldr_circuito.webp" width="720"/>
-<figcaption>Projeto 6 — Fotoresistor (LDR): o sensor de luz é lido na entrada analógica A0; o LED é controlado pela porta digital 7.</figcaption>
-</figure>
-</div>
-<div class="projectGrid">
-<article class="infoCard">
-<h3>1. OBJETIVO DO PROJETO</h3>
-<p>Montar um circuito que percebe a luminosidade do ambiente usando um fotoresistor, também chamado de LDR.</p>
-<p>Quando o ambiente estiver escuro, o Arduino acende o LED. Quando houver luz suficiente, o LED permanece apagado.</p>
-</article>
-<article class="infoCard">
-<h3>2. LISTA EXATA DE COMPONENTES</h3>
-<ul>
-<li>1 Arduino Uno R3</li>
-<li>1 cabo USB para alimentar o Arduino</li>
-<li>1 protoboard</li>
-<li>1 LED comum de 5 mm</li>
-<li>1 resistor de 300 Ω para o LED</li>
-<li>1 fotoresistor (LDR)</li>
-<li>1 resistor de 10 kΩ para o LDR</li>
-<li>Jumpers macho-macho</li>
-</ul>
-</article>
-</div>
-<div class="projectGrid">
-<article class="infoCard">
-<h3>3. MONTAGEM DO CIRCUITO</h3>
-<p>O LED é ligado à porta digital 7 do Arduino. O LDR é ligado à entrada analógica A0, permitindo que o Arduino leia a variação da luz.</p>
-<p>O resistor do LED limita a corrente elétrica. O resistor de 10 kΩ participa da leitura analógica do LDR.</p>
-</article>
-<article class="infoCard">
-<h3>4. COMO FUNCIONA</h3>
-<p>O comando <code>analogRead(pinoLDR)</code> lê o valor do sensor na entrada A0.</p>
-<p>Se a leitura for menor que 40, o programa entende que há pouca luz e acende o LED.</p>
-</article>
-</div>
-<article class="infoCard">
-<h3>5. CÓDIGO COMPLETO</h3>
-<pre><code>const int pinoLDR = A0;
+<div class="projectHead"><span class="badge">P6</span><div><h2>Projeto 6 — Fotoresistor (LDR)</h2><p>O Arduino lê a luminosidade do ambiente pelo LDR e acende o LED automaticamente quando estiver escuro.</p></div></div>
+<div class="circuitPanel"><h3>Montagem do circuito</h3><figure class="circuitFigure"><img alt="Projeto 6 — Fotoresistor LDR: Arduino Uno com LDR na entrada A0 e LED na porta digital 7." class="circuitPhoto" decoding="async" height="612" loading="lazy" src="../img/arduino/ldr_circuito.webp" width="720"/><figcaption>Projeto 6 — Fotoresistor (LDR): o sensor de luz é lido na entrada analógica A0; o LED é controlado pela porta digital 7.</figcaption></figure></div>
+<div class="cards">
+<article class="card"><h3>1. Objetivo do projeto</h3><p>Montar um circuito que percebe a luminosidade do ambiente usando um fotoresistor, também chamado de LDR. Quando o ambiente estiver escuro, o Arduino acende o LED automaticamente. Quando houver luz suficiente, o LED permanece apagado.</p><p>Neste projeto, o aluno começa a juntar sensor, leitura analógica, decisão com <code>if</code> e saída digital em uma situação parecida com uma iluminação automática.</p></article>
+<article class="card"><h3>2. Lista exata de componentes</h3><ul><li>1 Arduino Uno R3</li><li>1 cabo USB para alimentar o Arduino</li><li>1 protoboard</li><li>1 LED comum de 5 mm</li><li>1 resistor de 300 Ω para o LED</li><li>1 fotoresistor (LDR)</li><li>1 resistor de 10 kΩ para o LDR</li><li>Jumpers macho-macho</li></ul></article>
+<article class="card wide"><h3>3. Tabela de ligação</h3><table><tr><th>Componente</th><th>Ponto inicial</th><th>Ponto final</th><th>Observação</th></tr><tr><td>LDR</td><td>Uma extremidade do LDR</td><td><strong>5V</strong> do Arduino</td><td>O LDR participa da leitura da luminosidade.</td></tr><tr><td>LDR</td><td>Outra extremidade do LDR</td><td>Pino analógico <strong>A0</strong></td><td>O ponto ligado ao A0 envia ao Arduino uma tensão variável.</td></tr><tr><td>Resistor do LDR</td><td>Pino analógico <strong>A0</strong></td><td><strong>GND</strong> do Arduino</td><td>O resistor de 10 kΩ forma o divisor de tensão usado na leitura analógica.</td></tr><tr><td>LED</td><td>Pino digital <strong>7</strong> do Arduino</td><td>Resistor de <strong>300 Ω</strong></td><td>Saída digital que controla o LED.</td></tr><tr><td>LED</td><td>Resistor de 300 Ω</td><td>Anodo do LED</td><td>O resistor fica em série para limitar a corrente.</td></tr><tr><td>LED</td><td>Catodo do LED</td><td><strong>GND</strong></td><td>Fecha o circuito do LED.</td></tr></table></article>
+<article class="card"><h3>4. Explicação da montagem</h3><p>O LDR é usado como sensor de luminosidade. Ele não liga o LED diretamente. Ele apenas ajuda o Arduino a perceber se o ambiente está mais claro ou mais escuro.</p><p>O ponto de leitura do sensor vai ao pino analógico <strong>A0</strong>. O resistor de <strong>10 kΩ</strong> trabalha junto com o LDR formando um divisor de tensão. Assim, a tensão lida pelo Arduino muda conforme a luz muda.</p><p>O LED é ligado ao pino digital <strong>7</strong>, passa pelo resistor de <strong>300 Ω</strong> e retorna ao GND. Quando o programa decide que está escuro, o pino 7 fica em <strong>HIGH</strong> e o LED acende.</p></article>
+<article class="card"><h3>5. Descrição textual do circuito visual</h3><p>A imagem mostra o Arduino Uno R3 ligado à protoboard. O LDR fica na parte do sensor e está associado ao resistor de <strong>10 kΩ</strong>, criando uma leitura analógica no pino <strong>A0</strong>. Essa parte representa a entrada de informação do circuito.</p><p>O LED fica na parte da saída. Ele é controlado pelo pino digital <strong>7</strong>, passa por um resistor de <strong>300 Ω</strong> e retorna ao GND. Assim, o circuito tem uma entrada que percebe a luz e uma saída que responde acendendo ou apagando o LED.</p></article>
+<article class="card code wide"><h3>6. Código completo <button onclick="copyCode('p6code')">Copiar</button></h3><pre id="p6code">// Projeto 6: Fotoresistor (LDR)
+// O Arduino lê a luminosidade no A0 e controla um LED no pino 7.
+
+const int pinoLDR = A0;
 const int pinoLED = 7;
+
 int leitura = 0;
 
 void setup() {
-  pinMode(pinoLDR, INPUT); 
+  pinMode(pinoLDR, INPUT);
   pinMode(pinoLED, OUTPUT);
   Serial.begin(9600);
 }
@@ -433,28 +398,22 @@ void setup() {
 void loop() {
   leitura = analogRead(pinoLDR);
 
-  Serial.print("Leitura:");
+  Serial.print("Leitura: ");
   Serial.println(leitura);
 
-  if(leitura &lt; 40){
-    digitalWrite(pinoLED,HIGH);
-  }
-  else {
-    digitalWrite(pinoLED,LOW);
+  if (leitura &lt; 40) {
+    digitalWrite(pinoLED, HIGH);
+  } else {
+    digitalWrite(pinoLED, LOW);
   }
 
   delay(100);
-}</code></pre>
-</article>
-<div class="projectGrid">
-<article class="infoCard">
-<h3>6. MONITOR SERIAL</h3>
-<p>O monitor serial mostra o valor lido pelo LDR. Isso permite observar como a leitura muda quando o sensor recebe mais ou menos luz.</p>
-</article>
-<article class="infoCard">
-<h3>7. TESTE PRÁTICO</h3>
-<p>Cubra o LDR com a mão e observe se o LED acende. Depois ilumine o sensor e verifique se o LED apaga.</p>
-</article>
+}</pre></article>
+<article class="card wide"><h3>7. Explicação linha por linha</h3><div class="explain"><p><code>const int pinoLDR = A0;</code> — define que o LDR será lido pela entrada analógica A0.</p><p><code>const int pinoLED = 7;</code> — define que o LED será controlado pelo pino digital 7.</p><p><code>int leitura = 0;</code> — cria uma variável para guardar o valor lido pelo sensor.</p><p><code>pinMode(pinoLDR, INPUT);</code> — indica que o pino do LDR será usado como entrada.</p><p><code>pinMode(pinoLED, OUTPUT);</code> — configura o pino do LED como saída.</p><p><code>Serial.begin(9600);</code> — inicia a comunicação com o monitor serial.</p><p><code>analogRead(pinoLDR);</code> — lê a variação de luz no sensor e gera um valor numérico.</p><p><code>Serial.print()</code> e <code>Serial.println()</code> — mostram a leitura para o aluno observar os valores.</p><p><code>if (leitura &lt; 40)</code> — verifica se a leitura indica pouca luz.</p><p><code>digitalWrite(pinoLED, HIGH);</code> — acende o LED quando o ambiente está escuro.</p><p><code>digitalWrite(pinoLED, LOW);</code> — apaga o LED quando há luz suficiente.</p><p><code>delay(100);</code> — cria uma pequena pausa entre as leituras.</p></div></article>
+<article class="card worked"><h3>8. O que foi trabalhado</h3><ul><li>Fotoresistor como sensor de luminosidade</li><li>Entrada analógica no pino A0</li><li>Divisor de tensão com LDR e resistor de 10 kΩ</li><li>Leitura de valores com analogRead()</li><li>Monitor serial para observar dados do sensor</li><li>Decisão com if/else</li><li>Saída digital para controlar LED</li><li>Relação entre sensor, processamento e resposta</li><li>Ideia inicial de iluminação automática</li></ul></article>
+<article class="card"><h3>9. Resultado esperado</h3><p>Ao cobrir o LDR com a mão, a leitura no monitor serial deve mudar e o LED deve acender quando o valor ficar abaixo do limite definido no código. Ao iluminar o sensor, o LED deve apagar.</p><p>Dependendo da montagem, da iluminação da sala e da posição do LDR, pode ser necessário ajustar o valor <strong>40</strong> para outro limite.</p></article>
+<article class="card errors wide"><h3>10. Erros comuns</h3><table><tr><th>Erro</th><th>Consequência</th></tr><tr><td>Ligar o LDR sem o resistor de 10 kΩ</td><td>A leitura pode ficar incorreta ou instável.</td></tr><tr><td>Ligar o ponto de leitura em lugar diferente do A0</td><td>O Arduino não lê o sensor conforme o código.</td></tr><tr><td>Usar pino diferente do 7 para o LED sem alterar o código</td><td>O LED não responde ao programa.</td></tr><tr><td>Inverter o LED</td><td>O LED não acende.</td></tr><tr><td>Esquecer o resistor de 300 Ω do LED</td><td>Pode queimar o LED.</td></tr><tr><td>Usar limite 40 sem observar o monitor serial</td><td>O LED pode acender ou apagar fora do momento desejado.</td></tr><tr><td>Não ligar o GND corretamente</td><td>O circuito pode ficar aberto ou apresentar leituras estranhas.</td></tr></table></article>
+<article class="card exercise wide"><h3>11. Exercício proposto</h3><p>Abra o monitor serial, cubra o LDR com a mão e anote os valores aproximados. Depois ilumine o LDR e anote novamente. Com base nesses números, ajuste o limite do <code>if</code> para que o LED acenda somente quando o ambiente estiver escuro.</p></article>
 </div>
 </section>
 <section class="project exercises-section" id="exercicios">
