@@ -741,3 +741,9 @@
 section[id]{
   scroll-margin-top: 90px;
 }
+
+
+/* Mundo bit Byte — ajuste de navegação por painel único (ia-vida-real)
+   Preserva conteúdo e IDs, exibindo apenas o tópico escolhido no menu lateral. */
+main > section[id]{display:none;}
+main > section[id].active-panel{display:block;}

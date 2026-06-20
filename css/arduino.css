@@ -1056,3 +1056,9 @@ main{
     scroll-margin-top: 150px;
   }
 }
+
+
+/* Mundo bit Byte — ajuste de navegação por painel único (Arduino)
+   Mantém IDs, classes e conteúdo. Apenas evita a rolagem longa entre projetos. */
+main > section[id]{display:none;}
+main > section[id].active-panel{display:block;}
