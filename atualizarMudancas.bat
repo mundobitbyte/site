@@ -1,1 +1,1 @@
-git status && git add . && git commit -m "Atualiza status dos módulos" && git push
+git status && git add . && git commit -m "Atualiza imagem Executando cortando no modo celular" && git push
