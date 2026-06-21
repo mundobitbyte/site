@@ -1,1 +1,1 @@
-git status && git add . && git commit -m "Atualiza imagem Executando cortando no modo celular" && git push
+git status && git add . && git commit -m "Atualiza nomes das imagens Executando (estavam invertidos)" && git push
