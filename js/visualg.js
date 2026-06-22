@@ -352,7 +352,7 @@ Sintaxe:
 nao condicao`,out:`Pode dirigir? VERDADEIRO
 É menor de idade? FALSO
 Não tem carteira? FALSO`,note:`<span class="badge">Exercício</span><br>Crie um algoritmo que informe se uma pessoa pode entrar em um evento: idade maior ou igual a 18 e convite verdadeiro.`},
-{id:8,menu:'8 Mesa',title:'8 — Teste de Mesa',objective:'Antes de executar um algoritmo no computador, é importante verificar se ele realmente funciona como esperado. O teste de mesa permite acompanhar passo a passo a execução do programa, identificando erros de lógica e compreendendo melhor seu funcionamento.',',code:`algoritmo "Teste_De_Mesa"
+{id:8,menu:'8 Mesa',title:'8 — Teste de Mesa',objective:'Antes de executar um algoritmo no computador, é importante verificar se ele realmente funciona como esperado. O teste de mesa permite acompanhar passo a passo a execução do programa, identificando erros de lógica e compreendendo melhor seu funcionamento.',code:`algoritmo "Teste_De_Mesa"
 var
    x, y, resultado: inteiro
 inicio
@@ -375,7 +375,7 @@ Como fazer:
 4. Confira a saída esperada.`,out:`x = 4
 y = 3
 resultado = 10`,note:`<span class="badge">Exercício</span><br>Faça o teste de mesa deste cálculo antes de executar: a <- 5; b <- 2; c <- a * b + 3.`},
-{id:9,menu:'9 Se',title:'9 — Decisão Simples e Composta',objective:'Entender que nem todo programa segue sempre o mesmo caminho. Nesta etapa, o algoritmo passa a analisar uma condição, como uma nota ou idade, e decide qual mensagem ou ação deve executar.',',code:`algoritmo "Aprovacao"
+{id:9,menu:'9 Se',title:'9 — Decisão Simples e Composta',objective:'Entender que nem todo programa segue sempre o mesmo caminho. Nesta etapa, o algoritmo passa a analisar uma condição, como uma nota ou idade, e decide qual mensagem ou ação deve executar.',code:`algoritmo "Aprovacao"
 var
    nota: real
 inicio
@@ -399,7 +399,7 @@ senao
    comandos se falso
 fimse`,out:`Digite a nota: 7
 Aluno aprovado`,note:`<span class="badge">Exercício</span><br>Faça um algoritmo que leia a idade e diga se a pessoa é maior ou menor de idade.`},
-{id:10,menu:'10 Escolha',title:'10 — Decisão Múltipla',objective:'Algumas situações possuem várias possibilidades de resposta. Nesses casos, utilizar diversas decisões encadeadas pode dificultar a leitura do algoritmo. A estrutura de decisão múltipla torna essas escolhas mais organizadas.',',code:`algoritmo "Menu_Operacoes"
+{id:10,menu:'10 Escolha',title:'10 — Decisão Múltipla',objective:'Algumas situações possuem várias possibilidades de resposta. Nesses casos, utilizar diversas decisões encadeadas pode dificultar a leitura do algoritmo. A estrutura de decisão múltipla torna essas escolhas mais organizadas.',code:`algoritmo "Menu_Operacoes"
 var
    opcao: inteiro
 inicio
