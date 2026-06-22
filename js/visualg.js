@@ -342,7 +342,9 @@ inicio
    escreval("É menor de idade? ", idade < 18)
    escreval("Não tem carteira? ", nao temCarteira)
 fimalgoritmo`,added:`Conceito:
-Expressões lógicas produzem resultado verdadeiro ou falso. A tabela verdade ajuda a prever esses resultados.
+Expressões lógicas produzem resultado verdadeiro ou falso. Elas aparecem quando o programa precisa comparar valores e tomar decisões.
+
+Na prática, a tabela verdade ajuda a prever o resultado antes de executar o algoritmo. Isso evita chutes e mostra por que uma condição foi verdadeira ou falsa.
 
 Sintaxe:
 (condicao1) e (condicao2)
@@ -362,7 +364,9 @@ inicio
    escreval("y = ", y)
    escreval("resultado = ", resultado)
 fimalgoritmo`,added:`Conceito:
-Teste de mesa é simular o algoritmo manualmente antes de executar. Serve para descobrir erros de lógica.
+Teste de mesa é simular o algoritmo manualmente antes de executar. Ele mostra o valor das variáveis linha por linha.
+
+Esse recurso é importante porque muitos erros não são de digitação, mas de raciocínio. Antes de culpar o VisuAlg, o aluno confere se a lógica realmente faz sentido.
 
 Como fazer:
 1. Liste as variáveis.
@@ -384,7 +388,9 @@ inicio
       escreval("Aluno reprovado")
    fimse
 fimalgoritmo`,added:`Conceito:
-Decisão permite executar comandos diferentes conforme uma condição.
+Decisão permite executar comandos diferentes conforme uma condição. É o momento em que o algoritmo deixa de seguir apenas em linha reta e passa a escolher um caminho.
+
+Use decisão simples quando só há uma ação se a condição for verdadeira. Use decisão composta quando também existe uma ação para o caso falso.
 
 Sintaxe:
 se condicao entao
@@ -414,7 +420,9 @@ inicio
          escreval("Opção inválida")
    fimescolha
 fimalgoritmo`,added:`Conceito:
-Decisão múltipla é usada quando existem várias opções possíveis para uma mesma variável.
+Decisão múltipla é usada quando existem várias opções possíveis para uma mesma variável. Ela deixa o algoritmo mais organizado do que vários se/senao repetidos.
+
+É muito comum em menus, códigos de produto, formas de pagamento e escolhas numeradas feitas pelo usuário.
 
 Sintaxe:
 escolha variavel
@@ -437,7 +445,9 @@ inicio
       escreval("Número: ", i)
    fimpara
 fimalgoritmo`,added:`Conceito:
-Laço de repetição executa o mesmo bloco várias vezes. O comando para é indicado quando já sabemos a quantidade de repetições.
+Laço de repetição executa o mesmo bloco várias vezes. Ele evita copiar comandos repetidos e torna o algoritmo mais limpo.
+
+O comando para é indicado quando já sabemos a quantidade de repetições. Para situações em que a repetição depende de uma condição, também existem enquanto e repita.
 
 Sintaxe:
 para variavel de inicio ate fim faca
@@ -496,7 +506,9 @@ inicio
    escreval("Dobro: ", dobro)
    linha()
 fimalgoritmo`,added:`Conceito:
-Programação modular divide o algoritmo em partes menores. Procedimento executa ações. Função executa ações e retorna um valor.
+Programação modular divide o algoritmo em partes menores. Isso facilita leitura, correção e reaproveitamento de código.
+
+Procedimento executa ações, como mostrar uma linha ou imprimir uma mensagem. Função também executa ações, mas retorna um valor para ser usado pelo programa.
 
 Procedimento:
 procedimento nome()
@@ -527,7 +539,9 @@ inicio
       escreval("Nota ", i, ": ", notas[i])
    fimpara
 fimalgoritmo`,added:`Conceito:
-Vetor guarda vários valores do mesmo tipo usando um único nome e posições numeradas.
+Vetor guarda vários valores do mesmo tipo usando um único nome e posições numeradas. Ele é útil quando seria trabalhoso criar muitas variáveis separadas.
+
+A posição do vetor funciona como um endereço. Por isso, notas[1], notas[2] e notas[3] são valores diferentes dentro da mesma estrutura.
 
 Sintaxe:
 nome: vetor[inicio..fim] de tipo`,out:`Digite a nota 1: 7
@@ -557,7 +571,9 @@ inicio
       escreval("")
    fimpara
 fimalgoritmo`,added:`Conceito:
-Matriz é uma estrutura com linhas e colunas. É como uma tabela.
+Matriz é uma estrutura com linhas e colunas. É como uma tabela, formada por posições identificadas por linha e coluna.
+
+Ela é útil para organizar dados em formato de grade, como notas por bimestre, lugares em uma sala, tabuleiros ou pequenas tabelas numéricas.
 
 Sintaxe:
 nome: vetor[linhaInicial..linhaFinal, colunaInicial..colunaFinal] de tipo`,out:`Digite o valor [1,1]: 1
