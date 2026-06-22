@@ -330,7 +330,7 @@ nao: inverte o valor lógico.`,out:`Soma: 15
 A é maior que B? VERDADEIRO
 Dobro de A: 20
 Resto de 10 dividido por 3: 1`,note:`<span class="badge">Exercício</span><br>Leia dois números e mostre: soma, subtração, multiplicação, divisão e se o primeiro é maior que o segundo.`},
-{id:7,menu:'7 Verdade',title:'7 — Expressões e Tabela Verdade',objective:'Entender resultados verdadeiro/falso.',code:`algoritmo "Tabela_Verdade"
+{id:7,menu:'7 Verdade',title:'7 — Expressões e Tabela Verdade',objective:'objective:'Muitas decisões dependem da combinação de várias condições ao mesmo tempo. Por exemplo, um aluno pode precisar ter nota suficiente e frequência mínima para ser aprovado. As expressões lógicas e as tabelas verdade ajudam a entender como essas condições são avaliadas pelo computador.',',code:`algoritmo "Tabela_Verdade"
 var
    idade: inteiro
    temCarteira: logico
@@ -352,7 +352,7 @@ Sintaxe:
 nao condicao`,out:`Pode dirigir? VERDADEIRO
 É menor de idade? FALSO
 Não tem carteira? FALSO`,note:`<span class="badge">Exercício</span><br>Crie um algoritmo que informe se uma pessoa pode entrar em um evento: idade maior ou igual a 18 e convite verdadeiro.`},
-{id:8,menu:'8 Mesa',title:'8 — Teste de Mesa',objective:'Simular manualmente os valores das variáveis.',code:`algoritmo "Teste_De_Mesa"
+{id:8,menu:'8 Mesa',title:'8 — Teste de Mesa',objective:'objective:'Antes de executar um algoritmo no computador, é importante verificar se ele realmente funciona como esperado. O teste de mesa permite acompanhar passo a passo a execução do programa, identificando erros de lógica e compreendendo melhor seu funcionamento.',',code:`algoritmo "Teste_De_Mesa"
 var
    x, y, resultado: inteiro
 inicio
@@ -375,7 +375,7 @@ Como fazer:
 4. Confira a saída esperada.`,out:`x = 4
 y = 3
 resultado = 10`,note:`<span class="badge">Exercício</span><br>Faça o teste de mesa deste cálculo antes de executar: a <- 5; b <- 2; c <- a * b + 3.`},
-{id:9,menu:'9 Se',title:'9 — Decisão Simples e Composta',objective:'Executar comandos conforme uma condição.',code:`algoritmo "Aprovacao"
+{id:9,menu:'9 Se',title:'9 — Decisão Simples e Composta',objective:'objective:'Entender que nem todo programa segue sempre o mesmo caminho. Nesta etapa, o algoritmo passa a analisar uma condição, como uma nota ou idade, e decide qual mensagem ou ação deve executar.',',code:`algoritmo "Aprovacao"
 var
    nota: real
 inicio
@@ -399,7 +399,7 @@ senao
    comandos se falso
 fimse`,out:`Digite a nota: 7
 Aluno aprovado`,note:`<span class="badge">Exercício</span><br>Faça um algoritmo que leia a idade e diga se a pessoa é maior ou menor de idade.`},
-{id:10,menu:'10 Escolha',title:'10 — Decisão Múltipla',objective:'Escolher uma ação entre várias opções.',code:`algoritmo "Menu_Operacoes"
+{id:10,menu:'10 Escolha',title:'10 — Decisão Múltipla',objective:'objective:'Algumas situações possuem várias possibilidades de resposta. Nesses casos, utilizar diversas decisões encadeadas pode dificultar a leitura do algoritmo. A estrutura de decisão múltipla torna essas escolhas mais organizadas.',',code:`algoritmo "Menu_Operacoes"
 var
    opcao: inteiro
 inicio
@@ -437,7 +437,7 @@ fimescolha`,out:`1 - Cadastrar
 3 - Sair
 Escolha uma opção: 2
 Consulta selecionada`,note:`<span class="badge">Exercício</span><br>Crie um menu com três opções de lanche. O usuário escolhe um número e o programa mostra o lanche escolhido.`},
-{id:11,menu:'11 Laços',title:'11 — Iteração e Laços',objective:'Repetir comandos usando enquanto, repita e para.',code:`algoritmo "Contagem"
+{id:11,menu:'11 Laços',title:'11 — Iteração e Laços',objective:'objective:'Muitas tarefas precisam ser executadas várias vezes. Imagine cadastrar 50 alunos ou exibir os números de 1 a 100. As estruturas de repetição permitem que o computador execute a mesma tarefa quantas vezes forem necessárias de forma automática.',',code:`algoritmo "Contagem"
 var
    i: inteiro
 inicio
@@ -483,7 +483,7 @@ escreval("Raiz de 25: ", raizq(25))`,out:`Valor original: -25
 Valor absoluto: 25
 Raiz quadrada de 25: 5
 Potência 2 elevado a 3: 8`,note:`<span class="badge">Exercício</span><br>Leia um número e mostre seu valor absoluto e sua raiz quadrada. Use valores positivos para a raiz.`},
-{id:13,menu:'13 Modular',title:'13 — Sub-rotinas, Procedimentos e Funções',objective:'Dividir o programa em partes menores.',code:`algoritmo "Procedimento_Funcao"
+{id:13,menu:'13 Modular',title:'13 — Sub-rotinas, Procedimentos e Funções',objective:'objective:'À medida que os programas crescem, partes do código acabam sendo reutilizadas várias vezes. Procedimentos e funções ajudam a organizar o algoritmo, evitar repetições e facilitar a manutenção do programa.',',code:`algoritmo "Procedimento_Funcao"
 var
    n, dobro: inteiro
 
@@ -524,7 +524,7 @@ fimfuncao`,out:`Digite um número: 8
 ---------------------
 Dobro: 16
 ---------------------`,note:`<span class="badge">Exercício</span><br>Crie uma função chamada triplo que receba um número inteiro e retorne esse número multiplicado por 3.`},
-{id:14,menu:'14 Vetores',title:'14 — Vetores',objective:'Guardar vários valores em uma única variável indexada.',code:`algoritmo "Vetor_Notas"
+{id:14,menu:'14 Vetores',title:'14 — Vetores',objective:'objective:'Imagine armazenar as notas de uma sala com dezenas de alunos. Criar uma variável para cada nota seria pouco prático. Os vetores permitem armazenar vários valores relacionados utilizando um único nome e posições numeradas.',',code:`algoritmo "Vetor_Notas"
 var
    notas: vetor[1..3] de real
    i: inteiro
@@ -551,7 +551,7 @@ Notas digitadas:
 Nota 1: 7
 Nota 2: 8
 Nota 3: 9`,note:`<span class="badge">Exercício</span><br>Crie um vetor com 5 nomes de alunos e depois mostre todos os nomes usando um laço.`},
-{id:15,menu:'15 Matrizes',title:'15 — Matrizes',objective:'Organizar dados em linhas e colunas.',code:`algoritmo "Matriz_2x2"
+{id:15,menu:'15 Matrizes',title:'15 — Matrizes',objective:'objective:'Algumas informações precisam ser organizadas em linhas e colunas, como uma planilha eletrônica ou um boletim escolar. As matrizes permitem representar esse tipo de estrutura dentro dos algoritmos.',',code:`algoritmo "Matriz_2x2"
 var
    matriz: vetor[1..2,1..2] de inteiro
    linha, coluna: inteiro
