@@ -422,7 +422,7 @@ inicio
 fimalgoritmo`,added:`Conceito:
 Decisão múltipla é usada quando existem várias opções possíveis para uma mesma variável. Ela deixa o algoritmo mais organizado do que vários se/senao repetidos.
 
-É muito comum em menus, códigos de produto, formas de pagamento e escolhas numeradas feitas pelo usuário.
+É muito comum em menus, códigos de produto, formas de pagamento e escolhas numeradas feitas pelo usuário. 
 
 Sintaxe:
 escolha variavel
@@ -437,7 +437,7 @@ fimescolha`,out:`1 - Cadastrar
 3 - Sair
 Escolha uma opção: 2
 Consulta selecionada`,note:`<span class="badge">Exercício</span><br>Crie um menu com três opções de lanche. O usuário escolhe um número e o programa mostra o lanche escolhido.`},
-{id:11,menu:'11 Laços',title:'11 — Iteração e Laços',objective:'Muitas tarefas precisam ser executadas várias vezes. Imagine cadastrar 50 alunos ou exibir os números de 1 a 100. As estruturas de repetição permitem que o computador execute a mesma tarefa quantas vezes forem necessárias de forma automática.',',code:`algoritmo "Contagem"
+{id:11,menu:'11 Laços',title:'11 — Iteração e Laços',objective:'Muitas tarefas precisam ser executadas várias vezes. Imagine cadastrar 50 alunos ou exibir os números de 1 a 100. As estruturas de repetição permitem que o computador execute a mesma tarefa quantas vezes forem necessárias de forma automática.',code:`algoritmo "Contagem"
 var
    i: inteiro
 inicio
@@ -483,7 +483,7 @@ escreval("Raiz de 25: ", raizq(25))`,out:`Valor original: -25
 Valor absoluto: 25
 Raiz quadrada de 25: 5
 Potência 2 elevado a 3: 8`,note:`<span class="badge">Exercício</span><br>Leia um número e mostre seu valor absoluto e sua raiz quadrada. Use valores positivos para a raiz.`},
-{id:13,menu:'13 Modular',title:'13 — Sub-rotinas, Procedimentos e Funções',objective:'À medida que os programas crescem, partes do código acabam sendo reutilizadas várias vezes. Procedimentos e funções ajudam a organizar o algoritmo, evitar repetições e facilitar a manutenção do programa.',',code:`algoritmo "Procedimento_Funcao"
+{id:13,menu:'13 Modular',title:'13 — Sub-rotinas, Procedimentos e Funções',objective:'À medida que os programas crescem, partes do código acabam sendo reutilizadas várias vezes. Procedimentos e funções ajudam a organizar o algoritmo, evitar repetições e facilitar a manutenção do programa.',code:`algoritmo "Procedimento_Funcao"
 var
    n, dobro: inteiro
 
@@ -524,7 +524,7 @@ fimfuncao`,out:`Digite um número: 8
 ---------------------
 Dobro: 16
 ---------------------`,note:`<span class="badge">Exercício</span><br>Crie uma função chamada triplo que receba um número inteiro e retorne esse número multiplicado por 3.`},
-{id:14,menu:'14 Vetores',title:'14 — Vetores',objective:'Imagine armazenar as notas de uma sala com dezenas de alunos. Criar uma variável para cada nota seria pouco prático. Os vetores permitem armazenar vários valores relacionados utilizando um único nome e posições numeradas.',',code:`algoritmo "Vetor_Notas"
+{id:14,menu:'14 Vetores',title:'14 — Vetores',objective:'Imagine armazenar as notas de uma sala com dezenas de alunos. Criar uma variável para cada nota seria pouco prático. Os vetores permitem armazenar vários valores relacionados utilizando um único nome e posições numeradas.',code:`algoritmo "Vetor_Notas"
 var
    notas: vetor[1..3] de real
    i: inteiro
@@ -551,7 +551,7 @@ Notas digitadas:
 Nota 1: 7
 Nota 2: 8
 Nota 3: 9`,note:`<span class="badge">Exercício</span><br>Crie um vetor com 5 nomes de alunos e depois mostre todos os nomes usando um laço.`},
-{id:15,menu:'15 Matrizes',title:'15 — Matrizes',objective:'Algumas informações precisam ser organizadas em linhas e colunas, como uma planilha eletrônica ou um boletim escolar. As matrizes permitem representar esse tipo de estrutura dentro dos algoritmos.',',code:`algoritmo "Matriz_2x2"
+{id:15,menu:'15 Matrizes',title:'15 — Matrizes',objective:'Algumas informações precisam ser organizadas em linhas e colunas, como uma planilha eletrônica ou um boletim escolar. As matrizes permitem representar esse tipo de estrutura dentro dos algoritmos.',code:`algoritmo "Matriz_2x2"
 var
    matriz: vetor[1..2,1..2] de inteiro
    linha, coluna: inteiro
