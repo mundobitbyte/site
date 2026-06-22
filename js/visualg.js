@@ -330,7 +330,7 @@ nao: inverte o valor lógico.`,out:`Soma: 15
 A é maior que B? VERDADEIRO
 Dobro de A: 20
 Resto de 10 dividido por 3: 1`,note:`<span class="badge">Exercício</span><br>Leia dois números e mostre: soma, subtração, multiplicação, divisão e se o primeiro é maior que o segundo.`},
-{id:7,menu:'7 Verdade',title:'7 — Expressões e Tabela Verdade',objective:'Muitas decisões dependem da combinação de várias condições ao mesmo tempo. Por exemplo, um aluno pode precisar ter nota suficiente e frequência mínima para ser aprovado. As expressões lógicas e as tabelas verdade ajudam a entender como essas condições são avaliadas pelo computador.',',code:`algoritmo "Tabela_Verdade"
+{id:7,menu:'7 Verdade',title:'7 — Expressões e Tabela Verdade',objective:'Muitas decisões dependem da combinação de várias condições ao mesmo tempo. Por exemplo, um aluno pode precisar ter nota suficiente e frequência mínima para ser aprovado. As expressões lógicas e as tabelas verdade ajudam a entender como essas condições são avaliadas pelo computador.',code:`algoritmo "Tabela_Verdade"
 var
    idade: inteiro
    temCarteira: logico
