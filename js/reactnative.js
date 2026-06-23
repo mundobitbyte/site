@@ -7662,6 +7662,195 @@ Limpar volta tudo ao estado inicial`,
           }
         ]
       }
+      ,
+      apiCep: {
+        "title": "4. API — Consulta de CEP",
+        "subtitle": "Primeiro contato com fetch, await e consumo de API.",
+        "steps": [
+                {
+                        "id": "api-intro",
+                        "menu": "Intro",
+                        "title": "API — Consulta de CEP",
+                        "objective": "Entender como um app simples consulta dados da internet e atualiza a tela.",
+                        "modulePage": true,
+                        "kicker": "Módulo 4",
+                        "lead": "Depois de aprender interface, Flexbox e state, o próximo passo é buscar dados reais. Neste módulo, o aluno monta um app simples que consulta a API ViaCEP e mostra cidade e estado na tela.",
+                        "highlight": "Neste módulo, o aluno vê o caminho completo: digitar um CEP, guardar o valor no state, clicar no botão, buscar dados na internet com fetch e atualizar a tela com cidade e estado.",
+                        "boxes": [
+                                [
+                                        "Ideia central",
+                                        "O usuário digita um CEP, toca no botão e o app busca os dados na internet."
+                                ],
+                                [
+                                        "Interface",
+                                        "View, Text, TextInput e Button montam a tela."
+                                ],
+                                [
+                                        "State",
+                                        "cep, cidade e estado guardam os dados que mudam."
+                                ],
+                                [
+                                        "Evento",
+                                        "onChangeText atualiza o CEP; onPress chama a função de pesquisa."
+                                ],
+                                [
+                                        "API",
+                                        "fetch acessa o ViaCEP e recebe uma resposta da internet."
+                                ],
+                                [
+                                        "Tela atualizada",
+                                        "setCidade e setEstado fazem o React Native redesenhar o resultado."
+                                ]
+                        ]
+                },
+                {
+                        "id": "api-1-app",
+                        "menu": "1. App",
+                        "title": "1 — Conhecendo o aplicativo",
+                        "objective": "Apresentar o objetivo geral do app Consulta de CEP.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "App Consulta de CEP\n\nO aplicativo tem uma ideia simples:\n1. o usuário digita um CEP;\n2. toca no botão Pesquisar;\n3. o app consulta a API ViaCEP;\n4. a tela mostra cidade e estado.",
+                        "preview": "<div style=\"height:100%;background:#fff;padding:26px 20px;font-family:Arial,sans-serif;color:#111;box-sizing:border-box;\">\n  <div style=\"font-size:24px;font-weight:800;margin-bottom:20px;\">Consulta de CEP</div>\n  <div style=\"font-size:15px;margin-bottom:8px;\">Digite o CEP:</div>\n  <div style=\"border:1px solid #999;padding:10px;margin:10px 0 14px 0;font-size:15px;\">13700-000</div>\n  <div style=\"background:#1d4ed8;color:white;text-align:center;padding:9px;border-radius:3px;font-size:14px;font-weight:700;margin-bottom:22px;\">Pesquisar</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Cidade: Casa Branca</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Estado: SP</div>\n</div>",
+                        "note": "Código propositalmente simples. Nesta primeira versão, não há validação de CEP, try/catch, loading ou tratamento de erro."
+                },
+                {
+                        "id": "api-2-interface",
+                        "menu": "2. Interface",
+                        "title": "2 — Estrutura da interface",
+                        "objective": "Identificar os componentes visuais usados na tela.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "import { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\n<View style={styles.container}>\n  <Text style={styles.titulo}>Consulta de CEP</Text>\n  <Text>Digite o CEP:</Text>\n  <TextInput />\n  <Button title=\"Pesquisar\" />\n  <Text>Cidade:</Text>\n  <Text>Estado:</Text>\n</View>",
+                        "preview": "<div style=\"height:100%;background:#fff;padding:26px 20px;font-family:Arial,sans-serif;color:#111;box-sizing:border-box;\">\n  <div style=\"font-size:24px;font-weight:800;margin-bottom:20px;\">Consulta de CEP</div>\n  <div style=\"font-size:15px;margin-bottom:8px;\">Digite o CEP:</div>\n  <div style=\"border:1px solid #999;padding:10px;margin:10px 0 14px 0;font-size:15px;\">13700-000</div>\n  <div style=\"background:#1d4ed8;color:white;text-align:center;padding:9px;border-radius:3px;font-size:14px;font-weight:700;margin-bottom:22px;\">Pesquisar</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Cidade: Casa Branca</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Estado: SP</div>\n</div>",
+                        "note": "Código propositalmente simples. Nesta primeira versão, não há validação de CEP, try/catch, loading ou tratamento de erro."
+                },
+                {
+                        "id": "api-3-state",
+                        "menu": "3. useState",
+                        "title": "3 — Criando os estados",
+                        "objective": "Mostrar que o app precisa guardar CEP, cidade e estado.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "const [cep, setCep] = useState('');\nconst [cidade, setCidade] = useState('');\nconst [estado, setEstado] = useState('');\n\ncep: guarda o que foi digitado.\ncidade: guarda a cidade retornada pela API.\nestado: guarda a UF retornada pela API.",
+                        "preview": "<div style=\"height:100%;background:#fff;padding:26px 20px;font-family:Arial,sans-serif;color:#111;box-sizing:border-box;\">\n  <div style=\"font-size:24px;font-weight:800;margin-bottom:20px;\">Consulta de CEP</div>\n  <div style=\"font-size:15px;margin-bottom:8px;\">Digite o CEP:</div>\n  <div style=\"border:1px solid #999;padding:10px;margin:10px 0 14px 0;font-size:15px;\">13700-000</div>\n  <div style=\"background:#1d4ed8;color:white;text-align:center;padding:9px;border-radius:3px;font-size:14px;font-weight:700;margin-bottom:22px;\">Pesquisar</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Cidade: Casa Branca</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Estado: SP</div>\n</div>",
+                        "note": "Código propositalmente simples. Nesta primeira versão, não há validação de CEP, try/catch, loading ou tratamento de erro."
+                },
+                {
+                        "id": "api-4-textinput",
+                        "menu": "4. TextInput",
+                        "title": "4 — TextInput controlado",
+                        "objective": "Ligar o campo de CEP ao state cep.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "<TextInput\n  style={styles.campo}\n  value={cep}\n  onChangeText={setCep}\n  keyboardType=\"numeric\"\n/>\n\nvalue={cep}: o campo mostra o valor guardado.\nonChangeText={setCep}: cada digitação atualiza o state cep.",
+                        "preview": "<div style=\"height:100%;background:#fff;padding:26px 20px;font-family:Arial,sans-serif;color:#111;box-sizing:border-box;\">\n  <div style=\"font-size:24px;font-weight:800;margin-bottom:20px;\">Consulta de CEP</div>\n  <div style=\"font-size:15px;margin-bottom:8px;\">Digite o CEP:</div>\n  <div style=\"border:1px solid #999;padding:10px;margin:10px 0 14px 0;font-size:15px;\">13700-000</div>\n  <div style=\"background:#1d4ed8;color:white;text-align:center;padding:9px;border-radius:3px;font-size:14px;font-weight:700;margin-bottom:22px;\">Pesquisar</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Cidade: Casa Branca</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Estado: SP</div>\n</div>",
+                        "note": "Código propositalmente simples. Nesta primeira versão, não há validação de CEP, try/catch, loading ou tratamento de erro."
+                },
+                {
+                        "id": "api-5-button",
+                        "menu": "5. Button",
+                        "title": "5 — Button e evento onPress",
+                        "objective": "Chamar a função pesquisarCEP quando o usuário tocar no botão.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "<Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\nQuando o usuário toca no botão:\nonPress chama a função pesquisarCEP.",
+                        "preview": "<div style=\"height:100%;background:#fff;padding:26px 20px;font-family:Arial,sans-serif;color:#111;box-sizing:border-box;\">\n  <div style=\"font-size:24px;font-weight:800;margin-bottom:20px;\">Consulta de CEP</div>\n  <div style=\"font-size:15px;margin-bottom:8px;\">Digite o CEP:</div>\n  <div style=\"border:1px solid #999;padding:10px;margin:10px 0 14px 0;font-size:15px;\">13700-000</div>\n  <div style=\"background:#1d4ed8;color:white;text-align:center;padding:9px;border-radius:3px;font-size:14px;font-weight:700;margin-bottom:22px;\">Pesquisar</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Cidade: Casa Branca</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Estado: SP</div>\n</div>",
+                        "note": "Código propositalmente simples. Nesta primeira versão, não há validação de CEP, try/catch, loading ou tratamento de erro."
+                },
+                {
+                        "id": "api-6-async",
+                        "menu": "6. async",
+                        "title": "6 — Função async",
+                        "objective": "Entender por que a função precisa ser assíncrona.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "async function pesquisarCEP() {\n  // comandos da consulta\n}\n\nasync indica que esta função trabalha com uma ação que pode demorar:\na resposta da internet.",
+                        "preview": "<div style=\"height:100%;background:#fff;padding:26px 20px;font-family:Arial,sans-serif;color:#111;box-sizing:border-box;\">\n  <div style=\"font-size:24px;font-weight:800;margin-bottom:20px;\">Consulta de CEP</div>\n  <div style=\"font-size:15px;margin-bottom:8px;\">Digite o CEP:</div>\n  <div style=\"border:1px solid #999;padding:10px;margin:10px 0 14px 0;font-size:15px;\">13700-000</div>\n  <div style=\"background:#1d4ed8;color:white;text-align:center;padding:9px;border-radius:3px;font-size:14px;font-weight:700;margin-bottom:22px;\">Pesquisar</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Cidade: Casa Branca</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Estado: SP</div>\n</div>",
+                        "note": "Código propositalmente simples. Nesta primeira versão, não há validação de CEP, try/catch, loading ou tratamento de erro."
+                },
+                {
+                        "id": "api-7-fetch",
+                        "menu": "7. fetch/await",
+                        "title": "7 — fetch e await",
+                        "objective": "Acessar a API do ViaCEP e aguardar a resposta.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n\nfetch acessa o endereço da API.\nawait manda o app aguardar a resposta antes de continuar.",
+                        "preview": "<div style=\"height:100%;background:#fff;padding:26px 20px;font-family:Arial,sans-serif;color:#111;box-sizing:border-box;\">\n  <div style=\"font-size:24px;font-weight:800;margin-bottom:20px;\">Consulta de CEP</div>\n  <div style=\"font-size:15px;margin-bottom:8px;\">Digite o CEP:</div>\n  <div style=\"border:1px solid #999;padding:10px;margin:10px 0 14px 0;font-size:15px;\">13700-000</div>\n  <div style=\"background:#1d4ed8;color:white;text-align:center;padding:9px;border-radius:3px;font-size:14px;font-weight:700;margin-bottom:22px;\">Pesquisar</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Cidade: Casa Branca</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Estado: SP</div>\n</div>",
+                        "note": "Código propositalmente simples. Nesta primeira versão, não há validação de CEP, try/catch, loading ou tratamento de erro."
+                },
+                {
+                        "id": "api-8-json",
+                        "menu": "8. JSON",
+                        "title": "8 — Transformando a resposta em JSON",
+                        "objective": "Converter a resposta da internet em dados que o JavaScript consegue usar.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "const dados = await resposta.json();\n\nA API responde em formato JSON.\nDepois dessa linha, o app consegue acessar:\ndados.localidade\ndados.uf",
+                        "preview": "<div style=\"height:100%;background:#fff;padding:26px 20px;font-family:Arial,sans-serif;color:#111;box-sizing:border-box;\">\n  <div style=\"font-size:24px;font-weight:800;margin-bottom:20px;\">Consulta de CEP</div>\n  <div style=\"font-size:15px;margin-bottom:8px;\">Digite o CEP:</div>\n  <div style=\"border:1px solid #999;padding:10px;margin:10px 0 14px 0;font-size:15px;\">13700-000</div>\n  <div style=\"background:#1d4ed8;color:white;text-align:center;padding:9px;border-radius:3px;font-size:14px;font-weight:700;margin-bottom:22px;\">Pesquisar</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Cidade: Casa Branca</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Estado: SP</div>\n</div>",
+                        "note": "Código propositalmente simples. Nesta primeira versão, não há validação de CEP, try/catch, loading ou tratamento de erro."
+                },
+                {
+                        "id": "api-9-tela",
+                        "menu": "9. Atualizar tela",
+                        "title": "9 — Atualizando cidade e estado",
+                        "objective": "Usar os dados retornados para atualizar a interface.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "setCidade(dados.localidade);\nsetEstado(dados.uf);\n\nQuando esses states mudam, o React Native redesenha a tela.\nPor isso Cidade e Estado aparecem no aplicativo.",
+                        "preview": "<div style=\"height:100%;background:#fff;padding:26px 20px;font-family:Arial,sans-serif;color:#111;box-sizing:border-box;\">\n  <div style=\"font-size:24px;font-weight:800;margin-bottom:20px;\">Consulta de CEP</div>\n  <div style=\"font-size:15px;margin-bottom:8px;\">Digite o CEP:</div>\n  <div style=\"border:1px solid #999;padding:10px;margin:10px 0 14px 0;font-size:15px;\">13700-000</div>\n  <div style=\"background:#1d4ed8;color:white;text-align:center;padding:9px;border-radius:3px;font-size:14px;font-weight:700;margin-bottom:22px;\">Pesquisar</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Cidade: Casa Branca</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Estado: SP</div>\n</div>",
+                        "note": "Código propositalmente simples. Nesta primeira versão, não há validação de CEP, try/catch, loading ou tratamento de erro."
+                },
+                {
+                        "id": "api-10-fluxo",
+                        "menu": "10. Fluxo",
+                        "title": "10 — Fluxo completo do app",
+                        "objective": "Visualizar o caminho completo entre digitação, API e tela atualizada.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "Digita CEP\n↓\nsetCep\n↓\nclica no botão\n↓\npesquisarCEP\n↓\nfetch\n↓\nawait\n↓\nJSON\n↓\nsetCidade e setEstado\n↓\na tela atualiza",
+                        "preview": "<div style=\"height:100%;background:#f8fafc;padding:18px;box-sizing:border-box;font-family:Arial,sans-serif;color:#0f172a;display:flex;align-items:center;justify-content:center;\">\n  <div style=\"width:100%;display:grid;gap:8px;font-size:13px;font-weight:800;text-align:center;\">\n    <div style=\"background:white;border:1px solid #cbd5e1;border-radius:10px;padding:8px;\">Digita CEP</div>\n    <div>↓</div>\n    <div style=\"background:white;border:1px solid #cbd5e1;border-radius:10px;padding:8px;\">setCep</div>\n    <div>↓</div>\n    <div style=\"background:white;border:1px solid #cbd5e1;border-radius:10px;padding:8px;\">onPress</div>\n    <div>↓</div>\n    <div style=\"background:white;border:1px solid #cbd5e1;border-radius:10px;padding:8px;\">pesquisarCEP</div>\n    <div>↓</div>\n    <div style=\"background:white;border:1px solid #cbd5e1;border-radius:10px;padding:8px;\">fetch + await</div>\n    <div>↓</div>\n    <div style=\"background:white;border:1px solid #cbd5e1;border-radius:10px;padding:8px;\">JSON</div>\n    <div>↓</div>\n    <div style=\"background:white;border:1px solid #cbd5e1;border-radius:10px;padding:8px;\">setCidade / setEstado</div>\n  </div>\n</div>",
+                        "note": "Código propositalmente simples. Nesta primeira versão, não há validação de CEP, try/catch, loading ou tratamento de erro."
+                },
+                {
+                        "id": "api-11-final",
+                        "menu": "11. Código final",
+                        "title": "11 — Código final simples",
+                        "objective": "Reunir o aplicativo completo em uma versão introdutória.",
+                        "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [cep, setCep] = useState('');\n  const [cidade, setCidade] = useState('');\n  const [estado, setEstado] = useState('');\n\n  async function pesquisarCEP() {\n    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);\n    const dados = await resposta.json();\n\n    setCidade(dados.localidade);\n    setEstado(dados.uf);\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Consulta de CEP</Text>\n\n      <Text>Digite o CEP:</Text>\n\n      <TextInput\n        style={styles.campo}\n        value={cep}\n        onChangeText={setCep}\n        keyboardType=\"numeric\"\n      />\n\n      <Button title=\"Pesquisar\" onPress={pesquisarCEP} />\n\n      <Text style={styles.resultado}>Cidade: {cidade}</Text>\n      <Text style={styles.resultado}>Estado: {estado}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                        "added": "Código final do app Consulta de CEP.\n\nNesta primeira versão, o objetivo é entender o caminho principal:\ninterface → state → evento → API → atualização da tela.",
+                        "preview": "<div style=\"height:100%;background:#fff;padding:26px 20px;font-family:Arial,sans-serif;color:#111;box-sizing:border-box;\">\n  <div style=\"font-size:24px;font-weight:800;margin-bottom:20px;\">Consulta de CEP</div>\n  <div style=\"font-size:15px;margin-bottom:8px;\">Digite o CEP:</div>\n  <div style=\"border:1px solid #999;padding:10px;margin:10px 0 14px 0;font-size:15px;\">13700-000</div>\n  <div style=\"background:#1d4ed8;color:white;text-align:center;padding:9px;border-radius:3px;font-size:14px;font-weight:700;margin-bottom:22px;\">Pesquisar</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Cidade: Casa Branca</div>\n  <div style=\"font-size:18px;margin-top:20px;\">Estado: SP</div>\n</div>",
+                        "note": "Este código deve ser mantido simples para fins didáticos. Melhorias como validação, loading e tratamento de erro entram depois."
+                },
+                {
+                        "id": "api-99-exercicios",
+                        "menu": "99. Exercícios API",
+                        "title": "99. Exercícios API",
+                        "objective": "Praticar pequenas evoluções do app sem perder a lógica principal.",
+                        "modulePage": true,
+                        "kicker": "Exercícios futuros",
+                        "lead": "A partir do app Consulta de CEP, proponha pequenas melhorias graduais. A ideia é evoluir com cuidado, sem colocar muitos recursos de uma vez.",
+                        "highlight": "As melhorias abaixo devem entrar como próximos passos, não dentro da primeira versão. O código inicial deve continuar simples para o aluno entender o fluxo principal.",
+                        "boxes": [
+                                [
+                                        "1. Mostrar bairro",
+                                        "Usar dados.bairro e criar o state bairro."
+                                ],
+                                [
+                                        "2. Mostrar logradouro",
+                                        "Usar dados.logradouro para exibir a rua ou avenida."
+                                ],
+                                [
+                                        "3. Mostrar DDD",
+                                        "Exibir o DDD retornado pela API."
+                                ],
+                                [
+                                        "4. Mostrar IBGE",
+                                        "Exibir o código IBGE da cidade."
+                                ],
+                                [
+                                        "5. Endereço completo",
+                                        "Montar uma tela com CEP, logradouro, bairro, cidade e estado."
+                                ],
+                                [
+                                        "6. Outra API",
+                                        "Criar um app semelhante usando uma API de moedas, clima ou feriados."
+                                ]
+                        ]
+                }
+        ]
+}
     };
 
     let currentModuleKey = 'interfaceBasica';
@@ -7867,9 +8056,11 @@ Limpar volta tudo ao estado inicial`,
           <p class="intro-lead">${step.lead}</p>
 
           <div class="intro-highlight">
-            ${step.id === 'flex-intro'
-              ? 'Neste módulo, cada exemplo mostra uma mudança visual concreta: primeiro você observa o problema no Antes, depois compara o código e o resultado do Depois. A ideia é aprender Flexbox olhando a tela, entendendo o código e percebendo como pequenas propriedades reorganizam a interface.'
-              : 'Use estes desafios para praticar os mesmos conceitos do módulo em situações novas. Observe o resultado esperado, divida a tela em blocos, escolha as propriedades Flexbox adequadas e só depois monte o código no App.js.'}
+            ${step.highlight
+              ? step.highlight
+              : step.id === 'flex-intro'
+                ? 'Neste módulo, cada exemplo mostra uma mudança visual concreta: primeiro você observa o problema no Antes, depois compara o código e o resultado do Depois. A ideia é aprender Flexbox olhando a tela, entendendo o código e percebendo como pequenas propriedades reorganizam a interface.'
+                : 'Use estes desafios para praticar os mesmos conceitos do módulo em situações novas. Observe o resultado esperado, divida a tela em blocos, escolha as propriedades Flexbox adequadas e só depois monte o código no App.js.'}
           </div>
 
           <div class="module-page-grid">
