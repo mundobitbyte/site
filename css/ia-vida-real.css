@@ -76,7 +76,7 @@
       transition:.15s ease;
     }
     .back:hover{background:#0d4384}
-    .titulo-topo{
+    .titulo-topo{color:#fff;
       font-weight:900;
       font-size:1.15rem;
       letter-spacing:-.02em;
@@ -656,10 +656,10 @@
       aside{position:static;width:auto;border-right:none;border-bottom:1px solid var(--borda);display:flex;overflow:auto;gap:8px;padding:12px;top:auto;background:white}
       .side-block{display:flex;gap:8px;background:transparent;border:none;padding:0;margin:0;flex:0 0 auto}.menu-label,.side-hint{display:none}
       .side-link{white-space:nowrap;margin-bottom:0;flex:0 0 auto;background:#f7fbff;border:1px solid #d8e6f7}
-      main{padding:14px}.hero-grid{grid-template-columns:1fr}.grid-2,.grid-3,.truth-box,.term-list,.pattern-demo,.generation-map{grid-template-columns:1fr}.concept-strip{grid-template-columns:1fr 1fr}.flow-box{grid-template-columns:1fr}.journey-row{grid-template-columns:1fr 1fr}.quiz-options{grid-template-columns:1fr 1fr}.visual-chip:not(:last-child)::after{content:'↓';right:auto;left:50%;top:auto;bottom:-18px;transform:translateX(-50%)}.visual-line{gap:18px}.professor{display:none}.titulo-topo{font-size:1rem}
+      main{padding:14px}.hero-grid{grid-template-columns:1fr}.grid-2,.grid-3,.truth-box,.term-list,.pattern-demo,.generation-map{grid-template-columns:1fr}.concept-strip{grid-template-columns:1fr 1fr}.flow-box{grid-template-columns:1fr}.journey-row{grid-template-columns:1fr 1fr}.quiz-options{grid-template-columns:1fr 1fr}.visual-chip:not(:last-child)::after{content:'↓';right:auto;left:50%;top:auto;bottom:-18px;transform:translateX(-50%)}.visual-line{gap:18px}.professor{display:none}.titulo-topo{color:#fff;font-size:1rem}
     }
     @media(max-width:560px){
-      body{font-size:15px}.topbar{padding:0 10px}.back{padding:6px 10px;font-size:.8rem}.titulo-topo{font-size:.92rem}.hero,.content-card{padding:18px}.quiz-options,.checklist,.journey-row,.concept-strip{grid-template-columns:1fr}h1{font-size:2.15rem}.mini-panel{padding:13px}
+      body{font-size:15px}.topbar{padding:0 10px}.back{padding:6px 10px;font-size:.8rem}.titulo-topo{color:#fff;font-size:.92rem}.hero,.content-card{padding:18px}.quiz-options,.checklist,.journey-row,.concept-strip{grid-template-columns:1fr}h1{font-size:2.15rem}.mini-panel{padding:13px}
     }
   
     .copy-btn{
@@ -747,3 +747,30 @@ section[id]{
    Preserva conteúdo e IDs, exibindo apenas o tópico escolhido no menu lateral. */
 main > section[id]{display:none;}
 main > section[id].active-panel{display:block;}
+
+/* Padronização aprovada dos cabeçalhos superiores dos módulos */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.header-left{display:flex;align-items:center;gap:12px;min-width:0;}
+.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.brand{font-size:13px;font-weight:800;white-space:nowrap;}
+.topbar a{white-space:nowrap;}
+@media(max-width:720px){.topbar h1{font-size:17px}.brand{font-size:12px}}
+
+
+/* Revisão fina dos cabeçalhos superiores — padronização visual sem alterar navegação */
+.header-left{display:flex;align-items:center;gap:12px;min-width:0;}
+.portal-link,.btn-voltar.portal-link,.topbar .portal-link{display:inline-flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.42);background:rgba(255,255,255,.12);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:900;line-height:1;white-space:nowrap;}
+.portal-link:hover,.btn-voltar.portal-link:hover,.topbar .portal-link:hover{background:rgba(255,255,255,.22);}
+header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.brand{font-size:13px;font-weight:800;white-space:nowrap;}
+@media(max-width:720px){
+  header,.topbar{min-height:auto;}
+  .header-left{flex-direction:column;align-items:flex-start;gap:6px;}
+  header h1,.topbar h1{font-size:17px;white-space:normal;overflow:visible;text-overflow:clip;}
+  .brand{font-size:12px;}
+  .portal-link,.btn-voltar.portal-link,.topbar .portal-link{font-size:12px;padding:6px 10px;}
+}
+
+@media(max-width:720px){:root{--topo:86px}}
+
+.topbar h1,.titulo-topo{color:#fff !important;}

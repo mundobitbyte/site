@@ -4,3 +4,24 @@
 
 @media(max-width:720px){html,body{width:100%;max-width:100%;overflow-x:hidden;overflow-y:auto}body{overflow:hidden}.topbar{height:auto;min-height:64px;align-items:flex-start;gap:8px;flex-direction:column;padding:12px 14px}.topbar h1{white-space:normal;font-size:18px}.brand{font-size:12px}.layout{height:calc(100vh - 64px);min-width:0;max-width:100%}.content{padding:14px;padding-top:18px;max-width:100%;width:100%;overflow-y:auto;overflow-x:hidden}.hero-card,.section-card{padding:18px;margin-bottom:16px;border-radius:16px}.hero-card h2,.section-card h2{font-size:23px}.hero-card p,.section-card p{font-size:15px}.section-head{gap:10px;margin-bottom:14px}.badge{min-width:36px;height:36px}.section-head h2{font-size:22px}.hero-grid,.two-col,.concept-grid,.three-levels,.system-grid,.system-grid.compact,.exercise-grid{grid-template-columns:1fr}.concept-grid article,.system-grid article,.exercise-grid article,.text-panel,.summary-card,.activity-box,.example-box{padding:14px}.flow-line span,.case-flow span{font-size:13px;padding:7px 9px}section[id]{scroll-margin-top:12px}}
 
+/* Padronização aprovada dos cabeçalhos superiores dos módulos */
+.header-left{display:flex;align-items:center;gap:12px;min-width:0;}
+header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.brand{font-size:13px;font-weight:800;white-space:nowrap;}
+.portal-link,.btn-voltar,.topbar a{white-space:nowrap;}
+@media(max-width:720px){header h1,.topbar h1{font-size:17px}.brand{font-size:12px}}
+
+
+/* Revisão fina dos cabeçalhos superiores — padronização visual sem alterar navegação */
+.header-left{display:flex;align-items:center;gap:12px;min-width:0;}
+.portal-link,.btn-voltar.portal-link,.topbar .portal-link{display:inline-flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.42);background:rgba(255,255,255,.12);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:900;line-height:1;white-space:nowrap;}
+.portal-link:hover,.btn-voltar.portal-link:hover,.topbar .portal-link:hover{background:rgba(255,255,255,.22);}
+header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.brand{font-size:13px;font-weight:800;white-space:nowrap;}
+@media(max-width:720px){
+  header,.topbar{min-height:auto;}
+  .header-left{flex-direction:column;align-items:flex-start;gap:6px;}
+  header h1,.topbar h1{font-size:17px;white-space:normal;overflow:visible;text-overflow:clip;}
+  .brand{font-size:12px;}
+  .portal-link,.btn-voltar.portal-link,.topbar .portal-link{font-size:12px;padding:6px 10px;}
+}

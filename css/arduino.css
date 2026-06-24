@@ -1068,3 +1068,10 @@ html,
 body {
   scroll-behavior: auto !important;
 }
+
+/* Padronização aprovada dos cabeçalhos superiores dos módulos */
+.header-left{display:flex;align-items:center;gap:12px;min-width:0;}
+header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.brand{font-size:13px;font-weight:800;white-space:nowrap;}
+.portal-link,.btn-voltar,.topbar a{white-space:nowrap;}
+@media(max-width:720px){header h1,.topbar h1{font-size:17px}.brand{font-size:12px}}
