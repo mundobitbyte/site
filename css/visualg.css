@@ -78,91 +78,55 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
   }
 }
 
-/* ===== CORREÇÃO EXCLUSIVA VISUALG — CONTEÚDO MOBILE ===== */
-@media(max-width:720px){
-  body{
-    overflow-x:hidden !important;
-  }
-  .layout,
-  main,
-  .workspace,
-  .card,
-  .intro-view{
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-  }
-  main{
-    padding:10px !important;
-  }
+
+/* ===== AJUSTE EXCLUSIVO VISUALG — TOPO DO CONTEÚDO EM TELAS MENORES =====
+   Corrige apenas a faixa do título/objetivo acima dos painéis do VisuAlg.
+   Não altera cabeçalho superior, menu, JS, âncoras, cards, exercícios ou conteúdo. */
+@media(max-width:1050px){
   .top-row{
-    height:auto !important;
-    min-height:0 !important;
-    display:flex !important;
-    flex-direction:column !important;
-    align-items:flex-start !important;
-    justify-content:flex-start !important;
-    gap:6px !important;
-    margin-bottom:10px !important;
+    height:auto;
+    min-height:44px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:6px 12px;
+    margin-bottom:10px;
   }
   .top-row h2{
-    width:100% !important;
-    max-width:100% !important;
-    font-size:18px !important;
-    line-height:1.18 !important;
-    white-space:normal !important;
-    overflow:visible !important;
-    text-overflow:clip !important;
-    overflow-wrap:break-word !important;
+    flex:1 1 280px;
+    min-width:0;
+    max-width:100%;
+    font-size:22px;
+    line-height:1.16;
+    white-space:normal;
+    overflow-wrap:break-word;
   }
   .objective{
-    width:100% !important;
-    max-width:100% !important;
-    text-align:left !important;
-    font-size:12.5px !important;
-    line-height:1.35 !important;
-    overflow-wrap:break-word !important;
+    flex:1 1 280px;
+    min-width:0;
+    max-width:100%;
+    font-size:12.5px;
+    line-height:1.32;
+    text-align:left;
+    overflow-wrap:break-word;
   }
-  .workspace{
-    height:auto !important;
-    display:grid !important;
-    grid-template-columns:minmax(0,1fr) !important;
-    grid-template-rows:auto !important;
-    gap:10px !important;
+}
+@media(max-width:720px){
+  main{padding:10px;}
+  .top-row{
+    min-height:0;
+    gap:5px;
+    margin-bottom:10px;
   }
-  .code-card,
-  .result-card,
-  .new-code,
-  .side-bottom,
-  .intro-view{
-    grid-column:auto !important;
-    grid-row:auto !important;
-    max-width:100% !important;
-    min-width:0 !important;
+  .top-row h2{
+    flex-basis:100%;
+    font-size:18px;
+    line-height:1.16;
   }
-  .code-card,
-  .result-card{
-    height:auto !important;
-    min-height:360px !important;
-  }
-  .panel-title{
-    height:auto !important;
-    min-height:34px !important;
-    gap:8px !important;
-    line-height:1.2 !important;
-  }
-  .visualg{
-    min-height:320px !important;
-  }
-  .visualg-menu{
-    overflow-x:auto !important;
-    white-space:nowrap !important;
-    gap:10px !important;
-  }
-  pre,
-  .console,
-  .new-code pre{
-    max-width:100% !important;
-    font-size:12px !important;
+  .objective{
+    flex-basis:100%;
+    font-size:12px;
+    line-height:1.3;
   }
 }
