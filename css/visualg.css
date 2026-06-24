@@ -77,3 +77,92 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
     display:none !important;
   }
 }
+
+/* ===== CORREÇÃO EXCLUSIVA VISUALG — CONTEÚDO MOBILE ===== */
+@media(max-width:720px){
+  body{
+    overflow-x:hidden !important;
+  }
+  .layout,
+  main,
+  .workspace,
+  .card,
+  .intro-view{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+  main{
+    padding:10px !important;
+  }
+  .top-row{
+    height:auto !important;
+    min-height:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:flex-start !important;
+    gap:6px !important;
+    margin-bottom:10px !important;
+  }
+  .top-row h2{
+    width:100% !important;
+    max-width:100% !important;
+    font-size:18px !important;
+    line-height:1.18 !important;
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    overflow-wrap:break-word !important;
+  }
+  .objective{
+    width:100% !important;
+    max-width:100% !important;
+    text-align:left !important;
+    font-size:12.5px !important;
+    line-height:1.35 !important;
+    overflow-wrap:break-word !important;
+  }
+  .workspace{
+    height:auto !important;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+    gap:10px !important;
+  }
+  .code-card,
+  .result-card,
+  .new-code,
+  .side-bottom,
+  .intro-view{
+    grid-column:auto !important;
+    grid-row:auto !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+  .code-card,
+  .result-card{
+    height:auto !important;
+    min-height:360px !important;
+  }
+  .panel-title{
+    height:auto !important;
+    min-height:34px !important;
+    gap:8px !important;
+    line-height:1.2 !important;
+  }
+  .visualg{
+    min-height:320px !important;
+  }
+  .visualg-menu{
+    overflow-x:auto !important;
+    white-space:nowrap !important;
+    gap:10px !important;
+  }
+  pre,
+  .console,
+  .new-code pre{
+    max-width:100% !important;
+    font-size:12px !important;
+  }
+}
