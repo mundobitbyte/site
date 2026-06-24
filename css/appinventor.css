@@ -385,3 +385,164 @@ section[id]{
   max-width:800px;
   margin:20px auto 0;
 }
+/* ===== Exercícios com Eventos e Lógica ===== */
+
+.logic-exercises{
+  margin-top:28px;
+  padding-top:22px;
+  border-top:1px solid #d8e5f5;
+}
+
+.section-subhead{
+  background:#eef6ff;
+  border:1px solid #c9dcf4;
+  border-radius:14px;
+  padding:16px 18px;
+  margin-bottom:18px;
+}
+
+.section-subhead h3{
+  margin:0 0 8px;
+  color:#034aa6;
+  font-size:22px;
+}
+
+.section-subhead p{
+  margin:0;
+}
+
+.logic-card{
+  background:#f8fbff;
+  border:1px solid #d8e5f5;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 10px 24px rgba(15, 72, 145, .06);
+}
+
+.logic-card > h3{
+  margin:14px 0 16px;
+  color:#034aa6;
+  font-size:26px;
+}
+
+.logic-card h4{
+  color:#034aa6;
+  margin:0 0 10px;
+  font-size:19px;
+}
+
+.logic-card h5{
+  color:#034aa6;
+  margin:0 0 8px;
+  font-size:16px;
+}
+
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+}
+
+.content-table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border:1px solid #d3e0ef;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.content-table th,
+.content-table td{
+  border:1px solid #d3e0ef;
+  padding:10px 12px;
+  text-align:left;
+  vertical-align:top;
+}
+
+.content-table th{
+  background:#eaf4ff;
+  color:#034aa6;
+}
+
+.lampada-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.4fr) minmax(230px,.8fr);
+  gap:20px;
+  align-items:start;
+  margin:18px 0;
+}
+
+.lampada-interface-figure{
+  background:white;
+  border:1px solid #d3e0ef;
+  border-radius:16px;
+  padding:14px;
+  text-align:center;
+}
+
+.lampada-interface-figure img{
+  width:100%;
+  max-width:260px;
+  height:auto;
+}
+
+.blocks-section{
+  margin-top:20px;
+}
+
+.block-card{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(280px,.9fr);
+  gap:18px;
+  align-items:center;
+  background:white;
+  border:1px solid #d3e0ef;
+  border-radius:16px;
+  padding:16px;
+  margin:14px 0;
+}
+
+.block-card figure{
+  margin:0;
+  text-align:center;
+  overflow-x:auto;
+}
+
+.block-card img{
+  max-width:100%;
+  height:auto;
+}
+
+.checklist{
+  list-style:none;
+  padding-left:0;
+}
+
+.checklist li{
+  margin:8px 0;
+  padding-left:28px;
+  position:relative;
+}
+
+.checklist li::before{
+  content:"☐";
+  position:absolute;
+  left:0;
+  color:#034aa6;
+  font-weight:700;
+}
+
+@media(max-width:900px){
+  .lampada-layout,
+  .block-card{
+    grid-template-columns:1fr;
+  }
+
+  .logic-card{
+    padding:16px;
+  }
+
+  .block-card{
+    align-items:start;
+  }
+}
