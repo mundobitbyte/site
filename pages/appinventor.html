@@ -1605,6 +1605,216 @@
     </article>
 
 
+    <article class="logic-card adivinhacao-exercise">
+      <div class="panel-title">Exercício 4</div>
+      <h3>Jogo de Adivinhação</h3>
+
+      <div class="story-panel">
+        <h4>Situação-Problema</h4>
+        <p>Imagine que você foi contratado para desenvolver um jogo simples para dispositivos móveis.</p>
+        <p>O desafio do jogador é descobrir um número secreto gerado aleatoriamente pelo aplicativo. A cada tentativa, o aplicativo informa se o número digitado é maior ou menor que o número correto.</p>
+        <p>Esse tipo de jogo é muito utilizado para ensinar conceitos fundamentais de programação, como variáveis, tomada de decisão, repetição de tentativas e controle do estado de um sistema.</p>
+      </div>
+
+      <div class="concept-grid">
+        <article>
+          <h4>Objetivo</h4>
+          <ul>
+            <li>Gerar um número aleatório entre 1 e 100.</li>
+            <li>Receber palpites do jogador.</li>
+            <li>Informar se o número correto é maior ou menor.</li>
+            <li>Controlar a quantidade de tentativas.</li>
+            <li>Permitir reiniciar a partida.</li>
+          </ul>
+        </article>
+        <article>
+          <h4>O que você vai aprender</h4>
+          <ul>
+            <li>Variáveis globais.</li>
+            <li>Procedimentos.</li>
+            <li>Eventos.</li>
+            <li>Números aleatórios.</li>
+            <li>Estruturas de decisão.</li>
+            <li>Controle de tentativas.</li>
+          </ul>
+        </article>
+        <article>
+          <h4>Conceito principal</h4>
+          <p>Este projeto apresenta a ideia de <strong>estado do jogo</strong>. A variável <strong>gameOver</strong> indica se a partida está em andamento ou se já terminou.</p>
+        </article>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Componentes utilizados</h4>
+        <div class="table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr><th>Componente</th><th>Nome</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Tela</td><td>Screen1</td></tr>
+              <tr><td>Rótulo</td><td>legTitulo</td></tr>
+              <tr><td>Caixa de Texto</td><td>cxtPalpite</td></tr>
+              <tr><td>Botão</td><td>btAdvinhar</td></tr>
+              <tr><td>Rótulo</td><td>legTentativas</td></tr>
+              <tr><td>Rótulo</td><td>lblMensagem</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Configurando a Screen1</h4>
+        <p>Antes de inserir os componentes, configure a tela principal do aplicativo.</p>
+        <div class="table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr><th>Propriedade</th><th>Valor</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Título</td><td>Jogo de Adivinhação</td></tr>
+              <tr><td>AlinhamentoHorizontal</td><td>Centro</td></tr>
+              <tr><td>AlinhamentoVertical</td><td>Centro</td></tr>
+              <tr><td>Orientação da Tela</td><td>Retrato</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="lampada-layout">
+        <div class="exercise-text">
+          <h4>Montando a interface</h4>
+          <p>Monte uma tela semelhante ao modelo apresentado. Ela deve conter o título do jogo, o campo para digitar o palpite, o botão para confirmar e os rótulos para exibir tentativas e mensagens.</p>
+          <div class="table-wrap">
+            <table class="content-table">
+              <thead>
+                <tr><th>Componente</th><th>Nome</th><th>Função</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Rótulo</td><td>legTitulo</td><td>Exibir o título Adivinhe o Número!</td></tr>
+                <tr><td>CaixaDeTexto</td><td>cxtPalpite</td><td>Receber o palpite digitado.</td></tr>
+                <tr><td>Botão</td><td>btAdvinhar</td><td>Confirmar o palpite ou reiniciar o jogo.</td></tr>
+                <tr><td>Rótulo</td><td>legTentativas</td><td>Mostrar a quantidade de tentativas restantes.</td></tr>
+                <tr><td>Rótulo</td><td>lblMensagem</td><td>Mostrar mensagens de orientação ao jogador.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <figure class="lampada-interface-figure">
+          <img src="../img/appinventor/adivinhacao_interface.webp" alt="Interface do aplicativo Jogo de Adivinhação" loading="lazy" decoding="async">
+          <figcaption>Modelo da interface do aplicativo.</figcaption>
+        </figure>
+      </div>
+
+      <div class="blocks-section">
+        <h4>Programação dos Blocos</h4>
+
+        <article class="block-card">
+          <div>
+            <h5>Variáveis Globais</h5>
+            <p>Crie três variáveis globais para controlar a partida.</p>
+            <ul>
+              <li><strong>gameOver</strong>: indica se o jogo terminou.</li>
+              <li><strong>randomNumber</strong>: armazena o número secreto.</li>
+              <li><strong>tentativas</strong>: controla as tentativas restantes.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/adivinhacao_variaveis.webp" alt="Variáveis globais do Jogo de Adivinhação" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Procedimento gerarNumeroAleatorio</h5>
+            <p>Este procedimento recebe um valor inicial e um valor final, retornando um número inteiro aleatório dentro desse intervalo.</p>
+            <p>No jogo, ele será usado para gerar o número secreto entre <strong>1</strong> e <strong>100</strong>.</p>
+          </div>
+          <figure><img src="../img/appinventor/adivinhacao_gerar_numero_aleatorio.webp" alt="Procedimento gerarNumeroAleatorio" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Screen1.Inicializar</h5>
+            <p>Quando o aplicativo iniciar, a tela chama o procedimento <strong>reiniciarJogo</strong>.</p>
+            <p>Assim, toda a configuração inicial da partida fica organizada em um único procedimento.</p>
+          </div>
+          <figure><img src="../img/appinventor/adivinhacao_screen1_inicializar.webp" alt="Bloco Screen1.Inicializar do Jogo de Adivinhação" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card block-card-wide">
+          <div>
+            <h5>Procedimento reiniciarJogo</h5>
+            <p>Este procedimento prepara uma nova partida.</p>
+            <ul>
+              <li>Gera um novo número aleatório.</li>
+              <li>Reinicia as tentativas para 5.</li>
+              <li>Define <strong>gameOver</strong> como falso.</li>
+              <li>Limpa o campo de palpite e a mensagem.</li>
+              <li>Atualiza o texto do botão para <strong>ADIVINHAR</strong>.</li>
+              <li>Devolve o foco para o campo de palpite.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/adivinhacao_reiniciar_jogo.webp" alt="Procedimento reiniciarJogo do Jogo de Adivinhação" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Botão ADIVINHAR</h5>
+            <p>O botão possui duas funções.</p>
+            <ul>
+              <li>Se o jogo já terminou, ele chama <strong>reiniciarJogo</strong>.</li>
+              <li>Se o jogo ainda está em andamento, ele chama <strong>checarPalpite</strong>.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/adivinhacao_botao_advinhar.webp" alt="Bloco do botão ADIVINHAR" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card block-card-wide">
+          <div>
+            <h5>Procedimento checarPalpite</h5>
+            <p>Este é o procedimento principal do jogo. Ele analisa o palpite digitado pelo usuário e decide o que deve acontecer.</p>
+            <ul>
+              <li>Se o campo estiver vazio, exibe uma mensagem de aviso.</li>
+              <li>Se o jogador acertar, encerra a partida.</li>
+              <li>Se errar, reduz uma tentativa.</li>
+              <li>Informa se o jogador deve tentar um número maior ou menor.</li>
+              <li>Quando as tentativas chegam a zero, mostra o número correto e permite jogar novamente.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/adivinhacao_checar_palpite.webp" alt="Procedimento checarPalpite do Jogo de Adivinhação" loading="lazy" decoding="async"></figure>
+        </article>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Testando o aplicativo</h4>
+        <ul class="checklist">
+          <li>O aplicativo inicia com 5 tentativas.</li>
+          <li>O número secreto é gerado automaticamente.</li>
+          <li>Campo vazio exibe mensagem de aviso.</li>
+          <li>O aplicativo informa se o número correto é maior.</li>
+          <li>O aplicativo informa se o número correto é menor.</li>
+          <li>O contador de tentativas é atualizado.</li>
+          <li>O jogo encerra quando o número é descoberto.</li>
+          <li>O jogo encerra quando as tentativas acabam.</li>
+          <li>O botão reinicia a partida.</li>
+        </ul>
+      </div>
+
+      <div class="notice">
+        <strong>Aplicação no mundo real:</strong> embora seja um jogo simples, este projeto usa conceitos presentes em jogos digitais, aplicativos educacionais, simulações, sistemas de sorteio e sistemas que precisam controlar estados internos.
+      </div>
+
+      <div class="challenge">
+        <strong>Desafio Extra — Níveis de Dificuldade:</strong> modifique o jogo para permitir que o usuário escolha o nível: fácil, com número entre 1 e 50; médio, com número entre 1 e 100; ou difícil, com número entre 1 e 500.
+      </div>
+
+      <div class="activity-box">
+        <h4>Para pensar</h4>
+        <p>O computador consegue gerar números verdadeiramente aleatórios ou apenas números pseudoaleatórios?</p>
+        <p>Por que números aleatórios são importantes em jogos, sorteios e sistemas de segurança?</p>
+      </div>
+    </article>
+
+
   </div>
 </section>
 
