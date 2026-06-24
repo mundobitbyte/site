@@ -596,3 +596,45 @@ section[id]{
 .adivinhacao-exercise .block-card-wide img{
   max-width:760px;
 }
+
+/* Submenu do item 99 — Exercícios */
+.nav-tree{
+  margin:-2px 0 10px 10px;
+  padding:4px 0 4px 10px;
+  border-left:2px solid #d7e5f7;
+}
+
+.nav-sub,
+.nav-sub-title{
+  display:block;
+  font-size:13px;
+  line-height:1.25;
+  margin:5px 0;
+  padding:6px 8px;
+  border-radius:9px;
+  color:#315f9b;
+  text-decoration:none;
+  font-weight:800;
+  font-family:Consolas, 'Courier New', monospace;
+}
+
+.nav-sub-child{
+  margin-left:14px;
+  font-size:12.5px;
+}
+
+.nav-sub:hover,
+.nav-sub.active{
+  background:#e8f2ff;
+  color:#073f8e;
+}
+
+.nav-sub-title{
+  color:#53657d;
+  cursor:default;
+}
+
+.logic-card[id],
+.logic-exercises[id]{
+  scroll-margin-top:18px;
+}
