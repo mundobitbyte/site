@@ -796,7 +796,6 @@
 <div class="challenge">
   <strong>Experimente:</strong> peça para outra pessoa utilizar o aplicativo e observe se ela consegue entender o funcionamento sem receber explicações. Anote sugestões de melhoria que possam tornar a interface mais clara e intuitiva.
 </div>
-```
 
   </div>
 
@@ -999,7 +998,201 @@
   </div>
 
   <div class="notice">
-    Estes exercícios reforçam a construção visual da interface. Para praticar a lógica do aplicativo, utilize também os desafios propostos no tópico 7 - Blocos.
+    Estes exercícios reforçam a construção visual da interface. Depois de praticar o Designer, avance para os exercícios com eventos e lógica.
+  </div>
+
+  <div class="logic-exercises">
+    <div class="section-subhead">
+      <h3>Exercícios com Eventos e Lógica</h3>
+      <p>Agora que você já praticou a construção de interfaces no Designer do App Inventor, chegou o momento de desenvolver aplicativos que respondem às ações do usuário.</p>
+    </div>
+
+    <article class="logic-card lampada-exercise">
+      <div class="panel-title">Exercício 1</div>
+      <h3>Controle de Lâmpada</h3>
+
+      <div class="story-panel">
+        <h4>Situação-Problema</h4>
+        <p>Imagine que você trabalha em uma empresa que desenvolve soluções para casas inteligentes. Um dos primeiros recursos que os clientes desejam é controlar lâmpadas pelo celular.</p>
+        <p>Embora neste exercício a lâmpada seja apenas uma imagem na tela, a mesma lógica poderá ser utilizada futuramente para controlar uma lâmpada real por meio de um microcontrolador, como Arduino ou ESP32.</p>
+        <p>Esse tipo de projeto combina Programação Mobile, Sistemas Embarcados e Internet das Coisas (IoT), permitindo que dispositivos físicos sejam controlados por aplicativos.</p>
+      </div>
+
+      <div class="concept-grid">
+        <article>
+          <h4>Objetivo</h4>
+          <ul>
+            <li>Acender uma lâmpada virtual.</li>
+            <li>Apagar uma lâmpada virtual.</li>
+            <li>Alternar o estado ao clicar na imagem.</li>
+            <li>Habilitar e desabilitar botões.</li>
+          </ul>
+        </article>
+        <article>
+          <h4>O que você vai aprender</h4>
+          <ul>
+            <li>Eventos de clique.</li>
+            <li>Manipulação de imagens.</li>
+            <li>Propriedades dos componentes.</li>
+            <li>Estrutura condicional.</li>
+          </ul>
+        </article>
+        <article>
+          <h4>Arquivos necessários</h4>
+          <ul>
+            <li><strong>Acesa.jpg</strong></li>
+            <li><strong>Apagada.jpg</strong></li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Componentes utilizados</h4>
+        <div class="table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr><th>Componente</th><th>Nome</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Tela</td><td>Screen1</td></tr>
+              <tr><td>Imagem</td><td>imgLampada</td></tr>
+              <tr><td>Botão</td><td>btnAcesa</td></tr>
+              <tr><td>Botão</td><td>btnApagada</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Configurando a Screen1</h4>
+        <p>Antes de inserir os componentes, configure a tela principal do aplicativo.</p>
+        <div class="howto">
+          <h5>Faça assim</h5>
+          <ol>
+            <li>Selecione <strong>Screen1</strong>.</li>
+            <li>Localize a área de propriedades.</li>
+            <li>Configure os valores abaixo.</li>
+          </ol>
+        </div>
+        <div class="table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr><th>Propriedade</th><th>Valor</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Título</td><td>Controle de Lâmpada</td></tr>
+              <tr><td>AlinhamentoHorizontal</td><td>Centro</td></tr>
+              <tr><td>AlinhamentoVertical</td><td>Superior</td></tr>
+              <tr><td>Orientação da Tela</td><td>Retrato</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="lampada-layout">
+        <div class="exercise-text">
+          <h4>Montando a interface</h4>
+          <p>Monte uma tela semelhante ao modelo apresentado. Ela deve conter uma imagem da lâmpada e dois botões: um para acender e outro para apagar.</p>
+          <div class="table-wrap">
+            <table class="content-table">
+              <thead>
+                <tr><th>Componente</th><th>Nome</th><th>Configuração</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Image</td><td>imgLampada</td><td>Clicável = Verdadeiro</td></tr>
+                <tr><td>Button</td><td>btnAcesa</td><td>Texto = Acesa</td></tr>
+                <tr><td>Button</td><td>btnApagada</td><td>Texto = Apagada</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="notice">
+            <strong>Atenção:</strong> a propriedade <strong>Clicável</strong> da imagem deve estar configurada como <strong>Verdadeiro</strong>. Sem isso, o usuário não conseguirá clicar diretamente na lâmpada.
+          </div>
+        </div>
+        <figure class="lampada-interface-figure">
+          <img src="../img/appinventor/lampada_interface.webp" alt="Interface do aplicativo Controle de Lâmpada" loading="lazy" decoding="async">
+          <figcaption>Modelo da interface do aplicativo.</figcaption>
+        </figure>
+      </div>
+
+      <div class="blocks-section">
+        <h4>Programação dos Blocos</h4>
+
+        <article class="block-card">
+          <div>
+            <h5>Bloco 1 — Inicialização da Tela</h5>
+            <p>Define o estado inicial do aplicativo quando ele for aberto.</p>
+            <ul>
+              <li>Botão Acesa habilitado.</li>
+              <li>Botão Apagada desabilitado.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/lampada_screen1_inicializar.webp" alt="Blocos de inicialização da Screen1" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Bloco 2 — Botão Acesa</h5>
+            <p>Quando o usuário clicar em <strong>Acesa</strong>, o aplicativo passa para o estado ligado.</p>
+            <ul>
+              <li>A imagem muda para <strong>Acesa.jpg</strong>.</li>
+              <li>O botão Acesa é desabilitado.</li>
+              <li>O botão Apagada é habilitado.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/lampada_btn_acesa.webp" alt="Blocos do botão Acesa" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Bloco 3 — Botão Apagada</h5>
+            <p>Quando o usuário clicar em <strong>Apagada</strong>, o aplicativo retorna ao estado desligado.</p>
+            <ul>
+              <li>A imagem muda para <strong>Apagada.jpg</strong>.</li>
+              <li>O botão Apagada é desabilitado.</li>
+              <li>O botão Acesa é habilitado.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/lampada_btn_apagada.webp" alt="Blocos do botão Apagada" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Bloco 4 — Clique na Lâmpada</h5>
+            <p>Quando o usuário clicar diretamente na imagem, o aplicativo verifica o estado atual da lâmpada e alterna entre acesa e apagada.</p>
+            <p>Este bloco usa a estrutura <strong>se / então / senão</strong>, permitindo que o aplicativo tome uma decisão.</p>
+          </div>
+          <figure><img src="../img/appinventor/lampada_img_clique.webp" alt="Blocos do clique na imagem da lâmpada" loading="lazy" decoding="async"></figure>
+        </article>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Testando o aplicativo</h4>
+        <ul class="checklist">
+          <li>A lâmpada inicia apagada.</li>
+          <li>O botão Acesa inicia habilitado.</li>
+          <li>O botão Apagada inicia desabilitado.</li>
+          <li>Ao clicar em Acesa, a imagem muda corretamente.</li>
+          <li>Ao clicar em Apagada, a imagem retorna ao estado apagado.</li>
+          <li>Ao clicar na lâmpada, ela alterna seu estado.</li>
+          <li>Os botões são habilitados e desabilitados corretamente.</li>
+        </ul>
+      </div>
+
+      <div class="notice">
+        <strong>Aplicação no mundo real:</strong> a mesma lógica pode ser aplicada em automação residencial, tomadas inteligentes, ventiladores, projetos com Arduino, ESP32 e soluções de Internet das Coisas.
+      </div>
+
+      <div class="challenge">
+        <strong>Desafio Extra — Botão Único:</strong> remova os botões Acesa e Apagada e crie apenas um botão chamado <strong>Alternar Estado</strong>. Ao clicar, se a lâmpada estiver apagada, ela deverá acender; se estiver acesa, ela deverá apagar.
+      </div>
+
+      <div class="activity-box">
+        <h4>Para pensar</h4>
+        <p>Além das lâmpadas, quais outros equipamentos de uma casa inteligente poderiam ser controlados por um aplicativo semelhante?</p>
+        <p>Como você faria para que esse aplicativo controlasse uma lâmpada real utilizando um Arduino ou ESP32?</p>
+      </div>
+    </article>
   </div>
 </section>
 
