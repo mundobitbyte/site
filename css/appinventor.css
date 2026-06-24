@@ -597,29 +597,68 @@ section[id]{
   max-width:760px;
 }
 
-/* Submenu do item 99 — Exercícios */
+/* Submenu recolhível do item 99 — Exercícios */
+.nav-group{
+  margin-bottom:8px;
+}
+
+.nav-toggle{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  font-family:inherit;
+  font-size:inherit;
+  cursor:pointer;
+  text-align:left;
+}
+
+.nav-caret{
+  font-size:13px;
+  transition:transform .18s ease;
+}
+
+.nav-exercises.open .nav-caret{
+  transform:rotate(90deg);
+}
+
 .nav-tree{
-  margin:-2px 0 10px 10px;
-  padding:4px 0 4px 10px;
-  border-left:2px solid #d7e5f7;
+  display:none;
+  margin:-2px 0 10px 0;
+  padding:8px;
+  background:#f8fbff;
+  border:1px solid #d3e0ef;
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(15,43,78,.08);
+}
+
+.nav-exercises.open .nav-tree{
+  display:block;
 }
 
 .nav-sub,
 .nav-sub-title{
   display:block;
-  font-size:13px;
   line-height:1.25;
-  margin:5px 0;
-  padding:6px 8px;
-  border-radius:9px;
+  margin:4px 0;
+  border-radius:10px;
+  font-family:Arial, Helvetica, sans-serif;
+  white-space:nowrap;
+}
+
+.nav-sub{
+  padding:8px 10px;
   color:#315f9b;
   text-decoration:none;
   font-weight:800;
-  font-family:Consolas, 'Courier New', monospace;
+  font-size:13px;
+  background:#fff;
+  border:1px solid #d9e7f8;
 }
 
 .nav-sub-child{
-  margin-left:14px;
+  margin-left:10px;
   font-size:12.5px;
 }
 
@@ -632,6 +671,32 @@ section[id]{
 .nav-sub-title{
   color:#53657d;
   cursor:default;
+  padding:6px 10px 3px;
+  font-size:12.5px;
+  font-weight:800;
+}
+
+@media(max-width:900px){
+  .nav-group{
+    flex:0 0 auto;
+    position:relative;
+    margin-bottom:0;
+  }
+
+  .nav-toggle{
+    white-space:nowrap;
+    margin:0;
+  }
+
+  .nav-tree{
+    position:fixed;
+    top:var(--submenu-top, 118px);
+    left:var(--submenu-left, 12px);
+    width:min(240px, calc(100vw - 24px));
+    z-index:80;
+    margin:0;
+    box-shadow:0 14px 34px rgba(15,43,78,.24);
+  }
 }
 
 .logic-card[id],
