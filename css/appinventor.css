@@ -591,3 +591,8 @@ section[id]{
   border:1px solid #d3e0ef;
   border-radius:10px;
 }
+
+/* Ajustes do exercício Jogo de Adivinhação */
+.adivinhacao-exercise .block-card-wide img{
+  max-width:760px;
+}
