@@ -546,3 +546,18 @@ section[id]{
     align-items:start;
   }
 }
+
+/* Ajuste específico: o procedimento VerificarCredencial é maior que os demais blocos. */
+.block-card-wide{
+  grid-template-columns:1fr;
+  align-items:start;
+}
+
+.block-card-wide figure{
+  margin-top:10px;
+}
+
+.block-card-wide img{
+  width:100%;
+  max-width:680px;
+}
