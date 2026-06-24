@@ -561,3 +561,33 @@ section[id]{
   width:100%;
   max-width:680px;
 }
+
+/* Ajustes do exercício Calculadora de IMC */
+.logic-card + .logic-card{
+  margin-top:24px;
+}
+
+.inline-logo-figure{
+  margin:10px 0 0;
+  text-align:center;
+}
+
+.inline-logo-figure img{
+  max-width:150px;
+  width:100%;
+  height:auto;
+  border-radius:14px;
+}
+
+.table-image-figure{
+  margin:12px 0;
+  text-align:center;
+  overflow-x:auto;
+}
+
+.table-image-figure img{
+  max-width:100%;
+  height:auto;
+  border:1px solid #d3e0ef;
+  border-radius:10px;
+}
