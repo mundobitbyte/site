@@ -1413,6 +1413,197 @@
         <p>Como grandes sistemas verificam credenciais sem expor as senhas dos usuários?</p>
       </div>
     </article>
+    <article class="logic-card imc-exercise">
+      <div class="panel-title">Exercício 3</div>
+      <h3>Calculadora de IMC</h3>
+
+      <div class="story-panel">
+        <h4>Situação-Problema</h4>
+        <p>Imagine que você foi contratado para desenvolver um aplicativo simples para auxiliar profissionais da área da saúde no cálculo do Índice de Massa Corporal (IMC).</p>
+        <p>O IMC é uma medida utilizada para relacionar peso e altura, permitindo uma avaliação inicial da condição corporal de uma pessoa.</p>
+        <p>Seu desafio é criar um aplicativo capaz de calcular automaticamente o IMC e informar a classificação correspondente de acordo com uma tabela de referência.</p>
+      </div>
+
+      <div class="concept-grid">
+        <article>
+          <h4>Objetivo</h4>
+          <ul>
+            <li>Informar peso e altura.</li>
+            <li>Calcular o IMC.</li>
+            <li>Identificar a situação correspondente.</li>
+            <li>Exibir o resultado em uma mensagem.</li>
+          </ul>
+        </article>
+        <article>
+          <h4>O que você vai aprender</h4>
+          <ul>
+            <li>Entrada de dados numéricos.</li>
+            <li>Operações matemáticas.</li>
+            <li>Variáveis globais.</li>
+            <li>Procedimentos e condicionais.</li>
+          </ul>
+        </article>
+        <article>
+          <h4>Arquivo necessário</h4>
+          <ul>
+            <li><strong>IMC.png</strong></li>
+          </ul>
+          <figure class="inline-logo-figure">
+            <img src="../img/appinventor/imc_logo.webp" alt="Imagem de referência para o aplicativo de IMC" loading="lazy" decoding="async">
+          </figure>
+        </article>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Componentes utilizados</h4>
+        <div class="table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr><th>Componente</th><th>Nome</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Tela</td><td>Screen1</td></tr>
+              <tr><td>Organização Vertical</td><td>OrgTopo</td></tr>
+              <tr><td>Organização Vertical</td><td>OrgMeio</td></tr>
+              <tr><td>Organização Horizontal</td><td>OrgBase</td></tr>
+              <tr><td>Imagem</td><td>ImgLogo</td></tr>
+              <tr><td>Rótulo</td><td>legPeso</td></tr>
+              <tr><td>Caixa de Texto</td><td>cxPeso</td></tr>
+              <tr><td>Rótulo</td><td>legAltura</td></tr>
+              <tr><td>Caixa de Texto</td><td>cxAltura</td></tr>
+              <tr><td>Botão</td><td>btCalcular</td></tr>
+              <tr><td>Botão</td><td>btLimpar</td></tr>
+              <tr><td>Notificador</td><td>Notificador1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Configurando a Screen1</h4>
+        <p>Antes de inserir os componentes, configure a tela principal do aplicativo.</p>
+        <div class="table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr><th>Propriedade</th><th>Valor</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Título</td><td>IMC</td></tr>
+              <tr><td>AlinhamentoHorizontal</td><td>Esquerda</td></tr>
+              <tr><td>AlinhamentoVertical</td><td>Topo</td></tr>
+              <tr><td>Orientação da Tela</td><td>Retrato</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="lampada-layout">
+        <div class="exercise-text">
+          <h4>Montando a interface</h4>
+          <p>Monte uma tela semelhante ao modelo apresentado. Ela deve conter o logo do IMC, os campos para peso e altura e os botões Calcular e Limpar.</p>
+          <div class="table-wrap">
+            <table class="content-table">
+              <thead>
+                <tr><th>Componente</th><th>Nome</th><th>Função</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>ImgLogo</td><td>ImgLogo</td><td>Exibir a imagem principal do aplicativo.</td></tr>
+                <tr><td>Rótulo</td><td>legPeso</td><td>Orientar a digitação do peso.</td></tr>
+                <tr><td>CaixaDeTexto</td><td>cxPeso</td><td>Receber o peso em kg.</td></tr>
+                <tr><td>Rótulo</td><td>legAltura</td><td>Orientar a digitação da altura.</td></tr>
+                <tr><td>CaixaDeTexto</td><td>cxAltura</td><td>Receber a altura em metros.</td></tr>
+                <tr><td>Botão</td><td>btCalcular</td><td>Calcular o IMC.</td></tr>
+                <tr><td>Botão</td><td>btLimpar</td><td>Limpar os campos.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <figure class="lampada-interface-figure">
+          <img src="../img/appinventor/imc_interface.webp" alt="Interface do aplicativo Calculadora de IMC" loading="lazy" decoding="async">
+          <figcaption>Modelo da interface do aplicativo.</figcaption>
+        </figure>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Tabela de Classificação do IMC</h4>
+        <p>Utilize a tabela abaixo para determinar a situação do usuário.</p>
+        <figure class="table-image-figure">
+          <img src="../img/appinventor/imc_tabela_resultado.webp" alt="Tabela de classificação do IMC" loading="lazy" decoding="async">
+        </figure>
+        <div class="notice">
+          Esta tabela é utilizada neste exercício para fins didáticos e não substitui avaliação médica profissional.
+        </div>
+      </div>
+
+      <div class="blocks-section">
+        <h4>Programação dos Blocos</h4>
+
+        <article class="block-card">
+          <div>
+            <h5>Variáveis Globais</h5>
+            <p>Crie as variáveis <strong>global IMC</strong> e <strong>global Situacao</strong>.</p>
+            <ul>
+              <li><strong>IMC</strong> armazenará o valor calculado.</li>
+              <li><strong>Situacao</strong> armazenará a classificação encontrada.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/imc_variaveis.webp" alt="Variáveis globais do aplicativo Calculadora de IMC" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card block-card-wide">
+          <div>
+            <h5>Procedimento VerificarSituacao</h5>
+            <p>Crie um procedimento chamado <strong>VerificarSituacao</strong>. Ele será responsável por analisar o valor calculado do IMC e determinar a classificação correspondente.</p>
+            <p>O exemplo apresentado mostra apenas parte das classificações. Complete o procedimento usando todas as faixas da tabela de IMC.</p>
+          </div>
+          <figure><img src="../img/appinventor/imc_procedimento_verificar_situacao.webp" alt="Procedimento VerificarSituacao da Calculadora de IMC" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card block-card-wide">
+          <div>
+            <h5>Botão Calcular</h5>
+            <p>Calcula o IMC, chama o procedimento <strong>VerificarSituacao</strong> e mostra o resultado com duas casas decimais no Notificador.</p>
+          </div>
+          <figure><img src="../img/appinventor/imc_botao_calcular.webp" alt="Blocos do botão Calcular do aplicativo de IMC" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Botão Limpar</h5>
+            <p>Limpa os campos de peso e altura e posiciona o cursor novamente em <strong>cxPeso</strong>.</p>
+          </div>
+          <figure><img src="../img/appinventor/imc_botao_limpar.webp" alt="Blocos do botão Limpar do aplicativo de IMC" loading="lazy" decoding="async"></figure>
+        </article>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Testando o aplicativo</h4>
+        <ul class="checklist">
+          <li>O peso é digitado corretamente.</li>
+          <li>A altura é digitada corretamente.</li>
+          <li>O IMC é calculado corretamente.</li>
+          <li>O resultado aparece com duas casas decimais.</li>
+          <li>A situação exibida corresponde à tabela.</li>
+          <li>O botão Limpar apaga os campos.</li>
+          <li>O cursor retorna para o campo peso.</li>
+        </ul>
+      </div>
+
+      <div class="notice">
+        <strong>Aplicação no mundo real:</strong> aplicativos semelhantes são utilizados em academias, clínicas, consultórios de nutrição, aplicativos de saúde, smartwatches e programas de acompanhamento físico.
+      </div>
+
+      <div class="challenge">
+        <strong>Desafio Extra — Validação de Dados:</strong> impeça o cálculo quando o peso estiver vazio, a altura estiver vazia ou a altura for igual a zero. Nesses casos, exiba uma mensagem orientando o usuário a preencher corretamente os campos.
+      </div>
+
+      <div class="activity-box">
+        <h4>Para pensar</h4>
+        <p>O IMC considera apenas peso e altura. Duas pessoas com o mesmo IMC podem ter condições físicas diferentes?</p>
+        <p>Quais outras informações poderiam ser utilizadas para complementar uma avaliação física?</p>
+      </div>
+    </article>
+
 
   </div>
 </section>
