@@ -78,9 +78,10 @@ document.addEventListener("DOMContentLoaded",()=>{
       top+=node.offsetTop;
       node=node.offsetParent;
     }
-    // Mantém o título da seção visível abaixo da barra superior
-    // e evita que a navegação passe um pouco do ponto.
-    const menuOffset=72;
+    // Mantém o título da seção visível.
+    // No celular, o menu horizontal fica acima do conteúdo; por isso
+    // precisa de uma folga maior para a seção não ficar escondida.
+    const menuOffset=isSmallScreen() ? 150 : 72;
     return Math.max(0, top-menuOffset);
   }
 
