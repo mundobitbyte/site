@@ -1193,6 +1193,227 @@
         <p>Como você faria para que esse aplicativo controlasse uma lâmpada real utilizando um Arduino ou ESP32?</p>
       </div>
     </article>
+
+    <article class="logic-card login-exercise">
+      <div class="panel-title">Exercício 2</div>
+      <h3>Sistema de Login</h3>
+
+      <div class="story-panel">
+        <h4>Situação-Problema</h4>
+        <p>Imagine que você foi contratado para desenvolver a tela de acesso de um sistema acadêmico. Antes de utilizar os recursos do sistema, os usuários precisam informar um nome de usuário e uma senha.</p>
+        <p>Além de validar as informações digitadas, o sistema deve limitar a quantidade de tentativas incorretas para evitar acessos indevidos.</p>
+        <p>Seu desafio é desenvolver um aplicativo de login utilizando o App Inventor, aplicando conceitos de interface, eventos, validação de dados, procedimentos e variáveis.</p>
+      </div>
+
+      <div class="concept-grid">
+        <article>
+          <h4>Objetivo</h4>
+          <ul>
+            <li>Receber usuário e senha.</li>
+            <li>Validar os dados digitados.</li>
+            <li>Permitir visualizar ou ocultar a senha.</li>
+            <li>Controlar tentativas incorretas.</li>
+          </ul>
+        </article>
+        <article>
+          <h4>O que você vai aprender</h4>
+          <ul>
+            <li>Eventos de foco e clique.</li>
+            <li>Caixa de senha e caixa de seleção.</li>
+            <li>Variável global.</li>
+            <li>Procedimento e validação.</li>
+          </ul>
+        </article>
+        <article>
+          <h4>Arquivos necessários</h4>
+          <ul>
+            <li><strong>login.png</strong></li>
+            <li><strong>identificador.png</strong></li>
+            <li><strong>senha.png</strong></li>
+            <li><strong>exibirSenha.png</strong> e <strong>ocultarSenha.png</strong></li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Componentes utilizados</h4>
+        <div class="table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr><th>Componente</th><th>Nome</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Tela</td><td>Screen1</td></tr>
+              <tr><td>Caixa de Texto</td><td>cxtUsuario</td></tr>
+              <tr><td>Caixa de Senha</td><td>cxtSenha</td></tr>
+              <tr><td>Caixa de Seleção</td><td>cxsMostraSenha</td></tr>
+              <tr><td>Botão</td><td>botOK</td></tr>
+              <tr><td>Imagem</td><td>imgMostraSenha</td></tr>
+              <tr><td>Notificador</td><td>Notifier1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Configurando a Screen1</h4>
+        <p>Antes de inserir os componentes, configure a tela principal do aplicativo.</p>
+        <div class="howto">
+          <h5>Faça assim</h5>
+          <ol>
+            <li>Selecione <strong>Screen1</strong>.</li>
+            <li>Localize a área de propriedades.</li>
+            <li>Configure os valores abaixo.</li>
+          </ol>
+        </div>
+        <div class="table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr><th>Propriedade</th><th>Valor</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Título</td><td>Sistema de Login</td></tr>
+              <tr><td>AlinhamentoHorizontal</td><td>Centro</td></tr>
+              <tr><td>AlinhamentoVertical</td><td>Superior</td></tr>
+              <tr><td>Orientação da Tela</td><td>Retrato</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="lampada-layout">
+        <div class="exercise-text">
+          <h4>Montando a interface</h4>
+          <p>Monte uma tela semelhante ao modelo apresentado. Ela deve conter o título do aplicativo, ícone de login, campo de usuário, campo de senha, opção para mostrar ou ocultar a senha, botão OK e Notificador.</p>
+          <div class="table-wrap">
+            <table class="content-table">
+              <thead>
+                <tr><th>Componente</th><th>Nome</th><th>Função</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>CaixaDeTexto</td><td>cxtUsuario</td><td>Receber o nome do usuário.</td></tr>
+                <tr><td>CaixaDeSenha</td><td>cxtSenha</td><td>Receber a senha digitada.</td></tr>
+                <tr><td>CaixaDeSeleção</td><td>cxsMostraSenha</td><td>Alternar entre mostrar e ocultar a senha.</td></tr>
+                <tr><td>Botão</td><td>botOK</td><td>Confirmar os dados informados.</td></tr>
+                <tr><td>Imagem</td><td>imgMostraSenha</td><td>Exibir o ícone visual de mostrar ou ocultar senha.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="notice">
+            <strong>Atenção:</strong> a CaixaDeSenha já oculta os caracteres digitados. A caixa de seleção será usada para alternar a propriedade que permite visualizar ou esconder a senha.
+          </div>
+        </div>
+        <figure class="lampada-interface-figure">
+          <img src="../img/appinventor/login_interface.webp" alt="Interface do aplicativo Sistema de Login" loading="lazy" decoding="async">
+          <figcaption>Modelo da interface do aplicativo.</figcaption>
+        </figure>
+      </div>
+
+      <div class="blocks-section">
+        <h4>Programação dos Blocos</h4>
+
+        <article class="block-card">
+          <div>
+            <h5>Variável global — tentativas</h5>
+            <p>Crie a variável <strong>global tentativas</strong> com valor inicial <strong>0</strong>.</p>
+            <p>Ela será usada para contar quantas vezes o usuário informou dados incorretos.</p>
+          </div>
+          <figure><img src="../img/appinventor/login_variavel_tentativas.webp" alt="Bloco da variável global tentativas" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Bloco 1 — Inicialização da Tela</h5>
+            <p>Prepara o aplicativo quando a tela é aberta.</p>
+            <ul>
+              <li>Configura o estado inicial dos componentes.</li>
+              <li>Garante que o botão OK esteja disponível para uso.</li>
+              <li>Deixa a tela pronta para receber usuário e senha.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/login_screen1_inicializar.webp" alt="Blocos de inicialização do sistema de login" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Bloco 2 — Eventos de Foco</h5>
+            <p>Quando o usuário entra ou sai dos campos, o aplicativo altera as cores para destacar o campo em uso.</p>
+            <ul>
+              <li>Ao receber foco: fundo amarelo e texto azul.</li>
+              <li>Ao perder foco: fundo branco e texto preto.</li>
+              <li>Esse comportamento vale para usuário e senha.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/login_blocos_foco.webp" alt="Blocos de foco dos campos usuário e senha" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Bloco 3 — Botão OK</h5>
+            <p>Quando o usuário clicar no botão <strong>OK</strong>, o aplicativo chama o procedimento <strong>VerificarCredencial</strong>.</p>
+            <p>Assim, a lógica principal fica organizada em um procedimento separado.</p>
+          </div>
+          <figure><img src="../img/appinventor/login_bot_ok.webp" alt="Bloco do clique no botão OK" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card">
+          <div>
+            <h5>Bloco 4 — Mostrar e Ocultar Senha</h5>
+            <p>Quando a caixa de seleção for alterada, o aplicativo mostra ou oculta a senha digitada.</p>
+            <ul>
+              <li>Se estiver marcada, a senha fica visível.</li>
+              <li>Se estiver desmarcada, a senha volta a ficar oculta.</li>
+              <li>O texto da opção e a imagem também são atualizados.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/login_mostrar_senha.webp" alt="Blocos para mostrar e ocultar a senha" loading="lazy" decoding="async"></figure>
+        </article>
+
+        <article class="block-card block-card-wide">
+          <div>
+            <h5>Bloco 5 — Procedimento VerificarCredencial</h5>
+            <p>Este é o bloco principal do aplicativo. Ele valida campos vazios, verifica usuário e senha, controla as tentativas e bloqueia o acesso quando o limite é atingido.</p>
+            <ul>
+              <li>Se algum campo estiver vazio, exibe uma mensagem de aviso.</li>
+              <li>Se usuário e senha estiverem corretos, libera o acesso.</li>
+              <li>Se estiverem incorretos, soma uma tentativa.</li>
+              <li>Ao atingir o limite, desabilita o botão e encerra o aplicativo.</li>
+            </ul>
+          </div>
+          <figure><img src="../img/appinventor/login_procedimento_verificarcredencial.webp" alt="Procedimento VerificarCredencial" loading="lazy" decoding="async"></figure>
+        </article>
+      </div>
+
+      <div class="exercise-group">
+        <h4>Testando o aplicativo</h4>
+        <ul class="checklist">
+          <li>O campo usuário recebe destaque ao ganhar foco.</li>
+          <li>O campo senha recebe destaque ao ganhar foco.</li>
+          <li>A senha é ocultada inicialmente.</li>
+          <li>A opção Mostrar Senha funciona corretamente.</li>
+          <li>Os campos vazios são validados.</li>
+          <li>O login correto é aceito.</li>
+          <li>O login incorreto incrementa as tentativas.</li>
+          <li>O sistema informa quantas tentativas restam.</li>
+          <li>O sistema bloqueia após três erros.</li>
+        </ul>
+      </div>
+
+      <div class="notice">
+        <strong>Aplicação no mundo real:</strong> sistemas de autenticação são usados em aplicativos bancários, redes sociais, sistemas escolares, lojas virtuais, sistemas corporativos e aplicativos governamentais. Em sistemas reais, as credenciais normalmente são verificadas em servidores ou bancos de dados, com mecanismos adicionais de segurança.
+      </div>
+
+      <div class="challenge">
+        <strong>Desafio Extra — Administrador:</strong> modifique o aplicativo para aceitar dois usuários diferentes: <strong>aluno / 123456</strong> e <strong>admin / 654321</strong>. O sistema deverá permitir o acesso para qualquer uma das combinações válidas.
+      </div>
+
+      <div class="activity-box">
+        <h4>Para pensar</h4>
+        <p>Em sistemas reais, é seguro armazenar usuários e senhas diretamente no aplicativo?</p>
+        <p>Como grandes sistemas verificam credenciais sem expor as senhas dos usuários?</p>
+      </div>
+    </article>
+
   </div>
 </section>
 
