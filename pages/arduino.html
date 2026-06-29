@@ -3,6 +3,7 @@
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Apostila Técnica Interativa — Arduino: Projetos Iniciais com Circuitos Reais</title>
 <link href="../css/arduino.css" rel="stylesheet"/></head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="layout"><nav><h3>Etapas</h3><a class="nav-btn" href="#intro">Fundamentos</a><a class="nav-btn" href="#p1">1 — LED protegido</a><a class="nav-btn" href="#p2">2 — Blink com LED externo</a><a class="nav-btn" href="#p3">3 — Botão com LED</a><a class="nav-btn" href="#p4">4 — Buzzer</a><a class="nav-btn" href="#p5">5 — Potenciômetro com PWM</a>
 <a class="nav-btn" href="#p6">6 — Fotoresistor (LDR)</a>
+<a class="nav-btn" href="#lab1">Lab 1 — Monitor Serial</a>
 <a class="nav-btn" href="#exercicios">99 — Exercícios</a></nav><main>
 <section class="fundamentos-premium" id="intro">
 <div class="fund-hero">
@@ -418,6 +419,56 @@ void loop() {
 <article class="card exercise wide"><h3>11. Exercício proposto</h3><p>Abra o monitor serial, cubra o LDR com a mão e anote os valores aproximados. Depois ilumine o LDR e anote novamente. Com base nesses números, ajuste o limite do <code>if</code> para que o LED acenda somente quando o ambiente estiver escuro.</p></article>
 </div>
 </section>
+<section class="project" id="lab1">
+<div class="projectHead"><span class="badge">Lab 1</span><div><h2>Laboratório 1 — Conversando com o Arduino</h2><p>Reutilizando o circuito do potenciômetro com PWM para visualizar, no Monitor Serial, o que o Arduino está lendo e enviando ao LED.</p></div></div>
+<div class="circuitPanel"><h3>Reutilizando o circuito do Projeto 5</h3><figure class="circuitFigure"><img alt="Laboratório 1 — Conversando com o Arduino: circuito do potenciômetro com LED PWM e Monitor Serial exibindo leitura e brilho." class="circuitPhoto circuitPhotoLarge" decoding="async" height="882" loading="lazy" src="../img/arduino/lab1_conversando_arduino.webp" width="1169"/><figcaption>Laboratório 1 — Conversando com o Arduino: o mesmo circuito do potenciômetro com PWM agora mostra os valores no Monitor Serial.</figcaption></figure></div>
+<div class="cards">
+<article class="card"><h3>1. Antes de começar</h3><p>Até agora, observamos o resultado dos programas principalmente pelo comportamento dos componentes: LED acendendo, buzzer tocando ou brilho variando.</p><p>Neste laboratório, a pergunta muda: <strong>como descobrir quais valores o Arduino está lendo enquanto o programa está funcionando?</strong></p></article>
+<article class="card"><h3>2. Objetivo do laboratório</h3><p>Utilizar o <strong>Monitor Serial</strong> para acompanhar os valores lidos no potenciômetro e os valores enviados ao LED pelo PWM.</p><p>O circuito é conhecido. A novidade está em enxergar os dados que antes ficavam invisíveis.</p></article>
+<article class="card"><h3>3. Componentes utilizados</h3><ul><li>1 Arduino Uno R3</li><li>1 cabo USB</li><li>1 protoboard</li><li>1 potenciômetro de 10 kΩ</li><li>1 LED comum de 5 mm</li><li>1 resistor de 300 Ω</li><li>Jumpers macho-macho</li></ul></article>
+<article class="card wide"><h3>4. Ligações utilizadas</h3><table><tr><th>Componente</th><th>Ligação</th><th>Função</th></tr><tr><td>Potenciômetro</td><td>Terminal central no <strong>A0</strong>; laterais em <strong>5V</strong> e <strong>GND</strong></td><td>Enviar ao Arduino uma leitura analógica variável.</td></tr><tr><td>LED</td><td>Pino PWM <strong>9</strong>, resistor de <strong>300 Ω</strong> e GND</td><td>Variar o brilho de acordo com o valor calculado no programa.</td></tr><tr><td>Monitor Serial</td><td>Comunicação pelo cabo USB</td><td>Mostrar no computador os valores enviados pelo Arduino.</td></tr></table></article>
+<article class="card code wide"><h3>5. Código completo <button onclick="copyCode('lab1code')">Copiar</button></h3><pre id="lab1code">// Laboratório 1: Conversando com o Arduino
+// Utilizando o Monitor Serial.
+// O potenciômetro controla o brilho do LED e envia
+// as informações para o Monitor Serial.
+
+int pinoPotenciometro = A0;
+int pinoLed = 9;
+
+int leituraPotenciometro = 0;
+int brilhoLed = 0;
+
+void setup() {
+  pinMode(pinoLed, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  leituraPotenciometro = analogRead(pinoPotenciometro);
+
+  brilhoLed = map(leituraPotenciometro, 0, 1023, 0, 255);
+
+  analogWrite(pinoLed, brilhoLed);
+
+  Serial.print("Leitura: ");
+  Serial.print(leituraPotenciometro);
+
+  Serial.print("   Brilho: ");
+  Serial.println(brilhoLed);
+
+  delay(100);
+}</pre></article>
+<article class="card wide"><h3>6. Entendendo as novidades</h3><div class="explain"><p><code>Serial.begin(9600);</code> — inicia a comunicação entre o Arduino e o computador.</p><p><code>Serial.print()</code> — escreve um texto ou valor no Monitor Serial sem mudar de linha.</p><p><code>Serial.println()</code> — escreve um texto ou valor e muda para a próxima linha.</p><p><code>9600</code> — representa a velocidade da comunicação. Use o mesmo valor no programa e no Monitor Serial.</p></div></article>
+<article class="card"><h3>7. O que observar</h3><p>Ao girar o potenciômetro, duas coisas devem acontecer ao mesmo tempo:</p><ul><li>o brilho do LED muda;</li><li>os valores aparecem no Monitor Serial.</li></ul><p>Você deverá visualizar algo parecido com:</p><pre>Leitura: 532   Brilho: 132</pre></article>
+<article class="card"><h3>8. Pense um pouco</h3><p>O potenciômetro gera leituras de aproximadamente <strong>0 a 1023</strong>.</p><p>O brilho do LED usa valores de aproximadamente <strong>0 a 255</strong>.</p><p>É por isso que usamos a função <code>map()</code>: ela adapta a faixa de valores da entrada analógica para a faixa usada pelo PWM.</p></article>
+<article class="card"><h3>9. Testando</h3><ol><li>Envie o código para o Arduino.</li><li>Abra o <strong>Monitor Serial</strong>.</li><li>Confira se a velocidade está em <strong>9600</strong>.</li><li>Gire lentamente o potenciômetro.</li><li>Observe a relação entre leitura, brilho e LED.</li></ol></article>
+<article class="card worked"><h3>10. O que foi trabalhado</h3><ul><li>Monitor Serial como ferramenta de teste</li><li>Visualização de valores em tempo real</li><li>Comunicação entre Arduino e computador</li><li>Relação entre leitura analógica e PWM</li><li>Uso de Serial.begin(), Serial.print() e Serial.println()</li><li>Reforço do uso da função map()</li></ul></article>
+<article class="card exercise wide"><h3>11. Experimente</h3><p><strong>1.</strong> Altere o <code>delay(100)</code> para <code>delay(500)</code>. O que mudou na exibição dos valores?</p><p><strong>2.</strong> Gire o potenciômetro até aproximadamente a metade. Quais valores aparecem em <strong>Leitura</strong> e <strong>Brilho</strong>?</p><p><strong>3.</strong> Em outro momento, teste a mesma ideia com o circuito do LDR. O que muda: o programa ou os valores lidos?</p></article>
+</div>
+</section>
+
 <section class="project exercises-section" id="exercicios">
 <div class="exercises-head">
 <span class="badge">99</span>
@@ -430,7 +481,7 @@ void loop() {
 </div>
 <div class="exercise-tabs">
 <a href="#ex-fundamentos">Fundamentos de Arduino, eletricidade e protoboard</a><a href="#ex-led">Projeto 1 — LED protegido</a><a href="#ex-blink">Projeto 2 — Blink com LED externo</a><a href="#ex-botao">Projeto 3 — Botão com LED</a><a href="#ex-buzzer">Projeto 4 — Buzzer</a><a href="#ex-pwm">Projeto 5 — Potenciômetro com PWM</a>
-<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a></div>
+<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-monitor-serial">Laboratório 1 — Monitor Serial</a></div>
 <section class="exercise-topic" id="ex-fundamentos">
 <h3>Fundamentos de Arduino, eletricidade e protoboard</h3>
 <p class="topic-intro">Revise a base conceitual antes dos projetos: alimentação, GND, circuito fechado, resistor, protoboard, entrada, saída, digital, analógico e PWM.</p>
@@ -1174,6 +1225,15 @@ else {
 }</code></pre>
 </div>
 </article>
+</div>
+</section>
+
+<section class="exercise-topic" id="ex-monitor-serial">
+<h3>Laboratório 1 — Monitor Serial</h3>
+<div class="exercise-grid">
+<article class="exercise-box"><h4>Alterando a velocidade da leitura</h4><div class="box-body"><p>No código do laboratório, troque <code>delay(100)</code> por <code>delay(500)</code>. Execute o programa e observe o Monitor Serial.</p><p>Explique o que mudou na exibição dos valores.</p></div></article>
+<article class="exercise-box"><h4>Interpretando os valores</h4><div class="box-body"><p>Gire o potenciômetro até uma posição intermediária e observe os valores exibidos no Monitor Serial.</p><p>Anote um exemplo de leitura e brilho. Depois explique por que o valor do brilho é menor que o valor da leitura.</p></div></article>
+<article class="exercise-box wide"><h4>Simplificando a saída</h4><div class="box-body"><p>Modifique o código para mostrar apenas a leitura do potenciômetro no Monitor Serial.</p><p>O objetivo é exibir somente números, um por linha.</p></div></article>
 </div>
 </section>
 </section>
