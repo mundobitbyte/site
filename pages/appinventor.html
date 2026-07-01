@@ -26,6 +26,8 @@
   <a class="nav-btn" href="#interface">5 - Interface</a>
   <a class="nav-btn" href="#execucao">6 - Executando</a>
   <a class="nav-btn" href="#blocos">7 - Blocos</a>
+  <a class="nav-btn" href="#usando-api">8 - Usando API</a>
+  <a class="nav-btn" href="#publicacao-app">9 - Publicação APP</a>
   <div class="nav-group nav-exercises">
     <button class="nav-btn nav-toggle" type="button" data-target="exercicios" aria-expanded="false">
       <span>99 - Exercícios</span>
@@ -813,6 +815,236 @@
   </div>
 </section>
 
+
+
+<section id="usando-api" class="section-card cep-api-project">
+  <div class="section-head">
+    <span class="badge">8</span>
+    <div>
+      <h2>Projeto 2 — Usando API: Consulta CEP</h2>
+      <p>Agora o aplicativo passa a buscar informações na internet usando o componente Web do App Inventor.</p>
+    </div>
+  </div>
+
+  <div class="notice">
+    <strong>Foco deste projeto:</strong> aprender como um aplicativo consulta uma API, recebe uma resposta em JSON e atualiza a tela com os dados retornados. O App Inventor será a ferramenta para praticar esse fluxo.
+  </div>
+
+  <div class="story-panel">
+    <h4>Contextualização</h4>
+    <p>Muitos aplicativos não possuem todas as informações dentro do próprio celular. Eles consultam serviços disponíveis na internet para buscar dados atualizados, como CEP, clima, mapas, cotação de moedas, notícias e informações de produtos.</p>
+    <p>Neste projeto, o aplicativo enviará um CEP para o serviço ViaCEP e receberá como resposta dados de endereço. Para manter o foco, serão exibidos apenas a <strong>cidade</strong> e o <strong>estado</strong>.</p>
+  </div>
+
+  <div class="story-panel">
+    <h4>Situação-problema</h4>
+    <p>Imagine que uma empresa precisa criar uma tela simples para facilitar o preenchimento de cadastros. Em vez de pedir que o usuário digite cidade e estado manualmente, o aplicativo pode consultar essas informações automaticamente a partir do CEP.</p>
+    <p>Seu desafio é criar um aplicativo no App Inventor que leia um CEP, consulte a API ViaCEP e mostre na tela a cidade e o estado encontrados.</p>
+  </div>
+
+  <div class="concept-grid">
+    <article>
+      <h4>O que é uma API?</h4>
+      <p>API é uma forma organizada de comunicação entre sistemas. Um aplicativo faz um pedido, um serviço processa esse pedido e devolve uma resposta em um formato que o programa consegue interpretar.</p>
+    </article>
+    <article>
+      <h4>Cliente e servidor</h4>
+      <p>No nosso exemplo, o aplicativo feito no App Inventor é o cliente. O ViaCEP é o serviço consultado. A internet faz a ponte entre os dois.</p>
+    </article>
+    <article>
+      <h4>Fluxo do projeto</h4>
+      <p>Digitar CEP → montar URL → consultar API → receber JSON → extrair cidade e estado → atualizar a tela.</p>
+    </article>
+  </div>
+
+  <div class="exercise-group">
+    <h4>Conhecendo o ViaCEP</h4>
+    <p>O ViaCEP é um serviço gratuito para consulta de CEPs brasileiros. A consulta é feita por meio de uma URL organizada.</p>
+    <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr><th>Parte</th><th>Significado</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>https://viacep.com.br/ws/</strong></td><td>Endereço base do serviço.</td></tr>
+          <tr><td><strong>01001000</strong></td><td>CEP enviado para consulta.</td></tr>
+          <tr><td><strong>/json/</strong></td><td>Formato da resposta solicitada.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="compact-figure" style="max-width:900px;margin:1.5rem auto;text-align:center;">
+      <img src="../img/reactnative/api_cep_site_inicio.webp" alt="Site ViaCEP" loading="lazy" decoding="async" style="width:100%;height:auto;">
+      <figcaption>ViaCEP: serviço usado para consultar dados de endereço.</figcaption>
+    </figure>
+    <div class="notice">No aplicativo, o CEP digitado será encaixado no meio da URL: <strong>https://viacep.com.br/ws/CEP/json/</strong>.</div>
+  </div>
+
+  <div class="exercise-group">
+    <h4>Entendendo o JSON</h4>
+    <p>JSON é um formato de dados baseado em pares de <strong>chave</strong> e <strong>valor</strong>. No retorno do ViaCEP, cada informação possui um nome.</p>
+    <figure class="compact-figure" style="max-width:900px;margin:1.5rem auto;text-align:center;">
+      <img src="../img/reactnative/api_cep_json_viacep.webp" alt="Resposta JSON do ViaCEP" loading="lazy" decoding="async" style="width:100%;height:auto;">
+      <figcaption>Resposta JSON retornada pela API.</figcaption>
+    </figure>
+    <div class="concept-grid">
+      <article><h4>uf</h4><p>Indica o estado retornado pela API. Exemplo: <strong>SP</strong>.</p></article>
+      <article><h4>localidade</h4><p>Indica a cidade retornada pela API. Exemplo: <strong>São Paulo</strong>.</p></article>
+      <article><h4>conteúdoDaResposta</h4><p>No App Inventor, é o texto recebido pelo componente Web depois da consulta.</p></article>
+    </div>
+  </div>
+
+  <div class="lampada-layout">
+    <div class="exercise-text">
+      <h4>Construindo a interface</h4>
+      <p>Monte uma tela simples para digitar o CEP, pesquisar e mostrar os campos de resultado.</p>
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead><tr><th>Componente</th><th>Nome</th><th>Função</th></tr></thead>
+          <tbody>
+            <tr><td>Legenda</td><td>LegCEP</td><td>Orientar o usuário sobre o CEP.</td></tr>
+            <tr><td>CaixaDeTexto</td><td>CxCEP</td><td>Receber o CEP digitado.</td></tr>
+            <tr><td>Botão</td><td>BtPesquisar</td><td>Iniciar a consulta na API.</td></tr>
+            <tr><td>Legenda</td><td>LegEstado</td><td>Identificar o campo de estado.</td></tr>
+            <tr><td>CaixaDeTexto</td><td>CxEstado</td><td>Mostrar o estado retornado.</td></tr>
+            <tr><td>Legenda</td><td>LegCidade</td><td>Identificar o campo de cidade.</td></tr>
+            <tr><td>CaixaDeTexto</td><td>CxCidade</td><td>Mostrar a cidade retornada.</td></tr>
+            <tr><td>Web</td><td>Web1</td><td>Consultar a API e receber a resposta.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <figure class="lampada-interface-figure">
+      <img src="../img/appinventor/cep_interface_final.webp" alt="Tela do aplicativo Consulta Cidade por CEP no App Inventor" loading="lazy" decoding="async">
+      <figcaption>Modelo da interface do aplicativo Consulta Cidade por CEP.</figcaption>
+    </figure>
+  </div>
+
+  <div class="blocks-section">
+    <h4>Componentes utilizados</h4>
+    <article class="block-card">
+      <div>
+        <h5>Interface de Usuário</h5>
+        <p>Os componentes visuais ficam na categoria Interface de Usuário: legenda, caixa de texto e botão.</p>
+      </div>
+      <figure><img src="../img/appinventor/cep_interface_usuario.webp" alt="Categoria Interface de Usuário no App Inventor" loading="lazy" decoding="async"></figure>
+    </article>
+
+    <article class="block-card">
+      <div>
+        <h5>Árvore de componentes</h5>
+        <p>A tela utiliza poucos componentes visuais e um componente invisível: <strong>Web1</strong>.</p>
+      </div>
+      <figure><img src="../img/appinventor/cep_componentes_arvore.webp" alt="Árvore de componentes do aplicativo Consulta CEP" loading="lazy" decoding="async"></figure>
+    </article>
+
+    <article class="block-card">
+      <div>
+        <h5>O componente Web</h5>
+        <p>O componente <strong>Web</strong> fica na categoria Conectividade. Ele permite acessar endereços da internet, enviar requisições e receber respostas.</p>
+        <p>Ao ser inserido, ele aparece na parte inferior como componente invisível.</p>
+      </div>
+      <figure><img src="../img/appinventor/cep_componente_web.webp" alt="Componente Web na categoria Conectividade" loading="lazy" decoding="async"></figure>
+    </article>
+
+    <article class="block-card block-card-wide">
+      <div>
+        <h5>Enviando a consulta</h5>
+        <p>Quando o botão <strong>BtPesquisar</strong> for clicado, o aplicativo monta a URL juntando o endereço base do ViaCEP, o CEP digitado e o final <strong>/json/</strong>.</p>
+        <p>Depois disso, o bloco chama <strong>Web1.Obter</strong> para fazer a consulta.</p>
+      </div>
+      <figure><img src="../img/appinventor/cep_bloco_botao_pesquisar.webp" alt="Bloco do botão Pesquisar montando a URL do ViaCEP" loading="lazy" decoding="async"></figure>
+    </article>
+
+    <article class="block-card block-card-wide">
+      <div>
+        <h5>Recebendo a resposta</h5>
+        <p>Quando o componente Web recebe a resposta, o evento <strong>Web1.RecebeuTexto</strong> é executado automaticamente.</p>
+        <p>O texto recebido é decodificado como JSON. Em seguida, o aplicativo busca as chaves <strong>uf</strong> e <strong>localidade</strong> para preencher estado e cidade.</p>
+      </div>
+      <figure><img src="../img/appinventor/cep_bloco_web_recebeu_texto.webp" alt="Bloco Web1.RecebeuTexto lendo o JSON do ViaCEP" loading="lazy" decoding="async"></figure>
+    </article>
+  </div>
+
+  <div class="exercise-group">
+    <h4>Testando o aplicativo</h4>
+    <ul class="checklist">
+      <li>Execute o aplicativo usando o MIT AI2 Companion.</li>
+      <li>Digite um CEP válido no campo <strong>CxCEP</strong>.</li>
+      <li>Clique em <strong>Pesquisar</strong>.</li>
+      <li>Verifique se o estado aparece em <strong>CxEstado</strong>.</li>
+      <li>Verifique se a cidade aparece em <strong>CxCidade</strong>.</li>
+      <li>Teste outro CEP e observe se os dados mudam.</li>
+    </ul>
+    <figure class="compact-figure" style="max-width:360px;margin:1.5rem auto;text-align:center;">
+      <img src="../img/appinventor/cep_interface_final.webp" alt="Resultado final do aplicativo Consulta CEP" loading="lazy" decoding="async" style="width:100%;height:auto;">
+      <figcaption>Resultado visual esperado do aplicativo.</figcaption>
+    </figure>
+  </div>
+
+  <div class="challenge">
+    <strong>Desafios:</strong>
+    <ol>
+      <li>Mostre também o bairro retornado pela API.</li>
+      <li>Mostre também o logradouro.</li>
+      <li>Crie um botão Limpar para apagar CEP, cidade e estado.</li>
+      <li>Pesquise o que acontece quando o CEP não é encontrado.</li>
+    </ol>
+  </div>
+
+  <div class="activity-box">
+    <h4>Você acabou de aprender</h4>
+    <ul>
+      <li>Que uma API permite a comunicação entre sistemas.</li>
+      <li>Como montar uma URL de consulta.</li>
+      <li>Como usar o componente Web do App Inventor.</li>
+      <li>Como receber uma resposta em JSON.</li>
+      <li>Como buscar valores por chave dentro de um dicionário.</li>
+      <li>Como atualizar a interface com dados vindos da internet.</li>
+    </ul>
+  </div>
+
+  <div class="notice">
+    <strong>Conclusão:</strong> neste projeto, o aplicativo deixou de trabalhar apenas com dados digitados na tela e passou a consultar informações externas. Esse é um passo importante para criar aplicativos mais úteis e conectados. No próximo avanço, esse conhecimento ajudará a transformar uma ideia criada com auxílio de IA em um aplicativo real: <strong>Do Assistente ao Aplicativo</strong>.
+  </div>
+</section>
+
+<section id="publicacao-app" class="section-card cep-api-project">
+  <div class="section-head">
+    <span class="badge">9</span>
+    <div>
+      <h2>Publicação APP</h2>
+      <p>Depois de testar o aplicativo no Companion, o App Inventor permite gerar arquivos para instalação ou publicação.</p>
+    </div>
+  </div>
+
+  <div class="notice">
+    <strong>Importante:</strong> esta etapa não substitui os testes. Primeiro o aplicativo deve funcionar corretamente no MIT AI2 Companion. Depois disso, ele pode ser compilado.
+  </div>
+
+  <div class="exercise-group">
+    <h4>Compilando o aplicativo</h4>
+    <p>O menu <strong>Compilar</strong> oferece formatos diferentes para distribuir o aplicativo Android.</p>
+    <div class="image-pair">
+      <figure class="compact-figure"><img src="../img/appinventor/cep_compilar_apk.webp" alt="Opção Android App APK" loading="lazy" decoding="async"><figcaption>APK: usado para instalar diretamente em aparelhos Android.</figcaption></figure>
+      <figure class="compact-figure"><img src="../img/appinventor/cep_compilar_aab.webp" alt="Opção Android App Bundle AAB" loading="lazy" decoding="async"><figcaption>AAB: formato usado para publicação na Google Play.</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="concept-grid">
+    <article>
+      <h4>APK</h4>
+      <p>Arquivo usado para instalar o aplicativo diretamente em um dispositivo Android. É útil para testes, demonstrações e instalação manual.</p>
+    </article>
+    <article>
+      <h4>AAB</h4>
+      <p>Formato utilizado para publicação na Google Play. Ele é indicado quando o objetivo é distribuir o aplicativo oficialmente pela loja.</p>
+    </article>
+    <article>
+      <h4>Antes de publicar</h4>
+      <p>Revise interface, textos, funcionamento, permissões, imagens e testes. Publicar é uma etapa posterior ao desenvolvimento.</p>
+    </article>
+  </div>
+</section>
 <section id="exercicios" class="section-card exercises-interface">
   <div class="section-head">
     <span class="badge">99</span>
