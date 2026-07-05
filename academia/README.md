@@ -1,13 +1,11 @@
 # Academia Mundo bit Byte
 
-Estrutura limpa da Academia, separada do site antigo.
+Estrutura independente da Academia.
 
-## Arquivos principais
+Publicação recomendada:
+1. Copiar a pasta `academia` para dentro do repositório `site`.
+2. Executar `git add academia`.
+3. Fazer commit e push.
 
-- `index.html` — página inicial da Academia.
-- `css/academia.css` — identidade visual da Academia.
-- `js/academia.js` — base JavaScript da Academia.
-- `cursos/chatgpt-na-vida-real/index.html` — página do curso.
-- `cursos/chatgpt-na-vida-real/modulo-01.html` — Módulo 1 finalizado.
-
-Não foram incluídos módulos antigos do site Mundo bit Byte.
+URL esperada no domínio atual:
+`https://www.mundobitbyte.com.br/academia/`
