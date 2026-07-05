@@ -1,6 +1,11 @@
-(function(){
-  const started = localStorage.getItem('mbbAcademiaStarted');
-  if(!started){
-    localStorage.setItem('mbbAcademiaStarted','true');
-  }
-})();
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', event => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if(target){
+        event.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+});
