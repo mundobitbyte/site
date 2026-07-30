@@ -78,3 +78,19 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
     display:none !important;
   }
 }
+
+
+/* ===== 99 — Exercícios de Python ===== */
+.exercises-99 .exercise-level{margin-top:22px;border-top:1px solid #d6e0ee;padding-top:18px;scroll-margin-top:18px}
+.exercises-99 .exercise-item p{margin:8px 0 10px}
+.exercises-99 .exercise-solved{background:#f8fbff;border:1px solid #d6e0ee;border-radius:14px;padding:14px;margin:14px 0}
+.exercises-99 .exercise-solved h3{font-size:20px;margin-bottom:10px;color:#1e3a8a}
+.exercises-99 .badge{cursor:help}.exercises-99 pre{max-height:none}
+.theory-hero{background:linear-gradient(135deg,#eaf2ff,#fff);border:1px solid #bfdbfe;border-radius:14px;padding:18px;margin-bottom:16px}
+.intro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.intro-box{border:1px solid var(--line);border-radius:10px;padding:15px;background:#f8fbff;line-height:1.42}
+.question{margin-bottom:12px;padding:12px;border:1px solid #dbeafe;background:#f8fbff;border-radius:10px}.question strong{color:var(--dark)}
+.badge{display:inline-block;background:#e0f2fe;color:#075985;border:1px solid #bae6fd;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:800;margin-bottom:7px}
+.theory-view ul,.theory-view ol{margin:8px 0 12px 22px}.theory-view li{margin:5px 0}.theory-view pre{display:block;background:#0f172a;color:#f8fafc;border-radius:8px;padding:12px;margin:8px 0;white-space:pre-wrap;overflow:auto}.example-box{background:#f8fbff;border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0}
+.nav-group{position:relative}.nav-toggle{display:flex;align-items:center;justify-content:space-between;gap:8px}.nav-toggle .nav-caret{font-size:12px;line-height:1;transition:transform .18s ease}.nav-group.open .nav-caret{transform:rotate(90deg)}
+.nav-tree{display:none;margin:3px 0 8px 10px;padding:7px;border-left:2px solid #d6e0ee}.nav-group.open .nav-tree{display:block}.nav-sub{display:block;width:100%;border:0;background:#f8fbff;color:#1e3a8a;cursor:pointer;text-align:left;font-size:11.5px;font-weight:750;padding:7px 8px;border-radius:7px;margin:3px 0}.nav-sub:hover,.nav-sub.active{background:#eaf2ff;color:#2563eb}.nav-sub.active{box-shadow:inset 0 0 0 1px #b9d3f6}
+@media(max-width:1050px){.intro-grid{grid-template-columns:1fr}nav{position:sticky;top:46px;z-index:30}.nav-group{flex:0 0 auto}.nav-tree{position:fixed;left:var(--submenu-left,12px);top:var(--submenu-top,92px);width:min(290px,calc(100vw - 24px));margin:0;padding:8px;border:1px solid #d6e0ee;border-radius:12px;background:#fff;box-shadow:0 12px 26px rgba(15,23,42,.18);z-index:999}.nav-sub{font-size:12px;margin:4px 0;padding:9px 10px}}
