@@ -3,6 +3,7 @@
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Apostila Técnica Interativa — Arduino: Projetos Iniciais com Circuitos Reais</title>
 <link href="../css/arduino.css" rel="stylesheet"/></head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="layout"><nav><h3>Etapas</h3><a class="nav-btn" href="#intro">Fundamentos</a><a class="nav-btn" href="#p1">1 — LED protegido</a><a class="nav-btn" href="#p2">2 — Blink com LED externo</a><a class="nav-btn" href="#p3">3 — Botão com LED</a><a class="nav-btn" href="#p4">4 — Buzzer</a><a class="nav-btn" href="#p5">5 — Potenciômetro com PWM</a>
 <a class="nav-btn" href="#p6">6 — Fotoresistor (LDR)</a>
+<a class="nav-btn" href="#p7">7 — Sensor de distância</a>
 <a class="nav-btn" href="#lab1">Lab 1 — Monitor Serial</a>
 <a class="nav-btn" href="#exercicios">99 — Exercícios</a></nav><main>
 <section class="fundamentos-premium" id="intro">
@@ -123,6 +124,8 @@
     <span>Potenciômetro com PWM</span>
     <b>→</b>
     <span>Fotoresistor (LDR)</span>
+    <b>→</b>
+    <span>Sensor de distância</span>
 </div>
 </div>
 <div class="closing-panel">
@@ -417,6 +420,61 @@ void loop() {
 <article class="card"><h3>9. Resultado esperado</h3><p>Ao cobrir o LDR com a mão, a leitura no monitor serial deve mudar e o LED deve acender quando o valor ficar abaixo do limite definido no código. Ao iluminar o sensor, o LED deve apagar.</p><p>Dependendo da montagem, da iluminação da sala e da posição do LDR, pode ser necessário ajustar o valor <strong>40</strong> para outro limite.</p></article>
 <article class="card errors wide"><h3>10. Erros comuns</h3><table><tr><th>Erro</th><th>Consequência</th></tr><tr><td>Ligar o LDR sem o resistor de 10 kΩ</td><td>A leitura pode ficar incorreta ou instável.</td></tr><tr><td>Ligar o ponto de leitura em lugar diferente do A0</td><td>O Arduino não lê o sensor conforme o código.</td></tr><tr><td>Usar pino diferente do 7 para o LED sem alterar o código</td><td>O LED não responde ao programa.</td></tr><tr><td>Inverter o LED</td><td>O LED não acende.</td></tr><tr><td>Esquecer o resistor de 300 Ω do LED</td><td>Pode queimar o LED.</td></tr><tr><td>Usar limite 40 sem observar o monitor serial</td><td>O LED pode acender ou apagar fora do momento desejado.</td></tr><tr><td>Não ligar o GND corretamente</td><td>O circuito pode ficar aberto ou apresentar leituras estranhas.</td></tr></table></article>
 <article class="card exercise wide"><h3>11. Exercício proposto</h3><p>Abra o monitor serial, cubra o LDR com a mão e anote os valores aproximados. Depois ilumine o LDR e anote novamente. Com base nesses números, ajuste o limite do <code>if</code> para que o LED acenda somente quando o ambiente estiver escuro.</p></article>
+</div>
+</section>
+<section class="project" id="p7">
+<div class="projectHead"><span class="badge">P7</span><div><h2>Projeto 7 — Sensor de distância com HC-SR04</h2><p>O Arduino envia um pulso ultrassônico, mede o tempo do eco e calcula a distância até um objeto.</p></div></div>
+<div class="circuitPanel"><h3>Montagem do circuito</h3><figure class="circuitFigure"><img alt="Projeto 7 — Sensor de distância: Arduino Uno ligado ao sensor ultrassônico HC-SR04, com VCC em 5V, GND em GND, TRIG no pino 3 e ECHO no pino 2." class="circuitPhoto" decoding="async" height="430" loading="lazy" src="../img/arduino/projeto_7_sensor_ultrassonico_hc_sr04.webp" width="643"/><figcaption>Projeto 7 — Sensor de distância: o HC-SR04 recebe alimentação de 5V; o pino TRIG envia o pulso e o pino ECHO informa por quanto tempo o eco demorou para retornar.</figcaption></figure></div>
+<div class="cards">
+<article class="card"><h3>1. Objetivo do projeto</h3><p>Montar um circuito capaz de medir a distância entre o sensor HC-SR04 e um objeto. O Arduino enviará um pequeno pulso pelo pino <strong>TRIG</strong>, aguardará o retorno pelo pino <strong>ECHO</strong> e mostrará o resultado, em centímetros, no Monitor Serial.</p><p>Neste projeto, o aluno passa a trabalhar com uma medição baseada em tempo: o programa não recebe a distância pronta, mas calcula o valor a partir da duração do eco.</p></article>
+<article class="card"><h3>2. Lista exata de componentes</h3><ul><li>1 Arduino Uno R3</li><li>1 cabo USB para alimentar e programar o Arduino</li><li>1 protoboard</li><li>1 sensor ultrassônico HC-SR04</li><li>Jumpers macho-macho</li></ul></article>
+<article class="card wide"><h3>3. Tabela de ligação</h3><table><tr><th>Pino do HC-SR04</th><th>Ligação no Arduino</th><th>Função</th></tr><tr><td><strong>VCC</strong></td><td><strong>5V</strong></td><td>Alimenta o sensor.</td></tr><tr><td><strong>TRIG</strong></td><td>Pino digital <strong>3</strong></td><td>Recebe do Arduino um pulso curto que inicia a medição.</td></tr><tr><td><strong>ECHO</strong></td><td>Pino digital <strong>2</strong></td><td>Permanece em HIGH durante o tempo de ida e volta do som.</td></tr><tr><td><strong>GND</strong></td><td><strong>GND</strong></td><td>Fecha o circuito e fornece a referência elétrica.</td></tr></table></article>
+<article class="card"><h3>4. Explicação da montagem</h3><p>O HC-SR04 possui dois transdutores circulares. Um deles emite ondas ultrassônicas e o outro recebe o eco refletido por um objeto.</p><p>O pino <strong>TRIG</strong> é configurado como saída porque o Arduino envia por ele o comando de início. O pino <strong>ECHO</strong> é configurado como entrada porque o Arduino mede nele a duração do sinal devolvido pelo sensor.</p><p>Os pinos <strong>VCC</strong> e <strong>GND</strong> alimentam o módulo. Nesta montagem, o sensor deve ser alimentado com <strong>5V</strong>.</p></article>
+<article class="card"><h3>5. Como a distância é calculada</h3><p>O sensor mede o tempo que o som leva para ir até o objeto e retornar. Como esse tempo inclui os dois percursos, o cálculo considera apenas metade do caminho.</p><p>No programa, <code>pulseIn()</code> mede a duração do pulso recebido no pino ECHO. Dividindo esse tempo por aproximadamente <strong>58</strong>, obtemos uma estimativa da distância em centímetros.</p><p>O sensor não identifica qual é o objeto. Ele apenas informa o tempo do eco; o Arduino transforma esse tempo em distância.</p></article>
+<article class="card code wide"><h3>6. Código completo <button onclick="copyCode('p7code')">Copiar</button></h3><pre id="p7code">// Projeto 7: Sensor de distância com HC-SR04
+// O Arduino mede o tempo do eco e calcula a distância em centímetros.
+
+const int pinoTrig = 3;
+const int pinoEcho = 2;
+
+long duracao = 0;
+float distancia = 0;
+
+void setup() {
+  pinMode(pinoTrig, OUTPUT);
+  pinMode(pinoEcho, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  distancia = medirDistancia();
+
+  Serial.print("Distancia: ");
+  Serial.print(distancia);
+  Serial.println(" cm");
+
+  delay(200);
+}
+
+float medirDistancia() {
+  digitalWrite(pinoTrig, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(pinoTrig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(pinoTrig, LOW);
+
+  duracao = pulseIn(pinoEcho, HIGH);
+
+  return duracao / 58.0;
+}</pre></article>
+<article class="card wide"><h3>7. Explicação linha por linha</h3><div class="explain"><p><code>const int pinoTrig = 3;</code> — define o pino que enviará o comando de início da medição.</p><p><code>const int pinoEcho = 2;</code> — define o pino que receberá o sinal de retorno.</p><p><code>long duracao = 0;</code> — guarda o tempo do pulso em microssegundos. O tipo <code>long</code> permite armazenar valores maiores.</p><p><code>float distancia = 0;</code> — guarda a distância com possibilidade de casas decimais.</p><p><code>pinMode(pinoTrig, OUTPUT);</code> — configura TRIG como saída.</p><p><code>pinMode(pinoEcho, INPUT);</code> — configura ECHO como entrada.</p><p><code>distancia = medirDistancia();</code> — chama a função e guarda o valor que ela retorna.</p><p><code>digitalWrite(pinoTrig, LOW);</code> — garante que o pino comece desligado.</p><p><code>delayMicroseconds(2);</code> — cria uma pausa curta para estabilizar o sinal.</p><p><code>digitalWrite(pinoTrig, HIGH);</code> e <code>delayMicroseconds(10);</code> — enviam o pulso de 10 microssegundos que inicia a medição.</p><p><code>pulseIn(pinoEcho, HIGH);</code> — mede por quanto tempo o pino ECHO permaneceu em HIGH.</p><p><code>return duracao / 58.0;</code> — converte o tempo medido em uma estimativa de distância e devolve o resultado à função principal.</p><p><code>Serial.print()</code> e <code>Serial.println()</code> — exibem a distância no Monitor Serial.</p></div></article>
+<article class="card worked"><h3>8. O que foi trabalhado</h3><ul><li>Sensor ultrassônico HC-SR04</li><li>Função dos pinos VCC, TRIG, ECHO e GND</li><li>Pino digital configurado como saída e como entrada</li><li>Pulso de 10 microssegundos</li><li>Uso de delayMicroseconds()</li><li>Medição de duração com pulseIn()</li><li>Variáveis dos tipos long e float</li><li>Função com retorno</li><li>Conversão do tempo do eco em distância</li><li>Exibição de dados no Monitor Serial</li></ul></article>
+<article class="card"><h3>9. Resultado esperado</h3><p>Ao abrir o Monitor Serial na velocidade de <strong>9600</strong>, devem aparecer medições semelhantes a:</p><pre>Distancia: 18.45 cm
+Distancia: 18.31 cm
+Distancia: 32.76 cm</pre><p>Ao aproximar ou afastar um objeto da frente do sensor, os valores devem mudar. Pequenas oscilações são normais porque a reflexão do som varia conforme a posição, o formato e o material do objeto.</p></article>
+<article class="card errors wide"><h3>10. Erros comuns</h3><table><tr><th>Erro</th><th>Consequência</th></tr><tr><td>Trocar VCC e GND</td><td>O sensor não funciona e pode ser danificado.</td></tr><tr><td>Ligar TRIG e ECHO nos pinos errados</td><td>O programa não consegue iniciar ou medir corretamente o eco.</td></tr><tr><td>Usar pinos diferentes de 3 e 2 sem alterar o código</td><td>As ligações físicas deixam de corresponder ao programa.</td></tr><tr><td>Não configurar o Monitor Serial em 9600</td><td>Os dados podem aparecer ilegíveis.</td></tr><tr><td>Apontar o sensor para uma superfície muito inclinada ou irregular</td><td>O eco pode ser desviado e a leitura ficar instável.</td></tr><tr><td>Colocar o objeto muito próximo dos transdutores</td><td>A medição pode ficar incorreta porque o sensor possui uma distância mínima de funcionamento.</td></tr><tr><td>Esquecer de dividir o tempo de ida e volta</td><td>O resultado calculado fica aproximadamente duas vezes maior.</td></tr></table></article>
+<article class="card exercise wide"><h3>11. Exercício proposto</h3><p>Posicione uma régua diante do sensor e escolha três distâncias, como 10 cm, 20 cm e 30 cm. Compare os valores da régua com os valores exibidos no Monitor Serial e anote as diferenças encontradas.</p><p>Depois, repita o teste usando objetos de formatos ou materiais diferentes. Observe quais deles produzem leituras mais estáveis e explique por que a reflexão do som pode mudar.</p></article>
 </div>
 </section>
 <section class="project" id="lab1">
