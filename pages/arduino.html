@@ -5,6 +5,7 @@
 <a class="nav-btn" href="#p6">6 — Fotoresistor (LDR)</a>
 <a class="nav-btn" href="#p7">7 — Sensor de distância</a>
 <a class="nav-btn" href="#lab1">Lab 1 — Monitor Serial</a>
+<a class="nav-btn" href="#lab2">Lab 2 — Sensor de ré</a>
 <a class="nav-btn" href="#exercicios">99 — Exercícios</a></nav><main>
 <section class="fundamentos-premium" id="intro">
 <div class="fund-hero">
@@ -527,6 +528,141 @@ void loop() {
 </div>
 </section>
 
+
+<section class="project" id="lab2">
+<div class="projectHead"><span class="badge">Lab 2</span><div><h2>Laboratório 2 — Sensor de ré</h2><p>Reutilizando o HC-SR04 do Projeto 7, LEDs e buzzer para criar alertas visuais e sonoros de proximidade.</p></div></div>
+<div class="circuitPanel"><h3>Ampliando o circuito do Projeto 7</h3><figure class="circuitFigure"><img alt="Laboratório 2 — Sensor de ré: Arduino Uno conectado ao HC-SR04, seis LEDs com resistores e um buzzer passivo." class="circuitPhoto circuitPhotoLarge" decoding="async" height="689" loading="lazy" src="../img/arduino/lab2_sensor_de_re.webp" width="965"/><figcaption>Laboratório 2 — Sensor de ré: quanto menor a distância, mais LEDs acendem e menor fica o intervalo entre os sinais sonoros.</figcaption></figure></div>
+<div class="cards">
+<article class="card"><h3>1. Antes de começar</h3><p>Este laboratório reutiliza a medição desenvolvida no <strong>Projeto 7 — Sensor de distância com HC-SR04</strong>. Mantenha o sensor ligado aos pinos <strong>TRIG 3</strong> e <strong>ECHO 2</strong>.</p><p>Agora serão acrescentados componentes já estudados: seis LEDs, resistores e um buzzer.</p></article>
+<article class="card"><h3>2. Objetivo do laboratório</h3><p>Construir um sistema de alerta de proximidade semelhante a um sensor de ré didático.</p><p>O programa transformará a distância medida em dois tipos de resposta: uma indicação visual com LEDs e um aviso sonoro cujo intervalo diminui à medida que o objeto se aproxima.</p></article>
+<article class="card"><h3>3. Componentes acrescentados</h3><ul><li>1 buzzer passivo de 5 V</li><li>3 LEDs verdes de 5 mm</li><li>2 LEDs amarelos de 5 mm</li><li>1 LED vermelho de 5 mm</li><li>6 resistores de 300 Ω</li><li>Jumpers macho-macho</li></ul><p>Também serão reutilizados o Arduino, a protoboard e o HC-SR04 montados no Projeto 7.</p></article>
+<article class="card"><h3>4. Como os alertas funcionarão</h3><ul><li><strong>Acima de 60 cm:</strong> LEDs apagados e buzzer desligado.</li><li><strong>De 51 a 60 cm:</strong> 1 LED aceso e bipes lentos.</li><li><strong>De 41 a 50 cm:</strong> 2 LEDs acesos.</li><li><strong>De 31 a 40 cm:</strong> 3 LEDs acesos.</li><li><strong>De 21 a 30 cm:</strong> 4 LEDs acesos.</li><li><strong>De 11 a 20 cm:</strong> 5 LEDs acesos e bipes rápidos.</li><li><strong>Até 10 cm:</strong> todos os LEDs acesos e sinal contínuo.</li></ul></article>
+<article class="card wide"><h3>5. Tabela de ligações</h3><table><tr><th>Componente</th><th>Ligação no Arduino</th><th>Função</th></tr><tr><td>HC-SR04 — TRIG</td><td>Pino digital <strong>3</strong></td><td>Iniciar a medição ultrassônica.</td></tr><tr><td>HC-SR04 — ECHO</td><td>Pino digital <strong>2</strong></td><td>Informar a duração do eco.</td></tr><tr><td>Buzzer passivo</td><td>Pino digital <strong>7</strong> e GND</td><td>Produzir o alerta sonoro.</td></tr><tr><td>LED verde 1</td><td>Pino digital <strong>8</strong>, resistor de 300 Ω e GND</td><td>Primeiro nível de aproximação.</td></tr><tr><td>LED verde 2</td><td>Pino digital <strong>9</strong>, resistor de 300 Ω e GND</td><td>Segundo nível de aproximação.</td></tr><tr><td>LED verde 3</td><td>Pino digital <strong>10</strong>, resistor de 300 Ω e GND</td><td>Terceiro nível de aproximação.</td></tr><tr><td>LED amarelo 1</td><td>Pino digital <strong>11</strong>, resistor de 300 Ω e GND</td><td>Alerta intermediário.</td></tr><tr><td>LED amarelo 2</td><td>Pino digital <strong>12</strong>, resistor de 300 Ω e GND</td><td>Alerta elevado.</td></tr><tr><td>LED vermelho</td><td>Pino digital <strong>13</strong>, resistor de 300 Ω e GND</td><td>Distância crítica.</td></tr></table></article>
+<article class="card code wide"><h3>6. Código completo <button onclick="copyCode('lab2code')">Copiar</button></h3><pre id="lab2code">// Laboratório 2: Sensor de ré
+// Reutiliza o HC-SR04 do Projeto 7.
+
+const int pinoTrig = 3;
+const int pinoEcho = 2;
+const int pinoBuzzer = 7;
+
+float distancia = 0;
+int intervalo = 0;
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(pinoTrig, OUTPUT);
+  pinMode(pinoEcho, INPUT);
+  pinMode(pinoBuzzer, OUTPUT);
+
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  distancia = medirDistancia();
+
+  Serial.print("Distancia: ");
+  Serial.print(distancia);
+  Serial.println(" cm");
+
+  if (distancia &gt; 60) {
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
+    digitalWrite(10, LOW);
+    digitalWrite(11, LOW);
+    digitalWrite(12, LOW);
+    digitalWrite(13, LOW);
+    noTone(pinoBuzzer);
+  }
+  else if (distancia &lt;= 10) {
+    digitalWrite(8, HIGH);
+    digitalWrite(9, HIGH);
+    digitalWrite(10, HIGH);
+    digitalWrite(11, HIGH);
+    digitalWrite(12, HIGH);
+    digitalWrite(13, HIGH);
+    tone(pinoBuzzer, 1750);
+  }
+  else {
+    if (distancia &lt;= 20) {
+      digitalWrite(8, HIGH);
+      digitalWrite(9, HIGH);
+      digitalWrite(10, HIGH);
+      digitalWrite(11, HIGH);
+      digitalWrite(12, HIGH);
+      digitalWrite(13, LOW);
+      intervalo = 100;
+    }
+    else if (distancia &lt;= 30) {
+      digitalWrite(8, HIGH);
+      digitalWrite(9, HIGH);
+      digitalWrite(10, HIGH);
+      digitalWrite(11, HIGH);
+      digitalWrite(12, LOW);
+      digitalWrite(13, LOW);
+      intervalo = 150;
+    }
+    else if (distancia &lt;= 40) {
+      digitalWrite(8, HIGH);
+      digitalWrite(9, HIGH);
+      digitalWrite(10, HIGH);
+      digitalWrite(11, LOW);
+      digitalWrite(12, LOW);
+      digitalWrite(13, LOW);
+      intervalo = 200;
+    }
+    else if (distancia &lt;= 50) {
+      digitalWrite(8, HIGH);
+      digitalWrite(9, HIGH);
+      digitalWrite(10, LOW);
+      digitalWrite(11, LOW);
+      digitalWrite(12, LOW);
+      digitalWrite(13, LOW);
+      intervalo = 250;
+    }
+    else {
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+      digitalWrite(10, LOW);
+      digitalWrite(11, LOW);
+      digitalWrite(12, LOW);
+      digitalWrite(13, LOW);
+      intervalo = 300;
+    }
+
+    tone(pinoBuzzer, 1750);
+    delay(intervalo);
+    noTone(pinoBuzzer);
+    delay(intervalo);
+  }
+}
+
+float medirDistancia() {
+  digitalWrite(pinoTrig, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(pinoTrig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(pinoTrig, LOW);
+
+  long duracao = pulseIn(pinoEcho, HIGH);
+  return duracao / 58.0;
+}</pre></article>
+<article class="card wide"><h3>7. Entendendo a lógica</h3><div class="explain"><p><code>distancia = medirDistancia();</code> — reutiliza a função criada no Projeto 7.</p><p><code>if (distancia &gt; 60)</code> — mantém todos os alertas desligados quando o objeto está longe.</p><p><code>else if (distancia &lt;= 10)</code> — representa a situação crítica: todos os LEDs acendem e o buzzer permanece ligado.</p><p>Os demais testes com <code>else if</code> dividem a distância em faixas. Cada faixa define quantos LEDs ficarão acesos e qual será o valor de <code>intervalo</code>.</p><p><code>tone(pinoBuzzer, 1750);</code> — inicia o som do buzzer na frequência de 1750 Hz.</p><p><code>delay(intervalo);</code> — determina por quanto tempo o buzzer fica ligado e desligado. Quanto menor o intervalo, mais rápidos ficam os bipes.</p></div></article>
+<article class="card"><h3>8. Testando</h3><ol><li>Confira todas as ligações antes de energizar o circuito.</li><li>Envie o código para o Arduino.</li><li>Abra o Monitor Serial em <strong>9600</strong>.</li><li>Posicione um objeto a mais de 60 cm do sensor.</li><li>Aproxime o objeto lentamente e observe os LEDs e o buzzer.</li><li>Compare as mudanças com as faixas apresentadas no laboratório.</li></ol></article>
+<article class="card"><h3>9. Resultado esperado</h3><p>Quanto mais próximo o objeto estiver do HC-SR04, maior será o número de LEDs acesos e mais rápidos serão os bipes.</p><p>Ao chegar a 10 cm ou menos, todos os LEDs devem permanecer acesos e o buzzer deve emitir um sinal contínuo.</p></article>
+<article class="card errors wide"><h3>10. Erros comuns</h3><table><tr><th>Erro</th><th>Consequência</th></tr><tr><td>Inverter a polaridade de um LED</td><td>Esse LED não acende.</td></tr><tr><td>Esquecer algum resistor de 300 Ω</td><td>O LED fica sem proteção e pode ser danificado.</td></tr><tr><td>Ligar um LED em pino diferente do indicado</td><td>A sequência visual não corresponde ao programa.</td></tr><tr><td>Usar buzzer ativo no lugar do passivo</td><td>O comportamento do comando tone() pode não ser o esperado.</td></tr><tr><td>Trocar TRIG e ECHO</td><td>A medição de distância não funciona corretamente.</td></tr><tr><td>Não compartilhar o GND entre os componentes</td><td>O circuito pode não funcionar ou apresentar comportamento instável.</td></tr></table></article>
+<article class="card worked"><h3>11. O que foi trabalhado</h3><ul><li>Reutilização do sensor HC-SR04</li><li>Integração entre sensor, LEDs e buzzer</li><li>Faixas de distância com if, else if e else</li><li>Acionamento progressivo de múltiplas saídas</li><li>Variação do intervalo entre sinais sonoros</li><li>Uso do Monitor Serial como apoio ao teste</li><li>Transformação de uma medição em uma aplicação prática</li></ul></article>
+<article class="card exercise wide"><h3>12. Experimente</h3><p><strong>1.</strong> Altere o limite máximo de 60 cm para 100 cm e redistribua as faixas de distância.</p><p><strong>2.</strong> Troque a frequência <code>1750</code> por outros valores e compare os sons produzidos.</p><p><strong>3.</strong> Modifique o código para manter apenas os LEDs, sem utilizar o buzzer.</p></article>
+<article class="card errors wide"><h3>Atenção</h3><p>Este circuito é apenas didático. O HC-SR04 e a montagem em protoboard não são componentes automotivos e não devem ser usados como sistema real de segurança ou manobra de veículos.</p></article>
+</div>
+</section>
+
 <section class="project exercises-section" id="exercicios">
 <div class="exercises-head">
 <span class="badge">99</span>
@@ -539,7 +675,7 @@ void loop() {
 </div>
 <div class="exercise-tabs">
 <a href="#ex-fundamentos">Fundamentos de Arduino, eletricidade e protoboard</a><a href="#ex-led">Projeto 1 — LED protegido</a><a href="#ex-blink">Projeto 2 — Blink com LED externo</a><a href="#ex-botao">Projeto 3 — Botão com LED</a><a href="#ex-buzzer">Projeto 4 — Buzzer</a><a href="#ex-pwm">Projeto 5 — Potenciômetro com PWM</a>
-<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-monitor-serial">Laboratório 1 — Monitor Serial</a></div>
+<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-monitor-serial">Laboratório 1 — Monitor Serial</a><a href="#ex-sensor-re">Laboratório 2 — Sensor de ré</a></div>
 <section class="exercise-topic" id="ex-fundamentos">
 <h3>Fundamentos de Arduino, eletricidade e protoboard</h3>
 <p class="topic-intro">Revise a base conceitual antes dos projetos: alimentação, GND, circuito fechado, resistor, protoboard, entrada, saída, digital, analógico e PWM.</p>
@@ -1293,6 +1429,14 @@ else {
 <article class="exercise-box"><h4>Interpretando os valores</h4><div class="box-body"><p>Gire o potenciômetro até uma posição intermediária e observe os valores exibidos no Monitor Serial.</p><p>Anote um exemplo de leitura e brilho. Depois explique por que o valor do brilho é menor que o valor da leitura.</p></div></article>
 <article class="exercise-box wide"><h4>Simplificando a saída</h4><div class="box-body"><p>Modifique o código para mostrar apenas a leitura do potenciômetro no Monitor Serial.</p><p>O objetivo é exibir somente números, um por linha.</p></div></article>
 </div>
+</section>
+
+<section class="exercise-topic" id="ex-sensor-re">
+<h3>Laboratório 2 — Sensor de ré</h3>
+<p class="topic-intro">Revise a integração entre distância, faixas condicionais, LEDs e buzzer.</p>
+<article class="exercise-box"><h4>Interpretando uma faixa</h4><div class="box-body"><p>Considere que o sensor mediu <strong>35 cm</strong>. Indique quantos LEDs devem acender e qual intervalo será utilizado pelo buzzer.</p></div></article>
+<article class="exercise-box"><h4>Alterando os limites</h4><div class="box-body"><p>Modifique a lógica para que o alerta contínuo seja acionado somente quando a distância for menor ou igual a <strong>5 cm</strong>.</p><p>Explique qual condição precisa ser alterada.</p></div></article>
+<article class="exercise-box wide"><h4>Analisando o sistema</h4><div class="box-body"><p>Explique por que o Laboratório 2 é uma integração de conhecimentos anteriores e não a apresentação de um novo componente.</p></div></article>
 </section>
 </section>
 </main></div>
