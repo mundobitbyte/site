@@ -4,6 +4,7 @@
 <link href="../css/arduino.css" rel="stylesheet"/></head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="layout"><nav><h3>Etapas</h3><a class="nav-btn" href="#intro">Fundamentos</a><a class="nav-btn" href="#p1">1 — LED protegido</a><a class="nav-btn" href="#p2">2 — Blink com LED externo</a><a class="nav-btn" href="#p3">3 — Botão com LED</a><a class="nav-btn" href="#p4">4 — Buzzer</a><a class="nav-btn" href="#p5">5 — Potenciômetro com PWM</a>
 <a class="nav-btn" href="#p6">6 — Fotoresistor (LDR)</a>
 <a class="nav-btn" href="#p7">7 — Sensor de distância</a>
+<a class="nav-btn" href="#p8">8 — LED RGB</a>
 <a class="nav-btn" href="#lab1">Lab 1 — Monitor Serial</a>
 <a class="nav-btn" href="#lab2">Lab 2 — Sensor de ré</a>
 <a class="nav-btn" href="#exercicios">99 — Exercícios</a></nav><main>
@@ -127,6 +128,8 @@
     <span>Fotoresistor (LDR)</span>
     <b>→</b>
     <span>Sensor de distância</span>
+    <b>→</b>
+    <span>LED RGB</span>
 </div>
 </div>
 <div class="closing-panel">
@@ -478,6 +481,68 @@ Distancia: 32.76 cm</pre><p>Ao aproximar ou afastar um objeto da frente do senso
 <article class="card exercise wide"><h3>11. Exercício proposto</h3><p>Posicione uma régua diante do sensor e escolha três distâncias, como 10 cm, 20 cm e 30 cm. Compare os valores da régua com os valores exibidos no Monitor Serial e anote as diferenças encontradas.</p><p>Depois, repita o teste usando objetos de formatos ou materiais diferentes. Observe quais deles produzem leituras mais estáveis e explique por que a reflexão do som pode mudar.</p></article>
 </div>
 </section>
+
+<section class="project" id="p8">
+<div class="projectHead"><span class="badge">P8</span><div><h2>Projeto 8 — LED RGB</h2><p>O Arduino controla separadamente os canais vermelho, verde e azul para produzir diferentes combinações de cores.</p></div></div>
+<div class="circuitPanel"><h3>Montagem do circuito</h3><figure class="circuitFigure"><img alt="Projeto 8 — LED RGB de cátodo comum ligado ao Arduino Uno, com os canais vermelho, verde e azul protegidos por resistores." class="circuitPhoto" decoding="async" height="785" loading="lazy" src="../img/arduino/projeto_8_led_rgb.webp" width="957"/><figcaption>Projeto 8 — LED RGB: cada canal de cor é ligado a um pino digital por meio de um resistor, enquanto o cátodo comum é conectado ao GND.</figcaption></figure></div>
+<div class="cards">
+<article class="card"><h3>1. Objetivo do projeto</h3><p>Aprender a ligar e controlar um <strong>LED RGB de cátodo comum</strong>. O componente reúne três LEDs internos — vermelho, verde e azul — que podem ser acionados separadamente ou ao mesmo tempo.</p><p>Ao combinar esses três canais, o circuito produzirá vermelho, verde, azul, amarelo, ciano, magenta, branco e o estado apagado.</p></article>
+<article class="card"><h3>2. Lista exata de componentes</h3><ul><li>1 Arduino Uno R3</li><li>1 cabo USB para alimentar e programar o Arduino</li><li>1 protoboard</li><li>1 LED RGB de cátodo comum</li><li>3 resistores de 300 Ω</li><li>4 jumpers macho-macho</li></ul></article>
+<article class="card wide"><h3>3. Tabela de ligação</h3><table><tr><th>Terminal do LED RGB</th><th>Ligação</th><th>Observação</th></tr><tr><td><strong>Vermelho (R)</strong></td><td>Pino digital <strong>9</strong>, passando por resistor de 300 Ω</td><td>Controla o canal vermelho.</td></tr><tr><td><strong>Cátodo comum</strong></td><td><strong>GND</strong></td><td>É o terminal comum dos três LEDs internos.</td></tr><tr><td><strong>Verde (G)</strong></td><td>Pino digital <strong>11</strong>, passando por resistor de 300 Ω</td><td>Controla o canal verde.</td></tr><tr><td><strong>Azul (B)</strong></td><td>Pino digital <strong>10</strong>, passando por resistor de 300 Ω</td><td>Controla o canal azul.</td></tr></table></article>
+<article class="card"><h3>4. Explicação da montagem</h3><p>O segundo terminal do LED, na orientação mostrada na imagem, é o <strong>cátodo comum</strong> e deve ser ligado ao GND pelo jumper preto.</p><p>Os outros três terminais correspondem às cores vermelho, verde e azul. Cada canal precisa de seu próprio resistor para limitar a corrente e proteger o componente.</p><p>Os jumpers seguem as cores dos canais, facilitando a identificação visual das ligações.</p></article>
+<article class="card"><h3>5. Como o LED RGB funciona</h3><p>Embora pareça um único LED, o componente possui três emissores de luz dentro da mesma cápsula. Cada emissor responde a um pino diferente do Arduino.</p><p>Como o modelo é de cátodo comum, enviar <code>HIGH</code> a um canal acende essa cor; enviar <code>LOW</code> a apaga.</p><p>Quando dois ou três canais são ligados simultaneamente, as luzes se combinam e nossos olhos percebem uma nova cor.</p></article>
+<article class="card code wide"><h3>6. Código completo <button onclick="copyCode('p8code')">Copiar</button></h3><pre id="p8code">// Projeto 8: LED RGB
+// Combinação de cores com sinais digitais.
+
+const int pinoLEDR = 9;
+const int pinoLEDB = 10;
+const int pinoLEDG = 11;
+
+void setup() {
+  pinMode(pinoLEDR, OUTPUT);
+  pinMode(pinoLEDB, OUTPUT);
+  pinMode(pinoLEDG, OUTPUT);
+}
+
+void loop() {
+  definirCor(HIGH, LOW, LOW);      // Vermelho
+  delay(1000);
+
+  definirCor(LOW, HIGH, LOW);      // Verde
+  delay(1000);
+
+  definirCor(LOW, LOW, HIGH);      // Azul
+  delay(1000);
+
+  definirCor(HIGH, HIGH, LOW);     // Amarelo
+  delay(1000);
+
+  definirCor(LOW, HIGH, HIGH);     // Ciano
+  delay(1000);
+
+  definirCor(HIGH, LOW, HIGH);     // Magenta
+  delay(1000);
+
+  definirCor(HIGH, HIGH, HIGH);    // Branco
+  delay(1000);
+
+  definirCor(LOW, LOW, LOW);       // Apagado
+  delay(1000);
+}
+
+void definirCor(bool vermelho, bool verde, bool azul) {
+  digitalWrite(pinoLEDR, vermelho);
+  digitalWrite(pinoLEDG, verde);
+  digitalWrite(pinoLEDB, azul);
+}</pre></article>
+<article class="card wide"><h3>7. Explicação do código</h3><div class="explain"><p><code>const int pinoLEDR = 9;</code> — associa o canal vermelho ao pino 9.</p><p><code>const int pinoLEDB = 10;</code> — associa o canal azul ao pino 10.</p><p><code>const int pinoLEDG = 11;</code> — associa o canal verde ao pino 11.</p><p><code>pinMode(..., OUTPUT);</code> — configura os três pinos como saídas digitais.</p><p><code>definirCor(HIGH, LOW, LOW);</code> — liga somente o vermelho.</p><p><code>definirCor(HIGH, HIGH, LOW);</code> — liga vermelho e verde ao mesmo tempo, formando amarelo.</p><p><code>void definirCor(bool vermelho, bool verde, bool azul)</code> — recebe o estado de cada canal e evita repetir três comandos em cada etapa.</p><p><code>digitalWrite()</code> — envia HIGH ou LOW para ligar ou desligar cada cor.</p></div></article>
+<article class="card"><h3>8. Combinações utilizadas</h3><table><tr><th>Vermelho</th><th>Verde</th><th>Azul</th><th>Resultado</th></tr><tr><td>HIGH</td><td>LOW</td><td>LOW</td><td>Vermelho</td></tr><tr><td>LOW</td><td>HIGH</td><td>LOW</td><td>Verde</td></tr><tr><td>LOW</td><td>LOW</td><td>HIGH</td><td>Azul</td></tr><tr><td>HIGH</td><td>HIGH</td><td>LOW</td><td>Amarelo</td></tr><tr><td>LOW</td><td>HIGH</td><td>HIGH</td><td>Ciano</td></tr><tr><td>HIGH</td><td>LOW</td><td>HIGH</td><td>Magenta</td></tr><tr><td>HIGH</td><td>HIGH</td><td>HIGH</td><td>Branco</td></tr><tr><td>LOW</td><td>LOW</td><td>LOW</td><td>Apagado</td></tr></table></article>
+<article class="card"><h3>9. Resultado esperado</h3><p>Ao iniciar a simulação, o LED deve apresentar cada combinação por aproximadamente um segundo.</p><p>A sequência será: vermelho, verde, azul, amarelo, ciano, magenta, branco e apagado. Depois, o ciclo recomeçará automaticamente.</p><p>As cores combinadas podem não parecer perfeitamente puras porque cada emissor interno possui brilho próprio e a percepção também varia conforme a tela ou o componente físico.</p></article>
+<article class="card errors wide"><h3>10. Erros comuns e correções</h3><table><tr><th>Problema</th><th>Possível causa ou correção</th></tr><tr><td>Nenhuma cor acende</td><td>Confira se o cátodo comum está ligado ao GND e se a orientação do LED está correta.</td></tr><tr><td>Uma das cores não aparece</td><td>Verifique o jumper, o resistor e o pino correspondente àquela cor.</td></tr><tr><td>As cores aparecem trocadas</td><td>Confirme a ordem dos terminais e compare-a com as cores dos jumpers.</td></tr><tr><td>O LED foi ligado sem os três resistores</td><td>Desligue o circuito e coloque um resistor em série com cada canal de cor.</td></tr><tr><td>O comportamento está invertido</td><td>Confira se o componente escolhido é realmente de cátodo comum; LEDs de ânodo comum usam lógica invertida.</td></tr></table></article>
+<article class="card exercise wide"><h3>11. Exercício proposto</h3><p>Altere a ordem das cores no programa. Mostre primeiro as três cores primárias, depois as três combinações secundárias, mantenha o branco aceso por dois segundos e apague o LED antes de reiniciar.</p><p>Depois, retire duas cores da sequência e explique quais chamadas de <code>definirCor()</code> foram removidas.</p></article>
+</div>
+</section>
+
 <section class="project" id="lab1">
 <div class="projectHead"><span class="badge">Lab 1</span><div><h2>Laboratório 1 — Conversando com o Arduino</h2><p>Reutilizando o circuito do potenciômetro com PWM para visualizar, no Monitor Serial, o que o Arduino está lendo e enviando ao LED.</p></div></div>
 <div class="circuitPanel"><h3>Reutilizando o circuito do Projeto 5</h3><figure class="circuitFigure"><img alt="Laboratório 1 — Conversando com o Arduino: circuito do potenciômetro com LED PWM e Monitor Serial exibindo leitura e brilho." class="circuitPhoto circuitPhotoLarge" decoding="async" height="882" loading="lazy" src="../img/arduino/lab1_conversando_arduino.webp" width="1169"/><figcaption>Laboratório 1 — Conversando com o Arduino: o mesmo circuito do potenciômetro com PWM agora mostra os valores no Monitor Serial.</figcaption></figure></div>
@@ -675,7 +740,7 @@ float medirDistancia() {
 </div>
 <div class="exercise-tabs">
 <a href="#ex-fundamentos">Fundamentos de Arduino, eletricidade e protoboard</a><a href="#ex-led">Projeto 1 — LED protegido</a><a href="#ex-blink">Projeto 2 — Blink com LED externo</a><a href="#ex-botao">Projeto 3 — Botão com LED</a><a href="#ex-buzzer">Projeto 4 — Buzzer</a><a href="#ex-pwm">Projeto 5 — Potenciômetro com PWM</a>
-<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-monitor-serial">Laboratório 1 — Monitor Serial</a><a href="#ex-sensor-re">Laboratório 2 — Sensor de ré</a></div>
+<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-led-rgb">Projeto 8 — LED RGB</a><a href="#ex-monitor-serial">Laboratório 1 — Monitor Serial</a><a href="#ex-sensor-re">Laboratório 2 — Sensor de ré</a></div>
 <section class="exercise-topic" id="ex-fundamentos">
 <h3>Fundamentos de Arduino, eletricidade e protoboard</h3>
 <p class="topic-intro">Revise a base conceitual antes dos projetos: alimentação, GND, circuito fechado, resistor, protoboard, entrada, saída, digital, analógico e PWM.</p>
@@ -1419,6 +1484,27 @@ else {
 }</code></pre>
 </div>
 </article>
+</div>
+</section>
+
+
+<section class="exercise-topic" id="ex-led-rgb">
+<h3>Projeto 8 — LED RGB</h3>
+<p class="topic-intro">Revise os terminais do LED RGB de cátodo comum, o uso de um resistor por canal e as combinações digitais das cores vermelho, verde e azul.</p>
+<div class="exercise-grid">
+<article class="exercise-box wide"><h4>Questionário interativo — 6 questões de múltipla escolha</h4><div class="box-body"><div class="use-note">Clique em uma alternativa. Após a escolha, a questão será bloqueada e o sistema informará se a resposta está certa ou errada.</div><ol>
+<li class="mc-question"><span class="level">Fácil</span>Quantos LEDs internos existem em um LED RGB?<div class="mc-options"><button class="mc-option" data-correct="false" type="button">A) Um</button><button class="mc-option" data-correct="false" type="button">B) Dois</button><button class="mc-option" data-correct="true" type="button">C) Três</button><button class="mc-option" data-correct="false" type="button">D) Quatro</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+<li class="mc-question"><span class="level">Fácil</span>Onde o cátodo comum deve ser ligado neste projeto?<div class="mc-options"><button class="mc-option" data-correct="false" type="button">A) 5V</button><button class="mc-option" data-correct="true" type="button">B) GND</button><button class="mc-option" data-correct="false" type="button">C) A0</button><button class="mc-option" data-correct="false" type="button">D) Vin</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+<li class="mc-question"><span class="level">Fácil</span>Por que há três resistores no circuito?<div class="mc-options"><button class="mc-option" data-correct="true" type="button">A) Para proteger separadamente cada canal de cor</button><button class="mc-option" data-correct="false" type="button">B) Para alimentar o Arduino</button><button class="mc-option" data-correct="false" type="button">C) Para transformar o LED em sensor</button><button class="mc-option" data-correct="false" type="button">D) Para ligar o cabo USB</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+<li class="mc-question"><span class="level mid">Intermediário</span>Qual combinação produz amarelo?<div class="mc-options"><button class="mc-option" data-correct="false" type="button">A) Verde e azul</button><button class="mc-option" data-correct="true" type="button">B) Vermelho e verde</button><button class="mc-option" data-correct="false" type="button">C) Vermelho e azul</button><button class="mc-option" data-correct="false" type="button">D) Somente azul</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+<li class="mc-question"><span class="level mid">Intermediário</span>O que faz <code>definirCor(HIGH, LOW, HIGH)</code>?<div class="mc-options"><button class="mc-option" data-correct="false" type="button">A) Acende amarelo</button><button class="mc-option" data-correct="false" type="button">B) Apaga o LED</button><button class="mc-option" data-correct="true" type="button">C) Acende magenta</button><button class="mc-option" data-correct="false" type="button">D) Acende verde</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+<li class="mc-question"><span class="level mid">Intermediário</span>Qual comando liga ou desliga cada canal neste projeto?<div class="mc-options"><button class="mc-option" data-correct="false" type="button">A) analogRead()</button><button class="mc-option" data-correct="false" type="button">B) Serial.println()</button><button class="mc-option" data-correct="true" type="button">C) digitalWrite()</button><button class="mc-option" data-correct="false" type="button">D) pulseIn()</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+</ol></div></article>
+<article class="exercise-box"><h4>Questões abertas</h4><div class="box-body"><ol><li>Explique por que o LED RGB precisa de um resistor para cada canal.</li><li>Qual é a diferença entre acender uma cor primária e combinar duas cores?</li><li>O que aconteceria se o cátodo comum não estivesse ligado ao GND?</li></ol></div></article>
+<article class="exercise-box"><h4>Completar código</h4><div class="box-body"><p>Complete a chamada que deve acender ciano e a chamada que apaga o LED.</p><pre><code>definirCor(____, ____, ____); // Ciano
+
+definirCor(____, ____, ____); // Apagado</code></pre></div></article>
+<article class="exercise-box wide"><h4>Desafio de sequência</h4><div class="box-body"><p>Crie uma sequência que mostre: azul, magenta, vermelho, amarelo, verde e ciano. Coloque o LED apagado por 500 ms entre cada cor.</p></div></article>
 </div>
 </section>
 
