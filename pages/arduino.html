@@ -9,6 +9,7 @@
 <a class="nav-btn" href="#lab1">Lab 1 — Monitor Serial</a>
 <a class="nav-btn" href="#lab2">Lab 2 — Sensor de ré</a>
 <a class="nav-btn" href="#lab3">Lab 3 — LED RGB com botões</a>
+<a class="nav-btn" href="#lab4">Lab 4 — Lixeira automática</a>
 <a class="nav-btn" href="#exercicios">99 — Exercícios</a></nav><main>
 <section class="fundamentos-premium" id="intro">
 <div class="fund-hero">
@@ -864,6 +865,110 @@ void loop() {
 </div>
 </section>
 
+
+<section class="project" id="lab4">
+<div class="projectHead"><span class="badge">Lab 4</span><div><h2>Laboratório 4 — Lixeira automática</h2><p>Integrando o sensor ultrassônico HC-SR04 do Projeto 7 com o Servo Motor do Projeto 9 para criar uma aplicação prática de abertura automática.</p></div></div>
+<div class="circuitPanel"><h3>Integrando sensor de distância e servo</h3><figure class="circuitFigure"><img alt="Laboratório 4 — Lixeira automática com Arduino Uno, sensor HC-SR04 e Micro Servo, utilizando a protoboard para distribuir 5V e GND." class="circuitPhoto circuitPhotoLarge" decoding="async" height="526" loading="lazy" src="../img/arduino/lab4_lixeira.webp" width="645"/><figcaption>Laboratório 4 — Lixeira automática: o HC-SR04 detecta a aproximação, e o servo abre e fecha a tampa de forma gradual.</figcaption></figure></div>
+<div class="cards">
+<article class="card"><h3>1. Antes de começar</h3><p>Este laboratório reutiliza conhecimentos já trabalhados: medição de distância com o <strong>HC-SR04</strong>, controle de posição com <strong>Servo Motor</strong>, uso do <strong>Monitor Serial</strong>, funções e estruturas condicionais.</p><p>O principal conceito novo será a estrutura de repetição <code>for</code>, usada para movimentar o servo gradualmente.</p></article>
+
+<article class="card"><h3>2. Objetivo do laboratório</h3><p>Construir uma lixeira automática didática: quando uma mão ou objeto se aproximar a <strong>15 cm ou menos</strong>, o servo deverá abrir a tampa gradualmente até 120°, mantê-la aberta por 3 segundos e fechá-la novamente.</p><p>O sistema só poderá abrir outra vez depois que o objeto se afastar do sensor.</p></article>
+
+<article class="card"><h3>3. Componentes utilizados</h3><ul><li>1 Arduino Uno R3</li><li>1 cabo USB</li><li>1 protoboard</li><li>1 sensor ultrassônico HC-SR04</li><li>1 Micro Servo</li><li>Jumpers macho-macho</li></ul><p>Todos os componentes principais já foram utilizados anteriormente. A protoboard é usada aqui para distribuir 5V e GND ao sensor e ao servo.</p></article>
+
+<article class="card wide"><h3>4. Tabela de ligações</h3><table><tr><th>Componente</th><th>Terminal / fio</th><th>Ligação</th></tr><tr><td>Arduino</td><td>5V</td><td>Barramento positivo (+) da protoboard</td></tr><tr><td>Arduino</td><td>GND</td><td>Barramento negativo (−) da protoboard</td></tr><tr><td>Micro Servo</td><td>Sinal (amarelo)</td><td>Pino digital <strong>D9</strong></td></tr><tr><td>Micro Servo</td><td>Alimentação (vermelho)</td><td>Barramento positivo (+)</td></tr><tr><td>Micro Servo</td><td>GND (preto)</td><td>Barramento negativo (−)</td></tr><tr><td>HC-SR04</td><td>VCC</td><td>Barramento positivo (+)</td></tr><tr><td>HC-SR04</td><td>TRIG</td><td>Pino digital <strong>D3</strong></td></tr><tr><td>HC-SR04</td><td>ECHO</td><td>Pino digital <strong>D2</strong></td></tr><tr><td>HC-SR04</td><td>GND</td><td>Barramento negativo (−)</td></tr></table></article>
+
+<article class="card"><h3>5. Como o sistema funciona</h3><ol><li>O HC-SR04 mede continuamente a distância.</li><li>Se a distância for maior que 15 cm, o sistema fica liberado para uma próxima abertura.</li><li>Ao detectar uma distância menor ou igual a 15 cm, o servo abre gradualmente de 0° até 120°.</li><li>A tampa permanece aberta por 3 segundos.</li><li>O servo retorna gradualmente até 0°.</li><li>Enquanto a mão continuar próxima, a tampa não abre novamente.</li><li>Ao afastar a mão, o sistema é liberado para um novo ciclo.</li></ol></article>
+
+<article class="card"><h3>6. Por que usar uma variável bool?</h3><p>A variável <code>podeAbrir</code> funciona como uma <strong>trava lógica</strong>.</p><div class="explain"><p><code>bool podeAbrir = true;</code> — inicialmente a lixeira está liberada para abrir.</p><p><code>podeAbrir = false;</code> — depois que a abertura começa, impede que o sistema abra novamente enquanto o objeto continuar perto.</p><p>Quando a distância volta a ser maior que 15 cm, <code>podeAbrir</code> recebe <code>true</code> e uma nova abertura fica autorizada.</p></div><p>Uma variável do tipo <code>bool</code> possui apenas dois valores possíveis: <code>true</code> ou <code>false</code>.</p></article>
+
+<article class="card wide"><h3>7. Novo conceito: estrutura de repetição for</h3><p>Nos programas anteriores, quando era necessário repetir comandos, eles apareciam escritos várias vezes. O <code>for</code> permite repetir automaticamente um bloco de código enquanto uma condição for verdadeira.</p><pre><code>for (posicao = 0; posicao &lt;= 120; posicao += 1) {
+  meuServo.write(posicao);
+  delay(15);
+}</code></pre><div class="explain"><p><code>posicao = 0</code> — valor inicial: o movimento começa em 0°.</p><p><code>posicao &lt;= 120</code> — condição: a repetição continua enquanto a posição for menor ou igual a 120°.</p><p><code>posicao += 1</code> — atualização: após cada repetição, a posição aumenta 1 grau.</p></div><p>Assim, o servo recebe sucessivamente 0°, 1°, 2°, 3°... até 120°, criando um movimento gradual.</p><p>Para fechar a tampa, o processo é invertido: começa em 120° e diminui 1 grau a cada repetição até chegar a 0°.</p></article>
+
+<article class="card code wide"><h3>8. Código completo <button onclick="copyCode('lab4code')">Copiar</button></h3><pre id="lab4code">#include &lt;Servo.h&gt;
+
+Servo meuServo;
+
+const int pinoServo = 9;
+const int TRIG = 3;
+const int ECHO = 2;
+
+int posicao = 0;
+unsigned int distancia;
+
+bool podeAbrir = true;
+
+void setup() {
+  meuServo.attach(pinoServo);
+  meuServo.write(0);
+
+  Serial.begin(9600);
+
+  pinMode(TRIG, OUTPUT);
+  pinMode(ECHO, INPUT);
+}
+
+void loop() {
+  distancia = medirDistancia(TRIG, ECHO);
+
+  Serial.println(distancia);
+
+  // Libera uma nova abertura somente depois
+  // que a mão ou objeto se afastar.
+  if (distancia &gt; 15) {
+    podeAbrir = true;
+  }
+
+  if (distancia &lt;= 15 &amp;&amp; podeAbrir) {
+    podeAbrir = false;
+
+    // Abre a tampa gradualmente.
+    for (posicao = 0; posicao &lt;= 120; posicao += 1) {
+      meuServo.write(posicao);
+      delay(15);
+    }
+
+    // Mantém a tampa aberta por 3 segundos.
+    delay(3000);
+
+    // Fecha a tampa gradualmente.
+    for (posicao = 120; posicao &gt;= 0; posicao -= 1) {
+      meuServo.write(posicao);
+      delay(15);
+    }
+  }
+}
+
+int medirDistancia(int pinoTrig, int pinoEcho) {
+  digitalWrite(pinoTrig, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(pinoTrig, HIGH);
+  delayMicroseconds(10);
+
+  digitalWrite(pinoTrig, LOW);
+
+  return pulseIn(pinoEcho, HIGH) / 58;
+}</pre></article>
+
+<article class="card wide"><h3>9. Explicação do código</h3><div class="explain"><p><code>#include &lt;Servo.h&gt;</code> e <code>Servo meuServo;</code> — reutilizam a biblioteca e o objeto apresentados no Projeto 9.</p><p><code>const int pinoServo = 9;</code> — define o D9 como pino de sinal do servo.</p><p><code>TRIG = 3</code> e <code>ECHO = 2</code> — definem os pinos do HC-SR04.</p><p><code>meuServo.write(0);</code> — inicia a tampa na posição fechada.</p><p><code>medirDistancia(TRIG, ECHO)</code> — reutiliza a função de medição do sensor ultrassônico.</p><p><code>Serial.println(distancia);</code> — permite acompanhar as medições no Monitor Serial.</p><p><code>if (distancia &gt; 15)</code> — libera uma nova abertura somente quando o objeto se afasta.</p><p><code>if (distancia &lt;= 15 &amp;&amp; podeAbrir)</code> — inicia a abertura somente quando há um objeto próximo e a trava está liberada.</p><p>Os dois comandos <code>for</code> realizam a abertura e o fechamento graduais.</p></div></article>
+
+<article class="card"><h3>10. Teste no Tinkercad</h3><ol><li>Inicie a simulação.</li><li>Abra o Monitor Serial.</li><li>Altere a distância simulada do HC-SR04.</li><li>Acima de 15 cm, a tampa deve permanecer fechada.</li><li>Em 15 cm ou menos, o servo deve abrir até 120°.</li><li>Aguarde 3 segundos e observe o fechamento.</li><li>Mantenha o objeto próximo: a tampa não deve abrir novamente.</li><li>Afaste o objeto e aproxime novamente para iniciar outro ciclo.</li></ol></article>
+
+<article class="card"><h3>11. Resultado esperado</h3><p>A lixeira deve responder a uma aproximação apenas uma vez, abrir e fechar suavemente e exigir que a mão seja afastada antes de aceitar uma nova abertura.</p><p>O Monitor Serial deve continuar exibindo as distâncias sempre que o programa estiver novamente na etapa de leitura.</p></article>
+
+<article class="card errors wide"><h3>12. Erros comuns e correções</h3><table><tr><th>Problema</th><th>Verifique</th></tr><tr><td>Servo não se move</td><td>Sinal no D9, alimentação no barramento positivo e GND no negativo.</td></tr><tr><td>Sensor não mede corretamente</td><td>TRIG no D3, ECHO no D2, VCC em 5V e GND comum.</td></tr><tr><td>Tampa abre repetidamente sem afastar a mão</td><td>Confira a variável <code>podeAbrir</code> e as duas estruturas <code>if</code>.</td></tr><tr><td>Tampa abre, mas não fecha gradualmente</td><td>Confira o segundo <code>for</code>: ele deve começar em 120 e usar <code>posicao -= 1</code>.</td></tr><tr><td>Movimento muito lento ou muito rápido</td><td>O <code>delay(15)</code> dentro do <code>for</code> controla o intervalo entre cada grau.</td></tr></table></article>
+
+<article class="card worked"><h3>13. O que foi trabalhado</h3><ul><li>Integração entre sensor e atuador</li><li>Reutilização do HC-SR04</li><li>Reutilização da biblioteca Servo</li><li>Reutilização da função <code>medirDistancia()</code></li><li>Monitor Serial</li><li>Estruturas condicionais</li><li>Variável lógica <code>bool</code></li><li>Estrutura de repetição <code>for</code></li><li>Incremento e decremento de uma variável</li><li>Controle de estado para evitar acionamentos repetidos</li></ul></article>
+
+<article class="card exercise wide"><h3>14. Experimente</h3><p><strong>1.</strong> Troque a distância de acionamento de 15 cm para 20 cm.</p><p><strong>2.</strong> Altere a abertura máxima de 120° para 90° e observe o resultado.</p><p><strong>3.</strong> Troque o tempo de 3 segundos por 5 segundos.</p><p><strong>4.</strong> Altere o <code>delay(15)</code> dos movimentos para comparar uma abertura mais rápida e uma mais lenta.</p></article>
+
+<article class="card errors wide"><h3>Atenção em uma montagem real</h3><p>No Tinkercad, o Micro Servo e o HC-SR04 são alimentados pelos 5V do Arduino para simplificar o laboratório. Em uma aplicação física, o servo pode exigir uma alimentação adequada à corrente e à carga mecânica. A protoboard também é indicada para prototipagem, não como montagem definitiva de uma lixeira em uso cotidiano.</p></article>
+</div>
+</section>
+
 <section class="project exercises-section" id="exercicios">
 <div class="exercises-head">
 <span class="badge">99</span>
@@ -876,7 +981,7 @@ void loop() {
 </div>
 <div class="exercise-tabs">
 <a href="#ex-fundamentos">Fundamentos de Arduino, eletricidade e protoboard</a><a href="#ex-led">Projeto 1 — LED protegido</a><a href="#ex-blink">Projeto 2 — Blink com LED externo</a><a href="#ex-botao">Projeto 3 — Botão com LED</a><a href="#ex-buzzer">Projeto 4 — Buzzer</a><a href="#ex-pwm">Projeto 5 — Potenciômetro com PWM</a>
-<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-led-rgb">Projeto 8 — LED RGB</a><a href="#ex-servo">Projeto 9 — Servo Motor</a><a href="#ex-monitor-serial">Laboratório 1 — Monitor Serial</a><a href="#ex-sensor-re">Laboratório 2 — Sensor de ré</a><a href="#ex-led-rgb-botoes">Laboratório 3 — LED RGB com botões</a></div>
+<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-led-rgb">Projeto 8 — LED RGB</a><a href="#ex-servo">Projeto 9 — Servo Motor</a><a href="#ex-monitor-serial">Laboratório 1 — Monitor Serial</a><a href="#ex-sensor-re">Laboratório 2 — Sensor de ré</a><a href="#ex-led-rgb-botoes">Laboratório 3 — LED RGB com botões</a><a href="#ex-lixeira">Laboratório 4 — Lixeira automática</a></div>
 <section class="exercise-topic" id="ex-fundamentos">
 <h3>Fundamentos de Arduino, eletricidade e protoboard</h3>
 <p class="topic-intro">Revise a base conceitual antes dos projetos: alimentação, GND, circuito fechado, resistor, protoboard, entrada, saída, digital, analógico e PWM.</p>
@@ -1704,6 +1809,30 @@ void loop() {
 <article class="exercise-box wide"><h4>Integração de conhecimentos</h4><div class="box-body"><p>Explique por que este conteúdo é um laboratório e não um novo projeto, identificando quais conhecimentos anteriores foram reutilizados.</p></div></article>
 </div>
 </section>
+
+<section class="exercise-topic" id="ex-lixeira">
+<h3>Laboratório 4 — Lixeira automática</h3>
+<p class="topic-intro">Revise a integração entre HC-SR04 e Servo Motor, o uso de <code>bool</code> como trava lógica e a estrutura de repetição <code>for</code>.</p>
+<div class="exercise-grid">
+<article class="exercise-box wide"><h4>Questionário interativo — 6 questões de múltipla escolha</h4><div class="box-body"><div class="use-note">Clique em uma alternativa. Após a escolha, a questão será bloqueada e o sistema informará se a resposta está certa ou errada.</div><ol>
+<li class="mc-question"><span class="level">Fácil</span>Qual componente detecta a aproximação da mão?<div class="mc-options"><button class="mc-option" data-correct="false" type="button">A) Servo Motor</button><button class="mc-option" data-correct="true" type="button">B) HC-SR04</button><button class="mc-option" data-correct="false" type="button">C) Resistor</button><button class="mc-option" data-correct="false" type="button">D) LED RGB</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+<li class="mc-question"><span class="level">Fácil</span>Quando a tampa deve abrir?<div class="mc-options"><button class="mc-option" data-correct="true" type="button">A) Quando a distância for menor ou igual a 15 cm e a abertura estiver liberada</button><button class="mc-option" data-correct="false" type="button">B) Sempre que a distância for maior que 15 cm</button><button class="mc-option" data-correct="false" type="button">C) Somente ao ligar o Arduino</button><button class="mc-option" data-correct="false" type="button">D) Quando o servo estiver em 120°</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+<li class="mc-question"><span class="level mid">Intermediário</span>Para que serve <code>podeAbrir</code>?<div class="mc-options"><button class="mc-option" data-correct="false" type="button">A) Guardar a distância</button><button class="mc-option" data-correct="true" type="button">B) Impedir uma nova abertura enquanto o objeto continuar próximo</button><button class="mc-option" data-correct="false" type="button">C) Controlar a velocidade do som</button><button class="mc-option" data-correct="false" type="button">D) Alimentar o servo</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+<li class="mc-question"><span class="level mid">Intermediário</span>No primeiro <code>for</code>, o que faz <code>posicao += 1</code>?<div class="mc-options"><button class="mc-option" data-correct="false" type="button">A) Zera a posição</button><button class="mc-option" data-correct="true" type="button">B) Aumenta a posição em 1 a cada repetição</button><button class="mc-option" data-correct="false" type="button">C) Aumenta 15 graus</button><button class="mc-option" data-correct="false" type="button">D) Fecha o Monitor Serial</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+<li class="mc-question"><span class="level mid">Intermediário</span>Por que existem dois comandos <code>for</code>?<div class="mc-options"><button class="mc-option" data-correct="false" type="button">A) Um mede distância e outro imprime</button><button class="mc-option" data-correct="true" type="button">B) Um abre gradualmente e outro fecha gradualmente</button><button class="mc-option" data-correct="false" type="button">C) Ambos fazem exatamente a mesma coisa</button><button class="mc-option" data-correct="false" type="button">D) São obrigatórios em qualquer programa com Servo</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+<li class="mc-question"><span class="level mid">Intermediário</span>O que precisa acontecer para <code>podeAbrir</code> voltar a <code>true</code>?<div class="mc-options"><button class="mc-option" data-correct="false" type="button">A) O servo chegar a 120°</button><button class="mc-option" data-correct="false" type="button">B) Passarem 3 segundos</button><button class="mc-option" data-correct="true" type="button">C) A distância voltar a ser maior que 15 cm</button><button class="mc-option" data-correct="false" type="button">D) O Arduino ser reiniciado</button></div><div aria-live="polite" class="mc-feedback"></div></li>
+</ol></div></article>
+<article class="exercise-box"><h4>Entendendo o for</h4><div class="box-body"><p>Explique as três partes de <code>for (posicao = 0; posicao &lt;= 120; posicao += 1)</code>: inicialização, condição e atualização.</p></div></article>
+<article class="exercise-box"><h4>Prevendo o comportamento</h4><div class="box-body"><p>A mão permanece a 10 cm do sensor mesmo depois de a tampa fechar. Explique por que a tampa não abre novamente.</p></div></article>
+<article class="exercise-box"><h4>Completar código</h4><div class="box-body"><p>Complete o laço para fechar a tampa gradualmente:</p><pre><code>for (posicao = ____; posicao &gt;= ____; posicao ____ 1) {
+  meuServo.write(posicao);
+  delay(15);
+}</code></pre></div></article>
+<article class="exercise-box"><h4>Alterando parâmetros</h4><div class="box-body"><p>Modifique o programa para abrir a tampa quando a distância for 25 cm ou menos, abrir somente até 100° e permanecer aberta por 4 segundos.</p></div></article>
+<article class="exercise-box wide"><h4>Integração de conhecimentos</h4><div class="box-body"><p>Explique por que a lixeira automática é um laboratório e não um projeto de componente novo. Identifique quais conhecimentos dos Projetos 7 e 9 foram reutilizados e qual conceito de programação foi acrescentado.</p></div></article>
+</div>
+</section>
+
 </section>
 </main></div>
 <script src="../js/arduino.js"></script>
