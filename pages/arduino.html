@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Apostila Técnica Interativa — Arduino: Projetos Iniciais com Circuitos Reais</title>
 <link href="../css/arduino.css" rel="stylesheet"/></head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="layout"><nav><h3>Etapas</h3><a class="nav-btn" href="#intro">Fundamentos</a><a class="nav-btn" href="#p1">1 — LED protegido</a><a class="nav-btn" href="#p2">2 — Blink com LED externo</a><a class="nav-btn" href="#p3">3 — Botão com LED</a><a class="nav-btn" href="#p4">4 — Buzzer</a><a class="nav-btn" href="#p5">5 — Potenciômetro com PWM</a>
 <a class="nav-btn" href="#p6">6 — Fotoresistor (LDR)</a>
@@ -6,6 +7,7 @@
 <a class="nav-btn" href="#p8">8 — LED RGB</a>
 <a class="nav-btn" href="#lab1">Lab 1 — Monitor Serial</a>
 <a class="nav-btn" href="#lab2">Lab 2 — Sensor de ré</a>
+<a class="nav-btn" href="#lab3">Lab 3 — LED RGB com botões</a>
 <a class="nav-btn" href="#exercicios">99 — Exercícios</a></nav><main>
 <section class="fundamentos-premium" id="intro">
 <div class="fund-hero">
@@ -727,6 +729,71 @@ float medirDistancia() {
 </div>
 </section>
 
+
+<section class="project" id="lab3">
+<div class="projectHead"><span class="badge">Lab 3</span><div><h2>Laboratório 3 — LED RGB com botões</h2><p>Reutilizando o LED RGB do Projeto 8 e os botões do Projeto 3 para controlar separadamente as cores vermelho, verde e azul.</p></div></div>
+<div class="circuitPanel"><h3>Ampliando o circuito do Projeto 8</h3><figure class="circuitFigure"><img alt="Laboratório 3 — LED RGB de cátodo comum controlado por três botões ligados ao Arduino Uno." class="circuitPhoto circuitPhotoLarge" decoding="async" height="698" loading="lazy" src="../img/arduino/lab_3_led_rgb_com_botoes.webp" width="965"/><figcaption>Laboratório 3 — LED RGB com botões: cada botão controla um canal de cor e as combinações surgem quando dois ou três botões são pressionados ao mesmo tempo.</figcaption></figure></div>
+<div class="cards">
+<article class="card"><h3>1. Antes de começar</h3><p>Este laboratório integra dois conhecimentos já trabalhados: o <strong>LED RGB do Projeto 8</strong> e a leitura de <strong>botões do Projeto 3</strong>.</p><p>O LED continua sendo de <strong>cátodo comum</strong>, com os canais vermelho, verde e azul protegidos por resistores. Os três botões serão usados como entradas digitais.</p></article>
+<article class="card"><h3>2. Objetivo do laboratório</h3><p>Controlar cada canal do LED RGB com um botão independente.</p><p>Ao pressionar mais de um botão ao mesmo tempo, as cores serão combinadas: vermelho + verde produz amarelo, verde + azul produz ciano, vermelho + azul produz magenta e os três juntos produzem branco.</p></article>
+<article class="card"><h3>3. Componentes utilizados</h3><ul><li>1 Arduino Uno R3</li><li>1 cabo USB</li><li>1 protoboard</li><li>1 LED RGB de cátodo comum</li><li>3 resistores de 300 Ω</li><li>3 botões</li><li>Jumpers macho-macho</li></ul><p>Todos esses componentes já foram utilizados em projetos anteriores.</p></article>
+<article class="card wide"><h3>4. Tabela de ligações</h3><table><tr><th>Componente</th><th>Ligação no Arduino</th><th>Função</th></tr><tr><td>Canal vermelho do LED RGB</td><td>Pino <strong>9</strong>, passando por resistor de 300 Ω</td><td>Controlar a luz vermelha.</td></tr><tr><td>Canal azul do LED RGB</td><td>Pino <strong>10</strong>, passando por resistor de 300 Ω</td><td>Controlar a luz azul.</td></tr><tr><td>Canal verde do LED RGB</td><td>Pino <strong>11</strong>, passando por resistor de 300 Ω</td><td>Controlar a luz verde.</td></tr><tr><td>Cátodo comum do LED RGB</td><td><strong>GND</strong></td><td>Referência comum dos três LEDs internos.</td></tr><tr><td>Botão vermelho</td><td>Pino <strong>7</strong> e GND</td><td>Controlar o canal vermelho.</td></tr><tr><td>Botão verde</td><td>Pino <strong>6</strong> e GND</td><td>Controlar o canal verde.</td></tr><tr><td>Botão azul</td><td>Pino <strong>5</strong> e GND</td><td>Controlar o canal azul.</td></tr></table></article>
+<article class="card"><h3>5. Como os botões funcionam</h3><p>Os três botões utilizam <code>INPUT_PULLUP</code>. Dessa forma, não é necessário acrescentar resistores externos para manter as entradas em um estado conhecido.</p><p>Quando o botão está solto, a leitura é <code>HIGH</code>. Quando ele é pressionado, o pino é conectado ao GND e a leitura passa para <code>LOW</code>.</p><p>Por isso, neste programa, a condição <code>leituraBotaoR == LOW</code> significa que o botão vermelho está pressionado.</p></article>
+<article class="card"><h3>6. Como as cores serão combinadas</h3><table><tr><th>Botões pressionados</th><th>Cor resultante</th></tr><tr><td>Vermelho</td><td>Vermelho</td></tr><tr><td>Verde</td><td>Verde</td></tr><tr><td>Azul</td><td>Azul</td></tr><tr><td>Vermelho + Verde</td><td>Amarelo</td></tr><tr><td>Verde + Azul</td><td>Ciano</td></tr><tr><td>Vermelho + Azul</td><td>Magenta</td></tr><tr><td>Vermelho + Verde + Azul</td><td>Branco</td></tr><tr><td>Nenhum</td><td>Apagado</td></tr></table></article>
+<article class="card code wide"><h3>7. Código completo <button onclick="copyCode('lab3code')">Copiar</button></h3><pre id="lab3code">const int pinoLEDG = 11; 
+const int pinoLEDB = 10;
+const int pinoLEDR = 9;
+const int pinoBotaoR = 7;
+const int pinoBotaoG = 6;
+const int pinoBotaoB = 5;
+
+int leituraBotaoR;
+int leituraBotaoG;
+int leituraBotaoB;
+
+void setup() {
+  pinMode(pinoLEDR, OUTPUT);
+  pinMode(pinoLEDG, OUTPUT);
+  pinMode(pinoLEDB, OUTPUT);
+  pinMode(pinoBotaoR, INPUT_PULLUP);
+  pinMode(pinoBotaoG, INPUT_PULLUP);
+  pinMode(pinoBotaoB, INPUT_PULLUP);
+}
+
+void loop() {
+  leituraBotaoR = digitalRead(pinoBotaoR);
+  leituraBotaoG = digitalRead(pinoBotaoG);
+  leituraBotaoB = digitalRead(pinoBotaoB);
+
+  if (leituraBotaoR == LOW) {
+    digitalWrite(pinoLEDR, HIGH);
+  } else {
+    digitalWrite(pinoLEDR, LOW);
+  }
+
+  if (leituraBotaoG == LOW) {
+    digitalWrite(pinoLEDG, HIGH);
+  } else {
+    digitalWrite(pinoLEDG, LOW);
+  }
+
+  if (leituraBotaoB == LOW) {
+    digitalWrite(pinoLEDB, HIGH);
+  } else {
+    digitalWrite(pinoLEDB, LOW);
+  }
+
+  delay(100);
+}</pre></article>
+<article class="card wide"><h3>8. Entendendo o código</h3><div class="explain"><p><code>const int pinoLEDG = 11;</code>, <code>pinoLEDB = 10;</code> e <code>pinoLEDR = 9;</code> — definem os três pinos que controlam os canais do LED RGB.</p><p><code>pinoBotaoR = 7</code>, <code>pinoBotaoG = 6</code> e <code>pinoBotaoB = 5</code> — identificam os pinos usados para ler os três botões.</p><p><code>pinMode(..., INPUT_PULLUP);</code> — ativa o resistor interno de pull-up do Arduino. Por isso, o botão solto gera <code>HIGH</code> e o botão pressionado gera <code>LOW</code>.</p><p><code>digitalRead()</code> — lê o estado de cada botão e armazena o resultado nas variáveis <code>leituraBotaoR</code>, <code>leituraBotaoG</code> e <code>leituraBotaoB</code>.</p><p>Cada estrutura <code>if / else</code> verifica um botão independentemente. Se estiver pressionado, o respectivo canal recebe <code>HIGH</code> e acende; caso contrário, recebe <code>LOW</code> e permanece apagado.</p><p><code>digitalWrite()</code> é adequado aqui porque cada canal trabalha apenas com dois estados: ligado ou desligado. Neste laboratório não há controle gradual de brilho.</p><p><code>delay(100);</code> — cria uma pequena pausa entre as leituras sucessivas dos botões.</p></div></article>
+<article class="card"><h3>9. Testando</h3><ol><li>Confira as ligações do LED RGB, dos resistores e dos três botões.</li><li>Envie o código para o Arduino.</li><li>Pressione somente o botão vermelho e observe o LED.</li><li>Repita o teste com os botões verde e azul.</li><li>Pressione dois botões simultaneamente e observe a combinação resultante.</li><li>Pressione os três botões ao mesmo tempo e verifique a formação do branco.</li></ol></article>
+<article class="card"><h3>10. Resultado esperado</h3><p>Cada botão deve controlar somente seu respectivo canal de cor.</p><p>Ao pressionar dois ou três botões simultaneamente, os canais permanecem ligados ao mesmo tempo e formam as demais combinações RGB. Ao soltar todos os botões, o LED deve apagar.</p></article>
+<article class="card errors wide"><h3>11. Erros comuns</h3><table><tr><th>Erro</th><th>Consequência</th></tr><tr><td>Ligar um botão em pino diferente do código</td><td>A cor acionada não corresponde ao botão esperado.</td></tr><tr><td>Esquecer que INPUT_PULLUP inverte a lógica</td><td>O aluno pode interpretar HIGH como botão pressionado, quando neste circuito ocorre o contrário.</td></tr><tr><td>Não ligar os botões ao GND</td><td>O pressionamento não produz a mudança esperada na entrada.</td></tr><tr><td>Trocar os terminais R, G ou B do LED</td><td>As cores exibidas não correspondem ao programa.</td></tr><tr><td>Ligar incorretamente o cátodo comum</td><td>O LED pode não acender corretamente.</td></tr><tr><td>Retirar algum dos três resistores</td><td>Um dos canais fica sem limitação adequada de corrente.</td></tr></table></article>
+<article class="card worked"><h3>12. O que foi trabalhado</h3><ul><li>Integração entre dois projetos anteriores</li><li>LED RGB de cátodo comum</li><li>Três entradas digitais independentes</li><li>Uso de INPUT_PULLUP</li><li>Leitura com digitalRead()</li><li>Estruturas if / else</li><li>Controle independente dos canais RGB</li><li>Combinação simultânea de cores</li></ul></article>
+<article class="card exercise wide"><h3>13. Experimente</h3><p><strong>1.</strong> Inverta no código dois botões e observe como muda a associação entre botão e cor.</p><p><strong>2.</strong> Altere <code>delay(100)</code> para <code>delay(500)</code> e compare a resposta dos botões.</p><p><strong>3.</strong> Modifique o programa para que cada botão controle uma cor diferente da indicada pelo jumper.</p></article>
+</div>
+</section>
+
 <section class="project exercises-section" id="exercicios">
 <div class="exercises-head">
 <span class="badge">99</span>
@@ -739,7 +806,7 @@ float medirDistancia() {
 </div>
 <div class="exercise-tabs">
 <a href="#ex-fundamentos">Fundamentos de Arduino, eletricidade e protoboard</a><a href="#ex-led">Projeto 1 — LED protegido</a><a href="#ex-blink">Projeto 2 — Blink com LED externo</a><a href="#ex-botao">Projeto 3 — Botão com LED</a><a href="#ex-buzzer">Projeto 4 — Buzzer</a><a href="#ex-pwm">Projeto 5 — Potenciômetro com PWM</a>
-<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-led-rgb">Projeto 8 — LED RGB</a><a href="#ex-monitor-serial">Laboratório 1 — Monitor Serial</a><a href="#ex-sensor-re">Laboratório 2 — Sensor de ré</a></div>
+<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-led-rgb">Projeto 8 — LED RGB</a><a href="#ex-monitor-serial">Laboratório 1 — Monitor Serial</a><a href="#ex-sensor-re">Laboratório 2 — Sensor de ré</a><a href="#ex-led-rgb-botoes">Laboratório 3 — LED RGB com botões</a></div>
 <section class="exercise-topic" id="ex-fundamentos">
 <h3>Fundamentos de Arduino, eletricidade e protoboard</h3>
 <p class="topic-intro">Revise a base conceitual antes dos projetos: alimentação, GND, circuito fechado, resistor, protoboard, entrada, saída, digital, analógico e PWM.</p>
@@ -1522,6 +1589,18 @@ definirCor(____, ____, ____); // Apagado</code></pre></div></article>
 <article class="exercise-box"><h4>Interpretando uma faixa</h4><div class="box-body"><p>Considere que o sensor mediu <strong>35 cm</strong>. Indique quantos LEDs devem acender e qual intervalo será utilizado pelo buzzer.</p></div></article>
 <article class="exercise-box"><h4>Alterando os limites</h4><div class="box-body"><p>Modifique a lógica para que o alerta contínuo seja acionado somente quando a distância for menor ou igual a <strong>5 cm</strong>.</p><p>Explique qual condição precisa ser alterada.</p></div></article>
 <article class="exercise-box wide"><h4>Analisando o sistema</h4><div class="box-body"><p>Explique por que o Laboratório 2 é uma integração de conhecimentos anteriores e não a apresentação de um novo componente.</p></div></article>
+</section>
+
+<section class="exercise-topic" id="ex-led-rgb-botoes">
+<h3>Laboratório 3 — LED RGB com botões</h3>
+<p class="topic-intro">Revise INPUT_PULLUP, leitura digital e o controle independente dos três canais do LED RGB.</p>
+<div class="exercise-grid">
+<article class="exercise-box"><h4>Interpretando INPUT_PULLUP</h4><div class="box-body"><p>Explique por que o programa considera o botão pressionado quando <code>digitalRead()</code> retorna <code>LOW</code>.</p></div></article>
+<article class="exercise-box"><h4>Prevendo a cor</h4><div class="box-body"><p>Considere que os botões vermelho e azul estão pressionados e o botão verde está solto. Qual cor deverá aparecer no LED? Explique usando os três canais RGB.</p></div></article>
+<article class="exercise-box"><h4>Alterando a resposta</h4><div class="box-body"><p>Troque <code>delay(100)</code> por <code>delay(1000)</code>. Antes de testar, preveja como essa mudança afetará a resposta do circuito aos botões.</p></div></article>
+<article class="exercise-box wide"><h4>Analisando o código</h4><div class="box-body"><p>No laboratório, <code>analogWrite()</code> recebe apenas <code>0</code> e <code>255</code>. Explique o que cada valor faz neste circuito e por que não ocorre variação gradual de brilho.</p></div></article>
+<article class="exercise-box wide"><h4>Integração de conhecimentos</h4><div class="box-body"><p>Explique por que este conteúdo é um laboratório e não um novo projeto, identificando quais conhecimentos anteriores foram reutilizados.</p></div></article>
+</div>
 </section>
 </section>
 </main></div>
