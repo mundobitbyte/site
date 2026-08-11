@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Apostila Técnica Interativa — Arduino: Projetos Iniciais com Circuitos Reais</title>
-<link href="../css/arduino.css" rel="stylesheet"/></head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="layout"><nav><h3>Etapas</h3><a class="nav-btn" href="#intro">Fundamentos</a><a class="nav-btn" href="#p1">1 — LED protegido</a><a class="nav-btn" href="#p2">2 — Blink com LED externo</a><a class="nav-btn" href="#p3">3 — Botão com LED</a><a class="nav-btn" href="#p4">4 — Buzzer</a><a class="nav-btn" href="#p5">5 — Potenciômetro com PWM</a>
-<a class="nav-btn" href="#p6">6 — Fotoresistor (LDR)</a>
-<a class="nav-btn" href="#p7">7 — Sensor de distância</a>
-<a class="nav-btn" href="#p8">8 — LED RGB</a>
-<a class="nav-btn" href="#p9">9 — Servo Motor</a>
-<a class="nav-btn" href="#lab1">Lab 1 — Monitor Serial</a>
-<a class="nav-btn" href="#lab2">Lab 2 — Sensor de ré</a>
-<a class="nav-btn" href="#lab3">Lab 3 — LED RGB com botões</a>
-<a class="nav-btn" href="#lab4">Lab 4 — Lixeira automática</a>
-<a class="nav-btn" href="#exercicios">99 — Exercícios</a></nav><main>
+<link href="../css/arduino.css" rel="stylesheet"/></head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="module-menu" id="arduinoModuleMenu" aria-label="Módulos do Arduino">
+<button class="module-btn active" type="button" data-module="fundamentos" data-target="#intro">1. Fundamentos</button>
+<button class="module-btn" type="button" data-module="io" data-target="#p1">2. Entrada/Saída</button>
+<button class="module-btn" type="button" data-module="sensores" data-target="#p6">3. Sensores</button>
+<button class="module-btn" type="button" data-module="atuadores" data-target="#p8">4. Atuadores/Automação</button>
+</div>
+<div class="layout arduino-layout no-sidebar" id="arduinoLayout">
+<aside class="stage-sidebar" id="stageSidebar" aria-label="Etapas do módulo">
+<div class="stage-sidebar-head"><h3>Etapas</h3><button class="stage-close" id="stageClose" type="button" aria-label="Fechar etapas">×</button></div>
+<div class="stage-menu" id="stageMenu">
+<a class="stage-link" data-module="io" href="#p1">LED protegido</a>
+<a class="stage-link" data-module="io" href="#p2">Blink</a>
+<a class="stage-link" data-module="io" href="#p3">Botão + LED</a>
+<a class="stage-link" data-module="io" href="#p4">Buzzer</a>
+<a class="stage-link" data-module="io" href="#p5">Potenciômetro</a>
+<a class="stage-link" data-module="io" href="#lab1">Monitor Serial</a>
+<a class="stage-link" data-module="sensores" href="#p6">Fotoresistor (LDR)</a>
+<a class="stage-link" data-module="sensores" href="#p7">Sensor de distância</a>
+<a class="stage-link" data-module="sensores" href="#lab2">Sensor de ré</a>
+<a class="stage-link" data-module="atuadores" href="#p8">LED RGB</a>
+<a class="stage-link" data-module="atuadores" href="#lab3">RGB + botões</a>
+<a class="stage-link" data-module="atuadores" href="#p9">Servo Motor</a>
+<a class="stage-link" data-module="atuadores" href="#lab4">Lixeira automática</a>
+<a class="stage-link stage-exercises" data-module="io sensores atuadores" href="#exercicios">Exercícios</a>
+</div>
+</aside>
+<div class="stage-backdrop" id="stageBackdrop" hidden></div>
+<div class="arduino-content">
+<button class="stage-toggle" id="stageToggle" type="button" aria-controls="stageSidebar" aria-expanded="false">☰ Etapas</button>
+<main>
 <section class="fundamentos-premium" id="intro">
 <div class="fund-hero">
 <div>
@@ -488,15 +508,15 @@ Distancia: 32.76 cm</pre><p>Ao aproximar ou afastar um objeto da frente do senso
 </section>
 
 <section class="project" id="p8">
-<div class="projectHead"><span class="badge">P8</span><div><h2>Projeto 8 — LED RGB</h2><p>O Arduino controla separadamente os canais vermelho, verde e azul para produzir diferentes combinações de cores.</p></div></div>
-<div class="circuitPanel"><h3>Montagem do circuito</h3><figure class="circuitFigure"><img alt="Projeto 8 — LED RGB de cátodo comum ligado ao Arduino Uno, com os canais vermelho, verde e azul protegidos por resistores." class="circuitPhoto" decoding="async" height="785" loading="lazy" src="../img/arduino/projeto_8_led_rgb.webp" width="957"/><figcaption>Projeto 8 — LED RGB: cada canal de cor é ligado a um pino digital por meio de um resistor, enquanto o cátodo comum é conectado ao GND.</figcaption></figure></div>
+<div class="projectHead"><span class="badge">P10</span><div><h2>Projeto 10 — LED RGB</h2><p>O Arduino controla separadamente os canais vermelho, verde e azul para produzir diferentes combinações de cores.</p></div></div>
+<div class="circuitPanel"><h3>Montagem do circuito</h3><figure class="circuitFigure"><img alt="Projeto 10 — LED RGB de cátodo comum ligado ao Arduino Uno, com os canais vermelho, verde e azul protegidos por resistores." class="circuitPhoto" decoding="async" height="785" loading="lazy" src="../img/arduino/projeto_8_led_rgb.webp" width="957"/><figcaption>Projeto 10 — LED RGB: cada canal de cor é ligado a um pino digital por meio de um resistor, enquanto o cátodo comum é conectado ao GND.</figcaption></figure></div>
 <div class="cards">
 <article class="card"><h3>1. Objetivo do projeto</h3><p>Aprender a ligar e controlar um <strong>LED RGB de cátodo comum</strong>. O componente reúne três LEDs internos — vermelho, verde e azul — que podem ser acionados separadamente ou ao mesmo tempo.</p><p>Ao combinar esses três canais, o circuito produzirá vermelho, verde, azul, amarelo, ciano, magenta, branco e o estado apagado.</p></article>
 <article class="card"><h3>2. Lista exata de componentes</h3><ul><li>1 Arduino Uno R3</li><li>1 cabo USB para alimentar e programar o Arduino</li><li>1 protoboard</li><li>1 LED RGB de cátodo comum</li><li>3 resistores de 300 Ω</li><li>4 jumpers macho-macho</li></ul></article>
 <article class="card wide"><h3>3. Tabela de ligação</h3><table><tr><th>Terminal do LED RGB</th><th>Ligação</th><th>Observação</th></tr><tr><td><strong>Vermelho (R)</strong></td><td>Pino digital <strong>9</strong>, passando por resistor de 300 Ω</td><td>Controla o canal vermelho.</td></tr><tr><td><strong>Cátodo comum</strong></td><td><strong>GND</strong></td><td>É o terminal comum dos três LEDs internos.</td></tr><tr><td><strong>Verde (G)</strong></td><td>Pino digital <strong>11</strong>, passando por resistor de 300 Ω</td><td>Controla o canal verde.</td></tr><tr><td><strong>Azul (B)</strong></td><td>Pino digital <strong>10</strong>, passando por resistor de 300 Ω</td><td>Controla o canal azul.</td></tr></table></article>
 <article class="card"><h3>4. Explicação da montagem</h3><p>O segundo terminal do LED, na orientação mostrada na imagem, é o <strong>cátodo comum</strong> e deve ser ligado ao GND pelo jumper preto.</p><p>Os outros três terminais correspondem às cores vermelho, verde e azul. Cada canal precisa de seu próprio resistor para limitar a corrente e proteger o componente.</p><p>Os jumpers seguem as cores dos canais, facilitando a identificação visual das ligações.</p></article>
 <article class="card"><h3>5. Como o LED RGB funciona</h3><p>Embora pareça um único LED, o componente possui três emissores de luz dentro da mesma cápsula. Cada emissor responde a um pino diferente do Arduino.</p><p>Como o modelo é de cátodo comum, enviar <code>HIGH</code> a um canal acende essa cor; enviar <code>LOW</code> a apaga.</p><p>Quando dois ou três canais são ligados simultaneamente, as luzes se combinam e nossos olhos percebem uma nova cor.</p></article>
-<article class="card code wide"><h3>6. Código completo <button onclick="copyCode('p8code')">Copiar</button></h3><pre id="p8code">// Projeto 8: LED RGB
+<article class="card code wide"><h3>6. Código completo <button onclick="copyCode('p8code')">Copiar</button></h3><pre id="p8code">// Projeto 10: LED RGB
 // Combinação de cores com sinais digitais.
 
 const int pinoLEDR = 9;
@@ -550,9 +570,9 @@ void definirCor(bool vermelho, bool verde, bool azul) {
 
 
 <section class="project" id="p9">
-<div class="projectHead"><span class="badge">P9</span><div><h2>Projeto 9 — Servo Motor</h2><p>O Arduino controla a posição de um Micro Servo e introduz, pela primeira vez no módulo, o uso de uma biblioteca.</p></div></div>
+<div class="projectHead"><span class="badge">P11</span><div><h2>Projeto 11 — Servo Motor</h2><p>O Arduino controla a posição de um Micro Servo e introduz, pela primeira vez no módulo, o uso de uma biblioteca.</p></div></div>
 
-<div class="circuitPanel"><h3>Montagem do circuito</h3><figure class="circuitFigure"><img alt="Projeto 9 — Micro Servo ligado diretamente ao Arduino Uno: sinal no pino digital 6, alimentação em 5V e GND." class="circuitPhoto" decoding="async" height="485" loading="lazy" src="../img/arduino/projeto_9_servo_motor.webp" width="709"/><figcaption>Projeto 9 — Servo Motor: o fio de sinal do Micro Servo vai ao pino D6; alimentação e GND são ligados diretamente ao Arduino.</figcaption></figure></div>
+<div class="circuitPanel"><h3>Montagem do circuito</h3><figure class="circuitFigure"><img alt="Projeto 11 — Micro Servo ligado diretamente ao Arduino Uno: sinal no pino digital 6, alimentação em 5V e GND." class="circuitPhoto" decoding="async" height="485" loading="lazy" src="../img/arduino/projeto_9_servo_motor.webp" width="709"/><figcaption>Projeto 11 — Servo Motor: o fio de sinal do Micro Servo vai ao pino D6; alimentação e GND são ligados diretamente ao Arduino.</figcaption></figure></div>
 
 <div class="cards">
 <article class="card"><h3>1. Objetivo do projeto</h3><p>Conhecer o <strong>servomotor</strong> e aprender a posicionar seu eixo em ângulos determinados pelo programa.</p><p>Neste projeto o Micro Servo irá assumir, em sequência, as posições aproximadas de <strong>0°, 90° e 180°</strong>, retornando depois para 90° e reiniciando o ciclo.</p></article>
@@ -567,7 +587,7 @@ void definirCor(bool vermelho, bool verde, bool azul) {
 
 <article class="card wide"><h3>6. Primeira biblioteca do módulo</h3><p>Até este ponto, os programas utilizaram diretamente os comandos básicos do Arduino. Neste projeto aparece um novo conceito: a <strong>biblioteca</strong>.</p><p>Uma biblioteca é um conjunto de códigos já preparados para facilitar determinada tarefa. A biblioteca <code>Servo</code> já contém os recursos necessários para controlar um servomotor sem precisarmos programar manualmente todos os sinais elétricos envolvidos.</p><div class="explain"><p><code>#include &lt;Servo.h&gt;</code> — inclui no programa os recursos da biblioteca Servo.</p><p><code>Servo meuServo;</code> — cria um objeto chamado <code>meuServo</code>. Esse será o nome usado pelo programa para representar e controlar o servomotor.</p><p>Neste momento não é necessário aprofundar orientação a objetos: basta entender que <code>meuServo</code> passa a ser o nome pelo qual comandaremos esse componente.</p></div></article>
 
-<article class="card code wide"><h3>7. Código completo <button onclick="copyCode('p9code')">Copiar</button></h3><pre id="p9code">// Projeto 9: Servo Motor
+<article class="card code wide"><h3>7. Código completo <button onclick="copyCode('p9code')">Copiar</button></h3><pre id="p9code">// Projeto 11: Servo Motor
 // Controle de posições com a biblioteca Servo.
 
 #include &lt;Servo.h&gt;
@@ -616,14 +636,14 @@ void loop() {
 </section>
 
 <section class="project" id="lab1">
-<div class="projectHead"><span class="badge">Lab 1</span><div><h2>Laboratório 1 — Conversando com o Arduino</h2><p>Reutilizando o circuito do potenciômetro com PWM para visualizar, no Monitor Serial, o que o Arduino está lendo e enviando ao LED.</p></div></div>
-<div class="circuitPanel"><h3>Reutilizando o circuito do Projeto 5</h3><figure class="circuitFigure"><img alt="Laboratório 1 — Conversando com o Arduino: circuito do potenciômetro com LED PWM e Monitor Serial exibindo leitura e brilho." class="circuitPhoto circuitPhotoLarge" decoding="async" height="882" loading="lazy" src="../img/arduino/lab1_conversando_arduino.webp" width="1169"/><figcaption>Laboratório 1 — Conversando com o Arduino: o mesmo circuito do potenciômetro com PWM agora mostra os valores no Monitor Serial.</figcaption></figure></div>
+<div class="projectHead"><span class="badge">Lab 2</span><div><h2>Laboratório 2 — Conversando com o Arduino</h2><p>Reutilizando o circuito do potenciômetro com PWM para visualizar, no Monitor Serial, o que o Arduino está lendo e enviando ao LED.</p></div></div>
+<div class="circuitPanel"><h3>Reutilizando o circuito do Projeto 5</h3><figure class="circuitFigure"><img alt="Laboratório 2 — Conversando com o Arduino: circuito do potenciômetro com LED PWM e Monitor Serial exibindo leitura e brilho." class="circuitPhoto circuitPhotoLarge" decoding="async" height="882" loading="lazy" src="../img/arduino/lab1_conversando_arduino.webp" width="1169"/><figcaption>Laboratório 2 — Conversando com o Arduino: o mesmo circuito do potenciômetro com PWM agora mostra os valores no Monitor Serial.</figcaption></figure></div>
 <div class="cards">
 <article class="card"><h3>1. Antes de começar</h3><p>Até agora, observamos o resultado dos programas principalmente pelo comportamento dos componentes: LED acendendo, buzzer tocando ou brilho variando.</p><p>Neste laboratório, a pergunta muda: <strong>como descobrir quais valores o Arduino está lendo enquanto o programa está funcionando?</strong></p></article>
 <article class="card"><h3>2. Objetivo do laboratório</h3><p>Utilizar o <strong>Monitor Serial</strong> para acompanhar os valores lidos no potenciômetro e os valores enviados ao LED pelo PWM.</p><p>O circuito é conhecido. A novidade está em enxergar os dados que antes ficavam invisíveis.</p></article>
 <article class="card"><h3>3. Componentes utilizados</h3><ul><li>1 Arduino Uno R3</li><li>1 cabo USB</li><li>1 protoboard</li><li>1 potenciômetro de 10 kΩ</li><li>1 LED comum de 5 mm</li><li>1 resistor de 300 Ω</li><li>Jumpers macho-macho</li></ul></article>
 <article class="card wide"><h3>4. Ligações utilizadas</h3><table><tr><th>Componente</th><th>Ligação</th><th>Função</th></tr><tr><td>Potenciômetro</td><td>Terminal central no <strong>A0</strong>; laterais em <strong>5V</strong> e <strong>GND</strong></td><td>Enviar ao Arduino uma leitura analógica variável.</td></tr><tr><td>LED</td><td>Pino PWM <strong>9</strong>, resistor de <strong>300 Ω</strong> e GND</td><td>Variar o brilho de acordo com o valor calculado no programa.</td></tr><tr><td>Monitor Serial</td><td>Comunicação pelo cabo USB</td><td>Mostrar no computador os valores enviados pelo Arduino.</td></tr></table></article>
-<article class="card code wide"><h3>5. Código completo <button onclick="copyCode('lab1code')">Copiar</button></h3><pre id="lab1code">// Laboratório 1: Conversando com o Arduino
+<article class="card code wide"><h3>5. Código completo <button onclick="copyCode('lab1code')">Copiar</button></h3><pre id="lab1code">// Laboratório 2: Conversando com o Arduino
 // Utilizando o Monitor Serial.
 // O potenciômetro controla o brilho do LED e envia
 // as informações para o Monitor Serial.
@@ -667,15 +687,15 @@ void loop() {
 
 
 <section class="project" id="lab2">
-<div class="projectHead"><span class="badge">Lab 2</span><div><h2>Laboratório 2 — Sensor de ré</h2><p>Reutilizando o HC-SR04 do Projeto 7, LEDs e buzzer para criar alertas visuais e sonoros de proximidade.</p></div></div>
-<div class="circuitPanel"><h3>Ampliando o circuito do Projeto 7</h3><figure class="circuitFigure"><img alt="Laboratório 2 — Sensor de ré: Arduino Uno conectado ao HC-SR04, seis LEDs com resistores e um buzzer passivo." class="circuitPhoto circuitPhotoLarge" decoding="async" height="689" loading="lazy" src="../img/arduino/lab2_sensor_de_re.webp?v=2" width="965"/><figcaption>Laboratório 2 — Sensor de ré: quanto menor a distância, mais LEDs acendem e menor fica o intervalo entre os sinais sonoros.</figcaption></figure></div>
+<div class="projectHead"><span class="badge">Lab 3</span><div><h2>Laboratório 3 — Sensor de ré</h2><p>Reutilizando o HC-SR04 do Projeto 7, LEDs e buzzer para criar alertas visuais e sonoros de proximidade.</p></div></div>
+<div class="circuitPanel"><h3>Ampliando o circuito do Projeto 7</h3><figure class="circuitFigure"><img alt="Laboratório 3 — Sensor de ré: Arduino Uno conectado ao HC-SR04, seis LEDs com resistores e um buzzer passivo." class="circuitPhoto circuitPhotoLarge" decoding="async" height="689" loading="lazy" src="../img/arduino/lab2_sensor_de_re.webp?v=2" width="965"/><figcaption>Laboratório 3 — Sensor de ré: quanto menor a distância, mais LEDs acendem e menor fica o intervalo entre os sinais sonoros.</figcaption></figure></div>
 <div class="cards">
 <article class="card"><h3>1. Antes de começar</h3><p>Este laboratório reutiliza a medição desenvolvida no <strong>Projeto 7 — Sensor de distância com HC-SR04</strong>. Mantenha o sensor ligado aos pinos <strong>TRIG 3</strong> e <strong>ECHO 2</strong>.</p><p>Agora serão acrescentados componentes já estudados: seis LEDs, resistores e um buzzer.</p></article>
 <article class="card"><h3>2. Objetivo do laboratório</h3><p>Construir um sistema de alerta de proximidade semelhante a um sensor de ré didático.</p><p>O programa transformará a distância medida em dois tipos de resposta: uma indicação visual com LEDs e um aviso sonoro cujo intervalo diminui à medida que o objeto se aproxima.</p></article>
 <article class="card"><h3>3. Componentes acrescentados</h3><ul><li>1 buzzer passivo de 5 V</li><li>3 LEDs verdes de 5 mm</li><li>2 LEDs amarelos de 5 mm</li><li>1 LED vermelho de 5 mm</li><li>6 resistores de 300 Ω</li><li>Jumpers macho-macho</li></ul><p>Também serão reutilizados o Arduino, a protoboard e o HC-SR04 montados no Projeto 7.</p></article>
 <article class="card"><h3>4. Como os alertas funcionarão</h3><ul><li><strong>Acima de 60 cm:</strong> LEDs apagados e buzzer desligado.</li><li><strong>De 51 a 60 cm:</strong> 1 LED aceso e bipes lentos.</li><li><strong>De 41 a 50 cm:</strong> 2 LEDs acesos.</li><li><strong>De 31 a 40 cm:</strong> 3 LEDs acesos.</li><li><strong>De 21 a 30 cm:</strong> 4 LEDs acesos.</li><li><strong>De 11 a 20 cm:</strong> 5 LEDs acesos e bipes rápidos.</li><li><strong>Até 10 cm:</strong> todos os LEDs acesos e sinal contínuo.</li></ul></article>
 <article class="card wide"><h3>5. Tabela de ligações</h3><table><tr><th>Componente</th><th>Ligação no Arduino</th><th>Função</th></tr><tr><td>HC-SR04 — TRIG</td><td>Pino digital <strong>3</strong></td><td>Iniciar a medição ultrassônica.</td></tr><tr><td>HC-SR04 — ECHO</td><td>Pino digital <strong>2</strong></td><td>Informar a duração do eco.</td></tr><tr><td>Buzzer passivo</td><td>Pino digital <strong>7</strong> e GND</td><td>Produzir o alerta sonoro.</td></tr><tr><td>LED verde 1</td><td>Pino digital <strong>8</strong>, resistor de 300 Ω e GND</td><td>Primeiro nível de aproximação.</td></tr><tr><td>LED verde 2</td><td>Pino digital <strong>9</strong>, resistor de 300 Ω e GND</td><td>Segundo nível de aproximação.</td></tr><tr><td>LED verde 3</td><td>Pino digital <strong>10</strong>, resistor de 300 Ω e GND</td><td>Terceiro nível de aproximação.</td></tr><tr><td>LED amarelo 1</td><td>Pino digital <strong>11</strong>, resistor de 300 Ω e GND</td><td>Alerta intermediário.</td></tr><tr><td>LED amarelo 2</td><td>Pino digital <strong>12</strong>, resistor de 300 Ω e GND</td><td>Alerta elevado.</td></tr><tr><td>LED vermelho</td><td>Pino digital <strong>13</strong>, resistor de 300 Ω e GND</td><td>Distância crítica.</td></tr></table></article>
-<article class="card code wide"><h3>6. Código completo <button onclick="copyCode('lab2code')">Copiar</button></h3><pre id="lab2code">// Laboratório 2: Sensor de ré
+<article class="card code wide"><h3>6. Código completo <button onclick="copyCode('lab2code')">Copiar</button></h3><pre id="lab2code">// Laboratório 3: Sensor de ré
 // Reutiliza o HC-SR04 do Projeto 7.
 
 const int pinoTrig = 3;
@@ -802,10 +822,10 @@ float medirDistancia() {
 
 
 <section class="project" id="lab3">
-<div class="projectHead"><span class="badge">Lab 3</span><div><h2>Laboratório 3 — LED RGB com botões</h2><p>Reutilizando o LED RGB do Projeto 8 e os botões do Projeto 3 para controlar separadamente as cores vermelho, verde e azul.</p></div></div>
-<div class="circuitPanel"><h3>Ampliando o circuito do Projeto 8</h3><figure class="circuitFigure"><img alt="Laboratório 3 — LED RGB de cátodo comum controlado por três botões ligados ao Arduino Uno." class="circuitPhoto circuitPhotoLarge" decoding="async" height="698" loading="lazy" src="../img/arduino/lab_3_led_rgb_com_botoes.webp" width="965"/><figcaption>Laboratório 3 — LED RGB com botões: cada botão controla um canal de cor e as combinações surgem quando dois ou três botões são pressionados ao mesmo tempo.</figcaption></figure></div>
+<div class="projectHead"><span class="badge">Lab 6</span><div><h2>Laboratório 6 — LED RGB com botões</h2><p>Reutilizando o LED RGB do Projeto 10 e os botões do Projeto 3 para controlar separadamente as cores vermelho, verde e azul.</p></div></div>
+<div class="circuitPanel"><h3>Ampliando o circuito do Projeto 10</h3><figure class="circuitFigure"><img alt="Laboratório 6 — LED RGB de cátodo comum controlado por três botões ligados ao Arduino Uno." class="circuitPhoto circuitPhotoLarge" decoding="async" height="698" loading="lazy" src="../img/arduino/lab_3_led_rgb_com_botoes.webp" width="965"/><figcaption>Laboratório 6 — LED RGB com botões: cada botão controla um canal de cor e as combinações surgem quando dois ou três botões são pressionados ao mesmo tempo.</figcaption></figure></div>
 <div class="cards">
-<article class="card"><h3>1. Antes de começar</h3><p>Este laboratório integra dois conhecimentos já trabalhados: o <strong>LED RGB do Projeto 8</strong> e a leitura de <strong>botões do Projeto 3</strong>.</p><p>O LED continua sendo de <strong>cátodo comum</strong>, com os canais vermelho, verde e azul protegidos por resistores. Os três botões serão usados como entradas digitais.</p></article>
+<article class="card"><h3>1. Antes de começar</h3><p>Este laboratório integra dois conhecimentos já trabalhados: o <strong>LED RGB do Projeto 10</strong> e a leitura de <strong>botões do Projeto 3</strong>.</p><p>O LED continua sendo de <strong>cátodo comum</strong>, com os canais vermelho, verde e azul protegidos por resistores. Os três botões serão usados como entradas digitais.</p></article>
 <article class="card"><h3>2. Objetivo do laboratório</h3><p>Controlar cada canal do LED RGB com um botão independente.</p><p>Ao pressionar mais de um botão ao mesmo tempo, as cores serão combinadas: vermelho + verde produz amarelo, verde + azul produz ciano, vermelho + azul produz magenta e os três juntos produzem branco.</p></article>
 <article class="card"><h3>3. Componentes utilizados</h3><ul><li>1 Arduino Uno R3</li><li>1 cabo USB</li><li>1 protoboard</li><li>1 LED RGB de cátodo comum</li><li>3 resistores de 300 Ω</li><li>3 botões</li><li>Jumpers macho-macho</li></ul><p>Todos esses componentes já foram utilizados em projetos anteriores.</p></article>
 <article class="card wide"><h3>4. Tabela de ligações</h3><table><tr><th>Componente</th><th>Ligação no Arduino</th><th>Função</th></tr><tr><td>Canal vermelho do LED RGB</td><td>Pino <strong>9</strong>, passando por resistor de 300 Ω</td><td>Controlar a luz vermelha.</td></tr><tr><td>Canal azul do LED RGB</td><td>Pino <strong>10</strong>, passando por resistor de 300 Ω</td><td>Controlar a luz azul.</td></tr><tr><td>Canal verde do LED RGB</td><td>Pino <strong>11</strong>, passando por resistor de 300 Ω</td><td>Controlar a luz verde.</td></tr><tr><td>Cátodo comum do LED RGB</td><td><strong>GND</strong></td><td>Referência comum dos três LEDs internos.</td></tr><tr><td>Botão vermelho</td><td>Pino <strong>7</strong> e GND</td><td>Controlar o canal vermelho.</td></tr><tr><td>Botão verde</td><td>Pino <strong>6</strong> e GND</td><td>Controlar o canal verde.</td></tr><tr><td>Botão azul</td><td>Pino <strong>5</strong> e GND</td><td>Controlar o canal azul.</td></tr></table></article>
@@ -867,8 +887,8 @@ void loop() {
 
 
 <section class="project" id="lab4">
-<div class="projectHead"><span class="badge">Lab 4</span><div><h2>Laboratório 4 — Lixeira automática</h2><p>Integrando o sensor ultrassônico HC-SR04 do Projeto 7 com o Servo Motor do Projeto 9 para criar uma aplicação prática de abertura automática.</p></div></div>
-<div class="circuitPanel"><h3>Integrando sensor de distância e servo</h3><figure class="circuitFigure"><img alt="Laboratório 4 — Lixeira automática com Arduino Uno, sensor HC-SR04 e Micro Servo, utilizando a protoboard para distribuir 5V e GND." class="circuitPhoto circuitPhotoLarge" decoding="async" height="526" loading="lazy" src="../img/arduino/lab4_lixeira.webp" width="645"/><figcaption>Laboratório 4 — Lixeira automática: o HC-SR04 detecta a aproximação, e o servo abre e fecha a tampa de forma gradual.</figcaption></figure></div>
+<div class="projectHead"><span class="badge">Lab 7</span><div><h2>Laboratório 7 — Lixeira automática</h2><p>Integrando o sensor ultrassônico HC-SR04 do Projeto 7 com o Servo Motor do Projeto 11 para criar uma aplicação prática de abertura automática.</p></div></div>
+<div class="circuitPanel"><h3>Integrando sensor de distância e servo</h3><figure class="circuitFigure"><img alt="Laboratório 7 — Lixeira automática com Arduino Uno, sensor HC-SR04 e Micro Servo, utilizando a protoboard para distribuir 5V e GND." class="circuitPhoto circuitPhotoLarge" decoding="async" height="526" loading="lazy" src="../img/arduino/lab4_lixeira.webp" width="645"/><figcaption>Laboratório 7 — Lixeira automática: o HC-SR04 detecta a aproximação, e o servo abre e fecha a tampa de forma gradual.</figcaption></figure></div>
 <div class="cards">
 <article class="card"><h3>1. Antes de começar</h3><p>Este laboratório reutiliza conhecimentos já trabalhados: medição de distância com o <strong>HC-SR04</strong>, controle de posição com <strong>Servo Motor</strong>, uso do <strong>Monitor Serial</strong>, funções e estruturas condicionais.</p><p>O principal conceito novo será a estrutura de repetição <code>for</code>, usada para movimentar o servo gradualmente.</p></article>
 
@@ -953,7 +973,7 @@ int medirDistancia(int pinoTrig, int pinoEcho) {
   return pulseIn(pinoEcho, HIGH) / 58;
 }</pre></article>
 
-<article class="card wide"><h3>9. Explicação do código</h3><div class="explain"><p><code>#include &lt;Servo.h&gt;</code> e <code>Servo meuServo;</code> — reutilizam a biblioteca e o objeto apresentados no Projeto 9.</p><p><code>const int pinoServo = 9;</code> — define o D9 como pino de sinal do servo.</p><p><code>TRIG = 3</code> e <code>ECHO = 2</code> — definem os pinos do HC-SR04.</p><p><code>meuServo.write(0);</code> — inicia a tampa na posição fechada.</p><p><code>medirDistancia(TRIG, ECHO)</code> — reutiliza a função de medição do sensor ultrassônico.</p><p><code>Serial.println(distancia);</code> — permite acompanhar as medições no Monitor Serial.</p><p><code>if (distancia &gt; 15)</code> — libera uma nova abertura somente quando o objeto se afasta.</p><p><code>if (distancia &lt;= 15 &amp;&amp; podeAbrir)</code> — inicia a abertura somente quando há um objeto próximo e a trava está liberada.</p><p>Os dois comandos <code>for</code> realizam a abertura e o fechamento graduais.</p></div></article>
+<article class="card wide"><h3>9. Explicação do código</h3><div class="explain"><p><code>#include &lt;Servo.h&gt;</code> e <code>Servo meuServo;</code> — reutilizam a biblioteca e o objeto apresentados no Projeto 11.</p><p><code>const int pinoServo = 9;</code> — define o D9 como pino de sinal do servo.</p><p><code>TRIG = 3</code> e <code>ECHO = 2</code> — definem os pinos do HC-SR04.</p><p><code>meuServo.write(0);</code> — inicia a tampa na posição fechada.</p><p><code>medirDistancia(TRIG, ECHO)</code> — reutiliza a função de medição do sensor ultrassônico.</p><p><code>Serial.println(distancia);</code> — permite acompanhar as medições no Monitor Serial.</p><p><code>if (distancia &gt; 15)</code> — libera uma nova abertura somente quando o objeto se afasta.</p><p><code>if (distancia &lt;= 15 &amp;&amp; podeAbrir)</code> — inicia a abertura somente quando há um objeto próximo e a trava está liberada.</p><p>Os dois comandos <code>for</code> realizam a abertura e o fechamento graduais.</p></div></article>
 
 <article class="card"><h3>10. Teste no Tinkercad</h3><ol><li>Inicie a simulação.</li><li>Abra o Monitor Serial.</li><li>Altere a distância simulada do HC-SR04.</li><li>Acima de 15 cm, a tampa deve permanecer fechada.</li><li>Em 15 cm ou menos, o servo deve abrir até 120°.</li><li>Aguarde 3 segundos e observe o fechamento.</li><li>Mantenha o objeto próximo: a tampa não deve abrir novamente.</li><li>Afaste o objeto e aproxime novamente para iniciar outro ciclo.</li></ol></article>
 
@@ -981,7 +1001,7 @@ int medirDistancia(int pinoTrig, int pinoEcho) {
 </div>
 <div class="exercise-tabs">
 <a href="#ex-fundamentos">Fundamentos de Arduino, eletricidade e protoboard</a><a href="#ex-led">Projeto 1 — LED protegido</a><a href="#ex-blink">Projeto 2 — Blink com LED externo</a><a href="#ex-botao">Projeto 3 — Botão com LED</a><a href="#ex-buzzer">Projeto 4 — Buzzer</a><a href="#ex-pwm">Projeto 5 — Potenciômetro com PWM</a>
-<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-led-rgb">Projeto 8 — LED RGB</a><a href="#ex-servo">Projeto 9 — Servo Motor</a><a href="#ex-monitor-serial">Laboratório 1 — Monitor Serial</a><a href="#ex-sensor-re">Laboratório 2 — Sensor de ré</a><a href="#ex-led-rgb-botoes">Laboratório 3 — LED RGB com botões</a><a href="#ex-lixeira">Laboratório 4 — Lixeira automática</a></div>
+<a href="#ex-ldr">Projeto 6 — Fotoresistor (LDR)</a><a href="#ex-led-rgb">Projeto 10 — LED RGB</a><a href="#ex-servo">Projeto 11 — Servo Motor</a><a href="#ex-monitor-serial">Laboratório 2 — Monitor Serial</a><a href="#ex-sensor-re">Laboratório 3 — Sensor de ré</a><a href="#ex-led-rgb-botoes">Laboratório 6 — LED RGB com botões</a><a href="#ex-lixeira">Laboratório 7 — Lixeira automática</a></div>
 <section class="exercise-topic" id="ex-fundamentos">
 <h3>Fundamentos de Arduino, eletricidade e protoboard</h3>
 <p class="topic-intro">Revise a base conceitual antes dos projetos: alimentação, GND, circuito fechado, resistor, protoboard, entrada, saída, digital, analógico e PWM.</p>
@@ -1730,7 +1750,7 @@ else {
 
 
 <section class="exercise-topic" id="ex-led-rgb">
-<h3>Projeto 8 — LED RGB</h3>
+<h3>Projeto 10 — LED RGB</h3>
 <p class="topic-intro">Revise os terminais do LED RGB de cátodo comum, o uso de um resistor por canal e as combinações digitais das cores vermelho, verde e azul.</p>
 <div class="exercise-grid">
 <article class="exercise-box wide"><h4>Questionário interativo — 6 questões de múltipla escolha</h4><div class="box-body"><div class="use-note">Clique em uma alternativa. Após a escolha, a questão será bloqueada e o sistema informará se a resposta está certa ou errada.</div><ol>
@@ -1751,7 +1771,7 @@ definirCor(____, ____, ____); // Apagado</code></pre></div></article>
 
 
 <section class="exercise-topic" id="ex-servo">
-<h3>Projeto 9 — Servo Motor</h3>
+<h3>Projeto 11 — Servo Motor</h3>
 <p class="topic-intro">Revise a ligação do Micro Servo, a diferença entre alimentação e sinal, o primeiro uso de biblioteca e os comandos <code>attach()</code> e <code>write()</code>.</p>
 <div class="exercise-grid">
 
@@ -1782,7 +1802,7 @@ void loop() {
 </section>
 
 <section class="exercise-topic" id="ex-monitor-serial">
-<h3>Laboratório 1 — Monitor Serial</h3>
+<h3>Laboratório 2 — Monitor Serial</h3>
 <div class="exercise-grid">
 <article class="exercise-box"><h4>Alterando a velocidade da leitura</h4><div class="box-body"><p>No código do laboratório, troque <code>delay(100)</code> por <code>delay(500)</code>. Execute o programa e observe o Monitor Serial.</p><p>Explique o que mudou na exibição dos valores.</p></div></article>
 <article class="exercise-box"><h4>Interpretando os valores</h4><div class="box-body"><p>Gire o potenciômetro até uma posição intermediária e observe os valores exibidos no Monitor Serial.</p><p>Anote um exemplo de leitura e brilho. Depois explique por que o valor do brilho é menor que o valor da leitura.</p></div></article>
@@ -1791,15 +1811,15 @@ void loop() {
 </section>
 
 <section class="exercise-topic" id="ex-sensor-re">
-<h3>Laboratório 2 — Sensor de ré</h3>
+<h3>Laboratório 3 — Sensor de ré</h3>
 <p class="topic-intro">Revise a integração entre distância, faixas condicionais, LEDs e buzzer.</p>
 <article class="exercise-box"><h4>Interpretando uma faixa</h4><div class="box-body"><p>Considere que o sensor mediu <strong>35 cm</strong>. Indique quantos LEDs devem acender e qual intervalo será utilizado pelo buzzer.</p></div></article>
 <article class="exercise-box"><h4>Alterando os limites</h4><div class="box-body"><p>Modifique a lógica para que o alerta contínuo seja acionado somente quando a distância for menor ou igual a <strong>5 cm</strong>.</p><p>Explique qual condição precisa ser alterada.</p></div></article>
-<article class="exercise-box wide"><h4>Analisando o sistema</h4><div class="box-body"><p>Explique por que o Laboratório 2 é uma integração de conhecimentos anteriores e não a apresentação de um novo componente.</p></div></article>
+<article class="exercise-box wide"><h4>Analisando o sistema</h4><div class="box-body"><p>Explique por que o Laboratório 3 é uma integração de conhecimentos anteriores e não a apresentação de um novo componente.</p></div></article>
 </section>
 
 <section class="exercise-topic" id="ex-led-rgb-botoes">
-<h3>Laboratório 3 — LED RGB com botões</h3>
+<h3>Laboratório 6 — LED RGB com botões</h3>
 <p class="topic-intro">Revise INPUT_PULLUP, leitura digital e o controle independente dos três canais do LED RGB.</p>
 <div class="exercise-grid">
 <article class="exercise-box"><h4>Interpretando INPUT_PULLUP</h4><div class="box-body"><p>Explique por que o programa considera o botão pressionado quando <code>digitalRead()</code> retorna <code>LOW</code>.</p></div></article>
@@ -1811,7 +1831,7 @@ void loop() {
 </section>
 
 <section class="exercise-topic" id="ex-lixeira">
-<h3>Laboratório 4 — Lixeira automática</h3>
+<h3>Laboratório 7 — Lixeira automática</h3>
 <p class="topic-intro">Revise a integração entre HC-SR04 e Servo Motor, o uso de <code>bool</code> como trava lógica e a estrutura de repetição <code>for</code>.</p>
 <div class="exercise-grid">
 <article class="exercise-box wide"><h4>Questionário interativo — 6 questões de múltipla escolha</h4><div class="box-body"><div class="use-note">Clique em uma alternativa. Após a escolha, a questão será bloqueada e o sistema informará se a resposta está certa ou errada.</div><ol>
@@ -1829,11 +1849,11 @@ void loop() {
   delay(15);
 }</code></pre></div></article>
 <article class="exercise-box"><h4>Alterando parâmetros</h4><div class="box-body"><p>Modifique o programa para abrir a tampa quando a distância for 25 cm ou menos, abrir somente até 100° e permanecer aberta por 4 segundos.</p></div></article>
-<article class="exercise-box wide"><h4>Integração de conhecimentos</h4><div class="box-body"><p>Explique por que a lixeira automática é um laboratório e não um projeto de componente novo. Identifique quais conhecimentos dos Projetos 7 e 9 foram reutilizados e qual conceito de programação foi acrescentado.</p></div></article>
+<article class="exercise-box wide"><h4>Integração de conhecimentos</h4><div class="box-body"><p>Explique por que a lixeira automática é um laboratório e não um projeto de componente novo. Identifique quais conhecimentos dos Projetos 7 e 11 foram reutilizados e qual conceito de programação foi acrescentado.</p></div></article>
 </div>
 </section>
 
 </section>
-</main></div>
+</main></div></div>
 <script src="../js/arduino.js"></script>
 </body></html>
