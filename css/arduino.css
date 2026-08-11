@@ -1138,3 +1138,349 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
     display:none !important;
   }
 }
+
+
+/* ===== ARDUINO — NAVEGAÇÃO POR MÓDULOS + ETAPAS (11/08/2026) =====
+   Refatoração estrutural exclusiva deste módulo.
+   Preserva o conteúdo e as regras existentes; apenas redefine a navegação. */
+
+.module-menu{
+  position:sticky;
+  top:54px;
+  z-index:940;
+  min-height:46px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  white-space:nowrap;
+  background:rgba(255,255,255,.98);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 2px 9px rgba(15,23,42,.07);
+  scrollbar-width:thin;
+}
+.module-btn{
+  flex:0 0 auto;
+  border:1px solid #b9dfe6;
+  border-radius:999px;
+  background:#f8fbfc;
+  color:var(--dark);
+  padding:8px 13px;
+  font-size:13px;
+  font-weight:900;
+  line-height:1.15;
+  white-space:nowrap;
+}
+.module-btn:hover{
+  background:#e3f4f7;
+  color:var(--dark);
+}
+.module-btn.active{
+  background:var(--primary);
+  color:#fff;
+  border-color:var(--primary);
+  box-shadow:0 2px 7px rgba(11,114,133,.25);
+}
+
+.layout.arduino-layout{
+  display:grid !important;
+  grid-template-columns:clamp(174px,12vw,190px) minmax(0,1fr) !important;
+  min-height:calc(100vh - 100px) !important;
+  align-items:start;
+}
+.layout.arduino-layout.no-sidebar{
+  grid-template-columns:minmax(0,1fr) !important;
+}
+
+.stage-sidebar{
+  position:sticky;
+  top:100px;
+  align-self:start;
+  height:calc(100vh - 100px);
+  overflow-y:auto;
+  background:#fff;
+  border-right:1px solid var(--line);
+  padding:12px 9px 16px;
+  z-index:55;
+}
+.no-sidebar .stage-sidebar{
+  display:none;
+}
+.stage-sidebar-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin:2px 5px 9px;
+}
+.stage-sidebar h3{
+  margin:0;
+  color:var(--muted);
+  font-size:10.5px;
+  font-weight:900;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+.stage-close{
+  display:none;
+}
+.stage-menu{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.stage-link{
+  display:none;
+  width:100%;
+  text-decoration:none;
+  color:#10333b;
+  background:transparent;
+  border:1px solid transparent;
+  border-radius:9px;
+  padding:8px 9px;
+  font-size:12.5px;
+  font-weight:800;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+.stage-link.module-visible{
+  display:block;
+}
+.stage-link:hover{
+  background:#eaf7f9;
+  border-color:#cce7ec;
+  color:var(--dark);
+}
+.stage-link.active{
+  background:var(--primary);
+  border-color:var(--primary);
+  color:#fff;
+  box-shadow:0 2px 7px rgba(11,114,133,.22);
+}
+.stage-exercises{
+  margin-top:7px;
+  border-top:1px solid var(--line);
+  border-radius:0 0 9px 9px;
+  padding-top:11px;
+}
+
+.arduino-content{
+  min-width:0;
+  width:100%;
+}
+.arduino-content main{
+  width:100% !important;
+  max-width:1500px !important;
+  margin:0 auto !important;
+  padding:18px 22px 26px !important;
+}
+.no-sidebar .arduino-content main{
+  max-width:1500px !important;
+}
+.stage-toggle{
+  display:none;
+}
+.stage-backdrop{
+  display:none;
+}
+
+/* Com duas barras fixas no desktop, o circuito continua abaixo delas sem sobreposição. */
+@media(min-width:1024px){
+  .arduino-layout:not(.no-sidebar) .circuitPanel{
+    top:100px !important;
+  }
+  .arduino-layout.no-sidebar .fundamentos-premium{
+    width:100%;
+  }
+}
+
+/* Tablet: conteúdo em largura total e etapas em drawer temporário. */
+@media(max-width:1023px){
+  .layout.arduino-layout,
+  .layout.arduino-layout.no-sidebar{
+    display:block !important;
+    min-height:calc(100vh - 92px) !important;
+  }
+  .arduino-content main{
+    max-width:100% !important;
+    padding:12px !important;
+  }
+  .stage-sidebar{
+    position:fixed !important;
+    top:0 !important;
+    left:0;
+    z-index:1200;
+    width:min(82vw,300px);
+    height:100dvh;
+    padding:14px 10px 18px;
+    border-right:1px solid var(--line);
+    box-shadow:8px 0 28px rgba(15,23,42,.18);
+    transform:translateX(-105%);
+    transition:transform .2s ease;
+  }
+  .arduino-layout.drawer-open .stage-sidebar{
+    transform:translateX(0);
+  }
+  .no-sidebar .stage-sidebar{
+    display:block;
+    transform:translateX(-105%);
+  }
+  .stage-sidebar-head{
+    margin-bottom:12px;
+  }
+  .stage-close{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:34px;
+    height:34px;
+    padding:0;
+    border-radius:9px;
+    background:#eef8fa;
+    color:var(--dark);
+    font-size:23px;
+    line-height:1;
+  }
+  .stage-link{
+    font-size:14px;
+    padding:10px 11px;
+  }
+  .stage-backdrop{
+    position:fixed;
+    inset:0;
+    z-index:1190;
+    background:rgba(15,23,42,.36);
+  }
+  .arduino-layout.drawer-open .stage-backdrop{
+    display:block;
+  }
+  .stage-toggle{
+    position:sticky;
+    top:100px;
+    z-index:52;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin:8px 0 0 12px;
+    padding:8px 11px;
+    background:#fff;
+    color:var(--dark);
+    border:1px solid #b9dfe6;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(15,23,42,.08);
+  }
+  .no-sidebar .stage-toggle{
+    display:none;
+  }
+  .circuitPanel{
+    position:static !important;
+    top:auto !important;
+  }
+}
+
+/* Smartphone: módulos continuam numa única faixa rolável; conteúdo sempre ocupa 100%. */
+@media(max-width:720px){
+  .module-menu{
+    top:46px;
+    min-height:44px;
+    padding:6px 8px;
+    gap:6px;
+  }
+  .module-btn{
+    padding:7px 10px;
+    font-size:12px;
+  }
+  .layout.arduino-layout,
+  .layout.arduino-layout.no-sidebar{
+    min-height:calc(100vh - 90px) !important;
+  }
+  .stage-toggle{
+    top:90px;
+    margin:7px 0 0 10px;
+    font-size:12.5px;
+    padding:7px 10px;
+  }
+  .arduino-content main{
+    padding:10px !important;
+  }
+  .project,
+  .fundamentos-premium,
+  .exercises-section{
+    scroll-margin-top:98px !important;
+  }
+  .circuitPhoto,
+  .circuitFigure figcaption{
+    min-width:0 !important;
+    width:100% !important;
+    max-width:100% !important;
+  }
+}
+
+/* ===== ARDUINO — CORREÇÃO DE ESPAÇAMENTO E SOBREPOSIÇÃO DOS CIRCUITOS (11/08/2026) =====
+   Ajuste exclusivamente estrutural.
+   - Remove o espaço inútil após o cabeçalho do projeto.
+   - Impede que circuito/legenda cubram os cards seguintes.
+   - Mantém o circuito responsivo em desktop, tablet e smartphone.
+*/
+.projectHead + .circuitPanel{
+  margin-top:0 !important;
+}
+
+.circuitPanel{
+  position:static !important;
+  top:auto !important;
+  left:auto !important;
+  right:auto !important;
+  z-index:auto !important;
+  margin:0 !important;
+  padding-top:10px !important;
+  overflow:visible !important;
+}
+
+.circuitFigure{
+  position:relative !important;
+  z-index:auto !important;
+  margin:0 !important;
+}
+
+.circuitFigure figcaption{
+  position:static !important;
+  z-index:auto !important;
+}
+
+.cards{
+  position:relative !important;
+  z-index:auto !important;
+  clear:both !important;
+}
+
+@media(max-width:1023px){
+  .circuitPanel{
+    position:static !important;
+    top:auto !important;
+    margin:0 !important;
+  }
+}
+
+@media(max-width:720px){
+  .circuitPanel{
+    padding:8px !important;
+    overflow:hidden !important;
+  }
+
+  .circuitFigure{
+    width:100% !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+  }
+
+  .circuitPhoto,
+  .circuitFigure figcaption{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+}
+
