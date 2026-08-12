@@ -15,35 +15,43 @@
   <div class="brand">Professor Ronaldo Lavestein</div>
 </header>
 
-<div class="layout">
-<nav class="side-nav">
-  <h3>Etapas</h3>
-  <a class="nav-btn active" href="#inicio">Início</a>
-  <a class="nav-btn" href="#fundamentos">1 - Fundamentos</a>
-  <a class="nav-btn" href="#problema">2 - Problema</a>
-  <a class="nav-btn" href="#appinventor">3 - App Inventor</a>
-  <a class="nav-btn" href="#designer">4 - Designer</a>
-  <a class="nav-btn" href="#interface">5 - Interface</a>
-  <a class="nav-btn" href="#execucao">6 - Executando</a>
-  <a class="nav-btn" href="#blocos">7 - Blocos</a>
-  <a class="nav-btn" href="#usando-api">8 - Usando API</a>
-  <a class="nav-btn" href="#publicacao-app">9 - Publicação APP</a>
-  <div class="nav-group nav-exercises">
-    <button class="nav-btn nav-toggle" type="button" data-target="exercicios" aria-expanded="false">
-      <span>99 - Exercícios</span>
-      <span class="nav-caret" aria-hidden="true">▸</span>
-    </button>
-    <div class="nav-tree" aria-label="Submenu dos exercícios">
-      <a class="nav-sub" href="#exercicios">Interface</a>
-      <span class="nav-sub-title">Mini-Projetos</span>
-      <a class="nav-sub nav-sub-child" href="#exercicio-lampada">1 - Lâmpada</a>
-      <a class="nav-sub nav-sub-child" href="#exercicio-login">2 - Login</a>
-      <a class="nav-sub nav-sub-child" href="#exercicio-imc">3 - IMC</a>
-      <a class="nav-sub nav-sub-child" href="#exercicio-adivinhacao">4 - Adivinhação</a>
-    </div>
-  </div>
-</nav>
+<div class="module-menu" id="appInventorModuleMenu" aria-label="Módulos do App Inventor">
+  <button class="module-btn active" type="button" data-module="fundamentos" data-target="#inicio">1. Fundamentos e Interface</button>
+  <button class="module-btn" type="button" data-module="logica" data-target="#blocos">2. Lógica e Programação em Blocos</button>
+  <button class="module-btn module-btn-pending" type="button" data-module="recursos" disabled aria-disabled="true" title="Módulo preparado para os próximos conteúdos">3. Recursos do Smartphone e Dados</button>
+  <button class="module-btn" type="button" data-module="internet" data-target="#usando-api">4. Internet, APIs e Publicação</button>
+</div>
 
+<div class="layout appinventor-layout" id="appInventorLayout">
+<aside class="side-nav" id="stageSidebar" aria-label="Etapas do módulo">
+  <div class="stage-sidebar-head">
+    <h3>Etapas</h3>
+    <button class="stage-close" id="stageClose" type="button" aria-label="Fechar etapas">×</button>
+  </div>
+  <div class="stage-menu" id="stageMenu">
+    <a class="nav-btn active" data-module="fundamentos" href="#inicio">Início</a>
+    <a class="nav-btn" data-module="fundamentos" href="#fundamentos">1 - Fundamentos</a>
+    <a class="nav-btn" data-module="fundamentos" href="#problema">2 - Problema</a>
+    <a class="nav-btn" data-module="fundamentos" href="#appinventor">3 - App Inventor</a>
+    <a class="nav-btn" data-module="fundamentos" href="#designer">4 - Designer</a>
+    <a class="nav-btn" data-module="fundamentos" href="#interface">5 - Interface</a>
+    <a class="nav-btn" data-module="fundamentos" href="#execucao">6 - Executando</a>
+    <a class="nav-btn" data-module="fundamentos" href="#exercicios">99 - Exercícios de Interface</a>
+
+    <a class="nav-btn" data-module="logica" href="#blocos">Blocos</a>
+    <a class="nav-btn" data-module="logica" href="#exercicio-lampada">1 - Lâmpada</a>
+    <a class="nav-btn" data-module="logica" href="#exercicio-login">2 - Login</a>
+    <a class="nav-btn" data-module="logica" href="#exercicio-imc">3 - IMC</a>
+    <a class="nav-btn" data-module="logica" href="#exercicio-adivinhacao">4 - Adivinhação</a>
+
+
+    <a class="nav-btn" data-module="internet" href="#usando-api">Usando API</a>
+    <a class="nav-btn" data-module="internet" href="#publicacao-app">Publicação APP</a>
+  </div>
+</aside>
+<div class="stage-backdrop" id="stageBackdrop" hidden></div>
+<div class="appinventor-content">
+  <button class="stage-toggle" id="stageToggle" type="button" aria-controls="stageSidebar" aria-expanded="false">☰ Etapas</button>
 <main class="content">
 
 <section id="inicio" class="hero-card">
@@ -159,13 +167,12 @@
     <figcaption>Organizações horizontais e verticais controlam a posição dos componentes na tela.</figcaption>
   </figure>
 
-<figure class="layout-figure"
-        style="max-width:900px; margin:0 auto; text-align:center;">
+<figure class="compact-figure layout-figure hierarchy-tree-figure">
     <img
         src="../img/appinventor/arvore_hierarquica_interface.webp"
-        alt="Árvore hierárquica da interface"
-        style="width:100%; height:auto;">
+        alt="Árvore hierárquica da interface">
 </figure>
+</section>
 
 <section id="interface" class="section-card">
   <div class="section-head"><span class="badge">5</span><div><h2>Construindo a interface da Agenda</h2><p>A tela será construída por etapas. Em cada etapa, veja o que inserir, quais propriedades alterar e qual será o resultado.</p></div></div>
@@ -2038,6 +2045,7 @@
 </section>
 
 </main>
+</div>
 </div>
 <script src="../js/appinventor.js"></script>
 </body>
