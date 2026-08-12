@@ -18,7 +18,7 @@
 <div class="module-menu" id="appInventorModuleMenu" aria-label="Módulos do App Inventor">
   <button class="module-btn active" type="button" data-module="fundamentos" data-target="#inicio">1. Fundamentos e Interface</button>
   <button class="module-btn" type="button" data-module="logica" data-target="#blocos">2. Lógica e Programação em Blocos</button>
-  <button class="module-btn module-btn-pending" type="button" data-module="recursos" disabled aria-disabled="true" title="Módulo preparado para os próximos conteúdos">3. Recursos do Smartphone e Dados</button>
+  <button class="module-btn" type="button" data-module="recursos" data-target="#lab-voz">3. Recursos do Smartphone e Dados</button>
   <button class="module-btn" type="button" data-module="internet" data-target="#usando-api">4. Internet, APIs e Publicação</button>
 </div>
 
@@ -44,6 +44,7 @@
     <a class="nav-btn" data-module="logica" href="#exercicio-imc">3 - IMC</a>
     <a class="nav-btn" data-module="logica" href="#exercicio-adivinhacao">4 - Adivinhação</a>
 
+    <a class="nav-btn" data-module="recursos" href="#lab-voz">Lab 1 - Voz: falar e reconhecer</a>
 
     <a class="nav-btn" data-module="internet" href="#usando-api">Usando API</a>
     <a class="nav-btn" data-module="internet" href="#publicacao-app">Publicação APP</a>
@@ -822,6 +823,174 @@
   </div>
 </section>
 
+
+
+<section id="lab-voz" class="section-card voice-lab">
+  <div class="section-head">
+    <span class="badge">Lab 1</span>
+    <div>
+      <h2>Voz — o celular fala e escuta</h2>
+      <p>Use reconhecimento de voz e síntese de fala para explorar dois recursos reais do smartphone.</p>
+    </div>
+  </div>
+
+  <div class="notice">
+    <strong>Foco deste laboratório:</strong> conhecer componentes não visíveis do App Inventor e entender o fluxo <strong>falar → reconhecer → mostrar o texto → reproduzir o texto em voz</strong>.
+  </div>
+
+  <div class="concept-grid">
+    <article>
+      <h3>Objetivo</h3>
+      <ul>
+        <li>Capturar a fala do usuário.</li>
+        <li>Mostrar o texto reconhecido na tela.</li>
+        <li>Transformar um texto em fala.</li>
+      </ul>
+    </article>
+    <article>
+      <h3>O que você vai aprender</h3>
+      <ul>
+        <li>Componentes visíveis e não visíveis.</li>
+        <li>Eventos antes e depois de uma ação.</li>
+        <li>Passagem de valores entre componentes.</li>
+      </ul>
+    </article>
+    <article>
+      <h3>Componentes especiais</h3>
+      <ul>
+        <li><strong>ReconhecedorDeVoz</strong> — converte fala em texto.</li>
+        <li><strong>TextoParaFalar</strong> — converte texto em fala.</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="two-col">
+    <div class="exercise-group">
+      <h3>1. Componentes utilizados</h3>
+      <div class="table-wrap">
+        <table class="content-table">
+          <thead><tr><th>Componente</th><th>Nome</th><th>Função</th></tr></thead>
+          <tbody>
+            <tr><td>Tela</td><td>Screen1</td><td>Tela principal.</td></tr>
+            <tr><td>Legenda</td><td>legTitulo</td><td>Orienta o usuário.</td></tr>
+            <tr><td>Caixa de Texto</td><td>cxtTexto</td><td>Recebe texto digitado ou reconhecido.</td></tr>
+            <tr><td>Legendas</td><td>legEspaco01, legEspaco02 e legEspaco03</td><td>Criam espaçamento vertical.</td></tr>
+            <tr><td>Botão</td><td>btReconhecerVoz</td><td>Inicia o reconhecimento de voz.</td></tr>
+            <tr><td>Botão</td><td>btFalarTexto</td><td>Faz o aparelho falar o texto.</td></tr>
+            <tr><td>Texto para Falar</td><td>TextoParaFalar1</td><td>Componente não visível de síntese de fala.</td></tr>
+            <tr><td>Reconhecedor de Voz</td><td>ReconhecedorDeVoz1</td><td>Componente não visível de reconhecimento.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <figure class="compact-figure hierarchy-tree-figure">
+      <img src="../img/appinventor/voz_arvore_componentes.webp" alt="Árvore de componentes do laboratório de voz" loading="lazy" decoding="async">
+      <figcaption>Árvore de componentes utilizada no projeto.</figcaption>
+    </figure>
+  </div>
+
+  <div class="exercise-group">
+    <h3>2. Configure a Screen1</h3>
+    <p>Centralize os componentes e mantenha a tela em orientação retrato.</p>
+    <div class="table-wrap">
+      <table class="content-table">
+        <thead><tr><th>Propriedade</th><th>Valor</th></tr></thead>
+        <tbody>
+          <tr><td>AlinhamentoHorizontal</td><td>Centro</td></tr>
+          <tr><td>AlinhamentoVertical</td><td>Centro</td></tr>
+          <tr><td>OrientaçãoDaTela</td><td>Retrato</td></tr>
+          <tr><td>Título</td><td>Texto para falar</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="compact-figure" style="max-width:390px;margin-top:16px;">
+      <img src="../img/appinventor/voz_screen1_propriedades.webp" alt="Propriedades da Screen1 do laboratório de voz" loading="lazy" decoding="async">
+      <figcaption>Propriedades principais da Screen1.</figcaption>
+    </figure>
+  </div>
+
+  <div class="exercise-group">
+    <h3>3. Monte a interface</h3>
+    <p>Use a legenda <strong>Digite o texto para falar</strong>, a caixa <strong>cxtTexto</strong> e os botões <strong>Reconhecer voz</strong> e <strong>Falar texto</strong>. As três legendas de espaço permanecem sem texto e servem apenas para separar visualmente os elementos.</p>
+    <div class="image-pair">
+      <figure class="compact-figure">
+        <img src="../img/appinventor/voz_interface_final.webp" alt="Interface final do aplicativo de voz" loading="lazy" decoding="async">
+        <figcaption>Resultado esperado no celular.</figcaption>
+      </figure>
+      <div class="text-panel blue">
+        <h3>Propriedades importantes</h3>
+        <ul>
+          <li><strong>legTitulo:</strong> texto “Digite o texto para falar”, negrito e tamanho 14.</li>
+          <li><strong>btReconhecerVoz:</strong> texto “Reconhecer voz”.</li>
+          <li><strong>btFalarTexto:</strong> texto “Falar texto”.</li>
+          <li><strong>TextoParaFalar1:</strong> altura 1.0 e velocidade da fala 1.0.</li>
+          <li><strong>ReconhecedorDeVoz1:</strong> mantenha <em>UseLegacy</em> marcado, conforme o projeto.</li>
+        </ul>
+        <p>Os componentes <strong>TextoParaFalar1</strong> e <strong>ReconhecedorDeVoz1</strong> aparecem abaixo da tela no Designer porque não possuem representação visual dentro do aplicativo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="blocks-section">
+    <h3>4. Programação dos blocos</h3>
+
+    <article class="block-card">
+      <div>
+        <h4>Bloco 1 — Reconhecer voz</h4>
+        <p>Ao clicar em <strong>btReconhecerVoz</strong>, o aplicativo solicita ao componente de reconhecimento que obtenha um texto falado pelo usuário.</p>
+      </div>
+      <figure><img src="../img/appinventor/voz_blocos_reconhecer_clique.webp" alt="Bloco do botão Reconhecer voz" loading="lazy" decoding="async"></figure>
+    </article>
+
+    <article class="block-card">
+      <div>
+        <h4>Bloco 2 — Antes de ouvir</h4>
+        <p>Antes de iniciar o reconhecimento, o aplicativo limpa <strong>cxtTexto.Texto</strong>. Assim, o resultado anterior não permanece na caixa.</p>
+      </div>
+      <figure><img src="../img/appinventor/voz_blocos_antes_obter_texto.webp" alt="Bloco AntesDeObterTexto do reconhecedor de voz" loading="lazy" decoding="async"></figure>
+    </article>
+
+    <article class="block-card">
+      <div>
+        <h4>Bloco 3 — Depois de ouvir</h4>
+        <p>Quando o reconhecimento termina, o valor <strong>resultado</strong> recebido pelo evento é colocado em <strong>cxtTexto.Texto</strong>.</p>
+        <p>O parâmetro <strong>resultado</strong> contém o texto que foi reconhecido.</p>
+      </div>
+      <figure><img src="../img/appinventor/voz_blocos_depois_obter_texto.webp" alt="Bloco DepoisDeObterTexto do reconhecedor de voz" loading="lazy" decoding="async"></figure>
+    </article>
+
+    <article class="block-card">
+      <div>
+        <h4>Bloco 4 — Falar o texto</h4>
+        <p>Ao clicar em <strong>btFalarTexto</strong>, o componente <strong>TextoParaFalar1</strong> recebe como mensagem o conteúdo atual de <strong>cxtTexto.Texto</strong> e o reproduz em voz.</p>
+      </div>
+      <figure><img src="../img/appinventor/voz_blocos_falar_clique.webp" alt="Bloco do botão Falar texto" loading="lazy" decoding="async"></figure>
+    </article>
+  </div>
+
+  <div class="activity-box">
+    <h3>5. Entenda o fluxo</h3>
+    <div class="mini-flow">
+      <span>Usuário fala</span><strong>→</strong><span>Reconhecedor de Voz</span><strong>→</strong><span>cxtTexto</span><strong>→</strong><span>Texto para Falar</span><strong>→</strong><span>Celular fala</span>
+    </div>
+    <p>Uma mesma caixa de texto funciona como saída do reconhecimento e como entrada da síntese de fala. Isso deixa o projeto pequeno e facilita visualizar a passagem dos dados entre os componentes.</p>
+  </div>
+
+  <div class="exercise-group">
+    <h3>6. Testando no celular</h3>
+    <ol>
+      <li>Conecte o projeto ao <strong>MIT AI2 Companion</strong>.</li>
+      <li>Toque em <strong>Reconhecer voz</strong> e diga uma frase curta.</li>
+      <li>Confira se a frase reconhecida aparece em <strong>cxtTexto</strong>.</li>
+      <li>Toque em <strong>Falar texto</strong> e confira se o aparelho reproduz a frase.</li>
+      <li>Digite manualmente outra frase e teste novamente o botão <strong>Falar texto</strong>.</li>
+    </ol>
+  </div>
+
+  <div class="challenge">
+    <strong>Desafio:</strong> altere a propriedade <strong>VelocidadeDaFala</strong> do componente TextoParaFalar1, teste valores diferentes e observe como a reprodução muda. Depois, retorne ao valor 1.0.
+  </div>
+</section>
 
 
 <section id="usando-api" class="section-card cep-api-project">
