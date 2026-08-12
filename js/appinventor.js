@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   const initialId=location.hash?.slice(1);
   if(initialId && document.getElementById(initialId)){
     const exactLink=stageLinks.find(link=>link.getAttribute("href")==="#"+initialId);
-    if(exactLink && exactLink.dataset.module!=="recursos"){
+    if(exactLink){
       setModule(exactLink.dataset.module,false);
     }else{
       setModule("fundamentos",false);
