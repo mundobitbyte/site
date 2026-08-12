@@ -1,170 +1,128 @@
 document.addEventListener("DOMContentLoaded",()=>{
-  const navGroup=document.querySelector(".nav-exercises");
-  const navToggle=document.querySelector(".nav-toggle");
-  const navTree=document.querySelector(".nav-tree");
-  const navLinks=[...document.querySelectorAll(".side-nav .nav-btn[href], .side-nav .nav-sub")];
-  const mainLinks=[...document.querySelectorAll(".side-nav .nav-btn[href]")];
-  const subLinks=[...document.querySelectorAll(".side-nav .nav-sub")];
-  const sections=[...document.querySelectorAll("main section[id]")];
+  const layout=document.getElementById("appInventorLayout");
   const content=document.querySelector(".content");
-  const scrollArea=content||document.documentElement;
+  const moduleButtons=[...document.querySelectorAll(".module-btn[data-module]")];
+  const stageLinks=[...document.querySelectorAll(".stage-menu .nav-btn[data-module][href]")];
+  const stageToggle=document.getElementById("stageToggle");
+  const stageClose=document.getElementById("stageClose");
+  const stageBackdrop=document.getElementById("stageBackdrop");
+  let activeModule="fundamentos";
 
   function isSmallScreen(){
     return window.matchMedia("(max-width: 900px)").matches;
   }
 
-  function positionExercisesMenu(){
-    if(!navToggle || !navTree || !isSmallScreen()) return;
-    const rect=navToggle.getBoundingClientRect();
-    const menuWidth=Math.min(240, window.innerWidth-24);
-    const left=Math.min(Math.max(12, rect.left), window.innerWidth-menuWidth-12);
-    const top=rect.bottom+8;
-    navTree.style.setProperty("--submenu-left", left+"px");
-    navTree.style.setProperty("--submenu-top", top+"px");
+  function openDrawer(){
+    if(!layout || !isSmallScreen()) return;
+    layout.classList.add("drawer-open");
+    stageToggle?.setAttribute("aria-expanded","true");
+    if(stageBackdrop) stageBackdrop.hidden=false;
   }
 
-  function openExercisesMenu(){
-    if(!navGroup || !navToggle) return;
-    navGroup.classList.add("open");
-    navToggle.setAttribute("aria-expanded","true");
-    positionExercisesMenu();
+  function closeDrawer(){
+    layout?.classList.remove("drawer-open");
+    stageToggle?.setAttribute("aria-expanded","false");
+    if(stageBackdrop) stageBackdrop.hidden=true;
   }
 
-  function closeExercisesMenu(){
-    if(!navGroup || !navToggle) return;
-    navGroup.classList.remove("open");
-    navToggle.setAttribute("aria-expanded","false");
-  }
+  function setModule(module, scrollToFirst=false){
+    const button=moduleButtons.find(btn=>btn.dataset.module===module && !btn.disabled);
+    if(!button) return;
+    activeModule=module;
 
-  function toggleExercisesMenu(){
-    if(!navGroup || !navToggle) return;
-    const isOpen=navGroup.classList.toggle("open");
-    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-    if(isOpen) positionExercisesMenu();
-  }
-
-  function clearActive(){
-    navLinks.forEach(link=>link.classList.remove("active"));
-    if(navToggle) navToggle.classList.remove("active");
-  }
-
-  function activate(id){
-    clearActive();
-    navLinks.forEach(link=>{
-      if(link.getAttribute("href")==="#"+id){
-        link.classList.add("active");
-      }
+    moduleButtons.forEach(btn=>btn.classList.toggle("active",btn===button));
+    stageLinks.forEach(link=>{
+      const visible=link.dataset.module===module;
+      link.hidden=!visible;
+      if(!visible) link.classList.remove("active");
     });
 
-    const target=document.getElementById(id);
-    const parentSection=target?.closest("main section[id]");
-    if(parentSection){
-      mainLinks.forEach(link=>{
-        if(link.getAttribute("href")==="#"+parentSection.id){
-          link.classList.add("active");
-        }
-      });
-      if(parentSection.id==="exercicios" && navToggle){
-        navToggle.classList.add("active");
-      }
+    const visibleLinks=stageLinks.filter(link=>!link.hidden);
+    if(!visibleLinks.some(link=>link.classList.contains("active"))){
+      visibleLinks[0]?.classList.add("active");
+    }
+
+    if(scrollToFirst){
+      const target=button.dataset.target || visibleLinks[0]?.getAttribute("href");
+      if(target) scrollToTarget(target.slice(1),false);
     }
   }
 
-  function getTopInsideContent(target){
-    if(!content) return 0;
-    let top=target.offsetTop;
-    let node=target.offsetParent;
-    while(node && node!==content){
-      top+=node.offsetTop;
-      node=node.offsetParent;
-    }
-    // Mantém o título da seção visível.
-    // No celular, o menu horizontal fica acima do conteúdo; por isso
-    // precisa de uma folga maior para a seção não ficar escondida.
-    const menuOffset=isSmallScreen() ? 150 : 72;
-    return Math.max(0, top-menuOffset);
+  function activateLink(id){
+    const visibleLinks=stageLinks.filter(link=>!link.hidden);
+    visibleLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#"+id));
   }
 
-  function scrollToTarget(id){
+  function scrollToTarget(id, updateHistory=true){
     const target=document.getElementById(id);
     if(!target) return;
 
-    if(content){
-      content.scrollTo({top:getTopInsideContent(target), behavior:"auto"});
-    }else{
-      target.scrollIntoView({behavior:"auto", block:"start"});
-    }
-    activate(id);
+    // A própria .content é o contêiner de rolagem. O navegador faz o
+    // posicionamento de forma uniforme para sections e articles, respeitando
+    // o scroll-padding definido no CSS. Assim não dependemos de offsetTop,
+    // coordenadas do body ou da altura do menu horizontal.
+    target.scrollIntoView({behavior:"auto",block:"start",inline:"nearest"});
+
+    activateLink(id);
+    if(updateHistory) history.replaceState(null,"","#"+id);
   }
 
-  if(navToggle){
-    navToggle.addEventListener("click",event=>{
-      event.preventDefault();
-      toggleExercisesMenu();
-      if(navToggle.classList.contains("active")) return;
-      navToggle.classList.add("active");
+  moduleButtons.forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(btn.disabled) return;
+      setModule(btn.dataset.module,true);
+      closeDrawer();
     });
-  }
+  });
 
-  navLinks.forEach(link=>{
+  stageLinks.forEach(link=>{
     link.addEventListener("click",event=>{
       const href=link.getAttribute("href")||"";
       if(!href.startsWith("#")) return;
-      const id=href.slice(1);
-      if(!id) return;
       event.preventDefault();
-      if(link.classList.contains("nav-sub")){
-        openExercisesMenu();
-        scrollToTarget(id);
-        history.replaceState(null,"","#"+id);
-        if(isSmallScreen()) setTimeout(closeExercisesMenu,180);
-      }else{
-        closeExercisesMenu();
-        scrollToTarget(id);
-        history.replaceState(null,"","#"+id);
-      }
+      const module=link.dataset.module;
+      if(module && module!==activeModule) setModule(module,false);
+      scrollToTarget(href.slice(1),true);
+      if(isSmallScreen()) closeDrawer();
     });
   });
 
-  function setActive(){
-    let current=sections[0]?.id;
-    for(const section of sections){
-      if(section.getBoundingClientRect().top<=120){
-        current=section.id;
-      }
-    }
+  stageToggle?.addEventListener("click",()=>{
+    if(layout?.classList.contains("drawer-open")) closeDrawer();
+    else openDrawer();
+  });
+  stageClose?.addEventListener("click",closeDrawer);
+  stageBackdrop?.addEventListener("click",closeDrawer);
 
-    for(const link of subLinks){
+  function updateActiveFromScroll(){
+    const visibleLinks=stageLinks.filter(link=>!link.hidden);
+    let current=visibleLinks[0]?.getAttribute("href")?.slice(1);
+    for(const link of visibleLinks){
       const id=link.getAttribute("href")?.slice(1);
       const target=id ? document.getElementById(id) : null;
-      if(target && target.getBoundingClientRect().top<=130){
-        current=id;
-      }
+      if(target && target.getBoundingClientRect().top<=140) current=id;
     }
-
-    if(current) activate(current);
+    if(current) activateLink(current);
   }
 
-  document.addEventListener("click",event=>{
-    if(navGroup && navGroup.classList.contains("open") && !navGroup.contains(event.target)){
-      if(isSmallScreen()) closeExercisesMenu();
-    }
-  });
-
-  scrollArea.addEventListener("scroll",setActive,{passive:true});
+  content?.addEventListener("scroll",updateActiveFromScroll,{passive:true});
   window.addEventListener("resize",()=>{
-    positionExercisesMenu();
-    setActive();
+    if(!isSmallScreen()) closeDrawer();
+    updateActiveFromScroll();
   });
 
-  const initialId=window.location.hash?.slice(1);
+  const initialId=location.hash?.slice(1);
   if(initialId && document.getElementById(initialId)){
-    if(initialId==="exercicios" || document.getElementById(initialId)?.closest("#exercicios")){
-      openExercisesMenu();
+    const exactLink=stageLinks.find(link=>link.getAttribute("href")==="#"+initialId);
+    if(exactLink && exactLink.dataset.module!=="recursos"){
+      setModule(exactLink.dataset.module,false);
+    }else{
+      setModule("fundamentos",false);
     }
-    setTimeout(()=>scrollToTarget(initialId),60);
+    setTimeout(()=>scrollToTarget(initialId,false),50);
   }else{
-    setActive();
+    setModule("fundamentos",false);
+    updateActiveFromScroll();
   }
 });
 
