@@ -978,3 +978,13 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
 .appinventor-content .logic-exercises[id]{
   scroll-margin-block-start:0;
 }
+
+/* ===== Laboratório 1 — Voz (12/08/2026) ===== */
+.voice-lab .badge{
+  padding:0 10px;
+  white-space:nowrap;
+}
+.voice-lab .compact-figure img{
+  max-height:720px;
+  object-fit:contain;
+}
