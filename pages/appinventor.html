@@ -47,6 +47,7 @@
     <a class="nav-btn" data-module="recursos" href="#lab-voz">Lab 1 - Voz: falar e reconhecer</a>
 
     <a class="nav-btn" data-module="internet" href="#usando-api">Usando API</a>
+    <a class="nav-btn" data-module="internet" href="#exercicios-api-appinventor">99 - Exercícios de APIs</a>
     <a class="nav-btn" data-module="internet" href="#publicacao-app">Publicação APP</a>
   </div>
 </aside>
@@ -1181,6 +1182,188 @@
 
   <div class="notice">
     <strong>Conclusão:</strong> neste projeto, o aplicativo deixou de trabalhar apenas com dados digitados na tela e passou a consultar informações externas. Esse é um passo importante para criar aplicativos mais úteis e conectados. No próximo avanço, esse conhecimento ajudará a transformar uma ideia criada com auxílio de IA em um aplicativo real: <strong>Do Assistente ao Aplicativo</strong>.
+  </div>
+
+</section>
+
+<section id="exercicios-api-appinventor" class="section-card api-exercises-section">
+  <div class="section-head">
+    <span class="badge">99</span>
+    <div>
+      <h2>Exercícios — Web Services e APIs</h2>
+      <p>Pratique o mesmo fluxo aprendido no Consulta CEP, aumentando gradualmente a autonomia na construção do aplicativo.</p>
+    </div>
+  </div>
+
+  <div class="notice">
+    <strong>Como trabalhar:</strong> o primeiro exercício oferece mais pistas. A cada novo desafio, algumas decisões ficam por sua conta. O objetivo não é copiar blocos prontos, mas reaplicar o caminho <strong>entrada → requisição → JSON → dados → tela</strong>.
+  </div>
+
+  <div class="api-exercise-tabs" role="tablist" aria-label="Exercícios de APIs">
+    <button class="api-exercise-tab active" type="button" data-api-target="api-ex-cep" aria-selected="true">
+      <span>1. Busca CEP+</span>
+      <img src="../img/reactnative/cep_expandido.webp" alt="Modelo visual do exercício Busca CEP expandido" loading="lazy" decoding="async">
+    </button>
+    <button class="api-exercise-tab" type="button" data-api-target="api-ex-moedas" aria-selected="false">
+      <span>2. Cotação do Dólar</span>
+      <img src="../img/reactnative/cotacao_dolar.webp" alt="Modelo visual do exercício Cotação do Dólar" loading="lazy" decoding="async">
+    </button>
+    <button class="api-exercise-tab" type="button" data-api-target="api-ex-clima" aria-selected="false">
+      <span>3. Clima Atual</span>
+      <img src="../img/reactnative/clima_atual.webp" alt="Modelo visual do exercício Clima Atual" loading="lazy" decoding="async">
+    </button>
+    <button class="api-exercise-tab" type="button" data-api-target="api-ex-paises" aria-selected="false">
+      <span>4. Países</span>
+      <div class="api-country-thumb" aria-hidden="true"><b>Países</b><i></i><i></i><em>Buscar</em><small>Capital<br>População<br>Região</small></div>
+    </button>
+  </div>
+
+  <article id="api-ex-cep" class="api-exercise-detail active">
+    <div class="api-exercise-copy">
+      <span class="api-level">Mais orientado</span>
+      <h3>1. Expandindo o Busca CEP</h3>
+      <p>O projeto principal mostra apenas cidade e estado. Agora aproveite melhor o JSON retornado pelo ViaCEP e amplie o aplicativo sem trocar de API.</p>
+
+      <div class="api-requirements">
+        <h4>Seu aplicativo deverá</h4>
+        <ul>
+          <li>Continuar recebendo um CEP e realizando a consulta.</li>
+          <li>Mostrar também <strong>logradouro</strong>, <strong>bairro</strong>, <strong>DDD</strong> e <strong>IBGE</strong>.</li>
+          <li>Manter o botão <strong>Pesquisar</strong>.</li>
+          <li>Acrescentar um botão <strong>Limpar</strong> que apague entrada e resultados.</li>
+        </ul>
+      </div>
+
+      <h4>Componentes sugeridos</h4>
+      <div class="table-wrap">
+        <table class="content-table api-component-table">
+          <thead><tr><th>Componente</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td>Caixa de Texto (TextBox)</td><td>CEP e campos de resultado.</td></tr>
+            <tr><td>Legenda (Label)</td><td>Identificar cada informação exibida.</td></tr>
+            <tr><td>Botão (Button)</td><td>Pesquisar e Limpar.</td></tr>
+            <tr><td>Web</td><td>Consultar o ViaCEP.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="api-hints">
+        <div><strong>Pista 1</strong><span>Você não precisa alterar a forma como a URL é montada.</span></div>
+        <div><strong>Pista 2</strong><span>Procure no dicionário as chaves <code>logradouro</code>, <code>bairro</code>, <code>ddd</code> e <code>ibge</code>.</span></div>
+        <div><strong>Pista 3</strong><span>Reaproveite o evento <strong>Web1.RecebeuTexto</strong> do projeto principal.</span></div>
+      </div>
+    </div>
+    <figure class="api-exercise-visual">
+      <img src="../img/reactnative/cep_expandido.webp" alt="Interface esperada do Busca CEP expandido" loading="lazy" decoding="async">
+      <figcaption>Referência visual: mantenha a ideia da interface, adaptando-a aos componentes do App Inventor.</figcaption>
+    </figure>
+  </article>
+
+  <article id="api-ex-moedas" class="api-exercise-detail">
+    <div class="api-exercise-copy">
+      <span class="api-level">Orientação intermediária</span>
+      <h3>2. Cotação do Dólar</h3>
+      <p>Crie um novo aplicativo que consulte a cotação do dólar em relação ao real. Agora você muda de API, mas reaproveita o mesmo raciocínio do Consulta CEP.</p>
+
+      <div class="api-requirements">
+        <h4>Seu aplicativo deverá</h4>
+        <ul>
+          <li>Ter os botões <strong>Consultar</strong> e <strong>Limpar</strong>.</li>
+          <li>Consultar <code>https://economia.awesomeapi.com.br/json/last/USD-BRL</code>.</li>
+          <li>Mostrar o <strong>valor atual</strong>, a <strong>maior cotação</strong> e a <strong>menor cotação</strong>.</li>
+        </ul>
+      </div>
+
+      <h4>Componentes necessários</h4>
+      <p><strong>Legenda (Label)</strong>, <strong>Caixa de Texto (TextBox)</strong> ou legendas para os resultados, <strong>Botão (Button)</strong> e <strong>Web</strong>. A organização e os nomes dos componentes ficam por sua conta.</p>
+
+      <div class="api-hints two-hints">
+        <div><strong>Pista</strong><span>Depois de decodificar o JSON, procure primeiro o objeto <code>USDBRL</code>.</span></div>
+        <div><strong>Depois</strong><span>Dentro dele, investigue os campos <code>bid</code>, <code>high</code> e <code>low</code>.</span></div>
+      </div>
+
+      <div class="challenge"><strong>Desafio:</strong> acrescente “R$” aos valores exibidos sem alterar os dados recebidos da API.</div>
+    </div>
+    <figure class="api-exercise-visual">
+      <img src="../img/reactnative/cotacao_dolar.webp" alt="Interface esperada do aplicativo Cotação do Dólar" loading="lazy" decoding="async">
+      <figcaption>Referência visual usada também no módulo React Native.</figcaption>
+    </figure>
+  </article>
+
+  <article id="api-ex-clima" class="api-exercise-detail">
+    <div class="api-exercise-copy">
+      <span class="api-level">Menos ajuda</span>
+      <h3>3. Clima Atual</h3>
+      <p>Crie um aplicativo que consulte as condições atuais de uma localidade a partir de latitude e longitude. Neste exercício, parte da montagem da interface já deve ser decidida por você.</p>
+
+      <div class="api-requirements">
+        <h4>Requisitos</h4>
+        <ul>
+          <li>Use inicialmente as coordenadas de São Paulo: latitude <strong>-23.5505</strong> e longitude <strong>-46.6333</strong>.</li>
+          <li>Consulte <code>https://api.open-meteo.com/v1/forecast?latitude=-23.5505&amp;longitude=-46.6333&amp;current=temperature_2m,wind_speed_10m</code>.</li>
+          <li>Exiba <strong>temperatura atual</strong> e <strong>velocidade do vento</strong>.</li>
+          <li>Inclua uma identificação da cidade na interface.</li>
+        </ul>
+      </div>
+
+      <h4>O que você decide</h4>
+      <p>Escolha quantas <strong>Legendas (Label)</strong> serão usadas, como os resultados serão organizados e quais nomes dará aos componentes. O componente <strong>Web</strong> continua responsável pela consulta.</p>
+
+      <div class="api-hints two-hints">
+        <div><strong>Observe</strong><span>Agora existem parâmetros na própria URL da consulta.</span></div>
+        <div><strong>Investigue</strong><span>Depois de decodificar a resposta, localize o objeto <code>current</code> e identifique os valores pedidos.</span></div>
+      </div>
+
+      <div class="challenge"><strong>Desafio:</strong> substitua as coordenadas por outra cidade e confirme se os valores retornados mudam.</div>
+    </div>
+    <figure class="api-exercise-visual">
+      <img src="../img/reactnative/clima_atual.webp" alt="Interface esperada do aplicativo Clima Atual" loading="lazy" decoding="async">
+      <figcaption>O modelo indica o resultado esperado; a montagem no Designer é responsabilidade do aluno.</figcaption>
+    </figure>
+  </article>
+
+  <article id="api-ex-paises" class="api-exercise-detail">
+    <div class="api-exercise-copy">
+      <span class="api-level">Mais autônomo</span>
+      <h3>4. Consultando Países</h3>
+      <p>Construa um aplicativo que receba o nome de um país e apresente informações obtidas pela REST Countries. Aqui o JSON traz uma dificuldade nova: o resultado principal é uma <strong>lista de dicionários</strong>.</p>
+
+      <div class="api-requirements">
+        <h4>Enunciado</h4>
+        <ul>
+          <li>Receba o nome do país em uma <strong>Caixa de Texto (TextBox)</strong>.</li>
+          <li>Use um <strong>Botão (Button)</strong> para iniciar a busca.</li>
+          <li>Monte a consulta a partir de <code>https://restcountries.com/v3.1/name/PAIS?fields=name,capital,population,region,flags</code>.</li>
+          <li>Mostre pelo menos <strong>capital</strong>, <strong>população</strong> e <strong>região</strong>.</li>
+          <li>Use <strong>Legendas (Label)</strong> para organizar os resultados.</li>
+        </ul>
+      </div>
+
+      <div class="api-hints one-hint">
+        <div><strong>Única pista</strong><span>A resposta não começa diretamente por um dicionário. Primeiro você terá uma lista; depois deverá acessar o país retornado e, só então, suas informações.</span></div>
+      </div>
+
+      <div class="challenge"><strong>Desafio extra:</strong> pesquise no JSON como obter a bandeira do país e exiba-a usando o componente <strong>Imagem (Image)</strong>.</div>
+    </div>
+    <figure class="api-exercise-visual api-country-model">
+      <div class="api-phone-model">
+        <div class="api-phone-bar">Consulta de Países</div>
+        <div class="api-phone-body">
+          <span>Nome do país</span>
+          <div class="api-input-model">brazil</div>
+          <div class="api-button-model">Buscar País</div>
+          <div class="api-result-model"><b>Capital</b><span>Brasília</span></div>
+          <div class="api-result-model"><b>População</b><span>...</span></div>
+          <div class="api-result-model"><b>Região</b><span>Americas</span></div>
+        </div>
+      </div>
+      <figcaption>Tela-modelo: neste último exercício, a referência é intencionalmente mais simples.</figcaption>
+    </figure>
+  </article>
+
+  <div class="activity-box api-exercise-close">
+    <h4>Progressão dos exercícios</h4>
+    <p><strong>CEP+</strong> reaproveita uma solução conhecida → <strong>Moedas</strong> troca a API → <strong>Clima</strong> exige interpretar parâmetros → <strong>Países</strong> acrescenta JSON em lista. A dificuldade aumenta sem abandonar o mesmo fluxo fundamental.</p>
   </div>
 </section>
 
