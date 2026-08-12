@@ -140,3 +140,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+// Exercícios de APIs: navegação independente dos exercícios de Interface.
+document.addEventListener("DOMContentLoaded",()=>{
+  const tabs=[...document.querySelectorAll(".api-exercise-tab[data-api-target]")];
+  const details=[...document.querySelectorAll(".api-exercise-detail")];
+  tabs.forEach(tab=>{
+    tab.addEventListener("click",()=>{
+      const id=tab.dataset.apiTarget;
+      tabs.forEach(item=>{
+        const active=item===tab;
+        item.classList.toggle("active",active);
+        item.setAttribute("aria-selected",active ? "true" : "false");
+      });
+      details.forEach(detail=>detail.classList.toggle("active",detail.id===id));
+    });
+  });
+});
