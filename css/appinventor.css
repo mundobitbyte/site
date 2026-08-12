@@ -773,3 +773,208 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
     display:none !important;
   }
 }
+
+/* ===== Refinamento estrutural e visual — 12/08/2026 ===== */
+.hierarchy-tree-figure{
+  max-width:680px;
+  margin-top:18px;
+}
+
+.hierarchy-tree-figure img{
+  width:100%;
+  height:auto;
+}
+
+/* ===== Navegação por módulos — padrão MbB (12/08/2026) ===== */
+.module-menu{
+  min-height:50px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  background:#f7fbff;
+  border-bottom:1px solid #cbd8e8;
+  position:sticky;
+  top:64px;
+  z-index:19;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:thin;
+}
+.module-btn{
+  flex:0 0 auto;
+  border:1px solid #cfe0f6;
+  background:#fff;
+  color:#073f8e;
+  border-radius:11px;
+  padding:9px 14px;
+  font:800 13px Arial,Helvetica,sans-serif;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.module-btn.active{
+  background:#1f6ed4;
+  border-color:#1f6ed4;
+  color:#fff;
+  box-shadow:0 5px 13px rgba(31,110,212,.22);
+}
+.module-btn-pending,
+.module-btn:disabled{
+  opacity:.55;
+  cursor:default;
+}
+.layout.appinventor-layout{
+  height:calc(100vh - 114px);
+}
+.appinventor-content{
+  min-width:0;
+  min-height:0;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+.appinventor-content .content{
+  flex:1 1 auto;
+  min-height:0;
+}
+.stage-menu .nav-btn[hidden]{
+  display:none !important;
+}
+.stage-sidebar-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:14px;
+}
+.stage-sidebar-head h3{margin:0;}
+.stage-close,
+.stage-toggle{
+  display:none;
+  font-family:Arial,Helvetica,sans-serif;
+  cursor:pointer;
+}
+.stage-backdrop{display:none;}
+
+@media(max-width:900px){
+  .module-menu{
+    top:64px;
+    min-height:46px;
+    padding:6px 10px;
+    gap:6px;
+  }
+  .module-btn{
+    padding:8px 11px;
+    font-size:12px;
+  }
+  .layout.appinventor-layout{
+    position:relative;
+    display:block;
+    height:calc(100vh - 110px);
+  }
+  .appinventor-content{
+    width:100%;
+    height:100%;
+  }
+  .side-nav{
+    position:fixed !important;
+    top:110px !important;
+    left:0;
+    bottom:0;
+    width:min(280px, 86vw);
+    height:auto !important;
+    display:block !important;
+    padding:14px 10px 18px !important;
+    border-right:1px solid #cbd8e8 !important;
+    border-bottom:0 !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    background:#fff !important;
+    z-index:1200;
+    transform:translateX(-105%);
+    transition:transform .2s ease;
+    box-shadow:8px 0 28px rgba(15,23,42,.18);
+  }
+  .appinventor-layout.drawer-open .side-nav{transform:translateX(0);}
+  .side-nav h3{display:block !important;}
+  .stage-menu{display:block;}
+  .stage-menu .nav-btn{
+    display:block;
+    width:100%;
+    white-space:normal;
+    margin:0 0 8px;
+  }
+  .stage-close{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:34px;
+    height:34px;
+    padding:0;
+    border:0;
+    border-radius:9px;
+    background:#e8f2ff;
+    color:#073f8e;
+    font-size:23px;
+    line-height:1;
+  }
+  .stage-toggle{
+    position:sticky;
+    top:0;
+    z-index:52;
+    align-self:flex-start;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin:8px 0 -4px 10px;
+    padding:8px 11px;
+    background:#fff;
+    color:#073f8e;
+    border:1px solid #bcd5fa;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(15,23,42,.08);
+    font-weight:800;
+  }
+  .stage-backdrop{
+    position:fixed;
+    inset:110px 0 0 0;
+    z-index:1190;
+    background:rgba(15,23,42,.36);
+  }
+  .appinventor-layout.drawer-open .stage-backdrop{display:block;}
+  .appinventor-content .content{padding-top:14px;}
+}
+
+@media(max-width:720px){
+  .module-menu{
+    top:46px;
+    min-height:44px;
+    padding:6px 8px;
+  }
+  .layout.appinventor-layout{
+    height:calc(100vh - 90px);
+  }
+  .side-nav{top:90px !important;}
+  .stage-backdrop{inset:90px 0 0 0;}
+  .stage-toggle{
+    font-size:12.5px;
+    padding:7px 10px;
+    margin-top:7px;
+  }
+}
+
+
+/* ===== Correção unificada das âncoras da navegação — 12/08/2026 =====
+   A área .content é o único contêiner vertical rolável.
+   O scroll-padding cria a folga visual para TODOS os alvos do menu,
+   sem depender do tipo do elemento (section/article) nem de cálculos JS. */
+.appinventor-content .content{
+  scroll-padding-block-start:20px;
+}
+
+/* Neutraliza margens de âncora antigas concorrentes dentro da navegação nova. */
+.appinventor-content section[id],
+.appinventor-content .logic-card[id],
+.appinventor-content .logic-exercises[id]{
+  scroll-margin-block-start:0;
+}
