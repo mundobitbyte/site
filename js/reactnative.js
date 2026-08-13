@@ -1459,8 +1459,8 @@ btnVermelho: {
             objective: "Compreender o que muda quando desenvolvemos software para dispositivos móveis.",
             modulePage: true,
             kicker: "Antes do código",
-            lead: "O desenvolvimento mobile começa pelo mesmo princípio usado no App Inventor: entender o problema, o usuário, as telas, as ações e os dados antes de programar.",
-            highlight: "Se você já estudou App Inventor, parte desta base será familiar. Aqui vamos reaproveitar esses conceitos e acrescentar o que é importante para compreender onde o React Native entra.",
+            lead: "Antes de começar a programar em React Native, é importante compreender o aplicativo que será construído: qual problema ele resolve, quem vai utilizá-lo, quais telas serão necessárias, quais ações o usuário poderá realizar e quais dados serão manipulados.",
+            highlight: "Esses fundamentos ajudam a planejar o aplicativo antes do código e servem de base para compreender como JavaScript, React e React Native participam do desenvolvimento mobile.",
             boxes: [
               ["O que é um app?", "Um software criado para funcionar em dispositivos móveis, com telas, ações, dados e uma finalidade."],
               ["Problema → solução", "Um aplicativo deve resolver uma necessidade. Antes da tecnologia, precisamos entender o que será construído."],
@@ -1485,7 +1485,7 @@ btnVermelho: {
               ["Aplicativo mobile", "Aplicação criada para o ambiente móvel e integrada à experiência do dispositivo."],
               ["Em comum", "Todos podem ter telas, botões, dados, regras e comunicação com serviços."],
               ["O que muda", "Mudam o ambiente de execução, os componentes disponíveis e a forma de acessar recursos do dispositivo."],
-              ["Nosso foco", "Aprender a construir aplicativos mobile com React Native e Expo, de maneira progressiva."]
+              ["Foco do módulo", "Construir aplicativos mobile com React Native e Expo de maneira progressiva."]
             ]
           },
           {
@@ -1496,14 +1496,14 @@ btnVermelho: {
             modulePage: true,
             kicker: "O app precisa de uma plataforma",
             lead: "Android e iOS são as principais plataformas móveis encontradas no mercado. Cada uma possui seu próprio ambiente e características.",
-            highlight: "O objetivo aqui não é estudar Android ou iOS profundamente. Precisamos apenas entender que nosso código será executado sobre uma plataforma móvel real.",
+            highlight: "Nesta etapa, basta compreender que o aplicativo será executado em uma plataforma móvel e poderá interagir com recursos do sistema e do dispositivo.",
             boxes: [
               ["Android", "Plataforma móvel presente em aparelhos de diferentes fabricantes."],
               ["iOS", "Plataforma móvel utilizada nos dispositivos móveis da Apple."],
               ["Plataforma", "É o ambiente no qual o aplicativo é executado e interage com o sistema e o hardware."],
               ["Componentes", "Textos, botões, imagens e outros elementos precisam virar elementos da interface da plataforma."],
               ["Recursos", "GPS, câmera, sensores e notificações dependem da interação com o sistema do aparelho."],
-              ["Mais adiante", "Esses recursos serão estudados dentro de aplicativos concretos, e não como teoria isolada."]
+              ["Aplicação prática", "GPS, câmera, sensores e notificações serão estudados por meio de aplicativos que utilizam esses recursos."]
             ]
           },
           {
@@ -1514,7 +1514,7 @@ btnVermelho: {
             modulePage: true,
             kicker: "Uma ideia, diferentes plataformas",
             lead: "Um aplicativo pode ser criado especificamente para uma plataforma ou usar uma tecnologia que permite compartilhar grande parte do código entre plataformas.",
-            highlight: "React Native entra na abordagem cross-platform: usamos JavaScript e React para construir a aplicação e o React Native faz a ponte com a interface mobile.",
+            highlight: "React Native permite criar aplicativos para plataformas móveis usando React. JavaScript expressa dados e lógica, React organiza componentes e atualizações, e React Native fornece componentes e APIs para a interface e os recursos mobile.",
             boxes: [
               ["Desenvolvimento nativo", "O aplicativo é desenvolvido diretamente com tecnologias próprias da plataforma."],
               ["Cross-platform", "Uma base de desenvolvimento é usada para atender mais de uma plataforma, compartilhando boa parte do código."],
@@ -1549,15 +1549,15 @@ btnVermelho: {
             objective: "Conhecer o ambiente principal usado para escrever e testar os exemplos do curso.",
             modulePage: true,
             kicker: "Aprender sem configurar um projeto local",
-            lead: "Neste material, os primeiros módulos continuam utilizando o snack.expo.dev para que o foco permaneça no código, no resultado e nos conceitos.",
-            highlight: "Não será necessário usar VS Code, Android Studio ou outra ferramenta local nesta etapa. Ferramentas adicionais só entram quando algum conteúdo realmente exigir.",
+            lead: "Neste material, os primeiros módulos utilizam o snack.expo.dev para que o foco permaneça no código, no resultado e nos conceitos.",
+            highlight: "Para os exemplos desta etapa, o Snack funciona diretamente no navegador e não exige a configuração de VS Code, Android Studio ou outro ambiente local. Ferramentas adicionais poderão ser apresentadas quando forem necessárias a um recurso específico.",
             boxes: [
               ["Onde escrever", "O código dos exemplos será colocado no App.js do Snack."],
               ["Onde testar", "O próprio Snack mostra o resultado e permite experimentar o aplicativo."],
               ["Como aprender", "Conceito → pequeno exemplo → código no Snack → experimente → desafio."],
-              ["Sem instalação agora", "A prioridade é aprender os conceitos antes de acrescentar configuração de ambiente."],
+              ["Sem configuração local", "O Snack permite concentrar a atenção nos conceitos e no código antes de acrescentar outras ferramentas ao processo de desenvolvimento."],
               ["Código real", "Mesmo sendo um ambiente simplificado, os exemplos continuam sendo escritos em React Native."],
-              ["Próximo passo", "Antes de ampliar os apps, vamos revisar apenas o JavaScript necessário para compreender o código."]
+              ["Próximo passo", "Estudar os fundamentos de JavaScript necessários para ler, compreender e modificar os exemplos em React Native."]
             ]
           }
         ]
@@ -1571,13 +1571,13 @@ btnVermelho: {
             id: "js-intro",
             menu: "Intro",
             title: "JavaScript Essencial para React Native",
-            objective: "Revisar somente o JavaScript necessário para compreender e construir os aplicativos do curso.",
+            objective: "Estudar os fundamentos de JavaScript necessários para compreender e construir aplicativos em React Native.",
             modulePage: true,
             kicker: "JavaScript aplicado",
-            lead: "Não vamos parar o curso para fazer um curso completo de JavaScript. Cada conceito aparece dentro de um pequeno aplicativo que pode ser testado no Snack.",
-            highlight: "A leitura será sempre em três camadas: JavaScript define dados e lógica; React controla componentes e atualização; React Native mostra isso em uma interface mobile.",
+            lead: "Não faremos aqui um curso completo de JavaScript. Vamos estudar os fundamentos necessários para compreender e desenvolver aplicações em React Native. Cada conceito será explicado com exemplos práticos que poderão ser testados diretamente no Snack.",
+            highlight: "Ao ler os exemplos, observe três camadas: JavaScript define dados e lógica; React organiza componentes e atualização; React Native fornece os elementos e recursos da aplicação mobile.",
             boxes: [
-              ["Você já sabe lógica", "Condições, variáveis e funções não são ideias novas; a principal mudança é a sintaxe do JavaScript."],
+              ["Lógica de programação", "Variáveis, condições e funções são fundamentos de programação. Nesta etapa, o foco é compreender como esses conceitos são escritos em JavaScript."],
               ["JavaScript", "Variáveis, tipos, funções, arrays, objetos, operadores e operações assíncronas."],
               ["React", "Estado, componentes, eventos e atualização da interface entram quando forem necessários."],
               ["React Native", "View, Text, TextInput, Button e outros componentes formam a interface mobile."],
@@ -1589,23 +1589,23 @@ btnVermelho: {
             id: "js-variaveis",
             menu: "1. Variáveis",
             title: "1 — const, let e tipos básicos",
-            objective: "Revisar variáveis e tipos usando um pequeno app no Snack.",
-            code: "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const nome = 'Ana';\n  let idade = 16;\n  const altura = 1.65;\n  const matriculado = true;\n\n  return (\n    <View style={styles.container}>\n      <Text>Nome: {nome}</Text>\n      <Text>Idade: {idade}</Text>\n      <Text>Altura: {altura}</Text>\n      <Text>Matriculado: {matriculado ? 'Sim' : 'Não'}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
+            objective: "Compreender variáveis e tipos básicos usando um pequeno app no Snack.",
+            code: "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const nome = 'Ana';\n  let idade = 16;\n  idade = 17; // let permite reatribuição\n  const altura = 1.65;\n  const matriculado = true;\n\n  return (\n    <View style={styles.container}>\n      <Text>Nome: {nome}</Text>\n      <Text>Idade: {idade}</Text>\n      <Text>Altura: {altura}</Text>\n      <Text>Matriculado: {matriculado ? 'Sim' : 'Não'}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
             addedTitle: "O que observar",
-            added: "const cria uma variável que não será reatribuída.\nlet permite reatribuição.\n\nO JavaScript identifica o tipo pelo valor:\n'Ana' → string\n16 → number\ntrue → boolean\n\nEm Java, você declararia algo como:\nint idade = 16;\n\nEm JavaScript:\nlet idade = 16;",
-            preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"width:100%;max-width:300px;border:1px solid #dbe3ef;border-radius:14px;padding:20px;line-height:1.8;font-family:Arial;color:#1e293b;\"><b>Nome:</b> Ana<br><b>Idade:</b> 16<br><b>Altura:</b> 1.65<br><b>Matriculado:</b> Sim</div></div>",
+            added: "const cria uma variável que não será reatribuída.\nlet permite reatribuição. No exemplo, idade começa com 16 e depois recebe 17.\n\nO JavaScript identifica o tipo pelo valor:\n'Ana' → string\n16 → number\ntrue → boolean\n\nOutros valores importantes:\nnull → ausência intencional de valor\nundefined → valor ainda não definido\n\nComparação de sintaxe:\nJava: int idade = 16;\nJavaScript: let idade = 16;",
+            preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"width:100%;max-width:300px;border:1px solid #dbe3ef;border-radius:14px;padding:20px;line-height:1.8;font-family:Arial;color:#1e293b;\"><b>Nome:</b> Ana<br><b>Idade:</b> 17<br><b>Altura:</b> 1.65<br><b>Matriculado:</b> Sim</div></div>",
             note: "O foco não é decorar tipos. É perceber que o JavaScript usa uma sintaxe mais flexível que Java, mas continua trabalhando com dados e variáveis."
           },
           {
             id: "js-condicoes",
             menu: "2. if / else",
             title: "2 — Operadores e if / else",
-            objective: "Revisar comparação e decisão em JavaScript.",
+            objective: "Compreender operadores de comparação e estruturas de decisão em JavaScript.",
             code: "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const media = 7;\n  let situacao = '';\n\n  if (media >= 6) {\n    situacao = 'Aprovado';\n  } else {\n    situacao = 'Reprovado';\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text>Média: {media}</Text>\n      <Text>Situação: {situacao}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
             addedTitle: "Trecho em foco",
-            added: "if (media >= 6) {\n  situacao = 'Aprovado';\n} else {\n  situacao = 'Reprovado';\n}\n\nA lógica é a mesma que você já conhece: testar uma condição e escolher um caminho.",
+            added: "if (media >= 6) {\n  situacao = 'Aprovado';\n} else {\n  situacao = 'Reprovado';\n}\n\nO operador >= compara dois valores. Outros operadores comuns são >, <, <=, === e !==.\n\nA estrutura if/else testa uma condição e escolhe qual bloco de código será executado.",
             preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"font-family:Arial;font-size:18px;line-height:1.8;\"><b>Média:</b> 7<br><b>Situação:</b> Aprovado</div></div>",
-            note: "Mais adiante, essa mesma estrutura aparece no app Média Escolar do módulo React e Hooks."
+            note: "Essa mesma estrutura será aplicada no app Média Escolar do módulo React e Hooks."
           },
           {
             id: "js-funcoes",
@@ -1680,15 +1680,15 @@ btnVermelho: {
             objective: "Entender por que o código React Native começa importando recursos.",
             modulePage: true,
             kicker: "Organizando código",
-            lead: "Desde o primeiro exemplo do curso você já usa import e export, mesmo antes de estudar formalmente esses termos.",
-            highlight: "Não vamos dividir o projeto em muitos arquivos agora. O objetivo é apenas reconhecer que import traz recursos e export disponibiliza algo para ser usado por outro arquivo.",
+            lead: "Os exemplos em React Native utilizam import para trazer recursos de bibliotecas e export para disponibilizar o componente principal do arquivo.",
+            highlight: "Nesta etapa, os exemplos permanecem concentrados no App.js. O objetivo é reconhecer que import traz recursos para o arquivo e export disponibiliza um recurso para ser utilizado por outras partes da aplicação.",
             boxes: [
               ["import React", "Traz o recurso React quando o exemplo precisa dele."],
               ["import { View, Text }", "Traz componentes específicos da biblioteca react-native."],
               ["export default function App", "Disponibiliza o componente principal do arquivo App.js."],
               ["Módulos", "Arquivos e bibliotecas podem expor recursos para serem utilizados em outros pontos do projeto."],
-              ["Mais adiante", "Quando o aplicativo crescer, componentes, telas e serviços poderão ser separados em arquivos."],
-              ["Agora", "Continue concentrado no App.js e no entendimento dos conceitos principais."]
+              ["Projetos maiores", "Quando o aplicativo crescer, componentes, telas e serviços poderão ser separados em arquivos."],
+              ["Nesta etapa", "Concentre-se no App.js e no entendimento dos conceitos principais."]
             ]
           },
           {
