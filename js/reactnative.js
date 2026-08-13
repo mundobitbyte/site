@@ -1551,6 +1551,8 @@ btnVermelho: {
             kicker: "Aprender sem configurar um projeto local",
             lead: "Neste material, os primeiros módulos utilizam o snack.expo.dev para que o foco permaneça no código, no resultado e nos conceitos.",
             highlight: "Para os exemplos desta etapa, o Snack funciona diretamente no navegador e não exige a configuração de VS Code, Android Studio ou outro ambiente local. Ferramentas adicionais poderão ser apresentadas quando forem necessárias a um recurso específico.",
+            snackGuide: true,
+            note: "Nesta etapa, o objetivo é conhecer o ambiente Snack/Expo e aprender a criar, abrir, editar, executar e salvar um projeto React Native diretamente pelo navegador.",
             boxes: [
               ["Onde escrever", "O código dos exemplos será colocado no App.js do Snack."],
               ["Onde testar", "O próprio Snack mostra o resultado e permite experimentar o aplicativo."],
@@ -4609,6 +4611,11 @@ const styles = StyleSheet.create({
           <div class="module-page-grid">
             ${cards}
           </div>
+
+          ${step.snackGuide ? `
+            ${snackIntroPreview()}
+            <div class="obs"><strong>Observação:</strong> ${step.note}</div>
+          ` : ''}
         `;
 
         workspace.appendChild(intro);
