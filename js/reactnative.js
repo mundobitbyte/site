@@ -1448,8 +1448,262 @@ btnVermelho: {
     ];
 
     const modules = {
+      fundamentosMobile: {
+        title: '0. Fundamentos',
+        subtitle: 'Fundamentos mobile antes de aprofundar o código.',
+        steps: [
+          {
+            id: "mobile-intro",
+            menu: "Intro",
+            title: "Fundamentos Mobile",
+            objective: "Compreender o que muda quando desenvolvemos software para dispositivos móveis.",
+            modulePage: true,
+            kicker: "Antes do código",
+            lead: "O desenvolvimento mobile começa pelo mesmo princípio usado no App Inventor: entender o problema, o usuário, as telas, as ações e os dados antes de programar.",
+            highlight: "Se você já estudou App Inventor, parte desta base será familiar. Aqui vamos reaproveitar esses conceitos e acrescentar o que é importante para compreender onde o React Native entra.",
+            boxes: [
+              ["O que é um app?", "Um software criado para funcionar em dispositivos móveis, com telas, ações, dados e uma finalidade."],
+              ["Problema → solução", "Um aplicativo deve resolver uma necessidade. Antes da tecnologia, precisamos entender o que será construído."],
+              ["Interface", "É o que o usuário vê e utiliza: textos, campos, imagens, botões, listas e telas."],
+              ["Lógica", "É o comportamento do aplicativo: cálculos, decisões, eventos, regras e processamento."],
+              ["Dados", "São as informações digitadas, recebidas, processadas, armazenadas ou enviadas pelo aplicativo."],
+              ["Fluxo", "Problema → telas → ações → dados → resultado. Essa leitura ajuda a planejar antes de programar."]
+            ]
+          },
+          {
+            id: "mobile-app-site",
+            menu: "1. App x Web",
+            title: "1 — Aplicativo, site e aplicação web",
+            objective: "Distinguir aplicações mobile de páginas e aplicações executadas no navegador.",
+            modulePage: true,
+            kicker: "Onde o software roda",
+            lead: "Nem tudo que aparece no celular é um aplicativo mobile. O navegador também executa sites e aplicações web.",
+            highlight: "Para este curso, o ponto principal é entender que o React Native será usado para construir aplicativos mobile, e não páginas HTML executadas dentro do navegador.",
+            boxes: [
+              ["Site", "Conteúdo acessado pelo navegador e normalmente organizado em páginas web."],
+              ["Aplicação web", "Sistema executado no navegador, com interface, dados e interação."],
+              ["Aplicativo mobile", "Aplicação criada para o ambiente móvel e integrada à experiência do dispositivo."],
+              ["Em comum", "Todos podem ter telas, botões, dados, regras e comunicação com serviços."],
+              ["O que muda", "Mudam o ambiente de execução, os componentes disponíveis e a forma de acessar recursos do dispositivo."],
+              ["Nosso foco", "Aprender a construir aplicativos mobile com React Native e Expo, de maneira progressiva."]
+            ]
+          },
+          {
+            id: "mobile-plataformas",
+            menu: "2. Plataformas",
+            title: "2 — Android, iOS e plataformas móveis",
+            objective: "Reconhecer as principais plataformas para as quais um aplicativo mobile pode ser desenvolvido.",
+            modulePage: true,
+            kicker: "O app precisa de uma plataforma",
+            lead: "Android e iOS são as principais plataformas móveis encontradas no mercado. Cada uma possui seu próprio ambiente e características.",
+            highlight: "O objetivo aqui não é estudar Android ou iOS profundamente. Precisamos apenas entender que nosso código será executado sobre uma plataforma móvel real.",
+            boxes: [
+              ["Android", "Plataforma móvel presente em aparelhos de diferentes fabricantes."],
+              ["iOS", "Plataforma móvel utilizada nos dispositivos móveis da Apple."],
+              ["Plataforma", "É o ambiente no qual o aplicativo é executado e interage com o sistema e o hardware."],
+              ["Componentes", "Textos, botões, imagens e outros elementos precisam virar elementos da interface da plataforma."],
+              ["Recursos", "GPS, câmera, sensores e notificações dependem da interação com o sistema do aparelho."],
+              ["Mais adiante", "Esses recursos serão estudados dentro de aplicativos concretos, e não como teoria isolada."]
+            ]
+          },
+          {
+            id: "mobile-cross",
+            menu: "3. Cross-platform",
+            title: "3 — Nativo e cross-platform",
+            objective: "Entender por que existem diferentes estratégias para desenvolver aplicativos mobile.",
+            modulePage: true,
+            kicker: "Uma ideia, diferentes plataformas",
+            lead: "Um aplicativo pode ser criado especificamente para uma plataforma ou usar uma tecnologia que permite compartilhar grande parte do código entre plataformas.",
+            highlight: "React Native entra na abordagem cross-platform: usamos JavaScript e React para construir a aplicação e o React Native faz a ponte com a interface mobile.",
+            boxes: [
+              ["Desenvolvimento nativo", "O aplicativo é desenvolvido diretamente com tecnologias próprias da plataforma."],
+              ["Cross-platform", "Uma base de desenvolvimento é usada para atender mais de uma plataforma, compartilhando boa parte do código."],
+              ["JavaScript", "É a linguagem utilizada nos exemplos deste curso."],
+              ["React", "Organiza componentes, estado, propriedades e atualização da interface."],
+              ["React Native", "Fornece componentes e recursos para transformar essa lógica em uma aplicação mobile."],
+              ["Ideia central", "JavaScript + React + React Native/Mobile são camadas relacionadas, mas não são a mesma coisa."]
+            ]
+          },
+          {
+            id: "mobile-ciclo",
+            menu: "4. Ciclo de vida",
+            title: "4 — Uma visão simples do ciclo de vida",
+            objective: "Entender que um aplicativo pode estar aberto, ativo, em segundo plano ou encerrado.",
+            modulePage: true,
+            kicker: "O aplicativo muda de estado",
+            lead: "No celular, um app não fica necessariamente executando da mesma forma o tempo todo. O usuário abre, troca de aplicativo, volta e encerra.",
+            highlight: "Por enquanto, guarde apenas o fluxo: não aberto → aberto/ativo → segundo plano → retorno → encerramento. Mais adiante, Hooks ajudarão a reagir a efeitos e mudanças.",
+            boxes: [
+              ["Não aberto", "O aplicativo ainda não está em execução."],
+              ["Aberto e ativo", "O usuário está interagindo com a aplicação."],
+              ["Segundo plano", "O usuário mudou de aplicativo, mas o sistema pode manter parte do estado."],
+              ["Retorno", "O usuário volta ao aplicativo."],
+              ["Encerramento", "O aplicativo deixa de permanecer em execução."],
+              ["Por que importa?", "Timers, localização, notificações e outras operações podem depender desses momentos."]
+            ]
+          },
+          {
+            id: "mobile-snack",
+            menu: "5. Snack/Expo",
+            title: "5 — Ambiente do curso: Snack/Expo",
+            objective: "Conhecer o ambiente principal usado para escrever e testar os exemplos do curso.",
+            modulePage: true,
+            kicker: "Aprender sem configurar um projeto local",
+            lead: "Neste material, os primeiros módulos continuam utilizando o snack.expo.dev para que o foco permaneça no código, no resultado e nos conceitos.",
+            highlight: "Não será necessário usar VS Code, Android Studio ou outra ferramenta local nesta etapa. Ferramentas adicionais só entram quando algum conteúdo realmente exigir.",
+            boxes: [
+              ["Onde escrever", "O código dos exemplos será colocado no App.js do Snack."],
+              ["Onde testar", "O próprio Snack mostra o resultado e permite experimentar o aplicativo."],
+              ["Como aprender", "Conceito → pequeno exemplo → código no Snack → experimente → desafio."],
+              ["Sem instalação agora", "A prioridade é aprender os conceitos antes de acrescentar configuração de ambiente."],
+              ["Código real", "Mesmo sendo um ambiente simplificado, os exemplos continuam sendo escritos em React Native."],
+              ["Próximo passo", "Antes de ampliar os apps, vamos revisar apenas o JavaScript necessário para compreender o código."]
+            ]
+          }
+        ]
+      },
+
+      javascriptEssencial: {
+        title: 'JS Essencial',
+        subtitle: 'JavaScript necessário para compreender React Native.',
+        steps: [
+          {
+            id: "js-intro",
+            menu: "Intro",
+            title: "JavaScript Essencial para React Native",
+            objective: "Revisar somente o JavaScript necessário para compreender e construir os aplicativos do curso.",
+            modulePage: true,
+            kicker: "JavaScript aplicado",
+            lead: "Não vamos parar o curso para fazer um curso completo de JavaScript. Cada conceito aparece dentro de um pequeno aplicativo que pode ser testado no Snack.",
+            highlight: "A leitura será sempre em três camadas: JavaScript define dados e lógica; React controla componentes e atualização; React Native mostra isso em uma interface mobile.",
+            boxes: [
+              ["Você já sabe lógica", "Condições, variáveis e funções não são ideias novas; a principal mudança é a sintaxe do JavaScript."],
+              ["JavaScript", "Variáveis, tipos, funções, arrays, objetos, operadores e operações assíncronas."],
+              ["React", "Estado, componentes, eventos e atualização da interface entram quando forem necessários."],
+              ["React Native", "View, Text, TextInput, Button e outros componentes formam a interface mobile."],
+              ["Ambiente", "Todos os pequenos exemplos deste módulo foram pensados para o snack.expo.dev."],
+              ["Objetivo", "Ler o código com segurança e conseguir modificá-lo, não decorar toda a linguagem JavaScript."]
+            ]
+          },
+          {
+            id: "js-variaveis",
+            menu: "1. Variáveis",
+            title: "1 — const, let e tipos básicos",
+            objective: "Revisar variáveis e tipos usando um pequeno app no Snack.",
+            code: "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const nome = 'Ana';\n  let idade = 16;\n  const altura = 1.65;\n  const matriculado = true;\n\n  return (\n    <View style={styles.container}>\n      <Text>Nome: {nome}</Text>\n      <Text>Idade: {idade}</Text>\n      <Text>Altura: {altura}</Text>\n      <Text>Matriculado: {matriculado ? 'Sim' : 'Não'}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
+            addedTitle: "O que observar",
+            added: "const cria uma variável que não será reatribuída.\nlet permite reatribuição.\n\nO JavaScript identifica o tipo pelo valor:\n'Ana' → string\n16 → number\ntrue → boolean\n\nEm Java, você declararia algo como:\nint idade = 16;\n\nEm JavaScript:\nlet idade = 16;",
+            preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"width:100%;max-width:300px;border:1px solid #dbe3ef;border-radius:14px;padding:20px;line-height:1.8;font-family:Arial;color:#1e293b;\"><b>Nome:</b> Ana<br><b>Idade:</b> 16<br><b>Altura:</b> 1.65<br><b>Matriculado:</b> Sim</div></div>",
+            note: "O foco não é decorar tipos. É perceber que o JavaScript usa uma sintaxe mais flexível que Java, mas continua trabalhando com dados e variáveis."
+          },
+          {
+            id: "js-condicoes",
+            menu: "2. if / else",
+            title: "2 — Operadores e if / else",
+            objective: "Revisar comparação e decisão em JavaScript.",
+            code: "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const media = 7;\n  let situacao = '';\n\n  if (media >= 6) {\n    situacao = 'Aprovado';\n  } else {\n    situacao = 'Reprovado';\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text>Média: {media}</Text>\n      <Text>Situação: {situacao}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
+            addedTitle: "Trecho em foco",
+            added: "if (media >= 6) {\n  situacao = 'Aprovado';\n} else {\n  situacao = 'Reprovado';\n}\n\nA lógica é a mesma que você já conhece: testar uma condição e escolher um caminho.",
+            preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"font-family:Arial;font-size:18px;line-height:1.8;\"><b>Média:</b> 7<br><b>Situação:</b> Aprovado</div></div>",
+            note: "Mais adiante, essa mesma estrutura aparece no app Média Escolar do módulo React e Hooks."
+          },
+          {
+            id: "js-funcoes",
+            menu: "3. Funções",
+            title: "3 — Funções e arrow functions",
+            objective: "Comparar a função tradicional com a forma compacta de arrow function.",
+            code: "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  function somar(a, b) {\n    return a + b;\n  }\n\n  const dobro = numero => numero * 2;\n\n  return (\n    <View style={styles.container}>\n      <Text>5 + 3 = {somar(5, 3)}</Text>\n      <Text>Dobro de 6 = {dobro(6)}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
+            addedTitle: "Duas formas",
+            added: "function somar(a, b) {\n  return a + b;\n}\n\nconst dobro = numero => numero * 2;\n\nAs duas estruturas representam funções. Arrow functions aparecem com frequência em React.",
+            preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"font-family:Arial;font-size:18px;line-height:1.8;\">5 + 3 = <b>8</b><br>Dobro de 6 = <b>12</b></div></div>",
+            note: "Não é necessário escrever tudo com arrow function. O importante é saber reconhecer as duas formas."
+          },
+          {
+            id: "js-arrays",
+            menu: "4. Arrays",
+            title: "4 — Arrays, objetos e map",
+            objective: "Entender uma estrutura muito usada para representar listas de dados.",
+            code: "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const alunos = [\n    { id: 1, nome: 'Ana', nota: 8 },\n    { id: 2, nome: 'Bruno', nota: 5 },\n    { id: 3, nome: 'Carla', nota: 9 },\n  ];\n\n  return (\n    <View style={styles.container}>\n      {alunos.map(aluno => (\n        <Text key={aluno.id}>\n          {aluno.nome} - Nota: {aluno.nota}\n        </Text>\n      ))}\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
+            addedTitle: "Leitura do código",
+            added: "alunos é um array.\nCada item do array é um objeto.\n\nmap percorre os itens e devolve algo para cada um deles.\nNeste exemplo, cada aluno vira um componente Text.",
+            preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"font-family:Arial;font-size:17px;line-height:2;\">Ana - Nota: 8<br>Bruno - Nota: 5<br>Carla - Nota: 9</div></div>",
+            note: "Arrays de objetos aparecem constantemente em cadastros, APIs e listas de aplicativos."
+          },
+          {
+            id: "js-filter-find",
+            menu: "5. filter / find",
+            title: "5 — filter e find",
+            objective: "Distinguir filtrar vários itens de localizar um item específico.",
+            code: "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const alunos = [\n    { id: 1, nome: 'Ana', nota: 8 },\n    { id: 2, nome: 'Bruno', nota: 5 },\n    { id: 3, nome: 'Carla', nota: 9 },\n  ];\n\n  const aprovados = alunos.filter(aluno => aluno.nota >= 6);\n  const bruno = alunos.find(aluno => aluno.nome === 'Bruno');\n\n  return (\n    <View style={styles.container}>\n      <Text>Aprovados: {aprovados.length}</Text>\n      <Text>Nota de Bruno: {bruno.nota}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
+            addedTitle: "Diferença principal",
+            added: "filter → devolve um novo array com os itens que passam na condição.\n\nfind → procura e devolve o primeiro item encontrado.\n\nmap → transforma/percorre todos os itens.\nfilter → seleciona vários.\nfind → localiza um.",
+            preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"font-family:Arial;font-size:18px;line-height:1.8;\"><b>Aprovados:</b> 2<br><b>Nota de Bruno:</b> 5</div></div>",
+            note: "Essas três operações serão muito úteis quando trabalharmos com listas e dados vindos de APIs."
+          },
+          {
+            id: "js-destructuring",
+            menu: "6. Objetos",
+            title: "6 — Destructuring e spread",
+            objective: "Reconhecer duas sintaxes comuns em código React.",
+            code: "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const aluno = { nome: 'Ana', nota: 8, turma: '2º DS' };\n\n  const { nome, nota } = aluno;\n  const alunoAtualizado = { ...aluno, nota: 9 };\n\n  return (\n    <View style={styles.container}>\n      <Text>{nome} tinha nota {nota}.</Text>\n      <Text>Nova nota: {alunoAtualizado.nota}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
+            addedTitle: "Trecho em foco",
+            added: "const { nome, nota } = aluno;\n→ retira propriedades do objeto e cria referências com esses nomes.\n\nconst alunoAtualizado = { ...aluno, nota: 9 };\n→ copia as propriedades e substitui apenas nota.",
+            preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"font-family:Arial;font-size:18px;line-height:1.8;\">Ana tinha nota 8.<br>Nova nota: <b>9</b></div></div>",
+            note: "Destructuring e spread aparecem muito em props, estados e objetos de dados. Não precisam ser decorados de uma vez."
+          },
+          {
+            id: "js-operadores",
+            menu: "7. Operadores",
+            title: "7 — &&, ||, ! e operador ternário",
+            objective: "Reconhecer operadores muito usados para decisões compactas na interface.",
+            code: "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const nome = '';\n  const logado = true;\n  const idade = 20;\n\n  const nomeExibido = nome || 'Visitante';\n  const situacao = idade >= 18 ? 'Maior de idade' : 'Menor de idade';\n\n  return (\n    <View style={styles.container}>\n      <Text>Usuário: {nomeExibido}</Text>\n      {logado && <Text>Usuário autenticado</Text>}\n      <Text>{situacao}</Text>\n      <Text>Não está logado? {!logado ? 'Sim' : 'Não'}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
+            addedTitle: "Como ler",
+            added: "nome || 'Visitante'\n→ usa Visitante quando nome está vazio/falso.\n\nlogado && <Text>...</Text>\n→ mostra o componente somente quando logado é verdadeiro.\n\n!logado\n→ inverte o valor lógico.\n\ncondição ? valor1 : valor2\n→ forma compacta de escolher entre dois valores.",
+            preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"font-family:Arial;font-size:17px;line-height:1.9;\">Usuário: Visitante<br>Usuário autenticado<br>Maior de idade<br>Não está logado? Não</div></div>",
+            note: "Essas formas aparecem muito no JSX. Use-as quando deixarem a leitura clara; if/else continua válido."
+          },
+          {
+            id: "js-async",
+            menu: "8. Assíncrono",
+            title: "8 — Promise, async/await, try/catch e JSON",
+            objective: "Ter um primeiro contato com operações que não terminam imediatamente.",
+            code: "import React, { useState } from 'react';\nimport { View, Text, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [mensagem, setMensagem] = useState('Toque no botão');\n\n  async function carregar() {\n    try {\n      const resposta = await Promise.resolve(\n        '{\"curso\":\"React Native\",\"nivel\":\"Essencial\"}'\n      );\n\n      const dados = JSON.parse(resposta);\n      setMensagem(`${dados.curso} - ${dados.nivel}`);\n    } catch (erro) {\n      setMensagem('Erro ao carregar');\n    }\n  }\n\n  return (\n    <View style={styles.container}>\n      <Button title=\"Carregar\" onPress={carregar} />\n      <Text>{mensagem}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n    gap: 10,\n  },\n});",
+            addedTitle: "Fluxo do exemplo",
+            added: "1. carregar é uma função async.\n2. await aguarda a Promise.\n3. JSON.parse transforma o texto JSON em objeto.\n4. try/catch permite tratar um possível erro.\n5. useState aparece apenas para atualizar a mensagem na tela.\n\nNo módulo React e Hooks, useState será estudado no contexto do aplicativo.",
+            preview: "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:24px;box-sizing:border-box;\"><div style=\"width:220px;font-family:Arial;text-align:center;\"><div style=\"background:#2563eb;color:white;border-radius:5px;padding:10px;font-weight:bold;\">CARREGAR</div><div style=\"margin-top:18px;\">React Native - Essencial</div></div></div>",
+            note: "Este exemplo prepara o caminho para APIs. Depois, Promise.resolve será substituída por uma requisição real com fetch."
+          },
+          {
+            id: "js-imports",
+            menu: "9. Import/export",
+            title: "9 — Módulos, import e export",
+            objective: "Entender por que o código React Native começa importando recursos.",
+            modulePage: true,
+            kicker: "Organizando código",
+            lead: "Desde o primeiro exemplo do curso você já usa import e export, mesmo antes de estudar formalmente esses termos.",
+            highlight: "Não vamos dividir o projeto em muitos arquivos agora. O objetivo é apenas reconhecer que import traz recursos e export disponibiliza algo para ser usado por outro arquivo.",
+            boxes: [
+              ["import React", "Traz o recurso React quando o exemplo precisa dele."],
+              ["import { View, Text }", "Traz componentes específicos da biblioteca react-native."],
+              ["export default function App", "Disponibiliza o componente principal do arquivo App.js."],
+              ["Módulos", "Arquivos e bibliotecas podem expor recursos para serem utilizados em outros pontos do projeto."],
+              ["Mais adiante", "Quando o aplicativo crescer, componentes, telas e serviços poderão ser separados em arquivos."],
+              ["Agora", "Continue concentrado no App.js e no entendimento dos conceitos principais."]
+            ]
+          },
+          {
+            id: 'js-exercicios',
+            menu: '99. Exercícios',
+            title: '99 — Exercícios JavaScript',
+            objective: 'Praticar a sintaxe essencial de JavaScript em pequenos apps React Native.',
+            customPage: true,
+            html: "\n<div class=\"intro-kicker\">99. Exercícios — JavaScript Essencial</div>\n<h3>Pratique no snack.expo.dev</h3>\n<p class=\"intro-lead\">Crie um Snack para cada desafio. Use apenas os conceitos estudados e mantenha a interface simples.</p>\n<div class=\"intro-highlight\">A meta é modificar e escrever código, não copiar exatamente os exemplos anteriores.</div>\n<div class=\"module-page-grid\">\n  <div class=\"module-page-box\"><strong>1. Dados pessoais</strong><span>Crie const/let para nome, idade e cidade e mostre tudo com Text.</span></div>\n  <div class=\"module-page-box\"><strong>2. Situação do aluno</strong><span>Use if/else para mostrar Aprovado ou Reprovado a partir de uma média.</span></div>\n  <div class=\"module-page-box\"><strong>3. Função de cálculo</strong><span>Crie uma função que receba dois números e devolva o maior deles.</span></div>\n  <div class=\"module-page-box\"><strong>4. Lista de produtos</strong><span>Crie um array de objetos com nome e preço e use map para exibir os produtos.</span></div>\n  <div class=\"module-page-box\"><strong>5. Filtrando valores</strong><span>Use filter para mostrar apenas produtos com preço maior que um valor escolhido.</span></div>\n  <div class=\"module-page-box\"><strong>6. Objeto atualizado</strong><span>Use spread para criar uma nova versão de um objeto sem alterar o original.</span></div>\n</div>\n<div class=\"intro-highlight\" style=\"margin-top:16px;\"><b>Experimente:</b> altere valores e condições e observe imediatamente o resultado no Snack.</div>\n"
+          }
+        ]
+      },
+
       interfaceBasica: {
-        title: '1. Interface Básica',
+        title: '1. Interfaces',
         subtitle: 'Da introdução ao glossário estrutural.',
         steps: [
           ...steps,
@@ -1561,7 +1815,7 @@ btnVermelho: {
       },
 
       flexboxVisual: {
-        "title": "2. Flexbox Visual",
+        "title": "2. Flexbox",
         "subtitle": "Layout mobile aprendido por problemas reais.",
         "steps": [
                 {
@@ -3043,7 +3297,7 @@ export default function App() {
   return (
     <View style={styles.chat}>
       <Text style={styles.mensagemRecebida}>Oi, professor!</Text>
-      <Text style={styles.mensagemEnviada}>OlÃ¡! Vamos estudar Flexbox.</Text>
+      <Text style={styles.mensagemEnviada}>Olá! Vamos estudar Flexbox.</Text>
       <Text style={styles.mensagemRecebida}>Agora entendi.</Text>
     </View>
   );
@@ -3081,11 +3335,11 @@ const styles = StyleSheet.create({
                                         "preview": `<div class="fx-compare">
   <div class="fx-window">
     <div class="fx-head">Antes</div>
-    <div class="fx-body"><div class="fx-stack"><div class="fx-msg same">Oi, professor!</div><div class="fx-msg same" style="background:#dbeafe;color:#0f3f86;">OlÃ¡! Vamos estudar Flexbox.</div><div class="fx-msg same">Agora entendi.</div></div></div>
+    <div class="fx-body"><div class="fx-stack"><div class="fx-msg same">Oi, professor!</div><div class="fx-msg same" style="background:#dbeafe;color:#0f3f86;">Olá! Vamos estudar Flexbox.</div><div class="fx-msg same">Agora entendi.</div></div></div>
   </div>
   <div class="fx-window">
     <div class="fx-head">Depois</div>
-    <div class="fx-body"><div class="fx-chat"><div class="fx-msg left">Oi, professor!</div><div class="fx-msg right long">OlÃ¡! Vamos estudar Flexbox.</div><div class="fx-msg left">Agora entendi.</div></div></div>
+    <div class="fx-body"><div class="fx-chat"><div class="fx-msg left">Oi, professor!</div><div class="fx-msg right long">Olá! Vamos estudar Flexbox.</div><div class="fx-msg left">Agora entendi.</div></div></div>
   </div>
 </div>`,
                                         "note": "Chat mostra que Flexbox também resolve alinhamento individual dos elementos."
@@ -3642,18 +3896,18 @@ const styles = StyleSheet.create({
         ]
 },
       state: {
-        title: '3. A Inteligência do Aplicativo',
-        subtitle: 'State, eventos, cálculos e decisões.',
+        title: '3. React e Hooks',
+        subtitle: 'Estado, eventos, funções e primeiro Hook: useState.',
         steps: [
           {
                     "id": "state-intro",
                     "menu": "Intro",
-                    "title": "A Inteligência do Aplicativo",
+                    "title": "React e Hooks — A Inteligência do Aplicativo",
                     "objective": "Entender como um aplicativo recebe dados, processa informações, toma decisões e atualiza a tela.",
                     "modulePage": true,
-                    "kicker": "Módulo 3",
-                    "lead": "Até aqui, o aplicativo já conseguia mostrar elementos na tela e organizar o layout. Agora ele começa a reagir ao usuário. Neste módulo, vamos construir uma Calculadora de Média Escolar.",
-                    "highlight": "A ideia principal é simples: o usuário digita as notas, o app guarda esses valores, o botão chama uma função, a função calcula a média, toma uma decisão e a tela mostra o resultado.",
+                    "kicker": "Módulo 3 — React e Hooks",
+                    "lead": "Até aqui, o aplicativo já conseguia mostrar elementos na tela e organizar o layout. Agora ele começa a reagir ao usuário. Mantemos a Calculadora de Média Escolar e passamos a enxergá-la também como a primeira entrada em React e Hooks.",
+                    "highlight": "A ideia principal continua a mesma: o usuário digita as notas, o app guarda os valores, o botão chama uma função, a função calcula a média, toma uma decisão e a tela mostra o resultado. O ponto novo é perceber que useState é um Hook do React: ele guarda valores que mudam e provoca a atualização da interface.",
                     "boxes": [
                               [
                                         "Entrada",
@@ -3678,6 +3932,14 @@ const styles = StyleSheet.create({
                               [
                                         "Saída",
                                         "A tela mostra a média e a situação atualizadas."
+                              ],
+                              [
+                                        "React",
+                                        "Controla estado, eventos e atualização da interface conforme os dados mudam."
+                              ],
+                              [
+                                        "Hook",
+                                        "useState é o primeiro Hook deste módulo. useRef e useEffect entram na sequência do curso."
                               ]
                     ]
           },
@@ -3825,7 +4087,7 @@ const styles = StyleSheet.create({
                     "addedTitle": "Resumo do app",
                     "added": "Código final do app Média Escolar.\n\nO aplicativo agora possui:\n- campos controlados por state;\n- botões com onPress;\n- função de cálculo;\n- decisão com if/else;\n- função limpar;\n- atualização automática da tela.",
                     "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_06_aprovado.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
-                    "note": "Este app cria a ponte para o próximo módulo: Web Services — Consumindo APIs."
+                    "note": "Este app consolida useState, eventos, funções e decisões. O próximo avanço em Hooks será um laboratório com useEffect e atualização automática usando Bitcoin; ele será acrescentado quando o conteúdo for desenvolvido."
           },
           {
                     "id": "exercicios-state",
@@ -3833,12 +4095,12 @@ const styles = StyleSheet.create({
                     "title": "99 — Exercícios",
                     "objective": "Praticar state, eventos, cálculos e decisões simples.",
                     "exercisePage": true,
-                    "html": "\n<div class=\"exercise-native exercise-clean\">\n  <div class=\"topline exercise-clean-top\">\n    <h2>99. Exercícios — A Inteligência do Aplicativo</h2>\n    <div class=\"objective\"><strong>Objetivo:</strong> praticar entrada de dados, cálculo, decisão e atualização da tela.</div>\n  </div>\n\n  <div class=\"panel exercise-menu-panel\">\n    <div class=\"panel-body gallery exercise-menu-gallery\">\n      <button class=\"thumb-card active\" type=\"button\" onclick=\"showExerciseInterface(1)\">\n        <div class=\"thumb-title\">1. Média 3 notas</div>\n        <div class=\"thumb-phone\"><div class=\"thumb-bar blue\">Média</div><div class=\"thumb-body\"><div class=\"mini-line\"></div><div class=\"mini-line\"></div><div class=\"mini-line\"></div><div class=\"mini-btns\"><div class=\"mini-btn btn-blue\"></div><div class=\"mini-btn btn-gray\"></div></div><div class=\"mini-line\" style=\"height:34px\"></div></div></div>\n      </button>\n\n      <button class=\"thumb-card\" type=\"button\" onclick=\"showExerciseInterface(2)\">\n        <div class=\"thumb-title\">2. Temperatura</div>\n        <div class=\"thumb-phone\"><div class=\"thumb-bar orange\">Conversor</div><div class=\"thumb-body\"><div class=\"mini-line\"></div><div class=\"mini-line\" style=\"height:30px\"></div><div class=\"mini-btns\"><div class=\"mini-btn btn-orange\"></div><div class=\"mini-btn btn-gray\"></div></div></div></div>\n      </button>\n\n      <button class=\"thumb-card\" type=\"button\" onclick=\"showExerciseInterface(3)\">\n        <div class=\"thumb-title\">3. Desconto</div>\n        <div class=\"thumb-phone\"><div class=\"thumb-bar green\">Desconto</div><div class=\"thumb-body\"><div class=\"mini-line\"></div><div class=\"mini-line\"></div><div class=\"mini-btns\"><div class=\"mini-btn btn-green\"></div><div class=\"mini-btn btn-gray\"></div></div><div class=\"mini-line\" style=\"height:30px\"></div></div></div>\n      </button>\n\n      <button class=\"thumb-card\" type=\"button\" onclick=\"showExerciseInterface(4)\">\n        <div class=\"thumb-title\">4. Média 7</div>\n        <div class=\"thumb-phone\"><div class=\"thumb-bar purple\">Regra</div><div class=\"thumb-body\"><div class=\"mini-line\"></div><div class=\"mini-line\"></div><div class=\"mini-btns\"><div class=\"mini-btn btn-purple\"></div><div class=\"mini-btn btn-gray\"></div></div><div class=\"mini-line\" style=\"height:34px\"></div></div></div>\n      </button>\n\n      <button class=\"thumb-card\" type=\"button\" onclick=\"showExerciseInterface(5)\">\n        <div class=\"thumb-title\">5. Maioridade</div>\n        <div class=\"thumb-phone\"><div class=\"thumb-bar dark\">Idade</div><div class=\"thumb-body\"><div class=\"mini-line\"></div><div class=\"mini-line\"></div><div class=\"mini-btns\"><div class=\"mini-btn btn-blue\"></div><div class=\"mini-btn btn-gray\"></div></div><div class=\"mini-line\" style=\"height:32px\"></div></div></div>\n      </button>\n    </div>\n  </div>\n\n  <section id=\"exercise-clean-1\" class=\"exercise-clean-section active\">\n    <div class=\"exercise-grid\">\n      <div class=\"panel brief\">\n        <div class=\"panel-title\">Enunciado</div>\n        <div class=\"panel-body\">\n          <h3>Média de 3 Notas</h3>\n          <p>Crie uma nova versão do aplicativo Média Escolar utilizando três notas em vez de duas.</p>\n          <ul>\n            <li>Campos: Nota 1, Nota 2 e Nota 3.</li>\n            <li>Botões: Calcular e Limpar.</li>\n            <li>Resultado: média final.</li>\n            <li>Situação: Aprovado quando a média for maior ou igual a 6.</li>\n          </ul>\n          <div class=\"exercise-guide-inline\">\n            <div class=\"mini-card\"><strong>1. Crie</strong><p>Adicione um novo state para a terceira nota.</p></div>\n            <div class=\"mini-card\"><strong>2. Calcule</strong><p>Some as três notas e divida por 3.</p></div>\n            <div class=\"mini-card\"><strong>3. Decida</strong><p>Use if/else para mostrar a situação.</p></div>\n          </div>\n          <div class=\"tagline\"><strong>Desafio:</strong> mantenha o botão Limpar apagando todos os campos e resultados.</div>\n        </div>\n      </div>\n      <div class=\"mockup-wrap\"><div class=\"phone\"><div class=\"appbar blue\">Média de 3 Notas</div><div class=\"mock-body\"><div class=\"field-group b-blue\"><div class=\"label\">Nota 1</div><div class=\"input\"></div><div class=\"label\">Nota 2</div><div class=\"input\"></div><div class=\"label\">Nota 3</div><div class=\"input\"></div></div><div class=\"button-row b-green\"><div class=\"btn btn-blue\">Calcular</div><div class=\"btn btn-gray\">Limpar</div></div><div class=\"field-group b-orange\"><div class=\"label\">Média</div><div class=\"input\"></div><div class=\"label\">Situação</div><div class=\"input\"></div></div></div></div></div>\n    </div>\n  </section>\n\n  <section id=\"exercise-clean-2\" class=\"exercise-clean-section\">\n    <div class=\"exercise-grid\">\n      <div class=\"panel brief\"><div class=\"panel-title\">Enunciado</div><div class=\"panel-body\"><h3>Conversor de Temperatura</h3><p>Construa um aplicativo que receba uma temperatura em Celsius e mostre o valor correspondente em Fahrenheit.</p><ul><li>Campo: Temperatura em Celsius.</li><li>Botões: Converter e Limpar.</li><li>Resultado: Temperatura em Fahrenheit.</li></ul><div class=\"exercise-guide-inline\"><div class=\"mini-card\"><strong>State</strong><p>Guarde o valor digitado e o resultado.</p></div><div class=\"mini-card\"><strong>Evento</strong><p>O botão Converter chama a função.</p></div><div class=\"mini-card\"><strong>Cálculo</strong><p>Use a fórmula: F = C × 9 / 5 + 32.</p></div></div><div class=\"tagline\"><strong>Desafio:</strong> exiba o resultado acompanhado de °F.</div></div></div>\n      <div class=\"mockup-wrap\"><div class=\"phone\"><div class=\"appbar orange\">Temperatura</div><div class=\"mock-body\"><div class=\"field-group b-orange\"><div class=\"label\">Celsius</div><div class=\"input\"></div></div><div class=\"button-row b-blue\"><div class=\"btn btn-orange\">Converter</div><div class=\"btn btn-gray\">Limpar</div></div><div class=\"field-group b-blue\"><div class=\"label\">Fahrenheit</div><div class=\"input\"></div></div></div></div></div>\n    </div>\n  </section>\n\n  <section id=\"exercise-clean-3\" class=\"exercise-clean-section\">\n    <div class=\"exercise-grid\">\n      <div class=\"panel brief\"><div class=\"panel-title\">Enunciado</div><div class=\"panel-body\"><h3>Calculadora de Desconto</h3><p>Monte um aplicativo para calcular o valor final de um produto depois de aplicar um desconto.</p><ul><li>Campos: Preço do produto e percentual de desconto.</li><li>Botões: Calcular e Limpar.</li><li>Resultado: Valor do desconto e preço final.</li></ul><div class=\"exercise-guide-inline\"><div class=\"mini-card\"><strong>Entrada</strong><p>Receba preço e desconto com TextInput.</p></div><div class=\"mini-card\"><strong>Processamento</strong><p>Calcule o desconto usando porcentagem.</p></div><div class=\"mini-card\"><strong>Saída</strong><p>Atualize a tela com os valores finais.</p></div></div><div class=\"tagline\"><strong>Desafio:</strong> mostre o preço final de forma clara para o usuário.</div></div></div>\n      <div class=\"mockup-wrap\"><div class=\"phone\"><div class=\"appbar green\">Desconto</div><div class=\"mock-body\"><div class=\"field-group b-green\"><div class=\"label\">Preço</div><div class=\"input\"></div><div class=\"label\">Desconto (%)</div><div class=\"input\"></div></div><div class=\"button-row b-green\"><div class=\"btn btn-green\">Calcular</div><div class=\"btn btn-gray\">Limpar</div></div><div class=\"field-group b-orange\"><div class=\"label\">Valor Final</div><div class=\"input\"></div></div></div></div></div>\n    </div>\n  </section>\n\n  <section id=\"exercise-clean-4\" class=\"exercise-clean-section\">\n    <div class=\"exercise-grid\">\n      <div class=\"panel brief\"><div class=\"panel-title\">Enunciado</div><div class=\"panel-body\"><h3>Média com Regra 7</h3><p>Altere a regra da Média Escolar para aprovar apenas alunos com média maior ou igual a 7.</p><ul><li>Campos: Nota 1 e Nota 2.</li><li>Botões: Calcular e Limpar.</li><li>Resultado: Média e situação.</li><li>Regra: média maior ou igual a 7 → Aprovado.</li></ul><div class=\"exercise-guide-inline\"><div class=\"mini-card\"><strong>Reaproveite</strong><p>Use a base do app Média Escolar.</p></div><div class=\"mini-card\"><strong>Altere</strong><p>Mude apenas a regra do if.</p></div><div class=\"mini-card\"><strong>Teste</strong><p>Use notas que aprovem e notas que reprovem.</p></div></div><div class=\"tagline\"><strong>Desafio:</strong> personalize a mensagem exibida quando o aluno não atingir a média.</div></div></div>\n      <div class=\"mockup-wrap\"><div class=\"phone\"><div class=\"appbar purple\">Média 7</div><div class=\"mock-body\"><div class=\"field-group b-purple\"><div class=\"label\">Nota 1</div><div class=\"input\"></div><div class=\"label\">Nota 2</div><div class=\"input\"></div></div><div class=\"button-row b-purple\"><div class=\"btn btn-purple\">Calcular</div><div class=\"btn btn-gray\">Limpar</div></div><div class=\"field-group b-orange\"><div class=\"label\">Situação</div><div class=\"input\"></div></div></div></div></div>\n    </div>\n  </section>\n\n  <section id=\"exercise-clean-5\" class=\"exercise-clean-section\">\n    <div class=\"exercise-grid\">\n      <div class=\"panel brief\"><div class=\"panel-title\">Enunciado</div><div class=\"panel-body\"><h3>Verificador de Maioridade</h3><p>Crie um aplicativo que receba a idade de uma pessoa e informe se ela é maior ou menor de idade.</p><ul><li>Campo: Idade.</li><li>Botões: Verificar e Limpar.</li><li>Resultado: Maior de idade ou Menor de idade.</li><li>Regra: idade maior ou igual a 18.</li></ul><div class=\"exercise-guide-inline\"><div class=\"mini-card\"><strong>Entrada</strong><p>Guarde a idade digitada em um state.</p></div><div class=\"mini-card\"><strong>Decisão</strong><p>Use if/else para verificar a regra.</p></div><div class=\"mini-card\"><strong>Resposta</strong><p>Mostre a situação na tela.</p></div></div><div class=\"tagline\"><strong>Desafio:</strong> limpe também a mensagem de resultado ao tocar em Limpar.</div></div></div>\n      <div class=\"mockup-wrap\"><div class=\"phone\"><div class=\"appbar dark\">Maioridade</div><div class=\"mock-body\"><div class=\"field-group b-blue\"><div class=\"label\">Idade</div><div class=\"input\"></div></div><div class=\"button-row b-blue\"><div class=\"btn btn-blue\">Verificar</div><div class=\"btn btn-gray\">Limpar</div></div><div class=\"field-group b-green\"><div class=\"label\">Resultado</div><div class=\"input\"></div></div></div></div></div>\n    </div>\n  </section>\n\n  <div class=\"obs\"><strong>Observação:</strong> todos os exercícios utilizam os mesmos conceitos estudados neste módulo: state, eventos, cálculos, condições e atualização automática da interface.</div>\n</div>"
+                    "html": "\n<div class=\"exercise-native exercise-clean\">\n  <div class=\"topline exercise-clean-top\">\n    <h2>99. Exercícios — React e Hooks: A Inteligência do Aplicativo</h2>\n    <div class=\"objective\"><strong>Objetivo:</strong> praticar entrada de dados, cálculo, decisão e atualização da tela.</div>\n  </div>\n\n  <div class=\"panel exercise-menu-panel\">\n    <div class=\"panel-body gallery exercise-menu-gallery\">\n      <button class=\"thumb-card active\" type=\"button\" onclick=\"showExerciseInterface(1)\">\n        <div class=\"thumb-title\">1. Média 3 notas</div>\n        <div class=\"thumb-phone\"><div class=\"thumb-bar blue\">Média</div><div class=\"thumb-body\"><div class=\"mini-line\"></div><div class=\"mini-line\"></div><div class=\"mini-line\"></div><div class=\"mini-btns\"><div class=\"mini-btn btn-blue\"></div><div class=\"mini-btn btn-gray\"></div></div><div class=\"mini-line\" style=\"height:34px\"></div></div></div>\n      </button>\n\n      <button class=\"thumb-card\" type=\"button\" onclick=\"showExerciseInterface(2)\">\n        <div class=\"thumb-title\">2. Temperatura</div>\n        <div class=\"thumb-phone\"><div class=\"thumb-bar orange\">Conversor</div><div class=\"thumb-body\"><div class=\"mini-line\"></div><div class=\"mini-line\" style=\"height:30px\"></div><div class=\"mini-btns\"><div class=\"mini-btn btn-orange\"></div><div class=\"mini-btn btn-gray\"></div></div></div></div>\n      </button>\n\n      <button class=\"thumb-card\" type=\"button\" onclick=\"showExerciseInterface(3)\">\n        <div class=\"thumb-title\">3. Desconto</div>\n        <div class=\"thumb-phone\"><div class=\"thumb-bar green\">Desconto</div><div class=\"thumb-body\"><div class=\"mini-line\"></div><div class=\"mini-line\"></div><div class=\"mini-btns\"><div class=\"mini-btn btn-green\"></div><div class=\"mini-btn btn-gray\"></div></div><div class=\"mini-line\" style=\"height:30px\"></div></div></div>\n      </button>\n\n      <button class=\"thumb-card\" type=\"button\" onclick=\"showExerciseInterface(4)\">\n        <div class=\"thumb-title\">4. Média 7</div>\n        <div class=\"thumb-phone\"><div class=\"thumb-bar purple\">Regra</div><div class=\"thumb-body\"><div class=\"mini-line\"></div><div class=\"mini-line\"></div><div class=\"mini-btns\"><div class=\"mini-btn btn-purple\"></div><div class=\"mini-btn btn-gray\"></div></div><div class=\"mini-line\" style=\"height:34px\"></div></div></div>\n      </button>\n\n      <button class=\"thumb-card\" type=\"button\" onclick=\"showExerciseInterface(5)\">\n        <div class=\"thumb-title\">5. Maioridade</div>\n        <div class=\"thumb-phone\"><div class=\"thumb-bar dark\">Idade</div><div class=\"thumb-body\"><div class=\"mini-line\"></div><div class=\"mini-line\"></div><div class=\"mini-btns\"><div class=\"mini-btn btn-blue\"></div><div class=\"mini-btn btn-gray\"></div></div><div class=\"mini-line\" style=\"height:32px\"></div></div></div>\n      </button>\n    </div>\n  </div>\n\n  <section id=\"exercise-clean-1\" class=\"exercise-clean-section active\">\n    <div class=\"exercise-grid\">\n      <div class=\"panel brief\">\n        <div class=\"panel-title\">Enunciado</div>\n        <div class=\"panel-body\">\n          <h3>Média de 3 Notas</h3>\n          <p>Crie uma nova versão do aplicativo Média Escolar utilizando três notas em vez de duas.</p>\n          <ul>\n            <li>Campos: Nota 1, Nota 2 e Nota 3.</li>\n            <li>Botões: Calcular e Limpar.</li>\n            <li>Resultado: média final.</li>\n            <li>Situação: Aprovado quando a média for maior ou igual a 6.</li>\n          </ul>\n          <div class=\"exercise-guide-inline\">\n            <div class=\"mini-card\"><strong>1. Crie</strong><p>Adicione um novo state para a terceira nota.</p></div>\n            <div class=\"mini-card\"><strong>2. Calcule</strong><p>Some as três notas e divida por 3.</p></div>\n            <div class=\"mini-card\"><strong>3. Decida</strong><p>Use if/else para mostrar a situação.</p></div>\n          </div>\n          <div class=\"tagline\"><strong>Desafio:</strong> mantenha o botão Limpar apagando todos os campos e resultados.</div>\n        </div>\n      </div>\n      <div class=\"mockup-wrap\"><div class=\"phone\"><div class=\"appbar blue\">Média de 3 Notas</div><div class=\"mock-body\"><div class=\"field-group b-blue\"><div class=\"label\">Nota 1</div><div class=\"input\"></div><div class=\"label\">Nota 2</div><div class=\"input\"></div><div class=\"label\">Nota 3</div><div class=\"input\"></div></div><div class=\"button-row b-green\"><div class=\"btn btn-blue\">Calcular</div><div class=\"btn btn-gray\">Limpar</div></div><div class=\"field-group b-orange\"><div class=\"label\">Média</div><div class=\"input\"></div><div class=\"label\">Situação</div><div class=\"input\"></div></div></div></div></div>\n    </div>\n  </section>\n\n  <section id=\"exercise-clean-2\" class=\"exercise-clean-section\">\n    <div class=\"exercise-grid\">\n      <div class=\"panel brief\"><div class=\"panel-title\">Enunciado</div><div class=\"panel-body\"><h3>Conversor de Temperatura</h3><p>Construa um aplicativo que receba uma temperatura em Celsius e mostre o valor correspondente em Fahrenheit.</p><ul><li>Campo: Temperatura em Celsius.</li><li>Botões: Converter e Limpar.</li><li>Resultado: Temperatura em Fahrenheit.</li></ul><div class=\"exercise-guide-inline\"><div class=\"mini-card\"><strong>State</strong><p>Guarde o valor digitado e o resultado.</p></div><div class=\"mini-card\"><strong>Evento</strong><p>O botão Converter chama a função.</p></div><div class=\"mini-card\"><strong>Cálculo</strong><p>Use a fórmula: F = C × 9 / 5 + 32.</p></div></div><div class=\"tagline\"><strong>Desafio:</strong> exiba o resultado acompanhado de °F.</div></div></div>\n      <div class=\"mockup-wrap\"><div class=\"phone\"><div class=\"appbar orange\">Temperatura</div><div class=\"mock-body\"><div class=\"field-group b-orange\"><div class=\"label\">Celsius</div><div class=\"input\"></div></div><div class=\"button-row b-blue\"><div class=\"btn btn-orange\">Converter</div><div class=\"btn btn-gray\">Limpar</div></div><div class=\"field-group b-blue\"><div class=\"label\">Fahrenheit</div><div class=\"input\"></div></div></div></div></div>\n    </div>\n  </section>\n\n  <section id=\"exercise-clean-3\" class=\"exercise-clean-section\">\n    <div class=\"exercise-grid\">\n      <div class=\"panel brief\"><div class=\"panel-title\">Enunciado</div><div class=\"panel-body\"><h3>Calculadora de Desconto</h3><p>Monte um aplicativo para calcular o valor final de um produto depois de aplicar um desconto.</p><ul><li>Campos: Preço do produto e percentual de desconto.</li><li>Botões: Calcular e Limpar.</li><li>Resultado: Valor do desconto e preço final.</li></ul><div class=\"exercise-guide-inline\"><div class=\"mini-card\"><strong>Entrada</strong><p>Receba preço e desconto com TextInput.</p></div><div class=\"mini-card\"><strong>Processamento</strong><p>Calcule o desconto usando porcentagem.</p></div><div class=\"mini-card\"><strong>Saída</strong><p>Atualize a tela com os valores finais.</p></div></div><div class=\"tagline\"><strong>Desafio:</strong> mostre o preço final de forma clara para o usuário.</div></div></div>\n      <div class=\"mockup-wrap\"><div class=\"phone\"><div class=\"appbar green\">Desconto</div><div class=\"mock-body\"><div class=\"field-group b-green\"><div class=\"label\">Preço</div><div class=\"input\"></div><div class=\"label\">Desconto (%)</div><div class=\"input\"></div></div><div class=\"button-row b-green\"><div class=\"btn btn-green\">Calcular</div><div class=\"btn btn-gray\">Limpar</div></div><div class=\"field-group b-orange\"><div class=\"label\">Valor Final</div><div class=\"input\"></div></div></div></div></div>\n    </div>\n  </section>\n\n  <section id=\"exercise-clean-4\" class=\"exercise-clean-section\">\n    <div class=\"exercise-grid\">\n      <div class=\"panel brief\"><div class=\"panel-title\">Enunciado</div><div class=\"panel-body\"><h3>Média com Regra 7</h3><p>Altere a regra da Média Escolar para aprovar apenas alunos com média maior ou igual a 7.</p><ul><li>Campos: Nota 1 e Nota 2.</li><li>Botões: Calcular e Limpar.</li><li>Resultado: Média e situação.</li><li>Regra: média maior ou igual a 7 → Aprovado.</li></ul><div class=\"exercise-guide-inline\"><div class=\"mini-card\"><strong>Reaproveite</strong><p>Use a base do app Média Escolar.</p></div><div class=\"mini-card\"><strong>Altere</strong><p>Mude apenas a regra do if.</p></div><div class=\"mini-card\"><strong>Teste</strong><p>Use notas que aprovem e notas que reprovem.</p></div></div><div class=\"tagline\"><strong>Desafio:</strong> personalize a mensagem exibida quando o aluno não atingir a média.</div></div></div>\n      <div class=\"mockup-wrap\"><div class=\"phone\"><div class=\"appbar purple\">Média 7</div><div class=\"mock-body\"><div class=\"field-group b-purple\"><div class=\"label\">Nota 1</div><div class=\"input\"></div><div class=\"label\">Nota 2</div><div class=\"input\"></div></div><div class=\"button-row b-purple\"><div class=\"btn btn-purple\">Calcular</div><div class=\"btn btn-gray\">Limpar</div></div><div class=\"field-group b-orange\"><div class=\"label\">Situação</div><div class=\"input\"></div></div></div></div></div>\n    </div>\n  </section>\n\n  <section id=\"exercise-clean-5\" class=\"exercise-clean-section\">\n    <div class=\"exercise-grid\">\n      <div class=\"panel brief\"><div class=\"panel-title\">Enunciado</div><div class=\"panel-body\"><h3>Verificador de Maioridade</h3><p>Crie um aplicativo que receba a idade de uma pessoa e informe se ela é maior ou menor de idade.</p><ul><li>Campo: Idade.</li><li>Botões: Verificar e Limpar.</li><li>Resultado: Maior de idade ou Menor de idade.</li><li>Regra: idade maior ou igual a 18.</li></ul><div class=\"exercise-guide-inline\"><div class=\"mini-card\"><strong>Entrada</strong><p>Guarde a idade digitada em um state.</p></div><div class=\"mini-card\"><strong>Decisão</strong><p>Use if/else para verificar a regra.</p></div><div class=\"mini-card\"><strong>Resposta</strong><p>Mostre a situação na tela.</p></div></div><div class=\"tagline\"><strong>Desafio:</strong> limpe também a mensagem de resultado ao tocar em Limpar.</div></div></div>\n      <div class=\"mockup-wrap\"><div class=\"phone\"><div class=\"appbar dark\">Maioridade</div><div class=\"mock-body\"><div class=\"field-group b-blue\"><div class=\"label\">Idade</div><div class=\"input\"></div></div><div class=\"button-row b-blue\"><div class=\"btn btn-blue\">Verificar</div><div class=\"btn btn-gray\">Limpar</div></div><div class=\"field-group b-green\"><div class=\"label\">Resultado</div><div class=\"input\"></div></div></div></div></div>\n    </div>\n  </section>\n\n  <div class=\"obs\"><strong>Observação:</strong> todos os exercícios utilizam os mesmos conceitos estudados neste módulo: state, eventos, cálculos, condições e atualização automática da interface.</div>\n</div>"
           }
 ]
       },
       apiCep: {
-        "title": "4. Web Services e Consumo de APIs",
+        "title": "4. Web Services/APIs",
         "subtitle": "Cliente, servidor, APIs, JSON e Busca CEP.",
         "steps": [
                 {
@@ -4115,7 +4377,7 @@ const styles = StyleSheet.create({
 
     };
 
-    let currentModuleKey = 'interfaceBasica';
+    let currentModuleKey = 'fundamentosMobile';
 
     const moduleMenu = document.getElementById('moduleMenu');
     const menu = document.getElementById('menu');
@@ -4710,4 +4972,4 @@ const styles = StyleSheet.create({
 
     renderModuleMenu();
     renderStepMenu();
-    showStep(0);
+    showStep(modules[currentModuleKey].steps[0].id);
