@@ -435,6 +435,11 @@ const gitSteps = [
       <h3>3. Veja o que mudou</h3>
       <pre class="command">git status</pre>
 
+      <h3>Quer ver exatamente o que mudou?</h3>
+      <pre class="command">git diff</pre>
+      <p><span class="inline-code">git status</span> mostra <strong>quais arquivos</strong> mudaram. <span class="inline-code">git diff</span> mostra <strong>as linhas alteradas</strong> em arquivos que o Git já acompanha e que ainda não foram preparados com <span class="inline-code">git add</span>.</p>
+      <div class="concept-box"><strong>status = quais arquivos mudaram. diff = o que mudou dentro deles.</strong></div>
+
       <h3>4. Prepare a alteração</h3>
       <pre class="command">git add projeto.txt\ngit status</pre>
 
@@ -472,22 +477,574 @@ const gitSteps = [
 
       <h3>O que vem depois?</h3>
       <p>Na Parte 2 entraremos no <strong>GitHub</strong>: conta, repositório online, clone, push, pull e a sincronização completa entre computador e Internet.</p>`
+  },
+  {
+    id: 13,
+    menu: '13 Sobrevivência',
+    title: '13 — Sobrevivência: ignorar e desfazer',
+    objective: 'Evitar arquivos indevidos no repositório e corrigir dois erros locais comuns sem apagar o histórico.',
+    content: `
+      <div class="hero-box">
+        <span class="part-badge">Sobrevivência Git</span>
+        <h3>Três coisas que salvam muito tempo</h3>
+        <p>Antes de irmos para o GitHub, vamos aprender somente três recursos de proteção: <strong>.gitignore</strong>, <strong>git restore</strong> e <strong>git restore --staged</strong>.</p>
+      </div>
+
+      <h3>1. Arquivos que não devem entrar no Git</h3>
+      <p>Alguns arquivos são temporários, pessoais ou contêm informações que não devem ser publicadas. Para dizer ao Git que eles devem ser ignorados, criamos um arquivo chamado:</p>
+      <pre class="command">.gitignore</pre>
+
+      <h3>Um exemplo simples</h3>
+      <p>Dentro do repositório, crie o arquivo:</p>
+      <pre class="command">echo segredo.txt &gt; .gitignore
+echo *.tmp &gt;&gt; .gitignore
+echo .env &gt;&gt; .gitignore</pre>
+      <p>Agora o Git ignorará <span class="inline-code">segredo.txt</span>, arquivos terminados em <span class="inline-code">.tmp</span> e o arquivo <span class="inline-code">.env</span>, desde que ainda não estejam sendo rastreados.</p>
+      <pre class="command">git status</pre>
+      <div class="danger-box"><strong>Nunca publique senhas, tokens, chaves de API ou outras credenciais.</strong> Um <span class="inline-code">.gitignore</span> bem usado ajuda a evitar esse erro, mas você continua responsável por conferir o que está sendo versionado.</div>
+      <div class="note-box"><strong>Importante:</strong> o <span class="inline-code">.gitignore</span> não deixa de rastrear automaticamente um arquivo que já havia sido adicionado ao Git. Para o iniciante, a regra mais segura é criar as regras antes de adicionar arquivos sensíveis.</div>
+
+      <h3>2. Fiz uma alteração e quero descartá-la</h3>
+      <p>Se o arquivo já é acompanhado pelo Git, ainda não foi preparado com <span class="inline-code">git add</span> e você quer voltar ao conteúdo do último registro:</p>
+      <pre class="command">git diff
+git restore projeto.txt</pre>
+      <div class="danger-box"><strong>Atenção:</strong> <span class="inline-code">git restore projeto.txt</span> descarta as alterações locais não registradas daquele arquivo. Confira com <span class="inline-code">git diff</span> antes.</div>
+
+      <h3>3. Usei git add por engano</h3>
+      <p>Se você preparou um arquivo, mas ainda não quer incluí-lo no próximo commit:</p>
+      <pre class="command">git restore --staged projeto.txt</pre>
+      <p>O arquivo sai da área de preparação, mas <strong>suas alterações continuam no arquivo</strong>.</p>
+
+      <h3>Veja a diferença</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>git restore arquivo</strong><br>Descarta alterações locais ainda não preparadas.</div>
+        <div class="mini-card"><strong>git restore --staged arquivo</strong><br>Retira da preparação, mas mantém as alterações.</div>
+      </div>
+
+      <h3>Rotina de sobrevivência</h3>
+      <div class="flow">Não sei o que aconteceu
+        ↓
+   git status
+        ↓
+Quero ver as linhas
+        ↓
+    git diff
+        ↓
+Só então decido o que fazer</div>
+
+      <div class="ok-box"><strong>Git local concluído.</strong> Você já sabe criar versões, conferir mudanças, ignorar arquivos indevidos e desfazer dois erros locais muito comuns.</div>`
   }
 ];
 
 
 const githubSteps = [
   {
-    id: 'inicio',
-    menu: 'Em breve',
-    title: 'GitHub — próxima etapa',
-    objective: 'Deixar a estrutura do módulo preparada sem antecipar conceitos antes da hora.',
+    id: 1,
+    menu: '1 Conceitos',
+    title: 'GitHub 1 — O que é e por que usar',
+    objective: 'Entender o papel do GitHub sem misturá-lo com o Git que já funciona no computador.',
     content: `
-      <div class="placeholder-box">
+      <div class="hero-box">
         <span class="part-badge">Parte 2 — GitHub</span>
-        <h3>Esta seção já está preparada</h3>
-        <p>O conteúdo de GitHub será construído na próxima etapa do módulo. Primeiro concluímos o Git local; depois entraremos em conta, repositório remoto, clone, push, pull e sincronização.</p>
+        <h3>Agora acrescentamos a Internet</h3>
+        <p>Até aqui, todo o controle de versões funcionou no computador. O GitHub entra como uma plataforma online para hospedar e compartilhar repositórios Git.</p>
+      </div>
+
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Git</strong><br>Controla versões no computador.</div>
+        <div class="mini-card"><strong>GitHub</strong><br>Hospeda repositórios na Internet.</div>
+      </div>
+
+      <h3>Por que usar GitHub?</h3>
+      <ul>
+        <li>manter uma cópia online do repositório;</li>
+        <li>acessar o projeto em outros computadores;</li>
+        <li>compartilhar seu trabalho;</li>
+        <li>colaborar com outras pessoas.</li>
+      </ul>
+
+      <div class="concept-box"><strong>Git funciona sem GitHub. GitHub não substitui Git.</strong></div>
+
+      <h3>O que vai mudar no nosso fluxo?</h3>
+      <div class="flow">COMPUTADOR  ←────→  GITHUB
+     Git             repositório online</div>
+      <p>Mais adiante aprenderemos os comandos que fazem essa comunicação. Eles aparecerão um de cada vez.</p>
+
+      <h3>Confira se entendeu</h3>
+      <div class="example-box">
+        <p><strong>Git e GitHub são a mesma coisa?</strong><br>Não.</p>
+        <p><strong>Preciso de GitHub para fazer commits locais?</strong><br>Não.</p>
+        <p><strong>Para que vamos usar GitHub?</strong><br>Para hospedar e sincronizar nossos repositórios pela Internet.</p>
       </div>`
+  },
+  {
+    id: 2,
+    menu: '2 Conta',
+    title: 'GitHub 2 — Criando uma conta',
+    objective: 'Criar uma conta pessoal e confirmar o e-mail para poder usar os recursos básicos do GitHub.',
+    content: `
+      <div class="hero-box">
+        <h3>Primeiro precisamos de uma identidade no GitHub</h3>
+        <p>A conta será usada para criar repositórios, visualizar seu perfil e autenticar operações feitas pelo computador.</p>
+      </div>
+
+      <h3>1. Acesse o GitHub</h3>
+      <p>Abra o navegador e acesse <strong>github.com</strong>. Procure <strong>Sign up</strong> ou a opção equivalente de cadastro.</p>
+      <figure class="image-card">
+        <img src="../img/git/github-criar-conta.webp" alt="Página inicial do GitHub com as opções Sign in e Sign up" loading="lazy">
+        <figcaption>A aparência pode mudar com o tempo. Procure a opção de cadastro da conta.</figcaption>
+      </figure>
+
+      <h3>2. Preencha os dados solicitados</h3>
+      <p>O GitHub poderá solicitar e-mail, senha e nome de usuário. Também pode oferecer cadastro com provedores de login compatíveis.</p>
+      <div class="concept-box"><strong>O nome de usuário fará parte da sua identidade no GitHub.</strong><br>Exemplo: <span class="inline-code">github.com/joaosilva</span></div>
+
+      <h3>3. Verifique seu e-mail</h3>
+      <p>Conclua a verificação enviada pelo GitHub. Um e-mail verificado é necessário para algumas tarefas básicas, como criar repositórios.</p>
+
+      <h3>4. Entre na conta</h3>
+      <p>Depois do cadastro, use <strong>Sign in</strong> para entrar. Se você visualizar seu avatar ou perfil, a conta está funcionando.</p>
+
+      <div class="note-box"><strong>Git e GitHub ainda não estão conectados.</strong> Criar a conta não envia automaticamente nenhum arquivo do computador.</div>`
+  },
+  {
+    id: 3,
+    menu: '3 Interface',
+    title: 'GitHub 3 — Conhecendo a tela inicial',
+    objective: 'Localizar somente os elementos da interface que serão necessários nas próximas aulas.',
+    content: `
+      <div class="hero-box">
+        <h3>Não precisamos decorar o GitHub inteiro</h3>
+        <p>Vamos localizar somente o essencial para trabalhar com repositórios.</p>
+      </div>
+
+      <h3>Procure estas áreas</h3>
+      <ul>
+        <li>seu perfil ou avatar;</li>
+        <li>a área <strong>Repositories</strong>;</li>
+        <li>a opção <strong>New repository</strong> ou equivalente;</li>
+        <li>a busca do GitHub.</li>
+      </ul>
+
+      <h3>Uma palavra nova: remoto</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Repositório local</strong><br>Fica no seu computador.</div>
+        <div class="mini-card"><strong>Repositório remoto</strong><br>Fica em outro local; neste módulo, no GitHub.</div>
+      </div>
+      <p>Na próxima etapa criaremos nosso primeiro repositório remoto.</p>`
+  },
+  {
+    id: 4,
+    menu: '4 Repositório',
+    title: 'GitHub 4 — Criando o primeiro repositório',
+    objective: 'Criar um repositório remoto simples que depois será clonado para o computador.',
+    content: `
+      <div class="hero-box">
+        <h3>Nosso primeiro projeto online</h3>
+        <p>Neste primeiro cenário, o projeto <strong>nascerá no GitHub</strong> e depois será trazido ao computador.</p>
+      </div>
+
+      <h3>1. Crie um novo repositório</h3>
+      <p>Na sua conta, escolha <strong>New repository</strong>.</p>
+
+      <h3>2. Use estes dados</h3>
+      <div class="example-box">
+        <p><strong>Nome:</strong> <span class="inline-code">primeiro-repositorio</span></p>
+        <p><strong>Descrição:</strong> Meu primeiro repositório para aprender Git e GitHub.</p>
+        <p><strong>Visibilidade:</strong> Public, para facilitar a prática deste módulo.</p>
+        <p><strong>README:</strong> marque a opção para adicionar um README.</p>
+      </div>
+
+      <h3>3. Crie o repositório</h3>
+      <p>Confirme em <strong>Create repository</strong>.</p>
+      <p>Você deverá ver o arquivo:</p>
+      <pre class="command">README.md</pre>
+      <p>O GitHub também terá criado um primeiro commit para esse arquivo.</p>
+
+      <div class="note-box"><strong>Mais adiante teremos outro cenário.</strong> Quando o projeto já existir no computador, criaremos o repositório do GitHub <strong>vazio</strong>. Não misture os dois casos.</div>`
+  },
+  {
+    id: 5,
+    menu: '5 Local x remoto',
+    title: 'GitHub 5 — Repositório local e remoto',
+    objective: 'Entender que as cópias do computador e do GitHub não se atualizam sozinhas.',
+    content: `
+      <div class="hero-box">
+        <h3>Dois lugares, um mesmo projeto</h3>
+        <p>Quando trabalharmos com GitHub, poderemos ter uma cópia local e uma cópia remota.</p>
+      </div>
+
+      <div class="flow">LOCAL                         REMOTO
+computador                     GitHub
+arquivos de trabalho           cópia online</div>
+
+      <h3>Elas são sincronizadas automaticamente?</h3>
+      <p><strong>Não.</strong> Alterar o computador não muda o GitHub sozinho. Alterar o GitHub não muda o computador sozinho.</p>
+
+      <div class="concept-box"><strong>Precisaremos enviar e receber alterações de propósito.</strong></div>
+
+      <h3>Guarde duas ideias</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Enviar</strong><br>Mais adiante: <span class="inline-code">git push</span>.</div>
+        <div class="mini-card"><strong>Receber</strong><br>Mais adiante: <span class="inline-code">git pull</span>.</div>
+      </div>`
+  },
+  {
+    id: 6,
+    menu: '6 Clone',
+    title: 'GitHub 6 — Clonando um repositório',
+    objective: 'Trazer ao computador uma cópia completa de um repositório que já existe no GitHub.',
+    content: `
+      <div class="hero-box">
+        <h3>GitHub → computador</h3>
+        <p>Vamos trazer <span class="inline-code">primeiro-repositorio</span> para nossa pasta de projetos.</p>
+      </div>
+
+      <h3>1. Copie o endereço HTTPS</h3>
+      <p>No GitHub, abra o repositório, clique em <strong>Code</strong>, escolha <strong>HTTPS</strong> e copie o endereço. Ele será parecido com:</p>
+      <pre class="command">https://github.com/USUARIO/primeiro-repositorio.git</pre>
+
+      <h3>2. Vá para a pasta que receberá o projeto</h3>
+      <pre class="command">cd /d "%USERPROFILE%\meus-repositorios"</pre>
+
+      <h3>3. Clone</h3>
+      <pre class="command">git clone https://github.com/USUARIO/primeiro-repositorio.git</pre>
+      <p>Substitua a URL pela do seu repositório.</p>
+
+      <h3>4. Entre e confira</h3>
+      <pre class="command">cd primeiro-repositorio
+dir
+git status
+git log --oneline</pre>
+      <p>O <span class="inline-code">README.md</span> e o histórico vieram do GitHub.</p>
+
+      <div class="concept-box"><strong>Depois de git clone, não execute git init.</strong> O repositório já veio pronto.</div>
+
+      <div class="flow">GITHUB
+  ↓
+git clone
+  ↓
+COMPUTADOR
+arquivos + histórico + ligação remota</div>`
+  },
+  {
+    id: 7,
+    menu: '7 Origin',
+    title: 'GitHub 7 — Conhecendo o origin',
+    objective: 'Descobrir para qual endereço remoto o repositório local está conectado.',
+    content: `
+      <div class="hero-box">
+        <h3>O clone deixou um endereço salvo</h3>
+        <p>Normalmente, o Git dá ao repositório remoto principal o nome <strong>origin</strong>.</p>
+      </div>
+
+      <h3>Veja o remoto configurado</h3>
+      <pre class="command">git remote -v</pre>
+      <p>O resultado será parecido com:</p>
+      <pre class="command">origin  https://github.com/USUARIO/primeiro-repositorio.git (fetch)
+origin  https://github.com/USUARIO/primeiro-repositorio.git (push)</pre>
+
+      <div class="concept-box"><strong>origin é apenas um nome curto para o endereço remoto.</strong></div>
+
+      <h3>Para sobreviver, guarde isto</h3>
+      <div class="flow">git status     → como estão meus arquivos?
+git log        → quais commits existem?
+git remote -v  → a qual remoto estou ligado?</div>`
+  },
+  {
+    id: 8,
+    menu: '8 Push',
+    title: 'GitHub 8 — Enviando alterações com git push',
+    objective: 'Registrar uma alteração local e enviar seus commits para o GitHub.',
+    content: `
+      <div class="hero-box">
+        <h3>Computador → GitHub</h3>
+        <p>O <span class="inline-code">git push</span> envia commits locais que ainda não chegaram ao remoto.</p>
+      </div>
+
+      <h3>1. Altere o README</h3>
+      <pre class="command">echo Alteracao feita no computador &gt;&gt; README.md</pre>
+
+      <h3>2. Faça o fluxo local que você já conhece</h3>
+      <pre class="command">git status
+git diff
+git add README.md
+git commit -m "Atualiza README"</pre>
+
+      <h3>3. Envie</h3>
+      <pre class="command">git push</pre>
+      <div class="flow">alterar → status → add → commit → push → GitHub</div>
+
+      <h3>Na primeira vez, pode aparecer uma autenticação</h3>
+      <p>Usando HTTPS no Git for Windows atual, é comum o <strong>Git Credential Manager</strong> abrir ou orientar um login pelo navegador. Conclua a autenticação da sua conta e, quando solicitado, a verificação em duas etapas.</p>
+      <div class="danger-box"><strong>Não digite sua senha do GitHub como se ela fosse uma senha Git comum.</strong> O fluxo moderno de HTTPS usa mecanismos de autenticação próprios, como o Git Credential Manager.</div>
+
+      <h3>4. Confira no navegador</h3>
+      <p>Atualize o repositório no GitHub. A alteração e o commit <strong>Atualiza README</strong> deverão aparecer.</p>
+
+      <div class="concept-box"><strong>commit registra no computador. push envia commits ao GitHub.</strong></div>`
+  },
+  {
+    id: 9,
+    menu: '9 Pull',
+    title: 'GitHub 9 — Recebendo alterações com git pull',
+    objective: 'Trazer para o computador os commits que existem no GitHub e ainda não estão localmente.',
+    content: `
+      <div class="hero-box">
+        <h3>GitHub → computador</h3>
+        <p>Agora faremos o caminho contrário ao push.</p>
+      </div>
+
+      <h3>1. Faça uma pequena alteração no GitHub</h3>
+      <p>Abra <span class="inline-code">README.md</span>, use a opção de edição, acrescente:</p>
+      <pre class="command">Alteracao feita diretamente no GitHub.</pre>
+      <p>Salve criando o commit pedido pela interface.</p>
+
+      <h3>2. Veja que o computador ainda está antigo</h3>
+      <pre class="command">type README.md</pre>
+
+      <h3>3. Traga a novidade</h3>
+      <pre class="command">git pull</pre>
+
+      <h3>4. Confira</h3>
+      <pre class="command">type README.md
+git log --oneline</pre>
+      <p>A alteração e o novo commit agora fazem parte do repositório local.</p>
+
+      <div class="mini-grid">
+        <div class="mini-card"><strong>push</strong><br>envia.</div>
+        <div class="mini-card"><strong>pull</strong><br>recebe.</div>
+      </div>`
+  },
+  {
+    id: 10,
+    menu: '10 Editar online',
+    title: 'GitHub 10 — Alterando arquivos pelo GitHub',
+    objective: 'Entender quando uma edição pelo navegador é útil e como trazê-la de volta ao computador.',
+    content: `
+      <div class="hero-box">
+        <h3>Pequenos ajustes também podem nascer no GitHub</h3>
+        <p>A interface web é útil para correções pequenas, especialmente em arquivos como README.</p>
+      </div>
+
+      <h3>Fluxo pelo navegador</h3>
+      <div class="flow">abrir arquivo
+   ↓
+editar
+   ↓
+salvar/commit
+   ↓
+GitHub atualizado
+   ↓
+git pull no computador</div>
+
+      <h3>Quando preferir o computador?</h3>
+      <p>Para alterações maiores ou várias mudanças relacionadas, trabalhe normalmente nos arquivos locais e depois use <span class="inline-code">add → commit → push</span>.</p>
+
+      <div class="note-box"><strong>Regra simples:</strong> edição pequena pode ser feita no navegador. Desenvolvimento de verdade normalmente acontece no computador.</div>`
+  },
+  {
+    id: 11,
+    menu: '11 Projeto local',
+    title: 'GitHub 11 — Publicando um projeto que já existe no PC',
+    objective: 'Conectar ao GitHub um repositório local que já possui arquivos e commits.',
+    content: `
+      <div class="hero-box">
+        <span class="part-badge">Situação real de sobrevivência</span>
+        <h3>“Meu projeto já existe no computador. Como coloco no GitHub?”</h3>
+        <p>Este é diferente do caso do clone. Agora o projeto <strong>nasceu localmente</strong> e queremos criar o remoto.</p>
+      </div>
+
+      <h3>Antes de começar</h3>
+      <p>Entre no repositório local e confirme que já existe pelo menos um commit:</p>
+      <pre class="command">git status
+git log --oneline</pre>
+
+      <h3>1. Crie um repositório NOVO e VAZIO no GitHub</h3>
+      <p>Ao criar esse remoto, <strong>não adicione README, licença nem .gitignore</strong>. Queremos evitar criar um histórico separado antes de enviar o histórico local.</p>
+
+      <h3>2. Copie a URL HTTPS do novo repositório</h3>
+      <p>Ela será parecida com:</p>
+      <pre class="command">https://github.com/USUARIO/NOME-DO-REPOSITORIO.git</pre>
+
+      <h3>3. Conecte o projeto local</h3>
+      <pre class="command">git remote add origin https://github.com/USUARIO/NOME-DO-REPOSITORIO.git
+git remote -v</pre>
+
+      <h3>4. Descubra o nome da linha principal atual</h3>
+      <pre class="command">git branch --show-current</pre>
+      <p>Normalmente você verá <span class="inline-code">main</span> ou, em algumas instalações, <span class="inline-code">master</span>.</p>
+      <div class="note-box">Não vamos estudar branches agora. Só precisamos saber o nome atual para fazer o primeiro envio.</div>
+
+      <h3>5. Faça o primeiro envio</h3>
+      <p>Se o comando anterior mostrou <span class="inline-code">main</span>:</p>
+      <pre class="command">git push -u origin main</pre>
+      <p>Se mostrou outro nome, substitua <span class="inline-code">main</span> por ele.</p>
+      <p>Depois desse primeiro envio, normalmente bastará:</p>
+      <pre class="command">git push</pre>
+
+      <h3>Não confunda os dois começos</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Projeto já está no GitHub</strong><br><span class="inline-code">git clone</span>.</div>
+        <div class="mini-card"><strong>Projeto já está no PC</strong><br>remoto vazio → <span class="inline-code">remote add</span> → primeiro <span class="inline-code">push</span>.</div>
+      </div>`
+  },
+  {
+    id: 12,
+    menu: '12 Sincronizar',
+    title: 'GitHub 12 — Sincronizando Git + GitHub',
+    objective: 'Organizar uma sequência segura para receber novidades, trabalhar e enviar novos commits.',
+    content: `
+      <div class="hero-box">
+        <h3>Agora os dois lados trabalham juntos</h3>
+        <p>O hábito mais simples é atualizar antes de começar e enviar somente depois de criar o commit.</p>
+      </div>
+
+      <h3>1. Antes de trabalhar</h3>
+      <pre class="command">git pull</pre>
+
+      <h3>2. Trabalhe nos arquivos</h3>
+      <p>Edite normalmente no programa que você usa.</p>
+
+      <h3>3. Confira e registre</h3>
+      <pre class="command">git status
+git diff
+git add .
+git commit -m "Descricao da alteracao"</pre>
+
+      <h3>4. Envie</h3>
+      <pre class="command">git push</pre>
+
+      <div class="flow">PULL → TRABALHAR → STATUS/DIFF → ADD → COMMIT → PUSH</div>
+      <div class="concept-box"><strong>Primeiro receba. Depois trabalhe. Por último envie.</strong></div>`
+  },
+  {
+    id: 13,
+    menu: '13 Dia a dia',
+    title: 'GitHub 13 — Fluxo completo do dia a dia',
+    objective: 'Transformar os comandos principais em uma rotina simples de trabalho.',
+    content: `
+      <div class="hero-box">
+        <h3>A rotina que queremos automatizar na cabeça</h3>
+        <p>Você não precisa decorar dezenas de comandos. Para projetos simples, este pequeno ciclo resolve a maior parte do trabalho.</p>
+      </div>
+
+      <pre class="command">cd /d "%USERPROFILE%\meus-repositorios\primeiro-repositorio"
+git pull
+
+REM trabalhe nos arquivos
+
+git status
+git diff
+git add .
+git commit -m "Descricao da alteracao"
+git push</pre>
+      <div class="note-box"><strong>REM</strong> é apenas um comentário do CMD no exemplo. Não é um comando Git.</div>
+
+      <h3>Antes de fechar o trabalho</h3>
+      <pre class="command">git status</pre>
+      <p>Se não houver alterações pendentes, você sabe que não deixou mudanças locais esquecidas sem commit.</p>
+
+      <h3>Consulte quando precisar</h3>
+      <pre class="command">git log --oneline
+git remote -v</pre>`
+  },
+  {
+    id: 14,
+    menu: '14 Problemas',
+    title: 'GitHub 14 — Erros comuns e como se recuperar',
+    objective: 'Reconhecer problemas básicos sem recorrer a comandos destrutivos ou soluções aleatórias.',
+    content: `
+      <div class="hero-box">
+        <h3>Quando algo der errado, não adivinhe</h3>
+        <p>Leia a mensagem, confirme a pasta e consulte o estado antes de tentar corrigir.</p>
+      </div>
+
+      <h3>Primeiro comando de diagnóstico</h3>
+      <pre class="command">git status</pre>
+
+      <h3>Problema 1 — “não é um repositório Git”</h3>
+      <p>Provavelmente você está na pasta errada.</p>
+      <pre class="command">cd /d "%USERPROFILE%\meus-repositorios\primeiro-repositorio"
+git status</pre>
+
+      <h3>Problema 2 — Fiz commit, mas não apareceu no GitHub</h3>
+      <pre class="command">git push</pre>
+
+      <h3>Problema 3 — O push foi rejeitado porque o remoto tem novidades</h3>
+      <pre class="command">git pull</pre>
+      <p>Se o pull terminar normalmente:</p>
+      <pre class="command">git push</pre>
+
+      <h3>Problema 4 — Conflito</h3>
+      <p>Se você e o GitHub modificarem a mesma parte de um arquivo, o Git pode não saber qual conteúdo manter. Ele avisará que existe um conflito.</p>
+      <p>Abra o arquivo e procure marcações semelhantes a:</p>
+      <pre class="command">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+versao local
+=======
+versao recebida
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;</pre>
+      <p>Escolha ou combine o conteúdo correto, remova essas marcações, salve e finalize:</p>
+      <pre class="command">git status
+git add NOME-DO-ARQUIVO
+git commit -m "Resolve conflito"
+git push</pre>
+      <div class="note-box"><strong>Não tente “forçar” o Git sem entender a mensagem.</strong> Conflito não significa perda do projeto; significa que você precisa decidir qual conteúdo deve permanecer.</div>
+
+      <h3>Problema 5 — Quero desfazer uma alteração local</h3>
+      <pre class="command">git diff
+git restore NOME-DO-ARQUIVO</pre>
+
+      <h3>Problema 6 — Coloquei um arquivo no git add por engano</h3>
+      <pre class="command">git restore --staged NOME-DO-ARQUIVO</pre>
+
+      <div class="danger-box"><strong>Evite comandos aleatórios encontrados na Internet.</strong> Neste nível, não precisamos de <span class="inline-code">reset --hard</span>, rebase ou outras operações destrutivas para resolver os problemas básicos apresentados aqui.</div>`
+  },
+  {
+    id: 15,
+    menu: '15 Resumo',
+    title: 'GitHub 15 — Comandos essenciais de sobrevivência',
+    objective: 'Reunir em uma única tela os comandos realmente necessários para projetos simples.',
+    content: `
+      <div class="hero-box">
+        <span class="part-badge">Fechamento — Git + GitHub</span>
+        <h3>Não precisamos decorar tudo</h3>
+        <p>O objetivo é saber qual pergunta cada comando responde.</p>
+      </div>
+
+      <div class="flow">git status                    → como está o repositório?
+git diff                      → o que mudou nas linhas?
+git add .                     → o que quero preparar?
+git commit -m "Mensagem"      → registrar uma versão
+git log --oneline             → quais commits existem?
+git clone URL                 → trazer um repositório do GitHub
+git remote -v                 → a qual remoto estou ligado?
+git pull                      → receber novidades
+git push                      → enviar commits
+git restore arquivo           → descartar alteração local
+git restore --staged arquivo  → retirar da preparação</div>
+
+      <h3>Quando o projeto já existe no PC</h3>
+      <pre class="command">git remote add origin URL
+git remote -v
+git branch --show-current
+git push -u origin main</pre>
+      <p>Use o nome mostrado por <span class="inline-code">git branch --show-current</span> no lugar de <span class="inline-code">main</span>, se for diferente.</p>
+
+      <h3>O fluxo que mais importa</h3>
+      <div class="flow">git pull
+   ↓
+trabalhar
+   ↓
+git status + git diff
+   ↓
+git add .
+   ↓
+git commit
+   ↓
+git push</div>
+
+      <div class="ok-box"><strong>Sobrevivência concluída.</strong> Com esse conjunto, o aluno já consegue criar, versionar, publicar, clonar, sincronizar e recuperar os erros básicos de um projeto simples.</div>`
   }
 ];
 
@@ -495,237 +1052,208 @@ const exerciseSteps = [
   {
     id: 'inicio',
     menu: 'Como praticar',
-    title: '99 — Exercícios de Git',
-    objective: 'Praticar o Git local em ordem crescente de dificuldade, repetindo o ciclo aprendido nas aulas.',
+    title: '99 — Exercícios de Git e GitHub',
+    objective: 'Praticar do CMD à sincronização com GitHub em dificuldade crescente, consultando respostas somente depois da tentativa.',
     content: `
       <div class="hero-box">
-        <span class="part-badge">Prática — Git local</span>
-        <h3>Como usar estes exercícios</h3>
-        <p>Faça os exercícios na ordem. Eles reutilizam os mesmos conceitos das aulas e acrescentam dificuldade aos poucos.</p>
+        <span class="part-badge">Prática MbB</span>
+        <h3>Aprender fazendo</h3>
+        <p>Os exercícios seguem a mesma ordem do módulo: primeiro Git local, depois GitHub, e por fim situações de sobrevivência.</p>
       </div>
-      <div class="concept-box"><strong>Regra MbB:</strong> tente primeiro. Se travar, consulte a dica. Só depois abra uma possível resposta.</div>
-      <h3>O que será praticado?</h3>
+      <div class="concept-box"><strong>Regra MbB:</strong> tente sozinho → use a dica se necessário → só depois abra uma possível resposta.</div>
       <ul class="check-list">
-        <li>Navegação e criação de pastas pelo CMD.</li>
-        <li><span class="inline-code">git init</span> e <span class="inline-code">git status</span>.</li>
-        <li>Criação e alteração de arquivos.</li>
-        <li><span class="inline-code">git add</span> e preparação de alterações.</li>
-        <li><span class="inline-code">git commit</span> e mensagens de versão.</li>
-        <li><span class="inline-code">git log --oneline</span> e leitura do histórico.</li>
-        <li>Fluxo completo do Git local.</li>
-      </ul>
-      <div class="note-box"><strong>Importante:</strong> estes exercícios ainda não usam GitHub. A parte online será acrescentada quando o módulo GitHub estiver pronto.</div>`
+        <li>CMD e criação de repositório.</li>
+        <li>Status, diff, add, commit e histórico.</li>
+        <li>.gitignore e restore.</li>
+        <li>Clone, origin, push e pull.</li>
+        <li>Publicação de um projeto que já existe no PC.</li>
+        <li>Diagnóstico e fluxo completo.</li>
+      </ul>`
   },
   {
     id: 'e1',
-    menu: '1 Pastas',
+    menu: '1 CMD',
     title: 'Exercício 1 — Preparando uma pasta de prática',
-    objective: 'Relembrar os comandos básicos do CMD antes de usar Git.',
+    objective: 'Relembrar os comandos mínimos do CMD antes de iniciar o Git.',
     content: `
-      <div class="task-box">
-        <h4><span class="exercise-number">1</span>Desafio</h4>
-        <p>Partindo de qualquer lugar do CMD, vá para sua pasta de usuário, entre em <span class="inline-code">meus-repositorios</span>, crie uma pasta chamada <span class="inline-code">pratica-git</span> e entre nela.</p>
-      </div>
-      <h3>Dica</h3>
-      <p>Você precisará de <span class="inline-code">cd</span> e <span class="inline-code">mkdir</span>.</p>
-      <details class="answer-box"><summary>Conferir uma possível resposta</summary><div class="answer-content">
-        <pre class="command">cd /d "%USERPROFILE%"
+      <div class="task-box"><h4><span class="exercise-number">1</span>Desafio</h4>
+      <p>Vá para sua pasta de usuário, entre em <span class="inline-code">meus-repositorios</span>, crie <span class="inline-code">pratica-git</span> e entre nela.</p></div>
+      <details class="answer-box"><summary>Conferir uma possível resposta</summary><div class="answer-content"><pre class="command">cd /d "%USERPROFILE%"
 cd meus-repositorios
 mkdir pratica-git
-cd pratica-git</pre>
-        <p>O caminho deverá terminar em <span class="inline-code">meus-repositorios\pratica-git</span>.</p>
-      </div></details>`
+cd pratica-git</pre></div></details>`
   },
   {
     id: 'e2',
-    menu: '2 Repositório',
-    title: 'Exercício 2 — Transformando a pasta em repositório',
-    objective: 'Inicializar um novo repositório e verificar seu estado.',
+    menu: '2 Init',
+    title: 'Exercício 2 — Criando o repositório local',
+    objective: 'Inicializar um repositório e consultar seu estado.',
     content: `
-      <div class="task-box">
-        <h4><span class="exercise-number">2</span>Desafio</h4>
-        <p>Dentro de <span class="inline-code">pratica-git</span>, transforme a pasta em um repositório Git e pergunte ao Git como está o repositório.</p>
-      </div>
-      <h3>Dica</h3>
-      <p>São os dois primeiros comandos Git usados no módulo.</p>
-      <details class="answer-box"><summary>Conferir uma possível resposta</summary><div class="answer-content">
-        <pre class="command">git init
-git status</pre>
-        <p>Depois de <span class="inline-code">git init</span>, a pasta passa a ser reconhecida como um repositório Git.</p>
-      </div></details>`
+      <div class="task-box"><h4><span class="exercise-number">2</span>Desafio</h4><p>Transforme <span class="inline-code">pratica-git</span> em repositório e confira se o Git o reconhece.</p></div>
+      <details class="answer-box"><summary>Conferir resposta</summary><div class="answer-content"><pre class="command">git init
+git status</pre></div></details>`
   },
   {
     id: 'e3',
     menu: '3 Arquivo',
-    title: 'Exercício 3 — Criando um arquivo e observando o Git',
-    objective: 'Perceber como o Git identifica um arquivo novo.',
+    title: 'Exercício 3 — Primeiro arquivo e primeiro commit',
+    objective: 'Percorrer sozinho arquivo → status → add → commit.',
     content: `
-      <div class="task-box">
-        <h4><span class="exercise-number">3</span>Desafio</h4>
-        <p>Crie um arquivo chamado <span class="inline-code">anotacoes.txt</span> com o texto <strong>Praticando Git</strong>. Depois consulte o estado do repositório.</p>
-      </div>
-      <h3>Antes de abrir a resposta</h3>
-      <p>O arquivo deverá aparecer como <strong>não rastreado</strong> (<span class="inline-code">untracked</span>).</p>
-      <details class="answer-box"><summary>Conferir uma possível resposta</summary><div class="answer-content">
-        <pre class="command">echo Praticando Git &gt; anotacoes.txt
-git status</pre>
-      </div></details>`
+      <div class="task-box"><h4><span class="exercise-number">3</span>Desafio</h4><p>Crie <span class="inline-code">anotacoes.txt</span> com o texto <strong>Praticando Git</strong>, confira o estado, prepare e crie o primeiro commit.</p></div>
+      <details class="answer-box"><summary>Conferir uma possível resposta</summary><div class="answer-content"><pre class="command">echo Praticando Git &gt; anotacoes.txt
+git status
+git add anotacoes.txt
+git commit -m "Cria anotacoes"</pre></div></details>`
   },
   {
     id: 'e4',
-    menu: '4 Add',
-    title: 'Exercício 4 — Preparando o arquivo',
-    objective: 'Usar git add e observar a mudança de estado do arquivo.',
+    menu: '4 Diff',
+    title: 'Exercício 4 — Descobrindo exatamente o que mudou',
+    objective: 'Diferenciar git status de git diff.',
     content: `
-      <div class="task-box">
-        <h4><span class="exercise-number">4</span>Desafio</h4>
-        <p>Prepare somente o arquivo <span class="inline-code">anotacoes.txt</span> para o próximo registro. Consulte o estado antes e depois.</p>
-      </div>
-      <details class="answer-box"><summary>Conferir uma possível resposta</summary><div class="answer-content">
-        <pre class="command">git status
-git add anotacoes.txt
-git status</pre>
-        <p>O segundo <span class="inline-code">git status</span> deve mostrar o arquivo pronto para commit.</p>
-      </div></details>`
+      <div class="task-box"><h4><span class="exercise-number">4</span>Desafio</h4><p>Acrescente <strong>Segunda versao</strong> ao arquivo. Descubra primeiro qual arquivo mudou e depois quais linhas mudaram.</p></div>
+      <h3>Dica</h3><p>Use dois comandos de consulta diferentes.</p>
+      <details class="answer-box"><summary>Conferir resposta</summary><div class="answer-content"><pre class="command">echo Segunda versao &gt;&gt; anotacoes.txt
+git status
+git diff</pre><p><span class="inline-code">status</span> mostra o arquivo; <span class="inline-code">diff</span> mostra as linhas alteradas.</p></div></details>`
   },
   {
     id: 'e5',
-    menu: '5 Commit',
-    title: 'Exercício 5 — Criando a primeira versão',
-    objective: 'Registrar o primeiro commit do repositório de prática.',
+    menu: '5 Histórico',
+    title: 'Exercício 5 — Criando uma segunda versão',
+    objective: 'Registrar a nova alteração e consultar o histórico resumido.',
     content: `
-      <div class="task-box">
-        <h4><span class="exercise-number">5</span>Desafio</h4>
-        <p>Crie um commit para registrar o arquivo preparado. Use uma mensagem que explique o que foi feito.</p>
-      </div>
-      <h3>Dica</h3>
-      <p>A mensagem pode ser <strong>Cria arquivo de anotações</strong>.</p>
-      <details class="answer-box"><summary>Conferir uma possível resposta</summary><div class="answer-content">
-        <pre class="command">git commit -m "Cria arquivo de anotacoes"
-git status</pre>
-        <p>Se não houver outras alterações, o repositório ficará sem mudanças pendentes.</p>
-      </div></details>`
+      <div class="task-box"><h4><span class="exercise-number">5</span>Desafio</h4><p>Prepare a alteração do exercício anterior, registre uma segunda versão e mostre os commits em uma linha cada.</p></div>
+      <details class="answer-box"><summary>Conferir resposta</summary><div class="answer-content"><pre class="command">git add anotacoes.txt
+git commit -m "Atualiza anotacoes"
+git log --oneline</pre></div></details>`
   },
   {
     id: 'e6',
-    menu: '6 Nova versão',
-    title: 'Exercício 6 — Alterando e registrando novamente',
-    objective: 'Repetir o ciclo alteração → status → add → commit.',
+    menu: '6 Gitignore',
+    title: 'Exercício 6 — Mantendo um arquivo fora do Git',
+    objective: 'Criar uma regra simples de .gitignore e verificar seu efeito.',
     content: `
-      <div class="task-box">
-        <h4><span class="exercise-number">6</span>Desafio</h4>
-        <p>Acrescente ao final de <span class="inline-code">anotacoes.txt</span> a frase <strong>Segunda versão</strong>. Depois faça todo o processo necessário para criar um novo commit.</p>
-      </div>
-      <details class="answer-box"><summary>Conferir uma possível resposta</summary><div class="answer-content">
-        <pre class="command">echo Segunda versao &gt;&gt; anotacoes.txt
-git status
-git add anotacoes.txt
-git commit -m "Atualiza anotacoes"</pre>
-      </div></details>`
+      <div class="task-box"><h4><span class="exercise-number">6</span>Desafio</h4><p>Crie um <span class="inline-code">.gitignore</span> que ignore <span class="inline-code">segredo.txt</span>. Depois crie esse arquivo e use <span class="inline-code">git status</span>. Ele não deve aparecer para ser adicionado.</p></div>
+      <details class="answer-box"><summary>Conferir resposta</summary><div class="answer-content"><pre class="command">echo segredo.txt &gt; .gitignore
+echo Minha senha NAO deve ser publicada &gt; segredo.txt
+git status</pre><p>O <span class="inline-code">.gitignore</span> aparecerá para ser versionado; <span class="inline-code">segredo.txt</span> deverá ser ignorado.</p></div></details>`
   },
   {
     id: 'e7',
-    menu: '7 Histórico',
-    title: 'Exercício 7 — Lendo o histórico',
-    objective: 'Consultar os commits e identificar a versão mais recente.',
+    menu: '7 Restore',
+    title: 'Exercício 7 — Desfazendo sem apagar o histórico',
+    objective: 'Praticar os dois usos básicos de git restore.',
     content: `
-      <div class="task-box">
-        <h4><span class="exercise-number">7</span>Desafio</h4>
-        <p>Mostre o histórico resumido. Identifique qual commit aparece primeiro e explique mentalmente por quê.</p>
-      </div>
-      <details class="answer-box"><summary>Conferir uma possível resposta</summary><div class="answer-content">
-        <pre class="command">git log --oneline</pre>
-        <p>O commit mais recente aparece no topo da lista.</p>
-      </div></details>`
+      <div class="task-box"><h4><span class="exercise-number">7</span>Parte A</h4><p>Altere <span class="inline-code">anotacoes.txt</span>, veja a diferença e descarte a alteração.</p></div>
+      <details class="answer-box"><summary>Resposta da Parte A</summary><div class="answer-content"><pre class="command">echo Linha que vou descartar &gt;&gt; anotacoes.txt
+git diff
+git restore anotacoes.txt</pre></div></details>
+      <div class="task-box"><h4>Parte B</h4><p>Altere o arquivo novamente, use <span class="inline-code">git add</span> e depois retire-o da preparação sem perder a alteração.</p></div>
+      <details class="answer-box"><summary>Resposta da Parte B</summary><div class="answer-content"><pre class="command">echo Linha que vou manter &gt;&gt; anotacoes.txt
+git add anotacoes.txt
+git restore --staged anotacoes.txt
+git status</pre></div></details>`
   },
   {
     id: 'e8',
-    menu: '8 Vários arquivos',
-    title: 'Exercício 8 — Trabalhando com mais de um arquivo',
-    objective: 'Praticar git add . e registrar várias alterações juntas.',
+    menu: '8 GitHub',
+    title: 'Exercício 8 — Criando um repositório no GitHub',
+    objective: 'Criar um remoto simples que possa ser clonado.',
     content: `
-      <div class="task-box">
-        <h4><span class="exercise-number">8</span>Desafio</h4>
-        <p>Crie <span class="inline-code">autor.txt</span> e <span class="inline-code">objetivo.txt</span>. Consulte o estado, prepare todas as alterações de uma vez e crie um commit.</p>
-      </div>
-      <details class="answer-box"><summary>Conferir uma possível resposta</summary><div class="answer-content">
-        <pre class="command">echo Seu nome &gt; autor.txt
-echo Aprender Git &gt; objetivo.txt
-git status
-git add .
-git status
-git commit -m "Adiciona informacoes do projeto"</pre>
-      </div></details>`
+      <div class="task-box"><h4><span class="exercise-number">8</span>Desafio</h4><ol><li>Crie no GitHub um repositório chamado <span class="inline-code">pratica-github</span>.</li><li>Deixe-o público.</li><li>Adicione um README.</li><li>Confirme que o repositório possui um primeiro commit.</li></ol></div>
+      <div class="note-box">Este exercício é feito pela interface do GitHub. Não há comando de CMD para executar aqui.</div>`
   },
   {
     id: 'e9',
-    menu: '9 Diagnóstico',
-    title: 'Exercício 9 — Entendendo o estado do repositório',
-    objective: 'Relacionar cada situação ao comando adequado.',
+    menu: '9 Clone',
+    title: 'Exercício 9 — Clonando e identificando o origin',
+    objective: 'Trazer o repositório remoto e confirmar sua ligação com o GitHub.',
     content: `
-      <div class="task-box">
-        <h4><span class="exercise-number">9</span>Responda sem executar primeiro</h4>
-        <ol>
-          <li>Qual comando você usa para descobrir o que mudou?</li>
-          <li>Qual comando prepara um arquivo?</li>
-          <li>Qual comando registra uma versão?</li>
-          <li>Qual comando mostra o histórico resumido?</li>
-        </ol>
-      </div>
-      <details class="answer-box"><summary>Conferir respostas</summary><div class="answer-content">
-        <div class="flow">ver        → git status
-preparar   → git add
-registrar  → git commit
-histórico  → git log --oneline</div>
-      </div></details>`
+      <div class="task-box"><h4><span class="exercise-number">9</span>Desafio</h4><p>Na pasta <span class="inline-code">meus-repositorios</span>, clone <span class="inline-code">pratica-github</span>, entre nele, veja o histórico e descubra o endereço do <span class="inline-code">origin</span>.</p></div>
+      <details class="answer-box"><summary>Conferir roteiro</summary><div class="answer-content"><pre class="command">cd /d "%USERPROFILE%\meus-repositorios"
+git clone https://github.com/SEU-USUARIO/pratica-github.git
+cd pratica-github
+git log --oneline
+git remote -v</pre></div></details>`
   },
   {
     id: 'e10',
-    menu: '10 Desafio final',
-    title: 'Exercício 10 — Repositório do zero',
-    objective: 'Aplicar sozinho todo o fluxo básico do Git local.',
+    menu: '10 Push',
+    title: 'Exercício 10 — Do computador para o GitHub',
+    objective: 'Criar um commit local e enviá-lo ao remoto.',
     content: `
-      <div class="hero-box">
-        <span class="part-badge">Desafio final — Git local</span>
-        <h3>Agora sem roteiro de comandos</h3>
-        <p>Crie um novo repositório chamado <span class="inline-code">desafio-git</span> dentro de <span class="inline-code">meus-repositorios</span>.</p>
-      </div>
-      <div class="task-box">
-        <h4>Seu repositório deve ter:</h4>
-        <ol>
-          <li>uma pasta própria;</li>
-          <li>Git inicializado;</li>
-          <li>um arquivo <span class="inline-code">projeto.txt</span>;</li>
-          <li>um primeiro commit;</li>
-          <li>uma alteração no arquivo;</li>
-          <li>um segundo commit;</li>
-          <li>histórico exibindo os dois registros.</li>
-        </ol>
-      </div>
-      <h3>Checklist</h3>
-      <ul class="check-list">
-        <li>Conseguiu localizar a pasta correta pelo CMD.</li>
-        <li>Usou <span class="inline-code">git status</span> para conferir as etapas.</li>
-        <li>Preparou as alterações antes do commit.</li>
-        <li>Usou mensagens de commit que explicam o que mudou.</li>
-        <li>Consultou o histórico no final.</li>
-      </ul>
-      <details class="answer-box"><summary>Preciso de ajuda — ver um roteiro possível</summary><div class="answer-content">
-        <pre class="command">cd /d "%USERPROFILE%\meus-repositorios"
-mkdir desafio-git
-cd desafio-git
-git init
-echo Meu desafio Git &gt; projeto.txt
+      <div class="task-box"><h4><span class="exercise-number">10</span>Desafio</h4><p>Crie <span class="inline-code">aluno.txt</span>, coloque seu nome, faça o ciclo local e envie ao GitHub.</p></div>
+      <details class="answer-box"><summary>Conferir resposta</summary><div class="answer-content"><pre class="command">echo Seu Nome &gt; aluno.txt
 git status
-git add projeto.txt
-git commit -m "Cria projeto"
-echo Segunda versao &gt;&gt; projeto.txt
+git add aluno.txt
+git commit -m "Adiciona identificacao do aluno"
+git push</pre><p>Depois confirme no navegador se <span class="inline-code">aluno.txt</span> apareceu.</p></div></details>`
+  },
+  {
+    id: 'e11',
+    menu: '11 Pull',
+    title: 'Exercício 11 — Do GitHub para o computador',
+    objective: 'Criar uma alteração remota e recebê-la com git pull.',
+    content: `
+      <div class="task-box"><h4><span class="exercise-number">11</span>Desafio</h4><p>Edite o README pelo navegador, faça o commit no GitHub e depois traga a alteração ao computador.</p></div>
+      <details class="answer-box"><summary>Conferir resposta no CMD</summary><div class="answer-content"><pre class="command">git pull
+type README.md
+git log --oneline</pre></div></details>`
+  },
+  {
+    id: 'e12',
+    menu: '12 Fluxo',
+    title: 'Exercício 12 — A rotina completa',
+    objective: 'Executar sem roteiro detalhado o fluxo pull → trabalho → commit → push.',
+    content: `
+      <div class="task-box"><h4><span class="exercise-number">12</span>Desafio</h4><ol><li>Atualize o projeto.</li><li>Altere <span class="inline-code">aluno.txt</span>.</li><li>Confira arquivo e linhas alteradas.</li><li>Prepare.</li><li>Crie um commit.</li><li>Envie.</li></ol></div>
+      <details class="answer-box"><summary>Ver somente os comandos Git</summary><div class="answer-content"><pre class="command">git pull
 git status
-git add projeto.txt
-git commit -m "Atualiza projeto"
-git log --oneline</pre>
-      </div></details>
-      <div class="ok-box"><strong>Conseguiu sem olhar o roteiro?</strong> Então o ciclo básico do Git local já está consolidado.</div>`
+git diff
+git add .
+git commit -m "Atualiza dados do aluno"
+git push</pre></div></details>`
+  },
+  {
+    id: 'e13',
+    menu: '13 Projeto local',
+    title: 'Exercício 13 — Publicando um projeto que já existe no PC',
+    objective: 'Praticar o segundo caminho de início: local → GitHub.',
+    content: `
+      <div class="task-box"><h4><span class="exercise-number">13</span>Desafio</h4><p>Use o repositório local <span class="inline-code">pratica-git</span> criado no início. No GitHub, crie um repositório novo e <strong>vazio</strong>. Conecte o local a ele e faça o primeiro push.</p></div>
+      <h3>Checklist</h3><ul class="check-list"><li>O remoto foi criado sem README, licença ou .gitignore.</li><li>Você copiou a URL HTTPS correta.</li><li>Conferiu o <span class="inline-code">origin</span>.</li><li>Conferiu o nome da branch atual.</li><li>Fez o primeiro push com <span class="inline-code">-u</span>.</li></ul>
+      <details class="answer-box"><summary>Conferir roteiro</summary><div class="answer-content"><pre class="command">cd /d "%USERPROFILE%\meus-repositorios\pratica-git"
+git remote add origin URL-DO-REPOSITORIO
+git remote -v
+git branch --show-current
+git push -u origin main</pre><p>Substitua <span class="inline-code">main</span> pelo nome mostrado no comando anterior, se for diferente.</p></div></details>`
+  },
+  {
+    id: 'e14',
+    menu: '14 Diagnóstico',
+    title: 'Exercício 14 — Sobrevivendo a problemas comuns',
+    objective: 'Escolher o comando adequado antes de tentar soluções mais agressivas.',
+    content: `
+      <div class="task-box"><h4><span class="exercise-number">14</span>Responda</h4><ol><li>Você não sabe o que mudou. Qual comando vem primeiro?</li><li>Quer ver as linhas alteradas. Qual comando?</li><li>Fez commit, mas não chegou ao GitHub. O que provavelmente falta?</li><li>O GitHub está mais novo que o PC. O que usar?</li><li>Usou add por engano. Como retirar da preparação sem perder a alteração?</li></ol></div>
+      <details class="answer-box"><summary>Conferir respostas</summary><div class="answer-content"><div class="flow">1 → git status
+2 → git diff
+3 → git push
+4 → git pull
+5 → git restore --staged NOME-DO-ARQUIVO</div></div></details>`
+  },
+  {
+    id: 'e15',
+    menu: '15 Desafio final',
+    title: 'Exercício 15 — Projeto completo de sobrevivência',
+    objective: 'Demonstrar autonomia no ciclo básico de Git e GitHub.',
+    content: `
+      <div class="hero-box"><span class="part-badge">Desafio final</span><h3>Agora sem roteiro pronto</h3><p>Crie um projeto chamado <span class="inline-code">projeto-final-git</span> e leve-o do computador ao GitHub.</p></div>
+      <div class="task-box"><h4>Seu projeto deve:</h4><ol><li>nascer no computador;</li><li>ter Git inicializado;</li><li>ter um <span class="inline-code">.gitignore</span> simples;</li><li>ter pelo menos dois arquivos rastreados;</li><li>ter pelo menos três commits;</li><li>ser publicado em um repositório vazio do GitHub;</li><li>receber uma alteração feita pelo GitHub usando <span class="inline-code">git pull</span>;</li><li>receber depois uma nova alteração local usando <span class="inline-code">git push</span>.</li></ol></div>
+      <h3>Conferência final</h3><pre class="command">git status
+git log --oneline
+git remote -v</pre>
+      <div class="ok-box"><strong>Conseguiu e sabe explicar o que aconteceu?</strong> Então você já tem o essencial de sobrevivência para trabalhar com Git e GitHub em projetos simples.</div>`
   }
 ];
 
@@ -794,7 +1322,7 @@ function lessonFooter(id){
   const index = activeSteps.findIndex(item => String(item.id) === String(id));
   const prev = activeSteps[index - 1];
   const next = activeSteps[index + 1];
-  const lastLabel = activeModule === 'git' ? 'Parte Git concluída' : activeModule === 'exercicios' ? 'Exercícios concluídos' : 'Em breve';
+  const lastLabel = activeModule === 'git' ? 'Parte Git concluída' : activeModule === 'github' ? 'GitHub concluído' : 'Exercícios concluídos';
   return `
     <div class="lesson-footer">
       <button type="button" ${prev ? `onclick="showStep('${prev.id}')"` : 'disabled'}>← Anterior</button>
