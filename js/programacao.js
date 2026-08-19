@@ -33,32 +33,36 @@ const roteiroSteps = [
   },
   {
     id: 2,
-    menu: '2 Jornada 120 h/a',
-    title: 'Mapa da jornada',
-    objective: 'Visualizar a progressão completa sem transformar o plano de curso em uma lista burocrática para o aluno.',
+    menu: '2 Jornada completa',
+    title: 'Mapa da jornada completa',
+    objective: 'Visualizar a progressão integrada dos conteúdos de programação dos planos de referência, sem transformar o curso em uma lista burocrática.',
     content: `
       <div class="hero-box">
-        <h3>Do problema ao programa</h3>
-        <p>O percurso foi organizado para que os assuntos se apoiem uns nos outros. Um conceito não desaparece quando o próximo chega: ele reaparece em uma situação mais complexa.</p>
+        <h3>Do problema ao desenvolvimento de software</h3>
+        <p>O percurso foi ampliado para reunir o núcleo de Programação de Computadores do Informática e os conteúdos correlatos de Programação e Algoritmos dos planos de Desenvolvimento de Sistemas. O aluno continua aprendendo por necessidade, mas agora o caminho não para na sintaxe básica: chega também a estruturas de dados, exceções, depuração profissional, organização de projetos, classes, testes, colaboração e versionamento.</p>
       </div>
 
       <div class="roadmap">
-        <div class="roadmap-item"><strong>1. Problema, algoritmo, pseudocódigo e fluxograma</strong><span class="hours">12 h/a</span><br>Aprender a organizar uma solução antes da linguagem.</div>
-        <div class="roadmap-item"><strong>2. VisuAlg, variáveis, constantes, tipos, memória e bit/Byte</strong><span class="hours">12 h/a</span><br>Fazer a solução começar a ser executada.</div>
-        <div class="roadmap-item"><strong>3. Processamento, expressões, operadores e funções prontas</strong><span class="hours">10 h/a</span><br>Transformar dados de forma controlada.</div>
-        <div class="roadmap-item"><strong>4. Decisões</strong><span class="hours">12 h/a</span><br>Comparar situações e escolher caminhos.</div>
-        <div class="roadmap-item"><strong>5. Repetições</strong><span class="hours">14 h/a</span><br>Enquanto, Repita, Para, contador e acumulador.</div>
-        <div class="roadmap-item"><strong>6. Organização do programa</strong><span class="hours">10 h/a</span><br>Funções, procedimentos, parâmetros, retorno, escopo e bibliotecas.</div>
-        <div class="roadmap-item"><strong>7. Sistema da Cantina em VisuAlg</strong><span class="hours">12 h/a</span><br>Integrar o que foi aprendido em um problema único.</div>
-        <div class="roadmap-item"><strong>8. Transferência para Python</strong><span class="hours">16 h/a</span><br>Mostrar que a linguagem muda, mas os conceitos permanecem.</div>
-        <div class="roadmap-item"><strong>9. Python: aplicação, validação, testes e depuração</strong><span class="hours">14 h/a</span><br>Fazer o programa funcionar de forma mais confiável.</div>
-        <div class="roadmap-item"><strong>10. Projeto, desktop e paradigmas</strong><span class="hours">8 h/a</span><br>Aplicar em outro problema e abrir a porta para eventos e objetos.</div>
+        <div class="roadmap-item"><strong>1. Problema, algoritmo, pseudocódigo e fluxograma</strong><br>Aprender a organizar uma solução antes da linguagem.</div>
+        <div class="roadmap-item"><strong>2. Linguagem, código-fonte e ambiente</strong><br>Entender linguagem, plataforma, compilação/interpretação, IDE, SDK e execução.</div>
+        <div class="roadmap-item"><strong>3. VisuAlg: dados, memória e processamento</strong><br>Variáveis, constantes, tipos, entrada/saída, conversões, operadores, expressões e funções prontas.</div>
+        <div class="roadmap-item"><strong>4. Decisões e lógica booleana</strong><br>Comparações, tabela verdade, decisões simples, compostas, encadeadas e múltiplas.</div>
+        <div class="roadmap-item"><strong>5. Repetições</strong><br>Enquanto, Repita, Para, contador, acumulador e laços aninhados quando necessários.</div>
+        <div class="roadmap-item"><strong>6. Organização do programa</strong><br>Funções, procedimentos, argumentos, parâmetros, retorno, escopo e modularização.</div>
+        <div class="roadmap-item"><strong>7. Sistema da Cantina em VisuAlg</strong><br>Integrar o que foi aprendido em um problema único e crescente.</div>
+        <div class="roadmap-item"><strong>8. Transferência para Python</strong><br>Mostrar que a linguagem muda, mas os conceitos permanecem.</div>
+        <div class="roadmap-item"><strong>9. Robustez em Python</strong><br>Conversões, validação, exceções, testes e depuração.</div>
+        <div class="roadmap-item"><strong>10. Estruturas de dados</strong><br>Vetores, matrizes, listas, tuplas, conjuntos e dicionários.</div>
+        <div class="roadmap-item"><strong>11. Ferramentas e ecossistema</strong><br>IDE, bibliotecas, frameworks, módulos, pacotes, dependências e organização de projetos.</div>
+        <div class="roadmap-item"><strong>12. Qualidade e depuração</strong><br>Breakpoint, execução passo a passo, inspeção de valores, call stack, legibilidade, testes unitários e trabalho em par.</div>
+        <div class="roadmap-item"><strong>13. Paradigmas e objetos</strong><br>Estruturada, eventos, classes e objetos com profundidade adequada.</div>
+        <div class="roadmap-item"><strong>14. Versionamento e colaboração</strong><br>Reconhecer a necessidade do controle de versão e aplicar Git/GitHub no módulo especializado.</div>
+        <div class="roadmap-item"><strong>15. Aplicação</strong><br>Resolver um problema novo, construir uma aplicação desktop, testar, empacotar e explicar a solução.</div>
       </div>
 
-      <div class="optional-box"><strong>Aprofundamentos opcionais:</strong> coleções, arquivos/persistência e tratamento mais profundo de exceções podem ser explorados quando a turma e o tempo permitirem. Eles não devem roubar o tempo do núcleo essencial.</div>
+      <div class="concept-box"><strong>Regra de cobertura:</strong> nenhum conteúdo curricular fica escondido apenas porque não cabe naturalmente na Cantina. Quando um conceito exigir outro problema, outra ferramenta ou um laboratório próprio, ele aparecerá no contexto em que fizer sentido.</div>
 `
-  }
-];
+  }];
 
 const pensarSteps = [
   {
@@ -140,6 +144,16 @@ Troco = 30,00 - 21,00 = 9,00</pre>
       <p>Depois que a sequência já existe, damos o nome técnico:</p>
       <div class="concept-box"><strong>Algoritmo</strong> é uma sequência organizada e finita de passos para resolver um problema.</div>
 
+      <h3>O que torna um algoritmo utilizável?</h3>
+      <ul>
+        <li><strong>Finitude:</strong> precisa terminar depois de uma quantidade limitada de passos.</li>
+        <li><strong>Clareza:</strong> cada passo deve ser compreensível e não depender de adivinhação.</li>
+        <li><strong>Ordem:</strong> a sequência dos passos precisa respeitar as dependências do problema.</li>
+        <li><strong>Entradas e resultados:</strong> quando existirem, devemos saber quais dados entram e o que a solução produz.</li>
+        <li><strong>Correção:</strong> não basta executar; os passos precisam produzir o resultado esperado para os casos previstos.</li>
+      </ul>
+      <div class="note-box"><strong>Algoritmos não são exclusivos de uma linguagem.</strong> O mesmo raciocínio pode ser representado em pseudocódigo, fluxograma, VisuAlg, Python ou outra linguagem. O que muda é a forma de expressão.</div>
+
       <h3>Pseudocódigo</h3>
       <p>Podemos aproximar a solução da forma de um programa sem depender ainda de uma linguagem específica:</p>
       <pre class="command">receber quantidade de salgados
@@ -219,6 +233,23 @@ mostrar troco</pre>
       <p><strong>Código-fonte</strong> é aquilo que o programador escreve. A forma de transformar esse código em algo executável depende da linguagem e da plataforma: há ambientes que compilam antes da execução, outros que utilizam interpretadores ou máquinas virtuais, e alguns combinam etapas.</p>
       <p>No VisuAlg, nosso foco será executar o algoritmo para observar a lógica. No Python, usaremos o interpretador para executar o código-fonte. A preparação de um executável distribuível é uma etapa própria e depende do ambiente adotado.</p>
 
+      <h3>Do código-fonte ao que a máquina executa</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Código-fonte</strong><br>Texto escrito pelo programador segundo as regras de uma linguagem.</div>
+        <div class="mini-card"><strong>Código-objeto</strong><br>Em processos de compilação, pode ser uma representação intermediária produzida antes do executável final.</div>
+        <div class="mini-card"><strong>Executável</strong><br>Artefato preparado para ser carregado e executado em uma plataforma compatível.</div>
+        <div class="mini-card"><strong>Interpretador</strong><br>Executa ou coordena a execução do programa a partir do código ou de uma representação intermediária, conforme a implementação da linguagem.</div>
+      </div>
+      <p><strong>Compilador</strong> traduz código para outra representação antes da execução. <strong>Interpretador</strong> participa da execução de maneira diferente. Linguagens e implementações modernas podem combinar compilação, bytecode, máquinas virtuais e interpretação; por isso evitaremos a simplificação falsa de classificar toda linguagem em apenas uma caixa.</p>
+
+      <h3>Ferramentas que cercam a linguagem</h3>
+      <ul>
+        <li><strong>Editor de código:</strong> ferramenta para escrever arquivos de código-fonte.</li>
+        <li><strong>IDE:</strong> integra edição, execução, depuração, navegação e outras ferramentas de desenvolvimento.</li>
+        <li><strong>SDK:</strong> conjunto de ferramentas, bibliotecas e utilitários fornecidos para desenvolver para determinada plataforma ou tecnologia.</li>
+        <li><strong>Runtime:</strong> ambiente necessário para executar certos programas.</li>
+      </ul>
+
       <div class="note-box">Não precisamos decidir agora se uma linguagem é “melhor”. Primeiro vamos aprender a reconhecer o problema e as ferramentas conceituais necessárias para resolvê-lo.</div>`
   }
 ];
@@ -277,7 +308,9 @@ fimalgoritmo</pre>
 
       <div class="task-box">
         <h4>Experimente</h4>
-        <p>Execute com os dados originais e depois altere quantidades, preços e valor recebido. Antes de cada execução, preveja o total e o troco.</p>
+        <p>Execute com os dados originais e depois altere quantidades, preços e valor recebido.</p>
+        <div class="flow">PREVER → EXECUTAR → COMPARAR</div>
+        <p>Antes de cada execução, preveja o total e o troco. Depois compare o resultado esperado com o obtido.</p>
       </div>`
   },
   {
@@ -295,6 +328,15 @@ fimalgoritmo</pre>
       <p>Nomes como <span class="inline-code">qtdSalgado</span>, <span class="inline-code">precoSalgado</span> e <span class="inline-code">total</span> representam valores utilizados durante a execução.</p>
       <div class="concept-box"><strong>Variável:</strong> um nome usado no programa para referenciar um valor que pode ser armazenado e utilizado durante a execução.</div>
 
+      <h3>Identificador, declaração, inicialização e atribuição</h3>
+      <p>O nome usado para uma variável é um <strong>identificador</strong>. A linguagem estabelece regras para esses nomes. <strong>Declarar</strong> é informar que determinada variável fará parte do programa e, em linguagens que exigem isso, qual será seu tipo. <strong>Inicializar</strong> é fornecer um primeiro valor. <strong>Atribuir</strong> é colocar ou substituir um valor associado à variável durante a execução.</p>
+      <pre class="command">var
+   quantidade: inteiro
+inicio
+   quantidade <- 0      // primeiro valor
+   quantidade <- 3      // novo valor</pre>
+      <div class="note-box"><strong>Variável não é uma “caixinha” literal.</strong> A metáfora ajuda no começo, mas tecnicamente o identificador permite ao programa referenciar dados mantidos e manipulados conforme as regras da linguagem e do ambiente de execução.</div>
+
       <h3>Tipos</h3>
       <div class="mini-grid">
         <div class="mini-card"><strong>inteiro</strong><br>Quantidade de itens, contadores e outros valores sem parte fracionária.</div>
@@ -302,6 +344,10 @@ fimalgoritmo</pre>
         <div class="mini-card"><strong>caractere</strong><br>Textos e códigos representados como caracteres.</div>
         <div class="mini-card"><strong>lógico</strong><br>Representa condições como verdadeiro ou falso. Sua utilidade ficará clara nas decisões.</div>
       </div>
+
+      <h3>Conversão de tipos</h3>
+      <p>Às vezes o dado chega em um tipo e precisa ser usado como outro. Um número digitado pode chegar como texto em determinadas linguagens; uma divisão pode produzir resultado real; um valor pode precisar ser convertido antes de participar de uma expressão.</p>
+      <div class="concept-box"><strong>Conversão de tipo:</strong> transformação explícita ou implícita da representação de um valor para que ele seja tratado segundo outro tipo compatível. Conversões podem perder informação ou falhar, por isso devem ser compreendidas e testadas.</div>
 
       <h3>Constantes</h3>
       <p>Nem todo valor deve mudar. Uma taxa definida pelas regras do sistema, por exemplo, pode ser tratada conceitualmente como uma <strong>constante</strong> quando deve permanecer inalterada naquele contexto.</p>
@@ -344,6 +390,10 @@ troco <- valorRecebido - total</pre>
         <div class="mini-card"><strong>*</strong><br>multiplicar valores</div>
         <div class="mini-card"><strong>/</strong><br>dividir valores</div>
       </div>
+
+      <h3>Expressões e precedência</h3>
+      <p>Uma <strong>expressão</strong> combina valores, variáveis, operadores e funções para produzir um resultado. Assim como na Matemática, operadores podem ter precedências diferentes. Parênteses tornam a intenção mais clara e evitam depender apenas de memória sobre a ordem de avaliação.</p>
+      <p>Além de <span class="inline-code">+</span>, <span class="inline-code">-</span>, <span class="inline-code">*</span> e <span class="inline-code">/</span>, linguagens costumam oferecer operações como resto da divisão, potência e divisão inteira. A sintaxe exata varia; o conceito vem antes do símbolo.</p>
 
       <p>Os parênteses ajudam a deixar explícita a ordem desejada quando a expressão cresce:</p>
       <pre class="command">media <- (valor1 + valor2) / 2</pre>
@@ -406,6 +456,30 @@ fimse</pre>
       <div class="flow">E   → todas as condições precisam ser verdadeiras
 OU  → pelo menos uma condição precisa ser verdadeira
 NAO → inverte o resultado lógico</div>
+
+      <h3>Tabela verdade — enxergando combinações lógicas</h3>
+      <p>Quando duas condições são combinadas, uma tabela verdade ajuda a prever o resultado sem executar o programa:</p>
+      <div class="term-grid">
+        <div class="head">A / B</div><div class="head">A E B</div><div class="head">A OU B</div>
+        <div>V / V</div><div>V</div><div>V</div>
+        <div>V / F</div><div>F</div><div>V</div>
+        <div>F / V</div><div>F</div><div>V</div>
+        <div>F / F</div><div>F</div><div>F</div>
+      </div>
+      <p>O operador <strong>NÃO</strong> inverte um valor lógico: NÃO V resulta em F; NÃO F resulta em V.</p>
+
+      <h3>Decisões encadeadas</h3>
+      <p>Às vezes uma primeira resposta leva a uma nova pergunta. Por exemplo, a cantina pode aplicar faixas diferentes de desconto:</p>
+      <pre class="command">se total > 100 entao
+   desconto <- total * 0.10
+senao
+   se total > 50 entao
+      desconto <- total * 0.05
+   senao
+      desconto <- 0
+   fimse
+fimse</pre>
+      <p>A ordem importa: quem compra R$ 150 também compra mais de R$ 50. Por isso a faixa mais alta precisa ser verificada primeiro.</p>
 
       <h3>Escolha / Caso</h3>
       <p>Quando temos uma única informação e várias opções conhecidas, uma decisão múltipla pode expressar melhor o problema:</p>
@@ -480,6 +554,16 @@ faturamento <- faturamento + total</pre>
         <span>Mostrar claramente o ponto em que o fluxo volta para testar a condição e repetir o atendimento.</span>
       </div>
 
+      <h3>Controle do laço e risco de repetição infinita</h3>
+      <p>Todo laço precisa de uma lógica de continuidade e, quando deve terminar, de uma forma de fazer a condição de parada acontecer. Se a variável que controla o laço nunca muda, podemos criar uma <strong>repetição infinita</strong>.</p>
+      <pre class="command">contador <- 1
+
+enquanto contador <= 3 faca
+   escreval(contador)
+   contador <- contador + 1
+fimenquanto</pre>
+      <p>Também podemos ter <strong>laços aninhados</strong>: um laço dentro de outro. Isso é útil, por exemplo, para percorrer linhas e colunas de uma matriz. O custo é maior complexidade de leitura, então deve surgir apenas quando o problema exigir.</p>
+
       <div class="deep-box"><strong>Existe mais.</strong> Repetições podem ser combinadas e aninhadas quando um problema realmente exigir. Não precisamos criar complexidade antes da necessidade.</div>`
   },
   {
@@ -529,6 +613,10 @@ fimprocedimento</pre>
         <li><strong>Retorno:</strong> valor devolvido por uma função.</li>
         <li><strong>Escopo:</strong> contexto em que uma variável está disponível. Nem toda variável precisa existir para o programa inteiro.</li>
       </ul>
+
+      <h3>Sub-rotinas, argumentos e chamadas</h3>
+      <p><strong>Sub-rotina</strong> é um termo geral para uma parte do programa que executa uma tarefa e pode ser chamada a partir de outro ponto. Funções e procedimentos são formas de sub-rotina. Quando chamamos uma função, fornecemos <strong>argumentos</strong> aos parâmetros definidos por ela.</p>
+      <div class="example-box"><strong>Responsabilidade única ajuda a testar.</strong> Uma função pequena que apenas calcula um desconto é mais fácil de testar e reutilizar do que um bloco que lê teclado, calcula, imprime e altera várias variáveis globais ao mesmo tempo.</div>
 
       <h3>Bibliotecas</h3>
       <p>Programar profissionalmente também envolve reutilizar recursos já construídos. Bibliotecas reúnem funcionalidades que podem ser usadas sem implementar tudo do zero.</p>
@@ -783,6 +871,8 @@ min(valores)
 sum(valores)</pre>
       <p>Não é necessário memorizar todas. O importante é saber que muitas tarefas comuns já possuem recursos prontos e aprender a consultar documentação.</p>
 
+      <div class="example-box"><strong>Ao consultar uma função na documentação, procure pelo menos:</strong><br>nome → parâmetros → o que retorna → exemplo de uso.</div>
+
       <h3>Texto com necessidade real</h3>
       <p>Uma placa ou código de produto pode chegar com espaços e letras minúsculas. Antes de comparar ou armazenar, podemos normalizar:</p>
       <pre class="command">placa = input("Placa: ").strip().upper()</pre>
@@ -879,6 +969,445 @@ for venda in vendas:
       <p>Esse ponto abre caminho para arquivos e, em problemas maiores, para bancos de dados. Não precisamos antecipar todo esse conteúdo aqui.</p>
 
       <div class="deep-box"><strong>Voltando ao bit e ao Byte.</strong> Textos, números e arquivos acabam armazenados como bytes. No caso de texto, uma codificação define como caracteres são representados em bytes; por isso “um caractere” não significa necessariamente “um byte”.</div>`
+  }
+];
+
+
+const aprofundarSteps = [
+  {
+    id: 1,
+    menu: '1 IDE e projeto',
+    title: 'A ferramenta também faz parte do trabalho de programar',
+    objective: 'Compreender editor, IDE, navegação, recursos de produtividade e organização de um projeto sem confundir ferramenta com conhecimento de programação.',
+    content: `
+      <div class="hero-box">
+        <span class="part-badge">Aprofundar</span>
+        <h3>Quando o programa cresce, procurar tudo manualmente começa a atrapalhar</h3>
+        <p>Em um arquivo pequeno, é possível localizar uma função rolando a tela e perceber muitos erros apenas lendo. Em um projeto maior, precisamos de ferramentas que nos ajudem a navegar, executar, localizar problemas e manter os arquivos organizados.</p>
+      </div>
+
+      <h3>Editor de código e IDE não são a mesma coisa</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Editor de código</strong><br>Prioriza a edição de arquivos de código e normalmente pode receber extensões e integrações.</div>
+        <div class="mini-card"><strong>IDE</strong><br>Ambiente Integrado de Desenvolvimento: reúne editor, execução, depuração, navegação pelo projeto e outras ferramentas em um mesmo ambiente.</div>
+        <div class="mini-card"><strong>SDK</strong><br>Kit de desenvolvimento: conjunto de ferramentas, bibliotecas, documentação e utilitários necessários ou úteis para desenvolver para determinada tecnologia.</div>
+        <div class="mini-card"><strong>Runtime</strong><br>Ambiente responsável por fornecer recursos necessários durante a execução de determinados programas.</div>
+      </div>
+
+      <h3>Recursos de uma IDE que o programador precisa reconhecer</h3>
+      <ul>
+        <li><strong>Navegação:</strong> localizar arquivos, funções, classes e referências sem procurar linha por linha.</li>
+        <li><strong>Completar comandos:</strong> oferecer sugestões conforme o código é digitado. Isso economiza digitação, mas não substitui saber o que o comando faz.</li>
+        <li><strong>Coloração de sintaxe:</strong> usar diferenças visuais para facilitar a leitura de palavras reservadas, textos, números e comentários.</li>
+        <li><strong>Marcas de erro e avisos:</strong> indicar problemas detectáveis antes ou durante a execução.</li>
+        <li><strong>Terminal integrado:</strong> executar comandos sem sair do ambiente.</li>
+        <li><strong>Depurador:</strong> interromper a execução, avançar passo a passo e observar o estado do programa.</li>
+      </ul>
+
+      <div class="danger-box"><strong>Cuidado:</strong> a IDE pode completar uma instrução perfeitamente escrita e ainda assim o programa estar logicamente errado. Ferramenta de produtividade não é substituta do raciocínio.</div>
+
+      <h3>Build e deploy</h3>
+      <p><strong>Build</strong> é o processo de preparar artefatos de uma aplicação para execução ou distribuição, podendo envolver compilação, cópia de recursos, empacotamento e outras etapas. <strong>Deploy</strong> é disponibilizar uma versão preparada no ambiente em que será usada. Em um programa simples de desktop, isso pode significar gerar e entregar um pacote executável; em outros sistemas, o processo pode ser muito mais amplo.</p>
+
+      <h3>Organização em projeto</h3>
+      <p>Quando tudo está em um único arquivo, pequenas alterações podem ficar difíceis de localizar. Um projeto organiza arquivos por responsabilidade. Ainda não precisamos de uma arquitetura sofisticada, mas já podemos separar o que é entrada/saída, regras de negócio e funções reutilizáveis quando o tamanho justificar.</p>
+      <pre class="command">estacionamento/
+├── main.py
+├── calculos.py
+├── validacoes.py
+└── testes/
+    └── test_calculos.py</pre>
+      <p>Essa estrutura é apenas uma possibilidade. A organização correta depende do tamanho e da natureza do sistema.</p>
+
+      <div class="task-box">
+        <h4>Observe no ambiente que você usa</h4>
+        <p>Localize: explorador de arquivos, área de edição, execução, terminal, indicação de erros e, se disponível, depuração. Explique a função de cada recurso em vez de apenas apontar onde ele fica.</p>
+      </div>`
+  },
+  {
+    id: 2,
+    menu: '2 Teste de mesa',
+    title: 'Antes do depurador: acompanhar o algoritmo com teste de mesa',
+    objective: 'Rastrear valores e condições manualmente para compreender o estado do programa ao longo da execução.',
+    content: `
+      <div class="hero-box">
+        <h3>O resultado final está errado. Em que momento ele começou a ficar errado?</h3>
+        <p>Olhar apenas a saída final muitas vezes não revela a causa. O teste de mesa acompanha, passo a passo, como variáveis e condições mudam durante uma execução escolhida.</p>
+      </div>
+
+      <pre class="command">subtotal = 0
+
+for preco in [10, 20, 5]:
+    subtotal = subtotal + preco
+
+print(subtotal)</pre>
+
+      <h3>Rastreando o estado</h3>
+      <div class="term-grid">
+        <div class="head">Passo</div><div class="head">preco</div><div class="head">subtotal</div>
+        <div>início</div><div>—</div><div>0</div>
+        <div>1ª repetição</div><div>10</div><div>10</div>
+        <div>2ª repetição</div><div>20</div><div>30</div>
+        <div>3ª repetição</div><div>5</div><div>35</div>
+      </div>
+
+      <div class="concept-box"><strong>Estado do programa:</strong> conjunto dos valores e condições relevantes em determinado momento da execução. Rastrear o estado ajuda a explicar por que uma próxima instrução produzirá determinado resultado.</div>
+
+      <h3>Teste de mesa em decisão</h3>
+      <pre class="command">total = 50
+
+if total > 50:
+    desconto = total * 0.05
+else:
+    desconto = 0</pre>
+      <p>Antes de executar, responda: <span class="inline-code">50 > 50</span> é verdadeiro ou falso? Essa pergunta simples diferencia <span class="inline-code">></span> de <span class="inline-code">>=</span> e revela erros de fronteira.</p>
+
+      <h3>Teste de mesa não substitui testes do programa</h3>
+      <p>Ele é uma técnica de raciocínio. Depois executamos casos reais e comparamos. A sequência continua:</p>
+      <div class="flow">PREVER → RASTREAR → EXECUTAR → COMPARAR → EXPLICAR</div>
+
+      <div class="task-box"><h4>Faça à mão</h4><p>Escolha um laço com contador e acumulador do sistema da Cantina. Monte uma tabela com pelo menos três repetições e registre os valores antes e depois de cada atualização.</p></div>`
+  },
+  {
+    id: 3,
+    menu: '3 Estruturas de dados',
+    title: 'Quando precisamos guardar vários dados relacionados',
+    objective: 'Compreender vetores, matrizes e as principais coleções de Python pela necessidade que cada estrutura resolve.',
+    content: `
+      <div class="hero-box">
+        <h3>Criar venda1, venda2, venda3... não escala</h3>
+        <p>Quando vários valores pertencem ao mesmo conjunto lógico, precisamos de estruturas capazes de agrupá-los. A escolha da estrutura depende do tipo de relação entre os dados e das operações que queremos realizar.</p>
+      </div>
+
+      <h3>Vetor — uma sequência indexada</h3>
+      <p>Em linguagens e pseudolinguagens que trabalham com vetores, podemos imaginar várias posições do mesmo tipo acessadas por índice.</p>
+      <pre class="command">vendas[1] <- 25.00
+vendas[2] <- 18.50
+vendas[3] <- 62.00</pre>
+      <p>O índice identifica uma posição. Percorrer o vetor normalmente combina estrutura de dados com repetição.</p>
+
+      <h3>Matriz — duas ou mais dimensões</h3>
+      <p>Um mapa simples de ocupação de vagas pode ser pensado como linhas e colunas:</p>
+      <pre class="command">vagas[linha, coluna]</pre>
+      <p>Para percorrer uma matriz linha por linha, laços aninhados surgem naturalmente: um controla as linhas e outro as colunas.</p>
+
+      <h3>Python oferece coleções com características diferentes</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>list</strong><br>Sequência ordenada e mutável. Boa quando precisamos manter vários itens e alterar a coleção.</div>
+        <div class="mini-card"><strong>tuple</strong><br>Sequência ordenada e imutável. Útil quando o conjunto de posições não deve ser alterado depois de criado.</div>
+        <div class="mini-card"><strong>set</strong><br>Coleção de elementos únicos, sem depender de posição numérica como uma lista. Útil para pertinência e remoção de duplicidades.</div>
+        <div class="mini-card"><strong>dict</strong><br>Relaciona chaves a valores. Útil quando queremos buscar um dado por uma identificação significativa.</div>
+      </div>
+
+      <h3>Lista</h3>
+      <pre class="command">vendas = [25.0, 18.5, 62.0]
+vendas.append(40.0)
+print(vendas[0])</pre>
+
+      <h3>Tupla</h3>
+      <pre class="command">coordenada = (3, 5)
+linha, coluna = coordenada</pre>
+
+      <h3>Conjunto</h3>
+      <pre class="command">formas_usadas = {"pix", "cartao", "pix"}
+print(formas_usadas)  # cada valor aparece uma única vez no conjunto</pre>
+
+      <h3>Dicionário</h3>
+      <pre class="command">tarifas = {
+    "carro": 8.0,
+    "moto": 5.0
+}
+
+print(tarifas["carro"])</pre>
+
+      <div class="concept-box"><strong>Não existe “a melhor coleção”.</strong> Existe uma estrutura mais adequada à necessidade: ordem, alteração, unicidade, busca por chave, dimensionalidade e outras características.</div>
+
+      <h3>Estruturas compostas podem ser combinadas</h3>
+      <pre class="command">atendimentos = [
+    {"placa": "ABC1D23", "horas": 2, "valor": 16.0},
+    {"placa": "XYZ9A87", "horas": 1, "valor": 8.0}
+]</pre>
+      <p>Aqui temos uma lista de dicionários. Isso já aproxima o programa de dados mais estruturados, mas ainda não significa que precisamos transformar tudo em objetos.</p>
+
+      <div class="task-box"><h4>Escolha antes de codificar</h4><p>Para cada caso, justifique uma estrutura: a) sequência das vendas do dia; b) coordenadas fixas de uma vaga; c) placas únicas que entraram no estacionamento; d) tarifa por tipo de veículo; e) mapa de vagas por linha e coluna.</p></div>`
+  },
+  {
+    id: 4,
+    menu: '4 Exceções',
+    title: 'Quando uma operação válida encontra um dado ou situação que impede sua execução',
+    objective: 'Diferenciar validação e tratamento de exceções e usar try/except sem esconder erros ou transformar exceção em solução para qualquer problema.',
+    content: `
+      <div class="hero-box">
+        <h3>O usuário digitou "dez" onde esperávamos um número</h3>
+        <p>A instrução <span class="inline-code">int("dez")</span> é sintaticamente válida, mas a conversão não pode ser concluída. Em Python, isso produz uma exceção <span class="inline-code">ValueError</span>.</p>
+      </div>
+
+      <h3>Validação e exceção são ideias diferentes</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Validação</strong><br>Verifica se o dado respeita uma regra do problema: quantidade maior que zero, opção existente, placa em formato aceitável.</div>
+        <div class="mini-card"><strong>Exceção</strong><br>Representa uma situação excepcional detectada durante a execução, como uma conversão impossível ou arquivo inexistente.</div>
+      </div>
+
+      <pre class="command">while True:
+    try:
+        horas = float(input("Horas: ").replace(",", "."))
+
+        if horas <= 0:
+            print("O tempo deve ser maior que zero.")
+            continue
+
+        break
+
+    except ValueError:
+        print("Digite um número válido.")</pre>
+
+      <h3>O fluxo do try/except</h3>
+      <ol>
+        <li>O código dentro de <span class="inline-code">try</span> é executado.</li>
+        <li>Se nenhuma exceção ocorrer, o bloco <span class="inline-code">except</span> correspondente é ignorado.</li>
+        <li>Se ocorrer uma exceção compatível, o fluxo é desviado para o tratamento.</li>
+      </ol>
+
+      <h3>Não capture tudo sem saber por quê</h3>
+      <pre class="command"># Evite usar isto como solução genérica:
+try:
+    fazer_algo()
+except:
+    pass</pre>
+      <div class="danger-box"><strong>Por que isso é ruim?</strong> Pode esconder um defeito real e deixar o programa continuar em estado incorreto. Trate exceções que você compreende e para as quais existe uma resposta apropriada.</div>
+
+      <h3>Informações detalhadas ajudam a investigar</h3>
+      <p>Quando uma exceção não é tratada, Python normalmente apresenta uma mensagem com o tipo da exceção e um rastreamento das chamadas que levaram ao erro. Esse rastreamento é uma pista de depuração, não “um monte de texto para ignorar”.</p>
+
+      <div class="task-box"><h4>Compare os casos</h4><p>Explique por que <span class="inline-code">-2</span> pode exigir validação da regra do estacionamento, enquanto <span class="inline-code">"duas"</span> pode provocar uma exceção durante a conversão numérica.</p></div>`
+  },
+  {
+    id: 5,
+    menu: '5 Depuração real',
+    title: 'Parar o programa para enxergar o que ele está fazendo',
+    objective: 'Usar execução passo a passo, breakpoints, inspeção de variáveis, pilha de chamadas e mensagens de exceção como ferramentas de investigação.',
+    content: `
+      <div class="hero-box">
+        <h3>O bug está no código, mas não sabemos em qual linha ele nasce</h3>
+        <p>Imprimir valores ajuda, mas um depurador permite interromper o programa e observar seu estado enquanto ele executa.</p>
+      </div>
+
+      <h3>Breakpoint</h3>
+      <p>Um <strong>ponto de interrupção</strong> marca uma linha em que queremos pausar a execução. Quando o programa chega ali, podemos inspecionar valores antes de continuar.</p>
+
+      <h3>Execução passo a passo</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Continuar</strong><br>Prossegue até o próximo breakpoint ou até o programa terminar.</div>
+        <div class="mini-card"><strong>Avançar linha</strong><br>Executa a próxima instrução observando o fluxo atual.</div>
+        <div class="mini-card"><strong>Entrar na função</strong><br>Quando a linha chama uma função, permite acompanhar sua execução interna.</div>
+        <div class="mini-card"><strong>Sair da função</strong><br>Conclui a chamada atual e retorna ao ponto que chamou a função.</div>
+      </div>
+
+      <h3>Inspeção de variáveis</h3>
+      <p>Com o programa pausado, observe os valores atuais. Se <span class="inline-code">faturamento</span> deveria acumular vendas e volta para zero a cada repetição, o estado revela exatamente quando isso acontece.</p>
+
+      <h3>Pilha de chamadas — call stack</h3>
+      <p>Quando uma função chama outra, que chama outra, o programa precisa saber para onde retornar. A <strong>pilha de chamadas</strong> mostra a sequência de chamadas ativa naquele instante.</p>
+      <div class="flow">programa principal
+└── registrar_venda()
+    └── calcular_total()
+        └── calcular_desconto()</div>
+      <p>Se o erro ocorrer dentro de <span class="inline-code">calcular_desconto()</span>, a pilha ajuda a entender por qual caminho chegamos ali.</p>
+
+      <h3>Uma rotina de investigação</h3>
+      <div class="flow">1. Reproduzir o erro
+2. Definir o resultado esperado
+3. Escolher um ponto de observação
+4. Pausar com breakpoint
+5. Avançar e observar valores
+6. Encontrar a primeira divergência
+7. Formular uma hipótese
+8. Corrigir
+9. Executar os testes novamente</div>
+
+      <div class="concept-box"><strong>Depurar não é tentar alterações aleatórias até funcionar.</strong> É investigar evidências sobre o estado e o fluxo do programa.</div>`
+  },
+  {
+    id: 6,
+    menu: '6 Bibliotecas e pacotes',
+    title: 'Reutilizar software sem confundir biblioteca, módulo, pacote e framework',
+    objective: 'Compreender reutilização de código, documentação, dependências e gerenciamento de pacotes a partir de necessidades reais.',
+    content: `
+      <div class="hero-box">
+        <h3>Não precisamos implementar tudo do zero</h3>
+        <p>Já usamos <span class="inline-code">math</span>, <span class="inline-code">random</span> e <span class="inline-code">tkinter</span>. Agora vamos organizar o vocabulário que aparece em projetos reais.</p>
+      </div>
+
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Módulo</strong><br>Unidade de código reutilizável. Em Python, um arquivo Python pode funcionar como módulo.</div>
+        <div class="mini-card"><strong>Pacote</strong><br>Forma de organizar e distribuir módulos e outros recursos de um projeto.</div>
+        <div class="mini-card"><strong>Biblioteca</strong><br>Conjunto de recursos reutilizáveis oferecidos para que seu programa chame funcionalidades prontas.</div>
+        <div class="mini-card"><strong>Framework</strong><br>Estrutura mais abrangente que estabelece convenções e um fluxo de trabalho para construir aplicações.</div>
+      </div>
+
+      <h3>Biblioteca padrão e dependência externa</h3>
+      <p>Alguns módulos acompanham a instalação da linguagem; outros precisam ser obtidos separadamente. Quando um projeto depende de um pacote externo, essa dependência precisa ser conhecida e reproduzível em outros computadores.</p>
+
+      <h3>Gerenciador de pacotes</h3>
+      <p>No ecossistema Python, <span class="inline-code">pip</span> é uma ferramenta usada para instalar e gerenciar distribuições de pacotes. Um exemplo de instalação já usado no módulo é:</p>
+      <pre class="command">python -m pip install pyinstaller</pre>
+      <div class="note-box"><strong>Instalar um pacote é uma alteração no ambiente.</strong> Em laboratório escolar, permissões, conexão e política da máquina precisam ser respeitadas. Não instale recursos apenas porque existem.</div>
+
+      <h3>Dependência</h3>
+      <p>Se o programa usa um recurso externo para funcionar, ele possui uma dependência. Quanto mais dependências, mais importante saber quais são, por que existem e quais versões são compatíveis com o projeto.</p>
+
+      <h3>Documentação é parte do trabalho</h3>
+      <div class="flow">nome → finalidade → instalação (se houver) → importação → parâmetros → retorno → exceções possíveis → exemplo</div>
+      <p>O programador não precisa memorizar todas as APIs. Precisa saber formular a necessidade e localizar na documentação oficial a ferramenta apropriada.</p>
+
+      <h3>Organização em módulos próprios</h3>
+      <pre class="command"># calculos.py
+def calcular_valor(horas, tarifa):
+    return horas * tarifa
+
+# main.py
+from calculos import calcular_valor</pre>
+      <p>Essa separação é <strong>modularização</strong>: dividir o programa em unidades com responsabilidades compreensíveis.</p>`
+  },
+  {
+    id: 7,
+    menu: '7 Classes e objetos',
+    title: 'Quando dados e comportamentos pertencem à mesma entidade',
+    objective: 'Passar da noção de paradigma orientado a objetos para uma primeira implementação concreta de classe e objeto.',
+    content: `
+      <div class="hero-box">
+        <h3>Estamos passando os mesmos dados juntos por várias funções</h3>
+        <p>Um veículo possui placa e tipo. Uma venda possui itens e total. Quando dados e comportamentos pertencem à mesma entidade, a orientação a objetos oferece uma forma de agrupá-los.</p>
+      </div>
+
+      <h3>Classe e objeto</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Classe</strong><br>Define uma estrutura e comportamentos para criar objetos daquele tipo.</div>
+        <div class="mini-card"><strong>Objeto</strong><br>Uma instância concreta criada a partir de uma classe, com seu próprio estado.</div>
+        <div class="mini-card"><strong>Atributo</strong><br>Dado associado ao objeto.</div>
+        <div class="mini-card"><strong>Método</strong><br>Comportamento definido na classe e executado por um objeto.</div>
+      </div>
+
+      <pre class="command">class Veiculo:
+    def __init__(self, placa, tipo):
+        self.placa = placa
+        self.tipo = tipo
+
+    def descricao(self):
+        return f"{self.tipo}: {self.placa}"
+
+veiculo = Veiculo("ABC1D23", "carro")
+print(veiculo.descricao())</pre>
+
+      <h3>O que aconteceu?</h3>
+      <ul>
+        <li><span class="inline-code">Veiculo</span> é a classe.</li>
+        <li><span class="inline-code">veiculo</span> referencia um objeto criado a partir dela.</li>
+        <li><span class="inline-code">placa</span> e <span class="inline-code">tipo</span> são atributos do objeto.</li>
+        <li><span class="inline-code">descricao()</span> é um método.</li>
+        <li><span class="inline-code">__init__</span> participa da inicialização de uma nova instância em Python.</li>
+      </ul>
+
+      <h3>Nem tudo precisa virar classe</h3>
+      <div class="danger-box"><strong>Orientação a objetos não é um prêmio por programa grande.</strong> Se uma função simples resolve claramente o problema, criar uma hierarquia de classes pode piorar a solução. O paradigma deve ajudar a organizar, não acrescentar cerimônia sem benefício.</div>
+
+      <h3>Paradigmas podem coexistir</h3>
+      <p>Um programa Python pode usar funções estruturadas, objetos e eventos na mesma aplicação. Sistemas reais frequentemente combinam ideias de vários paradigmas.</p>
+
+      <div class="task-box"><h4>Modele antes de codificar</h4><p>Para uma classe <strong>Produto</strong>, proponha atributos e dois comportamentos que realmente pertençam ao produto. Depois justifique por que cada comportamento deveria estar na classe em vez de ser uma função completamente independente.</p></div>`
+  },
+  {
+    id: 8,
+    menu: '8 Qualidade e testes',
+    title: 'Código correto precisa continuar compreensível e verificável',
+    objective: 'Trabalhar legibilidade, comentários, estilo, testes unitários e programação em par como práticas de desenvolvimento, não como decoração.',
+    content: `
+      <div class="hero-box">
+        <h3>O programa funciona hoje. Outra pessoa conseguirá entendê-lo amanhã?</h3>
+        <p>Software é lido, alterado e testado muito mais vezes do que é escrito pela primeira vez. Organização e clareza diminuem a chance de introduzir novos defeitos.</p>
+      </div>
+
+      <h3>Legibilidade</h3>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Nomes claros</strong><br><span class="inline-code">calcular_total()</span> comunica mais do que <span class="inline-code">ct()</span>.</div>
+        <div class="mini-card"><strong>Indentação consistente</strong><br>Ajuda a enxergar a estrutura. Em Python, também participa da própria sintaxe.</div>
+        <div class="mini-card"><strong>Funções focadas</strong><br>Uma responsabilidade bem delimitada facilita teste e manutenção.</div>
+        <div class="mini-card"><strong>Evitar duplicação desnecessária</strong><br>Regras repetidas em vários lugares tendem a divergir quando mudam.</div>
+      </div>
+
+      <h3>Comentários úteis</h3>
+      <pre class="command"># Regra definida pelo estacionamento: mensalista não paga atendimento avulso.
+if mensalista:
+    valor = 0</pre>
+      <p>Um comentário deve explicar algo que o código sozinho não comunica bem — contexto, motivo ou decisão. Comentários como <span class="inline-code"># soma 1</span> antes de <span class="inline-code">contador += 1</span> normalmente apenas repetem o código.</p>
+
+      <h3>Testes unitários</h3>
+      <p>Uma função com entrada e saída bem definidas pode ser testada automaticamente em vários casos.</p>
+      <pre class="command">def calcular_valor(horas, tarifa):
+    return horas * tarifa
+
+
+def test_calcular_valor():
+    assert calcular_valor(2, 8.0) == 16.0</pre>
+      <p>O exemplo mostra a ideia essencial: executar uma pequena unidade e verificar automaticamente se o resultado obtido corresponde ao esperado. Ferramentas de teste podem ampliar isso depois.</p>
+
+      <h3>Teste não prova ausência de todos os bugs</h3>
+      <p>Testes verificam os casos que foram projetados. Por isso precisamos escolher casos normais, fronteiras, valores inválidos e situações que exercitem regras diferentes.</p>
+
+      <h3>Programação em par</h3>
+      <p>Duas pessoas trabalham juntas sobre a mesma tarefa. Uma conduz a implementação e a outra acompanha, questiona, revisa e pensa nos próximos passos; os papéis são alternados. O objetivo não é uma pessoa programar enquanto a outra assiste passivamente.</p>
+      <div class="concept-box"><strong>Construir software em equipe também é uma competência de programação.</strong> Explicar decisões, revisar mudanças e manter histórico compartilhado fazem parte do trabalho.</div>`
+  },
+  {
+    id: 9,
+    menu: '9 Versionamento',
+    title: 'O projeto agora merece histórico',
+    objective: 'Compreender por que controle de versão distribuído faz parte do desenvolvimento e encaminhar a prática completa ao módulo Git/GitHub já existente.',
+    content: `
+      <div class="hero-box">
+        <h3>Alteramos o programa e a versão de ontem funcionava. Como voltar?</h3>
+        <p>Copiar arquivos como <span class="inline-code">projeto_final_agora_vai_3.py</span> não cria um histórico confiável. Controle de versão registra mudanças de maneira estruturada e permite comparar, recuperar e compartilhar evoluções.</p>
+      </div>
+
+      <h3>O que precisa ser dominado neste universo</h3>
+      <div class="term-grid">
+        <div class="head">Necessidade</div><div class="head">Git</div><div class="head">Ideia</div>
+        <div>criar/configurar repositório</div><div>init, config</div><div>preparar o histórico local</div>
+        <div>selecionar/registrar mudanças</div><div>add, commit</div><div>criar versões significativas</div>
+        <div>desfazer/remover mudanças</div><div>restore, reset, rm</div><div>corrigir o estado controlado</div>
+        <div>inspecionar/comparar</div><div>status, diff, log</div><div>entender o que mudou e o histórico</div>
+        <div>linhas de desenvolvimento</div><div>branch, checkout/switch, merge, tag</div><div>isolar, integrar e marcar versões</div>
+        <div>trabalhar com remoto</div><div>clone, remote, push, pull, fetch</div><div>sincronizar trabalho entre repositórios</div>
+      </div>
+
+      <h3>Software livre e colaboração</h3>
+      <p>Controle de versão e repositórios remotos também são fundamentais em projetos de software livre e em equipes que colaboram sobre o mesmo código. O modelo distribuído do Git permite que cada participante possua um repositório local completo e sincronize mudanças com repositórios remotos quando necessário.</p>
+
+      <h3>Git e GitHub não são sinônimos</h3>
+      <p><strong>Git</strong> é o sistema de controle de versão distribuído. <strong>GitHub</strong> é uma plataforma que hospeda repositórios Git e oferece recursos de colaboração. O histórico Git pode existir localmente sem GitHub.</p>
+
+      <h3>Markdown e documentação do repositório</h3>
+      <p>Um arquivo <span class="inline-code">README.md</span> pode explicar propósito, execução, requisitos, decisões e estado do projeto. Documentar o repositório faz parte de tornar o trabalho compreensível para outras pessoas — e para você mesmo no futuro.</p>
+
+      <div class="concept-box"><strong>CLI primeiro:</strong> conhecer os comandos no terminal torna visível o que o Git está fazendo. Interfaces gráficas podem ajudar depois, mas não devem esconder os conceitos.</div>
+
+      <div class="task-box">
+        <h4>Laboratório especializado</h4>
+        <p>O Mundo bit Byte já possui um módulo completo de Git/GitHub. Em vez de duplicá-lo aqui, o projeto desenvolvido em Programação deve ser levado para esse módulo e versionado por evoluções reais.</p>
+        <p><a href="git.html"><strong>Ir para o módulo Git/GitHub →</strong></a></p>
+      </div>
+
+      <div class="flow">criar uma funcionalidade
+↓
+testar
+↓
+verificar status/diff
+↓
+registrar commit com sentido
+↓
+continuar o desenvolvimento
+↓
+consultar ou recuperar histórico quando necessário</div>`
   }
 ];
 
@@ -1087,6 +1616,7 @@ const stepGroups = {
   pensar: pensarSteps,
   visualg: visualgSteps,
   python: pythonSteps,
+  aprofundar: aprofundarSteps,
   aplicar: aplicarSteps
 };
 

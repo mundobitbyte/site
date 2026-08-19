@@ -542,7 +542,7 @@ const githubSteps = [
     id: 1,
     menu: '1 Conceitos',
     title: 'GitHub 1 — O que é e por que usar',
-    objective: 'Entender o papel do GitHub sem misturá-lo com o Git que já funciona no computador.',
+    objective: 'Entender o papel do GitHub como hospedagem, colaboração e comunidade, sem misturá-lo com o Git local.',
     content: `
       <div class="hero-box">
         <span class="part-badge">Parte 2 — GitHub</span>
@@ -563,6 +563,16 @@ const githubSteps = [
         <li>colaborar com outras pessoas.</li>
       </ul>
 
+      <h3>GitHub também é uma comunidade</h3>
+      <p>Além de hospedar projetos, o GitHub possui uma parte social voltada ao mundo do desenvolvimento.</p>
+      <div class="mini-grid">
+        <div class="mini-card"><strong>Perfil</strong><br>Mostra sua identidade e seus projetos públicos.</div>
+        <div class="mini-card"><strong>Seguir</strong><br>Você pode seguir pessoas e também ter seguidores.</div>
+        <div class="mini-card"><strong>Feed</strong><br>O painel pode mostrar atividades e recomendações relacionadas ao que você acompanha.</div>
+        <div class="mini-card"><strong>Stars</strong><br>Servem para marcar projetos interessantes e ajudam a encontrá-los novamente.</div>
+      </div>
+      <div class="note-box"><strong>Não é uma rede social comum.</strong> O foco está em código, projetos, contribuições e aprendizado entre desenvolvedores.</div>
+
       <div class="concept-box"><strong>Git funciona sem GitHub. GitHub não substitui Git.</strong></div>
 
       <h3>O que vai mudar no nosso fluxo?</h3>
@@ -575,6 +585,7 @@ const githubSteps = [
         <p><strong>Git e GitHub são a mesma coisa?</strong><br>Não.</p>
         <p><strong>Preciso de GitHub para fazer commits locais?</strong><br>Não.</p>
         <p><strong>Para que vamos usar GitHub?</strong><br>Para hospedar e sincronizar nossos repositórios pela Internet.</p>
+        <p><strong>O GitHub também pode funcionar como comunidade?</strong><br>Sim. Podemos ter perfil, seguir pessoas, acompanhar atividades e descobrir projetos.</p>
       </div>`
   },
   {
@@ -623,8 +634,11 @@ const githubSteps = [
         <li>seu perfil ou avatar;</li>
         <li>a área <strong>Repositories</strong>;</li>
         <li>a opção <strong>New repository</strong> ou equivalente;</li>
-        <li>a busca do GitHub.</li>
+        <li>a busca do GitHub;</li>
+        <li>o <strong>feed</strong> ou área de recomendações, quando aparecer no seu painel.</li>
       </ul>
+
+      <div class="note-box"><strong>Parte social:</strong> ao visitar o perfil de outro desenvolvedor, você poderá encontrar opções para seguir essa pessoa e consultar seguidores, pessoas seguidas e projetos públicos. Não precisamos usar isso para aprender Git, mas é uma forma de acompanhar a comunidade.</div>
 
       <h3>Uma palavra nova: remoto</h3>
       <div class="mini-grid">
