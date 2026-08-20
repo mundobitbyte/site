@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Avaliação Conceitual — Arduino e IoT | Mundo bit Byte</title>
+<link href="../css/arduino.css" rel="stylesheet"/>
+<style>
+.module-menu a.module-btn{display:inline-flex;align-items:center;text-decoration:none}
+.assessment-shell{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.assessment-head{padding:18px 20px;background:linear-gradient(135deg,#fff,#eef9fb);border-bottom:1px solid var(--line)}
+.assessment-head-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.assessment-head h2{margin:8px 0 0;color:var(--dark);font-size:26px}
+.assessment-head p{margin:8px 0 0;line-height:1.5;max-width:980px}
+.pdf-btn{flex:0 0 auto;background:var(--primary);color:#fff;border-radius:10px;padding:10px 13px;font-weight:900}
+.pdf-btn:hover{background:var(--dark)}
+.student-line{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-top:14px;font-size:13px;font-weight:800;color:#425466}
+.student-line span{display:block;border-bottom:1px solid #8ea6ad;padding:0 0 5px}
+.assessment-note{margin-top:12px;padding:11px 13px;border:1px solid #c8dfe4;border-radius:12px;background:#f8fbfc;font-size:13.5px;line-height:1.5}
+.assessment-body{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.concept-question{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;break-inside:avoid}
+.concept-question h3{margin:0;padding:10px 12px;background:#f1fbfd;border-bottom:1px solid var(--line);font-size:14px;color:var(--dark)}
+.concept-question p{margin:12px 13px 8px;font-size:14px;line-height:1.5}
+.answer-space{padding:0 13px 12px}
+.answer-space span{display:block;height:22px;border-bottom:1px solid #a5b8be}
+.page-note{margin:0;padding:0 16px 16px;color:#546670;font-size:12.5px;line-height:1.45}
+@media(max-width:900px){
+  .assessment-body{grid-template-columns:1fr}
+  .student-line{grid-template-columns:1fr}
+  .assessment-head-top{display:block}
+  .pdf-btn{margin-top:12px}
+}
+@media(max-width:620px){
+  .assessment-head{padding:14px}
+  .assessment-head h2{font-size:22px}
+  .assessment-body{padding:10px;gap:10px}
+  .concept-question p{font-size:13.5px}
+}
+@media print{
+  @page{size:A4 portrait;margin:9mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff!important;color:#111!important;font-family:Arial,sans-serif!important}
+  header,.module-menu,.stage-sidebar,.stage-backdrop,.stage-toggle,.pdf-btn,.page-note{display:none!important}
+  .layout.arduino-layout{display:block!important;min-height:0!important}
+  .arduino-content main{padding:0!important;margin:0!important;max-width:none!important;width:100%!important}
+  .assessment-shell{border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
+  .assessment-head{padding:0 0 3mm!important;background:#fff!important;border-bottom:1px solid #777!important}
+  .assessment-head h2{font-size:14pt!important;margin:1mm 0 0!important;color:#000!important}
+  .assessment-head p,.assessment-note{font-size:8.5pt!important;line-height:1.25!important}
+  .assessment-note{padding:2mm!important;margin-top:2mm!important}
+  .student-line{display:grid!important;grid-template-columns:2fr 1fr 1fr!important;gap:5mm!important;margin-top:2mm!important;font-size:8pt!important}
+  .assessment-body{display:grid!important;grid-template-columns:1fr 1fr!important;gap:3mm 5mm!important;padding:3mm 0 0!important}
+  .concept-question{border:1px solid #999!important;border-radius:2mm!important;overflow:hidden!important}
+  .concept-question h3{padding:1.5mm 2mm!important;background:#f2f2f2!important;font-size:8.5pt!important;color:#000!important}
+  .concept-question p{margin:1.5mm 2mm 1mm!important;font-size:8pt!important;line-height:1.2!important}
+  .answer-space{padding:0 2mm 1.5mm!important}
+  .answer-space span{height:4mm!important;border-bottom:1px solid #888!important}
+}
+</style>
+</head>
+<body>
+<header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header>
+
+<div class="module-menu" id="arduinoModuleMenu" aria-label="Módulos do Arduino">
+<a class="module-btn" href="arduino.html#intro">1. Fundamentos</a>
+<a class="module-btn" href="arduino.html#p1">2. Entrada/Saída</a>
+<a class="module-btn" href="arduino.html#p6">3. Sensores</a>
+<a class="module-btn" href="arduino.html#p8">4. Atuadores/Automação</a>
+<a class="module-btn active" href="arduino-exercicios.html">99. Exercícios</a>
+</div>
+
+<div class="layout arduino-layout" id="arduinoLayout">
+<aside class="stage-sidebar" id="stageSidebar" aria-label="Opções de exercícios">
+  <div class="stage-sidebar-head"><h3>Exercícios</h3><button class="stage-close" id="stageClose" type="button" aria-label="Fechar exercícios">×</button></div>
+  <div class="stage-menu" id="stageMenu">
+    <a class="stage-link module-visible active" href="#avaliacao">Avaliação Conceitual</a>
+    <a class="stage-link module-visible" href="arduino-exercicios.html">Revisão Bimestral</a>
+    <a class="stage-link module-visible stage-exercises" href="arduino.html#exercicios">Exercícios dos projetos</a>
+  </div>
+</aside>
+
+<div class="stage-backdrop" id="stageBackdrop" hidden></div>
+
+<div class="arduino-content">
+<button class="stage-toggle" id="stageToggle" type="button" aria-controls="stageSidebar" aria-expanded="false">☰ Exercícios</button>
+<main id="avaliacao">
+<section class="assessment-shell active-panel">
+  <div class="assessment-head">
+    <div class="assessment-head-top">
+      <div>
+        <span class="badge">99</span>
+        <h2>Avaliação Conceitual — Arduino e IoT</h2>
+        <p>Atividade individual com 10 questões conceituais de nível básico.</p>
+      </div>
+      <button class="pdf-btn" type="button" onclick="window.print()">Salvar / Imprimir PDF</button>
+    </div>
+    <div class="student-line"><span>Nome:</span><span>Turma:</span><span>Data:</span></div>
+    <div class="assessment-note"><strong>Orientação:</strong> responda com frases simples e objetivas. Você pode consultar os conteúdos do Mundo bit Byte ou pesquisar na Internet quando necessário. As respostas podem ser feitas em um editor de textos ou em uma folha.</div>
+  </div>
+
+  <div class="assessment-body">
+    <article class="concept-question">
+<h3>1. Monitor Serial</h3>
+<p>Para que serve o Monitor Serial no Arduino?</p>
+<div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
+</article><article class="concept-question">
+<h3>2. Monitor Serial</h3>
+<p>Dê um exemplo de informação que pode ser mostrada no Monitor Serial durante um projeto com sensor.</p>
+<div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
+</article><article class="concept-question">
+<h3>3. Sensor de distância HC-SR04</h3>
+<p>Para que serve o sensor ultrassônico HC-SR04?</p>
+<div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
+</article><article class="concept-question">
+<h3>4. Sensor de distância HC-SR04</h3>
+<p>Qual é a função dos pinos TRIG e ECHO do HC-SR04?</p>
+<div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
+</article><article class="concept-question">
+<h3>5. LED RGB</h3>
+<p>O que é um LED RGB e por que ele consegue mostrar várias cores?</p>
+<div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
+</article><article class="concept-question">
+<h3>6. Funções predefinidas</h3>
+<p>O que são funções predefinidas? Dê um exemplo de função pronta que pode ser usada em um programa.</p>
+<div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
+</article><article class="concept-question">
+<h3>7. Bibliotecas</h3>
+<p>Para que serve uma biblioteca no Arduino?</p>
+<div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
+</article><article class="concept-question">
+<h3>8. Conectividade</h3>
+<p>Qual é a diferença básica entre Bluetooth e Wi-Fi?</p>
+<div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
+</article><article class="concept-question">
+<h3>9. Internet das Coisas</h3>
+<p>O que significa Internet das Coisas (IoT)?</p>
+<div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
+</article><article class="concept-question">
+<h3>10. Aplicação prática de IoT</h3>
+<p>Dê um exemplo simples de uso de IoT no dia a dia e explique, em poucas palavras, o que o sistema faria.</p>
+<div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
+</article>
+  </div>
+
+  <p class="page-note">Se desejar imprimir a atividade, use o botão “Salvar / Imprimir PDF” e escolha uma impressora ou a opção “Salvar como PDF” do navegador.</p>
+</section>
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  const layout=document.getElementById('arduinoLayout');
+  const toggle=document.getElementById('stageToggle');
+  const close=document.getElementById('stageClose');
+  const backdrop=document.getElementById('stageBackdrop');
+  function closeDrawer(){layout.classList.remove('drawer-open');backdrop.hidden=true;toggle.setAttribute('aria-expanded','false')}
+  function openDrawer(){layout.classList.add('drawer-open');backdrop.hidden=false;toggle.setAttribute('aria-expanded','true')}
+  toggle.addEventListener('click',openDrawer);
+  close.addEventListener('click',closeDrawer);
+  backdrop.addEventListener('click',closeDrawer);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+})();
+</script>
+</body>
+</html>
