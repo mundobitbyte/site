@@ -48,6 +48,36 @@ if (typeof modules !== 'undefined') {
       const oldTop = originalRoot.querySelector('.topline.exercise-clean-top');
       const panelCopy = integratedPanel.cloneNode(true);
 
+      // Ajuste exclusivo do primeiro card: impede que o Flexbox comprima
+      // o conteúdo e melhora a leitura da lista sem afetar os demais cards.
+      panelCopy.style.setProperty('flex', '0 0 auto', 'important');
+
+      const panelBody = panelCopy.querySelector('.panel-body');
+      if (panelBody) {
+        panelBody.style.setProperty('padding', '14px 16px', 'important');
+      }
+
+      const panelTitle = panelCopy.querySelector('h3');
+      if (panelTitle) {
+        panelTitle.style.setProperty('margin-bottom', '8px', 'important');
+      }
+
+      const exerciseList = panelCopy.querySelector('ol');
+      if (exerciseList) {
+        exerciseList.style.setProperty('margin', '8px 0 0 22px', 'important');
+        exerciseList.style.setProperty('padding', '0', 'important');
+
+        const items = exerciseList.querySelectorAll('li');
+        items.forEach((item, index) => {
+          item.style.setProperty('line-height', '1.45', 'important');
+          item.style.setProperty(
+            'margin-bottom',
+            index === items.length - 1 ? '0' : '5px',
+            'important'
+          );
+        });
+      }
+
       if (oldTop) {
         oldTop.insertAdjacentElement('beforebegin', panelCopy);
       } else {
