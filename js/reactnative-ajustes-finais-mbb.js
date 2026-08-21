@@ -84,22 +84,30 @@ if (typeof modules !== 'undefined') {
         originalRoot.prepend(panelCopy);
       }
 
-      // Nas atividades antigas, a observação ficava como irmã da grade e,
-      // por isso, ocupava toda a largura da seção, passando por cima da
-      // coluna da miniatura. Mantém o texto, mas o coloca dentro do painel
-      // do enunciado, logo após o restante das orientações da atividade.
-      originalRoot.querySelectorAll('.exercise-clean-section').forEach(section => {
-        const observation = Array.from(section.children).find(element =>
-          element.classList?.contains('obs')
-        );
-        const exercisePanelBody = section.querySelector(
-          '.exercise-grid .panel.brief .panel-body'
-        );
+      // A observação é um rodapé geral do conjunto de exercícios, não de
+      // uma atividade específica. No HTML original ela é filha direta do
+      // .exercise-clean, depois das seções. Como o container tinha
+      // height:100% e as seções usavam flex:1, o conteúdo da atividade
+      // transbordava por baixo do rodapé. Deixamos este conjunto crescer
+      // naturalmente e mantemos a observação no fluxo normal, abaixo do
+      // exercício ativo.
+      originalRoot.style.setProperty('height', 'auto', 'important');
+      originalRoot.style.setProperty('min-height', '100%', 'important');
 
-        if (observation && exercisePanelBody) {
-          exercisePanelBody.appendChild(observation);
-        }
+      originalRoot.querySelectorAll('.exercise-clean-section').forEach(section => {
+        section.style.setProperty('flex', '0 0 auto', 'important');
       });
+
+      const observation = Array.from(originalRoot.children).find(element =>
+        element.classList?.contains('obs')
+      );
+
+      if (observation) {
+        observation.style.setProperty('position', 'static', 'important');
+        observation.style.setProperty('width', 'auto', 'important');
+        observation.style.setProperty('flex', '0 0 auto', 'important');
+        observation.style.setProperty('margin', '10px 0 0', 'important');
+      }
 
       reactExercise.html = originalRoot.outerHTML;
     }
