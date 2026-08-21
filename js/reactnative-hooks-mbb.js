@@ -1,304 +1,1084 @@
-// Reforma incremental do módulo 3 — React e Hooks (MbB)
-// Este arquivo complementa js/reactnative.js sem substituir o conteúdo existente.
+// Reforma completa do React Native MbB — especificação pedagógica consolidada.
+// Complementa a base atual sem apagar laboratórios existentes.
+// Fluxo: Contextualizar -> Necessidade -> Conceito -> Exemplo -> Aplicação -> Consolidação.
 
-if (typeof modules !== 'undefined' && modules.state) {
-  modules.state.subtitle = 'Estado, eventos, funções e Hooks: useState, useRef e useEffect.';
+if (typeof modules !== 'undefined') {
+  const mkPage = (id, menu, title, objective, kicker, lead, highlight, boxes) => ({
+    id, menu, title, objective, modulePage: true, kicker, lead, highlight, boxes
+  });
 
-  const passosState = modules.state.steps;
-  const jaAplicado = passosState.some(step => step.id === 'state-13-useeffect-intro');
+  const phonePreview = (title, body, footer = '') => `
+    <div style="height:100%;display:flex;align-items:center;justify-content:center;background:#eef4fb;padding:16px;box-sizing:border-box;">
+      <div style="width:88%;max-width:290px;background:#fff;border:1px solid #cbd5e1;border-radius:18px;padding:20px;box-shadow:0 8px 24px rgba(15,23,42,.12);font-family:Arial,sans-serif;">
+        <div style="font-size:21px;font-weight:800;color:#0f172a;margin-bottom:14px;text-align:center;">${title}</div>
+        ${body}
+        ${footer ? `<div style="font-size:12px;color:#64748b;margin-top:14px;text-align:center;">${footer}</div>` : ''}
+      </div>
+    </div>`;
 
-  if (!jaAplicado) {
-    const fechamentoMedia = passosState.find(step => step.id === 'state-12-final');
-    if (fechamentoMedia) {
-      fechamentoMedia.menu = '12. Média final';
-      fechamentoMedia.title = '12 — Fechamento do app Média Escolar';
-      fechamentoMedia.objective = 'Consolidar useState e useRef antes de avançar para useEffect.';
-      fechamentoMedia.note = 'A Média Escolar fecha o primeiro ciclo do módulo: useState guarda dados que mudam e useRef permite acessar diretamente o primeiro TextInput para devolver o foco. Agora começaremos um pequeno laboratório separado para compreender useEffect.';
-    }
+  // 0. FUNDAMENTOS ---------------------------------------------------------
+  if (modules.fundamentosMobile) {
+    modules.fundamentosMobile.title = '0. Fundamentos';
+    modules.fundamentosMobile.subtitle = 'Mobile, React Native atual, Expo/Snack e primeira visão de JSX.';
 
-    const previewBitcoin = `
-      <div style="height:100%;display:flex;align-items:center;justify-content:center;background:#eef4fb;padding:16px;box-sizing:border-box;">
-        <div style="width:88%;max-width:280px;background:#fff;border:1px solid #cbd5e1;border-radius:18px;padding:22px;box-shadow:0 8px 24px rgba(15,23,42,.12);text-align:center;font-family:Arial,sans-serif;">
-          <div style="font-size:14px;color:#64748b;margin-bottom:8px;">Cotação automática</div>
-          <div style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:14px;">Bitcoin</div>
-          <div style="font-size:13px;color:#64748b;">1 BTC</div>
-          <div style="font-size:26px;font-weight:800;color:#166534;margin:8px 0 14px;">R$ 000.000,00</div>
-          <div style="font-size:12px;color:#475569;">Atualiza automaticamente a cada 30 segundos</div>
-        </div>
-      </div>`;
-
-    const novosPassos = [
-      {
-        id: 'state-13-useeffect-intro',
-        menu: '13. useEffect',
-        title: '13 — Para que serve o useEffect?',
-        objective: 'Entender quando um componente precisa executar algo além de simplesmente desenhar a tela.',
-        modulePage: true,
-        kicker: 'Um novo tipo de tarefa',
-        lead: 'useState guarda informações que mudam. useRef mantém uma referência. Mas alguns aplicativos também precisam executar uma ação quando a tela é carregada ou enquanto ela permanece aberta.',
-        highlight: 'É aí que entra o useEffect. Ele permite executar um efeito ligado ao ciclo do componente. Neste laboratório, o efeito será consultar a cotação do Bitcoin automaticamente.',
-        boxes: [
-          ['useState', 'Guarda um valor que participa da interface. Quando o valor muda, a tela é atualizada.'],
-          ['useRef', 'Mantém uma referência sem provocar nova renderização quando current muda.'],
-          ['useEffect', 'Executa um efeito depois que o componente é renderizado, de acordo com as dependências informadas.'],
-          ['Nosso exemplo', 'Ao abrir o app, consultar a cotação do Bitcoin sem o usuário precisar apertar um botão.'],
-          ['Depois', 'Repetir a consulta automaticamente a cada 30 segundos.'],
-          ['Importante', 'O foco aqui é o Hook useEffect. O funcionamento detalhado de APIs, HTTP e JSON será estudado no módulo 4.']
-        ]
-      },
-      {
-        id: 'state-14-bitcoin-base',
-        menu: '14. Bitcoin',
-        title: '14 — Preparando o app Bitcoin',
-        objective: 'Criar a interface e o state que receberá a cotação.',
-        code: `import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
-export default function App() {
-  const [preco, setPreco] = useState('Aguardando consulta...');
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Bitcoin</Text>
-      <Text style={styles.rotulo}>1 BTC</Text>
-      <Text style={styles.preco}>{preco}</Text>
-      <Text style={styles.aviso}>Cotação automática</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 30,
-    backgroundColor: '#EEF4FB',
-  },
-  titulo: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 18,
-  },
-  rotulo: {
-    fontSize: 16,
-    color: '#64748B',
-  },
-  preco: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#166534',
-    marginVertical: 12,
-  },
-  aviso: {
-    fontSize: 13,
-    color: '#64748B',
-  },
-});`,
-        addedTitle: 'Trecho em foco',
-        added: `const [preco, setPreco] = useState('Aguardando consulta...');
-
-<Text style={styles.preco}>{preco}</Text>
-
-Primeiro criamos o lugar onde a cotação será guardada.
-Ainda não existe consulta automática nesta etapa.`,
-        preview: previewBitcoin,
-        note: 'Antes do useEffect, montamos a tela e preparamos o state. Assim o aluno separa interface, memória e efeito em etapas diferentes.'
-      },
-      {
-        id: 'state-15-primeiro-effect',
-        menu: '15. Ao abrir',
-        title: '15 — Executando uma consulta ao abrir o app',
-        objective: 'Usar useEffect para executar uma ação automaticamente quando o componente for carregado.',
-        code: `import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
-export default function App() {
-  const [preco, setPreco] = useState('Carregando...');
-
-  async function consultarBitcoin() {
-    try {
-      const resposta = await fetch(
-        'https://economia.awesomeapi.com.br/json/last/BTC-BRL'
+    if (!modules.fundamentosMobile.steps.some(s => s.id === 'mobile-jsx-visao')) {
+      modules.fundamentosMobile.steps.push(
+        mkPage(
+          'mobile-jsx-visao',
+          '6. Primeira visão JSX',
+          '6 — Primeira visão de JSX',
+          'Reconhecer a estrutura básica do código React Native antes de aprofundar React.',
+          'Antes de decorar comandos',
+          'Ao abrir um App.js, o aluno encontra JavaScript misturado com uma escrita parecida com HTML. Essa escrita é JSX. Neste momento, basta aprender a reconhecer o que está vendo.',
+          'JSX não é HTML. Ele é uma sintaxe usada com JavaScript para descrever a interface. Mais adiante, em React e Hooks, veremos JSX com mais profundidade.',
+          [
+            ['JavaScript', 'Declara dados, funções, decisões e outras regras do programa.'],
+            ['JSX', 'Descreve os componentes que devem aparecer na interface.'],
+            ['{ } no JSX', 'Permite inserir uma expressão JavaScript dentro da estrutura visual.'],
+            ['Exemplo', '<Text>{nome}</Text>: Text faz parte do JSX; nome é lido como JavaScript.'],
+            ['React Native', 'Usa componentes como View, Text, Image e TextInput em vez de tags HTML.'],
+            ['Por enquanto', 'Reconheça as duas camadas. A explicação completa virá no módulo React e Hooks.']
+          ]
+        )
       );
-      const dados = await resposta.json();
-      const valor = Number(dados.BTCBRL.bid);
-
-      setPreco(
-        valor.toLocaleString('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        })
-      );
-    } catch (erro) {
-      setPreco('Não foi possível consultar');
     }
   }
 
-  useEffect(() => {
-    consultarBitcoin();
-  }, []);
+  // 1. INTERFACES + FLEXBOX ------------------------------------------------
+  if (modules.interfaceBasica && modules.flexboxVisual) {
+    const interfaceSteps = modules.interfaceBasica.steps;
+    const interfaceExercise = interfaceSteps.find(s => s.id === 'exercicios-interface');
+    const interfaceCore = interfaceSteps.filter(s => s.id !== 'exercicios-interface');
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Bitcoin</Text>
-      <Text style={styles.rotulo}>1 BTC</Text>
-      <Text style={styles.preco}>{preco}</Text>
-      <Text style={styles.aviso}>Cotação automática</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 30,
-    backgroundColor: '#EEF4FB',
-  },
-  titulo: { fontSize: 28, fontWeight: 'bold', marginBottom: 18 },
-  rotulo: { fontSize: 16, color: '#64748B' },
-  preco: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#166534',
-    marginVertical: 12,
-  },
-  aviso: { fontSize: 13, color: '#64748B' },
-});`,
-        addedTitle: 'Trecho em foco',
-        added: `import React, { useEffect, useState } from 'react';
-
-useEffect(() => {
-  consultarBitcoin();
-}, []);
-
-Leitura didática:
-1. O componente aparece na tela.
-2. O useEffect é executado.
-3. consultarBitcoin() busca a informação.
-4. setPreco() altera o state.
-5. React atualiza o valor mostrado.
-
-O [] significa: execute este efeito na montagem do componente.`,
-        preview: previewBitcoin,
-        note: 'Nesta etapa, fetch e JSON aparecem apenas como parte da tarefa que o efeito executa. Eles serão estudados com calma no módulo 4 — Web Services/APIs.'
-      },
-      {
-        id: 'state-16-intervalo',
-        menu: '16. Repetir',
-        title: '16 — Atualizando a cotação automaticamente',
-        objective: 'Usar setInterval dentro do useEffect para repetir a consulta.',
-        code: `import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
-export default function App() {
-  const [preco, setPreco] = useState('Carregando...');
-
-  async function consultarBitcoin() {
-    try {
-      const resposta = await fetch(
-        'https://economia.awesomeapi.com.br/json/last/BTC-BRL'
-      );
-      const dados = await resposta.json();
-      const valor = Number(dados.BTCBRL.bid);
-
-      setPreco(
-        valor.toLocaleString('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        })
-      );
-    } catch (erro) {
-      setPreco('Não foi possível consultar');
+    if (interfaceExercise) {
+      interfaceExercise.menu = '99A. Exercícios Interface';
+      interfaceExercise.title = '99A — Exercícios de Interface';
     }
+
+    const flexSteps = modules.flexboxVisual.steps.map(step => ({ ...step }));
+    const flexExercise = flexSteps.find(s => s.id === 'flex-exercicios');
+    if (flexExercise) {
+      flexExercise.menu = '99B. Exercícios Flexbox';
+      flexExercise.title = '99B — Exercícios de Flexbox';
+    }
+
+    const flexSeparator = mkPage(
+      'interfaces-flexbox-ponte',
+      'Flexbox — Introdução',
+      'Flexbox dentro de Interfaces',
+      'Entender por que Flexbox pertence ao estudo da construção visual.',
+      'A interface precisa se organizar',
+      'Depois de aprender os componentes, surge um problema real: como colocar caixas em linha, coluna, centro, ocupar espaço e adaptar a tela?',
+      'Flexbox não é um módulo separado da interface: ele é o sistema usado para organizar os próprios componentes na tela.',
+      [
+        ['View', 'Cria containers e grupos visuais.'],
+        ['Flexbox', 'Organiza como esses containers e seus filhos ocupam o espaço.'],
+        ['Linha', "flexDirection: 'row' organiza os filhos horizontalmente."],
+        ['Coluna', 'A direção padrão organiza os filhos verticalmente.'],
+        ['Espaço', 'flex, gap, justifyContent e alignItems ajudam a distribuir e alinhar.'],
+        ['Prática', 'Todos os laboratórios e exercícios de Flexbox já existentes continuam preservados abaixo.']
+      ]
+    );
+
+    modules.interfaceBasica.steps = [
+      ...interfaceCore,
+      flexSeparator,
+      ...flexSteps,
+      ...(interfaceExercise ? [interfaceExercise] : [])
+    ];
+    modules.interfaceBasica.title = '1. Interfaces';
+    modules.interfaceBasica.subtitle = 'Componentes, StyleSheet, Agenda de Contatos e Flexbox.';
+    delete modules.flexboxVisual;
   }
 
-  useEffect(() => {
-    consultarBitcoin();
+  // 2. REACT E HOOKS -------------------------------------------------------
+  if (modules.state) {
+    modules.state.title = '2. React e Hooks';
+    modules.state.subtitle = 'JSX, componentes, props, state, eventos, listas, interação, useRef e useEffect.';
 
-    const intervalo = setInterval(() => {
-      consultarBitcoin();
-    }, 30000);
+    const original = modules.state.steps.filter(
+      s => !String(s.id).startsWith('mbb-') &&
+           !['state-13-useeffect-intro','state-14-bitcoin-base','state-15-primeiro-effect','state-16-intervalo','state-17-hooks-resumo'].includes(s.id)
+    );
 
-    return () => clearInterval(intervalo);
-  }, []);
+    const intro = original.find(s => s.id === 'state-intro');
+    if (intro) {
+      intro.title = 'React e Hooks — Da Interface ao Comportamento';
+      intro.objective = 'Entender como React organiza componentes, dados, eventos e efeitos antes de estudar cada recurso.';
+      intro.kicker = 'Módulo 2 — React e Hooks';
+      intro.lead = 'Até aqui construímos interfaces e aprendemos JavaScript essencial. Agora vamos juntar essas duas bases: React organiza a interface em componentes e acompanha dados que mudam durante o uso do aplicativo.';
+      intro.highlight = 'A sequência será intencional: JSX → componentes → props → state → eventos → renderização condicional → listas → interação → useRef → useEffect.';
+      intro.boxes = [
+        ['JSX', 'Descreve a interface usando uma sintaxe integrada ao JavaScript.'],
+        ['Componentes', 'Dividem a tela em peças menores e reutilizáveis.'],
+        ['Props', 'Levam informações de um componente para outro.'],
+        ['State', 'Guarda informações que podem mudar enquanto o app está sendo usado.'],
+        ['Eventos', 'Respondem a ações como toque, digitação e envio de formulário.'],
+        ['Hooks', 'Recursos do React que permitem trabalhar com estado, referências e sincronização.']
+      ];
+    }
 
+    const reactBasics = [
+      mkPage(
+        'mbb-react-jsx',
+        '1. JSX',
+        '1 — JSX: onde termina JavaScript e começa a interface?',
+        'Entender a sintaxe usada para descrever a interface.',
+        'Agora vamos aprofundar',
+        'Em Fundamentos vimos apenas a primeira visão. Agora precisamos ler JSX com segurança para entender os próximos exemplos.',
+        'JSX descreve a estrutura visual. Fora do return escrevemos JavaScript comum; dentro do JSX usamos componentes e podemos inserir expressões JavaScript entre chaves.',
+        [
+          ['JSX', '<View><Text>Olá</Text></View> descreve componentes da tela.'],
+          ['JavaScript', 'const nome = "Ana"; cria um dado fora da estrutura visual.'],
+          ['Chaves', '<Text>{nome}</Text> pede ao JSX para avaliar a expressão JavaScript nome.'],
+          ['Não é HTML', 'View e Text são componentes React Native, não div e p.'],
+          ['Expressão', 'Dentro de { } usamos valores e expressões; não colocamos qualquer bloco de comandos.'],
+          ['Leitura mental', 'JavaScript prepara dados e regras; JSX descreve como esses dados aparecem.']
+        ]
+      ),
+      {
+        id: 'mbb-react-componente-titulo',
+        menu: '2. Componentes',
+        title: '2 — Criando um componente personalizado',
+        objective: 'Perceber que uma tela pode ser montada com peças próprias.',
+        code: `import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+function Titulo() {
+  return <Text style={styles.titulo}>Clima das Cidades</Text>;
+}
+
+export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Bitcoin</Text>
-      <Text style={styles.rotulo}>1 BTC</Text>
-      <Text style={styles.preco}>{preco}</Text>
-      <Text style={styles.aviso}>
-        Atualiza automaticamente a cada 30 segundos
-      </Text>
+      <Titulo />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 30,
-    backgroundColor: '#EEF4FB',
-  },
-  titulo: { fontSize: 28, fontWeight: 'bold', marginBottom: 18 },
-  rotulo: { fontSize: 16, color: '#64748B' },
-  preco: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#166534',
-    marginVertical: 12,
-  },
-  aviso: { fontSize: 13, color: '#64748B', textAlign: 'center' },
+  container: { flex: 1, padding: 24 },
+  titulo: { fontSize: 24, fontWeight: 'bold' },
 });`,
         addedTitle: 'Trecho em foco',
-        added: `useEffect(() => {
-  consultarBitcoin();
+        added: `function Titulo() {
+  return <Text>Clima das Cidades</Text>;
+}
 
-  const intervalo = setInterval(() => {
-    consultarBitcoin();
-  }, 30000);
+<Titulo />
 
-  return () => clearInterval(intervalo);
-}, []);
-
-setInterval(..., 30000)
-→ repete a consulta a cada 30 segundos.
-
-return () => clearInterval(intervalo)
-→ encerra o temporizador quando o componente deixa de existir.`,
-        preview: previewBitcoin,
-        note: 'A função retornada pelo useEffect é a limpeza do efeito. Sem clearInterval, o temporizador poderia continuar ativo indevidamente depois que o componente saísse da tela.'
+Um componente é uma função que retorna JSX.
+Depois podemos usar essa função como uma peça da interface.`,
+        preview: phonePreview('Clima das Cidades', '<div style="font-size:14px;color:#475569;text-align:center;">Primeiro componente personalizado</div>'),
+        note: 'Componentes ajudam a dividir a tela e evitam repetir estruturas grandes.'
       },
       {
-        id: 'state-17-hooks-resumo',
-        menu: '17. Hooks lado a lado',
-        title: '17 — useState, useRef e useEffect lado a lado',
-        objective: 'Consolidar a função de cada Hook estudado.',
-        modulePage: true,
-        kicker: 'Não são três versões da mesma coisa',
-        lead: 'Os três Hooks aparecem no mesmo módulo porque resolvem problemas diferentes. Saber escolher entre eles é mais importante do que decorar sua sintaxe.',
-        highlight: 'Pergunte sempre: preciso guardar um valor que muda na interface? preciso manter uma referência? ou preciso executar um efeito relacionado ao ciclo do componente?',
-        boxes: [
-          ['useState', 'Use quando o valor precisa participar da interface e sua mudança deve provocar nova renderização. Exemplo: nota, média, situação e preço do Bitcoin.'],
-          ['useRef', 'Use quando precisa manter uma referência sem depender de nova renderização. Exemplo: acessar o TextInput da Nota 1 e chamar focus().'],
-          ['useEffect', 'Use para sincronizar o componente com algo externo ou executar um efeito depois da renderização. Exemplo: consultar a cotação e controlar um intervalo.'],
-          ['Dependências []', 'Neste laboratório, o array vazio faz o efeito ser configurado uma vez após a montagem do componente.'],
-          ['Cleanup', 'A função retornada pelo efeito desfaz o que precisa ser encerrado. Exemplo: clearInterval.'],
-          ['Próximo módulo', 'Agora o aluno já viu uma API funcionando. No módulo 4, aprenderá requisição HTTP, JSON e consumo de Web Services de forma explícita.']
+        id: 'mbb-react-cartao-fixo',
+        menu: '3. Cartão fixo',
+        title: '3 — Um componente útil: CartaoClima',
+        objective: 'Evoluir de um componente simples para uma peça visual reutilizável.',
+        code: `import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+function CartaoClima() {
+  return (
+    <View style={styles.cartao}>
+      <Text style={styles.cidade}>São Paulo</Text>
+      <Text style={styles.temperatura}>26 °C</Text>
+    </View>
+  );
+}
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <CartaoClima />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 24 },
+  cartao: { padding: 18, borderWidth: 1, borderRadius: 12 },
+  cidade: { fontSize: 18, fontWeight: 'bold' },
+  temperatura: { fontSize: 26, marginTop: 8 },
+});`,
+        addedTitle: 'Necessidade',
+        added: `O cartão funciona, mas os valores estão presos dentro dele.
+
+Problema:
+se quisermos mostrar Campinas ou Santos,
+teremos de copiar o componente?
+
+Não. No próximo passo entram as props.`,
+        preview: phonePreview('Clima', '<div style="border:1px solid #cbd5e1;border-radius:12px;padding:16px;"><b>São Paulo</b><div style="font-size:26px;margin-top:8px;">26 °C</div></div>'),
+        note: 'Primeiro surge a necessidade; só depois apresentamos o nome técnico props.'
+      },
+      {
+        id: 'mbb-react-props',
+        menu: '4. Props',
+        title: '4 — Passando dados com props',
+        objective: 'Permitir que o mesmo componente receba valores diferentes.',
+        code: `import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+function CartaoClima({ cidade, temperatura }) {
+  return (
+    <View style={styles.cartao}>
+      <Text style={styles.cidade}>{cidade}</Text>
+      <Text style={styles.temperatura}>{temperatura} °C</Text>
+    </View>
+  );
+}
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <CartaoClima cidade="São Paulo" temperatura={26} />
+      <CartaoClima cidade="Campinas" temperatura={28} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 24, gap: 12 },
+  cartao: { padding: 18, borderWidth: 1, borderRadius: 12 },
+  cidade: { fontSize: 18, fontWeight: 'bold' },
+  temperatura: { fontSize: 26, marginTop: 8 },
+});`,
+        addedTitle: 'Trecho em foco',
+        added: `function CartaoClima({ cidade, temperatura }) { ... }
+
+<CartaoClima cidade="São Paulo" temperatura={26} />
+<CartaoClima cidade="Campinas" temperatura={28} />
+
+props = informações que o componente recebe de fora.`,
+        preview: phonePreview('Clima', '<div style="display:grid;gap:10px;"><div style="border:1px solid #cbd5e1;border-radius:10px;padding:12px;"><b>São Paulo</b><div>26 °C</div></div><div style="border:1px solid #cbd5e1;border-radius:10px;padding:12px;"><b>Campinas</b><div>28 °C</div></div></div>'),
+        note: 'Agora a mesma peça visual pode ser reutilizada com dados diferentes.'
+      },
+      mkPage(
+        'mbb-react-props-state',
+        '5. Props × state',
+        '5 — Props × state',
+        'Distinguir dados recebidos de dados que pertencem ao componente e mudam.',
+        'Duas origens diferentes',
+        'Props e state aparecem juntos em muitos aplicativos, mas não resolvem o mesmo problema.',
+        'Props vêm de fora do componente. State pertence ao componente e pode mudar durante o uso.',
+        [
+          ['props', 'Exemplo: cidade e temperatura recebidas por CartaoClima.'],
+          ['state', 'Exemplo: nota digitada, resultado calculado ou texto que muda.'],
+          ['Quem altera props?', 'O componente que envia os valores decide quais props serão passadas.'],
+          ['Quem acompanha state?', 'O próprio componente usa uma função de atualização, como setNota1.'],
+          ['Renderização', 'Tanto props quanto state podem participar do JSX.'],
+          ['Próximo passo', 'A Média Escolar cria a necessidade natural de state: as notas mudam enquanto o usuário digita.']
         ]
-      }
+      )
     ];
 
-    const indiceExercicios = passosState.findIndex(step => step.id === 'exercicios-state');
-    if (indiceExercicios >= 0) {
-      passosState.splice(indiceExercicios, 0, ...novosPassos);
-    } else {
-      passosState.push(...novosPassos);
+    const mediaCore = original.filter(s => {
+      if (!s.id || !String(s.id).startsWith('state-')) return false;
+      if (['state-intro','state-11-useref','state-12-final'].includes(s.id)) return false;
+      const m = String(s.id).match(/^state-(\d+)/);
+      return m && Number(m[1]) <= 10;
+    });
+
+    const useStateStep = mediaCore.find(s => s.id === 'state-7-state');
+    if (useStateStep && !String(useStateStep.added || '').includes('valor atual')) {
+      useStateStep.added = `${useStateStep.added || ''}
+
+Como ler:
+const [nota1, setNota1] = useState('');
+
+nota1 -> valor atual.
+setNota1 -> função usada para alterar esse valor.
+'' -> valor inicial.
+
+Quando setNota1 recebe um novo valor, React registra a mudança e renderiza novamente o que depende desse state.
+
+TextInput:
+value={nota1} mostra o valor atual.
+onChangeText={setNota1} atualiza o state conforme o usuário digita.`;
     }
+
+    const eventStep = mediaCore.find(s => s.id === 'state-8-eventos');
+    if (eventStep) {
+      eventStep.note = 'Um botão não executa uma ação sozinho. O evento onPress recebe uma função. Quando o usuário toca, essa função é chamada. Isso é diferente de um efeito automático, assunto que veremos mais adiante.';
+    }
+
+    const postState = [
+      mkPage(
+        'mbb-react-condicional',
+        '16. Interface condicional',
+        'Renderização condicional — a interface também toma decisões',
+        'Mostrar ou esconder elementos conforme o estado.',
+        'O resultado nem sempre deve aparecer',
+        'Depois de calcular a média, podemos decidir quais elementos entram no JSX. A lógica de decisão continua importante; agora ela também controla o que é exibido.',
+        'if continua útil para regras do programa. No JSX, && e o operador ternário são formas comuns de escolher o que aparece.',
+        [
+          ['&&', 'condicao && <Text>...</Text> mostra o elemento somente quando a condição é verdadeira.'],
+          ['Ternário', 'condicao ? <A /> : <B /> escolhe entre duas possibilidades visuais.'],
+          ['if', 'Continua adequado para cálculos, validações e decisões fora do JSX.'],
+          ['Exemplo', 'media !== "" && <Text>Média: {media}</Text>.'],
+          ['Outro exemplo', 'aprovado ? <Text>Aprovado</Text> : <Text>Reprovado</Text>.'],
+          ['Regra MbB', 'Primeiro pergunte o que precisa aparecer; depois escolha a forma de expressar essa decisão.']
+        ]
+      ),
+      {
+        id: 'mbb-react-map',
+        menu: '17. Array → tela',
+        title: 'Array e map(): transformando dados em componentes',
+        objective: 'Aplicar no React o map() já estudado em JavaScript.',
+        code: `import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+function CartaoClima({ cidade, temperatura }) {
+  return (
+    <View style={styles.cartao}>
+      <Text style={styles.cidade}>{cidade}</Text>
+      <Text>{temperatura} °C</Text>
+    </View>
+  );
+}
+
+export default function App() {
+  const cidades = [
+    { id: 1, cidade: 'São Paulo', temperatura: 26 },
+    { id: 2, cidade: 'Campinas', temperatura: 28 },
+    { id: 3, cidade: 'Santos', temperatura: 24 },
+  ];
+
+  return (
+    <View style={styles.container}>
+      {cidades.map(item => (
+        <CartaoClima
+          key={item.id}
+          cidade={item.cidade}
+          temperatura={item.temperatura}
+        />
+      ))}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 24, gap: 10 },
+  cartao: { padding: 14, borderWidth: 1, borderRadius: 10 },
+  cidade: { fontWeight: 'bold' },
+});`,
+        addedTitle: 'Revisão em espiral',
+        added: `No JS Essencial:
+array + objeto + map() já foram estudados.
+
+Agora aplicamos isso à interface:
+cada objeto do array vira um CartaoClima.
+
+Não estamos aprendendo map() de novo.
+Estamos usando map() para gerar componentes.`,
+        preview: phonePreview('Cidades', '<div style="display:grid;gap:8px;"><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;"><b>São Paulo</b> — 26 °C</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;"><b>Campinas</b> — 28 °C</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;"><b>Santos</b> — 24 °C</div></div>'),
+        note: 'JavaScript ensina map(); React usa map() para transformar dados em elementos visuais.'
+      },
+      mkPage(
+        'mbb-react-key',
+        '18. key',
+        'Por que uma lista precisa de key?',
+        'Entender por que cada elemento gerado precisa ser identificado.',
+        'Vários componentes parecidos',
+        'Quando o React recebe uma lista de elementos, ele precisa acompanhar qual item corresponde a qual dado entre uma renderização e outra.',
+        'key fornece uma identidade estável para cada item da lista. Quando existe um id real no dado, ele costuma ser a melhor escolha.',
+        [
+          ['Exemplo', '<CartaoClima key={item.id} ... />'],
+          ['Por quê?', 'Ajuda o React a relacionar cada componente ao item correspondente.'],
+          ['ID estável', 'Prefira um identificador que pertença ao próprio dado.'],
+          ['Índice', 'Evite usar o índice como solução automática quando a lista pode mudar de ordem.'],
+          ['Não aparece na tela', 'key é usada pelo React; não é um texto mostrado ao usuário.'],
+          ['Próximo problema', 'Com muitos cartões, a tela pode ficar maior que o espaço disponível.']
+        ]
+      ),
+      {
+        id: 'mbb-react-scrollview',
+        menu: '19. ScrollView',
+        title: 'ScrollView — quando o conteúdo não cabe na tela',
+        objective: 'Permitir rolagem em uma quantidade limitada de conteúdo.',
+        code: `import React from 'react';
+import { ScrollView, Text, View, StyleSheet } from 'react-native';
+
+export default function App() {
+  return (
+    <ScrollView contentContainerStyle={styles.conteudo}>
+      <Text style={styles.titulo}>Cidades</Text>
+
+      <View style={styles.cartao}><Text>São Paulo</Text></View>
+      <View style={styles.cartao}><Text>Campinas</Text></View>
+      <View style={styles.cartao}><Text>Santos</Text></View>
+      <View style={styles.cartao}><Text>Sorocaba</Text></View>
+      <View style={styles.cartao}><Text>Ribeirão Preto</Text></View>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  conteudo: { padding: 24, gap: 10 },
+  titulo: { fontSize: 24, fontWeight: 'bold' },
+  cartao: { padding: 18, borderWidth: 1, borderRadius: 10 },
+});`,
+        addedTitle: 'Necessidade',
+        added: `Problema:
+o conteúdo ficou maior que a tela.
+
+ScrollView cria uma área rolável.
+
+Importante:
+todos os filhos declarados dentro dela são renderizados.`,
+        preview: phonePreview('Cidades', '<div style="height:175px;overflow:hidden;border:1px solid #cbd5e1;border-radius:10px;padding:8px;"><div>São Paulo</div><hr><div>Campinas</div><hr><div>Santos</div><hr><div>Sorocaba</div><hr><div>Ribeirão Preto</div></div>', 'A lista continua para baixo'),
+        note: 'ScrollView é ótimo para conteúdo finito e de tamanho controlado.'
+      },
+      mkPage(
+        'mbb-react-scroll-limite',
+        '20. Limite ScrollView',
+        'Quando ScrollView deixa de ser a melhor escolha?',
+        'Reconhecer que listas grandes ou dinâmicas precisam de outra abordagem.',
+        'Funciona, mas pode não escalar bem',
+        'ScrollView renderiza seus filhos de uma vez. Em uma tela com poucos itens isso é simples e adequado. Em listas grandes ou que crescem bastante, existe uma solução própria para listas.',
+        'A próxima etapa apresenta FlatList. A decisão não é “novo substitui velho”: cada componente resolve uma necessidade diferente.',
+        [
+          ['ScrollView', 'Boa para conteúdo pequeno ou finito que precisa de rolagem.'],
+          ['Todos os filhos', 'O conteúdo declarado dentro dela é renderizado.'],
+          ['Lista grande', 'Pode consumir recursos desnecessariamente quando há muitos itens.'],
+          ['Lista dinâmica', 'Pode crescer, mudar ou receber muitos registros.'],
+          ['FlatList', 'Foi criada para trabalhar com listas e renderização mais eficiente.'],
+          ['Regra', 'Escolha pela necessidade da tela, não pela novidade do componente.']
+        ]
+      ),
+      {
+        id: 'mbb-react-flatlist',
+        menu: '21. FlatList',
+        title: 'FlatList — uma lista preparada para crescer',
+        objective: 'Usar data, renderItem e keyExtractor.',
+        code: `import React from 'react';
+import { FlatList, Text, View, StyleSheet } from 'react-native';
+
+function CartaoClima({ cidade, temperatura }) {
+  return (
+    <View style={styles.cartao}>
+      <Text style={styles.cidade}>{cidade}</Text>
+      <Text>{temperatura} °C</Text>
+    </View>
+  );
+}
+
+export default function App() {
+  const cidades = [
+    { id: 'sp', cidade: 'São Paulo', temperatura: 26 },
+    { id: 'campinas', cidade: 'Campinas', temperatura: 28 },
+    { id: 'santos', cidade: 'Santos', temperatura: 24 },
+  ];
+
+  return (
+    <FlatList
+      data={cidades}
+      keyExtractor={item => item.id}
+      renderItem={({ item }) => (
+        <CartaoClima
+          cidade={item.cidade}
+          temperatura={item.temperatura}
+        />
+      )}
+      contentContainerStyle={styles.lista}
+    />
+  );
+}
+
+const styles = StyleSheet.create({
+  lista: { padding: 24, gap: 10 },
+  cartao: { padding: 14, borderWidth: 1, borderRadius: 10 },
+  cidade: { fontWeight: 'bold' },
+});`,
+        addedTitle: 'Três peças principais',
+        added: `data
+-> informa qual array será usado.
+
+renderItem
+-> define como cada item vira interface.
+
+keyExtractor
+-> informa como obter uma chave estável para cada item.`,
+        preview: phonePreview('FlatList', '<div style="display:grid;gap:8px;"><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;">São Paulo — 26 °C</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;">Campinas — 28 °C</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;">Santos — 24 °C</div></div>'),
+        note: 'O aluno chega à FlatList somente depois de entender array, map(), key e ScrollView.'
+      },
+      mkPage(
+        'mbb-react-listas-compare',
+        '22. Scroll × Flat',
+        'ScrollView × FlatList',
+        'Escolher conscientemente entre duas formas de exibir conteúdo rolável.',
+        'Não existe vencedor universal',
+        'As duas permitem rolagem, mas foram pensadas para situações diferentes.',
+        'Use ScrollView quando o conteúdo é pequeno e controlado; use FlatList quando o problema é uma lista maior, dinâmica ou que precisa crescer.',
+        [
+          ['ScrollView', 'Conteúdo pequeno/finito. Estrutura direta com filhos dentro do componente.'],
+          ['FlatList', 'Lista maior/dinâmica. Recebe data e renderItem.'],
+          ['key', 'Com map() usamos key; com FlatList podemos usar keyExtractor.'],
+          ['Eficiência', 'FlatList é preparada para não tratar toda lista como um bloco único já renderizado.'],
+          ['Didática', 'Primeiro entendemos a estrutura simples; depois usamos a ferramenta especializada.'],
+          ['Decisão', 'Pergunte: é uma página rolável ou é uma lista de dados que pode crescer?']
+        ]
+      ),
+      {
+        id: 'mbb-react-pressable',
+        menu: '23. Pressable',
+        title: 'Pressable — quando uma área inteira precisa reagir ao toque',
+        objective: 'Criar uma interação personalizada além do Button.',
+        code: `import React from 'react';
+import { Pressable, Text, StyleSheet } from 'react-native';
+
+export default function App() {
+  function abrirDetalhes() {
+    console.log('Abrir detalhes');
+  }
+
+  return (
+    <Pressable style={styles.cartao} onPress={abrirDetalhes}>
+      <Text style={styles.titulo}>São Paulo</Text>
+      <Text>Toque para ver detalhes</Text>
+    </Pressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  cartao: {
+    margin: 24,
+    padding: 18,
+    borderWidth: 1,
+    borderRadius: 12,
+  },
+  titulo: { fontSize: 18, fontWeight: 'bold' },
+});`,
+        addedTitle: 'Necessidade',
+        added: `Button resolve uma ação simples.
+TouchableOpacity continua válido.
+Pressable é útil quando queremos controlar melhor uma área clicável personalizada.
+
+onPress recebe uma função:
+onPress={abrirDetalhes}`,
+        preview: phonePreview('Cartão clicável', '<div style="border:1px solid #94a3b8;border-radius:12px;padding:18px;"><b>São Paulo</b><div style="margin-top:6px;color:#64748b;">Toque para ver detalhes</div></div>'),
+        note: 'Pressable é apresentado pela necessidade de tornar uma área personalizada interativa, não como substituto automático de TouchableOpacity.'
+      },
+      mkPage(
+        'mbb-react-botoes-compare',
+        '24. Botões',
+        'Button × TouchableOpacity × Pressable',
+        'Entender por que três formas de interação podem coexistir.',
+        'Escolha pela necessidade',
+        'Todos podem responder ao toque, mas oferecem níveis diferentes de controle visual e estrutural.',
+        'Não vamos apagar TouchableOpacity do material. Ele continua válido no laboratório de interface já existente.',
+        [
+          ['Button', 'Bom para uma ação simples com aparência definida pela plataforma.'],
+          ['TouchableOpacity', 'Área clicável personalizável que reduz opacidade durante o toque.'],
+          ['Pressable', 'Oferece mais controle sobre estados de interação e aparência.'],
+          ['Não é moda', 'A escolha depende da experiência que a interface precisa oferecer.'],
+          ['Preservação', 'Os botões atuais da Agenda de Contatos continuam como estão.'],
+          ['Próximo passo', 'Vamos usar o estado pressed do Pressable para reagir visualmente ao toque.']
+        ]
+      ),
+      {
+        id: 'mbb-react-pressed',
+        menu: '25. pressed',
+        title: 'O estado pressed do Pressable',
+        objective: 'Alterar a aparência enquanto o usuário está pressionando.',
+        code: `import React from 'react';
+import { Pressable, Text, StyleSheet } from 'react-native';
+
+export default function App() {
+  return (
+    <Pressable
+      onPress={() => console.log('Salvou')}
+      style={({ pressed }) => [
+        styles.botao,
+        pressed && styles.botaoPressionado,
+      ]}
+    >
+      <Text style={styles.texto}>Salvar</Text>
+    </Pressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  botao: {
+    margin: 24,
+    padding: 14,
+    borderRadius: 10,
+    backgroundColor: '#1967D2',
+  },
+  botaoPressionado: {
+    opacity: 0.6,
+  },
+  texto: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+});`,
+        addedTitle: 'Trecho em foco',
+        added: `style={({ pressed }) => [
+  styles.botao,
+  pressed && styles.botaoPressionado,
+]}
+
+pressed informa se a área está sendo pressionada.
+
+O && aplica o segundo estilo somente durante o toque.`,
+        preview: phonePreview('Pressable', '<div style="background:#1967d2;color:#fff;border-radius:10px;padding:13px;text-align:center;font-weight:700;">Salvar</div>', 'Durante o toque, a opacidade muda'),
+        note: 'Aqui reaparece a renderização condicional em um contexto real de interação.'
+      },
+      mkPage(
+        'mbb-react-arrow-eventos',
+        '26. Arrow em eventos',
+        'Por que aparece () => ... nos eventos?',
+        'Relacionar arrow functions à necessidade de passar uma função.',
+        'Não é decoração',
+        'Em React, onPress espera receber uma função para executar depois. Por isso precisamos distinguir passar uma função de executar uma função imediatamente.',
+        'onPress={salvar} passa uma função já existente. onPress={() => salvar(id)} cria uma função para que salvar(id) seja executado somente no toque.',
+        [
+          ['Direto', 'onPress={salvar}: use quando não precisa preparar argumentos naquele ponto.'],
+          ['Arrow', 'onPress={() => salvar(id)}: útil para chamar algo com argumento depois do toque.'],
+          ['Evite', 'onPress={salvar(id)} executa a chamada durante a renderização.'],
+          ['JavaScript', 'Arrow function já foi estudada no JS Essencial; aqui vemos por que ela aparece no React.'],
+          ['Evento', 'O clique é o gatilho. A função passada ao evento é executada quando o gatilho ocorre.'],
+          ['Ponte', 'Essa diferença será importante quando compararmos Evento × Effect.']
+        ]
+      )
+    ];
+
+    const refStep = original.find(s => s.id === 'state-11-useref');
+    const finalMedia = original.find(s => s.id === 'state-12-final');
+    if (refStep) {
+      refStep.menu = '27. useRef';
+      refStep.title = 'useRef — devolvendo o foco à primeira nota';
+      refStep.objective = 'Usar uma referência para acessar o TextInput sem transformar isso em state.';
+      refStep.code = String(refStep.code || '').replaceAll('campoNota1.current.focus()', 'campoNota1.current?.focus()');
+      refStep.added = `1. Importe useRef:
+import React, { useState, useRef } from 'react';
+
+2. Crie a referência:
+const campoNota1 = useRef(null);
+
+3. Ligue ao campo:
+ref={campoNota1}
+
+4. Depois de limpar:
+campoNota1.current?.focus();
+
+ref -> liga a referência ao componente.
+current -> aponta para o valor/elemento referenciado.
+focus() -> coloca o cursor no TextInput.
+?. -> só tenta chamar focus() se current estiver disponível.
+
+state × ref
+state participa da renderização.
+ref mantém uma referência sem provocar renderização quando current muda.`;
+      refStep.note = 'A forma campoNota1.current?.focus() evita tentar chamar focus() se a referência ainda não estiver disponível.';
+    }
+
+    const refOptional = {
+      id: 'mbb-react-ref-avancar',
+      menu: '28. Ref opcional',
+      title: 'Complemento — avançar o foco para o próximo campo',
+      objective: 'Ver uma segunda aplicação prática de referência sem tornar isso núcleo obrigatório.',
+      code: `import React, { useRef } from 'react';
+import { View, TextInput } from 'react-native';
+
+export default function App() {
+  const campoNota2 = useRef(null);
+
+  return (
+    <View>
+      <TextInput
+        placeholder="Nota 1"
+        returnKeyType="next"
+        onSubmitEditing={() => campoNota2.current?.focus()}
+      />
+
+      <TextInput
+        ref={campoNota2}
+        placeholder="Nota 2"
+        keyboardType="numeric"
+      />
+    </View>
+  );
+}`,
+      addedTitle: 'Complemento',
+      added: `onSubmitEditing
+-> evento disparado ao concluir a edição do primeiro campo.
+
+campoNota2.current?.focus()
+-> move o cursor para o próximo TextInput.
+
+Este passo é complementar.
+O núcleo obrigatório de useRef continua sendo compreender referência, current e focus().`,
+      preview: phonePreview('Notas', '<div style="border:1px solid #cbd5e1;padding:10px;border-radius:8px;margin-bottom:10px;">Nota 1</div><div style="border:2px solid #1967d2;padding:10px;border-radius:8px;">Nota 2 — foco</div>'),
+      note: 'Este exemplo amplia o formulário, mas não é necessário para compreender o conceito principal de useRef.'
+    };
+
+    if (finalMedia) {
+      finalMedia.menu = '29. Média final';
+      finalMedia.title = 'Média Escolar — consolidação de state, eventos e ref';
+      finalMedia.objective = 'Revisar o aplicativo preservado com a forma segura de foco.';
+      finalMedia.code = String(finalMedia.code || '').replaceAll('campoNota1.current.focus()', 'campoNota1.current?.focus()');
+      finalMedia.note = 'A Média Escolar consolida useState, TextInput controlado, eventos, funções, if/else e useRef. Agora o próximo problema será diferente: sincronizar o componente com algo externo.';
+    }
+
+    const effectSteps = [
+      mkPage(
+        'mbb-effect-intro',
+        '30. useEffect',
+        'useEffect — sincronizando o componente com algo externo',
+        'Compreender o papel do Effect antes de escrever código.',
+        'Uma necessidade diferente',
+        'Até agora, as mudanças vieram de dados, cálculos e ações do usuário. Alguns comportamentos precisam permanecer sincronizados com algo que existe fora do fluxo de renderização do React, como um temporizador, uma assinatura ou uma comunicação externa.',
+        'useEffect é usado para sincronizar o componente com sistemas externos ao React. Não vamos defini-lo simplesmente como “uma função que roda quando a tela abre”.',
+        [
+          ['Externo ao React', 'Temporizador, conexão, assinatura, API, recurso do navegador/dispositivo etc.'],
+          ['Effect', 'Configura a sincronização necessária depois que a renderização foi confirmada.'],
+          ['Evento', 'Responde diretamente a uma ação do usuário, como clicar em Calcular.'],
+          ['Não confundir', 'Cálculo simples derivado de state não precisa virar Effect.'],
+          ['Primeiro laboratório', 'Usaremos um temporizador porque ele deixa a sincronização externa visível sem misturar API.'],
+          ['Depois', 'Somente após entender Effect, cleanup e dependências faremos a ponte conceitual com API.']
+        ]
+      ),
+      {
+        id: 'mbb-effect-timer',
+        menu: '31. Temporizador',
+        title: 'Primeiro Effect: um temporizador',
+        objective: 'Sincronizar state com um relógio externo usando setInterval.',
+        code: `import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+export default function App() {
+  const [segundos, setSegundos] = useState(0);
+
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      setSegundos(valorAtual => valorAtual + 1);
+    }, 1000);
+
+    // Ainda falta encerrar o intervalo.
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.titulo}>Tempo</Text>
+      <Text style={styles.valor}>{segundos} s</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  titulo: { fontSize: 22, fontWeight: 'bold' },
+  valor: { fontSize: 34, marginTop: 12 },
+});`,
+        addedTitle: 'O que está acontecendo',
+        added: `setInterval pertence ao ambiente externo ao React.
+Ele dispara a função a cada 1000 ms.
+
+setSegundos(...) altera o state.
+React renderiza o novo valor.
+
+Esta versão mostra a necessidade do Effect,
+mas ainda está incompleta:
+se iniciamos um intervalo, precisamos também saber encerrá-lo.`,
+        preview: phonePreview('Tempo', '<div style="font-size:38px;font-weight:800;text-align:center;">12 s</div>', 'O valor cresce a cada segundo'),
+        note: 'Esta é uma etapa didática intermediária. O código correto será completado imediatamente com cleanup.'
+      },
+      {
+        id: 'mbb-effect-cleanup',
+        menu: '32. Cleanup',
+        title: 'Cleanup — desfazendo o que o Effect iniciou',
+        objective: 'Encerrar o intervalo quando o componente deixar de usar aquela sincronização.',
+        code: `import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+
+export default function App() {
+  const [segundos, setSegundos] = useState(0);
+
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      setSegundos(valorAtual => valorAtual + 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalo);
+    };
+  }, []);
+
+  return (
+    <View>
+      <Text>Tempo: {segundos} s</Text>
+    </View>
+  );
+}`,
+        addedTitle: 'Trecho em foco',
+        added: `return () => {
+  clearInterval(intervalo);
+};
+
+setup:
+criamos o intervalo.
+
+cleanup:
+encerramos o intervalo.
+
+Regra mental:
+se o Effect inicia algo externo que precisa ser encerrado,
+a função de cleanup desfaz esse trabalho.`,
+        preview: phonePreview('Effect + cleanup', '<div style="font-size:20px;text-align:center;">Temporizador ativo</div><div style="margin-top:10px;color:#166534;text-align:center;">cleanup preparado</div>'),
+        note: 'Cleanup faz parte do conceito, não é um detalhe opcional.'
+      },
+      mkPage(
+        'mbb-effect-ciclo',
+        '33. Montar/desmontar',
+        'Montagem, sincronização e desmontagem',
+        'Criar um modelo mental simples do ciclo do Effect.',
+        'Sem decorar jargão',
+        'Precisamos apenas acompanhar o que acontece quando o componente entra, mantém uma sincronização e depois sai.',
+        'Componente entra → React renderiza → Effect configura a sincronização → quando necessário o cleanup desfaz a configuração.',
+        [
+          ['Montagem', 'O componente entra na árvore e passa a existir na interface.'],
+          ['Setup', 'O Effect configura a sincronização externa necessária.'],
+          ['Enquanto existe', 'State e props podem provocar novas renderizações.'],
+          ['Dependências', 'Determinadas mudanças podem exigir refazer a sincronização.'],
+          ['Cleanup', 'Antes de refazer um Effect ou quando o componente sai, limpamos o que foi configurado.'],
+          ['Desmontagem', 'O componente deixa de existir na árvore da interface.']
+        ]
+      ),
+      mkPage(
+        'mbb-effect-dependencias',
+        '34. Dependências',
+        'O array de dependências não é um “botão de rodar uma vez”',
+        'Entender a relação entre valores reativos e sincronização.',
+        'O Effect depende de quê?',
+        'As dependências informam quais valores usados pelo Effect pertencem ao fluxo reativo do componente e podem exigir uma nova sincronização.',
+        'Não memorize apenas [] = “uma vez”. Leia o Effect perguntando: quais valores reativos esta sincronização usa?',
+        [
+          ['Sem segundo argumento', 'O Effect é considerado após cada renderização.'],
+          ['[]', 'O Effect não declara dependência de props/state. O setup ocorre após a montagem e o cleanup na desmontagem; em desenvolvimento pode haver verificação extra.'],
+          ['[cidade]', 'Se a sincronização usa cidade, ela pode ser refeita quando cidade muda.'],
+          ['Antes de refazer', 'React executa o cleanup da sincronização anterior.'],
+          ['Regra', 'Dependências devem refletir os valores reativos realmente usados pelo Effect.'],
+          ['Não é truque', 'O objetivo não é controlar artificialmente quantas vezes “roda”, e sim manter a sincronização correta.']
+        ]
+      ),
+      mkPage(
+        'mbb-effect-strict',
+        '35. Strict Mode',
+        'Por que em desenvolvimento um Effect pode parecer executar mais de uma vez?',
+        'Evitar que o aluno conclua que o código está necessariamente errado.',
+        'Uma observação curta',
+        'Em ambiente de desenvolvimento, o React pode executar uma sequência extra de setup e cleanup para ajudar a revelar Effects que não conseguem ser montados e desmontados corretamente.',
+        'Por isso, durante testes, você pode perceber setup → cleanup → setup. O importante é escrever o Effect de forma que essa sequência seja segura.',
+        [
+          ['Produção', 'O comportamento de verificação de desenvolvimento não deve ser usado como modelo de execução da aplicação publicada.'],
+          ['Desenvolvimento', 'Pode haver uma execução extra de setup/cleanup para verificar a robustez.'],
+          ['Solução correta', 'Não “driblar” o Effect; implementar cleanup correto.'],
+          ['Timer', 'Se criamos um intervalo, devemos removê-lo no cleanup.'],
+          ['Objetivo didático', 'Saber que essa duplicidade aparente pode existir e não entrar em detalhes internos.'],
+          ['Siga adiante', 'O conceito principal continua sendo sincronização com algo externo.']
+        ]
+      ),
+      mkPage(
+        'mbb-effect-evento',
+        '36. Effect × Evento',
+        'Effect × Event',
+        'Distinguir ação do usuário de sincronização externa.',
+        'O gatilho muda tudo',
+        'Muitos erros acontecem quando colocamos dentro de useEffect algo que deveria acontecer diretamente em resposta ao usuário.',
+        'Clique do usuário → evento. Sincronização com sistema externo → Effect.',
+        [
+          ['Calcular média', 'O usuário toca em Calcular. Isso pertence ao onPress.'],
+          ['Limpar', 'O usuário toca em Limpar. Isso pertence ao onPress.'],
+          ['Temporizador', 'Precisa existir enquanto o componente está sincronizado com o relógio. Isso é Effect.'],
+          ['API por botão', 'ViaCEP continua correto dentro do evento Pesquisar.'],
+          ['API automática', 'Se a aplicação realmente precisa sincronizar automaticamente com dados externos, um Effect pode fazer sentido.'],
+          ['Pergunta', 'Isso acontece porque o usuário fez algo agora ou porque o componente precisa permanecer sincronizado?']
+        ]
+      ),
+      mkPage(
+        'mbb-effect-nao-usar',
+        '37. Quando não usar',
+        'Quando NÃO usar useEffect',
+        'Evitar Effects desnecessários.',
+        'Menos código, melhor modelo mental',
+        'useEffect não é um lugar genérico para colocar qualquer lógica que “precisa acontecer”.',
+        'Se um valor pode ser calculado diretamente a partir de props/state durante a renderização, calcule-o. Se algo acontece por causa de um clique, trate no evento.',
+        [
+          ['Cálculo simples', 'total = quantidade * preco não precisa de Effect.'],
+          ['Média', '(nota1 + nota2) / 2 pode ser calculada na função acionada pelo botão.'],
+          ['Clique', 'Salvar, excluir e pesquisar por botão pertencem ao evento correspondente.'],
+          ['Effect', 'Reserve para sincronizações externas necessárias ao componente.'],
+          ['Sinal de alerta', 'Effect que apenas copia um state para outro frequentemente pode ser evitado.'],
+          ['Objetivo', 'Não decorar “useEffect para tudo automático”; entender a origem da necessidade.']
+        ]
+      ),
+      {
+        id: 'mbb-effect-api-ponte',
+        menu: '38. Ponte API',
+        title: 'Ponte conceitual: useEffect com uma API',
+        objective: 'Ver uma aplicação externa do Effect sem transformar esta aula em módulo de APIs.',
+        code: `import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+
+export default function App() {
+  const [preco, setPreco] = useState('Carregando...');
+
+  useEffect(() => {
+    async function consultarBitcoin() {
+      const resposta = await fetch(
+        'https://economia.awesomeapi.com.br/json/last/BTC-BRL'
+      );
+      const dados = await resposta.json();
+      setPreco(dados.BTCBRL.bid);
+    }
+
+    consultarBitcoin();
+  }, []);
+
+  return (
+    <View>
+      <Text>Bitcoin: R$ {preco}</Text>
+    </View>
+  );
+}`,
+        addedTitle: 'O foco ainda é Effect',
+        added: `Aqui aparece uma API apenas como sistema externo.
+
+Não vamos aprofundar ainda:
+- cliente e servidor;
+- request e response;
+- HTTP;
+- estrutura de JSON;
+- tratamento completo da requisição.
+
+Esses conceitos pertencem ao próximo módulo.
+
+A pergunta desta etapa é:
+o componente precisa sincronizar automaticamente com um dado externo?`,
+        preview: phonePreview('Bitcoin', '<div style="font-size:13px;color:#64748b;text-align:center;">Cotação recebida de serviço externo</div><div style="font-size:25px;font-weight:800;color:#166534;text-align:center;margin-top:12px;">R$ ...</div>'),
+        note: 'O primeiro laboratório de useEffect foi o temporizador. A API aparece somente depois, como ponte para Web Services/APIs.'
+      },
+      mkPage(
+        'mbb-hooks-resumo',
+        '39. Consolidação',
+        'useState × useRef × useEffect',
+        'Consolidar quando usar cada Hook estudado.',
+        'Três problemas diferentes',
+        'Os Hooks não são três versões de uma mesma solução. Cada um aparece porque surgiu uma necessidade diferente.',
+        'Antes de escolher um Hook, descreva o problema em português simples.',
+        [
+          ['useState', 'Preciso guardar um valor que participa da interface e pode mudar.'],
+          ['useRef', 'Preciso manter uma referência sem que a mudança de current provoque renderização.'],
+          ['useEffect', 'Preciso sincronizar o componente com algo externo ao React.'],
+          ['Evento', 'Não é Hook, mas é essencial na comparação: responde diretamente a ações do usuário.'],
+          ['Exemplos', 'nota → state; foco do campo → ref; temporizador → Effect; botão Calcular → evento.'],
+          ['Próximo módulo', 'Agora estamos prontos para estudar cliente, servidor, HTTP, JSON, fetch e APIs conscientemente.']
+        ]
+      )
+    ];
+
+    const exercise = original.find(s => s.id === 'exercicios-state');
+    if (exercise && !String(exercise.html || '').includes('Consolidação integrada')) {
+      const integrated = `
+<div class="exercise-native exercise-clean">
+  <div class="topline exercise-clean-top">
+    <h2>99. Exercícios — Consolidação integrada de React e Hooks</h2>
+    <div class="objective"><strong>Objetivo:</strong> combinar componentes, props, state, eventos, listas, interação e Hooks em problemas reais.</div>
+  </div>
+  <div class="panel brief"><div class="panel-body">
+    <h3>Consolidação integrada</h3>
+    <ol>
+      <li><strong>Painel de cidades:</strong> crie CartaoClima com props e gere vários cartões a partir de um array usando map() e key.</li>
+      <li><strong>Lista de contatos:</strong> comece com ScrollView e depois reescreva usando FlatList com data, renderItem e keyExtractor. Explique qual versão é mais adequada se a lista crescer.</li>
+      <li><strong>Card interativo:</strong> transforme um cartão em Pressable e altere o estilo enquanto pressed for verdadeiro.</li>
+      <li><strong>Formulário escolar:</strong> use state controlado, botão Salvar e useRef para devolver o foco ao primeiro campo após limpar.</li>
+      <li><strong>Temporizador:</strong> use useEffect + setInterval + cleanup. Explique por que esse caso é Effect e não evento.</li>
+      <li><strong>Decisão de arquitetura:</strong> para cada situação, diga se usaria evento ou Effect: consultar CEP por botão, atualizar relógio, calcular desconto, buscar dados automaticamente ao trocar uma cidade.</li>
+    </ol>
+  </div></div>
+</div>`;
+      exercise.html = integrated + (exercise.html || '');
+      exercise.objective = 'Consolidar state, props, componentes, listas, eventos, interação, useRef e useEffect.';
+    }
+
+    modules.state.steps = [
+      ...(intro ? [intro] : []),
+      ...reactBasics,
+      ...mediaCore,
+      ...postState,
+      ...(refStep ? [refStep] : []),
+      refOptional,
+      ...(finalMedia ? [finalMedia] : []),
+      ...effectSteps,
+      ...(exercise ? [exercise] : [])
+    ];
+  }
+
+  // 3. WEB SERVICES / APIs -------------------------------------------------
+  if (modules.apiCep) {
+    modules.apiCep.title = '3. Web Services/APIs';
+    modules.apiCep.subtitle = 'Cliente, servidor, HTTP, request/response, JSON, fetch e aplicações conectadas.';
+
+    if (!modules.apiCep.steps.some(s => s.id === 'mbb-api-ponte-react')) {
+      const apiIntro = modules.apiCep.steps.find(s => s.id === 'api-intro');
+      const demais = modules.apiCep.steps.filter(s => s.id !== 'api-intro');
+
+      const bridge = mkPage(
+        'mbb-api-ponte-react',
+        '1. Ponte React → API',
+        'Do React para os dados externos',
+        'Relacionar o que já foi aprendido com o consumo de APIs.',
+        'As peças agora trabalham juntas',
+        'O aluno já conhece state, eventos, componentes, props, listas e Effect. Agora vamos entender o caminho da informação entre aplicativo e serviço externo.',
+        'JavaScript continua cuidando dos dados e da lógica; React organiza a interface; a API fornece dados externos; state guarda o que a tela precisa mostrar.',
+        [
+          ['Evento', 'ViaCEP continuará sendo consultado quando o usuário tocar em Pesquisar. Isso está correto.'],
+          ['Effect', 'Só será usado quando existir uma necessidade real de sincronização automática.'],
+          ['State', 'Guarda CEP digitado, cidade, estado, cotação, temperatura etc.'],
+          ['Props', 'Permitem repassar dados recebidos para componentes como CartaoClima.'],
+          ['Lista', 'Dados recebidos em coleção podem virar componentes com map() ou FlatList.'],
+          ['Regra', 'Não trocamos tudo por useEffect só porque acabamos de aprendê-lo.']
+        ]
+      );
+
+      const spiral = mkPage(
+        'mbb-api-clima-espiral',
+        '2. Clima em espiral',
+        'Clima: o mesmo problema evoluindo em camadas',
+        'Enxergar a progressão pedagógica do exemplo de clima.',
+        'Do conhecido ao real',
+        'O exemplo de clima não aparece pronto e gigante. Ele cresce junto com os conceitos estudados.',
+        'Valores fixos → componente → props → array/map → lista → API real → depois, em Recursos do Celular, GPS real.',
+        [
+          ['1. Fixo', 'Primeiro mostramos cidade e temperatura diretamente na interface.'],
+          ['2. Componente', 'Criamos CartaoClima para separar a peça visual.'],
+          ['3. Props', 'O mesmo cartão recebe cidades e temperaturas diferentes.'],
+          ['4. Array/map/lista', 'Vários dados passam a gerar vários cartões.'],
+          ['5. API', 'Agora a temperatura pode vir de um serviço externo.'],
+          ['6. GPS depois', 'Localização real do aparelho fica para Recursos do Celular, após esta reforma ser aprovada.']
+        ]
+      );
+
+      modules.apiCep.steps = [
+        ...(apiIntro ? [apiIntro] : []),
+        bridge,
+        spiral,
+        ...demais
+      ];
+    }
+  }
+
+  // Recria os menus após a reorganização.
+  if (typeof renderModuleMenu === 'function') renderModuleMenu();
+  if (typeof renderStepMenu === 'function') renderStepMenu();
+  if (typeof showStep === 'function' && typeof currentModuleKey !== 'undefined') {
+    const atual = modules[currentModuleKey] || modules.fundamentosMobile;
+    if (atual && atual.steps && atual.steps.length) showStep(atual.steps[0].id);
   }
 }
