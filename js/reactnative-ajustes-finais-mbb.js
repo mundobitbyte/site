@@ -14,6 +14,50 @@ if (typeof modules !== 'undefined') {
       .replaceAll('if-exercise-clean-', 'exercise-clean-');
   }
 
+  // React e Hooks: mantém a Consolidação integrada dentro do mesmo bloco
+  // .exercise-clean dos exercícios antigos. Isso evita o grande espaço
+  // vertical causado por dois blocos com height:100% e faz as miniaturas
+  // voltarem a controlar as seções corretas pelo showExerciseInterface().
+  const reactExercise = modules.state?.steps?.find(
+    step => step.id === 'exercicios-state'
+  );
+
+  if (
+    reactExercise &&
+    typeof reactExercise.html === 'string' &&
+    reactExercise.html.includes('Consolidação integrada')
+  ) {
+    const template = document.createElement('template');
+    template.innerHTML = reactExercise.html.trim();
+
+    const roots = Array.from(template.content.children).filter(element =>
+      element.classList?.contains('exercise-clean')
+    );
+
+    const integratedRoot = roots.find(root =>
+      root.textContent?.includes('Consolidação integrada')
+    );
+
+    const originalRoot = roots.find(root =>
+      root !== integratedRoot && root.querySelector('.exercise-menu-panel')
+    );
+
+    const integratedPanel = integratedRoot?.querySelector('.panel.brief');
+
+    if (integratedPanel && originalRoot) {
+      const oldTop = originalRoot.querySelector('.topline.exercise-clean-top');
+      const panelCopy = integratedPanel.cloneNode(true);
+
+      if (oldTop) {
+        oldTop.insertAdjacentElement('beforebegin', panelCopy);
+      } else {
+        originalRoot.prepend(panelCopy);
+      }
+
+      reactExercise.html = originalRoot.outerHTML;
+    }
+  }
+
   const learnerTextReplacements = new Map([
     [
       'Antes de escrever muitos comandos, o aluno precisa entender uma ideia central: a interface de um aplicativo é formada por componentes organizados dentro de outros componentes.',
