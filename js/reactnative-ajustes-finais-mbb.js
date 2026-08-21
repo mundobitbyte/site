@@ -84,6 +84,23 @@ if (typeof modules !== 'undefined') {
         originalRoot.prepend(panelCopy);
       }
 
+      // Nas atividades antigas, a observação ficava como irmã da grade e,
+      // por isso, ocupava toda a largura da seção, passando por cima da
+      // coluna da miniatura. Mantém o texto, mas o coloca dentro do painel
+      // do enunciado, logo após o restante das orientações da atividade.
+      originalRoot.querySelectorAll('.exercise-clean-section').forEach(section => {
+        const observation = Array.from(section.children).find(element =>
+          element.classList?.contains('obs')
+        );
+        const exercisePanelBody = section.querySelector(
+          '.exercise-grid .panel.brief .panel-body'
+        );
+
+        if (observation && exercisePanelBody) {
+          exercisePanelBody.appendChild(observation);
+        }
+      });
+
       reactExercise.html = originalRoot.outerHTML;
     }
   }
