@@ -251,3 +251,26 @@ A prática detalhada permanece centralizada no módulo especializado para evitar
 - mantidos Cantina, Estacionamento, desktop/eventos e paradigmas;
 - mantido o módulo Git/GitHub separado, agora explicitamente acionado pelo módulo Programação;
 - preservados os três espaços reservados de fluxograma.
+
+## Auditoria editorial — linguagem voltada ao aluno — 24/08/2026
+
+Critério aplicado ao conteúdo visível do módulo:
+
+- retirar frases que descrevem decisões internas de construção do material, bastidores, acordos ou justificativas editoriais;
+- evitar primeira pessoa do plural quando ela soa como conversa entre autores (`nós`, `vamos`, `decidimos`, `nosso` etc.);
+- substituir justificativas de método por contextualização do próprio conceito;
+- manter instruções diretas ao estudante quando forem parte legítima da atividade (`observe`, `compare`, `experimente`, `escolha`);
+- manter a identidade MbB, mas apresentar seus princípios como estratégia de aprendizagem, não como relato de bastidores;
+- preservar navegação para módulos especializados quando ela tiver função pedagógica real, como Git/GitHub;
+- preservar os espaços reservados para fluxogramas, removendo referências internas sobre quem produzirá as imagens e quando.
+
+Principais correções realizadas no texto visível:
+
+- removida a explicação sobre consolidação de planos curriculares da tela "Jornada completa"; o texto agora apresenta diretamente a progressão de conhecimentos;
+- reescritos trechos como "não vamos criar exemplos", "nosso algoritmo", "agora vamos", "não vamos começar tudo de novo em Python" e equivalentes;
+- removidas referências como "o professor mandou usar" e "a imagem será produzida posteriormente pelo professor";
+- reescritas justificativas editoriais de trigonometria, fluxogramas, persistência, paradigmas e aprofundamentos como explicações conceituais;
+- reescrita a integração com Git/GitHub para explicar a função do controle de versão e encaminhar naturalmente ao laboratório especializado, sem falar em evitar duplicação;
+- fechamento reformulado para definir o que significa competência em programação, em vez de explicar a intenção do curso.
+
+Resultado esperado: o estudante deve sentir que está lendo um material didático autônomo, e não a transcrição de uma conversa entre os autores sobre como o material foi construído.
