@@ -1,0 +1,41 @@
+name: Aplicar auditoria editorial de Programacao
+
+on:
+  push:
+    branches:
+      - programacao-editorial-20260824
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: programacao-editorial-20260824
+          fetch-depth: 0
+
+      - name: Aplicar versao editorial
+        shell: bash
+        run: |
+          python - <<'PY'
+          import base64
+          from pathlib import Path
+          names = [f'.mbb-tmp/part{i:02d}.b64' for i in range(1, 7)] + [f'.mbb-tmp/seg{i:02d}.b64' for i in range(1, 11)]
+          with open('/tmp/programacao_latest.patch', 'wb') as out:
+              for name in names:
+                  out.write(base64.b64decode(Path(name).read_text().strip(), validate=True))
+          PY
+          git apply --check /tmp/programacao_latest.patch
+          git apply /tmp/programacao_latest.patch
+          test "$(git hash-object js/programacao.js)" = "09ec37ccb8bcbfa72f40eb3e693aafd534af0688"
+          test "$(git hash-object PROGRAMACAO_MBB_MAPA_E_AUDITORIA.md)" = "1e4de5cb6825a8b01176580042abd3fc523c978e"
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add js/programacao.js PROGRAMACAO_MBB_MAPA_E_AUDITORIA.md
+          git rm -r .mbb-tmp
+          git rm .github/workflows/apply-programacao-editorial.yml
+          git commit -m "Atualiza Programacao com auditoria editorial"
+          git push origin HEAD:programacao-editorial-20260824
