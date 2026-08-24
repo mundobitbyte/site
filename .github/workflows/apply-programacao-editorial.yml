@@ -1,9 +1,9 @@
 name: Aplicar auditoria editorial de Programacao
 
 on:
-  push:
+  pull_request:
     branches:
-      - programacao-editorial-20260824
+      - main
 
 permissions:
   contents: write
