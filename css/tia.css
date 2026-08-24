@@ -88,3 +88,6 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
     display:none !important;
   }
 }
+
+/* Tabela-resumo do fechamento TIA */
+.comparison-table{width:100%;border-collapse:collapse;margin-top:12px;background:#fff;border:1px solid #d3e0ef;border-radius:12px;overflow:hidden;font-size:15px}.comparison-table th,.comparison-table td{border:1px solid #d3e0ef;padding:11px 12px;text-align:left;vertical-align:top;line-height:1.4}.comparison-table th{background:#e8f2ff;color:#073f8e;font-weight:900}.comparison-table tr:nth-child(even) td{background:#f8fbff}@media(max-width:720px){.comparison-table{font-size:13px}.comparison-table th,.comparison-table td{padding:9px 8px}}
