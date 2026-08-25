@@ -1,0 +1,83 @@
+trong></td><td>utilitário tradicional do MySQL para produzir backup lógico</td></tr>
+<tr><td><strong>restauração</strong></td><td>processo de usar o backup para reconstruir os objetos/dados</td></tr>
+<tr><td><strong>teste de restauração</strong></td><td>prova prática de que o backup realmente pode ser utilizado</td></tr>
+</table>
+<div class="card warning"><div class="card-body"><h3>Copiar só a pasta do projeto não protege o banco</h3><p>HTML, Java, PHP ou qualquer outro código da aplicação não substitui os dados armazenados no servidor. Código e banco precisam de estratégias de proteção próprias.</p></div></div>
+
+<h2>BLOCO 15 — Laboratório: backup lógico com mysqldump</h2>
+<p>Saia do prompt <code>mysql&gt;</code> ou abra outro <strong>CMD</strong>. Para criar uma cópia lógica do banco <code>comercio</code>:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar backup CMD</button><pre><code>mysqldump -u root -p --single-transaction comercio &gt; comercio_backup.sql</code></pre></div>
+<p>Depois de pressionar Enter, o programa pedirá a senha. O arquivo <code>comercio_backup.sql</code> será criado na pasta atual do CMD.</p>
+<table class="sql-table">
+<tr><th>Trecho</th><th>Função</th></tr>
+<tr><td>mysqldump</td><td>executa o utilitário de backup</td></tr>
+<tr><td>-u root -p</td><td>conecta com uma conta e solicita sua senha</td></tr>
+<tr><td>--single-transaction</td><td>é apropriado para obter uma visão consistente de tabelas transacionais InnoDB sem bloquear as tabelas durante todo o dump</td></tr>
+<tr><td>comercio</td><td>banco que será copiado</td></tr>
+<tr><td>&gt; comercio_backup.sql</td><td>redireciona a saída para um arquivo</td></tr>
+</table>
+<div class="card note"><div class="card-body"><h3>O que esse arquivo representa?</h3><p>Esse dump contém a estrutura e os dados do banco selecionado. Ele <strong>não é uma imagem completa da máquina nem uma estratégia completa de recuperação do servidor</strong>. Configurações, certificados, contas administrativas e outros componentes exigem planejamento próprio.</p></div></div>
+
+<h2>BLOCO 16 — Laboratório seguro: restaure sem destruir o banco original</h2>
+<p>Um backup que nunca foi restaurado ainda não foi realmente testado. Em vez de sobrescrever o banco original, vamos restaurar em outro banco.</p>
+<p><strong>1. No prompt mysql&gt;</strong>, crie um banco vazio para o teste:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar criação do teste</button><pre><code>CREATE DATABASE comercio_teste_restore;</code></pre></div>
+<p><strong>2. No CMD</strong>, carregue o arquivo nele:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar restauração CMD</button><pre><code>mysql -u root -p comercio_teste_restore &lt; comercio_backup.sql</code></pre></div>
+<p><strong>3. De volta ao mysql&gt;</strong>, valide:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar validação</button><pre><code>USE comercio_teste_restore;
+SHOW TABLES;
+SELECT COUNT(*) FROM produto;
+SELECT COUNT(*) FROM fornecedor;
+SELECT COUNT(*) FROM produto_fornecedor;</code></pre></div>
+<p>Compare as quantidades com o banco original. Abra algumas tabelas, execute JOINs e confirme se estrutura e dados foram recuperados.</p>
+<div class="card solution"><div class="card-body"><h3>Backup confiável</h3><p><strong>Fazer o dump é metade do trabalho. Conseguir restaurá-lo e validar o resultado é a outra metade.</strong></p></div></div>
+<p>Depois do laboratório e somente se tiver certeza de que não precisa mais do banco de teste, ele pode ser removido:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar limpeza do teste</button><pre><code>DROP DATABASE comercio_teste_restore;</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>Confira o nome antes de DROP DATABASE</h3><p>Esse comando apaga o banco indicado. No laboratório, remova apenas <code>comercio_teste_restore</code>. Nunca transforme comandos destrutivos em hábito automático.</p></div></div>
+
+<h2>BLOCO 17 — Outra forma de dump: levando o próprio nome do banco</h2>
+<p>Quando usamos a opção <code>--databases</code>, o arquivo de dump inclui comandos para criar e selecionar o banco durante a restauração.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar alternativa de backup</button><pre><code>mysqldump -u root -p --single-transaction --databases comercio &gt; comercio_com_database.sql</code></pre></div>
+<p>Nesse caso, a restauração pode ser feita no CMD sem informar um banco de destino:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar restauração</button><pre><code>mysql -u root -p &lt; comercio_com_database.sql</code></pre></div>
+<div class="card note"><div class="card-body"><h3>Por que começamos pelo outro método?</h3><p>Sem <code>--databases</code>, conseguimos restaurar a cópia em <code>comercio_teste_restore</code> e testar sem apontar diretamente para o banco original. Primeiro aprendemos de forma segura; depois conhecemos a alternativa.</p></div></div>
+
+<h2>BLOCO 18 — Workbench: interface gráfica para tarefas administrativas</h2>
+<p>O MySQL Workbench permite executar SQL e também oferece telas administrativas. Entre elas estão controle do serviço, status do servidor, usuários e privilégios, exportação e importação de dados.</p>
+<table class="sql-table">
+<tr><th>No Workbench</th><th>Ideia correspondente</th></tr>
+<tr><td>Users and Privileges</td><td>CREATE USER, GRANT, REVOKE e administração de contas</td></tr>
+<tr><td>Server Status</td><td>estado e informações do servidor</td></tr>
+<tr><td>Data Export</td><td>exportação SQL para backup/transferência</td></tr>
+<tr><td>Data Import</td><td>carregamento de dump SQL</td></tr>
+</table>
+<div class="card idea"><div class="card-body"><h3>Interface não substitui conceito</h3><p>Workbench facilita o trabalho, mas você deve saber <strong>o que está fazendo</strong>. Se entende usuário, privilégio, dump e restauração no conceito e na linha de comando, consegue interpretar melhor qualquer interface gráfica.</p></div></div>
+
+<h2>BLOCO 19 — Logs, configuração e diagnóstico: saiba onde olhar</h2>
+<p>Um administrador não precisa decorar centenas de variáveis. Precisa desenvolver uma sequência de diagnóstico.</p>
+<div class="visual"><pre>Servidor não responde
+        ↓
+serviço está iniciado?
+        ↓
+consigo conectar localmente?
+        ↓
+usuário/senha/origem estão corretos?
+        ↓
+qual mensagem de erro apareceu?
+        ↓
+logs e configuração ajudam a explicar</pre></div>
+<p>O MySQL mantém arquivos de configuração e logs do servidor. Em Windows, instalações padrão armazenam dados de configuração e informações operacionais em diretórios próprios do MySQL. <strong>Não altere arquivos no escuro.</strong> Leia a mensagem de erro, faça backup da configuração e consulte a documentação da versão utilizada antes de mudar parâmetros.</p>
+<div class="card note"><div class="card-body"><h3>Modo MbB de diagnosticar</h3><p>Não comece “tentando qualquer coisa”. Identifique a camada: serviço, conexão, autenticação, privilégio, banco, SQL ou dado. Corrigir a camada errada costuma criar um segundo problema sem resolver o primeiro.</p></div></div>
+
+<h2>BLOCO 20 — Política mínima de backup</h2>
+<p>Em ambiente real, um backup manual feito uma única vez não basta. Uma política precisa responder:</p>
+<ol>
+<li><strong>O quê?</strong> Quais bancos e objetos precisam ser protegidos?</li>
+<li><strong>Quando?</strong> Qual frequência atende a quantidade de dados que a organização aceita perder?</li>
+<li><strong>Onde?</strong> Onde as cópias ficarão guardadas para não desaparecerem junto com o servidor?</li>
+<li><strong>Por quanto tempo?</strong> Quais versões históricas serão mantidas?</li>
+<li><strong>Quem?</strong> Quem é responsável por verificar o processo?</li>
+<li><strong>Como testar?</strong> Quando e onde a restauração será validada?</li>
+</ol>
+<div class="card warning"><div class="card-body"><h3>“Backup concluído” não significa “recup
