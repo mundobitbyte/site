@@ -71,7 +71,8 @@ jobs:
           # Prova que capítulos anteriores não mudaram.
           new_main = s[:s.index('<section class="module" id="mod-transacoes">')]
           assert hashlib.sha256(new_main.encode()).hexdigest() == frozen_main_hash
-          new_menu = s[menu_start:s.index("<button class=\"exercise-chapter-card\" onclick=\"openExerciseChapter('ex-cap8')\">")]
+          new_menu_start = s.index('<div class="exercise-menu-grid">')
+          new_menu = s[new_menu_start:s.index("<button class=\"exercise-chapter-card\" onclick=\"openExerciseChapter('ex-cap8')\">")]
           assert hashlib.sha256(new_menu.encode()).hexdigest() == frozen_menu_hash
           new_ex1 = s.index('<section class="exercise-chapter-view" id="ex-cap1">')
           new_ex6_end = s.index('<section class="exercise-chapter-view" id="ex-cap7">')
