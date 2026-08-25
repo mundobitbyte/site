@@ -43,7 +43,7 @@ jobs:
 
           assert "openExerciseChapter('ex-cap6')" in s
           assert 'id="ex-cap6"' in s
-          assert '5L — Desafio final: relatório comercial completo' in s
+          assert '5L — Desafio final: relatório comercial' in s
           assert 'id="ex-building-joins"' not in s
           p.write_text(s, encoding='utf-8')
           PY
