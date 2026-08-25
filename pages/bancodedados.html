@@ -2399,10 +2399,10 @@ logs e configuração ajudam a explicar</pre></div>
 <p>CLI do MySQL, CREATE, restrições, INSERT, SELECT, filtros, N:N, JOIN, agregações, GROUP BY e CRUD.</p>
 <span class="exercise-status available">Disponível · 12 exercícios</span>
 </button>
-<button class="exercise-chapter-card" onclick="openExerciseChapter('ex-building-joins')">
+<button class="exercise-chapter-card" onclick="openExerciseChapter('ex-cap6')">
 <h3>5 Relacionamentos e JOIN</h3>
-<p>INNER JOIN, LEFT JOIN, RIGHT JOIN, múltiplas junções e interpretação de relações.</p>
-<span class="exercise-status building">🟠 Em construção</span>
+<p>INNER JOIN, LEFT JOIN, RIGHT JOIN, N:N, múltiplas junções, ausências e relatórios.</p>
+<span class="exercise-status available">Disponível · 12 exercícios</span>
 </button>
 <button class="exercise-chapter-card" onclick="openExerciseChapter('ex-cap7')">
 <h3>6 Administração e SGBD</h3>
@@ -2673,9 +2673,24 @@ PRODUTO 1 ─── N ITEM_PEDIDO</pre><ol><li>Um cliente pode possuir vários p
 </div>
 </div>
 </section>
-<section class="exercise-chapter-view" id="ex-building-joins">
+<section class="exercise-chapter-view" id="ex-cap6">
 <div class="exercise-inner-card">
-<button class="exercise-back inside-card" onclick="backToExerciseHome()">← Voltar aos capítulos</button><section class="card note"><div class="card-body"><h3>🟠 Em construção</h3><p>Os exercícios deste capítulo serão adicionados quando o conteúdo estiver pronto.</p></div></section>
+<button class="exercise-back inside-card" onclick="backToExerciseHome()">← Voltar aos capítulos</button>
+<section class="hero"><span class="kicker">Exercícios — Capítulo 5</span><h2>Relacionamentos e JOIN</h2><p>Prática progressiva para interpretar relações e construir consultas que atravessem o modelo comercial corretamente.</p></section>
+<div class="exercise-set">
+<details class="exercise-item"><summary>5A — Relacionamento ou JOIN?</summary><div class="exercise-content"><ol><li>Explique com suas palavras a diferença entre relacionamento e JOIN.</li><li>Uma FOREIGN KEY pertence à estrutura do banco ou apenas à consulta?</li><li>JOIN altera fisicamente as tabelas? Justifique.</li><li>Por que um banco normalizado precisa de JOIN para produzir algumas informações completas?</li></ol></div></details>
+<details class="exercise-item"><summary>5B — INNER JOIN simples</summary><div class="exercise-content"><ol><li>Crie uma consulta que mostre id_produto, descricao e nome da categoria.</li><li>Explique qual coluna é FK e qual é PK na condição ON.</li><li>Ordene o resultado pela descrição.</li><li>Explique por que todos os produtos válidos devem encontrar uma categoria.</li></ol></div></details>
+<details class="exercise-item"><summary>5C — Percorrendo o N:N</summary><div class="exercise-content"><ol><li>Mostre produto e fornecedor usando produto_fornecedor.</li><li>Desenhe o caminho entre as três tabelas.</li><li>Explique por que não devemos ligar produto diretamente a fornecedor.</li><li>Se um produto tiver três fornecedores, quantas linhas esse produto poderá gerar na consulta?</li></ol></div></details>
+<details class="exercise-item"><summary>5D — Aliases com sentido</summary><div class="exercise-content"><ol><li>Reescreva a consulta produto → produto_fornecedor → fornecedor usando p, pf e f.</li><li>Use aliases também nos nomes das colunas exibidas.</li><li>Explique quando aliases tornam a consulta mais legível e quando podem atrapalhar.</li></ol></div></details>
+<details class="exercise-item"><summary>5E — LEFT JOIN: preserve fornecedores</summary><div class="exercise-content"><ol><li>Liste todos os fornecedores e seus id_produto, mesmo quando não houver produto relacionado.</li><li>Qual tabela deve ficar à esquerda?</li><li>O que aparece nas colunas de produto_fornecedor quando não há correspondência?</li><li>Explique por que INNER JOIN não responderia à mesma pergunta.</li></ol></div></details>
+<details class="exercise-item"><summary>5F — Quem não possui correspondência?</summary><div class="exercise-content"><ol><li>Use LEFT JOIN para listar somente fornecedores sem produtos associados.</li><li>Use IS NULL no lugar correto.</li><li>Explique por que NULL, nesse resultado, representa ausência de correspondência e não necessariamente um erro de cadastro.</li></ol></div></details>
+<details class="exercise-item"><summary>5G — RIGHT JOIN e equivalência</summary><div class="exercise-content"><ol><li>Crie uma consulta com RIGHT JOIN que preserve todos os fornecedores.</li><li>Reescreva a mesma ideia usando LEFT JOIN e invertendo a ordem das tabelas.</li><li>Compare os resultados.</li><li>Qual forma você considera mais fácil de ler? Justifique.</li></ol></div></details>
+<details class="exercise-item"><summary>5H — ON ou WHERE?</summary><div class="exercise-content"><ol><li>Explique o papel de ON.</li><li>Explique o papel de WHERE.</li><li>Crie um INNER JOIN entre produto e categoria e filtre produtos com preço maior ou igual a 20.</li><li>Explique por que filtrar uma coluna nullable da tabela direita no WHERE pode alterar o efeito de um LEFT JOIN.</li></ol></div></details>
+<details class="exercise-item"><summary>5I — Quatro relações em uma consulta</summary><div class="exercise-content"><ol><li>Mostre produto, categoria, fornecedor, cidade e estado.</li><li>Use produto, categoria, produto_fornecedor, fornecedor e cidade.</li><li>Use LEFT JOIN para cidade.</li><li>Explique por que cidade pode aparecer como NULL na base atual.</li><li>Ordene por categoria, produto e fornecedor.</li></ol></div></details>
+<details class="exercise-item"><summary>5J — JOIN com GROUP BY</summary><div class="exercise-content"><ol><li>Conte quantos produtos cada fornecedor possui.</li><li>Faça com que fornecedores sem produtos também apareçam com total zero.</li><li>Explique por que COUNT(pf.id_produto) é mais adequado que COUNT(*) neste relatório.</li><li>Use HAVING para mostrar apenas fornecedores com zero produtos.</li></ol></div></details>
+<details class="exercise-item"><summary>5K — Diagnóstico de consultas</summary><div class="exercise-content"><p>Analise cada situação e explique o problema antes de corrigir:</p><ol><li>uma consulta tenta usar produto.id_fornecedor;</li><li>duas tabelas são combinadas sem uma condição de relacionamento adequada;</li><li>um LEFT JOIN é usado, mas o WHERE elimina todas as linhas em que a tabela direita ficou NULL;</li><li>uma consulta com cinco tabelas usa SELECT * e retorna colunas difíceis de identificar.</li></ol></div></details>
+<details class="exercise-item"><summary>5L — Desafio final: relatório comercial</summary><div class="exercise-content"><ol><li>Monte um relatório com id do produto, descrição, preço, quantidade, categoria e fornecedor.</li><li>Inclua preço_custo e prazo_entrega da tabela associativa.</li><li>Inclua cidade e estado sem eliminar fornecedores que ainda não possuem cidade.</li><li>Ordene por categoria, produto e fornecedor.</li><li>Depois crie uma segunda consulta que mostre somente fornecedores sem produtos associados.</li><li>Explique, em texto, quais JOINs você escolheu e por quê.</li></ol></div></details>
+</div>
 </div>
 </section>
 <section class="exercise-chapter-view" id="ex-cap7">
