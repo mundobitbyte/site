@@ -2044,7 +2044,290 @@ ORDER BY total_produtos DESC;</code></pre></div>
 <h2>✅ CAPÍTULO 4 — SQL COM MYSQL OFICIALMENTE FINALIZADO</h2>
 </article>
 </section>
-<section class="module placeholder" id="mod-joins"><section class="hero"><span class="kicker">Capítulo 5</span><h2>Relacionamentos e JOIN</h2><p>INNER JOIN, LEFT JOIN, RIGHT JOIN, múltiplas junções e interpretação de relações.</p></section>
+<section class="module" id="mod-joins">
+<section class="hero">
+<span class="kicker">Capítulo 5</span>
+<h2>Relacionamentos e JOIN</h2>
+<p>Separar para organizar. Juntar para consultar. Neste capítulo, os relacionamentos modelados nos capítulos anteriores passam a ser usados de forma consciente em consultas com INNER JOIN, LEFT JOIN, RIGHT JOIN e múltiplas junções.</p>
+</section>
+<article class="chapter">
+<h2>BLOCO 1 — Por que JOIN existe?</h2>
+<p>Nos capítulos anteriores, aprendemos que um banco relacional <strong>não deve guardar tudo em uma única tabela</strong>. Categorias ficam em categoria, fornecedores em fornecedor, produtos em produto e a relação N:N entre produto e fornecedor fica em produto_fornecedor.</p>
+<p>Essa separação reduz redundância e melhora a integridade. Mas cria uma nova necessidade: quando queremos enxergar uma informação completa, precisamos <strong>consultar várias tabelas relacionadas ao mesmo tempo</strong>.</p>
+<div class="visual"><pre>Guardar corretamente
+↓
+separar os dados em tabelas relacionadas
+↓
+consultar quando necessário
+↓
+JOIN reúne as informações no resultado</pre></div>
+<div class="card idea"><div class="card-body"><h3>Ideia principal</h3><p><strong>JOIN não mistura nem funde as tabelas fisicamente.</strong> Ele apenas monta um resultado de consulta usando as relações existentes entre elas.</p></div></div>
+
+<h2>BLOCO 2 — Relacionamento e JOIN não são a mesma coisa</h2>
+<p>Um <strong>relacionamento</strong> pertence à estrutura do banco. Ele nasce das regras de negócio e normalmente é representado por PKs e FKs. Um <strong>JOIN</strong> pertence à consulta: usamos SQL para percorrer esse relacionamento e mostrar informações que estão separadas.</p>
+<table class="sql-table">
+<tr><th>Relacionamento</th><th>JOIN</th></tr>
+<tr><td>faz parte da modelagem do banco</td><td>faz parte de uma consulta SQL</td></tr>
+<tr><td>explica como as tabelas se relacionam</td><td>usa essa relação para combinar resultados</td></tr>
+<tr><td>pode ser protegido por FOREIGN KEY</td><td>não altera a estrutura das tabelas</td></tr>
+<tr><td>existe mesmo sem uma consulta sendo executada</td><td>existe apenas enquanto a consulta é executada</td></tr>
+</table>
+<p>No nosso banco comercial, o caminho principal é:</p>
+<div class="visual"><pre>CATEGORIA 1 ─── N PRODUTO
+                    ↓
+                    N
+           PRODUTO_FORNECEDOR
+                    N
+                    ↓
+               FORNECEDOR
+                    ↓
+              CIDADE (opcional)</pre></div>
+<p>Antes de escrever qualquer JOIN, pergunte: <strong>qual informação eu quero e por quais relacionamentos preciso passar para chegar até ela?</strong></p>
+
+<h2>BLOCO 3 — Anatomia de um JOIN</h2>
+<p>Vamos começar sem abreviações. Queremos mostrar o produto e o nome de sua categoria.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar consulta</button><pre><code>SELECT produto.descricao, categoria.nome
+FROM produto
+INNER JOIN categoria
+    ON produto.id_categoria = categoria.id_categoria;</code></pre></div>
+<table class="sql-table">
+<tr><th>Trecho</th><th>Função</th></tr>
+<tr><td>FROM produto</td><td>define a tabela inicial da consulta</td></tr>
+<tr><td>INNER JOIN categoria</td><td>indica a tabela que será relacionada</td></tr>
+<tr><td>ON</td><td>define a condição usada para encontrar a correspondência</td></tr>
+<tr><td>produto.id_categoria = categoria.id_categoria</td><td>liga a FK do produto à PK da categoria</td></tr>
+</table>
+<div class="card note"><div class="card-body"><h3>Não escolha colunas pelo nome parecido</h3><p>A junção deve seguir o <strong>relacionamento real do modelo</strong>. Neste caso, produto.id_categoria é FK e aponta para categoria.id_categoria.</p></div></div>
+
+<h2>BLOCO 4 — INNER JOIN: somente quem possui correspondência</h2>
+<p>O <strong>INNER JOIN</strong> retorna apenas as linhas que encontram correspondência dos dois lados da junção.</p>
+<div class="visual"><pre>PRODUTO           CATEGORIA
+   22  ───────────  3 BEBIDA     ✓ aparece
+   27  ───────────  4 LIMPEZA    ✓ aparece
+   ?   ── sem correspondência    ✗ não aparece</pre></div>
+<div class="codebox"><button class="copy-btn" type="button">Copiar INNER JOIN</button><pre><code>SELECT
+    produto.id_produto,
+    produto.descricao,
+    categoria.nome AS categoria
+FROM produto
+INNER JOIN categoria
+    ON produto.id_categoria = categoria.id_categoria
+ORDER BY produto.descricao;</code></pre></div>
+<p>Como id_categoria em produto é obrigatório e protegido por FOREIGN KEY, todos os produtos válidos devem encontrar uma categoria. Isso mostra como <strong>integridade e JOIN trabalham juntos</strong>.</p>
+
+<h2>BLOCO 5 — INNER JOIN em um relacionamento N:N</h2>
+<p>Produto e fornecedor possuem relacionamento N:N. Por isso, não existe uma FK de fornecedor dentro de produto. Para chegar de produto até fornecedor precisamos atravessar a tabela associativa.</p>
+<div class="visual"><pre>PRODUTO
+   ↓ id_produto
+PRODUTO_FORNECEDOR
+   ↓ id_fornecedor
+FORNECEDOR</pre></div>
+<div class="codebox"><button class="copy-btn" type="button">Copiar JOIN N:N</button><pre><code>SELECT
+    produto.descricao AS produto,
+    fornecedor.nome AS fornecedor
+FROM produto
+INNER JOIN produto_fornecedor
+    ON produto.id_produto = produto_fornecedor.id_produto
+INNER JOIN fornecedor
+    ON produto_fornecedor.id_fornecedor = fornecedor.id_fornecedor
+ORDER BY produto.descricao;</code></pre></div>
+<div class="card solution"><div class="card-body"><h3>Leitura da consulta</h3><p>Começamos em produto → encontramos suas linhas em produto_fornecedor → dessas linhas descobrimos os fornecedores correspondentes.</p></div></div>
+<div class="card warning"><div class="card-body"><h3>Erro conceitual</h3><p>Não tente escrever <strong>produto.id_fornecedor = fornecedor.id_fornecedor</strong>. Essa coluna não existe em produto porque o modelo correto é N:N.</p></div></div>
+
+<h2>BLOCO 6 — Aliases: abreviando sem perder o sentido</h2>
+<p>Depois que o caminho ficou claro, podemos usar <strong>aliases</strong> para reduzir a repetição dos nomes das tabelas. Alias é apenas um apelido válido durante aquela consulta.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar consulta com aliases</button><pre><code>SELECT
+    p.descricao AS produto,
+    f.nome AS fornecedor
+FROM produto AS p
+INNER JOIN produto_fornecedor AS pf
+    ON p.id_produto = pf.id_produto
+INNER JOIN fornecedor AS f
+    ON pf.id_fornecedor = f.id_fornecedor
+ORDER BY p.descricao;</code></pre></div>
+<table class="sql-table"><tr><th>Alias</th><th>Tabela</th></tr><tr><td>p</td><td>produto</td></tr><tr><td>pf</td><td>produto_fornecedor</td></tr><tr><td>f</td><td>fornecedor</td></tr></table>
+<div class="card note"><div class="card-body"><h3>MbB: primeiro entender, depois abreviar</h3><p>Aliases ajudam muito em consultas longas, mas não devem esconder de onde os dados estão vindo. Se a consulta ficar confusa, volte temporariamente aos nomes completos.</p></div></div>
+
+<h2>BLOCO 7 — LEFT JOIN: preserve tudo que está à esquerda</h2>
+<p>O <strong>LEFT JOIN</strong> preserva todas as linhas da tabela que está à esquerda da junção, mesmo quando não existe correspondência do lado direito.</p>
+<p>Na base atual existem fornecedores cadastrados que ainda não possuem produto associado. Isso nos permite observar o comportamento do LEFT JOIN sem inventar registros.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar LEFT JOIN</button><pre><code>SELECT
+    f.id_fornecedor,
+    f.nome AS fornecedor,
+    pf.id_produto
+FROM fornecedor AS f
+LEFT JOIN produto_fornecedor AS pf
+    ON f.id_fornecedor = pf.id_fornecedor
+ORDER BY f.nome;</code></pre></div>
+<p>Quando um fornecedor não possui produto relacionado, ele continua aparecendo. As colunas vindas de produto_fornecedor aparecem como <strong>NULL</strong>.</p>
+<div class="visual"><pre>FORNECEDOR                    PRODUTO_FORNECEDOR
+COCA-COLA FEMSA      ──────── produto 22
+AMBEV DISTRIBUIDORA  ──────── produto 23
+ARMAZEM DO COMERCIO  ──────── NULL   ← continua aparecendo</pre></div>
+
+<h2>BLOCO 8 — Encontrando quem NÃO possui correspondência</h2>
+<p>LEFT JOIN fica especialmente útil quando queremos descobrir registros sem relação correspondente.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar consulta</button><pre><code>SELECT
+    f.id_fornecedor,
+    f.nome AS fornecedor
+FROM fornecedor AS f
+LEFT JOIN produto_fornecedor AS pf
+    ON f.id_fornecedor = pf.id_fornecedor
+WHERE pf.id_produto IS NULL
+ORDER BY f.nome;</code></pre></div>
+<p>A lógica é:</p>
+<div class="visual"><pre>preserve todos os fornecedores
+↓
+tente encontrar produto_fornecedor
+↓
+onde não encontrou, pf.id_produto ficou NULL
+↓
+WHERE ... IS NULL mostra somente esses casos</pre></div>
+<div class="card idea"><div class="card-body"><h3>Pergunta de negócio</h3><p>“Quais fornecedores estão cadastrados, mas ainda não fornecem nenhum produto?” Esse tipo de pergunta é exatamente o que um LEFT JOIN pode responder.</p></div></div>
+
+<h2>BLOCO 9 — RIGHT JOIN: preserve tudo que está à direita</h2>
+<p>O <strong>RIGHT JOIN</strong> faz a ideia inversa: preserva todas as linhas da tabela que aparece à direita da junção.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar RIGHT JOIN</button><pre><code>SELECT
+    f.id_fornecedor,
+    f.nome AS fornecedor,
+    pf.id_produto
+FROM produto_fornecedor AS pf
+RIGHT JOIN fornecedor AS f
+    ON pf.id_fornecedor = f.id_fornecedor
+ORDER BY f.nome;</code></pre></div>
+<p>Essa consulta preserva todos os fornecedores e, portanto, produz a mesma ideia da consulta anterior escrita com LEFT JOIN e as tabelas em ordem invertida.</p>
+<div class="grid2"><section class="card note"><div class="card-body"><h3>LEFT JOIN</h3><p>Preserva a tabela da esquerda.</p></div></section><section class="card note"><div class="card-body"><h3>RIGHT JOIN</h3><p>Preserva a tabela da direita.</p></div></section></div>
+<div class="card idea"><div class="card-body"><h3>Qual usar no dia a dia?</h3><p>É importante saber ler RIGHT JOIN, mas normalmente podemos reorganizar a consulta e usar LEFT JOIN. O próprio manual do MySQL recomenda LEFT JOIN quando queremos manter maior portabilidade entre bancos.</p></div></div>
+
+<h2>BLOCO 10 — ON e WHERE têm papéis diferentes</h2>
+<p>Uma regra prática ajuda muito:</p>
+<ul>
+<li><strong>ON</strong> explica <em>como as tabelas se relacionam</em>;</li>
+<li><strong>WHERE</strong> filtra <em>quais linhas do resultado queremos manter</em>.</li>
+</ul>
+<div class="codebox"><button class="copy-btn" type="button">Copiar exemplo</button><pre><code>SELECT
+    p.descricao,
+    c.nome AS categoria,
+    p.preco
+FROM produto AS p
+INNER JOIN categoria AS c
+    ON p.id_categoria = c.id_categoria
+WHERE p.preco &gt;= 20
+ORDER BY p.preco DESC;</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>Cuidado especial com LEFT JOIN</h3><p>Se você filtrar no WHERE uma coluna da tabela que pode ficar NULL, poderá eliminar justamente as linhas sem correspondência que queria preservar. Primeiro pense no objetivo da consulta; depois escolha onde cada condição deve ficar.</p></div></div>
+
+<h2>BLOCO 11 — Múltiplas junções: percorrendo o banco inteiro</h2>
+<p>Uma consulta pode atravessar vários relacionamentos. Vamos mostrar produto, categoria, fornecedor e, quando existir, a cidade do fornecedor.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar múltiplos JOINs</button><pre><code>SELECT
+    p.id_produto,
+    p.descricao AS produto,
+    c.nome AS categoria,
+    f.nome AS fornecedor,
+    ci.nome_cidade,
+    ci.estado
+FROM produto AS p
+INNER JOIN categoria AS c
+    ON p.id_categoria = c.id_categoria
+INNER JOIN produto_fornecedor AS pf
+    ON p.id_produto = pf.id_produto
+INNER JOIN fornecedor AS f
+    ON pf.id_fornecedor = f.id_fornecedor
+LEFT JOIN cidade AS ci
+    ON f.id_cidade = ci.id_cidade
+ORDER BY p.descricao, f.nome;</code></pre></div>
+<p>Observe que usamos INNER JOIN enquanto a correspondência é necessária para montar o caminho produto → categoria → fornecedor. Para cidade usamos LEFT JOIN porque id_cidade é opcional no modelo.</p>
+<div class="card note"><div class="card-body"><h3>Resultado esperado na base atual</h3><p>Como as cidades reais dos fornecedores ainda não foram informadas, nome_cidade e estado aparecerão como NULL. Isso não é erro: é a consulta respeitando uma relação opcional sem inventar dados.</p></div></div>
+
+<h2>BLOCO 12 — JOIN com GROUP BY: incluindo também quem tem zero</h2>
+<p>Já aprendemos funções de agregação e GROUP BY. Agora podemos combiná-las com LEFT JOIN para criar relatórios mais completos.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar relatório</button><pre><code>SELECT
+    f.id_fornecedor,
+    f.nome AS fornecedor,
+    COUNT(pf.id_produto) AS total_produtos
+FROM fornecedor AS f
+LEFT JOIN produto_fornecedor AS pf
+    ON f.id_fornecedor = pf.id_fornecedor
+GROUP BY f.id_fornecedor, f.nome
+ORDER BY total_produtos DESC, f.nome;</code></pre></div>
+<p>Usamos <strong>COUNT(pf.id_produto)</strong>, e não COUNT(*), porque queremos contar somente produtos realmente encontrados. Quando não existe correspondência, pf.id_produto é NULL e não entra nessa contagem.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar fornecedores sem produtos</button><pre><code>SELECT
+    f.id_fornecedor,
+    f.nome AS fornecedor,
+    COUNT(pf.id_produto) AS total_produtos
+FROM fornecedor AS f
+LEFT JOIN produto_fornecedor AS pf
+    ON f.id_fornecedor = pf.id_fornecedor
+GROUP BY f.id_fornecedor, f.nome
+HAVING COUNT(pf.id_produto) = 0
+ORDER BY f.nome;</code></pre></div>
+
+<h2>BLOCO 13 — Erros comuns em JOIN</h2>
+<table class="sql-table">
+<tr><th>Erro</th><th>Problema</th><th>Como pensar</th></tr>
+<tr><td>juntar colunas sem seguir a relação real</td><td>resultados incorretos</td><td>siga PK, FK e a regra de negócio</td></tr>
+<tr><td>pular produto_fornecedor</td><td>quebra o N:N</td><td>percorra a tabela associativa</td></tr>
+<tr><td>esquecer a condição de junção</td><td>pode gerar combinações indevidas entre linhas</td><td>pergunte “qual coluna liga estas tabelas?”</td></tr>
+<tr><td>usar SELECT * em consulta grande</td><td>resultado poluído e colunas ambíguas</td><td>liste apenas as colunas necessárias</td></tr>
+<tr><td>filtrar NULL incorretamente após LEFT JOIN</td><td>pode perder linhas que queria preservar</td><td>entenda primeiro o papel de ON e WHERE</td></tr>
+<tr><td>abusar de aliases curtos</td><td>consulta fica difícil de ler</td><td>use abreviações consistentes</td></tr>
+</table>
+<div class="card warning"><div class="card-body"><h3>Produto cartesiano acidental</h3><p>Quando tabelas são combinadas sem uma condição correta, uma linha pode ser combinada com muitas linhas da outra tabela. O resultado cresce rapidamente e geralmente não representa a regra de negócio desejada.</p></div></div>
+
+<h2>BLOCO 14 — Como escolher o JOIN?</h2>
+<table class="sql-table">
+<tr><th>Pergunta</th><th>Escolha inicial</th></tr>
+<tr><td>Quero apenas registros que possuem correspondência dos dois lados.</td><td><strong>INNER JOIN</strong></td></tr>
+<tr><td>Quero todos da tabela principal, mesmo sem correspondência.</td><td><strong>LEFT JOIN</strong>, colocando a tabela que quero preservar à esquerda</td></tr>
+<tr><td>Quero preservar a tabela que está à direita.</td><td><strong>RIGHT JOIN</strong> ou reorganizar a consulta como LEFT JOIN</td></tr>
+<tr><td>Quero descobrir quem não possui correspondência.</td><td><strong>LEFT JOIN + IS NULL</strong></td></tr>
+<tr><td>Preciso atravessar várias relações.</td><td><strong>múltiplos JOINs</strong>, um relacionamento por vez</td></tr>
+</table>
+<div class="visual"><pre>1. O que eu quero descobrir?
+2. Qual tabela contém o ponto de partida?
+3. Qual relacionamento leva ao próximo dado?
+4. Preciso somente de correspondências ou preservar ausentes?
+5. Escrevo o JOIN.
+6. Confiro se o resultado faz sentido.</pre></div>
+
+<h2>BLOCO 15 — Laboratório final: relatório comercial completo</h2>
+<p>Agora reunimos o que aprendemos em uma consulta que percorre o modelo relacional completo.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar laboratório final</button><pre><code>SELECT
+    p.id_produto,
+    p.descricao AS produto,
+    p.preco,
+    p.qtde,
+    c.nome AS categoria,
+    f.nome AS fornecedor,
+    pf.preco_custo,
+    pf.prazo_entrega,
+    ci.nome_cidade,
+    ci.estado
+FROM produto AS p
+INNER JOIN categoria AS c
+    ON p.id_categoria = c.id_categoria
+INNER JOIN produto_fornecedor AS pf
+    ON p.id_produto = pf.id_produto
+INNER JOIN fornecedor AS f
+    ON pf.id_fornecedor = f.id_fornecedor
+LEFT JOIN cidade AS ci
+    ON f.id_cidade = ci.id_cidade
+ORDER BY c.nome, p.descricao, f.nome;</code></pre></div>
+<p>Leia essa consulta de cima para baixo e tente responder:</p>
+<ol>
+<li>Qual é a tabela de partida?</li>
+<li>Por que categoria usa INNER JOIN?</li>
+<li>Por que precisamos passar por produto_fornecedor?</li>
+<li>Por que cidade usa LEFT JOIN?</li>
+<li>Se um produto passasse a ter dois fornecedores, quantas linhas ele poderia gerar nesse relatório?</li>
+</ol>
+<div class="card solution"><div class="card-body"><h3>O que deve ficar na cabeça</h3><p>O banco continua normalizado e separado. A consulta percorre os relacionamentos e monta a visão necessária sem destruir essa organização.</p></div></div>
+
+<h2>BLOCO 16 — Fechamento do Capítulo</h2>
+<p>Neste capítulo, relacionamentos deixaram de ser apenas linhas de um DER e passaram a orientar consultas reais.</p>
+<p>Aprendemos a diferença entre relacionamento e JOIN, a condição ON, INNER JOIN, LEFT JOIN, RIGHT JOIN, aliases, relações N:N por tabela associativa, múltiplas junções, ausência de correspondência com NULL e JOIN combinado com GROUP BY.</p>
+<div class="card idea"><div class="card-body"><h3>Próxima ponte</h3><p>Agora que sabemos estruturar, popular e consultar um banco relacional, podemos aprender a <strong>administrar o SGBD</strong>: instalação, ferramentas, usuários, permissões, backup e restauração.</p></div></div>
+<h2>✅ CAPÍTULO 5 — RELACIONAMENTOS E JOIN OFICIALMENTE FINALIZADO</h2>
+</article>
 </section>
 <section class="module" id="mod-sgbd">
 <section class="hero">
