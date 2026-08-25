@@ -99,7 +99,7 @@ ALUNOS
  id_turma (FK)</pre></div><p>Quando um aplicativo mostra cliente, pedido, produto e pagamento, ele está relacionando várias tabelas ao mesmo tempo.</p>
 <h2>12. O surgimento do SQL</h2><p>Com o crescimento dos bancos relacionais surgiu a necessidade de uma linguagem padronizada. Essa linguagem ficou conhecida como <strong>SQL — Structured Query Language</strong>.</p><pre>SELECT nome
 FROM alunos
-WHERE turma = '1A';</pre><p>Esse comando busca os nomes dos alunos da turma 1A. O SQL é uma linguagem declarativa: normalmente dizemos o que queremos, e o SGBD decide como executar.</p>
+WHERE id_turma = 10;</pre><p>Esse comando busca os nomes dos alunos da turma 1A. O SQL é uma linguagem declarativa: normalmente dizemos o que queremos, e o SGBD decide como executar.</p>
 <div class="card note"><div class="card-body"><h3>Analogia</h3><p>Quando você pede “uma pizza de calabresa”, não precisa explicar como preparar a massa, o molho e o forno. Você declara o resultado desejado. O SQL funciona de forma parecida.</p></div></div>
 <h2>13. O modelo relacional mudou o mundo</h2><p>O modelo relacional trouxe simplicidade, organização, integridade, flexibilidade e padronização. Isso permitiu a criação de bancos, redes sociais, hospitais, ERPs, e-commerce, sistemas acadêmicos e aplicativos.</p>
 <div class="grid"><section class="card solution"><div class="card-body"><h3>Banco de Dados</h3><p>Conjunto organizado de dados.</p></div></section><section class="card solution"><div class="card-body"><h3>SGBD</h3><p>Sistema que gerencia os dados.</p></div></section><section class="card solution"><div class="card-body"><h3>SQL</h3><p>Linguagem utilizada para manipular e consultar os dados.</p></div></section></div>
@@ -107,14 +107,19 @@ WHERE turma = '1A';</pre><p>Esse comando busca os nomes dos alunos da turma 1A. 
 <h2>15. A internet mudou as regras do jogo</h2><p>Antes da internet, muitos sistemas funcionavam localmente. Mas a internet trouxe milhões de usuários simultâneos. Agora os bancos de dados precisavam responder rapidamente, funcionar 24 horas, suportar milhares de acessos, manter integridade e processar operações em tempo real.</p>
 <div class="card problem"><div class="card-body"><h3>Problema real</h3><p>Em uma Black Friday, milhares de pessoas acessam produtos, realizam pagamentos, alteram carrinhos, atualizam estoques e finalizam pedidos ao mesmo tempo.</p></div></div>
 <h2>16. O crescimento dos bancos relacionais</h2><p>Os bancos relacionais continuaram evoluindo. SGBDs como Oracle, PostgreSQL, MySQL e SQL Server passaram a oferecer transações, recuperação de falhas, gerenciamento multiusuário, segurança avançada, controle de permissões e otimização de consultas.</p>
-<h2>17. Big Data — quando os dados explodiram</h2><p>Com a internet, surgiu um novo desafio: quantidade absurda de dados. Big Data não significa apenas “muitos dados”; envolve escala, velocidade, variedade, complexidade e geração contínua de informações.</p>
-<div class="grid"><section class="card note"><div class="card-body"><h3>Volume</h3><p>Quantidade gigantesca de dados.</p></div></section><section class="card note"><div class="card-body"><h3>Velocidade</h3><p>Dados sendo produzidos continuamente.</p></div></section><section class="card note"><div class="card-body"><h3>Variedade</h3><p>Textos, imagens, vídeos, localização, áudio e sensores.</p></div></section><section class="card note"><div class="card-body"><h3>Veracidade</h3><p>Necessidade de confiabilidade.</p></div></section><section class="card note"><div class="card-body"><h3>Valor</h3><p>Capacidade de transformar dados em conhecimento útil.</p></div></section></div>
-<h2>18. O surgimento do NoSQL</h2><p>Alguns problemas modernos começaram a exigir mais flexibilidade, escalabilidade extrema, armazenamento distribuído e velocidade em cenários específicos. Foi nesse contexto que surgiram os bancos NoSQL, expressão geralmente entendida como <strong>Not Only SQL</strong>: “não apenas SQL”.</p>
-<div class="grid2"><section class="card solution"><div class="card-body"><h3>Relacional</h3><ul><li>tabelas;</li><li>integridade forte;</li><li>estrutura rígida;</li><li>excelente consistência.</li></ul><p>Ideal para financeiro, ERP, controle acadêmico, estoque e bancos.</p></div></section><section class="card solution"><div class="card-body"><h3>NoSQL</h3><ul><li>maior flexibilidade;</li><li>escalabilidade;</li><li>estruturas menos rígidas.</li></ul><p>Muito usado em redes sociais, cache, logs, recomendações e mensageria.</p></div></section></div>
-<h3>Tipos de bancos NoSQL</h3><p><span class="tag">Documento</span> MongoDB   <span class="tag">Chave-valor</span> Redis   <span class="tag">Grafos</span> Neo4j   <span class="tag">Colunar</span> Cassandra</p>
-<h2>19. Cloud Computing — bancos na nuvem</h2><p>Outro avanço revolucionário foi a computação em nuvem. Antes, os bancos normalmente ficavam em servidores locais. Agora eles podem funcionar pela internet, com escalabilidade, acesso remoto, alta disponibilidade, backups automatizados e elasticidade.</p>
-<p>Exemplos modernos incluem Amazon RDS, Google Cloud SQL, Azure SQL, Firebase e Supabase.</p>
-<h2>20. Bancos de dados e Inteligência Artificial</h2><p>A Inteligência Artificial moderna depende profundamente de dados organizados. Sem dados, não existe IA útil.</p><p>Um sistema de recomendação da Netflix, por exemplo, analisa filmes assistidos, tempo de visualização, avaliações, preferências e histórico do usuário. Tudo isso depende de bancos de dados.</p>
+<h2>17. Big Data — novos problemas de escala</h2>
+<p>Com internet, smartphones, sensores e serviços digitais, algumas organizações passaram a lidar com volumes, velocidades e variedades de dados muito maiores. O termo <strong>Big Data</strong> aparece nesse contexto para descrever desafios que não se resumem apenas a “ter muitos dados”.</p>
+
+<h2>18. NoSQL — outros modelos para outros problemas</h2>
+<p>Também surgiram bancos não relacionais, frequentemente agrupados sob o nome <strong>NoSQL — Not Only SQL</strong>. Eles não substituem automaticamente bancos relacionais: oferecem modelos diferentes para necessidades específicas.</p>
+<p><span class="tag">Documento</span> MongoDB &nbsp; <span class="tag">Chave-valor</span> Redis &nbsp; <span class="tag">Grafos</span> Neo4j &nbsp; <span class="tag">Colunas amplas (wide-column)</span> Cassandra</p>
+
+<h2>19. Cloud Computing — bancos como serviço</h2>
+<p>A computação em nuvem também mudou a forma de operar bancos: em vez de manter toda a infraestrutura localmente, organizações podem usar serviços gerenciados, com recursos de disponibilidade, backup, monitoramento e escala fornecidos pela plataforma.</p>
+
+<h2>20. Dados e Inteligência Artificial</h2>
+<p>Sistemas de Inteligência Artificial também dependem de dados organizados, acessíveis e confiáveis. Isso aproxima bancos de dados de temas como análise, busca, recomendação e aplicações com IA.</p>
+<div class="card note"><div class="card-body"><h3>Prévia, não destino final</h3><p>Por enquanto, basta perceber que novos problemas produziram novas arquiteturas. No <strong>Capítulo 10 — Visão Moderna</strong>, voltaremos a Big Data, NoSQL, nuvem, analytics e IA com critérios de escolha e exemplos mais completos.</p></div></div>
 <h2>21. O mundo atual funciona sobre dados</h2><p>Hoje praticamente toda área depende de bancos de dados: educação, medicina, bancos, logística, indústria, agronegócio, comércio, segurança, redes sociais e aplicativos.</p>
 <div class="visual"><pre>Sistemas manuais
         ↓
@@ -136,10 +141,10 @@ Cloud Computing
         ↓
 Inteligência Artificial</pre></div>
 <h2>22. Resumo inteligente do capítulo</h2><p>Neste capítulo aprendemos por que os bancos de dados surgiram, os problemas dos sistemas manuais, as limitações dos sistemas baseados em arquivos, como nasceram os SGBDs, como o modelo relacional revolucionou a computação, como surgiu o SQL e como os bancos evoluíram para Big Data, NoSQL, cloud e IA.</p><p>Mais importante: aprendemos que banco de dados não é apenas tecnologia. Banco de dados é organização inteligente da informação em escala global.</p>
-<h2>23. Exercícios diretos</h2><ol><li>Explique o principal problema dos sistemas baseados em arquivos.</li><li>O que é redundância de dados?</li><li>O que é inconsistência?</li><li>Qual foi a principal contribuição do modelo relacional?</li><li>Qual a função de um SGBD?</li><li>Explique resumidamente a diferença entre banco relacional e banco NoSQL.</li></ol>
-<h2>24. Perguntas reflexivas</h2><ol><li>Por que a sociedade moderna depende tanto de bancos de dados?</li><li>Quais problemas poderiam acontecer se bancos não garantissem integridade?</li><li>Por que apenas armazenar dados não é suficiente?</li><li>Por que bancos relacionais continuam importantes mesmo com NoSQL?</li></ol>
-<h2>25. Desafio final do capítulo</h2><div class="card idea"><div class="card-body"><h3>Rede social moderna</h3><p>Explique quais tipos de dados uma rede social precisa armazenar, quais desafios de volume ela enfrenta, por que precisa de bancos rápidos e organizados, onde bancos relacionais podem ser úteis e onde bancos NoSQL podem ser úteis.</p></div></div>
-<h2>26. Fechamento do capítulo</h2><p>Neste capítulo você não aprendeu apenas “história”. Você começou a entender por que bancos de dados existem, quais problemas eles resolvem e por que se tornaram uma das tecnologias mais importantes da computação moderna.</p><p>Agora estamos prontos para estudar tabelas, registros, colunas/atributos, valores, chaves, integridade e estrutura relacional: os fundamentos internos dos bancos de dados modernos.</p>
+<h2>23. Checagem antes de avançar</h2>
+<ol><li>Qual problema central dos arquivos isolados levou à necessidade dos SGBDs?</li><li>O que o modelo relacional mudou na organização dos dados?</li><li>Qual é a diferença entre banco de dados, SGBD e SQL?</li><li>Por que o surgimento de novas tecnologias não tornou o modelo relacional inútil?</li></ol>
+<div class="card note"><div class="card-body"><h3>Quer praticar mais?</h3><p>Os exercícios completos, graduados e contextualizados deste capítulo estão em <strong>99 Exercícios → Início</strong>.</p></div></div>
+<h2>24. Fechamento do capítulo</h2><p>Neste capítulo você não aprendeu apenas “história”. Você começou a entender por que bancos de dados existem, quais problemas eles resolvem e por que se tornaram uma das tecnologias mais importantes da computação moderna.</p><p>Agora estamos prontos para estudar tabelas, registros, colunas/atributos, valores, chaves, integridade e estrutura relacional: os fundamentos internos dos bancos de dados modernos.</p>
 </article></section>
 <section class="module" id="mod-fundamentos">
 <section class="hero">
@@ -252,7 +257,7 @@ TABELA: alunos
 <tr><td>2</td><td>Maria</td></tr>
 <tr><td>3</td><td>Carlos</td></tr>
 </table>
-<p>O campo <strong>id_aluno</strong> identifica cada aluno individualmente. Ele não pode repetir e não deve ficar vazio.</p>
+<p>A coluna/atributo <strong>id_aluno</strong> identifica cada aluno individualmente. Ela não pode repetir e não deve ficar vazia.</p>
 <div class="card note"><div class="card-body">
 <h3>Por que não usar nome?</h3>
 <p>Nomes podem repetir. Pode existir mais de um João, mais de uma Maria ou mais de um Carlos. Por isso sistemas profissionais normalmente usam códigos ou IDs.</p>
@@ -277,7 +282,7 @@ TURMAS
 ALUNOS
  id_turma (FK)
 </pre></div>
-<p>O campo <strong>id_turma</strong> aparece na tabela alunos para indicar a qual turma cada aluno pertence.</p>
+<p>A coluna/atributo <strong>id_turma</strong> aparece na tabela alunos para indicar a qual turma cada aluno pertence.</p>
 <h3>Relacionamentos representam o mundo real</h3>
 <table class="sql-table">
 <tr><th>Relação real</th><th>Representação no banco</th></tr>
@@ -448,7 +453,7 @@ Estrutura
 ↓
 Tabelas
 ↓
-Campos
+Colunas / atributos
 ↓
 Tipos
 ↓
@@ -481,59 +486,14 @@ Disciplinas
 Notas
 Frequência
 </pre>
-<p>Depois pensamos nos campos, tipos, chaves, relacionamentos e regras de integridade.</p>
+<p>Depois pensamos nas colunas/atributos, tipos, chaves, relacionamentos e regras de integridade.</p>
 <div class="card idea"><div class="card-body">
 <h3>Ideia principal</h3>
 <p>Banco de Dados começa na organização mental das informações.</p>
 </div></div>
-<h2>EXERCÍCIOS — CAPÍTULO 1</h2>
-<h3>Exercício 1A — Dados e Informação</h3>
-<ol>
-<li>Explique a diferença entre dado e informação.</li>
-<li>Transforme os dados “Maria, 8,7, Matemática, 2026” em uma informação compreensível.</li>
-</ol>
-<h3>Exercício 1B — Estrutura das Tabelas</h3>
-<ol>
-<li>Explique a diferença entre tabela, linha/registro, coluna/atributo e valor.</li>
-<li>Observe uma tabela de clientes e identifique suas colunas/atributos, registros e alguns valores.</li>
-</ol>
-<h3>Exercício 1C — Domínio e Tipos</h3>
-<ol>
-<li>Qual tipo de dado seria adequado para idade, preço, data de nascimento e e-mail?</li>
-<li>Explique por que telefone geralmente não deve ser tratado como número para cálculo.</li>
-</ol>
-<h3>Exercício 1D — Chave Primária</h3>
-<ol>
-<li>O que é chave primária?</li>
-<li>Por que nomes normalmente não são boas chaves primárias?</li>
-</ol>
-<h3>Exercício 1E — Relacionamentos</h3>
-<ol>
-<li>Explique a função da chave estrangeira.</li>
-<li>Por que relacionamentos evitam repetição desnecessária?</li>
-</ol>
-<h3>Exercício 1F — Integridade</h3>
-<ol>
-<li>Explique integridade de entidade, referencial e de domínio.</li>
-<li>Dê um exemplo de dado inválido que o banco deveria bloquear.</li>
-</ol>
-<h3>Exercício 1G — Funcionamento Real</h3>
-<ol>
-<li>Explique o fluxo entre usuário, aplicação e banco de dados.</li>
-<li>O que acontece internamente quando um usuário salva um favorito em um aplicativo?</li>
-</ol>
-<h3>Exercício 1H — Erros Clássicos</h3>
-<ol>
-<li>Explique o problema de misturar nome, telefone e bairro em uma única coluna.</li>
-<li>Reescreva essa estrutura de forma correta.</li>
-</ol>
-<h3>Exercício 1I — Desafio Final</h3>
-<ol>
-<li>Imagine um sistema escolar. Quais tabelas poderiam existir?</li>
-<li>Quais campos seriam importantes?</li>
-<li>Onde seriam usadas chaves primárias e estrangeiras?</li>
-<li>Quais regras de integridade seriam importantes?</li>
-</ol>
+<h2>Checagem antes de avançar</h2>
+<ol><li>Explique a diferença entre dado e informação.</li><li>Diferencie tabela, registro, coluna/atributo e valor.</li><li>Qual é a função de PK e FK?</li><li>Por que integridade e tipos de dados importam?</li></ol>
+<div class="card note"><div class="card-body"><h3>Prática completa</h3><p>Os exercícios graduados deste capítulo estão em <strong>99 Exercícios → Capítulo 1</strong>.</p></div></div>
 <h2>FECHAMENTO DO CAPÍTULO 1</h2>
 <p>A partir deste ponto, o aluno já consegue enxergar sistemas como estruturas organizadas de informação.</p>
 <p>Agora já é possível compreender tabelas, registros, relacionamentos, tipos, integridade e o funcionamento básico dos sistemas modernos.</p>
@@ -634,9 +594,9 @@ Modelo lógico
 ↓
 Banco físico
 </pre></div>
-<h3>Entidade forte e entidade fraca</h3>
-<p>Uma entidade forte consegue existir sozinha, como Cliente, Produto, Aluno ou Funcionário.</p>
-<p>Uma entidade fraca depende de outra para existir. Um exemplo simples é <strong>ItemPedido</strong>, que normalmente depende de um Pedido.</p>
+<h3>Entidade associativa: quando a relação também precisa guardar dados</h3>
+<p>Alguns relacionamentos precisam ser representados por um elemento próprio. É o caso de <strong>ItemPedido</strong>, que liga Pedido e Produto e pode guardar informações da própria relação, como quantidade e preço praticado.</p>
+<p>Esse tipo de estrutura é especialmente importante em relacionamentos N:N. Mais adiante veremos como ela se transforma em uma tabela associativa no modelo lógico.</p>
 <h2>BLOCO 3 — Atributos</h2>
 <p>As entidades sozinhas ainda não bastam. Depois de identificar uma entidade, precisamos definir quais informações ela precisa armazenar.</p>
 <p>Essas informações são chamadas de <strong>atributos</strong>.</p>
@@ -878,6 +838,7 @@ SQL
 <h3>Leitura do modelo</h3>
 <ul>
 <li><strong>FORNECEDOR (1) — (N) PRODUTO:</strong> um fornecedor pode fornecer vários produtos, mas cada produto está ligado a um fornecedor neste modelo simplificado.</li>
+<li><strong>Regra simplificada:</strong> este desenho considera um fornecedor por produto apenas para a primeira leitura do DER. Se o negócio permitir vários fornecedores para o mesmo produto, a regra muda para N:N e o modelo precisará ser refinado — exatamente o que faremos no próximo capítulo.</li>
 <li><strong>CATEGORIA (1) — (N) PRODUTO:</strong> uma categoria pode possuir vários produtos, mas cada produto pertence a uma categoria.</li>
 <li><strong>PRODUTO</strong> possui atributos como descrição, preço e quantidade em estoque.</li>
 <li>As chaves primárias estão destacadas em azul escuro.</li>
@@ -956,95 +917,9 @@ Nota
 <h3>Modelagem é pensamento, não ferramenta</h3>
 <p>A ferramenta pode ser Draw.io, brModelo, MySQL Workbench, Oracle Data Modeler ou papel e caneta. O principal é o raciocínio estrutural.</p>
 <p>O objetivo não é decorar diagramas. O objetivo é desenvolver pensamento analítico.</p>
-<h2>EXERCÍCIOS — CAPÍTULO 2</h2>
-<h3>Exercício 2A — Identificando Entidades</h3>
-<p>Uma academia deseja controlar alunos, professores, planos, pagamentos e aulas.</p>
-<ol>
-<li>Quais elementos podem se tornar entidades?</li>
-<li>Explique por que essas entidades são importantes para o sistema.</li>
-<li>Existe algum elemento listado que talvez não precise virar entidade? Justifique.</li>
-</ol>
-<h3>Exercício 2B — Identificando Atributos</h3>
-<p>A entidade Cliente precisa armazenar informações importantes.</p>
-<ol>
-<li>Cite pelo menos 6 atributos possíveis para Cliente.</li>
-<li>Qual atributo poderia funcionar como identificador?</li>
-<li>Quais atributos poderiam possuir validações específicas?</li>
-<li>Existe algum atributo desnecessário? Explique.</li>
-</ol>
-<h3>Exercício 2C — Relacionamentos e regras de negócio</h3>
-<p>Uma loja virtual possui clientes, pedidos, produtos e categorias.</p>
-<ol>
-<li>Escreva uma regra de negócio para cada relacionamento que você identificar.</li>
-<li>Quais relacionamentos provavelmente existem?</li>
-<li>Explique cada relacionamento.</li>
-<li>O que aconteceria se essas entidades não fossem relacionadas?</li>
-<li>Quais problemas poderiam surgir?</li>
-</ol>
-<h3>Exercício 2D — Cardinalidade</h3>
-<p>Identifique a cardinalidade correta nos cenários:</p>
-<ol>
-<li>Um cliente pode realizar vários pedidos; cada pedido pertence a apenas um cliente.</li>
-<li>Um aluno pode cursar várias disciplinas; uma disciplina pode possuir vários alunos.</li>
-<li>Um funcionário possui um crachá exclusivo; cada crachá pertence a apenas um funcionário.</li>
-<li>No cenário Cliente–Pedido, indique também a cardinalidade mínima e máxima considerando que um cliente pode ainda não ter feito pedidos.</li>
-</ol>
-<h3>Exercício 2E — Problemas de Modelagem</h3>
-<p>Analise a estrutura:</p>
-<table class="sql-table">
-<tr><th>aluno</th><th>turma</th><th>professor</th><th>disciplina</th><th>nota</th></tr>
-</table>
-<ol>
-<li>Quais problemas essa estrutura pode gerar?</li>
-<li>Existe mistura de responsabilidades?</li>
-<li>Quais entidades poderiam ser separadas?</li>
-<li>Onde pode existir redundância?</li>
-<li>Como melhorar essa modelagem?</li>
-</ol>
-<h3>Exercício 2F — Pensamento Analítico</h3>
-<p>Uma clínica deseja controlar pacientes, médicos, consultas, exames e pagamentos.</p>
-<ol>
-<li>Quais entidades provavelmente existirão?</li>
-<li>Quais atributos importantes cada entidade poderia possuir?</li>
-<li>Quais relacionamentos existirão?</li>
-<li>Quais cardinalidades provavelmente aparecerão?</li>
-<li>O que poderia acontecer se a clínica não modelasse corretamente o sistema?</li>
-</ol>
-<h3>Exercício 2G — Interpretação de DER</h3>
-<pre>
-CLIENTE 1 ─── N PEDIDO
-PEDIDO 1 ─── N ITEM_PEDIDO
-PRODUTO 1 ─── N ITEM_PEDIDO
-</pre>
-<ol>
-<li>Um cliente pode possuir vários pedidos?</li>
-<li>Um pedido pode possuir vários produtos?</li>
-<li>Por que ITEM_PEDIDO existe?</li>
-<li>Qual problema aconteceria sem essa entidade intermediária?</li>
-<li>Qual relacionamento do modelo é muitos-para-muitos?</li>
-</ol>
-<h3>Exercício 2H — Mini Desafio de Modelagem</h3>
-<p>Uma locadora de veículos deseja controlar clientes, veículos, locações, pagamentos e multas.</p>
-<ol>
-<li>Liste as entidades principais.</li>
-<li>Sugira atributos importantes para cada entidade.</li>
-<li>Explique os relacionamentos.</li>
-<li>Defina possíveis cardinalidades.</li>
-<li>Descreva quais problemas poderiam acontecer em uma modelagem ruim.</li>
-<li>Explique como a modelagem ajuda a organizar o sistema.</li>
-</ol>
-<h3>Exercício 2I — Desafio Final do Capítulo</h3>
-<p>Uma plataforma de cursos online deseja controlar alunos, professores, cursos, módulos, aulas, matrículas, pagamentos e certificados.</p>
-<ol>
-<li>Identifique as entidades principais.</li>
-<li>Defina atributos importantes.</li>
-<li>Explique os relacionamentos.</li>
-<li>Defina cardinalidades prováveis.</li>
-<li>Indique onde pode existir relacionamento N:N.</li>
-<li>Explique quais tabelas intermediárias poderiam existir.</li>
-<li>Quais problemas apareceriam sem modelagem adequada?</li>
-<li>Explique por que modelagem conceitual é importante antes da implementação física do banco.</li>
-</ol>
+<h2>Checagem antes de avançar</h2>
+<ol><li>Identifique entidades, atributos e relacionamentos em um sistema simples.</li><li>Escreva uma regra de negócio antes de definir uma cardinalidade.</li><li>Diferencie 1:1, 1:N e N:N.</li><li>Explique o que 0..N e 1..1 acrescentam à leitura da cardinalidade.</li></ol>
+<div class="card note"><div class="card-body"><h3>Prática completa</h3><p>Os exercícios graduados deste capítulo estão em <strong>99 Exercícios → Capítulo 2</strong>.</p></div></div>
 <h2>FECHAMENTO DO CAPÍTULO 2</h2>
 <p>A partir deste ponto, o aluno já consegue transformar problemas reais em estruturas organizadas de informação.</p>
 <p>Agora já é possível identificar entidades, definir atributos, criar relacionamentos, compreender cardinalidades, interpretar DERs, analisar problemas de modelagem e desenvolver visão estrutural de sistemas.</p>
@@ -1401,7 +1276,7 @@ FORNECEDOR 1 ─ N PRODUTO_FORNECEDOR
 </pre></div>
 <h3>Modelo lógico refinado</h3>
 <table class="sql-table">
-<tr><th>Tabela</th><th>Campos principais</th></tr>
+<tr><th>Tabela</th><th>Colunas principais</th></tr>
 <tr><td>categoria</td><td>id_categoria, nome</td></tr>
 <tr><td>cidade</td><td>id_cidade, nome_cidade, estado</td></tr>
 <tr><td>fornecedor</td><td>id_fornecedor, nome, telefone, id_cidade</td></tr>
@@ -1415,62 +1290,9 @@ FORNECEDOR 1 ─ N PRODUTO_FORNECEDOR
 <h3>Resultado esperado</h3>
 <p>Um banco bem modelado é mais fácil de consultar, alterar, manter, documentar e implementar em SQL.</p>
 </div></div>
-<h2>EXERCÍCIOS — CAPÍTULO 3</h2>
-<h3>Exercício 3A — Transformação do DER em tabelas</h3>
-<ol>
-<li>Explique como a entidade PRODUTO se transforma em tabela.</li>
-<li>Explique como os atributos descrição, preço e quantidade aparecem no modelo lógico.</li>
-<li>Explique como o relacionamento CATEGORIA 1:N PRODUTO aparece nas tabelas.</li>
-</ol>
-<h3>Exercício 3B — PK e FK</h3>
-<ol>
-<li>Qual é a função da PK em uma tabela?</li>
-<li>Qual é a função da FK?</li>
-<li>Explique por que produto.id_categoria é FK.</li>
-<li>O que aconteceria se um produto apontasse para uma categoria inexistente?</li>
-</ol>
-<h3>Exercício 3C — Tabela associativa</h3>
-<ol>
-<li>Por que PRODUTO N:N FORNECEDOR precisa de tabela associativa?</li>
-<li>Quais campos poderiam existir em produto_fornecedor?</li>
-<li>Por que preco_custo pode pertencer à tabela associativa?</li>
-</ol>
-<h3>Exercício 3D — Redundância</h3>
-<ol>
-<li>Explique o que é redundância.</li>
-<li>Por que repetir o nome da categoria dentro de produto é ruim?</li>
-<li>Quais problemas podem ocorrer em uma atualização?</li>
-</ol>
-<h3>Exercício 3E — 1FN</h3>
-<ol>
-<li>O que significa valor atômico?</li>
-<li>Por que guardar “Tech, Alpha, Mega” em uma única coluna viola a 1FN?</li>
-<li>Como resolver esse problema?</li>
-</ol>
-<h3>Exercício 3F — 2FN</h3>
-<ol>
-<li>Explique, com suas palavras, o que significa dependência funcional.</li>
-<li>O que é dependência parcial?</li>
-<li>Por que nome_fornecedor não deve ficar em produto_fornecedor?</li>
-<li>Onde o nome do fornecedor deve ficar?</li>
-</ol>
-<h3>Exercício 3G — 3FN</h3>
-<ol>
-<li>O que é dependência transitiva?</li>
-<li>Por que nome_cidade e estado devem ficar em uma tabela cidade?</li>
-<li>Dê outro exemplo de dependência transitiva.</li>
-</ol>
-<h3>Exercício 3H — Desafio final</h3>
-<p>Refine o sistema comercial considerando as tabelas categoria, cidade, fornecedor, produto e produto_fornecedor.</p>
-<ol>
-<li>Liste as PKs.</li>
-<li>Liste as FKs.</li>
-<li>Explique os relacionamentos.</li>
-<li>Indique onde a 1FN aparece.</li>
-<li>Indique onde a 2FN aparece.</li>
-<li>Indique onde a 3FN aparece.</li>
-<li>Explique por que esse modelo está mais organizado que uma tabela única.</li>
-</ol>
+<h2>Checagem antes de avançar</h2>
+<ol><li>Explique como entidade, atributo e relacionamento chegam ao modelo lógico.</li><li>Por que um N:N costuma exigir tabela associativa?</li><li>Diferencie 1FN, 2FN e 3FN pelo problema que cada uma evita.</li><li>Explique por que dependência funcional ajuda a decidir onde um dado deve ficar.</li></ol>
+<div class="card note"><div class="card-body"><h3>Prática completa</h3><p>Os exercícios graduados deste capítulo estão em <strong>99 Exercícios → Capítulo 3</strong>.</p></div></div>
 <h2>FECHAMENTO DO CAPÍTULO 3</h2>
 <p>Ao longo deste capítulo, o aluno deixou de enxergar o banco de dados apenas como tabelas isoladas e passou a compreender a estrutura relacional de forma muito mais profissional.</p>
 <p>Agora já é possível:</p>
@@ -1496,7 +1318,7 @@ FORNECEDOR 1 ─ N PRODUTO_FORNECEDOR
 <section class="hero">
 <span class="kicker">Capítulo 4</span>
 <h2>SQL com MySQL</h2>
-<p>Implementação física do modelo comercial refinado no MySQL usando SQL, com foco em terminal CLI, criação de banco, cinco tabelas relacionadas, restrições, inserção dos dados existentes, consultas, filtros, alterações, exclusões, chaves estrangeiras, JOIN, agregações, GROUP BY e boas práticas.</p>
+<p>Implementação física do modelo comercial refinado no MySQL usando SQL, com foco em terminal CLI, criação e evolução de estruturas, cinco tabelas relacionadas, restrições, inserção dos dados existentes, consultas, filtros, alterações, exclusões, chaves estrangeiras, JOIN, agregações, GROUP BY e boas práticas.</p>
 </section>
 <article class="chapter">
 <h2>BLOCO 1 — Modelagem Física</h2>
@@ -1536,6 +1358,7 @@ Banco físico é alterado</pre></div>
 <p>Depois de informar a senha, o aluno estará dentro do ambiente interativo do MySQL.</p>
 <div class="card note"><div class="card-body"><h3>Se “mysql” não for reconhecido</h3><p>O executável do MySQL pode não estar no PATH do Windows. Nesse caso, use o cliente instalado pelo MySQL ou configure o diretório <strong>bin</strong> da instalação no PATH. O caminho exato depende da versão e do local escolhido na instalação.</p></div></div>
 <p>A administração completa de instalação, usuários, permissões, backup e restauração será aprofundada no Capítulo 6. Aqui fazemos apenas o necessário para conseguir praticar SQL desde já.</p>
+<div class="card note"><div class="card-body"><h3>Regra dos laboratórios: preserve a base de referência</h3><p>O banco <code>comercio</code> será reutilizado nos próximos capítulos. Por isso, exemplos que alteram dados devem terminar deixando a base novamente em um estado conhecido. Enquanto ainda estamos aprendendo SQL básico, usaremos principalmente <strong>registros temporários + limpeza</strong> ou <strong>tabelas de laboratório separadas</strong>. No Capítulo 7, depois de aprender transações, também usaremos <strong>ROLLBACK</strong> para desfazer testes com segurança.</p></div></div>
 <h2>BLOCO 5 — CREATE DATABASE e USE</h2>
 <p>O primeiro passo físico é criar o banco de dados do sistema comercial.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>CREATE DATABASE comercio;
@@ -1614,6 +1437,23 @@ DESCRIBE cidade;
 DESCRIBE fornecedor;
 DESCRIBE produto;
 DESCRIBE produto_fornecedor;</code></pre></div>
+<h2>BLOCO 6.1 — ALTER TABLE: quando a estrutura precisa evoluir</h2>
+<p>CREATE TABLE cria a estrutura inicial. Mas sistemas evoluem. <strong>ALTER TABLE</strong> modifica a estrutura de uma tabela que já existe.</p>
+<p>Para aprender sem alterar o modelo comercial, use uma tabela de laboratório:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar laboratório ALTER TABLE</button><pre><code>CREATE TABLE estrutura_lab (
+    id INT PRIMARY KEY
+);
+
+ALTER TABLE estrutura_lab
+ADD COLUMN observacao VARCHAR(100);
+
+DESCRIBE estrutura_lab;
+
+ALTER TABLE estrutura_lab
+DROP COLUMN observacao;
+
+DROP TABLE estrutura_lab;</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>Mudança de estrutura não é um Ctrl+Z</h3><p>ALTER TABLE, DROP TABLE e outros comandos que mudam a estrutura podem causar <strong>commit implícito</strong> no MySQL. Por isso o laboratório usa uma tabela descartável. Mais adiante, quando estudarmos transações, veremos por que não devemos contar com ROLLBACK para recuperar uma estrutura removida.</p></div></div>
 <h2>BLOCO 7 — INSERT INTO: inserindo os dados da base</h2>
 <p>Agora o banco deixa de ser apenas estrutura e começa a receber dados. Vamos preservar os dados existentes de categoria, fornecedor e produto e transformar a antiga ligação produto–fornecedor em registros da tabela associativa.</p>
 <div class="card note"><div class="card-body"><h3>Não inventar dado que não existe</h3><p>A base recebida não informa a cidade de cada fornecedor nem preço de custo/prazo de entrega por fornecedor. Por isso esses campos ficarão <strong>NULL</strong> até existirem dados reais. A estrutura está pronta, mas não vamos preencher informações fictícias apenas para “completar” a tabela.</p></div></div>
@@ -1897,22 +1737,29 @@ FROM categoria
 WHERE nome LIKE '%DOCE%';</code></pre></div>
 <p>Esse tipo de busca aparece em sistemas reais quando o usuário digita parte do nome de um produto, fornecedor ou categoria.</p>
 <h2>BLOCO 12 — UPDATE: alterando registros</h2>
-<p>UPDATE modifica dados existentes. O uso do WHERE é essencial.</p>
-<div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>SELECT *
-FROM produto
-WHERE id_produto = 22;
-
-UPDATE produto
-SET preco = 6
-WHERE id_produto = 22;
+<p>UPDATE modifica dados existentes. O uso do WHERE é essencial. Para praticar sem alterar um produto real da base, criaremos um registro temporário apenas para este teste.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar UPDATE seguro</button><pre><code>INSERT INTO produto
+(id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)
+VALUES
+(1001, 'PRODUTO TEMPORARIO UPDATE', 5, 1, 3, 0);
 
 SELECT *
 FROM produto
-WHERE id_produto = 22;</code></pre></div>
-<div class="card problem"><div class="card-body"><h3>Cuidado</h3><p>UPDATE sem WHERE altera todos os registros da tabela. Esse é um dos erros mais perigosos para iniciantes.</p></div></div>
-<div class="codebox"><button class="copy-btn" type="button">Copiar UPDATE em grupo</button><pre><code>UPDATE produto
-SET preco = preco + 1
-WHERE id_categoria = 3;</code></pre></div>
+WHERE id_produto = 1001;
+
+UPDATE produto
+SET preco = 6
+WHERE id_produto = 1001;
+
+SELECT *
+FROM produto
+WHERE id_produto = 1001;
+
+-- limpeza do laboratório
+DELETE FROM produto
+WHERE id_produto = 1001;</code></pre></div>
+<div class="card problem"><div class="card-body"><h3>Cuidado</h3><p>UPDATE sem WHERE altera todos os registros da tabela. Em um banco real, isso pode causar grande impacto.</p></div></div>
+<div class="card note"><div class="card-body"><h3>Por que usamos um produto temporário?</h3><p>O objetivo é aprender UPDATE sem modificar a base que será usada nos capítulos seguintes. O comando DELETE usado apenas para limpeza será explicado detalhadamente no próximo bloco.</p></div></div>
 <h2>BLOCO 13 — DELETE: removendo registros</h2>
 <p>DELETE remove registros. Assim como UPDATE, precisa de muito cuidado com WHERE.</p>
 <p>Para praticar sem destruir um produto real da base, crie primeiro um registro temporário sem fornecedor associado.</p>
@@ -1934,23 +1781,35 @@ WHERE id_produto = 1000;</code></pre></div>
 <div class="card problem"><div class="card-body"><h3>Cuidado extremo</h3><p>DELETE FROM produto; sem WHERE apaga todos os produtos.</p></div></div>
 <p>Se tentarmos apagar um produto que ainda aparece em <strong>produto_fornecedor</strong>, ou uma categoria que possui produtos vinculados, a FK pode impedir a exclusão. Isso não é erro do banco: é proteção da integridade referencial.</p>
 <h2>BLOCO 14 — FOREIGN KEY: integridade referencial real</h2>
-<p>A FOREIGN KEY é a implementação física do relacionamento entre tabelas. Ela impede referências para registros que não existem.</p>
-<div class="codebox"><button class="copy-btn" type="button">Copiar teste de categoria</button><pre><code>INSERT INTO produto
-(id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)
-VALUES
-(100, 'PRODUTO TESTE', 5, 10, 3, 5);
-
+<p>A FOREIGN KEY é a implementação física do relacionamento entre tabelas. Ela impede referências para registros que não existem. Usaremos um produto temporário e o removeremos ao final.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar teste de integridade</button><pre><code>-- deve funcionar: categoria 3 existe
 INSERT INTO produto
 (id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)
 VALUES
-(101, 'PRODUTO INVALIDO', 5, 10, 999, 5);</code></pre></div>
-<p>O segundo INSERT deve falhar se a categoria 999 não existir. O primeiro pode funcionar porque a categoria 3 existe.</p>
-<div class="codebox"><button class="copy-btn" type="button">Copiar teste da tabela associativa</button><pre><code>INSERT INTO produto_fornecedor (id_produto, id_fornecedor)
-VALUES (100, 4);
+(900001, 'PRODUTO TESTE', 5, 10, 3, 5);
 
+-- deve falhar: categoria 999 não existe
+INSERT INTO produto
+(id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)
+VALUES
+(900002, 'PRODUTO INVALIDO', 5, 10, 999, 5);
+
+-- deve funcionar: produto e fornecedor existem
 INSERT INTO produto_fornecedor (id_produto, id_fornecedor)
-VALUES (100, 999);</code></pre></div>
-<p>A segunda associação deve falhar se o fornecedor 999 não existir. Assim enxergamos a integridade também no relacionamento N:N.</p>
+VALUES (900001, 4);
+
+-- deve falhar: fornecedor 999 não existe
+INSERT INTO produto_fornecedor (id_produto, id_fornecedor)
+VALUES (900001, 999);
+
+-- limpeza dos testes válidos
+DELETE FROM produto_fornecedor
+WHERE id_produto = 900001;
+
+DELETE FROM produto
+WHERE id_produto = 900001;</code></pre></div>
+<p>Os comandos inválidos são rejeitados pelas restrições. Os dois DELETEs finais removem somente os registros de laboratório que foram aceitos, preservando a base <code>comercio</code>.</p>
+<div class="card solution"><div class="card-body"><h3>O erro é parte do laboratório</h3><p>Quando a FK ou o CHECK bloqueia um dado inválido, o banco está fazendo exatamente o que foi modelado: protegendo integridade.</p></div></div>
 <h2>BLOCO 15 — JOIN: unindo tabelas relacionadas</h2>
 <p>JOIN é usado para unir dados de tabelas relacionadas. Aqui o banco relacional mostra seu verdadeiro valor.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>SELECT
@@ -2038,7 +1897,7 @@ ORDER BY total_produtos DESC;</code></pre></div>
 <div class="card solution"><div class="card-body"><h3>Fluxo seguro</h3><p>Consultar → alterar/remover → consultar novamente. Esse hábito evita muitos erros em bancos reais.</p></div></div>
 <h2>BLOCO 19 — Fechamento do Capítulo SQL com MySQL</h2>
 <p>Neste capítulo, o banco deixou de ser apenas desenho e estrutura lógica. Ele virou implementação física real no MySQL.</p>
-<p>Aprendemos modelagem física, SQL, MySQL, SGBD, CREATE DATABASE, CREATE TABLE, AUTO_INCREMENT, restrições, INSERT, SELECT, DISTINCT, LIMIT, WHERE, AND, OR, NOT, IN, BETWEEN, IS NULL, ORDER BY, LIKE, UPDATE, DELETE, FOREIGN KEY, JOIN, funções de agregação, GROUP BY, HAVING e boas práticas.</p>
+<p>Aprendemos modelagem física, SQL, MySQL, SGBD, CREATE DATABASE, CREATE TABLE, ALTER TABLE, AUTO_INCREMENT, restrições, INSERT, SELECT, DISTINCT, LIMIT, WHERE, AND, OR, NOT, IN, BETWEEN, IS NULL, ORDER BY, LIKE, UPDATE, DELETE, FOREIGN KEY, JOIN, funções de agregação, GROUP BY, HAVING e boas práticas.</p>
 <p>Mais importante: entendemos como transformar uma modelagem relacional completa em um banco físico real utilizando SQL no MySQL.</p>
 </article>
 </section>
@@ -2834,12 +2693,17 @@ WHERE id_produto = 22
 FOR UPDATE;
 
 -- não dê COMMIT ainda</code></pre></div>
-<p>Na <strong>Sessão B</strong>:</p>
-<div class="codebox"><button class="copy-btn" type="button">Copiar Sessão B</button><pre><code>UPDATE produto
+<p>Na <strong>Sessão B</strong>, também abra uma transação antes de tentar alterar:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar Sessão B</button><pre><code>START TRANSACTION;
+
+UPDATE produto
 SET qtde = qtde - 1
-WHERE id_produto = 22;</code></pre></div>
-<p>A Sessão B pode ficar aguardando. Volte à Sessão A e execute <code>ROLLBACK;</code>. Observe o que acontece com a Sessão B.</p>
-<div class="card solution"><div class="card-body"><h3>O conceito ficou visível</h3><p>Concorrência não é uma definição distante: duas conexões disputando a mesma linha permitem enxergar bloqueio e espera na prática.</p></div></div>
+WHERE id_produto = 22;
+
+-- quando o UPDATE finalmente concluir, execute:
+ROLLBACK;</code></pre></div>
+<p>A Sessão B deve ficar aguardando enquanto A mantém o bloqueio. Volte à Sessão A e execute <code>ROLLBACK;</code>. O UPDATE da Sessão B então pode prosseguir; em seguida, execute o <code>ROLLBACK</code> indicado nela para que nenhuma baixa fique gravada.</p>
+<div class="card solution"><div class="card-body"><h3>O conceito ficou visível sem sujar a base</h3><p>Duas conexões disputando a mesma linha permitem enxergar bloqueio e espera. As duas terminam com ROLLBACK, portanto o produto permanece com a quantidade original.</p></div></div>
 
 <h2>BLOCO 17 — Deadlock: quando cada transação espera pela outra</h2>
 <p>Um <strong>deadlock</strong> ocorre quando transações ficam presas em uma dependência circular de bloqueios.</p>
@@ -2906,6 +2770,18 @@ ORDER BY preco DESC;</code></pre></div>
 
 <h2>BLOCO 3 — IN, EXISTS e NOT EXISTS</h2>
 <p>Subconsultas não servem apenas para retornar um único valor. Elas também podem responder se existe ou não uma correspondência.</p>
+<h3>IN com subconsulta</h3>
+<p>No Capítulo 4 usamos IN com uma lista fixa. Agora a própria lista pode vir de outro SELECT:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar IN com subconsulta</button><pre><code>SELECT id_produto, descricao, id_categoria
+FROM produto
+WHERE id_categoria IN (
+    SELECT id_categoria
+    FROM categoria
+    WHERE nome LIKE '%DOCE%'
+)
+ORDER BY descricao;</code></pre></div>
+<p>A consulta interna retorna os IDs das categorias cujo nome contém “DOCE”; a consulta externa procura produtos que pertencem a qualquer uma delas.</p>
+
 <h3>Fornecedores que possuem pelo menos um produto</h3>
 <div class="codebox"><button class="copy-btn" type="button">Copiar EXISTS</button><pre><code>SELECT f.id_fornecedor, f.nome
 FROM fornecedor AS f
@@ -3886,7 +3762,7 @@ resposta baseada nesse contexto</pre></div>
 </button>
 <button class="exercise-chapter-card" onclick="openExerciseChapter('ex-cap2')">
 <h3>1 Fundamentos</h3>
-<p>Dados, informação, tabelas, registros, campos, chaves e integridade.</p>
+<p>Dados, informação, tabelas, registros, colunas/atributos, chaves e integridade.</p>
 <span class="exercise-status available">Disponível · 9 exercícios</span>
 </button>
 <button class="exercise-chapter-card" onclick="openExerciseChapter('ex-cap3')">
@@ -4060,39 +3936,19 @@ WHERE id_turma = 10;</pre>
 <details class="exercise-item">
 <summary>H6 — Internet, Big Data, NoSQL e Cloud</summary>
 <div class="exercise-content">
-<div class="exercise-meta">
-<span class="meta-pill meta-hard">🔴 Avançado</span>
-<span class="meta-pill">🌐 Mercado</span>
-<span class="meta-pill">Tema: mundo moderno</span>
-</div>
-<p><strong>Situação-problema:</strong> uma plataforma de vídeos registra usuários, vídeos assistidos, curtidas, comentários, tempo de visualização, recomendações, pagamentos e logs de acesso.</p>
-<ol>
-<li>Quais desses dados poderiam ficar bem em um banco relacional?</li>
-<li>Quais dados poderiam justificar o uso de NoSQL?</li>
-<li>Quais dos 5Vs do Big Data aparecem nesse cenário?</li>
-<li>Por que cloud computing pode ser útil para essa plataforma?</li>
-<li>Explique por que NoSQL não significa “fim do SQL”.</li>
-</ol>
+<div class="exercise-meta"><span class="meta-pill meta-medium">🟡 Intermediário</span><span class="meta-pill">🌐 Evolução</span><span class="meta-pill">Tema: novos desafios</span></div>
+<p><strong>Situação-problema:</strong> uma plataforma digital cresce de milhares para milhões de acessos e passa a registrar vídeos, comentários, pagamentos, recomendações e logs.</p>
+<ol><li>Que novos desafios de volume, velocidade ou variedade podem aparecer?</li><li>Por que esse crescimento pode levar a organização a combinar tecnologias diferentes?</li><li>Explique por que NoSQL não significa “fim do SQL”.</li><li>Qual papel a nuvem pode ter nesse crescimento?</li></ol>
+<div class="answer-space">Neste momento, foque no motivo histórico da evolução. A escolha arquitetural detalhada será estudada no Capítulo 10.</div>
 </div>
 </details>
 <details class="exercise-item">
-<summary>H7 — Desafio Final: Rede Social Moderna</summary>
+<summary>H7 — Desafio Final: da história ao presente</summary>
 <div class="exercise-content">
-<div class="exercise-meta">
-<span class="meta-pill meta-hard">🔴 Avançado</span>
-<span class="meta-pill">🛠 Projeto Reflexivo</span>
-<span class="meta-pill">Tema: síntese do capítulo</span>
-</div>
-<p>Imagine que você foi chamado para explicar a estrutura de dados de uma rede social para uma equipe iniciante.</p>
-<ol>
-<li>Quais tipos de dados essa rede social precisa armazenar?</li>
-<li>Quais problemas surgiriam se tudo fosse guardado em arquivos separados?</li>
-<li>Onde um SGBD ajudaria?</li>
-<li>Onde o modelo relacional seria útil?</li>
-<li>Onde tecnologias NoSQL poderiam fazer sentido?</li>
-<li>Como Big Data e IA poderiam ser usados nesse ambiente?</li>
-</ol>
-<div class="answer-space">Produza uma resposta em formato de relatório curto, com começo, meio e conclusão.</div>
+<div class="exercise-meta"><span class="meta-pill meta-hard">🔴 Avançado</span><span class="meta-pill">🛠 Síntese</span><span class="meta-pill">Tema: evolução dos bancos</span></div>
+<p>Escolha um sistema moderno, como rede social, streaming, banco digital ou e-commerce.</p>
+<ol><li>Que problemas ele teria se dependesse apenas de arquivos isolados?</li><li>Onde um SGBD ajuda?</li><li>Por que o modelo relacional continua útil?</li><li>Que novos desafios de escala ou variedade aparecem?</li><li>Por que tecnologias diferentes podem coexistir no mesmo sistema?</li></ol>
+<div class="answer-space">Produza uma síntese curta ligando sistemas manuais, arquivos, SGBDs, modelo relacional e desafios modernos.</div>
 </div>
 </details>
 </div>
@@ -4104,7 +3960,7 @@ WHERE id_turma = 10;</pre>
 <section class="hero">
 <span class="kicker">Exercícios — Capítulo 1</span>
 <h2>Fundamentos de Banco de Dados</h2>
-<p>Dados, informação, tabelas, campos, chaves, tipos, relacionamentos, integridade e funcionamento real dos sistemas.</p>
+<p>Dados, informação, tabelas, colunas/atributos, chaves, tipos, relacionamentos, integridade e funcionamento real dos sistemas.</p>
 </section>
 <div class="exercise-set">
 <details class="exercise-item"><summary>1A — Dados e Informação</summary><div class="exercise-content"><div class="exercise-meta"><span class="meta-pill meta-basic">🟢 Básico</span><span class="meta-pill">📖 Conceitual</span></div><p>Explique a diferença entre dado e informação. Depois transforme os dados “Maria, 8,7, Matemática, 2026” em uma informação compreensível.</p><div class="answer-space">Responda com suas palavras e crie uma frase completa.</div></div></details>
@@ -4115,7 +3971,7 @@ WHERE id_turma = 10;</pre>
 <details class="exercise-item"><summary>1F — Integridade</summary><div class="exercise-content"><div class="exercise-meta"><span class="meta-pill meta-hard">🔴 Avançado</span><span class="meta-pill">🛡 Integridade</span></div><ol><li>Explique integridade de entidade, referencial e de domínio.</li><li>Dê um exemplo de dado inválido que o banco deveria bloquear.</li><li>Por que o banco também deve validar dados, mesmo quando a aplicação já valida?</li></ol></div></details>
 <details class="exercise-item"><summary>1G — Funcionamento Real</summary><div class="exercise-content"><div class="exercise-meta"><span class="meta-pill meta-medium">🟡 Intermediário</span><span class="meta-pill">🌐 Sistemas reais</span></div><ol><li>Explique o fluxo entre usuário, aplicação e banco de dados.</li><li>O que acontece internamente quando um usuário salva um favorito em um aplicativo?</li><li>Por que o usuário normalmente não vê SQL?</li></ol></div></details>
 <details class="exercise-item"><summary>1H — Erros Clássicos</summary><div class="exercise-content"><div class="exercise-meta"><span class="meta-pill meta-medium">🟡 Intermediário</span><span class="meta-pill">⚠️ Diagnóstico</span></div><ol><li>Explique o problema de misturar nome, telefone e bairro em uma única coluna.</li><li>Reescreva essa estrutura de forma correta.</li><li>Cite dois erros comuns de iniciantes em banco de dados.</li></ol></div></details>
-<details class="exercise-item"><summary>1I — Desafio Final: Sistema Escolar</summary><div class="exercise-content"><div class="exercise-meta"><span class="meta-pill meta-hard">🔴 Avançado</span><span class="meta-pill">🛠 Projeto Reflexivo</span></div><p>Imagine um sistema escolar.</p><ol><li>Quais tabelas poderiam existir?</li><li>Quais campos seriam importantes?</li><li>Onde seriam usadas chaves primárias e estrangeiras?</li><li>Quais regras de integridade seriam importantes?</li></ol></div></details>
+<details class="exercise-item"><summary>1I — Desafio Final: Sistema Escolar</summary><div class="exercise-content"><div class="exercise-meta"><span class="meta-pill meta-hard">🔴 Avançado</span><span class="meta-pill">🛠 Projeto Reflexivo</span></div><p>Imagine um sistema escolar.</p><ol><li>Quais tabelas poderiam existir?</li><li>Quais colunas/atributos seriam importantes?</li><li>Onde seriam usadas chaves primárias e estrangeiras?</li><li>Quais regras de integridade seriam importantes?</li></ol></div></details>
 </div>
 </div>
 </section>
@@ -4169,8 +4025,8 @@ PRODUTO 1 ─── N ITEM_PEDIDO</pre><ol><li>Um cliente pode possuir vários p
 <details class="exercise-item"><summary>4D — SELECT, DISTINCT e LIMIT</summary><div class="exercise-content"><ol><li>Liste todos os produtos.</li><li>Mostre apenas descricao, preco e qtde.</li><li>Liste os valores distintos de id_categoria usados em produto.</li><li>Mostre somente os dez primeiros produtos por id_produto.</li></ol></div></details>
 <details class="exercise-item"><summary>4E — WHERE e operadores</summary><div class="exercise-content"><ol><li>Liste produtos com preço entre 10 e 30.</li><li>Liste produtos das categorias 3, 7 ou 8 usando IN.</li><li>Localize fornecedores sem cidade usando IS NULL.</li><li>Crie uma consulta usando AND e outra usando OR.</li></ol></div></details>
 <details class="exercise-item"><summary>4F — ORDER BY e LIKE</summary><div class="exercise-content"><ol><li>Ordene os produtos pelo preço decrescente.</li><li>Pesquise produtos que começam com P.</li><li>Pesquise fornecedores que contenham BRASIL.</li></ol></div></details>
-<details class="exercise-item"><summary>4G — UPDATE seguro</summary><div class="exercise-content"><ol><li>Consulte o produto 22.</li><li>Atualize seu preço.</li><li>Consulte novamente para confirmar.</li><li>Explique o risco de UPDATE sem WHERE.</li></ol></div></details>
-<details class="exercise-item"><summary>4H — DELETE seguro</summary><div class="exercise-content"><ol><li>Consulte um produto pelo ID.</li><li>Remova esse produto com DELETE.</li><li>Confirme a exclusão.</li><li>Explique o risco de DELETE sem WHERE.</li></ol></div></details>
+<details class="exercise-item"><summary>4G — UPDATE seguro</summary><div class="exercise-content"><ol><li>Crie um produto temporário reservado para o exercício.</li><li>Consulte o registro e anote seu preço.</li><li>Atualize somente esse produto com UPDATE + WHERE.</li><li>Consulte novamente para confirmar a mudança.</li><li>Remova o registro temporário ao terminar.</li><li>Explique por que praticar em um registro temporário é mais seguro que alterar um produto real da base.</li><li>Explique o risco de UPDATE sem WHERE.</li></ol></div></details>
+<details class="exercise-item"><summary>4H — DELETE seguro</summary><div class="exercise-content"><ol><li>Crie um produto temporário com um ID reservado para laboratório e sem fornecedor associado.</li><li>Consulte esse registro pelo ID.</li><li>Remova somente o registro temporário com DELETE + WHERE.</li><li>Confirme que ele desapareceu.</li><li>Explique por que não devemos escolher um produto real da base apenas para praticar exclusão.</li><li>Explique o risco de DELETE sem WHERE.</li></ol></div></details>
 <details class="exercise-item"><summary>4I — FOREIGN KEY</summary><div class="exercise-content"><ol><li>Tente explicar por que um produto não pode ter id_categoria inexistente.</li><li>Explique o que a FK protege.</li><li>Explique por que categoria deve existir antes de produto.</li></ol></div></details>
 <details class="exercise-item"><summary>4J — JOIN</summary><div class="exercise-content"><ol><li>Monte uma consulta que mostre produto e categoria.</li><li>Monte uma consulta que mostre produto, categoria e fornecedor passando por produto_fornecedor.</li><li>Explique por que produto não deve ser ligado diretamente a fornecedor neste modelo.</li><li>Ordene o resultado pela descrição do produto.</li></ol></div></details>
 <details class="exercise-item"><summary>4K — Relatórios com GROUP BY e HAVING</summary><div class="exercise-content"><ol><li>Conte produtos por categoria.</li><li>Some o estoque por categoria.</li><li>Calcule preço médio por categoria.</li><li>Conte produtos por fornecedor usando produto_fornecedor.</li><li>Use HAVING para exibir apenas categorias com pelo menos três produtos.</li></ol></div></details>
@@ -4229,7 +4085,7 @@ PRODUTO 1 ─── N ITEM_PEDIDO</pre><ol><li>Um cliente pode possuir vários p
 <details class="exercise-item"><summary>7D — COMMIT em uma transferência</summary><div class="exercise-content"><ol><li>Use a tabela conta_lab.</li><li>Transfira R$ 50 da conta 1 para a conta 2 dentro de uma única transação.</li><li>Consulte os saldos antes do COMMIT.</li><li>Confirme a transação.</li><li>Explique qual diferença prática existiria se cada UPDATE fosse confirmado isoladamente.</li></ol></div></details>
 <details class="exercise-item"><summary>7E — SAVEPOINT</summary><div class="exercise-content"><ol><li>Inicie uma transação com três alterações.</li><li>Crie um SAVEPOINT depois da primeira alteração.</li><li>Execute mais duas alterações.</li><li>Use ROLLBACK TO SAVEPOINT.</li><li>Confirme o restante com COMMIT.</li><li>Explique o que foi preservado e o que foi desfeito.</li></ol></div></details>
 <details class="exercise-item"><summary>7F — ACID no mundo real</summary><div class="exercise-content"><p>Para uma compra online que registra pedido, pagamento e baixa de estoque:</p><ol><li>explique a Atomicidade;</li><li>explique a Consistência;</li><li>explique o Isolamento;</li><li>explique a Durabilidade;</li><li>diga qual problema apareceria se cada propriedade fosse ignorada.</li></ol></div></details>
-<details class="exercise-item"><summary>7G — Duas sessões</summary><div class="exercise-content"><ol><li>Abra duas conexões ao MySQL.</li><li>Na Sessão A, inicie uma transação e selecione um produto com FOR UPDATE.</li><li>Sem encerrar A, tente alterar o mesmo produto na Sessão B.</li><li>Descreva o que acontece.</li><li>Execute ROLLBACK na Sessão A.</li><li>Explique por que a Sessão B estava esperando.</li></ol></div></details>
+<details class="exercise-item"><summary>7G — Duas sessões</summary><div class="exercise-content"><ol><li>Abra duas conexões ao MySQL.</li><li>Na Sessão A, inicie uma transação e selecione um produto com FOR UPDATE.</li><li>Na Sessão B, inicie outra transação e tente alterar o mesmo produto.</li><li>Descreva a espera observada.</li><li>Execute ROLLBACK na Sessão A para liberar o bloqueio.</li><li>Assim que o UPDATE da Sessão B concluir, execute ROLLBACK nela também.</li><li>Confirme que a quantidade final do produto não mudou e explique por que B estava esperando.</li></ol></div></details>
 <details class="exercise-item"><summary>7H — Fenômenos de concorrência</summary><div class="exercise-content"><ol><li>Explique com suas palavras o que é dirty read.</li><li>Explique non-repeatable read.</li><li>Explique phantom read.</li><li>Crie um exemplo cotidiano para cada fenômeno sem copiar a definição.</li></ol></div></details>
 <details class="exercise-item"><summary>7I — Níveis de isolamento</summary><div class="exercise-content"><ol><li>Execute <code>SELECT @@transaction_isolation;</code>.</li><li>Qual nível aparece?</li><li>Coloque READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ e SERIALIZABLE em ordem do mais permissivo ao mais restritivo.</li><li>Explique por que “sempre usar o nível mais forte” não é necessariamente uma decisão gratuita.</li></ol></div></details>
 <details class="exercise-item"><summary>7J — FOR UPDATE no estoque</summary><div class="exercise-content"><p>Duas pessoas tentam comprar a última unidade de um produto.</p><ol><li>Explique por que apenas fazer SELECT da quantidade e depois UPDATE pode ser arriscado.</li><li>Escreva uma transação que consulte o produto com FOR UPDATE.</li><li>Faça o UPDATE somente se <code>qtde &gt; 0</code>.</li><li>Explique quando COMMIT e ROLLBACK seriam utilizados pela aplicação.</li></ol></div></details>
@@ -4244,7 +4100,7 @@ PRODUTO 1 ─── N ITEM_PEDIDO</pre><ol><li>Um cliente pode possuir vários p
 <section class="hero"><span class="kicker">Exercícios — Capítulo 8</span><h2>SQL Avançado</h2><p>Prática progressiva para compor consultas, reutilizar resultados, analisar dados e compreender recursos armazenados do MySQL.</p></section>
 <div class="exercise-set">
 <details class="exercise-item"><summary>8A — Subconsulta escalar</summary><div class="exercise-content"><ol><li>Calcule o preço médio dos produtos.</li><li>Use esse SELECT dentro de outra consulta.</li><li>Liste somente produtos acima da média.</li><li>Ordene do maior para o menor preço.</li><li>Explique por que a subconsulta precisa retornar um único valor nesse caso.</li></ol></div></details>
-<details class="exercise-item"><summary>8B — EXISTS e NOT EXISTS</summary><div class="exercise-content"><ol><li>Liste fornecedores que possuem pelo menos um produto associado usando EXISTS.</li><li>Liste fornecedores sem produtos usando NOT EXISTS.</li><li>Explique o papel da correlação entre fornecedor e produto_fornecedor.</li><li>Compare conceitualmente a segunda consulta com LEFT JOIN + IS NULL.</li></ol></div></details>
+<details class="exercise-item"><summary>8B — IN, EXISTS e NOT EXISTS</summary><div class="exercise-content"><ol><li>Use IN com uma subconsulta para listar produtos pertencentes a categorias selecionadas por outro SELECT.</li><li>Liste fornecedores que possuem pelo menos um produto associado usando EXISTS.</li><li>Liste fornecedores sem produtos usando NOT EXISTS.</li><li>Explique o papel da correlação entre fornecedor e produto_fornecedor.</li><li>Compare conceitualmente NOT EXISTS com LEFT JOIN + IS NULL.</li></ol></div></details>
 <details class="exercise-item"><summary>8C — JOIN ou subconsulta?</summary><div class="exercise-content"><p>Escolha a abordagem inicial e justifique:</p><ol><li>mostrar produto e nome da categoria;</li><li>mostrar produtos acima do preço médio;</li><li>descobrir fornecedores sem produtos;</li><li>mostrar produto, fornecedor e preço de custo;</li><li>descobrir se existe pelo menos um produto em cada fornecedor.</li></ol><p>Não basta escolher: explique o raciocínio.</p></div></details>
 <details class="exercise-item"><summary>8D — UNION e UNION ALL</summary><div class="exercise-content"><ol><li>Crie uma lista única com nomes de categorias e fornecedores, acrescentando uma coluna tipo.</li><li>Execute primeiro com UNION ALL.</li><li>Depois troque por UNION.</li><li>Explique a diferença entre preservar e eliminar duplicidades.</li><li>Explique por que as duas consultas precisam retornar colunas compatíveis.</li></ol></div></details>
 <details class="exercise-item"><summary>8E — CTE para organizar etapas</summary><div class="exercise-content"><ol><li>Crie uma CTE chamada estoque_baixo com produtos cuja quantidade seja menor ou igual ao estoque mínimo.</li><li>Consulte a CTE ordenando por quantidade.</li><li>Depois crie uma segunda CTE que relacione esses produtos com categoria.</li><li>Explique por que a CTE não é uma tabela permanente.</li></ol></div></details>
