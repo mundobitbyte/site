@@ -1,0 +1,249 @@
+<section class="module" id="mod-moderna">
+<section class="hero">
+<span class="kicker">Capítulo 10</span>
+<h2>Visão Moderna de Dados</h2>
+<p>Banco relacional continua essencial, mas hoje ele convive com bancos NoSQL, serviços em nuvem, plataformas analíticas, APIs e sistemas de Inteligência Artificial. O objetivo deste capítulo é aprender a escolher tecnologia pelo problema — e não pela moda.</p>
+</section>
+<article class="chapter">
+<h2>BLOCO 1 — Moderno não significa abandonar o relacional</h2>
+<p>Depois de aprender modelagem, SQL, transações, segurança e administração, seria um erro concluir que tudo isso foi substituído. Bancos relacionais continuam sendo uma escolha excelente quando o problema exige estrutura clara, integridade, relacionamentos e transações confiáveis.</p>
+<div class="card idea"><div class="card-body"><h3>Ideia principal</h3><p>A pergunta moderna não é “SQL ou NoSQL: qual é melhor?”. A pergunta é: <strong>qual modelo de dados e qual arquitetura atendem melhor aos requisitos deste sistema?</strong></p></div></div>
+<div class="visual"><pre>Problema real
+    ↓
+requisitos de dados + acesso + escala + consistência
+    ↓
+escolha da tecnologia
+    ↓
+relacional / documento / chave-valor / grafo / analytics / combinação</pre></div>
+
+<h2>BLOCO 2 — NoSQL é uma família, não um único tipo de banco</h2>
+<p>O termo <strong>NoSQL</strong> reúne tecnologias com modelos diferentes do relacional tradicional. Elas não possuem todas as mesmas características.</p>
+<table class="sql-table">
+<tr><th>Modelo</th><th>Organização principal</th><th>Exemplo de uso</th></tr>
+<tr><td>documentos</td><td>documentos com campos e estruturas aninhadas</td><td>catálogos com atributos variados</td></tr>
+<tr><td>chave-valor</td><td>uma chave identifica um valor</td><td>cache, sessão, contadores</td></tr>
+<tr><td>colunas amplas</td><td>dados distribuídos organizados por chaves e famílias de colunas</td><td>grandes volumes com padrões previsíveis de consulta</td></tr>
+<tr><td>grafos</td><td>nós, relacionamentos e propriedades</td><td>redes, fraude, recomendação, dependências</td></tr>
+</table>
+<div class="card warning"><div class="card-body"><h3>NoSQL não significa “sem modelagem”</h3><p>Um modelo flexível continua exigindo decisões. Em bancos de documentos, por exemplo, é preciso decidir o que fica incorporado, o que fica separado e como a aplicação acessará os dados.</p></div></div>
+
+<h2>BLOCO 3 — Banco de documentos</h2>
+<p>Em um banco de documentos, um registro pode ser representado por uma estrutura parecida com JSON. MongoDB, por exemplo, armazena documentos em BSON.</p>
+<div class="codebox"><button class="copy-btn" type="button">Exemplo de documento</button><pre><code>{
+  "pedido": 501,
+  "cliente": {
+    "id": 7,
+    "nome": "ANA"
+  },
+  "itens": [
+    {"produto": "CADERNO", "qtd": 2, "preco": 18.90},
+    {"produto": "CANETA", "qtd": 5, "preco": 3.50}
+  ]
+}</code></pre></div>
+<p>Dados usados juntos podem ser armazenados juntos. Isso pode ser muito conveniente, mas também exige cuidado com duplicidade, tamanho dos documentos, atualização e padrões de acesso.</p>
+<div class="card note"><div class="card-body"><h3>Compare com o relacional</h3><p>No projeto anterior, cliente, pedido e itens estavam normalizados em tabelas relacionadas. Em documento, parte dessa estrutura pode ficar aninhada. Não é “certo versus errado”: são estratégias diferentes.</p></div></div>
+
+<h2>BLOCO 4 — Chave-valor: acesso extremamente direto</h2>
+<p>No modelo chave-valor, uma chave identifica um valor.</p>
+<div class="visual"><pre>sessao:usuario:42  → { dados da sessão }
+produto:22:cache   → { resumo do produto }
+tentativas:login:7 → 3</pre></div>
+<p>Esse formato combina bem com situações em que a aplicação já sabe exatamente qual chave precisa buscar. Sistemas como Redis vão além de valores simples e oferecem várias estruturas de dados, mas a ideia de chave continua central.</p>
+<div class="card idea"><div class="card-body"><h3>Uso combinado</h3><p>Uma aplicação pode manter os pedidos oficiais em MySQL e usar outro banco como cache. Sistemas modernos frequentemente combinam tecnologias em vez de substituir uma por outra.</p></div></div>
+
+<h2>BLOCO 5 — Bancos de grafos: quando as relações são o centro do problema</h2>
+<p>Grafos representam dados como <strong>nós</strong> e <strong>relacionamentos</strong>, ambos podendo possuir propriedades.</p>
+<div class="visual"><pre>(PESSOA: Ana) ──COMPRA──&gt; (PRODUTO: Notebook)
+      │
+      └──CONHECE──&gt; (PESSOA: Bruno)
+                         │
+                         └──COMPRA──&gt; (PRODUTO: Mouse)</pre></div>
+<p>Quando a pergunta principal envolve percorrer muitas conexões — amigos de amigos, rotas, fraude, dependências ou recomendações — um banco de grafos pode tornar esse tipo de navegação mais natural.</p>
+
+<h2>BLOCO 6 — Bancos de colunas amplas</h2>
+<p>Bancos de colunas amplas foram projetados para grandes volumes distribuídos e padrões específicos de acesso. Em vez de começar por um modelo relacional cheio de JOINs, o desenho costuma considerar fortemente <strong>como os dados serão consultados</strong>.</p>
+<div class="card note"><div class="card-body"><h3>Não confunda</h3><p>Banco de “colunas amplas” não é simplesmente uma tabela SQL com muitas colunas, nem é a mesma coisa que um banco analítico colunar. Os nomes parecem próximos, mas os conceitos são diferentes.</p></div></div>
+
+<h2>BLOCO 7 — Esquema rígido, flexível e híbrido</h2>
+<p>Relacional não significa que tudo precise ser inflexível, e NoSQL não significa ausência de esquema. O MySQL 8.4, por exemplo, possui tipo de dados <code>JSON</code>.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar exemplo</button><pre><code>CREATE TABLE produto_flexivel (
+    id INT PRIMARY KEY,
+    descricao VARCHAR(100) NOT NULL,
+    atributos JSON
+);
+
+INSERT INTO produto_flexivel VALUES
+(1, 'NOTEBOOK', JSON_OBJECT(
+    'ram', '16 GB',
+    'ssd', '512 GB',
+    'cor', 'cinza'
+));</code></pre></div>
+<div class="card idea"><div class="card-body"><h3>Arquitetura híbrida</h3><p>É possível manter os dados essenciais em colunas relacionais bem definidas e reservar JSON para atributos realmente variáveis. Flexibilidade também deve ser uma decisão de modelagem.</p></div></div>
+
+<h2>BLOCO 8 — Como escolher entre relacional e outros modelos?</h2>
+<table class="sql-table">
+<tr><th>Pergunta</th><th>O que ela ajuda a descobrir</th></tr>
+<tr><td>existem transações importantes entre vários dados?</td><td>forte motivo para considerar um banco transacional com boas garantias</td></tr>
+<tr><td>relacionamentos complexos são parte central das consultas?</td><td>relacional ou grafo podem ser candidatos, dependendo do padrão</td></tr>
+<tr><td>os objetos possuem estruturas muito variáveis?</td><td>documentos ou abordagem híbrida podem ajudar</td></tr>
+<tr><td>o acesso é quase sempre por uma chave conhecida?</td><td>chave-valor pode ser adequado</td></tr>
+<tr><td>qual é o volume e como ele cresce?</td><td>influencia particionamento, distribuição e custo</td></tr>
+<tr><td>quais consultas realmente precisam ser rápidas?</td><td>o padrão de acesso influencia o modelo e os índices</td></tr>
+<tr><td>qual consistência o negócio exige?</td><td>evita trocar correção por disponibilidade sem perceber</td></tr>
+</table>
+
+<h2>BLOCO 9 — Escala vertical e horizontal</h2>
+<div class="grid2"><section class="card note"><div class="card-body"><h3>Escala vertical</h3><p>Dar mais CPU, memória ou armazenamento a um servidor.</p></div></section><section class="card note"><div class="card-body"><h3>Escala horizontal</h3><p>Distribuir trabalho ou dados entre múltiplos servidores.</p></div></section></div>
+<p>Escalar horizontalmente pode envolver réplicas, particionamento e outras técnicas. Mas distribuição traz novos problemas: latência de rede, sincronização, falhas parciais e consistência.</p>
+<div class="card warning"><div class="card-body"><h3>Distribuir não é automaticamente melhor</h3><p>Um sistema pequeno pode ficar mais caro e mais difícil de operar se adotar uma arquitetura distribuída sem necessidade.</p></div></div>
+
+<h2>BLOCO 10 — Réplica, particionamento e cache</h2>
+<table class="sql-table">
+<tr><th>Técnica</th><th>Ideia</th><th>Cuidado</th></tr>
+<tr><td>replicação</td><td>manter cópias dos dados em outros nós</td><td>consistência, atraso e failover</td></tr>
+<tr><td>particionamento / sharding</td><td>dividir os dados entre partes</td><td>escolher uma boa chave e lidar com consultas entre partições</td></tr>
+<tr><td>cache</td><td>guardar resultados de acesso frequente em camada rápida</td><td>dados desatualizados e invalidação</td></tr>
+</table>
+<div class="card note"><div class="card-body"><h3>Réplica não é backup</h3><p>Se um erro lógico apagar dados e a exclusão for replicada, todas as réplicas podem receber o erro. Alta disponibilidade e recuperação de dados resolvem problemas diferentes.</p></div></div>
+
+<h2>BLOCO 11 — Consistência em sistemas distribuídos</h2>
+<p>No capítulo de transações, “consistência” apareceu dentro do ACID. Em sistemas distribuídos existe também a discussão de <strong>consistência entre cópias e nós</strong>.</p>
+<p>Durante uma falha de comunicação entre partes de um sistema distribuído, pode ser necessário decidir entre recusar certas operações para preservar uma visão mais consistente ou continuar atendendo e aceitar temporariamente diferenças entre réplicas.</p>
+<div class="card warning"><div class="card-body"><h3>Evite o slogan “CAP = escolha dois”</h3><p>O ponto útil para o iniciante é entender que partições de rede podem acontecer e que consistência e disponibilidade envolvem escolhas de arquitetura. Sistemas reais oferecem comportamentos e níveis mais graduais do que um slogan de três letras sugere.</p></div></div>
+
+<h2>BLOCO 12 — Banco em nuvem: serviço gerenciado</h2>
+<p>Em vez de instalar e manter todo o servidor manualmente, podemos contratar um serviço gerenciado de banco. Plataformas de nuvem oferecem opções relacionais e NoSQL com automação de tarefas operacionais.</p>
+<div class="visual"><pre>Aplicação
+   ↓
+serviço de banco gerenciado
+   ├── infraestrutura
+   ├── monitoramento
+   ├── opções de backup
+   ├── opções de alta disponibilidade
+   └── atualização/operação conforme o serviço
+</pre></div>
+<div class="card warning"><div class="card-body"><h3>Gerenciado não significa “sem responsabilidade”</h3><p>A equipe ainda precisa escolher região, capacidade, rede, usuários, privilégios, política de backup, retenção, custos e testes de recuperação. Automatizar tarefas não elimina a necessidade de entendê-las.</p></div></div>
+
+<h2>BLOCO 13 — Disponibilidade e recuperação são decisões diferentes</h2>
+<p>Serviços de nuvem podem oferecer implantação em múltiplas zonas, réplicas, snapshots e restauração para um ponto no tempo. Cada recurso responde a um risco diferente.</p>
+<table class="sql-table">
+<tr><th>Necessidade</th><th>Exemplo de mecanismo</th></tr>
+<tr><td>continuar atendendo se uma instância falhar</td><td>redundância / failover / multi-zona</td></tr>
+<tr><td>recuperar dado apagado por engano</td><td>backup / snapshot / restauração temporal</td></tr>
+<tr><td>sobreviver a desastre regional</td><td>estratégia entre regiões, quando o risco justificar</td></tr>
+</table>
+<p>Não escolha arquitetura apenas pela lista de recursos. Pergunte quanto tempo o sistema pode ficar indisponível e quanto dado o negócio aceita perder.</p>
+
+<h2>BLOCO 14 — API: a fronteira entre aplicação e dados</h2>
+<div class="visual"><pre>Navegador / App móvel / outro sistema
+                 ↓ HTTPS
+                API
+                 ↓
+        regras + autenticação
+                 ↓
+              Banco</pre></div>
+<p>A API pode validar entrada, autenticar usuários, aplicar regras, controlar transações e devolver apenas os dados necessários. Ela também evita expor diretamente credenciais e portas do banco aos clientes finais.</p>
+<div class="card idea"><div class="card-body"><h3>Banco não é API</h3><p>SQL organiza e consulta dados; a API define como outras aplicações podem solicitar operações do sistema. São camadas diferentes.</p></div></div>
+
+<h2>BLOCO 15 — OLTP e analytics: perguntas diferentes</h2>
+<table class="sql-table">
+<tr><th>Operacional / OLTP</th><th>Analítico</th></tr>
+<tr><td>muitas operações pequenas</td><td>leitura e agregação de grandes conjuntos</td></tr>
+<tr><td>pedido, pagamento, estoque</td><td>tendências, indicadores, histórico</td></tr>
+<tr><td>baixa latência por transação</td><td>processamento de grandes volumes</td></tr>
+<tr><td>dados atuais e consistentes</td><td>dados integrados de várias fontes</td></tr>
+</table>
+<p>Um banco criado para registrar pedidos não precisa ser a mesma plataforma usada para analisar bilhões de eventos históricos.</p>
+
+<h2>BLOCO 16 — Data warehouse, data lake e lakehouse</h2>
+<table class="sql-table">
+<tr><th>Conceito</th><th>Explicação inicial</th></tr>
+<tr><td>data warehouse</td><td>ambiente orientado à análise, com dados organizados para relatórios e inteligência de negócio</td></tr>
+<tr><td>data lake</td><td>repositório capaz de guardar grandes volumes de dados em formatos variados, inclusive brutos</td></tr>
+<tr><td>lakehouse</td><td>arquitetura que busca combinar flexibilidade de lake com recursos de gestão e análise associados a warehouses</td></tr>
+</table>
+<div class="card note"><div class="card-body"><h3>Não é uma sequência obrigatória</h3><p>Esses termos descrevem arquiteturas e produtos diferentes. Uma escola ou pequena empresa não precisa montar um “Big Data” apenas porque o conceito existe.</p></div></div>
+
+<h2>BLOCO 17 — Big Data: mais do que “muitos registros”</h2>
+<p>Big Data costuma ser explicado por dimensões como <strong>volume</strong>, <strong>velocidade</strong> e <strong>variedade</strong>. O ponto importante é que certas cargas ultrapassam o que uma arquitetura convencional consegue processar de modo adequado em custo, tempo ou complexidade.</p>
+<div class="visual"><pre>sensores + cliques + transações + logs + arquivos
+                    ↓
+          ingestão e processamento
+                    ↓
+             armazenamento
+                    ↓
+          análise / modelos / BI</pre></div>
+<p>Antes de escolher ferramentas, defina a pergunta analítica. Coletar dados sem objetivo cria custo e risco, não inteligência.</p>
+
+<h2>BLOCO 18 — IA, embeddings e busca vetorial</h2>
+<p>Modelos de IA frequentemente trabalham com <strong>embeddings</strong>: representações numéricas que capturam características semânticas de textos, imagens ou outros dados. Embeddings podem ser comparados por similaridade.</p>
+<div class="visual"><pre>documento
+   ↓ modelo de embedding
+vetor numérico
+   ↓
+armazenamento vetorial
+   ↓ similaridade
+conteúdo semanticamente próximo</pre></div>
+<p>Um sistema de busca vetorial não substitui automaticamente as tabelas transacionais. Um e-commerce pode manter pedido e pagamento no banco relacional e usar vetores para busca semântica de produtos ou documentos.</p>
+<div class="card warning"><div class="card-body"><h3>Não confunda os ambientes</h3><p>O MySQL 8.4 usado neste curso possui JSON, mas recursos de Vector Store e GenAI aparecem em ofertas específicas como MySQL HeatWave e evoluem por versão. Não assuma que qualquer instalação comum do MySQL 8.4 possui os mesmos recursos.</p></div></div>
+
+<h2>BLOCO 19 — RAG: IA consultando uma base de conhecimento</h2>
+<p><strong>RAG — Retrieval-Augmented Generation</strong> combina recuperação de conteúdo relevante com geração por um modelo de linguagem.</p>
+<div class="visual"><pre>Pergunta do usuário
+       ↓
+busca por conteúdo relevante
+       ↓
+trechos recuperados
+       ↓ contexto
+modelo de linguagem
+       ↓
+resposta baseada nesse contexto</pre></div>
+<p>O banco ou vector store participa da etapa de recuperação. O modelo de linguagem continua sendo outra parte da arquitetura. Qualidade dos documentos, atualização, permissões e avaliação das respostas continuam importantes.</p>
+
+<h2>BLOCO 20 — Dados para IA precisam de qualidade e governança</h2>
+<p>IA não corrige automaticamente dados ruins. Duplicidades, cadastros incorretos, documentos desatualizados e permissões mal definidas podem produzir resultados ruins ou exposição indevida de informação.</p>
+<table class="sql-table">
+<tr><th>Questão</th><th>Pergunta prática</th></tr>
+<tr><td>qualidade</td><td>os dados estão corretos, completos e atuais?</td></tr>
+<tr><td>linhagem</td><td>sabemos de onde vieram?</td></tr>
+<tr><td>acesso</td><td>quem pode consultar cada informação?</td></tr>
+<tr><td>retenção</td><td>por quanto tempo os dados devem existir?</td></tr>
+<tr><td>privacidade</td><td>há dados pessoais ou sensíveis que exigem proteção específica?</td></tr>
+<tr><td>auditoria</td><td>é possível investigar alterações e usos importantes?</td></tr>
+</table>
+
+<h2>BLOCO 21 — Quatro cenários, quatro arquiteturas possíveis</h2>
+<table class="sql-table">
+<tr><th>Cenário</th><th>Escolha inicial razoável</th><th>Motivo</th></tr>
+<tr><td>loja pequena com pedidos e estoque</td><td>banco relacional</td><td>transações, integridade e relacionamentos claros</td></tr>
+<tr><td>cache de sessões de um site</td><td>chave-valor</td><td>acesso direto e dados temporários</td></tr>
+<tr><td>rede de relacionamentos para investigar fraude</td><td>grafo</td><td>travessia de conexões é central</td></tr>
+<tr><td>análise de anos de eventos de milhões de usuários</td><td>plataforma analítica / warehouse</td><td>grandes agregações e histórico</td></tr>
+</table>
+<p>Em sistemas maiores, essas escolhas podem coexistir. O pedido oficial pode estar no relacional, a sessão no cache, os eventos no analytics e os embeddings em uma camada vetorial.</p>
+
+<h2>BLOCO 22 — Checklist para escolher tecnologia</h2>
+<ol>
+<li>qual problema de negócio estamos resolvendo?</li>
+<li>qual é a estrutura natural dos dados?</li>
+<li>quais consultas e operações são mais importantes?</li>
+<li>quais regras de integridade são obrigatórias?</li>
+<li>quais operações precisam ser transacionais?</li>
+<li>qual volume existe hoje e qual crescimento é plausível?</li>
+<li>qual disponibilidade e recuperação são necessárias?</li>
+<li>quais conhecimentos a equipe possui?</li>
+<li>qual custo operacional e financeiro é aceitável?</li>
+<li>como segurança, privacidade e governança serão tratadas?</li>
+</ol>
+<div class="card idea"><div class="card-body"><h3>Comece pelo necessário</h3><p>Uma arquitetura simples que atende aos requisitos costuma ser melhor do que uma arquitetura sofisticada criada para problemas que ainda não existem.</p></div></div>
+
+<h2>BLOCO 23 — O que permanece válido em qualquer tecnologia</h2>
+<p>As ferramentas mudam. Os princípios que aprendemos durante o módulo continuam úteis:</p>
+<div class="grid"><section class="card solution"><div class="card-body"><h3>Entender o problema</h3><p>Requisitos e regras vêm antes da tecnologia.</p></div></section><section class="card solution"><div class="card-body"><h3>Modelar conscientemente</h3><p>Mesmo modelos flexíveis precisam de decisões.</p></div></section><section class="card solution"><div class="card-body"><h3>Proteger os dados</h3><p>Acesso mínimo, backup, recuperação e auditoria continuam essenciais.</p></div></section><section class="card solution"><div class="card-body"><h3>Medir</h3><p>Desempenho e escala devem ser observados, não adivinhados.</p></div></section></div>
+
+<h2>BLOCO 24 — Fechamento do módulo</h2>
+<p>Começamos entendendo por que bancos de dados surgiram. Passamos por fundamentos, modelagem conceitual, modelo lógico, normalização, implementação, SQL, relacionamentos, administração, transações, recursos avançados e um projeto completo.</p>
+<p>Agora também sabemos que o ecossistema de dados é maior que um único SGBD. A competência mais importante é conseguir <strong>entender o problema, estruturar os dados, preservar sua integridade e escolher conscientemente a tecnologia</strong>.</p>
+<div class="card idea"><div class="card-body"><h3>Da ferramenta para a decisão</h3><p>Aprender MySQL foi o caminho prático. Aprender a pensar sobre dados é o conhecimento que continua válido quando a ferramenta muda.</p></div></div>
+</article>
+</section>
