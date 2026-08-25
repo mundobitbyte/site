@@ -12,7 +12,14 @@
   const backLinks = Array.from(document.querySelectorAll('[data-back]'));
 
   function areaFromLocation() {
-    const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+    let hash = window.location.hash.replace(/^#/, '');
+
+    try {
+      hash = decodeURIComponent(hash);
+    } catch (_) {
+      return null;
+    }
+
     return validAreas.has(hash) ? hash : null;
   }
 
@@ -124,5 +131,5 @@
   }
 
   document.documentElement.classList.add('js-ready');
-  render(initialArea, { focusHeading: false, scrollTop: false });
+  render(initialArea, { focusHeading: false, scrollTop: Boolean(initialArea) });
 })();
