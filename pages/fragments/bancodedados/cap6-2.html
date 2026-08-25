@@ -1,0 +1,99 @@
+ss="card solution"><div class="card-body"><h3>Princípio do menor privilégio</h3><p>Cada conta deve receber <strong>somente os privilégios necessários para realizar sua função</strong>. Menos privilégio significa menor impacto caso a senha vaze, a aplicação tenha uma falha ou alguém execute um comando errado.</p></div></div>
+<div class="card warning"><div class="card-body"><h3>Evite a prática “GRANT ALL para tudo”</h3><p>Dar acesso total global apenas para fazer uma aplicação funcionar é simples, mas inseguro e didaticamente errado. Primeiro descobrimos o que a conta precisa; depois concedemos exatamente isso.</p></div></div>
+
+<h2>BLOCO 8 — Conta MySQL = usuário + origem</h2>
+<p>No MySQL, uma conta é identificada por algo como <code>'usuario'@'host'</code>. Isso significa que <strong>nome e origem da conexão fazem parte da identidade da conta</strong>.</p>
+<table class="sql-table">
+<tr><th>Conta</th><th>Ideia</th></tr>
+<tr><td><code>'operador'@'localhost'</code></td><td>operador conectando na própria máquina do servidor</td></tr>
+<tr><td><code>'operador'@'algum-host-autorizado'</code></td><td>mesmo nome, mas outra origem autorizada</td></tr>
+</table>
+<p>Para nosso laboratório local, criaremos uma conta restrita a <strong>localhost</strong>:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar CREATE USER</button><pre><code>CREATE USER 'operador_comercio'@'localhost'
+IDENTIFIED BY 'Exemplo-Apenas-Troque-Agora#2026';</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>Senha do exemplo</h3><p>A senha acima existe apenas para mostrar a sintaxe. <strong>Não reutilize senhas publicadas em material didático.</strong> Na prática, crie uma senha própria, forte e exclusiva.</p></div></div>
+<p>Uma conta recém-criada não ganha automaticamente acesso ao banco <code>comercio</code>. Primeiro criamos a identidade; depois concedemos privilégios.</p>
+
+<h2>BLOCO 9 — GRANT: concedendo apenas o necessário</h2>
+<p>Suponha que <code>operador_comercio</code> precise consultar e manter os dados comerciais, mas não precise criar bancos, excluir tabelas ou administrar usuários.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar GRANT</button><pre><code>GRANT SELECT, INSERT, UPDATE, DELETE
+ON comercio.*
+TO 'operador_comercio'@'localhost';</code></pre></div>
+<p>Leia a instrução:</p>
+<div class="visual"><pre>SELECT, INSERT, UPDATE, DELETE  → o que pode fazer
+comercio.*                      → em todas as tabelas do banco comercio
+'operador_comercio'@'localhost'→ quem recebe</pre></div>
+<p>Agora crie também uma conta somente para consultas:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar usuário de leitura</button><pre><code>CREATE USER 'consulta_comercio'@'localhost'
+IDENTIFIED BY 'Exemplo-Leitura-Troque-Agora#2026';
+
+GRANT SELECT
+ON comercio.*
+TO 'consulta_comercio'@'localhost';</code></pre></div>
+<p>Isso materializa uma regra simples: <strong>quem só precisa ler não deve receber UPDATE ou DELETE</strong>.</p>
+
+<h2>BLOCO 10 — SHOW GRANTS e REVOKE: conferir antes de confiar</h2>
+<p>Depois de conceder privilégios, confirme o resultado:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar SHOW GRANTS</button><pre><code>SHOW GRANTS FOR 'operador_comercio'@'localhost';
+SHOW GRANTS FOR 'consulta_comercio'@'localhost';</code></pre></div>
+<p>Se um privilégio deixou de ser necessário, retire-o com <strong>REVOKE</strong>:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar REVOKE</button><pre><code>REVOKE DELETE
+ON comercio.*
+FROM 'operador_comercio'@'localhost';</code></pre></div>
+<div class="card idea"><div class="card-body"><h3>Administrar também é revisar</h3><p>Segurança não termina no CREATE USER. Contas mudam de função, pessoas saem de projetos e aplicações evoluem. Privilégios antigos que não são mais necessários devem ser removidos.</p></div></div>
+<div class="card note"><div class="card-body"><h3>Precisa executar FLUSH PRIVILEGES?</h3><p><strong>Não depois de CREATE USER, GRANT ou REVOKE.</strong> Esses comandos de gerenciamento de contas entram em vigor pelo próprio mecanismo do MySQL. <code>FLUSH PRIVILEGES</code> é necessário em situações específicas, como alterações diretas nas tabelas internas de privilégios — prática que não devemos usar para a administração normal.</p></div></div>
+
+<h2>BLOCO 11 — Roles: quando várias contas possuem a mesma função</h2>
+<p>Se muitas contas precisarem do mesmo conjunto de privilégios, repetir GRANT usuário por usuário aumenta o trabalho. Uma <strong>role</strong> é um conjunto nomeado de privilégios que pode ser concedido a contas.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar exemplo de role</button><pre><code>CREATE ROLE 'leitura_comercio';
+
+GRANT SELECT
+ON comercio.*
+TO 'leitura_comercio';
+
+CREATE USER 'analista_comercio'@'localhost'
+IDENTIFIED BY 'Exemplo-Role-Troque-Agora#2026';
+
+GRANT 'leitura_comercio'
+TO 'analista_comercio'@'localhost';
+
+SET DEFAULT ROLE 'leitura_comercio'
+TO 'analista_comercio'@'localhost';</code></pre></div>
+<div class="card note"><div class="card-body"><h3>Primeiro contato</h3><p>Você não precisa usar roles em todo exercício pequeno. O conceito fica importante quando vários usuários compartilham responsabilidades. Em vez de administrar permissões uma a uma, administramos a função.</p></div></div>
+
+<h2>BLOCO 12 — Ciclo de vida das contas</h2>
+<p>Além de criar e conceder acesso, o administrador precisa saber alterar, bloquear e remover contas.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar comandos de conta</button><pre><code>ALTER USER 'operador_comercio'@'localhost'
+IDENTIFIED BY 'NOVA_SENHA_FORTE_E_EXCLUSIVA';
+
+ALTER USER 'operador_comercio'@'localhost' ACCOUNT LOCK;
+
+ALTER USER 'operador_comercio'@'localhost' ACCOUNT UNLOCK;</code></pre></div>
+<p>Quando uma conta realmente deixou de existir:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar DROP USER</button><pre><code>DROP USER 'operador_comercio'@'localhost';</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>Bloquear ou excluir?</h3><p>Se existe dúvida ou necessidade temporária de impedir acesso, <strong>bloquear</strong> preserva a conta. <strong>DROP USER</strong> remove a conta. Em ambiente real, essa decisão deve seguir a política da organização.</p></div></div>
+
+<h2>BLOCO 13 — Administração segura: quatro regras que evitam muitos problemas</h2>
+<ol>
+<li><strong>Não use root na aplicação.</strong> Crie uma conta própria para cada finalidade.</li>
+<li><strong>Não conceda mais privilégios do que o necessário.</strong></li>
+<li><strong>Não exponha o servidor diretamente à Internet só para “fazer conectar”.</strong> Acesso remoto envolve rede, firewall, origem da conta e proteção da conexão.</li>
+<li><strong>Não altere arquivos internos do diretório de dados manualmente.</strong> Use ferramentas e procedimentos próprios do SGBD.</li>
+</ol>
+<div class="card problem"><div class="card-body"><h3>Porta 3306 aberta não é solução mágica</h3><p>A porta padrão do protocolo MySQL é frequentemente 3306, mas simplesmente liberá-la publicamente pode ampliar a superfície de ataque. Neste curso, nossos laboratórios administrativos permanecem locais; acesso remoto deve ser configurado conscientemente em ambiente apropriado.</p></div></div>
+
+<h2>BLOCO 14 — Backup: uma cópia capaz de permitir recuperação</h2>
+<p>Backup não é apenas “salvar um arquivo”. O objetivo é conseguir <strong>recuperar dados e objetos depois de erro, falha, corrupção ou perda</strong>.</p>
+<div class="visual"><pre>Banco funcionando
+      ↓
+criar backup
+      ↓
+guardar em local adequado
+      ↓
+testar restauração
+      ↓
+ter confiança de recuperação</pre></div>
+<table class="sql-table">
+<tr><th>Conceito</th><th>Significado</th></tr>
+<tr><td><strong>backup lógico</strong></td><td>representa estruturas e dados em formato que pode ser recriado, como comandos SQL</td></tr>
+<tr><td><strong>mysqldump</s
