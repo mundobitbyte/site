@@ -1,16 +1,24 @@
+function jumpToTop(){
+  // A navegação entre capítulos deve ser imediata, sem percorrer visualmente o conteúdo.
+  document.documentElement.style.scrollBehavior='auto';
+  window.scrollTo(0,0);
+  const main=document.querySelector('main');
+  if(main) main.scrollTop=0;
+}
+
 function openExerciseChapter(id){
   const home = document.getElementById('exerciseHome');
   if(home) home.classList.add('hidden');
   document.querySelectorAll('.exercise-chapter-view').forEach(v=>v.classList.remove('active'));
   const view = document.getElementById(id);
   if(view) view.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+  jumpToTop();
 }
 function backToExerciseHome(){
   const home = document.getElementById('exerciseHome');
   if(home) home.classList.remove('hidden');
   document.querySelectorAll('.exercise-chapter-view').forEach(v=>v.classList.remove('active'));
-  window.scrollTo({top:0,behavior:'smooth'});
+  jumpToTop();
 }
 
 function showModule(id){
@@ -24,7 +32,7 @@ function showModule(id){
     if(id==='exercicios' && typeof backToExerciseHome === 'function'){
       backToExerciseHome();
     }
-    window.scrollTo({top:0,behavior:'smooth'});
+    jumpToTop();
   }
 }
 document.querySelectorAll('.nav-link[data-target]').forEach(btn=>btn.addEventListener('click',()=>showModule(btn.dataset.target)));
