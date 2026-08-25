@@ -44,36 +44,3 @@ document.addEventListener('click', function(e){
     setTimeout(function(){ btn.innerText = old; btn.classList.remove('copied'); }, 1600);
   });
 });
-
-async function loadBancoDadosCap6(){
-  const paths = [
-    'fragments/bancodedados/cap6-1.html',
-    'fragments/bancodedados/cap6-2.html',
-    'fragments/bancodedados/cap6-3.html',
-    'fragments/bancodedados/cap6-4.html',
-    'fragments/bancodedados/cap6-exercicios.html'
-  ];
-
-  const parts = await Promise.all(paths.map(async path => {
-    const response = await fetch(path);
-    if(!response.ok) throw new Error(`Falha ao carregar ${path}: ${response.status}`);
-    return response.text();
-  }));
-
-  const placeholder = document.getElementById('mod-sgbd');
-  if(placeholder) placeholder.outerHTML = parts.slice(0, 4).join('');
-
-  const card = document.querySelector(".exercise-chapter-card[onclick=\"openExerciseChapter('ex-building-sgbd')\"]");
-  if(card){
-    card.outerHTML = `<button class="exercise-chapter-card" onclick="openExerciseChapter('ex-cap7')">
-<h3>6 Administração e SGBD</h3>
-<p>Servidor, serviço, clientes, usuários, privilégios, roles, backup, restauração e diagnóstico.</p>
-<span class="exercise-status available">Disponível · 12 exercícios</span>
-</button>`;
-  }
-
-  const exercisePlaceholder = document.getElementById('ex-building-sgbd');
-  if(exercisePlaceholder) exercisePlaceholder.outerHTML = parts[4];
-}
-
-loadBancoDadosCap6().catch(err => console.error('Falha ao carregar Capítulo 6:', err));
