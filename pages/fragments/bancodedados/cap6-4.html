@@ -1,0 +1,28 @@
+eração garantida”</h3><p>Arquivo vazio, incompleto, inacessível ou nunca testado pode dar falsa sensação de segurança. O objetivo final não é produzir arquivos; é <strong>recuperar o serviço e os dados quando necessário</strong>.</p></div></div>
+
+<h2>BLOCO 21 — Laboratório integrador de administração</h2>
+<p>Agora execute o ciclo administrativo completo usando o banco <code>comercio</code>:</p>
+<ol>
+<li>confirme que o serviço MySQL está iniciado;</li>
+<li>conecte como administrador;</li>
+<li>confirme versão e conta atual;</li>
+<li>crie uma conta somente de leitura para <code>comercio</code>;</li>
+<li>conceda apenas SELECT;</li>
+<li>confira com SHOW GRANTS;</li>
+<li>entre com essa nova conta e teste um SELECT;</li>
+<li>tente um UPDATE e observe que ele deve ser negado;</li>
+<li>volte à conta administrativa;</li>
+<li>faça um dump do banco;</li>
+<li>restaure em <code>comercio_teste_restore</code>;</li>
+<li>valide tabelas, quantidades e um JOIN;</li>
+<li>remova somente o banco de teste quando finalizar.</li>
+</ol>
+<div class="card solution"><div class="card-body"><h3>O que esse laboratório prova?</h3><p>Você deixa de ser alguém que apenas “sabe SQL” e passa a entender o ciclo básico de operação: <strong>servidor → autenticação → autorização → uso → proteção → recuperação</strong>.</p></div></div>
+
+<h2>BLOCO 22 — Fechamento do Capítulo</h2>
+<p>Neste capítulo, aprendemos a separar MySQL Server, processo mysqld, cliente mysql e Workbench; instalar e reconhecer o serviço; identificar onde cada comando deve ser executado; administrar contas e privilégios; aplicar menor privilégio; usar roles; criar backup lógico; restaurar com segurança; validar recuperação e organizar um diagnóstico básico.</p>
+<p>O próximo passo é entender algo que acontece <strong>dentro do trabalho concorrente com os dados</strong>: como várias alterações podem formar uma unidade segura e como o banco decide confirmar ou desfazer mudanças.</p>
+<div class="card idea"><div class="card-body"><h3>Próxima ponte</h3><p>No Capítulo 7 entraremos em <strong>Transações e ACID</strong>: COMMIT, ROLLBACK, atomicidade, consistência, isolamento, durabilidade e problemas de concorrência.</p></div></div>
+<h2>✅ CAPÍTULO 6 — ADMINISTRAÇÃO E SGBD OFICIALMENTE FINALIZADO</h2>
+</article>
+</section>
