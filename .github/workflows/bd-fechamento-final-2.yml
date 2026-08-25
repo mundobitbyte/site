@@ -1,0 +1,44 @@
+name: Autocritica final Banco de Dados
+
+on:
+  push:
+    branches:
+      - bancodedados-fechamento-final
+    paths:
+      - .github/workflows/bd-fechamento-final-2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  ajustar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: bancodedados-fechamento-final
+          fetch-depth: 0
+      - name: Aplicar ajuste pedagógico final
+        run: python .github/scripts/bd_final_patch2.py
+      - name: Validar escopo
+        shell: bash
+        run: |
+          git fetch origin main
+          CHANGED="$(git diff --name-only origin/main...HEAD; git diff --name-only)"
+          BAD="$(echo "$CHANGED" | sort -u | grep -v -E '^(pages/bancodedados\.html|\.github/workflows/bd-fechamento-final-2\.yml|\.github/scripts/bd_final_patch2\.py)$' || true)"
+          test -z "$BAD" || { echo "Arquivo fora do escopo: $BAD"; exit 1; }
+      - name: Publicar ajuste final
+        shell: bash
+        run: |
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add pages/bancodedados.html
+          git commit -m "Ajusta progressao dos laboratorios de Banco de Dados"
+          git push origin HEAD:bancodedados-fechamento-final
+      - name: Limpar automacao temporaria
+        shell: bash
+        run: |
+          rm .github/scripts/bd_final_patch2.py .github/workflows/bd-fechamento-final-2.yml
+          git add .github/scripts/bd_final_patch2.py .github/workflows/bd-fechamento-final-2.yml
+          git commit -m "Remove segunda automacao temporaria de Banco de Dados"
+          git push origin HEAD:bancodedados-fechamento-final
