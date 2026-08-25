@@ -1358,7 +1358,7 @@ Banco físico é alterado</pre></div>
 <p>Depois de informar a senha, o aluno estará dentro do ambiente interativo do MySQL.</p>
 <div class="card note"><div class="card-body"><h3>Se “mysql” não for reconhecido</h3><p>O executável do MySQL pode não estar no PATH do Windows. Nesse caso, use o cliente instalado pelo MySQL ou configure o diretório <strong>bin</strong> da instalação no PATH. O caminho exato depende da versão e do local escolhido na instalação.</p></div></div>
 <p>A administração completa de instalação, usuários, permissões, backup e restauração será aprofundada no Capítulo 6. Aqui fazemos apenas o necessário para conseguir praticar SQL desde já.</p>
-<div class="card note"><div class="card-body"><h3>Regra dos laboratórios: preserve a base de referência</h3><p>O banco <code>comercio</code> será reutilizado nos próximos capítulos. Por isso, exemplos que alteram dados reais devem terminar deixando a base novamente em um estado conhecido. Neste módulo faremos isso de três formas: <strong>ROLLBACK</strong> quando a alteração for apenas teste, <strong>registro temporário + limpeza</strong> quando for necessário praticar INSERT/DELETE, ou um <strong>banco/tabela de laboratório separado</strong> quando a experiência precisar permanecer.</p></div></div>
+<div class="card note"><div class="card-body"><h3>Regra dos laboratórios: preserve a base de referência</h3><p>O banco <code>comercio</code> será reutilizado nos próximos capítulos. Por isso, exemplos que alteram dados devem terminar deixando a base novamente em um estado conhecido. Enquanto ainda estamos aprendendo SQL básico, usaremos principalmente <strong>registros temporários + limpeza</strong> ou <strong>tabelas de laboratório separadas</strong>. No Capítulo 7, depois de aprender transações, também usaremos <strong>ROLLBACK</strong> para desfazer testes com segurança.</p></div></div>
 <h2>BLOCO 5 — CREATE DATABASE e USE</h2>
 <p>O primeiro passo físico é criar o banco de dados do sistema comercial.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>CREATE DATABASE comercio;
@@ -1453,7 +1453,7 @@ ALTER TABLE estrutura_lab
 DROP COLUMN observacao;
 
 DROP TABLE estrutura_lab;</code></pre></div>
-<div class="card warning"><div class="card-body"><h3>DDL não é um Ctrl+Z</h3><p>ALTER TABLE, DROP TABLE e outros comandos de definição podem causar <strong>commit implícito</strong> no MySQL. Por isso o laboratório usa uma tabela descartável: não conte com ROLLBACK para desfazer mudanças de estrutura.</p></div></div>
+<div class="card warning"><div class="card-body"><h3>Mudança de estrutura não é um Ctrl+Z</h3><p>ALTER TABLE, DROP TABLE e outros comandos que mudam a estrutura podem causar <strong>commit implícito</strong> no MySQL. Por isso o laboratório usa uma tabela descartável. Mais adiante, quando estudarmos transações, veremos por que não devemos contar com ROLLBACK para recuperar uma estrutura removida.</p></div></div>
 <h2>BLOCO 7 — INSERT INTO: inserindo os dados da base</h2>
 <p>Agora o banco deixa de ser apenas estrutura e começa a receber dados. Vamos preservar os dados existentes de categoria, fornecedor e produto e transformar a antiga ligação produto–fornecedor em registros da tabela associativa.</p>
 <div class="card note"><div class="card-body"><h3>Não inventar dado que não existe</h3><p>A base recebida não informa a cidade de cada fornecedor nem preço de custo/prazo de entrega por fornecedor. Por isso esses campos ficarão <strong>NULL</strong> até existirem dados reais. A estrutura está pronta, mas não vamos preencher informações fictícias apenas para “completar” a tabela.</p></div></div>
@@ -1737,39 +1737,29 @@ FROM categoria
 WHERE nome LIKE '%DOCE%';</code></pre></div>
 <p>Esse tipo de busca aparece em sistemas reais quando o usuário digita parte do nome de um produto, fornecedor ou categoria.</p>
 <h2>BLOCO 12 — UPDATE: alterando registros</h2>
-<p>UPDATE modifica dados existentes. O uso do WHERE é essencial. Como <code>comercio</code> será reutilizado, vamos praticar dentro de uma transação e terminar com ROLLBACK.</p>
-<div class="codebox"><button class="copy-btn" type="button">Copiar UPDATE seguro</button><pre><code>START TRANSACTION;
+<p>UPDATE modifica dados existentes. O uso do WHERE é essencial. Para praticar sem alterar um produto real da base, criaremos um registro temporário apenas para este teste.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar UPDATE seguro</button><pre><code>INSERT INTO produto
+(id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)
+VALUES
+(1001, 'PRODUTO TEMPORARIO UPDATE', 5, 1, 3, 0);
 
 SELECT *
 FROM produto
-WHERE id_produto = 22;
+WHERE id_produto = 1001;
 
 UPDATE produto
 SET preco = 6
-WHERE id_produto = 22;
+WHERE id_produto = 1001;
 
 SELECT *
 FROM produto
-WHERE id_produto = 22;
+WHERE id_produto = 1001;
 
-ROLLBACK;
-
-SELECT *
-FROM produto
-WHERE id_produto = 22;</code></pre></div>
+-- limpeza do laboratório
+DELETE FROM produto
+WHERE id_produto = 1001;</code></pre></div>
 <div class="card problem"><div class="card-body"><h3>Cuidado</h3><p>UPDATE sem WHERE altera todos os registros da tabela. Em um banco real, isso pode causar grande impacto.</p></div></div>
-<div class="codebox"><button class="copy-btn" type="button">Copiar UPDATE em grupo sem deixar alteração</button><pre><code>START TRANSACTION;
-
-UPDATE produto
-SET preco = preco + 1
-WHERE id_categoria = 3;
-
-SELECT id_produto, descricao, preco
-FROM produto
-WHERE id_categoria = 3;
-
-ROLLBACK;</code></pre></div>
-<p>O objetivo é enxergar o efeito do UPDATE sem carregar essa mudança para os capítulos seguintes.</p>
+<div class="card note"><div class="card-body"><h3>Por que usamos um produto temporário?</h3><p>O objetivo é aprender UPDATE sem modificar a base que será usada nos capítulos seguintes. O comando DELETE usado apenas para limpeza será explicado detalhadamente no próximo bloco.</p></div></div>
 <h2>BLOCO 13 — DELETE: removendo registros</h2>
 <p>DELETE remove registros. Assim como UPDATE, precisa de muito cuidado com WHERE.</p>
 <p>Para praticar sem destruir um produto real da base, crie primeiro um registro temporário sem fornecedor associado.</p>
@@ -1791,10 +1781,8 @@ WHERE id_produto = 1000;</code></pre></div>
 <div class="card problem"><div class="card-body"><h3>Cuidado extremo</h3><p>DELETE FROM produto; sem WHERE apaga todos os produtos.</p></div></div>
 <p>Se tentarmos apagar um produto que ainda aparece em <strong>produto_fornecedor</strong>, ou uma categoria que possui produtos vinculados, a FK pode impedir a exclusão. Isso não é erro do banco: é proteção da integridade referencial.</p>
 <h2>BLOCO 14 — FOREIGN KEY: integridade referencial real</h2>
-<p>A FOREIGN KEY é a implementação física do relacionamento entre tabelas. Ela impede referências para registros que não existem. Faremos os testes dentro de uma transação para não deixar registros de laboratório na base.</p>
-<div class="codebox"><button class="copy-btn" type="button">Copiar teste de integridade</button><pre><code>START TRANSACTION;
-
--- deve funcionar: categoria 3 existe
+<p>A FOREIGN KEY é a implementação física do relacionamento entre tabelas. Ela impede referências para registros que não existem. Usaremos um produto temporário e o removeremos ao final.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar teste de integridade</button><pre><code>-- deve funcionar: categoria 3 existe
 INSERT INTO produto
 (id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)
 VALUES
@@ -1814,8 +1802,13 @@ VALUES (900001, 4);
 INSERT INTO produto_fornecedor (id_produto, id_fornecedor)
 VALUES (900001, 999);
 
-ROLLBACK;</code></pre></div>
-<p>Os comandos inválidos são rejeitados pelas constraints. O ROLLBACK final desfaz também os testes válidos que chegaram a ser executados, preservando a base <code>comercio</code>.</p>
+-- limpeza dos testes válidos
+DELETE FROM produto_fornecedor
+WHERE id_produto = 900001;
+
+DELETE FROM produto
+WHERE id_produto = 900001;</code></pre></div>
+<p>Os comandos inválidos são rejeitados pelas restrições. Os dois DELETEs finais removem somente os registros de laboratório que foram aceitos, preservando a base <code>comercio</code>.</p>
 <div class="card solution"><div class="card-body"><h3>O erro é parte do laboratório</h3><p>Quando a FK ou o CHECK bloqueia um dado inválido, o banco está fazendo exatamente o que foi modelado: protegendo integridade.</p></div></div>
 <h2>BLOCO 15 — JOIN: unindo tabelas relacionadas</h2>
 <p>JOIN é usado para unir dados de tabelas relacionadas. Aqui o banco relacional mostra seu verdadeiro valor.</p>
@@ -4032,7 +4025,7 @@ PRODUTO 1 ─── N ITEM_PEDIDO</pre><ol><li>Um cliente pode possuir vários p
 <details class="exercise-item"><summary>4D — SELECT, DISTINCT e LIMIT</summary><div class="exercise-content"><ol><li>Liste todos os produtos.</li><li>Mostre apenas descricao, preco e qtde.</li><li>Liste os valores distintos de id_categoria usados em produto.</li><li>Mostre somente os dez primeiros produtos por id_produto.</li></ol></div></details>
 <details class="exercise-item"><summary>4E — WHERE e operadores</summary><div class="exercise-content"><ol><li>Liste produtos com preço entre 10 e 30.</li><li>Liste produtos das categorias 3, 7 ou 8 usando IN.</li><li>Localize fornecedores sem cidade usando IS NULL.</li><li>Crie uma consulta usando AND e outra usando OR.</li></ol></div></details>
 <details class="exercise-item"><summary>4F — ORDER BY e LIKE</summary><div class="exercise-content"><ol><li>Ordene os produtos pelo preço decrescente.</li><li>Pesquise produtos que começam com P.</li><li>Pesquise fornecedores que contenham BRASIL.</li></ol></div></details>
-<details class="exercise-item"><summary>4G — UPDATE seguro</summary><div class="exercise-content"><ol><li>Inicie uma transação.</li><li>Consulte o produto 22 e anote o preço.</li><li>Atualize temporariamente seu preço.</li><li>Consulte novamente para enxergar a mudança.</li><li>Execute ROLLBACK e confirme que o preço original voltou.</li><li>Explique o risco de UPDATE sem WHERE.</li></ol></div></details>
+<details class="exercise-item"><summary>4G — UPDATE seguro</summary><div class="exercise-content"><ol><li>Crie um produto temporário reservado para o exercício.</li><li>Consulte o registro e anote seu preço.</li><li>Atualize somente esse produto com UPDATE + WHERE.</li><li>Consulte novamente para confirmar a mudança.</li><li>Remova o registro temporário ao terminar.</li><li>Explique por que praticar em um registro temporário é mais seguro que alterar um produto real da base.</li><li>Explique o risco de UPDATE sem WHERE.</li></ol></div></details>
 <details class="exercise-item"><summary>4H — DELETE seguro</summary><div class="exercise-content"><ol><li>Crie um produto temporário com um ID reservado para laboratório e sem fornecedor associado.</li><li>Consulte esse registro pelo ID.</li><li>Remova somente o registro temporário com DELETE + WHERE.</li><li>Confirme que ele desapareceu.</li><li>Explique por que não devemos escolher um produto real da base apenas para praticar exclusão.</li><li>Explique o risco de DELETE sem WHERE.</li></ol></div></details>
 <details class="exercise-item"><summary>4I — FOREIGN KEY</summary><div class="exercise-content"><ol><li>Tente explicar por que um produto não pode ter id_categoria inexistente.</li><li>Explique o que a FK protege.</li><li>Explique por que categoria deve existir antes de produto.</li></ol></div></details>
 <details class="exercise-item"><summary>4J — JOIN</summary><div class="exercise-content"><ol><li>Monte uma consulta que mostre produto e categoria.</li><li>Monte uma consulta que mostre produto, categoria e fornecedor passando por produto_fornecedor.</li><li>Explique por que produto não deve ser ligado diretamente a fornecedor neste modelo.</li><li>Ordene o resultado pela descrição do produto.</li></ol></div></details>
