@@ -1490,7 +1490,6 @@ FORNECEDOR 1 ─ N PRODUTO_FORNECEDOR
 <h3>Próximo passo</h3>
 <p>Agora SQL deixará de ser apenas comandos decorados e passará a ser implementação prática de uma estrutura lógica já compreendida.</p>
 </div></div>
-<h2>✅ CAPÍTULO 3 — MODELAGEM LÓGICA E NORMALIZAÇÃO OFICIALMENTE FINALIZADO</h2>
 </article>
 </section>
 <section class="module" id="mod-sql">
@@ -2037,11 +2036,10 @@ ORDER BY total_produtos DESC;</code></pre></div>
 <li>não decore SQL sem entender a estrutura.</li>
 </ul>
 <div class="card solution"><div class="card-body"><h3>Fluxo seguro</h3><p>Consultar → alterar/remover → consultar novamente. Esse hábito evita muitos erros em bancos reais.</p></div></div>
-<h2>BLOCO 19 — Fechamento Oficial do Capítulo SQL com MySQL</h2>
+<h2>BLOCO 19 — Fechamento do Capítulo SQL com MySQL</h2>
 <p>Neste capítulo, o banco deixou de ser apenas desenho e estrutura lógica. Ele virou implementação física real no MySQL.</p>
 <p>Aprendemos modelagem física, SQL, MySQL, SGBD, CREATE DATABASE, CREATE TABLE, AUTO_INCREMENT, restrições, INSERT, SELECT, DISTINCT, LIMIT, WHERE, AND, OR, NOT, IN, BETWEEN, IS NULL, ORDER BY, LIKE, UPDATE, DELETE, FOREIGN KEY, JOIN, funções de agregação, GROUP BY, HAVING e boas práticas.</p>
 <p>Mais importante: entendemos como transformar uma modelagem relacional completa em um banco físico real utilizando SQL no MySQL.</p>
-<h2>✅ CAPÍTULO 4 — SQL COM MYSQL OFICIALMENTE FINALIZADO</h2>
 </article>
 </section>
 <section class="module" id="mod-joins">
@@ -2146,7 +2144,7 @@ INNER JOIN fornecedor AS f
     ON pf.id_fornecedor = f.id_fornecedor
 ORDER BY p.descricao;</code></pre></div>
 <table class="sql-table"><tr><th>Alias</th><th>Tabela</th></tr><tr><td>p</td><td>produto</td></tr><tr><td>pf</td><td>produto_fornecedor</td></tr><tr><td>f</td><td>fornecedor</td></tr></table>
-<div class="card note"><div class="card-body"><h3>MbB: primeiro entender, depois abreviar</h3><p>Aliases ajudam muito em consultas longas, mas não devem esconder de onde os dados estão vindo. Se a consulta ficar confusa, volte temporariamente aos nomes completos.</p></div></div>
+<div class="card note"><div class="card-body"><h3>Primeiro entender, depois abreviar</h3><p>Aliases ajudam muito em consultas longas, mas não devem esconder de onde os dados estão vindo. Se a consulta ficar confusa, volte temporariamente aos nomes completos.</p></div></div>
 
 <h2>BLOCO 7 — LEFT JOIN: preserve tudo que está à esquerda</h2>
 <p>O <strong>LEFT JOIN</strong> preserva todas as linhas da tabela que está à esquerda da junção, mesmo quando não existe correspondência do lado direito.</p>
@@ -2326,7 +2324,6 @@ ORDER BY c.nome, p.descricao, f.nome;</code></pre></div>
 <p>Neste capítulo, relacionamentos deixaram de ser apenas linhas de um DER e passaram a orientar consultas reais.</p>
 <p>Aprendemos a diferença entre relacionamento e JOIN, a condição ON, INNER JOIN, LEFT JOIN, RIGHT JOIN, aliases, relações N:N por tabela associativa, múltiplas junções, ausência de correspondência com NULL e JOIN combinado com GROUP BY.</p>
 <div class="card idea"><div class="card-body"><h3>Próxima ponte</h3><p>Agora que sabemos estruturar, popular e consultar um banco relacional, podemos aprender a <strong>administrar o SGBD</strong>: instalação, ferramentas, usuários, permissões, backup e restauração.</p></div></div>
-<h2>✅ CAPÍTULO 5 — RELACIONAMENTOS E JOIN OFICIALMENTE FINALIZADO</h2>
 </article>
 </section>
 <section class="module" id="mod-sgbd">
@@ -2594,7 +2591,7 @@ qual mensagem de erro apareceu?
         ↓
 logs e configuração ajudam a explicar</pre></div>
 <p>O MySQL mantém arquivos de configuração e logs do servidor. Em Windows, instalações padrão armazenam dados de configuração e informações operacionais em diretórios próprios do MySQL. <strong>Não altere arquivos no escuro.</strong> Leia a mensagem de erro, faça backup da configuração e consulte a documentação da versão utilizada antes de mudar parâmetros.</p>
-<div class="card note"><div class="card-body"><h3>Modo MbB de diagnosticar</h3><p>Não comece “tentando qualquer coisa”. Identifique a camada: serviço, conexão, autenticação, privilégio, banco, SQL ou dado. Corrigir a camada errada costuma criar um segundo problema sem resolver o primeiro.</p></div></div>
+<div class="card note"><div class="card-body"><h3>Como diagnosticar</h3><p>Não comece “tentando qualquer coisa”. Identifique a camada: serviço, conexão, autenticação, privilégio, banco, SQL ou dado. Corrigir a camada errada costuma criar um segundo problema sem resolver o primeiro.</p></div></div>
 
 <h2>BLOCO 20 — Política mínima de backup</h2>
 <p>Em ambiente real, um backup manual feito uma única vez não basta. Uma política precisa responder:</p>
@@ -2631,7 +2628,6 @@ logs e configuração ajudam a explicar</pre></div>
 <p>Neste capítulo, aprendemos a separar MySQL Server, processo mysqld, cliente mysql e Workbench; instalar e reconhecer o serviço; identificar onde cada comando deve ser executado; administrar contas e privilégios; aplicar menor privilégio; usar roles; criar backup lógico; restaurar com segurança; validar recuperação e organizar um diagnóstico básico.</p>
 <p>O próximo passo é entender algo que acontece <strong>dentro do trabalho concorrente com os dados</strong>: como várias alterações podem formar uma unidade segura e como o banco decide confirmar ou desfazer mudanças.</p>
 <div class="card idea"><div class="card-body"><h3>Próxima ponte</h3><p>No Capítulo 7 entraremos em <strong>Transações e ACID</strong>: COMMIT, ROLLBACK, atomicidade, consistência, isolamento, durabilidade e problemas de concorrência.</p></div></div>
-<h2>✅ CAPÍTULO 6 — ADMINISTRAÇÃO E SGBD OFICIALMENTE FINALIZADO</h2>
 </article>
 </section>
 <section class="module" id="mod-transacoes">
@@ -2869,16 +2865,353 @@ Transação B bloqueia linha 2
 <h2>BLOCO 20 — Laboratório integrador</h2>
 <p>Faça o ciclo completo:</p>
 <ol><li>confirme que <code>conta_lab</code> usa InnoDB;</li><li>consulte saldos iniciais;</li><li>execute uma transferência com START TRANSACTION;</li><li>confira os valores antes de confirmar;</li><li>teste uma transferência com ROLLBACK;</li><li>teste outra com COMMIT;</li><li>use SAVEPOINT em uma operação com três etapas;</li><li>abra duas sessões e observe um bloqueio com FOR UPDATE;</li><li>consulte o nível de isolamento atual;</li><li>explique onde aparecem atomicidade, consistência, isolamento e durabilidade.</li></ol>
-<div class="card idea"><div class="card-body"><h3>Pergunta MbB</h3><p>Se você consegue explicar <strong>qual problema cada comando resolve</strong>, já está entendendo transações. Decorar START TRANSACTION, COMMIT e ROLLBACK sem enxergar o problema de negócio seria apenas decorar sintaxe.</p></div></div>
+<div class="card idea"><div class="card-body"><h3>Pergunta de revisão</h3><p>Se você consegue explicar <strong>qual problema cada comando resolve</strong>, já está entendendo transações. Decorar START TRANSACTION, COMMIT e ROLLBACK sem enxergar o problema de negócio seria apenas decorar sintaxe.</p></div></div>
 
 <h2>BLOCO 21 — Fechamento do Capítulo</h2>
 <p>Neste capítulo, aprendemos que transação é uma unidade de trabalho; vimos autocommit, START TRANSACTION, COMMIT, ROLLBACK e SAVEPOINT; relacionamos ACID a situações reais; observamos concorrência em duas sessões; conhecemos níveis de isolamento, FOR UPDATE, bloqueios, deadlocks e o cuidado com comandos que provocam commit implícito.</p>
 <p>Agora o SQL básico e o comportamento transacional estão sólidos o suficiente para avançar para consultas e recursos que ampliam o poder da linguagem.</p>
 <div class="card note"><div class="card-body"><h3>Próxima ponte</h3><p>No Capítulo 8 entraremos em <strong>SQL Avançado</strong>: subconsultas, UNION, CTEs, funções de janela, views, índices, EXPLAIN, triggers, procedures e functions.</p></div></div>
-<h2>✅ CAPÍTULO 7 — TRANSAÇÕES E ACID OFICIALMENTE FINALIZADO</h2>
 </article>
 </section>
-<section class="module placeholder" id="mod-avancado"><section class="hero"><span class="kicker">Capítulo 8</span><h2>SQL Avançado</h2><p>Subconsultas, UNION, CTEs, funções de janela, views, índices, EXPLAIN, triggers, procedures e functions.</p></section>
+<section class="module" id="mod-avancado">
+<section class="hero">
+<span class="kicker">Capítulo 8</span>
+<h2>SQL Avançado</h2>
+<p>Agora vamos ampliar o que já sabemos sem transformar SQL em uma coleção de truques. O objetivo é aprender recursos que ajudam a organizar consultas complexas, criar relatórios melhores, reutilizar lógica e investigar desempenho.</p>
+</section>
+<article class="chapter">
+<h2>BLOCO 1 — SQL avançado não significa SQL incompreensível</h2>
+<p>Até aqui já usamos SELECT, filtros, JOIN, GROUP BY, HAVING e transações. SQL avançado começa quando uma pergunta deixa de caber confortavelmente em uma consulta simples.</p>
+<div class="visual"><pre>Pergunta de negócio
+        ↓
+consulta simples resolve?
+        ↓ não
+subconsulta / CTE / janela / view / índice / rotina
+        ↓
+solução mais clara, reutilizável ou eficiente</pre></div>
+<div class="card idea"><div class="card-body"><h3>Ideia principal</h3><p>O melhor SQL não é o que parece mais sofisticado. É o que resolve o problema com clareza, correção e desempenho adequado.</p></div></div>
+
+<h2>BLOCO 2 — Subconsulta: um SELECT dentro de outro comando</h2>
+<p>Uma <strong>subconsulta</strong> é um SELECT usado dentro de outra instrução. Comece pensando em duas perguntas separadas.</p>
+<p>Exemplo: quais produtos custam mais do que o preço médio de todos os produtos?</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar subconsulta</button><pre><code>SELECT id_produto, descricao, preco
+FROM produto
+WHERE preco &gt; (
+    SELECT AVG(preco)
+    FROM produto
+)
+ORDER BY preco DESC;</code></pre></div>
+<p>A consulta interna calcula um único valor: a média. A consulta externa compara cada produto com esse resultado.</p>
+<div class="card note"><div class="card-body"><h3>Leia de dentro para fora</h3><p>Primeiro responda o SELECT interno. Depois pergunte como o resultado será usado pela consulta externa.</p></div></div>
+
+<h2>BLOCO 3 — IN, EXISTS e NOT EXISTS</h2>
+<p>Subconsultas não servem apenas para retornar um único valor. Elas também podem responder se existe ou não uma correspondência.</p>
+<h3>Fornecedores que possuem pelo menos um produto</h3>
+<div class="codebox"><button class="copy-btn" type="button">Copiar EXISTS</button><pre><code>SELECT f.id_fornecedor, f.nome
+FROM fornecedor AS f
+WHERE EXISTS (
+    SELECT 1
+    FROM produto_fornecedor AS pf
+    WHERE pf.id_fornecedor = f.id_fornecedor
+)
+ORDER BY f.nome;</code></pre></div>
+<h3>Fornecedores sem produtos associados</h3>
+<div class="codebox"><button class="copy-btn" type="button">Copiar NOT EXISTS</button><pre><code>SELECT f.id_fornecedor, f.nome
+FROM fornecedor AS f
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM produto_fornecedor AS pf
+    WHERE pf.id_fornecedor = f.id_fornecedor
+)
+ORDER BY f.nome;</code></pre></div>
+<p><code>EXISTS</code> pergunta se a subconsulta encontra pelo menos uma linha. <code>NOT EXISTS</code> pergunta o contrário.</p>
+
+<h2>BLOCO 4 — JOIN ou subconsulta?</h2>
+<p>Muitas perguntas podem ser resolvidas de mais de uma forma. Isso não significa que exista sempre uma única sintaxe correta.</p>
+<table class="sql-table">
+<tr><th>Quando pensar primeiro em JOIN</th><th>Quando pensar primeiro em subconsulta</th></tr>
+<tr><td>quando precisa exibir colunas de várias tabelas</td><td>quando precisa comparar com um resultado calculado</td></tr>
+<tr><td>quando o caminho entre tabelas é parte central da resposta</td><td>quando a pergunta é naturalmente “existe?”, “não existe?” ou “maior que a média?”</td></tr>
+<tr><td>quando quer combinar linhas relacionadas</td><td>quando dividir o raciocínio torna a consulta mais clara</td></tr>
+</table>
+<div class="card warning"><div class="card-body"><h3>Evite regras absolutas</h3><p>“JOIN é sempre mais rápido” ou “subconsulta é sempre mais simples” são generalizações perigosas. Clareza vem primeiro; depois, quando desempenho importar, confirme o plano com EXPLAIN.</p></div></div>
+
+<h2>BLOCO 5 — UNION e UNION ALL: empilhando resultados</h2>
+<p>JOIN coloca colunas relacionadas lado a lado. <strong>UNION</strong> combina resultados compatíveis colocando linhas de uma consulta abaixo das linhas de outra.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar UNION ALL</button><pre><code>SELECT 'CATEGORIA' AS tipo, nome AS descricao
+FROM categoria
+UNION ALL
+SELECT 'FORNECEDOR' AS tipo, nome AS descricao
+FROM fornecedor
+ORDER BY tipo, descricao;</code></pre></div>
+<table class="sql-table">
+<tr><th>Operador</th><th>Comportamento</th></tr>
+<tr><td><strong>UNION</strong></td><td>combina os resultados e elimina linhas duplicadas</td></tr>
+<tr><td><strong>UNION ALL</strong></td><td>combina os resultados e preserva duplicidades</td></tr>
+</table>
+<p>As consultas precisam retornar quantidade compatível de colunas, em posições correspondentes e com tipos que possam ser combinados.</p>
+<div class="card note"><div class="card-body"><h3>SQL de conjuntos</h3><p>MySQL 8.4 também oferece operações como INTERSECT e EXCEPT. Neste capítulo, o foco principal será UNION e UNION ALL, porque eles aparecem com mais frequência em sistemas e relatórios.</p></div></div>
+
+<h2>BLOCO 6 — CTE: dando nome a uma etapa da consulta</h2>
+<p>Uma <strong>CTE — Common Table Expression</strong> é definida com <code>WITH</code>. Ela permite dar um nome temporário a um resultado e usá-lo logo depois.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar CTE</button><pre><code>WITH estoque_baixo AS (
+    SELECT id_produto, descricao, qtde, estoque_minimo
+    FROM produto
+    WHERE qtde &lt;= estoque_minimo
+)
+SELECT *
+FROM estoque_baixo
+ORDER BY qtde, descricao;</code></pre></div>
+<div class="card idea"><div class="card-body"><h3>Por que usar?</h3><p>CTE ajuda a quebrar uma consulta grande em etapas nomeadas. Ela não cria uma tabela permanente; existe apenas durante aquela instrução.</p></div></div>
+
+<h2>BLOCO 7 — CTEs podem trabalhar em sequência</h2>
+<p>Quando o raciocínio possui etapas, podemos declarar mais de uma CTE.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar CTEs</button><pre><code>WITH resumo_categoria AS (
+    SELECT
+        id_categoria,
+        COUNT(*) AS total_produtos,
+        AVG(preco) AS preco_medio
+    FROM produto
+    GROUP BY id_categoria
+),
+resultado AS (
+    SELECT
+        c.nome AS categoria,
+        r.total_produtos,
+        r.preco_medio
+    FROM resumo_categoria AS r
+    INNER JOIN categoria AS c
+        ON c.id_categoria = r.id_categoria
+)
+SELECT *
+FROM resultado
+ORDER BY preco_medio DESC;</code></pre></div>
+<p>O importante é conseguir explicar o papel de cada etapa. Se uma CTE apenas deixa a consulta maior sem melhorar a leitura, ela não está ajudando.</p>
+
+<h2>BLOCO 8 — Funções de janela: calcular sem perder as linhas</h2>
+<p><code>GROUP BY</code> agrupa várias linhas e produz uma linha por grupo. Uma <strong>função de janela</strong> calcula usando linhas relacionadas, mas mantém as linhas individuais no resultado.</p>
+<div class="grid2"><section class="card note"><div class="card-body"><h3>GROUP BY</h3><p>Resume o grupo. Dez produtos de uma categoria podem virar uma única linha.</p></div></section><section class="card note"><div class="card-body"><h3>Função de janela</h3><p>Mantém os dez produtos e acrescenta cálculos relacionados à categoria em cada linha.</p></div></section></div>
+<div class="codebox"><button class="copy-btn" type="button">Copiar média por janela</button><pre><code>SELECT
+    p.descricao,
+    c.nome AS categoria,
+    p.preco,
+    AVG(p.preco) OVER (
+        PARTITION BY p.id_categoria
+    ) AS media_categoria
+FROM produto AS p
+INNER JOIN categoria AS c
+    ON c.id_categoria = p.id_categoria
+ORDER BY c.nome, p.preco DESC;</code></pre></div>
+<p><code>PARTITION BY</code> divide as linhas em grupos lógicos para o cálculo, sem reduzir o número de linhas exibidas.</p>
+
+<h2>BLOCO 9 — ROW_NUMBER e RANK: criando posições</h2>
+<p>Funções de janela também permitem criar rankings.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar ranking</button><pre><code>SELECT
+    c.nome AS categoria,
+    p.descricao,
+    p.preco,
+    ROW_NUMBER() OVER (
+        PARTITION BY p.id_categoria
+        ORDER BY p.preco DESC
+    ) AS posicao
+FROM produto AS p
+INNER JOIN categoria AS c
+    ON c.id_categoria = p.id_categoria
+ORDER BY c.nome, posicao;</code></pre></div>
+<p><code>ROW_NUMBER()</code> gera uma sequência sem empates de numeração. <code>RANK()</code> atribui a mesma posição a valores empatados e pode pular números depois do empate.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar top 3 por categoria</button><pre><code>WITH ranking AS (
+    SELECT
+        p.id_categoria,
+        p.descricao,
+        p.preco,
+        ROW_NUMBER() OVER (
+            PARTITION BY p.id_categoria
+            ORDER BY p.preco DESC
+        ) AS posicao
+    FROM produto AS p
+)
+SELECT
+    c.nome AS categoria,
+    r.descricao,
+    r.preco,
+    r.posicao
+FROM ranking AS r
+INNER JOIN categoria AS c
+    ON c.id_categoria = r.id_categoria
+WHERE r.posicao &lt;= 3
+ORDER BY c.nome, r.posicao;</code></pre></div>
+
+<h2>BLOCO 10 — Acumulados com SUM OVER</h2>
+<p>Outra aplicação útil é calcular valores acumulados sem perder cada linha.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar acumulado</button><pre><code>SELECT
+    id_produto,
+    descricao,
+    preco,
+    SUM(preco) OVER (
+        ORDER BY id_produto
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS preco_acumulado
+FROM produto
+ORDER BY id_produto;</code></pre></div>
+<div class="card note"><div class="card-body"><h3>Janela tem contexto</h3><p>A cláusula <code>OVER(...)</code> define quais linhas participam do cálculo e em que ordem. Alterar PARTITION BY, ORDER BY ou o frame pode mudar o significado do resultado.</p></div></div>
+
+<h2>BLOCO 11 — VIEW: salvando uma consulta com nome</h2>
+<p>Uma <strong>view</strong> é uma consulta armazenada no banco e acessada como se fosse uma tabela virtual.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar VIEW</button><pre><code>CREATE OR REPLACE VIEW vw_produto_categoria AS
+SELECT
+    p.id_produto,
+    p.descricao,
+    p.preco,
+    p.qtde,
+    c.nome AS categoria
+FROM produto AS p
+INNER JOIN categoria AS c
+    ON c.id_categoria = p.id_categoria;</code></pre></div>
+<p>Depois:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar consulta da VIEW</button><pre><code>SELECT *
+FROM vw_produto_categoria
+WHERE preco &gt; 20
+ORDER BY preco DESC;</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>View não é uma cópia automática dos dados</h3><p>Em uma view comum, a definição da consulta é armazenada. Os dados continuam nas tabelas de origem. Também não se cria índice diretamente sobre uma view comum no MySQL.</p></div></div>
+
+<h2>BLOCO 12 — Índices: atalhos para localizar linhas</h2>
+<p>Um índice é uma estrutura mantida pelo SGBD para encontrar determinadas linhas com menos trabalho. Sem um índice útil, uma consulta pode precisar examinar muitas linhas.</p>
+<div class="visual"><pre>Sem índice adequado
+linha 1 → linha 2 → linha 3 → ...
+
+Com índice adequado
+valor procurado → caminho mais direto até as linhas</pre></div>
+<p>Para experimentar:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar índice</button><pre><code>CREATE INDEX idx_produto_descricao
+ON produto(descricao);
+
+SHOW INDEX FROM produto;</code></pre></div>
+<p>Esse índice pode ajudar consultas que pesquisam pela descrição, dependendo do filtro, da quantidade de dados e das decisões do otimizador.</p>
+<div class="card warning"><div class="card-body"><h3>Índice não é grátis</h3><p>Índices ocupam espaço e precisam ser mantidos em INSERT, UPDATE e DELETE. Criar índice em toda coluna pode piorar o sistema em vez de melhorar.</p></div></div>
+
+<h2>BLOCO 13 — EXPLAIN: pergunte ao MySQL como ele pretende executar</h2>
+<p><code>EXPLAIN</code> mostra o plano escolhido pelo otimizador. Ele ajuda a investigar ordem de leitura das tabelas, índices possíveis, índice escolhido e estimativa de linhas examinadas.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar EXPLAIN</button><pre><code>EXPLAIN
+SELECT id_produto, descricao, preco
+FROM produto
+WHERE descricao LIKE 'A%';</code></pre></div>
+<p>Algumas colunas importantes da saída tradicional:</p>
+<table class="sql-table">
+<tr><th>Coluna</th><th>O que observar</th></tr>
+<tr><td>table</td><td>qual tabela está sendo analisada</td></tr>
+<tr><td>possible_keys</td><td>índices que poderiam ser usados</td></tr>
+<tr><td>key</td><td>índice realmente escolhido</td></tr>
+<tr><td>rows</td><td>estimativa de linhas examinadas</td></tr>
+<tr><td>Extra</td><td>informações adicionais do plano</td></tr>
+</table>
+<div class="card note"><div class="card-body"><h3>Base pequena, resultado pequeno</h3><p>Em uma tabela didática com poucas dezenas de linhas, o MySQL pode preferir ler a tabela inteira. Isso não torna o índice “errado”. O objetivo é aprender a medir em vez de adivinhar.</p></div></div>
+
+<h2>BLOCO 14 — EXPLAIN ANALYZE: plano e execução real</h2>
+<p>No MySQL 8.4, <code>EXPLAIN ANALYZE</code> executa uma consulta SELECT e mostra informações reais da execução em formato de árvore.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar EXPLAIN ANALYZE</button><pre><code>EXPLAIN ANALYZE
+SELECT id_produto, descricao, preco
+FROM produto
+WHERE descricao LIKE 'A%';</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>ANALYZE executa a consulta</h3><p>Use em SELECTs e em ambiente apropriado. A ideia aqui é comparar estimativas e execução real, não transformar otimização em tentativa aleatória.</p></div></div>
+
+<h2>BLOCO 15 — TRIGGER: uma ação automática ligada a uma tabela</h2>
+<p>Um <strong>trigger</strong> é executado automaticamente quando ocorre um evento de INSERT, UPDATE ou DELETE na tabela associada. Vamos criar um laboratório de auditoria de preço.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar tabela de auditoria</button><pre><code>CREATE TABLE IF NOT EXISTS auditoria_preco (
+    id_auditoria INT PRIMARY KEY AUTO_INCREMENT,
+    id_produto INT NOT NULL,
+    preco_anterior DECIMAL(10,2) NOT NULL,
+    preco_novo DECIMAL(10,2) NOT NULL,
+    alterado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);</code></pre></div>
+<div class="codebox"><button class="copy-btn" type="button">Copiar trigger</button><pre><code>DROP TRIGGER IF EXISTS trg_produto_audita_preco;
+
+DELIMITER //
+CREATE TRIGGER trg_produto_audita_preco
+AFTER UPDATE ON produto
+FOR EACH ROW
+BEGIN
+    IF NEW.preco &lt;&gt; OLD.preco THEN
+        INSERT INTO auditoria_preco
+            (id_produto, preco_anterior, preco_novo)
+        VALUES
+            (NEW.id_produto, OLD.preco, NEW.preco);
+    END IF;
+END//
+DELIMITER ;</code></pre></div>
+<p><code>OLD</code> representa os valores anteriores da linha; <code>NEW</code>, os valores novos.</p>
+<div class="card warning"><div class="card-body"><h3>Lógica automática precisa ser visível para a equipe</h3><p>Triggers podem ser úteis para auditoria e regras próximas aos dados, mas também podem esconder comportamento. Use quando houver motivo claro e documente.</p></div></div>
+
+<h2>BLOCO 16 — PROCEDURE: uma rotina chamada com CALL</h2>
+<p>Uma <strong>stored procedure</strong> agrupa instruções SQL no servidor e pode receber parâmetros.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar procedure</button><pre><code>DROP PROCEDURE IF EXISTS sp_produtos_por_categoria;
+
+DELIMITER //
+CREATE PROCEDURE sp_produtos_por_categoria(IN p_id_categoria INT)
+BEGIN
+    SELECT id_produto, descricao, preco, qtde
+    FROM produto
+    WHERE id_categoria = p_id_categoria
+    ORDER BY descricao;
+END//
+DELIMITER ;</code></pre></div>
+<p>Para executar:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar CALL</button><pre><code>CALL sp_produtos_por_categoria(1);</code></pre></div>
+<p>O parâmetro permite reutilizar a mesma rotina para categorias diferentes.</p>
+
+<h2>BLOCO 17 — FUNCTION: uma rotina que devolve um valor</h2>
+<p>Uma <strong>stored function</strong> retorna um valor e pode ser usada dentro de expressões SQL.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar function</button><pre><code>DROP FUNCTION IF EXISTS fn_status_estoque;
+
+DELIMITER //
+CREATE FUNCTION fn_status_estoque(
+    p_qtde INT,
+    p_minimo INT
+)
+RETURNS VARCHAR(10)
+DETERMINISTIC
+RETURN CASE
+    WHEN p_qtde &lt;= p_minimo THEN 'REPOR'
+    ELSE 'OK'
+END//
+DELIMITER ;</code></pre></div>
+<p>Depois:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar uso da function</button><pre><code>SELECT
+    descricao,
+    qtde,
+    estoque_minimo,
+    fn_status_estoque(qtde, estoque_minimo) AS status_estoque
+FROM produto
+ORDER BY descricao;</code></pre></div>
+
+<h2>BLOCO 18 — VIEW, PROCEDURE, FUNCTION e TRIGGER: não confunda</h2>
+<table class="sql-table">
+<tr><th>Recurso</th><th>Ideia principal</th><th>Como aparece</th></tr>
+<tr><td>VIEW</td><td>consulta armazenada</td><td>SELECT FROM nome_da_view</td></tr>
+<tr><td>PROCEDURE</td><td>rotina que executa um conjunto de instruções</td><td>CALL nome(...)</td></tr>
+<tr><td>FUNCTION</td><td>rotina que retorna um valor</td><td>nome(...) dentro de expressão</td></tr>
+<tr><td>TRIGGER</td><td>rotina acionada automaticamente por evento em tabela</td><td>dispara em INSERT, UPDATE ou DELETE</td></tr>
+</table>
+<div class="card idea"><div class="card-body"><h3>Escolha pelo problema</h3><p>Não use stored objects apenas porque são “avançados”. Cada recurso aumenta responsabilidades de manutenção, segurança, teste e documentação.</p></div></div>
+
+<h2>BLOCO 19 — Laboratório integrador</h2>
+<p>Monte um pequeno painel analítico do banco <code>comercio</code>:</p>
+<ol>
+<li>use uma subconsulta para identificar produtos acima da média de preço;</li>
+<li>use NOT EXISTS para localizar fornecedores sem produtos;</li>
+<li>use uma CTE para separar produtos com estoque baixo;</li>
+<li>use ROW_NUMBER para criar ranking de preço por categoria;</li>
+<li>crie uma view de produto + categoria;</li>
+<li>observe uma consulta com EXPLAIN antes e depois de um índice de laboratório;</li>
+<li>crie a função de status de estoque;</li>
+<li>execute a procedure de produtos por categoria;</li>
+<li>teste o trigger de auditoria alterando conscientemente um preço e depois restaurando o valor.</li>
+</ol>
+<div class="card solution"><div class="card-body"><h3>O que deve ficar na cabeça</h3><p>SQL avançado é composição: dividir problemas, reutilizar resultados, analisar conjuntos sem perder detalhes, medir planos e automatizar apenas o que realmente merece ficar no banco.</p></div></div>
+
+<h2>BLOCO 20 — Resumo e próxima etapa</h2>
+<p>Neste capítulo usamos subconsultas, EXISTS e NOT EXISTS, UNION, CTEs, funções de janela, views, índices, EXPLAIN, triggers, procedures e functions.</p>
+<p>O próximo passo será reunir modelagem, regras de negócio, implementação, consultas e validação em um <strong>Projeto Integrador</strong> completo.</p>
+</article>
 </section>
 <section class="module placeholder" id="mod-projetos"><section class="hero"><span class="kicker">Capítulo 9</span><h2>Projeto Integrador</h2><p>Requisitos, regras de negócio, DER, normalização, implementação, consultas e conexão com aplicações.</p></section>
 </section>
@@ -2939,10 +3272,10 @@ Transação B bloqueia linha 2
 <p>COMMIT, ROLLBACK, SAVEPOINT, ACID, concorrência, isolamento, bloqueios e deadlocks.</p>
 <span class="exercise-status available">Disponível · 12 exercícios</span>
 </button>
-<button class="exercise-chapter-card" onclick="openExerciseChapter('ex-building-avancado')">
+<button class="exercise-chapter-card" onclick="openExerciseChapter('ex-cap9')">
 <h3>8 SQL Avançado</h3>
 <p>Subconsultas, UNION, CTEs, funções de janela, views, índices, EXPLAIN, triggers, procedures e functions.</p>
-<span class="exercise-status building">🟠 Em construção</span>
+<span class="exercise-status available">Disponível · 12 exercícios</span>
 </button>
 <button class="exercise-chapter-card" onclick="openExerciseChapter('ex-building-projetos')">
 <h3>9 Projeto Integrador</h3>
@@ -3258,9 +3591,24 @@ PRODUTO 1 ─── N ITEM_PEDIDO</pre><ol><li>Um cliente pode possuir vários p
 </div>
 </div>
 </section>
-<section class="exercise-chapter-view" id="ex-building-avancado">
+<section class="exercise-chapter-view" id="ex-cap9">
 <div class="exercise-inner-card">
-<button class="exercise-back inside-card" onclick="backToExerciseHome()">← Voltar aos capítulos</button><section class="card note"><div class="card-body"><h3>🟠 Em construção</h3><p>Os exercícios deste capítulo serão adicionados quando o conteúdo estiver pronto.</p></div></section>
+<button class="exercise-back inside-card" onclick="backToExerciseHome()">← Voltar aos capítulos</button>
+<section class="hero"><span class="kicker">Exercícios — Capítulo 8</span><h2>SQL Avançado</h2><p>Prática progressiva para compor consultas, reutilizar resultados, analisar dados e compreender recursos armazenados do MySQL.</p></section>
+<div class="exercise-set">
+<details class="exercise-item"><summary>8A — Subconsulta escalar</summary><div class="exercise-content"><ol><li>Calcule o preço médio dos produtos.</li><li>Use esse SELECT dentro de outra consulta.</li><li>Liste somente produtos acima da média.</li><li>Ordene do maior para o menor preço.</li><li>Explique por que a subconsulta precisa retornar um único valor nesse caso.</li></ol></div></details>
+<details class="exercise-item"><summary>8B — EXISTS e NOT EXISTS</summary><div class="exercise-content"><ol><li>Liste fornecedores que possuem pelo menos um produto associado usando EXISTS.</li><li>Liste fornecedores sem produtos usando NOT EXISTS.</li><li>Explique o papel da correlação entre fornecedor e produto_fornecedor.</li><li>Compare conceitualmente a segunda consulta com LEFT JOIN + IS NULL.</li></ol></div></details>
+<details class="exercise-item"><summary>8C — JOIN ou subconsulta?</summary><div class="exercise-content"><p>Escolha a abordagem inicial e justifique:</p><ol><li>mostrar produto e nome da categoria;</li><li>mostrar produtos acima do preço médio;</li><li>descobrir fornecedores sem produtos;</li><li>mostrar produto, fornecedor e preço de custo;</li><li>descobrir se existe pelo menos um produto em cada fornecedor.</li></ol><p>Não basta escolher: explique o raciocínio.</p></div></details>
+<details class="exercise-item"><summary>8D — UNION e UNION ALL</summary><div class="exercise-content"><ol><li>Crie uma lista única com nomes de categorias e fornecedores, acrescentando uma coluna tipo.</li><li>Execute primeiro com UNION ALL.</li><li>Depois troque por UNION.</li><li>Explique a diferença entre preservar e eliminar duplicidades.</li><li>Explique por que as duas consultas precisam retornar colunas compatíveis.</li></ol></div></details>
+<details class="exercise-item"><summary>8E — CTE para organizar etapas</summary><div class="exercise-content"><ol><li>Crie uma CTE chamada estoque_baixo com produtos cuja quantidade seja menor ou igual ao estoque mínimo.</li><li>Consulte a CTE ordenando por quantidade.</li><li>Depois crie uma segunda CTE que relacione esses produtos com categoria.</li><li>Explique por que a CTE não é uma tabela permanente.</li></ol></div></details>
+<details class="exercise-item"><summary>8F — GROUP BY ou função de janela?</summary><div class="exercise-content"><ol><li>Use GROUP BY para mostrar a média de preço por categoria.</li><li>Depois use AVG(preco) OVER(PARTITION BY ...) para mostrar cada produto junto da média da própria categoria.</li><li>Compare a quantidade de linhas dos dois resultados.</li><li>Explique a diferença conceitual entre resumir e calcular sem perder detalhes.</li></ol></div></details>
+<details class="exercise-item"><summary>8G — Ranking por categoria</summary><div class="exercise-content"><ol><li>Use ROW_NUMBER para numerar produtos por categoria do maior para o menor preço.</li><li>Troque ROW_NUMBER por RANK e observe o comportamento caso existam empates.</li><li>Use uma CTE para exibir somente as três primeiras posições de cada categoria.</li><li>Explique o papel de PARTITION BY e ORDER BY dentro de OVER.</li></ol></div></details>
+<details class="exercise-item"><summary>8H — VIEW reutilizável</summary><div class="exercise-content"><ol><li>Crie uma view com produto, preço, quantidade e categoria.</li><li>Consulte a view filtrando produtos acima de determinado preço.</li><li>Ordene o resultado.</li><li>Explique onde os dados realmente continuam armazenados.</li><li>Explique uma vantagem e um cuidado no uso de views.</li></ol></div></details>
+<details class="exercise-item"><summary>8I — Índice e EXPLAIN</summary><div class="exercise-content"><ol><li>Execute EXPLAIN em uma consulta que filtre produto pela descrição.</li><li>Registre possible_keys, key e rows.</li><li>Crie um índice de laboratório sobre descricao.</li><li>Execute EXPLAIN novamente.</li><li>Compare os planos.</li><li>Explique por que uma tabela pequena pode não demonstrar grande diferença.</li><li>Explique por que criar índices demais também tem custo.</li></ol></div></details>
+<details class="exercise-item"><summary>8J — Trigger de auditoria</summary><div class="exercise-content"><ol><li>Crie a tabela auditoria_preco apresentada no capítulo.</li><li>Crie o trigger AFTER UPDATE para registrar mudanças de preço.</li><li>Escolha um produto e anote o preço atual.</li><li>Altere o preço conscientemente.</li><li>Consulte auditoria_preco.</li><li>Restaure o preço original.</li><li>Explique OLD, NEW e por que triggers devem ser documentados.</li></ol></div></details>
+<details class="exercise-item"><summary>8K — Procedure e function</summary><div class="exercise-content"><ol><li>Crie a procedure sp_produtos_por_categoria com parâmetro de entrada.</li><li>Execute-a para duas categorias diferentes.</li><li>Crie a function fn_status_estoque.</li><li>Use a function em um SELECT de produtos.</li><li>Explique a diferença entre chamar uma procedure com CALL e usar uma function dentro de uma expressão.</li></ol></div></details>
+<details class="exercise-item"><summary>8L — Desafio final: painel analítico</summary><div class="exercise-content"><ol><li>Mostre produtos acima da média de preço.</li><li>Mostre fornecedores sem produtos.</li><li>Crie uma CTE de estoque baixo.</li><li>Crie um ranking de preço por categoria.</li><li>Use uma view para simplificar pelo menos uma consulta.</li><li>Analise uma consulta com EXPLAIN.</li><li>Use a função de status de estoque.</li><li>Escreva um pequeno relatório explicando qual recurso resolveu cada parte e por que você o escolheu.</li></ol></div></details>
+</div>
 </div>
 </section>
 <section class="exercise-chapter-view" id="ex-building-projetos">
