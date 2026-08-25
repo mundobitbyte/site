@@ -2046,7 +2046,310 @@ ORDER BY total_produtos DESC;</code></pre></div>
 </section>
 <section class="module placeholder" id="mod-joins"><section class="hero"><span class="kicker">Capítulo 5</span><h2>Relacionamentos e JOIN</h2><p>INNER JOIN, LEFT JOIN, RIGHT JOIN, múltiplas junções e interpretação de relações.</p></section>
 </section>
-<section class="module placeholder" id="mod-sgbd"><section class="hero"><span class="kicker">Capítulo 6</span><h2>Administração e SGBD</h2><p>Instalação, operação, usuários, permissões, backup, restauração e ferramentas.</p></section>
+<section class="module" id="mod-sgbd">
+<section class="hero">
+<span class="kicker">Capítulo 6</span>
+<h2>Administração e SGBD</h2>
+<p>Fazer consultas é apenas uma parte do trabalho. Agora vamos entender quem mantém o MySQL funcionando: servidor, serviço, conexões, usuários, privilégios, ferramentas, backup e restauração.</p>
+</section>
+<article class="chapter">
+<h2>BLOCO 1 — Usar um banco e administrar um SGBD são coisas diferentes</h2>
+<p>Até aqui trabalhamos principalmente como <strong>usuários do banco</strong>: criamos tabelas, inserimos dados e escrevemos consultas. A administração começa quando passamos a cuidar do <strong>ambiente que torna tudo isso possível</strong>.</p>
+<table class="sql-table">
+<tr><th>Uso do banco</th><th>Administração do SGBD</th></tr>
+<tr><td>SELECT, INSERT, UPDATE, DELETE</td><td>instalação e operação do servidor</td></tr>
+<tr><td>criação das tabelas do sistema</td><td>contas, autenticação e privilégios</td></tr>
+<tr><td>consultas e relatórios</td><td>backup, restauração e disponibilidade</td></tr>
+<tr><td>trabalho dentro de um banco</td><td>cuidado com o ambiente inteiro</td></tr>
+</table>
+<div class="card idea"><div class="card-body"><h3>Ideia principal</h3><p><strong>Banco de dados</strong> é onde os dados e objetos ficam organizados. <strong>SGBD</strong> é o software que controla armazenamento, acesso, segurança, concorrência e recuperação desses dados. Administrar é cuidar desse SGBD.</p></div></div>
+
+<h2>BLOCO 2 — Quem é quem no MySQL?</h2>
+<p>Quando dizemos simplesmente “MySQL”, podemos estar falando de programas diferentes. Para administrar corretamente, precisamos separá-los.</p>
+<div class="visual"><pre>Aplicação / Workbench / cliente mysql
+              ↓ conexão
+        MYSQL SERVER
+           (mysqld)
+              ↓
+   bancos, tabelas e dados</pre></div>
+<table class="sql-table">
+<tr><th>Componente</th><th>Função</th></tr>
+<tr><td><strong>MySQL Server</strong></td><td>é o servidor do SGBD; recebe conexões, executa SQL e controla os dados</td></tr>
+<tr><td><strong>mysqld</strong></td><td>é o processo principal do MySQL Server</td></tr>
+<tr><td><strong>mysql</strong></td><td>é um cliente de linha de comando usado para conversar com o servidor</td></tr>
+<tr><td><strong>MySQL Workbench</strong></td><td>é uma ferramenta gráfica cliente para SQL, modelagem e tarefas administrativas</td></tr>
+<tr><td><strong>Aplicação</strong></td><td>conecta ao servidor usando um driver/connector e uma conta autorizada</td></tr>
+</table>
+<div class="card warning"><div class="card-body"><h3>Workbench não é o banco</h3><p>Fechar o Workbench não apaga nem necessariamente desliga o MySQL Server. Da mesma forma, instalar apenas uma ferramenta cliente não significa que exista um servidor MySQL funcionando naquela máquina.</p></div></div>
+
+<h2>BLOCO 3 — Instalação atual do MySQL no Windows</h2>
+<p>Neste curso adotamos o <strong>MySQL 8.4 LTS</strong> como referência estável. No Windows, a documentação oficial recomenda a instalação pelo pacote <strong>MSI</strong> e a configuração pelo <strong>MySQL Configurator</strong>.</p>
+<ol>
+<li>Baixe o MySQL Community Server para Windows no site oficial.</li>
+<li>Execute o instalador MSI.</li>
+<li>Ao final da instalação, execute o MySQL Configurator.</li>
+<li>Configure o servidor como serviço do Windows.</li>
+<li>Defina uma senha forte para a conta administrativa <strong>root</strong>.</li>
+<li>Conclua a configuração e confirme que o serviço iniciou.</li>
+</ol>
+<div class="card note"><div class="card-body"><h3>Atenção a tutoriais antigos</h3><p>Em versões antigas do MySQL 8.0 era muito comum encontrar o programa <strong>MySQL Installer</strong>. Para MySQL 8.1 ou superior, incluindo 8.4, a configuração atual é feita pelo <strong>MySQL Configurator</strong>. Não estranhe se vídeos antigos mostrarem telas diferentes.</p></div></div>
+<p>O diretório padrão de uma instalação MSI do MySQL 8.4 costuma ficar em <code>C:\Program Files\MySQL\MySQL Server 8.4</code>. Não é necessário decorar esse caminho; precisamos apenas saber que a pasta <strong>bin</strong> contém programas como mysql, mysqld e mysqldump.</p>
+
+<h2>BLOCO 4 — Serviço do Windows: o servidor precisa estar funcionando</h2>
+<p>Em uma instalação normal no Windows, o MySQL Server é configurado como um <strong>serviço</strong>. Assim, ele pode iniciar automaticamente com o sistema operacional.</p>
+<div class="visual"><pre>Windows inicia
+     ↓
+serviço do MySQL inicia
+     ↓
+mysqld fica aguardando conexões
+     ↓
+clientes podem se conectar</pre></div>
+<p>Uma forma simples de verificar é abrir <strong>Serviços</strong> do Windows (<code>services.msc</code>) e localizar o serviço configurado para o MySQL.</p>
+<div class="card note"><div class="card-body"><h3>O nome pode variar</h3><p>Não memorize um nome de serviço como se fosse universal. Ele depende da versão e de como a instalação foi configurada. O importante é reconhecer o serviço MySQL e verificar seu estado.</p></div></div>
+<div class="card problem"><div class="card-body"><h3>“mysql não conecta”</h3><p>Antes de culpar a senha ou o SQL, pergunte: <strong>o servidor está iniciado?</strong> Cliente funcionando e servidor parado são situações completamente diferentes.</p></div></div>
+
+<h2>BLOCO 5 — CMD ou mysql&gt;? Saiba onde executar cada comando</h2>
+<p>Este é um dos erros mais comuns de quem começa. Existem comandos do <strong>sistema operacional</strong> e comandos enviados <strong>ao servidor MySQL</strong>.</p>
+<table class="sql-table">
+<tr><th>Onde aparece</th><th>O que executar ali</th><th>Exemplo</th></tr>
+<tr><td><strong>CMD</strong></td><td>programas do Windows/MySQL</td><td><code>mysql -u root -p</code></td></tr>
+<tr><td><strong>CMD</strong></td><td>backup e restauração com redirecionamento</td><td><code>mysqldump ... &gt; arquivo.sql</code></td></tr>
+<tr><td><strong>mysql&gt;</strong></td><td>SQL e comandos do cliente conectado</td><td><code>SHOW DATABASES;</code></td></tr>
+<tr><td><strong>mysql&gt;</strong></td><td>administração por SQL</td><td><code>CREATE USER ...;</code></td></tr>
+</table>
+<div class="card warning"><div class="card-body"><h3>Não misture os ambientes</h3><p><code>mysqldump</code> não é um comando SQL. Ele deve ser executado no <strong>CMD</strong>, fora do prompt <code>mysql&gt;</code>.</p></div></div>
+
+<h2>BLOCO 6 — Primeira verificação administrativa</h2>
+<p>Com o servidor iniciado, abra o CMD e conecte:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar comando CMD</button><pre><code>mysql -u root -p</code></pre></div>
+<p>Depois de informar a senha e aparecer o prompt <code>mysql&gt;</code>, execute:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar verificação</button><pre><code>SELECT VERSION();
+SELECT CURRENT_USER();
+SHOW DATABASES;</code></pre></div>
+<table class="sql-table">
+<tr><th>Comando</th><th>O que confirma</th></tr>
+<tr><td>VERSION()</td><td>qual versão do servidor respondeu</td></tr>
+<tr><td>CURRENT_USER()</td><td>qual conta autenticada determina os privilégios da sessão</td></tr>
+<tr><td>SHOW DATABASES</td><td>quais bancos aquela conta pode enxergar</td></tr>
+</table>
+<p>Você também pode usar:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar diagnóstico</button><pre><code>SHOW PROCESSLIST;</code></pre></div>
+<p>Esse comando permite observar conexões/sessões que o usuário atual tem permissão para enxergar. Não precisamos administrar concorrência ainda; por enquanto basta reconhecer que o servidor pode atender vários clientes.</p>
+
+<h2>BLOCO 7 — root é administrador, não usuário comum da aplicação</h2>
+<p>A conta <strong>root</strong> possui grande poder administrativo. Ela é útil para tarefas que realmente exigem administração, mas não deve ser a conta normal usada por um aplicativo, site ou aluno para todas as atividades.</p>
+<div class="visual"><pre>ROOT
+  ↓ administra
+cria contas + concede somente o necessário
+  ↓
+USUÁRIO DA APLICAÇÃO / OPERADOR / CONSULTA</pre></div>
+<div class="card solution"><div class="card-body"><h3>Princípio do menor privilégio</h3><p>Cada conta deve receber <strong>somente os privilégios necessários para realizar sua função</strong>. Menos privilégio significa menor impacto caso a senha vaze, a aplicação tenha uma falha ou alguém execute um comando errado.</p></div></div>
+<div class="card warning"><div class="card-body"><h3>Evite a prática “GRANT ALL para tudo”</h3><p>Dar acesso total global apenas para fazer uma aplicação funcionar é simples, mas inseguro e didaticamente errado. Primeiro descobrimos o que a conta precisa; depois concedemos exatamente isso.</p></div></div>
+
+<h2>BLOCO 8 — Conta MySQL = usuário + origem</h2>
+<p>No MySQL, uma conta é identificada por algo como <code>'usuario'@'host'</code>. Isso significa que <strong>nome e origem da conexão fazem parte da identidade da conta</strong>.</p>
+<table class="sql-table">
+<tr><th>Conta</th><th>Ideia</th></tr>
+<tr><td><code>'operador'@'localhost'</code></td><td>operador conectando na própria máquina do servidor</td></tr>
+<tr><td><code>'operador'@'algum-host-autorizado'</code></td><td>mesmo nome, mas outra origem autorizada</td></tr>
+</table>
+<p>Para nosso laboratório local, criaremos uma conta restrita a <strong>localhost</strong>:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar CREATE USER</button><pre><code>CREATE USER 'operador_comercio'@'localhost'
+IDENTIFIED BY 'Exemplo-Apenas-Troque-Agora#2026';</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>Senha do exemplo</h3><p>A senha acima existe apenas para mostrar a sintaxe. <strong>Não reutilize senhas publicadas em material didático.</strong> Na prática, crie uma senha própria, forte e exclusiva.</p></div></div>
+<p>Uma conta recém-criada não ganha automaticamente acesso ao banco <code>comercio</code>. Primeiro criamos a identidade; depois concedemos privilégios.</p>
+
+<h2>BLOCO 9 — GRANT: concedendo apenas o necessário</h2>
+<p>Suponha que <code>operador_comercio</code> precise consultar e manter os dados comerciais, mas não precise criar bancos, excluir tabelas ou administrar usuários.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar GRANT</button><pre><code>GRANT SELECT, INSERT, UPDATE, DELETE
+ON comercio.*
+TO 'operador_comercio'@'localhost';</code></pre></div>
+<p>Leia a instrução:</p>
+<div class="visual"><pre>SELECT, INSERT, UPDATE, DELETE  → o que pode fazer
+comercio.*                      → em todas as tabelas do banco comercio
+'operador_comercio'@'localhost'→ quem recebe</pre></div>
+<p>Agora crie também uma conta somente para consultas:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar usuário de leitura</button><pre><code>CREATE USER 'consulta_comercio'@'localhost'
+IDENTIFIED BY 'Exemplo-Leitura-Troque-Agora#2026';
+
+GRANT SELECT
+ON comercio.*
+TO 'consulta_comercio'@'localhost';</code></pre></div>
+<p>Isso materializa uma regra simples: <strong>quem só precisa ler não deve receber UPDATE ou DELETE</strong>.</p>
+
+<h2>BLOCO 10 — SHOW GRANTS e REVOKE: conferir antes de confiar</h2>
+<p>Depois de conceder privilégios, confirme o resultado:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar SHOW GRANTS</button><pre><code>SHOW GRANTS FOR 'operador_comercio'@'localhost';
+SHOW GRANTS FOR 'consulta_comercio'@'localhost';</code></pre></div>
+<p>Se um privilégio deixou de ser necessário, retire-o com <strong>REVOKE</strong>:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar REVOKE</button><pre><code>REVOKE DELETE
+ON comercio.*
+FROM 'operador_comercio'@'localhost';</code></pre></div>
+<div class="card idea"><div class="card-body"><h3>Administrar também é revisar</h3><p>Segurança não termina no CREATE USER. Contas mudam de função, pessoas saem de projetos e aplicações evoluem. Privilégios antigos que não são mais necessários devem ser removidos.</p></div></div>
+<div class="card note"><div class="card-body"><h3>Precisa executar FLUSH PRIVILEGES?</h3><p><strong>Não depois de CREATE USER, GRANT ou REVOKE.</strong> Esses comandos de gerenciamento de contas entram em vigor pelo próprio mecanismo do MySQL. <code>FLUSH PRIVILEGES</code> é necessário em situações específicas, como alterações diretas nas tabelas internas de privilégios — prática que não devemos usar para a administração normal.</p></div></div>
+
+<h2>BLOCO 11 — Roles: quando várias contas possuem a mesma função</h2>
+<p>Se muitas contas precisarem do mesmo conjunto de privilégios, repetir GRANT usuário por usuário aumenta o trabalho. Uma <strong>role</strong> é um conjunto nomeado de privilégios que pode ser concedido a contas.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar exemplo de role</button><pre><code>CREATE ROLE 'leitura_comercio';
+
+GRANT SELECT
+ON comercio.*
+TO 'leitura_comercio';
+
+CREATE USER 'analista_comercio'@'localhost'
+IDENTIFIED BY 'Exemplo-Role-Troque-Agora#2026';
+
+GRANT 'leitura_comercio'
+TO 'analista_comercio'@'localhost';
+
+SET DEFAULT ROLE 'leitura_comercio'
+TO 'analista_comercio'@'localhost';</code></pre></div>
+<div class="card note"><div class="card-body"><h3>Primeiro contato</h3><p>Você não precisa usar roles em todo exercício pequeno. O conceito fica importante quando vários usuários compartilham responsabilidades. Em vez de administrar permissões uma a uma, administramos a função.</p></div></div>
+
+<h2>BLOCO 12 — Ciclo de vida das contas</h2>
+<p>Além de criar e conceder acesso, o administrador precisa saber alterar, bloquear e remover contas.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar comandos de conta</button><pre><code>ALTER USER 'operador_comercio'@'localhost'
+IDENTIFIED BY 'NOVA_SENHA_FORTE_E_EXCLUSIVA';
+
+ALTER USER 'operador_comercio'@'localhost' ACCOUNT LOCK;
+
+ALTER USER 'operador_comercio'@'localhost' ACCOUNT UNLOCK;</code></pre></div>
+<p>Quando uma conta realmente deixou de existir:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar DROP USER</button><pre><code>DROP USER 'operador_comercio'@'localhost';</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>Bloquear ou excluir?</h3><p>Se existe dúvida ou necessidade temporária de impedir acesso, <strong>bloquear</strong> preserva a conta. <strong>DROP USER</strong> remove a conta. Em ambiente real, essa decisão deve seguir a política da organização.</p></div></div>
+
+<h2>BLOCO 13 — Administração segura: quatro regras que evitam muitos problemas</h2>
+<ol>
+<li><strong>Não use root na aplicação.</strong> Crie uma conta própria para cada finalidade.</li>
+<li><strong>Não conceda mais privilégios do que o necessário.</strong></li>
+<li><strong>Não exponha o servidor diretamente à Internet só para “fazer conectar”.</strong> Acesso remoto envolve rede, firewall, origem da conta e proteção da conexão.</li>
+<li><strong>Não altere arquivos internos do diretório de dados manualmente.</strong> Use ferramentas e procedimentos próprios do SGBD.</li>
+</ol>
+<div class="card problem"><div class="card-body"><h3>Porta 3306 aberta não é solução mágica</h3><p>A porta padrão do protocolo MySQL é frequentemente 3306, mas simplesmente liberá-la publicamente pode ampliar a superfície de ataque. Neste curso, nossos laboratórios administrativos permanecem locais; acesso remoto deve ser configurado conscientemente em ambiente apropriado.</p></div></div>
+
+<h2>BLOCO 14 — Backup: uma cópia capaz de permitir recuperação</h2>
+<p>Backup não é apenas “salvar um arquivo”. O objetivo é conseguir <strong>recuperar dados e objetos depois de erro, falha, corrupção ou perda</strong>.</p>
+<div class="visual"><pre>Banco funcionando
+      ↓
+criar backup
+      ↓
+guardar em local adequado
+      ↓
+testar restauração
+      ↓
+ter confiança de recuperação</pre></div>
+<table class="sql-table">
+<tr><th>Conceito</th><th>Significado</th></tr>
+<tr><td><strong>backup lógico</strong></td><td>representa estruturas e dados em formato que pode ser recriado, como comandos SQL</td></tr>
+<tr><td><strong>mysqldump</strong></td><td>utilitário tradicional do MySQL para produzir backup lógico</td></tr>
+<tr><td><strong>restauração</strong></td><td>processo de usar o backup para reconstruir os objetos/dados</td></tr>
+<tr><td><strong>teste de restauração</strong></td><td>prova prática de que o backup realmente pode ser utilizado</td></tr>
+</table>
+<div class="card warning"><div class="card-body"><h3>Copiar só a pasta do projeto não protege o banco</h3><p>HTML, Java, PHP ou qualquer outro código da aplicação não substitui os dados armazenados no servidor. Código e banco precisam de estratégias de proteção próprias.</p></div></div>
+
+<h2>BLOCO 15 — Laboratório: backup lógico com mysqldump</h2>
+<p>Saia do prompt <code>mysql&gt;</code> ou abra outro <strong>CMD</strong>. Para criar uma cópia lógica do banco <code>comercio</code>:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar backup CMD</button><pre><code>mysqldump -u root -p --single-transaction comercio &gt; comercio_backup.sql</code></pre></div>
+<p>Depois de pressionar Enter, o programa pedirá a senha. O arquivo <code>comercio_backup.sql</code> será criado na pasta atual do CMD.</p>
+<table class="sql-table">
+<tr><th>Trecho</th><th>Função</th></tr>
+<tr><td>mysqldump</td><td>executa o utilitário de backup</td></tr>
+<tr><td>-u root -p</td><td>conecta com uma conta e solicita sua senha</td></tr>
+<tr><td>--single-transaction</td><td>é apropriado para obter uma visão consistente de tabelas transacionais InnoDB sem bloquear as tabelas durante todo o dump</td></tr>
+<tr><td>comercio</td><td>banco que será copiado</td></tr>
+<tr><td>&gt; comercio_backup.sql</td><td>redireciona a saída para um arquivo</td></tr>
+</table>
+<div class="card note"><div class="card-body"><h3>O que esse arquivo representa?</h3><p>Esse dump contém a estrutura e os dados do banco selecionado. Ele <strong>não é uma imagem completa da máquina nem uma estratégia completa de recuperação do servidor</strong>. Configurações, certificados, contas administrativas e outros componentes exigem planejamento próprio.</p></div></div>
+
+<h2>BLOCO 16 — Laboratório seguro: restaure sem destruir o banco original</h2>
+<p>Um backup que nunca foi restaurado ainda não foi realmente testado. Em vez de sobrescrever o banco original, vamos restaurar em outro banco.</p>
+<p><strong>1. No prompt mysql&gt;</strong>, crie um banco vazio para o teste:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar criação do teste</button><pre><code>CREATE DATABASE comercio_teste_restore;</code></pre></div>
+<p><strong>2. No CMD</strong>, carregue o arquivo nele:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar restauração CMD</button><pre><code>mysql -u root -p comercio_teste_restore &lt; comercio_backup.sql</code></pre></div>
+<p><strong>3. De volta ao mysql&gt;</strong>, valide:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar validação</button><pre><code>USE comercio_teste_restore;
+SHOW TABLES;
+SELECT COUNT(*) FROM produto;
+SELECT COUNT(*) FROM fornecedor;
+SELECT COUNT(*) FROM produto_fornecedor;</code></pre></div>
+<p>Compare as quantidades com o banco original. Abra algumas tabelas, execute JOINs e confirme se estrutura e dados foram recuperados.</p>
+<div class="card solution"><div class="card-body"><h3>Backup confiável</h3><p><strong>Fazer o dump é metade do trabalho. Conseguir restaurá-lo e validar o resultado é a outra metade.</strong></p></div></div>
+<p>Depois do laboratório e somente se tiver certeza de que não precisa mais do banco de teste, ele pode ser removido:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar limpeza do teste</button><pre><code>DROP DATABASE comercio_teste_restore;</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>Confira o nome antes de DROP DATABASE</h3><p>Esse comando apaga o banco indicado. No laboratório, remova apenas <code>comercio_teste_restore</code>. Nunca transforme comandos destrutivos em hábito automático.</p></div></div>
+
+<h2>BLOCO 17 — Outra forma de dump: levando o próprio nome do banco</h2>
+<p>Quando usamos a opção <code>--databases</code>, o arquivo de dump inclui comandos para criar e selecionar o banco durante a restauração.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar alternativa de backup</button><pre><code>mysqldump -u root -p --single-transaction --databases comercio &gt; comercio_com_database.sql</code></pre></div>
+<p>Nesse caso, a restauração pode ser feita no CMD sem informar um banco de destino:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar restauração</button><pre><code>mysql -u root -p &lt; comercio_com_database.sql</code></pre></div>
+<div class="card note"><div class="card-body"><h3>Por que começamos pelo outro método?</h3><p>Sem <code>--databases</code>, conseguimos restaurar a cópia em <code>comercio_teste_restore</code> e testar sem apontar diretamente para o banco original. Primeiro aprendemos de forma segura; depois conhecemos a alternativa.</p></div></div>
+
+<h2>BLOCO 18 — Workbench: interface gráfica para tarefas administrativas</h2>
+<p>O MySQL Workbench permite executar SQL e também oferece telas administrativas. Entre elas estão controle do serviço, status do servidor, usuários e privilégios, exportação e importação de dados.</p>
+<table class="sql-table">
+<tr><th>No Workbench</th><th>Ideia correspondente</th></tr>
+<tr><td>Users and Privileges</td><td>CREATE USER, GRANT, REVOKE e administração de contas</td></tr>
+<tr><td>Server Status</td><td>estado e informações do servidor</td></tr>
+<tr><td>Data Export</td><td>exportação SQL para backup/transferência</td></tr>
+<tr><td>Data Import</td><td>carregamento de dump SQL</td></tr>
+</table>
+<div class="card idea"><div class="card-body"><h3>Interface não substitui conceito</h3><p>Workbench facilita o trabalho, mas você deve saber <strong>o que está fazendo</strong>. Se entende usuário, privilégio, dump e restauração no conceito e na linha de comando, consegue interpretar melhor qualquer interface gráfica.</p></div></div>
+
+<h2>BLOCO 19 — Logs, configuração e diagnóstico: saiba onde olhar</h2>
+<p>Um administrador não precisa decorar centenas de variáveis. Precisa desenvolver uma sequência de diagnóstico.</p>
+<div class="visual"><pre>Servidor não responde
+        ↓
+serviço está iniciado?
+        ↓
+consigo conectar localmente?
+        ↓
+usuário/senha/origem estão corretos?
+        ↓
+qual mensagem de erro apareceu?
+        ↓
+logs e configuração ajudam a explicar</pre></div>
+<p>O MySQL mantém arquivos de configuração e logs do servidor. Em Windows, instalações padrão armazenam dados de configuração e informações operacionais em diretórios próprios do MySQL. <strong>Não altere arquivos no escuro.</strong> Leia a mensagem de erro, faça backup da configuração e consulte a documentação da versão utilizada antes de mudar parâmetros.</p>
+<div class="card note"><div class="card-body"><h3>Modo MbB de diagnosticar</h3><p>Não comece “tentando qualquer coisa”. Identifique a camada: serviço, conexão, autenticação, privilégio, banco, SQL ou dado. Corrigir a camada errada costuma criar um segundo problema sem resolver o primeiro.</p></div></div>
+
+<h2>BLOCO 20 — Política mínima de backup</h2>
+<p>Em ambiente real, um backup manual feito uma única vez não basta. Uma política precisa responder:</p>
+<ol>
+<li><strong>O quê?</strong> Quais bancos e objetos precisam ser protegidos?</li>
+<li><strong>Quando?</strong> Qual frequência atende a quantidade de dados que a organização aceita perder?</li>
+<li><strong>Onde?</strong> Onde as cópias ficarão guardadas para não desaparecerem junto com o servidor?</li>
+<li><strong>Por quanto tempo?</strong> Quais versões históricas serão mantidas?</li>
+<li><strong>Quem?</strong> Quem é responsável por verificar o processo?</li>
+<li><strong>Como testar?</strong> Quando e onde a restauração será validada?</li>
+</ol>
+<div class="card warning"><div class="card-body"><h3>“Backup concluído” não significa “recuperação garantida”</h3><p>Arquivo vazio, incompleto, inacessível ou nunca testado pode dar falsa sensação de segurança. O objetivo final não é produzir arquivos; é <strong>recuperar o serviço e os dados quando necessário</strong>.</p></div></div>
+
+<h2>BLOCO 21 — Laboratório integrador de administração</h2>
+<p>Agora execute o ciclo administrativo completo usando o banco <code>comercio</code>:</p>
+<ol>
+<li>confirme que o serviço MySQL está iniciado;</li>
+<li>conecte como administrador;</li>
+<li>confirme versão e conta atual;</li>
+<li>crie uma conta somente de leitura para <code>comercio</code>;</li>
+<li>conceda apenas SELECT;</li>
+<li>confira com SHOW GRANTS;</li>
+<li>entre com essa nova conta e teste um SELECT;</li>
+<li>tente um UPDATE e observe que ele deve ser negado;</li>
+<li>volte à conta administrativa;</li>
+<li>faça um dump do banco;</li>
+<li>restaure em <code>comercio_teste_restore</code>;</li>
+<li>valide tabelas, quantidades e um JOIN;</li>
+<li>remova somente o banco de teste quando finalizar.</li>
+</ol>
+<div class="card solution"><div class="card-body"><h3>O que esse laboratório prova?</h3><p>Você deixa de ser alguém que apenas “sabe SQL” e passa a entender o ciclo básico de operação: <strong>servidor → autenticação → autorização → uso → proteção → recuperação</strong>.</p></div></div>
+
+<h2>BLOCO 22 — Fechamento do Capítulo</h2>
+<p>Neste capítulo, aprendemos a separar MySQL Server, processo mysqld, cliente mysql e Workbench; instalar e reconhecer o serviço; identificar onde cada comando deve ser executado; administrar contas e privilégios; aplicar menor privilégio; usar roles; criar backup lógico; restaurar com segurança; validar recuperação e organizar um diagnóstico básico.</p>
+<p>O próximo passo é entender algo que acontece <strong>dentro do trabalho concorrente com os dados</strong>: como várias alterações podem formar uma unidade segura e como o banco decide confirmar ou desfazer mudanças.</p>
+<div class="card idea"><div class="card-body"><h3>Próxima ponte</h3><p>No Capítulo 7 entraremos em <strong>Transações e ACID</strong>: COMMIT, ROLLBACK, atomicidade, consistência, isolamento, durabilidade e problemas de concorrência.</p></div></div>
+<h2>✅ CAPÍTULO 6 — ADMINISTRAÇÃO E SGBD OFICIALMENTE FINALIZADO</h2>
+</article>
 </section>
 <section class="module placeholder" id="mod-transacoes"><section class="hero"><span class="kicker">Capítulo 7</span><h2>Transações e ACID</h2><p>COMMIT, ROLLBACK, atomicidade, consistência, isolamento, durabilidade e concorrência.</p></section>
 </section>
@@ -2101,10 +2404,10 @@ ORDER BY total_produtos DESC;</code></pre></div>
 <p>INNER JOIN, LEFT JOIN, RIGHT JOIN, múltiplas junções e interpretação de relações.</p>
 <span class="exercise-status building">🟠 Em construção</span>
 </button>
-<button class="exercise-chapter-card" onclick="openExerciseChapter('ex-building-sgbd')">
+<button class="exercise-chapter-card" onclick="openExerciseChapter('ex-cap7')">
 <h3>6 Administração e SGBD</h3>
-<p>Instalação, ferramentas, usuários, permissões, backup e administração.</p>
-<span class="exercise-status building">🟠 Em construção</span>
+<p>Servidor, serviço, clientes, usuários, privilégios, roles, backup, restauração e diagnóstico.</p>
+<span class="exercise-status available">Disponível · 12 exercícios</span>
 </button>
 <button class="exercise-chapter-card" onclick="openExerciseChapter('ex-building-transacoes')">
 <h3>7 Transações e ACID</h3>
@@ -2375,9 +2678,24 @@ PRODUTO 1 ─── N ITEM_PEDIDO</pre><ol><li>Um cliente pode possuir vários p
 <button class="exercise-back inside-card" onclick="backToExerciseHome()">← Voltar aos capítulos</button><section class="card note"><div class="card-body"><h3>🟠 Em construção</h3><p>Os exercícios deste capítulo serão adicionados quando o conteúdo estiver pronto.</p></div></section>
 </div>
 </section>
-<section class="exercise-chapter-view" id="ex-building-sgbd">
+<section class="exercise-chapter-view" id="ex-cap7">
 <div class="exercise-inner-card">
-<button class="exercise-back inside-card" onclick="backToExerciseHome()">← Voltar aos capítulos</button><section class="card note"><div class="card-body"><h3>🟠 Em construção</h3><p>Os exercícios deste capítulo serão adicionados quando o conteúdo estiver pronto.</p></div></section>
+<button class="exercise-back inside-card" onclick="backToExerciseHome()">← Voltar aos capítulos</button>
+<section class="hero"><span class="kicker">Exercícios — Capítulo 6</span><h2>Administração e SGBD</h2><p>Prática para compreender o ambiente MySQL, controlar acesso e provar que um backup pode ser recuperado.</p></section>
+<div class="exercise-set">
+<details class="exercise-item"><summary>6A — Banco, servidor ou ferramenta?</summary><div class="exercise-content"><ol><li>Explique a diferença entre banco de dados e SGBD.</li><li>Qual é a função do MySQL Server?</li><li>Qual é a função do cliente mysql?</li><li>O Workbench é o servidor? Justifique.</li><li>O que acontece se o Workbench estiver aberto, mas o serviço do MySQL estiver parado?</li></ol></div></details>
+<details class="exercise-item"><summary>6B — Serviço e conexão</summary><div class="exercise-content"><ol><li>Localize o serviço MySQL no Windows e registre seu estado.</li><li>Conecte pelo CMD usando <code>mysql -u root -p</code>.</li><li>Execute VERSION(), CURRENT_USER() e SHOW DATABASES.</li><li>Explique o que cada verificação informa.</li><li>Se a conexão falhar, liste uma ordem racional de diagnóstico.</li></ol></div></details>
+<details class="exercise-item"><summary>6C — CMD ou mysql&gt;?</summary><div class="exercise-content"><p>Classifique cada item como comando executado no <strong>CMD</strong> ou no prompt <strong>mysql&gt;</strong>:</p><ol><li>mysql -u root -p</li><li>SHOW DATABASES;</li><li>CREATE USER ...;</li><li>mysqldump ... &gt; backup.sql</li><li>GRANT SELECT ...;</li><li>mysql comercio_teste &lt; backup.sql</li></ol><p>Depois explique por que misturar os dois ambientes produz erros.</p></div></details>
+<details class="exercise-item"><summary>6D — Menor privilégio</summary><div class="exercise-content"><p>Uma funcionária precisa apenas consultar produtos e fornecedores do banco comercio.</p><ol><li>Quais privilégios ela precisa?</li><li>Quais privilégios ela não deveria receber?</li><li>Crie uma conta local para essa finalidade.</li><li>Conceda somente o necessário.</li><li>Confirme com SHOW GRANTS.</li><li>Explique por que usar root seria uma escolha ruim.</li></ol></div></details>
+<details class="exercise-item"><summary>6E — Operador de dados</summary><div class="exercise-content"><p>Um funcionário precisa consultar, inserir e corrigir dados, mas não pode excluir registros.</p><ol><li>Crie a conta.</li><li>Conceda SELECT, INSERT e UPDATE em comercio.*.</li><li>Não conceda DELETE.</li><li>Confirme com SHOW GRANTS.</li><li>Conecte com essa conta e teste uma consulta.</li><li>Explique o resultado esperado se tentar DELETE.</li></ol></div></details>
+<details class="exercise-item"><summary>6F — REVOKE e ciclo de vida</summary><div class="exercise-content"><ol><li>Explique a diferença entre REVOKE, ACCOUNT LOCK e DROP USER.</li><li>Retire UPDATE de uma conta de laboratório.</li><li>Confirme os privilégios restantes.</li><li>Bloqueie a conta e explique quando isso seria útil.</li><li>Desbloqueie-a.</li><li>Em que situação seria apropriado removê-la definitivamente?</li></ol></div></details>
+<details class="exercise-item"><summary>6G — Roles</summary><div class="exercise-content"><ol><li>Explique o problema de repetir os mesmos GRANTs para dezenas de usuários.</li><li>Crie uma role chamada leitura_comercio.</li><li>Conceda SELECT em comercio.* à role.</li><li>Conceda a role a uma conta de teste.</li><li>Defina-a como role padrão.</li><li>Explique a vantagem administrativa obtida.</li></ol></div></details>
+<details class="exercise-item"><summary>6H — Backup lógico</summary><div class="exercise-content"><ol><li>Explique o que é backup lógico.</li><li>No CMD, gere <code>comercio_backup.sql</code> com mysqldump.</li><li>Localize o arquivo criado.</li><li>Abra-o apenas para inspeção e identifique exemplos de CREATE TABLE e INSERT.</li><li>Explique por que esse arquivo não representa uma cópia completa de toda a máquina.</li></ol></div></details>
+<details class="exercise-item"><summary>6I — Teste de restauração</summary><div class="exercise-content"><ol><li>Crie <code>comercio_teste_restore</code>.</li><li>Restaure o dump nesse banco.</li><li>Execute SHOW TABLES.</li><li>Compare a quantidade de produtos, fornecedores e relações produto_fornecedor com o banco original.</li><li>Execute um JOIN já conhecido.</li><li>Explique por que testar a restauração é parte do backup.</li></ol></div></details>
+<details class="exercise-item"><summary>6J — Diagnóstico de falhas</summary><div class="exercise-content"><p>Para cada situação, diga qual camada você investigaria primeiro:</p><ol><li>o comando mysql não é reconhecido no CMD;</li><li>o cliente existe, mas não consegue conectar ao servidor local;</li><li>a senha é aceita, mas o usuário não consegue executar UPDATE;</li><li>uma consulta conecta, mas referencia uma tabela inexistente;</li><li>o servidor não inicia depois de uma alteração de configuração.</li></ol><p>Monte uma sequência de diagnóstico sem “tentar coisas aleatórias”.</p></div></details>
+<details class="exercise-item"><summary>6K — Segurança de uma aplicação</summary><div class="exercise-content"><p>Um desenvolvedor configurou um site com a conta root e liberou acesso remoto amplo para “não dar erro”.</p><ol><li>Identifique os problemas.</li><li>Explique o princípio do menor privilégio.</li><li>Proponha uma conta adequada para a aplicação.</li><li>Explique por que origem da conta importa.</li><li>Explique por que abrir a porta do MySQL publicamente não deve ser a primeira solução.</li></ol></div></details>
+<details class="exercise-item"><summary>6L — Desafio final: operação e recuperação</summary><div class="exercise-content"><ol><li>Confirme serviço, versão e conta administrativa.</li><li>Crie uma conta somente leitura para comercio.</li><li>Teste SELECT e confirme que uma alteração não autorizada é bloqueada.</li><li>Gere um backup lógico.</li><li>Restaure em um banco separado.</li><li>Valide tabelas, contagens e um JOIN.</li><li>Remova apenas o banco de teste depois da validação.</li><li>Escreva um relatório curto explicando: autenticação, autorização, menor privilégio, backup e restauração.</li></ol></div></details>
+</div>
 </div>
 </section>
 <section class="exercise-chapter-view" id="ex-building-transacoes">
