@@ -22,6 +22,17 @@
     4:[2,3,4,3],
     5:[3,4,4,3]
   };
+  const finalChallengePlans={
+    reta:[4],
+    partes:[3,4],
+    parabola:[3,4],
+    quadrado:[4],
+    transformacoes:[4],
+    tangente:[3,4],
+    porcentagem:[4],
+    ladrilhamento:[3,4],
+    dados:[3,4]
+  };
   const shuffle=a=>{
     const b=[...a];
     for(let i=b.length-1;i>0;i--){
@@ -35,7 +46,10 @@
     if(!bags)return;
     const key=`${topic}|${level}`;
     if(!Array.isArray(bags[key])||!bags[key].length){
-      bags[key]=shuffle(familyPlans[level]||familyPlans[3]);
+      const plan=level===5&&finalChallengePlans[topic]
+        ? finalChallengePlans[topic]
+        : (familyPlans[level]||familyPlans[3]);
+      bags[key]=shuffle(plan);
     }
   }
   function nextExercise(topic,level){
