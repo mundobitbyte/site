@@ -15,6 +15,34 @@
     return Number(text);
   };
 
+  const familyPlans={
+    1:[0,1,2],
+    2:[0,1,2,3],
+    3:[1,2,3,4],
+    4:[2,3,4,3],
+    5:[3,4,4,3]
+  };
+  const shuffle=a=>{
+    const b=[...a];
+    for(let i=b.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [b[i],b[j]]=[b[j],b[i]];
+    }
+    return b;
+  };
+  function primeFamily(topic,level){
+    const bags=window.__DSMathVarietyBags;
+    if(!bags)return;
+    const key=`${topic}|${level}`;
+    if(!Array.isArray(bags[key])||!bags[key].length){
+      bags[key]=shuffle(familyPlans[level]||familyPlans[3]);
+    }
+  }
+  function nextExercise(topic,level){
+    primeFamily(topic,level);
+    return G[topic](level);
+  }
+
   function updateProgress(){
     const e=$('#exerciseProgress');
     if(e)e.textContent=`Neste navegador: ${progress.correct} acertos registrados, ${progress.review} respostas para revisar, ${progress.total} exercícios avaliados.`;
@@ -28,11 +56,22 @@
   function unique(topic,level){
     let exercise,key;
     for(let i=0;i<40;i++){
-      exercise=G[topic](level);
+      exercise=nextExercise(topic,level);
       key=`${topic}|${level}|${exercise.key||exercise.question}`;
       if(!seen.has(key))break;
     }
     seen.add(key);saveSeen();return exercise;
+  }
+
+  function uniqueForList(topic,level,localSeen){
+    let exercise,key;
+    for(let i=0;i<40;i++){
+      exercise=nextExercise(topic,level);
+      key=`${topic}|${level}|${exercise.key||exercise.question}`;
+      if(!localSeen.has(key))break;
+    }
+    localSeen.add(key);
+    return exercise;
   }
 
   function setManualButtons(show){
@@ -128,10 +167,10 @@
   }
 
   function printList(){
-    const selected=$('#exerciseTopic').value,level=Number($('#exerciseLevel').value),list=[];
+    const selected=$('#exerciseTopic').value,level=Number($('#exerciseLevel').value),list=[],localSeen=new Set();
     for(let i=0;i<10;i++){
       const topic=selected==='mixed'?P(Object.keys(names)):selected;
-      list.push({topic,exercise:G[topic](level)});
+      list.push({topic,exercise:uniqueForList(topic,level,localSeen)});
     }
     const body=`<h1>DS Matemática — Lista de exercícios</h1><p>1ª Série · Nível ${level} — ${levels[level]}</p>${list.map((x,i)=>`<div class="item"><h2>${i+1}. ${names[x.topic]}</h2><p>${x.exercise.question}</p></div>`).join('')}`;
     const w=open('','_blank','width=900,height=700');
