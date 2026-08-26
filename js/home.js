@@ -2,6 +2,19 @@
   const areasView = document.getElementById('areas');
   const moduleViews = Array.from(document.querySelectorAll('.modules-view[data-area]'));
 
+  const ensinoMedioLink = document.querySelector('[data-area-link="ensino-medio"]');
+  const areasGrid = ensinoMedioLink?.closest('.areas-grid');
+  if (ensinoMedioLink && areasGrid) {
+    areasGrid.appendChild(ensinoMedioLink);
+  }
+
+  const ensinoMedioView = document.getElementById('ensino-medio');
+  const matematicaGroup = ensinoMedioView?.querySelector('[aria-labelledby="matematica-area-title"]');
+  const firstSubjectGroup = ensinoMedioView?.querySelector('.subject-group');
+  if (ensinoMedioView && matematicaGroup && firstSubjectGroup && matematicaGroup !== firstSubjectGroup) {
+    ensinoMedioView.insertBefore(matematicaGroup, firstSubjectGroup);
+  }
+
   if (!areasView || moduleViews.length === 0) {
     return;
   }
