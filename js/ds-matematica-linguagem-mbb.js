@@ -24,7 +24,7 @@
       technical: 'Variáveis, expressões, fórmulas e generalização',
       objective: 'Você vai aprender a usar letras para representar valores que podem mudar e a escrever regras que funcionam para muitos casos.',
       heroTitle: 'Uma regra para muitos casos',
-      heroText: 'Imagine calcular o preço de 10, 50 ou 200 unidades de um mesmo produto. Em vez de inventar uma conta nova a cada vez, a álgebra permite escrever uma única regra e trocar apenas o valor que mudou.'
+      heroText: 'Uma gráfica cobra R$ 3 por cartão impresso. Para 10 cartões, você calcula 3 × 10; para 50, 3 × 50. Em vez de criar uma conta nova a cada vez, a álgebra permite escrever uma única regra e trocar apenas o valor que mudou.'
     },
     funcao1: {
       menu: '03 Função Afim',
@@ -32,7 +32,7 @@
       technical: 'Funções afim, linear, constante e identidade',
       objective: 'Você vai aprender a relacionar uma entrada a uma saída e a reconhecer situações com valor inicial e variação constante.',
       heroTitle: 'Um valor inicial mais aquilo que varia',
-      heroText: 'Corridas por aplicativo, estacionamentos, serviços de entrega e planos de consumo muitas vezes começam com um valor fixo e acrescentam outro valor conforme o uso aumenta. A função afim descreve exatamente esse tipo de situação.'
+      heroText: 'Um estacionamento cobra R$ 10 de entrada e mais R$ 5 por hora. Se você fica 1, 2 ou 3 horas, o preço muda, mas sempre seguindo a mesma regra. Corridas por aplicativo, entregas e vários serviços também funcionam desse jeito.'
     },
     reta: {
       menu: '04 Gráfico da Função do 1º Grau',
@@ -48,7 +48,7 @@
       technical: 'Regras diferentes para intervalos diferentes',
       objective: 'Você vai aprender a identificar qual regra deve ser usada em cada faixa de valores e a interpretar situações que mudam de comportamento.',
       heroTitle: 'Nem sempre uma única regra serve para tudo',
-      heroText: 'Uma tarifa pode cobrar um preço até certo limite e outro depois dele. Estacionamentos, contas de consumo, impostos e planos por faixa funcionam assim: primeiro você identifica em qual faixa está e só então aplica a regra correta.'
+      heroText: 'Imagine um estacionamento que cobra R$ 12 até 1 hora e, depois disso, acrescenta R$ 5 por hora adicional. Antes de calcular, você precisa descobrir em qual faixa o tempo está. Contas de consumo, impostos e planos por faixa seguem a mesma lógica.'
     },
     quadratica: {
       menu: '06 Função Quadrática',
@@ -56,7 +56,7 @@
       technical: 'Expressões do 2º grau e comportamento da parábola',
       objective: 'Você vai aprender a reconhecer funções quadráticas e a perceber por que seu crescimento não acontece no mesmo ritmo de uma função do 1º grau.',
       heroTitle: 'Nem todo crescimento acontece em linha reta',
-      heroText: 'A área de um quadrado, a altura de certos movimentos e várias situações de máximo ou mínimo não crescem sempre pela mesma quantidade. Quando a própria variação muda, a função quadrática começa a aparecer.'
+      heroText: 'Observe os quadrados 1, 4, 9, 16 e 25. Os aumentos são +3, +5, +7 e +9: o próprio ritmo de crescimento está mudando. Esse comportamento aparece em áreas, trajetórias e situações de máximo ou mínimo.'
     },
     parabola: {
       menu: '07 Gráfico da Função Quadrática',
@@ -64,7 +64,7 @@
       technical: 'Parábola, raízes, vértice, máximo, mínimo e concavidade',
       objective: 'Você vai aprender a ler em uma parábola onde a função zera, onde atinge máximo ou mínimo e em quais trechos cresce ou decresce.',
       heroTitle: 'A curva pode revelar o ponto mais alto ou mais baixo',
-      heroText: 'Em problemas de altura, área, custo ou lucro, muitas vezes interessa descobrir quando um valor chega ao máximo ou ao mínimo. Na função quadrática, o gráfico ajuda a enxergar esses pontos antes mesmo de terminar todas as contas.'
+      heroText: 'Em problemas de altura, área, custo ou lucro, muitas vezes interessa descobrir quando um valor chega ao máximo ou ao mínimo. Na função quadrática, o gráfico ajuda a enxergar esses pontos e entender o comportamento da situação.'
     },
     quadrado: {
       menu: '08 Proporcionalidade ao Quadrado',
@@ -72,7 +72,7 @@
       technical: 'Relações do tipo y = ax²',
       objective: 'Você vai aprender a reconhecer situações em que uma grandeza depende do quadrado de outra e a interpretar a razão y/x².',
       heroTitle: 'Dobrar uma medida pode quadruplicar outra',
-      heroText: 'Se o lado de um quadrado dobra, sua área não dobra: ela fica quatro vezes maior. Esse tipo de crescimento também aparece em outras situações e exige uma comparação diferente da proporcionalidade direta.'
+      heroText: 'Um quadrado de lado 2 tem área 4. Se o lado dobra para 4, a área passa para 16. Ela não dobrou: ficou quatro vezes maior. Esse é o tipo de relação que você vai aprender a reconhecer aqui.'
     },
     transformacoes: {
       menu: '09 Transformações de Gráficos',
@@ -80,7 +80,7 @@
       technical: 'Deslocamentos, inclinação e mudanças no comportamento da função',
       objective: 'Você vai aprender a comparar gráficos e perceber como alterações na expressão mudam a posição, a inclinação ou a forma da representação.',
       heroTitle: 'Mudar a regra muda o gráfico',
-      heroText: 'Se uma tarifa fixa aumenta, todo o gráfico pode subir. Se a taxa por unidade muda, a reta fica mais ou menos inclinada. Comparar gráficos ajuda a entender o efeito de cada mudança sem precisar começar tudo do zero.'
+      heroText: 'Compare y = x com y = x + 3. As duas retas têm a mesma inclinação, mas a segunda fica 3 unidades acima. Mudanças pequenas na expressão podem deslocar, inclinar ou transformar um gráfico de maneiras previsíveis.'
     },
     pa: {
       menu: '10 Progressão Aritmética (PA)',
@@ -88,7 +88,7 @@
       technical: 'Sequências com diferença constante entre termos',
       objective: 'Você vai aprender a reconhecer uma PA, calcular seus termos e relacionar esse padrão a uma variação constante.',
       heroTitle: 'Padrões que avançam passo a passo',
-      heroText: 'Guardar um pouco mais de dinheiro a cada semana, aumentar fileiras sempre pela mesma quantidade ou produzir peças em etapas pode gerar sequências com um padrão constante. A PA organiza exatamente esse tipo de crescimento.'
+      heroText: 'Uma pessoa guarda R$ 20 na primeira semana e aumenta o depósito em R$ 5 a cada semana: 20, 25, 30, 35, 40... Quando a diferença entre os termos permanece a mesma, aparece o padrão de uma Progressão Aritmética.'
     },
     tangente: {
       menu: '11 Tangente de um Ângulo',
@@ -96,7 +96,7 @@
       technical: 'Razão entre subida e avanço em triângulos retângulos',
       objective: 'Você vai aprender a medir inclinações usando a tangente e a relacionar essa razão ao coeficiente angular de uma reta.',
       heroTitle: 'Inclinações estão por toda parte',
-      heroText: 'Rampas, telhados, ruas e escadas sobem enquanto avançam na horizontal. Comparar quanto subiu com quanto avançou permite medir essa inclinação de forma matemática.'
+      heroText: 'Imagine uma rampa que sobe 1 metro enquanto avança 5 metros na horizontal. Comparar a subida com o avanço permite medir sua inclinação. A mesma ideia aparece em telhados, ruas, escadas e retas no plano cartesiano.'
     },
     porcentagem: {
       menu: '12 Porcentagem',
@@ -104,7 +104,7 @@
       technical: 'Razões com base 100, aumentos, descontos, taxas e juros',
       objective: 'Você vai aprender a interpretar porcentagens, calcular partes de um total e analisar aumentos, descontos e variações percentuais.',
       heroTitle: 'Você encontra porcentagens todos os dias',
-      heroText: 'Uma loja anuncia 20% de desconto, o celular mostra 75% de bateria, uma pesquisa apresenta 60% das respostas e uma conta pode subir 8%. Em todos esses casos, estamos comparando uma quantidade com 100 partes.'
+      heroText: 'Uma loja anuncia 20% de desconto, o celular mostra 75% de bateria e uma pesquisa apresenta 60% das respostas. Em todos esses casos, a comparação é feita com 100 partes. Por isso, 25% significa 25 de cada 100: 25/100 = 0,25.'
     },
     ladrilhamento: {
       menu: '13 Ladrilhamento do Plano',
@@ -112,7 +112,7 @@
       technical: 'Polígonos, ângulos internos e encaixe em 360°',
       objective: 'Você vai aprender a descobrir quais formas conseguem cobrir uma superfície sem deixar espaços nem criar sobreposições.',
       heroTitle: 'Por que alguns pisos encaixam perfeitamente?',
-      heroText: 'Olhe para pisos, azulejos e mosaicos: algumas formas se repetem e cobrem toda a superfície sem deixar buracos. O segredo está nos ângulos que se encontram em cada ponto.'
+      heroText: 'Olhe para pisos, azulejos e mosaicos: algumas formas se repetem e cobrem toda a superfície sem deixar buracos. Outras deixam espaços. A explicação está nos ângulos que se encontram em cada ponto.'
     },
     grandezas: {
       menu: '14 Grandezas Compostas',
@@ -120,7 +120,7 @@
       technical: 'Velocidade, densidade, concentração, taxa de transmissão e outras razões',
       objective: 'Você vai aprender a interpretar grandezas formadas pela combinação de outras e a usar corretamente suas unidades.',
       heroTitle: 'A própria unidade conta a relação',
-      heroText: 'km/h compara distância e tempo. MB/s compara quantidade de dados e tempo. g/L compara massa e volume. Muitas grandezas do dia a dia nascem justamente da combinação de duas medidas.'
+      heroText: 'km/h compara distância e tempo. MB/s compara quantidade de dados e tempo. g/L compara massa e volume. Muitas grandezas do dia a dia nascem justamente da combinação de duas medidas, e a unidade já dá uma pista da operação usada.'
     },
     dados: {
       menu: '15 Estatística: Tabelas, Gráficos e Amostragem',
