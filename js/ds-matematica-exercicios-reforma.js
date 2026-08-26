@@ -8,7 +8,12 @@
   let seen=new Set(load('dsMathSeen',[]));
 
   const saveSeen=()=>localStorage.setItem('dsMathSeen',JSON.stringify([...seen].slice(-700)));
-  const parseNumber=v=>Number(String(v).trim().replace(/\./g,'').replace(',','.'));
+  const parseNumber=value=>{
+    let text=String(value).trim().replace(/\s/g,'');
+    if(text.includes(',')&&text.includes('.')) text=text.replace(/\./g,'').replace(',','.');
+    else text=text.replace(',','.');
+    return Number(text);
+  };
 
   function updateProgress(){
     const e=$('#exerciseProgress');
@@ -60,7 +65,6 @@
       };
       $('#checkGenerated').onclick=check;
       input.onkeydown=e=>{if(e.key==='Enter')check();};
-      setTimeout(()=>input.focus({preventScroll:true}),0);
     }
 
     if(current.kind==='mc'){
