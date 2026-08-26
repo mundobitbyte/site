@@ -11,6 +11,11 @@
   const mc = (q,h,s,answer,labels,k)=>({kind:'mc',question:q,hint:h,solution:s,answer,options:labels.map((label,i)=>({id:String.fromCharCode(97+i),label})),key:k});
   const open = (q,h,s,k)=>({question:q,hint:h,solution:s,key:k});
   const sg = n => n>=0?`+${n}`:`${n}`;
+  const qlead = a => a===1?'x²':a===-1?'−x²':`${a}x²`;
+  const qlin = b => b===0?'':b===1?'+x':b===-1?'−x':b>0?`+${b}x`:`−${Math.abs(b)}x`;
+  const qconst = c => c===0?'':c>0?`+${c}`:`−${Math.abs(c)}`;
+  const qexpr = (a,b,c) => `${qlead(a)}${qlin(b)}${qconst(c)}`;
+  const addDisplay = (a,b) => b<0?`${a}−${Math.abs(b)}`:`${a}+${b}`;
 
   // Linguagem algébrica — mantém a mesma letra no enunciado e na resolução.
   G.algebra = function(level){
@@ -18,11 +23,11 @@
     if(f===0){const y=a*x+b;return num(`Na regra y=${a}x+${b}, qual é o valor de y quando x=${x}?`,'Substitua x e respeite a ordem das operações.',`y=${a}·${x}+${b}=${y}.`,y,`af|calcula|${a}|${b}|${x}`);}
     if(f===1){
       const c=P([
-        {nome:'uma locadora',fn:'C',v:'h',un:'hora',fixa:'taxa inicial'},
-        {nome:'um estacionamento',fn:'P',v:'t',un:'hora',fixa:'entrada'},
-        {nome:'um serviço de impressão',fn:'C',v:'q',un:'unidade',fixa:'preparação'}
+        {nome:'uma locadora',fn:'C',v:'h',un:'hora',fixa:'taxa inicial',dep:'tempo em horas'},
+        {nome:'um estacionamento',fn:'P',v:'t',un:'hora',fixa:'entrada',dep:'tempo de permanência'},
+        {nome:'um serviço de impressão',fn:'C',v:'q',un:'unidade',fixa:'preparação',dep:'quantidade de unidades impressas'}
       ]);
-      return open(`${c.nome} cobra ${BR(b)} de ${c.fixa} e ${BR(a)} por ${c.un}. Escreva ${c.fn}(${c.v}), o custo total em função da quantidade usada.`,'Separe a parte fixa da parte que varia.',`${c.fn}(${c.v})=${a}${c.v}+${b}. O termo ${a}${c.v} varia com a quantidade; ${b} permanece fixo.`,`af|modelo|${c.fn}|${c.v}|${a}|${b}`);
+      return open(`${c.nome} cobra ${BR(b)} de ${c.fixa} e ${BR(a)} por ${c.un}. Escreva ${c.fn}(${c.v}), o custo total em função do ${c.dep}.`,'Separe a parte fixa da parte que varia.',`${c.fn}(${c.v})=${a}${c.v}+${b}. O termo ${a}${c.v} varia com a quantidade; ${b} permanece fixo.`,`af|modelo|${c.fn}|${c.v}|${a}|${b}`);
     }
     if(f===2){const y=a*x+b;return num(`A regra é y=${a}x+${b}. Sabemos que o resultado foi y=${y}. Qual valor de x foi usado?`,'Faça o caminho inverso: retire o valor fixo e depois divida pelo multiplicador.',`${y}−${b}=${a*x}; ${a*x}/${a}=${x}.`,x,`af|inverso|${a}|${b}|${y}`);}
     if(f===3)return mc(`Qual classificação está correta para as escritas abaixo?`,'Expressão não afirma igualdade; equação iguala duas expressões; fórmula relaciona grandezas.',`3x+7 é expressão; 3x+7=22 é equação; P=6+2,5d é uma fórmula que relaciona preço e distância.`,'d',['3x+7 é uma equação.','3x+7=22 é apenas uma expressão sem igualdade.','P=6+2,5d não relaciona grandezas.','3x+7 é expressão, 3x+7=22 é equação e P=6+2,5d pode ser usada como fórmula.'],`af|classifica|${a}`);
@@ -55,7 +60,7 @@
   G.partes = function(level){
     const f=fam('partes',level),limit=R(5,12),base=R(15,30),extra=R(2,6),x=limit+R(1,6);
     if(f===0){const total=base+extra*(x-limit);return num(`Um plano custa ${BR(base)} até ${limit} GB. Acima disso, cobra ${BR(extra)} por GB excedente. Quanto paga quem usa ${x} GB?`,'Descubra primeiro apenas o excedente.',`Excedente=${x}−${limit}=${x-limit} GB. Acréscimo=${BR(extra*(x-limit))}. Total=${BR(total)}.`,total,`pa|tarifa|${limit}|${base}|${extra}|${x}`,.01);}
-    if(f===1){const value=P([Math.max(1,limit-1),limit,limit+1]);const first=value<=limit;return mc(`Uma função usa a regra A para x≤${limit} e a regra B para x>${limit}. Qual regra deve ser usada quando x=${value}?`,'Observe com atenção se o sinal inclui ou exclui o limite.',`${value}${first?'≤':'>'}${limit}; portanto usa-se a regra ${first?'A':'B'}.`,first?'a':'b',['Regra A','Regra B','As duas ao mesmo tempo','Nenhuma'],`pa|limite|${limit}|${value}`);}
+    if(f===1){const value=P([Math.max(1,limit-1),limit,limit+1]);const first=value<=limit;return mc(`Uma função usa a regra A para x≤${limit} e a regra B para x>${limit}. Qual regra deve ser usada quando x=${value}?`,'Observe com atenção se o sinal inclui ou exclui o limite.',`${value}${first?'≤':'>'}${limit}; portanto usa-se a regra ${first?'A':'B'}.` ,first?'a':'b',['Regra A','Regra B','As duas ao mesmo tempo','Nenhuma'],`pa|limite|${limit}|${value}`);}
     if(f===2)return open(`Explique com suas palavras o que significa “0<t≤${limit}” em uma função definida por partes.`,'Leia como duas condições simultâneas.',`t é maior que zero e, ao mesmo tempo, menor ou igual a ${limit}. Essa é a faixa em que a regra vale.`,`pa|leitura|${limit}`);
     if(f===3)return mc(`Um estudante calculou uma cobrança acima do limite de ${limit} unidades aplicando o preço extra a TODAS as ${x} unidades. Qual é o erro?`,'O preço extra vale apenas para o que ultrapassa o limite.',`O excedente é ${x-limit}, não ${x}. Só a parte acima do limite recebe a nova regra.`,'c',['Ele deveria multiplicar por zero.','Ele deveria ignorar o limite.','Ele aplicou a segunda regra também à parte da primeira faixa.','Funções por partes não representam tarifas.'],`pa|erro|${limit}|${x}`);
     return open(`Num gráfico por partes, uma regra vale para x≤${limit} e outra para x>${limit}. Como você representaria o ponto de fronteira de cada parte?`,'Ponto preenchido indica valor incluído; ponto vazio indica valor excluído.',`Na parte x≤${limit}, o ponto em x=${limit} é incluído e pode ser desenhado preenchido. Na parte x>${limit}, o valor x=${limit} é excluído e, quando for útil indicar a fronteira, pode aparecer como ponto vazio.`,`pa|grafico|${limit}`);
@@ -64,18 +69,18 @@
   // Parábola — o exercício de discriminante agora produz Δ positivo, zero e negativo.
   G.parabola = function(level){
     const f=fam('parabola',level),r1=R(-4,1),r2=r1+R(2,5),a=P([-2,-1,1,2]),b=-a*(r1+r2),c=a*r1*r2;
-    if(f===0)return mc(`Para f(x)=${a}x²${sg(b)}x${sg(c)}, o sinal de a permite concluir o quê?`,'O sinal de a controla a abertura.',a>0?'A parábola abre para cima e o vértice é mínimo.':'A parábola abre para baixo e o vértice é máximo.',a>0?'a':'b',['Abre para cima e tem mínimo.','Abre para baixo e tem máximo.','É sempre crescente.','Não possui vértice.'],`pbf|concavidade|${a}|${b}|${c}`);
-    if(f===1)return mc(`Quais valores fazem f(x)=${a}x²${sg(b)}x${sg(c)} valer zero?`,'Raízes são os valores de x para os quais f(x)=0.',`As raízes são ${r1} e ${r2}; no gráfico, são os pontos em que a parábola cruza o eixo x.`,'c',[`${r1+r2} apenas`,`${c} apenas`,`${r1} e ${r2}`,'Nenhum valor real'],`pbf|raizes|${a}|${r1}|${r2}`);
-    if(f===2){const xv=(r1+r2)/2,yv=a*xv*xv+b*xv+c;return num(`Uma parábola tem raízes ${r1} e ${r2}. Qual é a coordenada x do eixo de simetria?`,'O eixo fica exatamente no ponto médio entre as raízes.',`x=(${r1}+${r2})/2=${F(xv)}. O vértice está sobre essa linha${Number.isInteger(yv)?` e tem y=${yv}`:''}.`,xv,`pbf|simetria|${r1}|${r2}`,.001);}
+    if(f===0)return mc(`Para f(x)=${qexpr(a,b,c)}, o sinal de a permite concluir o quê?`,'O sinal de a controla a abertura.',a>0?'A parábola abre para cima e o vértice é mínimo.':'A parábola abre para baixo e o vértice é máximo.',a>0?'a':'b',['Abre para cima e tem mínimo.','Abre para baixo e tem máximo.','É sempre crescente.','Não possui vértice.'],`pbf|concavidade|${a}|${b}|${c}`);
+    if(f===1)return mc(`Quais valores fazem f(x)=${qexpr(a,b,c)} valer zero?`,'Raízes são os valores de x para os quais f(x)=0.',`As raízes são ${r1} e ${r2}; no gráfico, são os pontos em que a parábola cruza o eixo x.`,'c',[`${r1+r2} apenas`,`${c} apenas`,`${r1} e ${r2}`,'Nenhum valor real'],`pbf|raizes|${a}|${r1}|${r2}`);
+    if(f===2){const xv=(r1+r2)/2,yv=a*xv*xv+b*xv+c;return num(`Uma parábola tem raízes ${r1} e ${r2}. Qual é a coordenada x do eixo de simetria?`,'O eixo fica exatamente no ponto médio entre as raízes.',`x=(${addDisplay(r1,r2)})/2=${F(xv)}. O vértice está sobre essa linha${Number.isInteger(yv)?` e tem y=${yv}`:''}.`,xv,`pbf|simetria|${r1}|${r2}`,.001);}
     if(f===3){
       const type=P(['two','double','none']);
       let aa=1,bb,cc,delta,meaning;
       if(type==='two'){const u=R(-4,0),v=u+R(2,5);bb=-(u+v);cc=u*v;delta=bb*bb-4*cc;meaning='duas raízes reais diferentes e dois cruzamentos com o eixo x';}
       else if(type==='double'){const u=R(-3,3);bb=-2*u;cc=u*u;delta=0;meaning='uma raiz real repetida; a parábola toca o eixo x no vértice';}
       else {const u=R(-3,3),q=R(1,4);bb=-2*u;cc=u*u+q;delta=bb*bb-4*cc;meaning='nenhuma raiz real; a parábola não encontra o eixo x';}
-      return open(`Para f(x)=${aa}x²${sg(bb)}x${sg(cc)}, calcule ou interprete Δ=${delta}. O que seu sinal permite prever sobre as raízes e o gráfico?`,'Use: Δ>0 → duas raízes; Δ=0 → uma raiz repetida; Δ<0 → nenhuma raiz real.',`Como Δ=${delta}, temos ${meaning}.`,`pbf|delta|${bb}|${cc}|${delta}`);
+      return open(`Para f(x)=${qexpr(aa,bb,cc)}, o discriminante é Δ=${delta}. O que seu sinal permite prever sobre as raízes e o gráfico?`,'Use: Δ>0 → duas raízes; Δ=0 → uma raiz repetida; Δ<0 → nenhuma raiz real.',`Como Δ=${delta}, temos ${meaning}.`,`pbf|delta|${bb}|${cc}|${delta}`);
     }
-    const xv=(r1+r2)/2,yv=a*xv*xv+b*xv+c;return mc(`Uma situação é modelada por f(x)=${a}x²${sg(b)}x${sg(c)}. Qual análise reúne corretamente raízes, simetria e extremo?`,'Use raízes, ponto médio e sinal de a.',`Raízes: ${r1} e ${r2}; eixo x=${F(xv)}; vértice é ${a>0?'mínimo':'máximo'}${Number.isInteger(yv)?` com y=${yv}`:''}.`,'d',[`Raízes ${r1} e ${r2}, mas eixo de simetria x=0.`,'A parábola não possui eixo de simetria.','O sinal de a não interfere em máximo ou mínimo.',`Raízes ${r1} e ${r2}; eixo x=${F(xv)}; vértice é ${a>0?'mínimo':'máximo'}.`],`pbf|analise|${a}|${r1}|${r2}`);
+    const xv=(r1+r2)/2,yv=a*xv*xv+b*xv+c;return mc(`Uma situação é modelada por f(x)=${qexpr(a,b,c)}. Qual análise reúne corretamente raízes, simetria e extremo?`,'Use raízes, ponto médio e sinal de a.',`Raízes: ${r1} e ${r2}; eixo x=${F(xv)}; vértice é ${a>0?'mínimo':'máximo'}${Number.isInteger(yv)?` com y=${yv}`:''}.`,'d',[`Raízes ${r1} e ${r2}, mas eixo de simetria x=0.`,'A parábola não possui eixo de simetria.','O sinal de a não interfere em máximo ou mínimo.',`Raízes ${r1} e ${r2}; eixo x=${F(xv)}; vértice é ${a>0?'mínimo':'máximo'}.`],`pbf|analise|${a}|${r1}|${r2}`);
   };
 
   // Porcentagem — nível alto alterna juros e mudanças sucessivas de base.
@@ -84,7 +89,7 @@
     if(f===0)return num(`Quanto é ${p}% de ${BR(v)}?`,'Transforme a porcentagem em p/100 e multiplique pela base.',`${p}/100·${v}=${BR(v*p/100)}.`,v*p/100,`pcf|parte|${p}|${v}`,.01);
     if(f===1){const novo=v*(1+p/100);return num(`Um produto de ${BR(v)} recebe aumento de ${p}%. Qual é o novo preço?`,'Calcule o aumento e some ao valor antigo.',`Aumento=${BR(v*p/100)}; novo=${BR(novo)}.`,novo,`pcf|aumento|${p}|${v}`,.01);}
     if(f===2){const novo=v*(1-p/100);return num(`Um produto de ${BR(v)} recebe desconto de ${p}%. Qual é o preço final?`,'Calcule a parte descontada e retire da base.',`Desconto=${BR(v*p/100)}; final=${BR(novo)}.`,novo,`pcf|desconto|${p}|${v}`,.01);}
-    if(f===3){const antigo=v,novo=v+v*p/100;return num(`Um valor passou de ${BR(antigo)} para ${BR(novo)}. Qual foi a variação percentual?`,'Mudança ÷ valor antigo × 100.',`Mudança=${BR(novo-antigo)}; (${novo-antigo})/${antigo}·100=${p}%.`,p,`pcf|variacao|${p}|${v}`,.01);}
+    if(f===3){const antigo=v,novo=v+v*p/100;return num(`Um valor passou de ${BR(antigo)} para ${BR(novo)}. Qual foi a variação percentual?`,'Mudança ÷ valor antigo × 100.',`Mudança=${BR(novo-antigo)}; (${F(novo-antigo)})/${antigo}·100=${p}%.`,p,`pcf|variacao|${p}|${v}`,.01);}
     if(P([true,false])){
       const i=P([1,2,3,4])/100,t=R(2,5),c=R(5,20)*100,mont=c*(1+i)**t,simples=c*(1+i*t);
       return open(`Compare ${BR(c)} aplicados a ${F(i*100)}% ao mês por ${t} meses em juros simples e compostos. Explique por que os resultados são diferentes.`,'No simples, a base não muda; no composto, o saldo vira a nova base.',`Simples: ${BR(simples)}. Compostos: ${BR(mont)}. Nos compostos, cada período calcula a porcentagem sobre um saldo já alterado.`,`pcf|juros|${c}|${i}|${t}`);
