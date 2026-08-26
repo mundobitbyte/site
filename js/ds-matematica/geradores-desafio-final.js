@@ -55,7 +55,7 @@
         'Teste cada fórmula nos dois valores de entrada.',
         `A regra y=${a}x+${b} produz ${a}·${x1}+${b}=${y1} e ${a}·${x2}+${b}=${y2}.`,
         'b',
-        [`y=${a+b}x`,`y=${a}x+${b}`,`y=${b}x+${a}`,`y=${a}x−${b}`],
+        [`y=${a+b}x`,`y=${a}x+${b}`,`y=${a+1}x+${b}`,`y=${a}x−${b}`],
         `af5|dados|${a}|${b}`);
     }
     if(type===1){
@@ -116,10 +116,10 @@
         [`y=${a}x`,`y=x+${a}`,`y=${a}x+1`,`y=${a}x²`],
         `q5|tabela|${a}`);
     }
-    const a=R(2,4),b=R(-5,5),c=R(-6,6);
+    const a=P([-4,-3,-2,2,3,4]),b=R(-5,5),c=R(-6,6);
     return open(`Na função f(x)=${qexpr(a,b,c)}, identifique a, b e c e explique duas informações que já podem ser previstas sem calcular as raízes.`,
       'O sinal de a indica a concavidade; c é f(0).',
-      `a=${a}, b=${b}, c=${c}. Como a>0, a parábola abre para cima e possui mínimo no vértice. Como f(0)=c=${c}, ela cruza o eixo y em (0,${c}).`,
+      `${a>0?`a=${a}, b=${b}, c=${c}. Como a>0, a parábola abre para cima e possui mínimo no vértice.`:`a=${a}, b=${b}, c=${c}. Como a<0, a parábola abre para baixo e possui máximo no vértice.`} Como f(0)=c=${c}, ela cruza o eixo y em (0,${c}).`,
       `q5|coef|${a}|${b}|${c}`);
   };
 
@@ -143,7 +143,7 @@
     const a=R(2,8),r=R(2,5);
     return mc(`Qual das sequências abaixo NÃO é uma PA?`,
       'Compare as diferenças entre termos consecutivos.',
-      `Na alternativa C, as diferenças não permanecem constantes.`,
+      `Na alternativa C, as diferenças são ${r}, ${r+1} e ${r+2}; elas não permanecem constantes.`,
       'c',
       [
         `${a}, ${a+r}, ${a+2*r}, ${a+3*r}`,
