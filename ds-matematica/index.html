@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mundo bit Byte — DS Matemática</title>
+  <link href="../css/ds-matematica.css?v=1" rel="stylesheet"/>
+</head>
+<body>
+<header>
+  <div class="header-left">
+    <a class="portal-link" href="../index.html">← Mundo bit Byte</a>
+    <h1>DS Matemática</h1>
+  </div>
+  <div class="brand">Professor Ronaldo Lavestein</div>
+</header>
+
+<main class="series-home" id="seriesHome">
+  <section class="intro-panel" aria-labelledby="moduleTitle">
+    <span class="kicker">Ensino Médio + Desenvolvimento de Sistemas</span>
+    <h2 id="moduleTitle">Matemática para entender, recordar e praticar</h2>
+    <p>Escolha sua série. Na 1ª série, você encontra explicações, exemplos, recursos visuais e exercícios para acompanhar as aulas e revisar o conteúdo quando precisar.</p>
+  </section>
+
+  <section class="series-grid" aria-label="Séries disponíveis">
+    <button class="series-card available" type="button" data-series="1">
+      <span class="series-number">1ª Série</span>
+      <strong>Começar</strong>
+      <span>Conteúdo disponível</span>
+    </button>
+
+    <article class="series-card disabled" aria-disabled="true">
+      <span class="series-number">2ª Série</span>
+      <strong>Em breve</strong>
+    </article>
+
+    <article class="series-card disabled" aria-disabled="true">
+      <span class="series-number">3ª Série</span>
+      <strong>Em breve</strong>
+    </article>
+  </section>
+</main>
+
+<section class="course-view" id="courseView" hidden>
+  <div class="module-menu" aria-label="Série atual">
+    <button class="module-btn active" type="button">1ª Série</button>
+    <button class="module-btn muted" type="button" id="backToSeries">← Séries</button>
+  </div>
+
+  <div class="layout">
+    <nav id="menu" aria-label="Conteúdos da 1ª série">
+      <h3>Conteúdos</h3>
+    </nav>
+
+    <main class="course-main">
+      <div class="top-row">
+        <div>
+          <div class="technical-title" id="technicalTitle"></div>
+          <h2 id="stepTitle"></h2>
+        </div>
+        <div class="objective" id="objective"></div>
+      </div>
+
+      <section class="lesson" id="lesson" aria-live="polite"></section>
+    </main>
+  </div>
+</section>
+
+<script src="../js/ds-matematica.js?v=1"></script>
+</body>
+</html>
