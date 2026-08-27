@@ -66,8 +66,9 @@
     });
   }
 
+  const initializers = [bindDiagnostic, bindClassifier];
+
   window.initFundamentosInformaticaInteractions = (root) => {
-    bindDiagnostic(root);
-    bindClassifier(root);
+    initializers.forEach((initialize) => initialize(root));
   };
 })();
