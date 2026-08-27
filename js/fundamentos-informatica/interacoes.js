@@ -24,49 +24,50 @@
 
       result.className = 'quiz-result ok-box';
       if (correct === questions.length) {
-        result.innerHTML = `<strong>${correct}/${questions.length}.</strong> Você já reconhece vários conceitos centrais. O módulo agora vai conectá-los e aprofundar o entendimento.`;
+        result.innerHTML = `<strong>${correct}/${questions.length}.</strong> Você já reconhece vários conceitos centrais. O módulo agora vai conectá-los e mostrar como eles funcionam juntos.`;
       } else if (correct >= 3) {
-        result.innerHTML = `<strong>${correct}/${questions.length}.</strong> Você já possui algumas referências. As aulas vão organizar essas ideias e preencher as lacunas.`;
+        result.innerHTML = `<strong>${correct}/${questions.length}.</strong> Você já possui boas referências. As aulas vão organizar essas ideias e preencher o que ainda estiver solto.`;
       } else {
-        result.innerHTML = `<strong>${correct}/${questions.length}.</strong> Há bastante coisa nova para construir — exatamente a função deste módulo. O resultado não vale nota.`;
+        result.innerHTML = `<strong>${correct}/${questions.length}.</strong> Há bastante coisa para construir — exatamente a função deste módulo. O resultado não vale nota.`;
       }
     });
   }
 
-  function bindClassifier(root) {
-    const button = root.querySelector('#checkClassifier');
-    const feedback = root.querySelector('#classifierFeedback');
+  function bindDeviceClassifier(root) {
+    const button = root.querySelector('#checkDeviceClassifier');
+    const feedback = root.querySelector('#deviceClassifierFeedback');
     if (!button || !feedback) return;
 
     button.addEventListener('click', () => {
-      const rows = [...root.querySelectorAll('#roleClassifier .classifier-row')];
-      let answered = 0;
-      let correct = 0;
+      const rows = [...root.querySelectorAll('#deviceClassifier .classifier-row')];
+      const unanswered = rows.filter((row) => !row.querySelector('select')?.value);
 
-      rows.forEach((row) => {
-        const select = row.querySelector('select');
-        if (!select?.value) return;
-        answered += 1;
-        if (select.value === row.dataset.answer) correct += 1;
-      });
-
-      if (answered < rows.length) {
+      if (unanswered.length) {
         feedback.className = 'classifier-feedback note-box';
-        feedback.innerHTML = `<strong>Complete o laboratório.</strong> Você classificou ${answered} de ${rows.length} itens.`;
+        feedback.innerHTML = `<strong>Faça uma aposta em todos os casos.</strong> Ainda faltam ${unanswered.length} ${unanswered.length === 1 ? 'item' : 'itens'}.`;
         return;
       }
 
-      if (correct === rows.length) {
-        feedback.className = 'classifier-feedback ok-box';
-        feedback.innerHTML = `<strong>${correct}/${rows.length}.</strong> Perfeito. Repare especialmente que touchscreen e placa de rede participam tanto da entrada quanto da saída de dados.`;
-      } else {
-        feedback.className = 'classifier-feedback note-box';
-        feedback.innerHTML = `<strong>${correct}/${rows.length}.</strong> Reveja a função predominante de cada componente. Dica: touchscreen e placa de rede trabalham nos dois sentidos.`;
-      }
+      let correct = 0;
+      rows.forEach((row) => {
+        const select = row.querySelector('select');
+        const isCorrect = select.value === row.dataset.answer;
+        if (isCorrect) correct += 1;
+        row.classList.toggle('is-correct', isCorrect);
+        row.classList.toggle('is-wrong', !isCorrect);
+      });
+
+      const explanations = rows.map((row) => {
+        const mark = row.querySelector('select').value === row.dataset.answer ? '✓' : '↺';
+        return `<li><strong>${mark} ${row.querySelector('strong').textContent}:</strong> ${row.dataset.explanation}</li>`;
+      }).join('');
+
+      feedback.className = `classifier-feedback ${correct === rows.length ? 'ok-box' : 'note-box'}`;
+      feedback.innerHTML = `<strong>${correct}/${rows.length}.</strong> Mais importante que a pontuação é perceber o critério.<ul class="feedback-list">${explanations}</ul>`;
     });
   }
 
-  const initializers = [bindDiagnostic, bindClassifier];
+  const initializers = [bindDiagnostic, bindDeviceClassifier];
 
   window.initFundamentosInformaticaInteractions = (root) => {
     initializers.forEach((initialize) => initialize(root));

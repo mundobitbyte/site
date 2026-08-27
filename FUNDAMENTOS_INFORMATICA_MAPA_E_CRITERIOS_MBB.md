@@ -25,44 +25,49 @@ ENTENDER → EXPERIMENTAR → PROGRAMAR → APLICAR.
 
 Cada aula deve buscar o fluxo:
 1. Propósito;
-2. situação humana/concreta;
+2. situação humana/concreta que realmente cria um problema;
 3. pergunta que cria necessidade;
-4. observação;
-5. construção da ideia;
-6. nome técnico;
-7. representação/terminologia;
-8. exemplo guiado;
-9. interpretação;
-10. conexão com tecnologia e programação;
-11. prática;
-12. essência;
-13. ponte para a próxima aula.
+4. hipótese ou tentativa inicial do aluno;
+5. contraste e contraexemplo para testar a hipótese;
+6. construção da ideia;
+7. nome técnico e terminologia;
+8. figura, diagrama ou representação visual quando ajudar a pensar;
+9. exemplo guiado;
+10. interpretação;
+11. conexão com tecnologia e programação;
+12. prática ou pausa de raciocínio;
+13. essência;
+14. ponte para a próxima aula.
 
-O módulo não deve virar um glossário. Conceitos entram porque resolvem uma pergunta.
+O módulo não deve virar um glossário nem um repositório de conteúdo. Conceitos entram porque resolvem uma pergunta. A contextualização não existe para “enfeitar” o texto: ela deve criar a necessidade que o conceito resolve. Contraexemplos são obrigatórios quando ajudam a delimitar um conceito.
+
+**Regra de navegação:** o menu é um índice, não um resumo da aula. Usar nomes curtos e reconhecíveis; perguntas provocativas ficam dentro da aula.
+
+**Regra visual:** cada aula deve avaliar se uma figura, diagrama, fotografia real ou interação visual melhora a compreensão. Preferir figuras próprias e leves quando o objetivo for explicar uma ideia; usar fotografia real apenas quando reconhecer o objeto real acrescentar algo pedagógico. Imagens devem ter tamanho de leitura adequado e nunca ser meramente decorativas.
 
 ## Mapa aprovado para evolução
-00. Avaliação diagnóstica — O que você realmente entende quando usa um computador?
-01. Computadores, Informática e TI — O que faz uma máquina ser um computador?
-02. Dados viram bits — Como texto, números, imagens e músicas cabem dentro de uma máquina?
-03. Hardware por dentro — Quem realmente faz o trabalho dentro do computador?
-04. Memória e armazenamento — Por que RAM e SSD não são a mesma coisa?
-05. Periféricos e conexões — Como o computador conversa com o mundo exterior?
-06. Do botão de ligar ao sistema — O que acontece entre apertar Power e aparecer a área de trabalho?
-07. Sistemas operacionais — Por que os programas não controlam diretamente o computador?
-08. Arquivos e terminal — Onde um arquivo realmente fica e como o sistema o encontra?
-09. Redes — Como dois computadores conseguem conversar?
-10. Internet — O que acontece quando você digita um endereço no navegador?
-11. Software e execução — Como um código escrito por alguém vira algo funcionando na máquina?
-12. Dados e bancos de dados — Por que não guardar tudo simplesmente em arquivos?
-13. Segurança digital — Como um sistema sabe que você é você — e como alguém tenta enganá-lo?
-14. Virtualização e nuvem — Como vários “computadores” podem existir dentro de um só — ou do outro lado da Internet?
-15. Eletricidade e sistemas embarcados — Por que um Arduino também é um computador?
-16. Software conversando com software — Como aplicativos e sistemas trocam informações?
-17. IA e computação atual — O que muda quando o computador passa a reconhecer padrões e gerar conteúdo?
-18. Manutenção e diagnóstico — Quando algo não funciona, como descobrir a causa sem tentar coisas aleatoriamente?
-19. Uso profissional da tecnologia — O que diferencia simplesmente usar um computador de trabalhar profissionalmente com tecnologia?
-20. Tudo conectado — O que aconteceu desde apertar Power até abrir o Mundo bit Byte?
-99. Exercícios e desafios — consolidação progressiva.
+00. Diagnóstico — pergunta interna: o que você já entende quando usa tecnologia?
+01. Computador — pergunta interna: o que é um computador?
+02. Bits e Bytes — como texto, números, imagens e músicas cabem dentro de uma máquina?
+03. Hardware — quem realmente faz o trabalho dentro do computador?
+04. Memória — por que RAM e SSD não são a mesma coisa?
+05. Periféricos — como o computador conversa com o mundo exterior?
+06. Inicialização — o que acontece entre apertar Power e aparecer a área de trabalho?
+07. Sistema Operacional — por que os programas não controlam diretamente o computador?
+08. Arquivos — onde um arquivo realmente fica e como o sistema o encontra?
+09. Redes — como dois computadores conseguem conversar?
+10. Internet — o que acontece quando você digita um endereço no navegador?
+11. Software — como um código escrito por alguém vira algo funcionando na máquina?
+12. Banco de Dados — por que não guardar tudo simplesmente em arquivos?
+13. Segurança — como um sistema sabe que você é você — e como alguém tenta enganá-lo?
+14. Nuvem — como vários “computadores” podem existir dentro de um só — ou do outro lado da Internet?
+15. Embarcados — por que um Arduino também faz computação?
+16. APIs — como aplicativos e sistemas trocam informações?
+17. IA — o que muda quando o computador passa a reconhecer padrões e gerar conteúdo?
+18. Manutenção — quando algo não funciona, como descobrir a causa sem tentar coisas aleatoriamente?
+19. Vida Profissional — o que diferencia simplesmente usar um computador de trabalhar profissionalmente com tecnologia?
+20. Tudo Conectado — o que aconteceu desde apertar Power até abrir o Mundo bit Byte?
+99. Exercícios — consolidação progressiva.
 
 ## Curadoria MbB adicional
 Conceitos contemporâneos que podem entrar quando pedagogicamente úteis, mesmo que não apareçam de forma explícita em todos os planos: ASCII/Unicode, hierarquia cache–RAM–SSD, firmware e BIOS/UEFI, hash e integridade, MFA/passkeys, backup 3-2-1, APIs e JSON em nível conceitual, máquina virtual × contêiner, energia/calor/throttling e diagnóstico por camadas.
@@ -83,9 +88,13 @@ Não criar arquivos do tipo `ajuste-*`, `acabamento-*`, `correcao-*` ou equivale
 Também não dividir arquivos apenas por estética. O conteúdo será agrupado em blocos para manter arquivos manejáveis sem transformar o HTML em uma lista de dezenas de scripts.
 
 ## Estado inicial de implementação
-Primeiro ciclo: estrutura própria e limpa do módulo + Aula 00 + Aula 01. Não acoplar à home antes de validar conteúdo, navegação e responsividade.
+Primeiro ciclo: estrutura própria e limpa do módulo + Aula 00 + Aula 01. O módulo já está ligado à home; a validação pedagógica das primeiras aulas continua antes de avançar em escala para as demais.
 
 A arquitetura foi preparada antes da Aula 02 para evitar a dívida técnica observada historicamente em DS Matemática: o conteúdo atual das aulas 00 e 01 pertence somente ao bloco `conteudo-00-05.js`; o `core.js` não contém lógica pedagógica das aulas; e as interações ficam separadas em `interacoes.js`.
 
 ### Estado dos blocos
 Somente `conteudo-00-05.js` existe neste momento porque é o único bloco com aulas implementadas. Os demais arquivos serão criados quando a primeira aula de cada faixa for desenvolvida. O `index.html` deve carregar apenas blocos que realmente existam e contenham conteúdo.
+
+
+## Benchmark pedagógico
+A Aula 01 deve funcionar como o primeiro benchmark do módulo, seguindo o princípio observado na aula de PA do DS Matemática: a necessidade vem antes do nome técnico; o aluno testa uma hipótese; a aula mostra fronteiras e contraexemplos; a definição fecha a pergunta que abriu a aula; e a atividade exige interpretação, não só reconhecimento de palavras.
