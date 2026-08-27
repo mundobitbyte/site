@@ -26,7 +26,9 @@
     $('#unitName').textContent=l.unit;
     $('#technicalTitle').textContent=l.technical;
     $('#lessonTitle').textContent=l.title;
-    $('#lessonObjective').textContent=l.objective;
+    const objective=$('#lessonObjective');
+    const purpose=document.createElement('strong'); purpose.textContent='Propósito:';
+    objective.replaceChildren(purpose,document.createTextNode(` ${l.objective}`));
     content.innerHTML=l.content;
     $$('.menu-item').forEach(b=>b.classList.toggle('active',b.dataset.lesson===l.id));
     menu.classList.remove('open'); $('#openMenu').setAttribute('aria-expanded','false');
