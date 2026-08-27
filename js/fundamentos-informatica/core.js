@@ -149,7 +149,7 @@
   const initialId = window.location.hash.replace('#', '');
   const validInitialId = lessons.some((lesson) => lesson.id === initialId)
     ? initialId
-    : (lessons.find((lesson) => lesson.id === 'diagnostico')?.id || lessons[0]?.id);
+    : lessons[0]?.id;
 
   if (validInitialId) showLesson(validInitialId);
 })();
