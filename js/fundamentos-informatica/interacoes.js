@@ -1,35 +1,68 @@
 (() => {
+  'use strict';
+
   function bindDiagnostic(root) {
     const button = root.querySelector('#checkDiagnostic');
     const result = root.querySelector('#diagnosticResult');
     if (!button || !result) return;
 
+    const topicNames = {
+      hardware: 'Hardware e memória',
+      software: 'Software e arquivos',
+      redes: 'Redes e Internet',
+      sistemas: 'Sistemas computacionais'
+    };
+
     button.addEventListener('click', () => {
       const questions = [...root.querySelectorAll('[data-diagnostic-question]')];
-      let answered = 0;
-      let correct = 0;
+      const unanswered = questions.filter((question) => !question.querySelector('input[type="radio"]:checked'));
 
-      questions.forEach((question) => {
-        const checked = question.querySelector('input[type="radio"]:checked');
-        if (!checked) return;
-        answered += 1;
-        if (checked.value === question.dataset.answer) correct += 1;
-      });
-
-      if (answered < questions.length) {
+      if (unanswered.length) {
         result.className = 'quiz-result note-box';
-        result.innerHTML = `<strong>Faltam respostas.</strong> Você respondeu ${answered} de ${questions.length}. Complete as demais antes de conferir.`;
+        result.innerHTML = `<strong>Complete o mapa.</strong><p>Ainda faltam ${unanswered.length} ${unanswered.length === 1 ? 'situação' : 'situações'}. Se estiver em dúvida, marque a alternativa que parece mais lógica agora.</p>`;
+        unanswered[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
 
-      result.className = 'quiz-result ok-box';
-      if (correct === questions.length) {
-        result.innerHTML = `<strong>${correct}/${questions.length}.</strong> Você já reconhece vários conceitos centrais. O módulo agora vai conectá-los e mostrar como eles funcionam juntos.`;
-      } else if (correct >= 3) {
-        result.innerHTML = `<strong>${correct}/${questions.length}.</strong> Você já possui boas referências. As aulas vão organizar essas ideias e preencher o que ainda estiver solto.`;
-      } else {
-        result.innerHTML = `<strong>${correct}/${questions.length}.</strong> Há bastante coisa para construir — exatamente a função deste módulo. O resultado não vale nota.`;
-      }
+      const stats = {};
+      const review = [];
+
+      questions.forEach((question, index) => {
+        const checked = question.querySelector('input[type="radio"]:checked');
+        const topic = question.dataset.topic || 'outros';
+        const isCorrect = checked.value === question.dataset.answer;
+
+        stats[topic] ||= { correct: 0, total: 0 };
+        stats[topic].total += 1;
+        if (isCorrect) stats[topic].correct += 1;
+        else review.push({ number: index + 1, explanation: question.dataset.explanation || '' });
+
+        question.classList.toggle('is-correct', isCorrect);
+        question.classList.toggle('is-wrong', !isCorrect);
+      });
+
+      const cards = Object.entries(topicNames).map(([topic, name]) => {
+        const stat = stats[topic] || { correct: 0, total: 0 };
+        let reading = 'vamos construir este eixo desde o início';
+        if (stat.correct === stat.total) reading = 'a ideia inicial já está bem firme';
+        else if (stat.correct > 0) reading = 'há uma base, mas ainda existe algo para organizar';
+        return `<article class="diagnostic-map-card"><strong>${name}</strong><span>${stat.correct}/${stat.total}</span><p>${reading}.</p></article>`;
+      }).join('');
+
+      const reviewHtml = review.length
+        ? `<details class="diagnostic-review"><summary>Ver os pontos que merecem revisão</summary><ol>${review.map((item) => `<li><strong>Situação ${item.number}:</strong> ${item.explanation}</li>`).join('')}</ol></details>`
+        : `<div class="ok-box compact-box"><strong>Seu ponto de partida está muito consistente.</strong><p>Mesmo assim, o módulo não será uma revisão de definições: vamos conectar essas ideias e entender por que funcionam.</p></div>`;
+
+      result.className = 'quiz-result diagnostic-result';
+      result.innerHTML = `
+        <div class="diagnostic-result-head">
+          <span class="card-title">Seu mapa inicial</span>
+          <p>Não há nota final. O que interessa é enxergar em quais áreas seu modelo mental já está firme e onde o módulo pode acrescentar mais.</p>
+        </div>
+        <div class="diagnostic-map-grid">${cards}</div>
+        ${reviewHtml}
+        <div class="bridge-box compact-box"><strong>Próximo passo:</strong><p>na Aula 01, vamos começar por uma pergunta aparentemente simples e surpreendentemente difícil: <em>o que é, afinal, um computador?</em></p></div>
+      `;
     });
   }
 

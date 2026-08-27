@@ -8,62 +8,99 @@ window.fundamentosInformaticaLessons.push(
     number: '00',
     unit: 'Começo',
     menuTitle: 'Diagnóstico',
-    technicalTitle: 'Seu ponto de partida',
-    title: 'Avaliação diagnóstica',
-    objective: 'Propósito: descobrir o que já está firme e quais ideias merecem mais atenção. Não vale nota.',
+    technicalTitle: 'Mapa inicial • hardware • software • redes • sistemas',
+    title: 'Seu mapa inicial',
+    objective: 'Propósito: revelar como você raciocina sobre situações comuns de tecnologia. Não é prova, não é pré-requisito e não impede ninguém de seguir.',
     content: `
-      <div class="hero-box">
-        <span class="card-title">Antes de começar, descubra o que já faz sentido</span>
-        <p>Você não precisa chegar aqui lembrando de tudo. Use o celular, o computador e a Internet há anos e, ainda assim, algumas palavras podem continuar meio soltas: RAM, DNS, hardware, roteador...</p>
-        <p>Faça as questões sem pesquisar. O resultado não é uma nota; é apenas um retrato do começo para que as próximas aulas tenham mais sentido.</p>
+      <div class="hero-box diagnostic-hero">
+        <span class="card-title">Você não precisa saber isso para entrar</span>
+        <p>Este módulo foi feito justamente para construir fundamentos. Por isso, o diagnóstico não pergunta se você “merece” continuar nem tenta medir informática por meia dúzia de siglas.</p>
+        <p>Ele coloca você diante de situações reais: computador lento, arquivo, programa, Wi-Fi, navegador. A ideia é descobrir <strong>como você explica o que acontece por trás da tela</strong>.</p>
       </div>
 
-      <h3>Responda com o que você sabe agora</h3>
-      <p>Se alguma resposta estiver errada, ótimo: encontramos um ponto que vale compreender melhor.</p>
-
-      <div class="quiz-item" data-diagnostic-question data-answer="b">
-        <p>1. Qual alternativa descreve melhor a memória RAM?</p>
-        <label><input type="radio" name="d1" value="a"> É onde os arquivos ficam guardados permanentemente.</label>
-        <label><input type="radio" name="d1" value="b"> É uma área rápida de trabalho usada enquanto programas e dados estão em uso.</label>
-        <label><input type="radio" name="d1" value="c"> É o componente que fornece acesso à Internet.</label>
+      <div class="diagnostic-scenarios" aria-label="Situações abordadas no diagnóstico">
+        <div><strong>Máquina lenta</strong><span>memória e armazenamento</span></div>
+        <div><strong>Arquivos</strong><span>formato e execução</span></div>
+        <div><strong>Wi-Fi</strong><span>rede local e Internet</span></div>
+        <div><strong>Dispositivos</strong><span>o que realmente é computação</span></div>
       </div>
 
-      <div class="quiz-item" data-diagnostic-question data-answer="c">
-        <p>2. Quando você digita mundobitbyte.com.br, qual serviço ajuda a descobrir o endereço IP do servidor?</p>
-        <label><input type="radio" name="d2" value="a"> Bluetooth</label>
-        <label><input type="radio" name="d2" value="b"> HDMI</label>
-        <label><input type="radio" name="d2" value="c"> DNS</label>
+      <div class="mbb-pause-question">
+        <strong>Faça sem pesquisar.</strong> Se você hesitar entre duas respostas, marque a que parece mais lógica agora. A dúvida também é informação útil.
       </div>
 
-      <div class="quiz-item" data-diagnostic-question data-answer="a">
-        <p>3. Hardware e software são:</p>
-        <label><input type="radio" name="d3" value="a"> partes físicas e instruções/programas que trabalham em conjunto.</label>
-        <label><input type="radio" name="d3" value="b"> dois tipos diferentes de Internet.</label>
-        <label><input type="radio" name="d3" value="c"> nomes diferentes para a mesma coisa.</label>
+      <h3>1. Hardware e memória</h3>
+
+      <div class="quiz-item" data-diagnostic-question data-topic="hardware" data-answer="b" data-explanation="Espaço livre no SSD não é a mesma coisa que memória de trabalho. Muitas abas e programas podem pressionar a RAM mesmo com bastante armazenamento disponível.">
+        <p>Seu notebook ainda tem 180 GB livres no SSD, mas fica lento quando você abre muitas abas, uma chamada de vídeo e um editor ao mesmo tempo. Qual hipótese faz mais sentido primeiro?</p>
+        <label><input type="radio" name="d1" value="a"> O SSD está cheio, porque lentidão sempre significa falta de espaço.</label>
+        <label><input type="radio" name="d1" value="b"> A memória RAM pode estar sob pressão, mesmo com bastante espaço livre no SSD.</label>
+        <label><input type="radio" name="d1" value="c"> O monitor provavelmente não consegue exibir tantos programas.</label>
       </div>
 
-      <div class="quiz-item" data-diagnostic-question data-answer="b">
-        <p>4. Um roteador doméstico serve principalmente para:</p>
-        <label><input type="radio" name="d4" value="a"> aumentar a memória do computador.</label>
-        <label><input type="radio" name="d4" value="b"> encaminhar dados entre redes e permitir que dispositivos da rede local se comuniquem com outras redes.</label>
-        <label><input type="radio" name="d4" value="c"> armazenar permanentemente todos os sites acessados.</label>
+      <div class="quiz-item" data-diagnostic-question data-topic="hardware" data-answer="c" data-explanation="A RAM guarda dados temporários em uso e é volátil. Para sobreviver ao desligamento, o conteúdo precisa ser gravado em armazenamento persistente, como SSD ou HD.">
+        <p>Você escreve um texto e o computador desliga antes de o arquivo ser salvo. Por que as últimas alterações podem desaparecer?</p>
+        <label><input type="radio" name="d2" value="a"> Porque o processador apaga arquivos sempre que perde energia.</label>
+        <label><input type="radio" name="d2" value="b"> Porque o SSD só funciona enquanto o computador está ligado.</label>
+        <label><input type="radio" name="d2" value="c"> Porque parte do trabalho ainda podia estar apenas na memória temporária e não ter sido gravada no armazenamento.</label>
       </div>
 
-      <div class="quiz-item" data-diagnostic-question data-answer="c">
-        <p>5. Por que um smartphone pode ser considerado um computador?</p>
-        <label><input type="radio" name="d5" value="a"> Porque possui uma tela sensível ao toque.</label>
-        <label><input type="radio" name="d5" value="b"> Porque se conecta à Internet.</label>
-        <label><input type="radio" name="d5" value="c"> Porque possui processador e memória, executa programas armazenados e manipula dados.</label>
+      <h3>2. Software e arquivos</h3>
+
+      <div class="quiz-item" data-diagnostic-question data-topic="software" data-answer="b" data-explanation="Mudar a extensão altera o nome, não a estrutura interna dos dados. Conversão de formato exige que um programa leia um formato e grave outro.">
+        <p>Você renomeia <strong>foto.jpg</strong> para <strong>foto.pdf</strong>. O que realmente aconteceu?</p>
+        <label><input type="radio" name="d3" value="a"> A imagem foi convertida para PDF automaticamente.</label>
+        <label><input type="radio" name="d3" value="b"> O nome/extensão mudou, mas o conteúdo interno do arquivo não foi convertido.</label>
+        <label><input type="radio" name="d3" value="c"> O arquivo passou a conter uma cópia dos dois formatos.</label>
       </div>
 
-      <div class="quiz-actions">
-        <button class="action-button primary" type="button" id="checkDiagnostic">Ver meu ponto de partida</button>
+      <div class="quiz-item" data-diagnostic-question data-topic="software" data-answer="a" data-explanation="Instalado significa que os arquivos do programa estão armazenados. Ao executar, o sistema carrega partes necessárias na memória e o processador passa a executar suas instruções como um processo.">
+        <p>Um aplicativo está instalado, mas fechado. Quando você o abre, qual descrição é mais correta?</p>
+        <label><input type="radio" name="d4" value="a"> O sistema carrega o que precisa na memória e o processador passa a executar as instruções do programa.</label>
+        <label><input type="radio" name="d4" value="b"> O aplicativo é enviado para a Internet e executado no roteador.</label>
+        <label><input type="radio" name="d4" value="c"> O SSD se transforma temporariamente em processador.</label>
+      </div>
+
+      <h3>3. Redes e Internet</h3>
+
+      <div class="quiz-item" data-diagnostic-question data-topic="redes" data-answer="c" data-explanation="As barras mostram a qualidade do enlace sem fio com o ponto de acesso. A conexão local pode estar ótima e, ainda assim, haver falha no acesso à Internet, no provedor ou em serviços como DNS.">
+        <p>O celular mostra o Wi-Fi com sinal máximo, mas nenhum site abre. O que isso prova?</p>
+        <label><input type="radio" name="d5" value="a"> Prova que a Internet está funcionando e o problema só pode ser do navegador.</label>
+        <label><input type="radio" name="d5" value="b"> Prova que o servidor do site está desligado.</label>
+        <label><input type="radio" name="d5" value="c"> Prova apenas que a conexão sem fio com a rede local está boa; o acesso à Internet ainda pode estar com problema.</label>
+      </div>
+
+      <div class="quiz-item" data-diagnostic-question data-topic="redes" data-answer="b" data-explanation="Nomes como mundobitbyte.com.br são fáceis para pessoas. Para localizar o destino na rede, o navegador normalmente precisa obter um endereço IP; o DNS faz essa resolução de nomes.">
+        <p>Ao digitar <strong>mundobitbyte.com.br</strong>, o navegador precisa descobrir para qual endereço de rede enviar a conexão. Qual serviço participa diretamente dessa etapa?</p>
+        <label><input type="radio" name="d6" value="a"> Bluetooth.</label>
+        <label><input type="radio" name="d6" value="b"> DNS.</label>
+        <label><input type="radio" name="d6" value="c"> HDMI.</label>
+      </div>
+
+      <h3>4. Sistemas computacionais</h3>
+
+      <div class="quiz-item" data-diagnostic-question data-topic="sistemas" data-answer="a" data-explanation="O critério central não é ter tela, Internet ou teclado. Um smartphone possui processador e memória e executa programas armazenados para manipular dados e produzir resultados.">
+        <p>Por que um smartphone pode ser considerado um computador, mesmo sem teclado físico?</p>
+        <label><input type="radio" name="d7" value="a"> Porque executa programas armazenados usando processador e memória para manipular dados.</label>
+        <label><input type="radio" name="d7" value="b"> Porque consegue acessar redes sociais.</label>
+        <label><input type="radio" name="d7" value="c"> Porque possui uma tela sensível ao toque.</label>
+      </div>
+
+      <div class="quiz-item" data-diagnostic-question data-topic="sistemas" data-answer="c" data-explanation="Notebook, roteador, console e sistemas embarcados podem ter propósitos muito diferentes, mas todos podem executar instruções programadas usando componentes de processamento e memória.">
+        <p>Notebook, console, roteador e uma placa com microcontrolador parecem coisas diferentes. O que mais aproxima esses sistemas tecnicamente?</p>
+        <label><input type="radio" name="d8" value="a"> Todos precisam de monitor e mouse para funcionar.</label>
+        <label><input type="radio" name="d8" value="b"> Todos foram projetados para executar exatamente os mesmos programas.</label>
+        <label><input type="radio" name="d8" value="c"> Todos podem executar instruções programadas, embora tenham finalidades e capacidades diferentes.</label>
+      </div>
+
+      <div class="quiz-actions diagnostic-actions">
+        <button class="action-button primary" type="button" id="checkDiagnostic">Montar meu mapa inicial</button>
       </div>
       <div id="diagnosticResult" class="quiz-result" aria-live="polite"></div>
 
       <div class="note-box">
-        <span class="card-title">Guarde esta ideia</span>
-        <p>No fim do módulo, palavras que hoje podem parecer assuntos separados deverão formar uma história única: ligar uma máquina, executar programas, representar dados, comunicar-se em rede e resolver problemas.</p>
+        <span class="card-title">O diagnóstico não é a porta de entrada</span>
+        <p>Você pode seguir para a Aula 01 com qualquer resultado. Quando terminar o módulo, a comparação interessante não será “quantas eu acertei?”, mas <strong>quão melhor consigo explicar o que está acontecendo</strong>.</p>
       </div>
     `
   },
@@ -77,11 +114,10 @@ window.fundamentosInformaticaLessons.push(
     objective: 'Propósito: construir um critério claro para reconhecer um computador e distinguir computadores de propósito geral, sistemas especializados e periféricos.',
     content: `
       <div class="hero-box">
-        <span class="card-title">A aparência engana</span>
-        <p>Se eu colocar um notebook na sua frente e perguntar “isso é um computador?”, a resposta parece óbvia.</p>
-        <p>Mas e um smartphone? Um videogame? Um roteador Wi-Fi? Uma Smart TV? Uma placa Arduino? E um teclado?</p>
+        <span class="card-title">A pergunta parece simples — até mudarmos o objeto</span>
+        <p>Um notebook sobre a mesa quase ninguém hesita em chamar de computador. Mas a certeza começa a diminuir quando trocamos o objeto por um smartphone, um console, um roteador Wi-Fi, uma Smart TV, uma placa Arduino ou um teclado.</p>
         <p>Se dissermos que computador é apenas aquilo que tem monitor, teclado e gabinete, vamos excluir máquinas que claramente fazem computação. Se chamarmos qualquer aparelho eletrônico de computador, a palavra perde o sentido.</p>
-        <p><strong>Então precisamos de um critério melhor do que a aparência.</strong></p>
+        <p><strong>O desafio desta aula é encontrar um critério que continue funcionando quando a aparência muda.</strong></p>
       </div>
 
       <figure class="device-figure" aria-labelledby="deviceFigureTitle">

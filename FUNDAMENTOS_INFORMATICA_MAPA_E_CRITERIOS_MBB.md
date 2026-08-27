@@ -98,3 +98,11 @@ Somente `conteudo-00-05.js` existe neste momento porque é o único bloco com au
 
 ## Benchmark pedagógico
 A Aula 01 deve funcionar como o primeiro benchmark do módulo, seguindo o princípio observado na aula de PA do DS Matemática: a necessidade vem antes do nome técnico; o aluno testa uma hipótese; a aula mostra fronteiras e contraexemplos; a definição fecha a pergunta que abriu a aula; e a atividade exige interpretação, não só reconhecimento de palavras.
+
+## Decisões de experiência e navegação
+- A chamada da home entra **diretamente na Aula 00 — Diagnóstico**. Não existe tela intermediária de apresentação do módulo.
+- O diagnóstico **não é pré-requisito nem prova de entrada**. Fundamentos deve poder ser estudado desde o zero. Sua função é mapear modelos mentais em quatro eixos: hardware/memória, software/arquivos, redes/Internet e sistemas computacionais.
+- O diagnóstico evita perguntas de simples reconhecimento de siglas quando uma situação concreta pode revelar melhor o raciocínio do aluno. O retorno é por eixo, não por nota global.
+- O menu de aulas não ocupa permanentemente uma coluna da tela. Ele funciona como **gaveta sobreposta (drawer)**, aberta sob demanda pelo botão “Conteúdos”, tanto no desktop quanto no celular. O conteúdo nunca deve perder largura para acomodar navegação.
+- A página usa rolagem normal do navegador; evitar painéis internos com altura fixa e rolagem própria, principalmente porque isso piora o uso em celular e no modo “site para computador”.
+- Regra responsiva: nenhum diagrama, seletor, cartão ou navegação pode obrigar a página inteira a rolar horizontalmente. Em larguras intermediárias, estruturas complexas devem empilhar antes de comprimirem o conteúdo essencial.

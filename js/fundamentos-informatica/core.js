@@ -1,13 +1,12 @@
 (() => {
+  'use strict';
+
   const lessons = Array.isArray(window.fundamentosInformaticaLessons)
     ? window.fundamentosInformaticaLessons
     : [];
 
-  const moduleHome = document.getElementById('moduleHome');
-  const courseView = document.getElementById('courseView');
-  const startModule = document.getElementById('startModule');
-  const backToHome = document.getElementById('backToHome');
   const lessonMenu = document.getElementById('lessonMenu');
+  const menuBackdrop = document.getElementById('menuBackdrop');
   const openMenu = document.getElementById('openMenu');
   const unitName = document.getElementById('unitName');
   const technicalTitle = document.getElementById('technicalTitle');
@@ -21,26 +20,31 @@
     return lesson?.menuTitle || lesson?.title || '';
   }
 
-  function enterCourse(id = lessons[0]?.id) {
-    if (!id) return;
-    moduleHome.hidden = true;
-    courseView.hidden = false;
-    showLesson(id);
+  function closeMenu() {
+    lessonMenu?.classList.remove('open');
+    openMenu?.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('drawer-open');
+    if (menuBackdrop) menuBackdrop.hidden = true;
   }
 
-  function leaveCourse() {
-    courseView.hidden = true;
-    moduleHome.hidden = false;
-    lessonMenu.classList.remove('open');
-    openMenu?.setAttribute('aria-expanded', 'false');
-    history.replaceState(null, '', window.location.pathname + window.location.search);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  function openLessonMenu() {
+    if (!lessonMenu || !openMenu) return;
+    lessonMenu.classList.add('open');
+    openMenu.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('drawer-open');
+    if (menuBackdrop) menuBackdrop.hidden = false;
   }
 
   function renderMenu() {
+    if (!lessonMenu) return;
     lessonMenu.innerHTML = '';
-    let lastUnit = '';
 
+    const heading = document.createElement('div');
+    heading.className = 'drawer-heading';
+    heading.innerHTML = '<strong>Fundamentos da Informática</strong><span>Escolha uma aula</span>';
+    lessonMenu.appendChild(heading);
+
+    let lastUnit = '';
     lessons.forEach((lesson) => {
       if (lesson.unit !== lastUnit) {
         const group = document.createElement('div');
@@ -54,49 +58,21 @@
       button.type = 'button';
       button.className = 'menu-item';
       button.dataset.lessonId = lesson.id;
-      button.textContent = `${lesson.number}. ${getShortTitle(lesson)}`;
+      button.innerHTML = `<span class="menu-number">${lesson.number}</span><span>${getShortTitle(lesson)}</span>`;
       button.addEventListener('click', () => {
         showLesson(lesson.id);
-        lessonMenu.classList.remove('open');
-        openMenu?.setAttribute('aria-expanded', 'false');
+        closeMenu();
       });
       lessonMenu.appendChild(button);
     });
-  }
-
-  function showLesson(id) {
-    const lesson = lessons.find((item) => item.id === id) || lessons[0];
-    if (!lesson) return;
-
-    currentLessonId = lesson.id;
-    unitName.textContent = lesson.unit;
-    technicalTitle.textContent = lesson.technicalTitle;
-    lessonTitle.textContent = `${lesson.number}. ${lesson.title}`;
-    lessonObjective.textContent = lesson.objective;
-    lessonContent.innerHTML = lesson.content;
-    lessonContent.scrollTop = 0;
-
-    lessonMenu.querySelectorAll('.menu-item').forEach((button) => {
-      button.classList.toggle('active', button.dataset.lessonId === lesson.id);
-    });
-
-    if (typeof window.initFundamentosInformaticaInteractions === 'function') {
-      window.initFundamentosInformaticaInteractions(lessonContent);
-    }
-    appendLessonNavigation(lesson.id);
-
-    const wantedHash = `#${lesson.id}`;
-    if (window.location.hash !== wantedHash) {
-      history.replaceState(null, '', wantedHash);
-    }
   }
 
   function appendLessonNavigation(id) {
     const index = lessons.findIndex((lesson) => lesson.id === id);
     if (index < 0) return;
 
-    const nav = document.createElement('div');
-    nav.className = 'quiz-actions';
+    const nav = document.createElement('nav');
+    nav.className = 'lesson-navigation';
     nav.setAttribute('aria-label', 'Navegação entre aulas');
 
     if (index > 0) {
@@ -120,24 +96,60 @@
     if (nav.childElementCount) lessonContent.appendChild(nav);
   }
 
-  startModule?.addEventListener('click', () => enterCourse('diagnostico'));
-  backToHome?.addEventListener('click', leaveCourse);
+  function showLesson(id) {
+    const lesson = lessons.find((item) => item.id === id) || lessons[0];
+    if (!lesson || !lessonContent) return;
+
+    currentLessonId = lesson.id;
+    unitName.textContent = lesson.unit;
+    technicalTitle.textContent = lesson.technicalTitle;
+    lessonTitle.textContent = `${lesson.number}. ${lesson.title}`;
+    lessonObjective.textContent = lesson.objective;
+    lessonContent.innerHTML = lesson.content;
+
+    lessonMenu?.querySelectorAll('.menu-item').forEach((button) => {
+      const active = button.dataset.lessonId === lesson.id;
+      button.classList.toggle('active', active);
+      if (active) button.setAttribute('aria-current', 'page');
+      else button.removeAttribute('aria-current');
+    });
+
+    if (typeof window.initFundamentosInformaticaInteractions === 'function') {
+      window.initFundamentosInformaticaInteractions(lessonContent);
+    }
+    appendLessonNavigation(lesson.id);
+
+    const wantedHash = `#${lesson.id}`;
+    if (window.location.hash !== wantedHash) {
+      history.replaceState(null, '', wantedHash);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
 
   openMenu?.addEventListener('click', () => {
-    const isOpen = lessonMenu.classList.toggle('open');
-    openMenu.setAttribute('aria-expanded', String(isOpen));
+    if (lessonMenu?.classList.contains('open')) closeMenu();
+    else openLessonMenu();
+  });
+
+  menuBackdrop?.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeMenu();
   });
 
   window.addEventListener('hashchange', () => {
     const id = window.location.hash.replace('#', '');
     if (!id || id === currentLessonId) return;
-    if (lessons.some((lesson) => lesson.id === id)) enterCourse(id);
+    if (lessons.some((lesson) => lesson.id === id)) showLesson(id);
   });
 
   renderMenu();
 
   const initialId = window.location.hash.replace('#', '');
-  if (initialId && lessons.some((lesson) => lesson.id === initialId)) {
-    enterCourse(initialId);
-  }
+  const validInitialId = lessons.some((lesson) => lesson.id === initialId)
+    ? initialId
+    : (lessons.find((lesson) => lesson.id === 'diagnostico')?.id || lessons[0]?.id);
+
+  if (validInitialId) showLesson(validInitialId);
 })();
