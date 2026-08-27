@@ -17,6 +17,10 @@
 
   let currentLessonId = null;
 
+  function getShortTitle(lesson) {
+    return lesson?.menuTitle || lesson?.title || '';
+  }
+
   function enterCourse(id = lessons[0]?.id) {
     if (!id) return;
     moduleHome.hidden = true;
@@ -50,7 +54,7 @@
       button.type = 'button';
       button.className = 'menu-item';
       button.dataset.lessonId = lesson.id;
-      button.textContent = `${lesson.number}. ${lesson.title}`;
+      button.textContent = `${lesson.number}. ${getShortTitle(lesson)}`;
       button.addEventListener('click', () => {
         showLesson(lesson.id);
         lessonMenu.classList.remove('open');
@@ -99,7 +103,7 @@
       const previous = document.createElement('button');
       previous.type = 'button';
       previous.className = 'action-button';
-      previous.textContent = `← ${lessons[index - 1].number}. ${lessons[index - 1].title}`;
+      previous.textContent = `← ${lessons[index - 1].number}. ${getShortTitle(lessons[index - 1])}`;
       previous.addEventListener('click', () => showLesson(lessons[index - 1].id));
       nav.appendChild(previous);
     }
@@ -108,7 +112,7 @@
       const next = document.createElement('button');
       next.type = 'button';
       next.className = 'action-button primary';
-      next.textContent = `${lessons[index + 1].number}. ${lessons[index + 1].title} →`;
+      next.textContent = `${lessons[index + 1].number}. ${getShortTitle(lessons[index + 1])} →`;
       next.addEventListener('click', () => showLesson(lessons[index + 1].id));
       nav.appendChild(next);
     }

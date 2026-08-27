@@ -7,18 +7,19 @@ window.fundamentosInformaticaLessons.push(
     id: 'diagnostico',
     number: '00',
     unit: 'Começo',
+    menuTitle: 'Avaliação diagnóstica',
     technicalTitle: 'Avaliação diagnóstica',
     title: 'O que você realmente entende quando usa um computador?',
     objective: 'Propósito: perceber o que você já compreende e quais ideias ainda precisam ser construídas. Não vale nota.',
     content: `
       <div class="hero-box">
         <span class="card-title">Antes de começar</span>
-        <p>Você provavelmente usa computadores todos os dias. Celular, notebook, videogame, caixa eletrônico e até alguns eletrodomésticos possuem sistemas computacionais.</p>
-        <p>Mas <strong>usar</strong> uma tecnologia e <strong>entender o que está acontecendo</strong> são coisas diferentes.</p>
+        <p>Pense em um dia comum. Talvez você acorde e já olhe o celular, mande uma mensagem, use um notebook, ligue a TV ou faça um pagamento. A tecnologia entra na rotina tão naturalmente que quase nunca paramos para pensar no que está acontecendo por trás da tela.</p>
+        <p>É por isso que começamos com um diagnóstico. Não é uma prova e não serve para dizer se você é “bom” ou “ruim” em informática. Ele só ajuda a perceber o que já faz sentido para você e quais ideias vamos construir com mais calma ao longo do módulo.</p>
       </div>
 
       <h3>Responda sem pesquisar</h3>
-      <p>O objetivo é descobrir seu ponto de partida. Se errar, ótimo: encontramos algo que vale aprender.</p>
+      <p>Marque o que você acredita agora. Se alguma resposta estiver errada, tudo bem: justamente aí encontramos algo que vale a pena compreender melhor.</p>
 
       <div class="quiz-item" data-diagnostic-question data-answer="b">
         <p>1. Qual alternativa descreve melhor a memória RAM?</p>
@@ -62,7 +63,7 @@ window.fundamentosInformaticaLessons.push(
 
       <div class="note-box">
         <span class="card-title">Importante</span>
-        <p>Este diagnóstico não pretende medir toda a sua experiência. Ele apenas mostra que muitos conceitos usados diariamente ficam invisíveis quando ninguém para para explicá-los.</p>
+        <p>Este diagnóstico não tenta resumir tudo o que você sabe. Ele é só um retrato do começo. Ao final do módulo, várias dessas palavras e ideias que hoje podem parecer soltas deverão fazer parte de uma mesma história.</p>
       </div>
     `
   },
@@ -70,13 +71,14 @@ window.fundamentosInformaticaLessons.push(
     id: 'computador',
     number: '01',
     unit: 'Fundamentos',
+    menuTitle: 'Computadores, Informática e TI',
     technicalTitle: 'Sistemas computacionais • hardware • software • dados',
     title: 'O que faz uma máquina ser um computador?',
     objective: 'Propósito: compreender o que caracteriza um sistema computacional e perceber que computador não significa apenas desktop ou notebook.',
     content: `
       <div class="hero-box">
-        <span class="card-title">Imagine a seguinte situação cotidiana:</span>
-        <p>Você olha ao redor e encontra vários equipamentos:</p>
+        <span class="card-title">Imagine uma cena bem comum:</span>
+        <p>Você chega em casa, coloca o celular para carregar, liga a TV, abre o notebook e vê o roteador piscando em algum canto. Em outro momento, pode usar um caixa eletrônico, jogar videogame ou trabalhar com um Arduino em uma aula.</p>
         <div class="device-list" aria-label="Exemplos de dispositivos">
           <span class="device-chip">Notebook</span>
           <span class="device-chip">Smartphone</span>
@@ -87,12 +89,12 @@ window.fundamentosInformaticaLessons.push(
           <span class="device-chip">Arduino</span>
           <span class="device-chip">Calculadora</span>
         </div>
-        <p><strong>Todos eles são computadores?</strong></p>
-        <p>Se não podemos decidir apenas olhando o formato, precisamos descobrir o que existe em comum entre eles.</p>
+        <p>Eles têm tamanhos, formatos e funções muito diferentes. Mesmo assim, existe algo que aproxima todos esses equipamentos.</p>
+        <p><strong>O que faz com que possamos enxergá-los como sistemas computacionais?</strong></p>
       </div>
 
       <h3>Comece observando o que a máquina faz</h3>
-      <p>Em vez de decorar uma definição, pense no caminho percorrido pela informação.</p>
+      <p>Antes de decorar uma definição, acompanhe o caminho da informação. Quase sempre há algo chegando ao sistema, sendo trabalhado e depois apresentado, enviado ou guardado.</p>
 
       <div class="flow" aria-label="Fluxo básico de um sistema computacional">
         <div class="flow-step"><strong>Entrada</strong><span>recebe dados</span></div>
@@ -105,7 +107,7 @@ window.fundamentosInformaticaLessons.push(
       <p>Durante esse processo, o sistema também pode <strong>armazenar</strong> dados e instruções para usar agora ou depois.</p>
 
       <div class="example-box">
-        <span class="card-title">Exemplo: tirar uma foto com o celular</span>
+        <span class="card-title">Pense em algo que você já fez muitas vezes: tirar uma foto</span>
         <p><strong>Entrada:</strong> o sensor da câmera capta luz.</p>
         <p><strong>Processamento:</strong> o sistema transforma os sinais captados em uma imagem digital e aplica correções.</p>
         <p><strong>Armazenamento:</strong> a foto é gravada na memória do aparelho ou enviada para a nuvem.</p>
@@ -135,9 +137,9 @@ window.fundamentosInformaticaLessons.push(
       </div>
 
       <div class="note-box">
-        <span class="card-title">Uma distinção útil</span>
+        <span class="card-title">Três palavras que você vai encontrar bastante</span>
         <p><strong>Computação</strong> estuda e aplica formas de representar informações e resolver problemas por meio de processos computacionais. <strong>Informática</strong> é um termo muito usado para o conjunto de tecnologias e práticas ligadas ao tratamento automático da informação. <strong>Tecnologia da Informação (TI)</strong> amplia o olhar para o uso e a gestão de sistemas, dados, infraestrutura e serviços tecnológicos em diferentes contextos.</p>
-        <p>Esses termos podem aparecer com fronteiras um pouco diferentes conforme o contexto. Aqui, o mais importante é compreender a ideia antes de se preocupar com a etiqueta.</p>
+        <p>As fronteiras entre esses termos podem mudar um pouco conforme o contexto. Por enquanto, não se preocupe em decorar uma definição perfeita: o importante é começar a reconhecer o papel de cada ideia.</p>
       </div>
 
       <h3>Experimente: qual é o papel de cada componente?</h3>
