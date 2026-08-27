@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fundamentos da Informática — módulo transversal do Mundo bit Byte para compreender computadores, dados, software, redes, segurança e tecnologia.">
+  <title>Fundamentos da Informática | Mundo bit Byte</title>
+  <link rel="stylesheet" href="../css/fundamentos-informatica.css?v=1">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand-link" href="../index.html" aria-label="Voltar ao Mundo bit Byte">
+      <span class="brand-mark">MbB</span>
+      <span>Mundo bit Byte</span>
+    </a>
+    <strong>Fundamentos da Informática</strong>
+  </header>
+
+  <main id="moduleHome" class="module-home">
+    <section class="intro-card">
+      <span class="eyebrow">Módulo transversal • Base tecnológica</span>
+      <h1>Fundamentos da Informática</h1>
+      <p>Antes de programar, administrar redes, trabalhar com bancos de dados ou usar a nuvem, vale entender o que existe por trás de tudo isso. Aqui você vai construir uma visão integrada do computador e do mundo digital.</p>
+      <button id="startModule" class="primary-button" type="button">Começar módulo</button>
+    </section>
+
+    <section class="promise-grid" aria-label="O que este módulo pretende ensinar">
+      <article class="promise-card"><strong>Entender</strong><span>o que existe dentro e fora do computador.</span></article>
+      <article class="promise-card"><strong>Conectar</strong><span>hardware, software, dados, redes e Internet.</span></article>
+      <article class="promise-card"><strong>Diagnosticar</strong><span>problemas com raciocínio, não por tentativa e erro.</span></article>
+    </section>
+  </main>
+
+  <section id="courseView" class="course-view" hidden>
+    <div class="course-toolbar">
+      <button id="backToHome" class="pill-button" type="button">← Início</button>
+      <span class="module-pill">Fundamentos</span>
+      <button id="openMenu" class="pill-button menu-toggle" type="button" aria-controls="lessonMenu" aria-expanded="false">Conteúdos</button>
+    </div>
+
+    <div class="course-layout">
+      <aside id="lessonMenu" class="lesson-menu" aria-label="Conteúdos de Fundamentos da Informática"></aside>
+
+      <main class="content-area">
+        <header class="lesson-heading">
+          <div>
+            <div id="unitName" class="unit-name"></div>
+            <div id="technicalTitle" class="technical-title"></div>
+            <h2 id="lessonTitle"></h2>
+          </div>
+          <p id="lessonObjective" class="lesson-objective"></p>
+        </header>
+
+        <article id="lessonContent" class="lesson-content" aria-live="polite"></article>
+      </main>
+    </div>
+  </section>
+
+  <script src="../js/fundamentos-informatica/conteudo.js?v=1"></script>
+  <script src="../js/fundamentos-informatica/core.js?v=1"></script>
+</body>
+</html>
