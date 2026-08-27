@@ -104,13 +104,16 @@
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
+  function splitIntoSteps(raw) {
+    const marked = raw.replace(/([.!?])\s+(?=[A-ZÁÉÍÓÚÂÊÔÃÕÇ0-9])/g, '$1§');
+    return marked.split(/§|;\s*/).map(part => part.trim()).filter(Boolean);
+  }
+
   function formatCalculation(solution) {
     const raw = String(solution ?? '').trim();
     if (!raw) return '<p>Retome os dados do enunciado e faça a conta com calma.</p>';
 
-    const chunks = raw.split(/;\s*/).filter(Boolean);
-    return chunks.map(chunk => {
-      const text = chunk.trim();
+    return splitIntoSteps(raw).map(text => {
       const parts = text.split('=').map(part => part.trim()).filter(Boolean);
 
       if (parts.length >= 3) {
