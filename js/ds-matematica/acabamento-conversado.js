@@ -54,13 +54,20 @@
       if (!box.querySelector('.math,.formula')) return;
       if (box.querySelector('.mbb-example-check')) return;
 
+      const reasoning = box.querySelector('.mbb-professor-pensa');
+      if (reasoning) {
+        const reasoningTitle = reasoning.querySelector('strong');
+        if (reasoningTitle) reasoningTitle.textContent = 'Como organizar o raciocínio';
+
+        const cardTitle = box.querySelector(':scope > .card-title');
+        if (cardTitle) cardTitle.insertAdjacentElement('afterend', reasoning);
+        else box.insertBefore(reasoning, box.firstChild);
+      }
+
       const note = document.createElement('div');
       note.className = 'mbb-pause-question mbb-example-check';
-      note.innerHTML = `<strong>Antes de seguir:</strong> ${checks[lesson.id]}`;
+      note.innerHTML = `<strong>Depois da conta, confira:</strong> ${checks[lesson.id]}`;
       box.appendChild(note);
-
-      const professorNote = box.querySelector('.mbb-professor-pensa > strong');
-      if (professorNote) professorNote.textContent = 'Como organizar o raciocínio';
     });
 
     lesson.content = wrapper.innerHTML;
