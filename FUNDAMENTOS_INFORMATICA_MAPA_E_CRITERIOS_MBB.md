@@ -86,3 +86,6 @@ Também não dividir arquivos apenas por estética. O conteúdo será agrupado e
 Primeiro ciclo: estrutura própria e limpa do módulo + Aula 00 + Aula 01. Não acoplar à home antes de validar conteúdo, navegação e responsividade.
 
 A arquitetura foi preparada antes da Aula 02 para evitar a dívida técnica observada historicamente em DS Matemática: o conteúdo atual das aulas 00 e 01 pertence somente ao bloco `conteudo-00-05.js`; o `core.js` não contém lógica pedagógica das aulas; e as interações ficam separadas em `interacoes.js`.
+
+### Estado dos blocos
+Somente `conteudo-00-05.js` existe neste momento porque é o único bloco com aulas implementadas. Os demais arquivos serão criados quando a primeira aula de cada faixa for desenvolvida. O `index.html` deve carregar apenas blocos que realmente existam e contenham conteúdo.
