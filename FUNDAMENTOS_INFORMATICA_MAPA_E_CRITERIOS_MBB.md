@@ -67,5 +67,22 @@ O módulo não deve virar um glossário. Conceitos entram porque resolvem uma pe
 ## Curadoria MbB adicional
 Conceitos contemporâneos que podem entrar quando pedagogicamente úteis, mesmo que não apareçam de forma explícita em todos os planos: ASCII/Unicode, hierarquia cache–RAM–SSD, firmware e BIOS/UEFI, hash e integridade, MFA/passkeys, backup 3-2-1, APIs e JSON em nível conceitual, máquina virtual × contêiner, energia/calor/throttling e diagnóstico por camadas.
 
+## Arquitetura do módulo
+Regra central: **cada conteúdo tem uma única fonte de verdade**. Uma melhoria deve alterar a fonte canônica; nunca criar uma camada posterior para corrigir outra camada.
+
+Responsabilidades:
+- `index.html`: estrutura e carregamento;
+- `conteudo-00-05.js`, `conteudo-06-10.js`, `conteudo-11-15.js`, `conteudo-16-20.js`: conteúdo canônico por blocos de aulas;
+- `interacoes.js`: componentes interativos reutilizáveis e interações específicas quando realmente necessárias;
+- `exercicios.js`: futura camada exclusiva de geração/prática da aula 99;
+- `core.js`: menu, navegação, hash e renderização;
+- `fundamentos-informatica.css`: apresentação e responsividade.
+
+Não criar arquivos do tipo `ajuste-*`, `acabamento-*`, `correcao-*` ou equivalentes para modificar texto já carregado. Se a Aula 03 precisar melhorar, a Aula 03 é corrigida diretamente em seu arquivo canônico.
+
+Também não dividir arquivos apenas por estética. O conteúdo será agrupado em blocos para manter arquivos manejáveis sem transformar o HTML em uma lista de dezenas de scripts.
+
 ## Estado inicial de implementação
-Primeiro ciclo: estrutura própria e limpa do módulo + Aula 00 + Aula 01. Não acoplar à home antes de validar conteúdo, navegação e responsividade. Evitar a arquitetura de múltiplas camadas de scripts corretivos que se acumulou historicamente em DS Matemática; preferir conteúdo canônico e ajustes no arquivo de origem.
+Primeiro ciclo: estrutura própria e limpa do módulo + Aula 00 + Aula 01. Não acoplar à home antes de validar conteúdo, navegação e responsividade.
+
+A arquitetura foi preparada antes da Aula 02 para evitar a dívida técnica observada historicamente em DS Matemática: o conteúdo atual das aulas 00 e 01 pertence somente ao bloco `conteudo-00-05.js`; o `core.js` não contém lógica pedagógica das aulas; e as interações ficam separadas em `interacoes.js`.
