@@ -174,10 +174,12 @@
 
     const template = document.createElement('template');
     template.innerHTML = html.trim();
-    const essence = lessonContent.querySelector('.essence');
+    const target = lessonId === 'capitulo-45'
+      ? lessonContent.querySelector('.bridge-box')
+      : lessonContent.querySelector('.essence');
 
-    if (essence) {
-      lessonContent.insertBefore(template.content, essence);
+    if (target) {
+      lessonContent.insertBefore(template.content, target);
     } else {
       lessonContent.appendChild(template.content);
     }
