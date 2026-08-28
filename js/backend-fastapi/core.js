@@ -155,6 +155,16 @@
     assert response.status_code == 200
     assert response.json() == []`;
       }
+
+      if (
+        block.textContent.includes('async function carregarProdutos()') &&
+        block.textContent.includes("if (!response.ok) {\n      criarTextoVazio(dados.detail || 'Falha ao consultar produtos.');")
+      ) {
+        block.textContent = block.textContent.replace(
+          "if (!response.ok) {\n      criarTextoVazio(dados.detail || 'Falha ao consultar produtos.');",
+          "if (!response.ok) {\n      limparResultado();\n      criarTextoVazio(dados.detail || 'Falha ao consultar produtos.');"
+        );
+      }
     });
   }
 
@@ -251,8 +261,8 @@
     lessonTitle.textContent = `${lesson.number}. ${lesson.title}`;
     lessonObjective.textContent = lesson.objective;
     lessonContent.innerHTML = lesson.content;
-    normalizeCodeSamples();
     insertLessonVisual(lesson.id);
+    normalizeCodeSamples();
     enhanceCodeBlocks();
     appendNavigation(block, lesson);
 
