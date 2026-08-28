@@ -37,7 +37,7 @@
 
         if (correct === questions.length) {
           result.className = 'quiz-result ok-box compact';
-          result.innerHTML = `<strong>${correct}/${questions.length}.</strong><p>Ótimo: o critério está consistente. O objetivo aqui é conseguir explicar o porquê, não apenas marcar a alternativa.</p>`;
+          result.innerHTML = `<strong>${correct}/${questions.length}.</strong><p>Ótimo: o critério está consistente. Explique o porquê com suas palavras para confirmar que o conceito ficou firme.</p>`;
           return;
         }
 

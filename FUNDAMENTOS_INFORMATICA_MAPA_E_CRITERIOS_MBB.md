@@ -34,6 +34,16 @@ Cada aula deve preferir:
 
 A contextualização existe para criar necessidade, não para enfeitar. O módulo não deve virar romance, enciclopédia ou glossário.
 
+### Regra editorial: texto publicado fala com o aluno
+Todo texto exibido na aula deve fazer parte da experiência de aprendizagem do estudante.
+
+- Não expor decisões de bastidor, critérios editoriais ou justificativas de autoria.
+- Evitar frases como “o Mundo bit Byte vai...”, “não precisamos ensinar...”, “por isso aparece aqui...” ou referências ao aluno em terceira pessoa.
+- Se uma ressalva metodológica for importante, convertê-la em conhecimento útil para o estudante: “uma resposta correta precisa considerar...”, “para compreender esta ideia, basta...”, “é comum encontrar...”.
+- Regras de construção do material pertencem a este documento interno, não ao conteúdo publicado.
+
+Pergunta de controle antes de publicar: **“Esta frase ensina algo ao aluno ou explica para o autor por que o material foi escrito assim?”** Se for a segunda opção, retirar ou reescrever.
+
 ### Rigor histórico
 - Não repetir “lendas de informática” como fatos.
 - Expressões como “primeiro computador”, “primeiro programador” ou “inventou sozinho” devem receber qualificação quando houver disputa de critérios.
@@ -77,7 +87,7 @@ Perguntas devem avaliar critério e explicação, não apenas datas e nomes.
 
 ### Ato 2 — Como funciona
 04. **O que é computador?** — definição, entrada, processamento, memória, saída, propósito geral/especializado, periféricos, microcontrolador, sistema computacional.
-05. **Bits e Bytes** — analógico/digital, binário, bit, byte, dado/informação, ASCII, Unicode/UTF-8, imagem/áudio, lógica digital em alto nível, unidades de dados, b × B.
+05. **Bits e Bytes** — analógico/digital, sistema binário e conversão simples de base 2, bit, byte, dado/informação, ASCII, Unicode/UTF-8, imagem/RGB, áudio com amostragem e quantização, lógica digital em alto nível, unidades de dados, b × B.
 06. **Hardware** — CPU, núcleos, cache, RAM, armazenamento, GPU, placa-mãe, barramentos, fonte, interfaces.
 07. **Memória e armazenamento** — hierarquia cache–RAM–SSD/HDD, volatilidade, capacidade, velocidade.
 08. **Software e programação** — software, firmware, driver, programa, código, pensamento computacional, compilação/interpretação, bug/debugging.
