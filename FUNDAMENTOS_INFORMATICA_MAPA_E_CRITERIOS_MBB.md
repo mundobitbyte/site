@@ -78,7 +78,7 @@ A revisão completa confirmou que **nem toda aula precisa de fotografia**. Em te
 
 Fotografias reais estão concentradas onde aparência/história ajudam: computação humana, máquinas históricas, ENIAC/transistor, microprocessador/PC, componentes físicos, memória/armazenamento, registro do bug, firmware/UEFI, CMD, placa de rede/switch, datacenter, Arduino/ESP32.
 
-Aulas como 04, 05, 12, 13, 14 e 17–21 usam principalmente diagramas, tabelas e fluxos porque o objetivo é compreender relações e mecanismos. Isso é intencional, não ausência de imagem.
+Aulas como 04, 05, 12, 13, 14 e 17–21 usam principalmente diagramas, tabelas e fluxos porque o objetivo é compreender relações e mecanismos. Isso é intencional, não ausência de imagem. A Aula 99 também não usa fotografia decorativa: nela, situações, fluxos, comandos e problemas são o material visual de trabalho.
 
 ### Responsividade
 O site deve funcionar bem em celular, inclusive em telas estreitas e em “site para computador”.
@@ -95,12 +95,16 @@ Prática é progressiva:
 - **checkpoints ao fim de arcos maiores**;
 - **Aula 99** com exercícios e desafios integradores.
 
-Perguntas devem avaliar critério e explicação, não apenas datas e nomes.
+Perguntas devem avaliar critério e explicação, não apenas datas, siglas e nomes.
 
-A Aula 99 deve combinar três famílias:
-- **compreensão:** distinguir conceitos que parecem sinônimos;
-- **diagnóstico:** receber sintomas e construir hipóteses/evidências;
-- **integração:** acompanhar situações reais e identificar as camadas envolvidas.
+### Regra da Aula 99
+A Aula 99 não introduz nova teoria estrutural. Ela deve obrigar o conhecimento já aprendido a trabalhar em quatro níveis progressivos:
+1. **compreensão:** separar conceitos relacionados que costumam ser confundidos;
+2. **aplicação:** interpretar situações e reconhecer o mecanismo envolvido;
+3. **diagnóstico:** receber sintomas/evidências, formular ou priorizar hipóteses e evitar conclusões maiores que o teste permite;
+4. **integração:** seguir uma situação real por várias camadas e justificar por que cada tecnologia entra.
+
+Depois dos blocos objetivos, usar **desafios abertos** em que o aluno formula a resposta antes de abrir uma linha de raciocínio sugerida, além de pequenas missões práticas seguras. O fechamento deve exigir explicação de ponta a ponta e diagnóstico, não simples reprodução de definições.
 
 ## Mapa narrativo consolidado
 ### Ato 1 — Como chegamos aqui
@@ -133,7 +137,8 @@ A Aula 99 deve combinar três famílias:
 20. **Diagnóstico e manutenção** — sintoma × causa, hipótese, evidência, teste controlado, isolamento, camadas, `ipconfig`/`ping`/`nslookup`, recursos, temperatura, logs, known-good, troca cruzada, segurança da intervenção, preventiva/corretiva e monitoramento.
 21. **Tudo conectado** — ação “Comprar” de ponta a ponta integrando hardware, SO, rede local, DNS/IP, TLS/HTTP, API, banco/transação, pagamento, nuvem, cache, IA opcional, embarcados, segurança e diagnóstico. **Checkpoint final 6.**
 
-99. **Exercícios/Desafios** — consolidação integradora, sem introduzir nova teoria estrutural.
+### Fechamento
+99. **Exercícios/Desafios** — quatro níveis progressivos (compreensão, aplicação, diagnóstico e integração), desafios abertos, missões práticas e desafio final de explicação/diagnóstico de ponta a ponta.
 
 ## Museu da Informática — ideia posterior
 Depois do módulo principal, avaliar uma experiência separada em formato de museu ou linha do tempo. Nesse espaço cabem datas, equipamentos, fotografias e explicações curtas sem sobrecarregar a narrativa principal.
@@ -142,21 +147,22 @@ Depois do módulo principal, avaliar uma experiência separada em formato de mus
 Regra central: **cada conteúdo tem uma única fonte de verdade**.
 - `index.html`: estrutura e carregamento;
 - `conteudo-00.js` a `conteudo-21.js`: conteúdo canônico das aulas conceituais;
+- `conteudo-99.js`: exercícios e desafios canônicos do fechamento;
 - `interacoes.js`: interações reutilizáveis;
-- futuro `exercicios.js` ou equivalente canônico: Aula 99;
 - `core.js`: menu, hash, renderização e navegação;
 - `fundamentos-informatica.css`: apresentação e responsividade.
 
 Não criar camadas `ajuste-*`, `correcao-*` ou equivalentes para sobrescrever conteúdo. Corrigir sempre na fonte canônica.
 
 ## Estado atual após auditoria circular MbB
-Aulas **00–21** estão implementadas como percurso conceitual completo. A revisão circular verificou novamente contexto, precisão técnica, progressão, pontes, checkpoints e uso de imagens.
+Aulas **00–21 e 99** estão implementadas. O percurso conceitual e o fechamento por exercícios formam agora o módulo completo de Fundamentos da Informática.
+
+A revisão circular verificou contexto, precisão técnica, progressão, pontes, checkpoints e uso de imagens. A Aula 99 foi construída somente depois dessa consolidação para avaliar os modelos mentais efetivamente ensinados, em vez de reproduzir uma lista antiga de perguntas.
 
 Mudanças de consolidação mais relevantes:
 - Aula 05 ganhou uma necessidade concreta antes de analógico/digital/binário;
 - Aula 06 teve créditos visuais completados e verificados;
 - Aula 09 ganhou situação real antes de autenticação/autorização e crédito UEFI mais preciso;
 - Aula 10 ganhou necessidade concreta antes de pipe/redirecionamento, comando de filtro corrigido, regra 3-2-1 refinada e crédito da captura revisado;
-- Aulas 13–21 foram consolidadas já sob a regra MbB atual, evitando sequências de definições sem necessidade e usando diagramas no lugar de imagens decorativas.
-
-A próxima etapa é **99 — Exercícios/Desafios**, construída a partir do percurso agora consolidado.
+- Aulas 13–21 foram consolidadas já sob a regra MbB atual, evitando sequências de definições sem necessidade e usando diagramas no lugar de imagens decorativas;
+- Aula 99 avalia distinção, aplicação, diagnóstico e integração e termina com uma explicação de ponta a ponta acompanhada de raciocínio diagnóstico.
