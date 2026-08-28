@@ -147,6 +147,14 @@
       ) {
         block.textContent = 'from sqlalchemy.exc import IntegrityError\n\n' + block.textContent;
       }
+
+      if (block.textContent.includes('def test_criar_produto(client, produto_exemplo):')) {
+        block.textContent = `def test_lista_produtos_vazia(client):
+    response = client.get("/produtos")
+
+    assert response.status_code == 200
+    assert response.json() == []`;
+      }
     });
   }
 
