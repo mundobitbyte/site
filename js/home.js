@@ -13,7 +13,7 @@
     backendCard.innerHTML = `
       <div class="module-head"><h3>Backend e APIs com Python e FastAPI</h3></div>
       <div class="module-body">
-        <p>Cliente-servidor, HTTP, REST, FastAPI, validação, regras de negócio e construção progressiva de APIs.</p>
+        <p>HTTP e FastAPI, regras de negócio, banco de dados, segurança, integração e testes de APIs.</p>
         <span class="module-label">Backend</span>
       </div>`;
     reactNativeCard.insertAdjacentElement('afterend', backendCard);
