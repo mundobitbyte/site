@@ -30,7 +30,7 @@ def test_listar_produtos():
     assert isinstance(response.json(), list)</pre>
         <p>O TestClient conversa diretamente com a aplicação ASGI; não precisamos iniciar <code class="inline-code">fastapi dev</code> nem abrir uma porta real para esses testes.</p>
         <h3>Execute</h3>
-        <pre class="code-block">pytest -v</pre>
+        <pre class="code-block">python -m pytest -v</pre>
         <p>O pytest encontra arquivos e funções seguindo convenções como <code class="inline-code">test_*.py</code> e <code class="inline-code">test_...</code>.</p>
         <h3>Teste também falhas esperadas</h3>
         <pre class="code-block">def test_produto_inexistente():
@@ -52,6 +52,17 @@ def test_listar_produtos():
       objective: 'Substituir get_session durante os testes e usar um SQLite isolado sem alterar as rotas da aplicação.',
       content: `
         <div class="hero-box"><h3>A mesma rota pode receber outra infraestrutura.</h3><p>As rotas pedem uma <code class="inline-code">SessionDep</code>; elas não precisam conhecer qual Engine a criou. Isso permite substituir a dependência somente durante os testes.</p></div>
+        <h3>Configuração do teste vem antes da aplicação</h3>
+        <p>No Bloco 5 tornamos <code class="inline-code">SECRET_KEY</code> obrigatória. Uma máquina limpa não deve depender do <code class="inline-code">.env</code> pessoal do desenvolvedor para executar a suíte. Em <code class="inline-code">conftest.py</code>, defina valores próprios de teste antes de importar <code class="inline-code">main</code>:</p>
+        <pre class="code-block">import os
+
+os.environ.setdefault(
+    "SECRET_KEY",
+    "segredo-exclusivo-para-testes"
+)
+
+from main import app</pre>
+        <div class="note-box"><strong>Segredo de teste não é segredo de produção.</strong>Esse valor fixo existe apenas no ambiente isolado da suíte; nunca reutilize nele a chave real da aplicação.</div>
         <pre class="code-block">from sqlalchemy import create_engine, event
 from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
@@ -86,6 +97,7 @@ app.dependency_overrides[get_session] = get_test_session
 client = TestClient(app)</pre>
         <div class="flow">APLICAÇÃO NORMAL\nget_session → agua_gas.db\n\nTESTE\nget_session → override → get_test_session → SQLite de teste</div>
         <p>As rotas permanecem iguais. A injeção de dependências permite trocar a infraestrutura sem criar código especial de teste dentro de <code class="inline-code">main.py</code>.</p>
+        <div class="note-box"><strong>create_all() aqui não testa nossas migrações.</strong>Ele cria diretamente o esquema ORM atual para estes testes funcionais. Se quisermos provar a evolução de uma versão antiga do banco, devemos testar o fluxo Alembic separadamente.</div>
         <div class="danger-box"><strong>Ainda falta isolamento entre testes.</strong>Separar o banco real não impede que o Teste B encontre dados deixados pelo Teste A. Precisamos preparar e limpar o cenário de cada teste.</div>
         <div class="essence"><strong>Essência</strong><code class="inline-code">app.dependency_overrides</code> permite substituir uma dependência durante testes. Assim a mesma API trabalha com um banco controlado sem contaminar os dados de desenvolvimento.</div>`
     },
@@ -94,7 +106,7 @@ client = TestClient(app)</pre>
       number: 41,
       menuTitle: 'Fixtures',
       title: 'Cada teste precisa começar do zero',
-      objective: 'Usar fixtures e conftest.py para preparar banco, TestClient e dados previsíveis sem depender da ordem dos testes.',
+      objective: 'Usar fixtures e conftest.py para preparar banco, Session, TestClient e dados previsíveis sem depender da ordem dos testes.',
       content: `
         <div class="hero-box"><h3>Teste independente é teste que consegue rodar sozinho.</h3><p>O resultado não deve depender de outro teste ter criado antes um produto, um usuário ou um pedido.</p></div>
         <p>Crie <code class="inline-code">tests/conftest.py</code>. O pytest disponibiliza automaticamente as fixtures desse arquivo aos testes da mesma árvore.</p>
@@ -110,6 +122,12 @@ def banco_limpo():
 
     Base.metadata.drop_all(test_engine)</pre>
         <p>O que vem antes do <code class="inline-code">yield</code> prepara o cenário; o que vem depois executa a limpeza.</p>
+        <h3>Uma Session para preparar dados</h3>
+        <pre class="code-block">@pytest.fixture
+def session(banco_limpo):
+    with Session(test_engine) as session:
+        yield session</pre>
+        <p>Essa fixture será útil para criar diretamente clientes, produtos ou usuários que formam o estado inicial de um teste. As requisições da API continuam recebendo suas próprias Sessions por <code class="inline-code">get_test_session()</code>.</p>
         <pre class="code-block">@pytest.fixture
 def client(banco_limpo):
     app.dependency_overrides[get_session] = get_test_session
@@ -118,7 +136,7 @@ def client(banco_limpo):
         yield test_client
 
     app.dependency_overrides.clear()</pre>
-        <p>Uma fixture também pode depender de outra. Aqui, pedir <code class="inline-code">client</code> implica preparar primeiro um banco limpo.</p>
+        <p>Uma fixture também pode depender de outra. Aqui, pedir <code class="inline-code">client</code> implica preparar primeiro um banco limpo. Se um mesmo teste pedir <code class="inline-code">client</code> e <code class="inline-code">session</code>, o pytest reutiliza a mesma fixture <code class="inline-code">banco_limpo</code> naquele teste.</p>
         <pre class="code-block">@pytest.fixture
 def produto_exemplo():
     return {
@@ -273,6 +291,11 @@ def headers_admin(client, usuario_admin):
         <div class="hero-box"><h3>CORS só surge agora porque apareceu um navegador em outra origem.</h3><p>Um frontend em <code class="inline-code">http://localhost:5500</code> tentando acessar a API em <code class="inline-code">http://127.0.0.1:8000</code> participa de uma comunicação cross-origin.</p></div>
         <div class="concept-box"><strong>Origem</strong>É a combinação de protocolo + host + porta. Mudar qualquer uma dessas partes pode produzir outra origem.</div>
         <p>CORS é principalmente uma política aplicada pelo navegador. Ele não substitui autenticação, autorização nem funciona como firewall para qualquer cliente HTTP.</p>
+        <h3>A origem também é configuração</h3>
+        <p>Acrescente ao <code class="inline-code">Settings</code>:</p>
+        <pre class="code-block">frontend_origin: str = "http://localhost:5500"</pre>
+        <p>Em produção, esse valor pode vir do <code class="inline-code">.env</code>:</p>
+        <pre class="code-block">FRONTEND_ORIGIN=https://app.exemplo.com</pre>
         <pre class="code-block">from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
@@ -351,9 +374,9 @@ def test_cancelamento_restaura_estoque_uma_vez():
     ...</pre>
         <p>O nome ajuda a suíte a funcionar também como documentação executável.</p>
         <h3>Execute tudo com um comando</h3>
-        <pre class="code-block">pytest -v</pre>
+        <pre class="code-block">python -m pytest -v</pre>
         <p>Durante o trabalho também podemos executar um arquivo ou teste específico, mas antes de publicar uma alteração relevante queremos executar a suíte completa.</p>
-        <div class="flow">MUDAR CÓDIGO\n↓\npytest\n↓\nFALHOU?\n├─ sim → investigar e corrigir\n└─ não → revisar a mudança\n↓\nPUBLICAR COM MAIS CONFIANÇA</div>
+        <div class="flow">MUDAR CÓDIGO\n↓\nTESTAR\n↓\nFALHOU?\n├─ sim → investigar e corrigir\n└─ não → revisar a mudança\n↓\nPUBLICAR COM MAIS CONFIANÇA</div>
         <h3>Teste não prova ausência de bugs</h3>
         <p>Uma suíte reduz incerteza, mas não consegue provar que todo cenário imaginável está correto. Revisão, regras de banco, validação, observabilidade e testes manuais continuam importantes.</p>
         <h3>Quando um bug aparecer, transforme-o em proteção</h3>
@@ -361,7 +384,7 @@ def test_cancelamento_restaura_estoque_uma_vez():
         <div class="concept-box"><strong>Bom teste pergunta sobre comportamento.</strong>O que deve acontecer? O que não pode acontecer? Que efeito precisa permanecer verdadeiro depois da operação?</div>
         <h3>O caminho percorrido</h3>
         <div class="flow">problema real\n↓\ncliente e servidor\n↓\nHTTP e API\n↓\nFastAPI e contratos\n↓\nregras de negócio\n↓\nSQLite + SQLAlchemy\n↓\ntransações e migrações\n↓\nautenticação e autorização\n↓\nintegração e testes</div>
-        <div class="bridge-box"><strong>Bloco 6 concluído.</strong>A API agora não apenas executa regras: possui uma base para provar repetidamente comportamentos importantes enquanto evolui.</div>
+        <div class="bridge-box"><strong>Módulo-base concluído.</strong>A API agora não apenas executa regras: possui uma base para provar repetidamente comportamentos importantes enquanto evolui. Extensões futuras podem surgir por necessidade, sem desmontar a progressão construída.</div>
         <div class="essence"><strong>Essência</strong>Testar é transformar expectativas relevantes em verificações executáveis. A melhor suíte não é a maior; é a que protege contratos e regras importantes sem esconder o funcionamento do sistema.</div>`
     }
   ]
