@@ -42,17 +42,17 @@ window.fundamentosInformaticaLessons.push({
     <div class="definition-box"><span class="term">Metadados</span><p>São dados que descrevem outros dados. Arquivos podem ter nome, tamanho, datas, proprietário e permissões; fotografias podem conter data de captura, modelo da câmera e outras informações.</p></div>
 
     <h3>Copiar, mover e excluir</h3>
-    <div class="comparison-grid three"><article><strong>Copiar</strong><p>Cria outra cópia dos dados em um novo local e preserva o original.</p></article><article><strong>Mover</strong><p>Altera a localização lógica. Dentro do mesmo sistema de arquivos, pode exigir principalmente atualização de referências.</p></article><article><strong>Excluir</strong><p>Remove a referência do usuário e disponibiliza o espaço para reutilização; isso não significa necessariamente sobrescrever cada bit imediatamente.</p></article></div>
+    <div class="comparison-grid three"><article><strong>Copiar</strong><p>Cria outra cópia dos dados em um novo local e preserva o original.</p></article><article><strong>Mover</strong><p>Altera a localização lógica. Dentro do mesmo sistema de arquivos, pode exigir principalmente atualização de referências.</p></article><article><strong>Excluir</strong><p>Em muitos sistemas de arquivos, remove ou invalida referências e marca espaço como reutilizável; a recuperação posterior depende do sistema, do dispositivo e de mecanismos como TRIM em SSDs.</p></article></div>
 
     <h3>Sincronização não é automaticamente backup</h3>
     <div class="comparison-grid"><article><strong>Sincronização</strong><p>Propaga alterações entre locais. Uma exclusão ou corrupção também pode ser sincronizada.</p></article><article><strong>Backup</strong><p>Existe para permitir recuperação depois de perda, corrupção ou erro, idealmente mantendo cópias ou versões independentes.</p></article></div>
-    <details class="sources-box"><summary>Aprofunde: regra 3-2-1</summary><p>Uma recomendação tradicional é manter <strong>3 cópias</strong> dos dados, em <strong>2 meios ou locais</strong>, com <strong>1 cópia separada</strong> do ambiente principal. O princípio é mais importante que decorar os números: uma única cópia não oferece redundância.</p></details>
+    <details class="sources-box"><summary>Aprofunde: regra 3-2-1</summary><p>Uma recomendação tradicional é manter <strong>3 cópias</strong> dos dados, usando <strong>2 tipos de mídia ou tecnologias</strong>, com <strong>1 cópia fora do ambiente principal</strong>. O princípio é mais importante que decorar os números: uma única cópia não oferece redundância.</p></details>
 
     <h3>Linha de comando: outra interface para o mesmo sistema</h3>
     <div class="media-text">
       <figure class="historical-media">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Windows_11_Command_Prompt.png" alt="Janela do Prompt de Comando do Windows 11" width="979" height="512" loading="lazy" decoding="async">
-        <figcaption><strong>Prompt de Comando no Windows.</strong> A linha de comando permite pedir operações ao sistema sem depender de menus e janelas.<span class="credit">Captura do Windows 11 · Wikimedia Commons; consulte a página do arquivo.</span></figcaption>
+        <figcaption><strong>Prompt de Comando no Windows.</strong> A linha de comando permite pedir operações ao sistema sem depender de menus e janelas.<span class="credit">Microsoft; captura enviada por Paowee · o texto exibido é tratado no Wikimedia Commons como inelegível a copyright; marcas permanecem protegidas.</span></figcaption>
       </figure>
       <div><div class="definition-box"><span class="term">CLI — Command-Line Interface</span><p>É uma interface em que o usuário digita comandos para solicitar operações ao sistema.</p></div><div class="definition-box compact"><span class="term">Shell</span><p>É o programa que interpreta comandos e fornece uma forma de interagir com os serviços do sistema operacional.</p></div></div>
     </div>
@@ -72,9 +72,13 @@ window.fundamentosInformaticaLessons.push({
       <tr><td><code>cd ..</code></td><td>volta ao diretório pai</td></tr>
     </tbody></table></div>
 
-    <h3><code>&gt;</code>, <code>&gt;&gt;</code> e <code>|</code></h3>
+    <h3>Quando a tela mostra dados demais</h3>
+    <div class="hero-box">
+      <span class="eyebrow">Situação</span>
+      <p>Imagine uma pasta com centenas de arquivos. Você precisa encontrar apenas os nomes terminados em <code>.txt</code> e guardar essa lista para usar depois. Copiar manualmente o que aparece na tela seria lento e sujeito a erro. <strong>É aí que redirecionamento e composição de comandos deixam de ser símbolos estranhos e passam a resolver um problema real.</strong></p>
+    </div>
     <div class="comparison-grid three"><article><strong><code>&gt;</code></strong><p>Redireciona a saída para um arquivo, normalmente substituindo o conteúdo existente.</p></article><article><strong><code>&gt;&gt;</code></strong><p>Acrescenta a saída ao final de um arquivo.</p></article><article><strong><code>|</code> — pipe</strong><p>Envia a saída de um comando para a entrada do próximo, permitindo composição.</p></article></div>
-    <div class="example-box"><strong>Composição</strong><p><code>dir | findstr ".txt" &gt; lista.txt</code></p><p><code>dir</code> gera a listagem → <code>findstr</code> filtra linhas com <code>.txt</code> → <code>&gt;</code> grava o resultado em <code>lista.txt</code>.</p></div>
+    <div class="example-box"><strong>Composição</strong><p><code>dir /b | findstr /L /E ".txt" &gt; lista.txt</code></p><p><code>dir /b</code> gera apenas os nomes → <code>findstr /L /E ".txt"</code> procura literalmente <code>.txt</code> no fim da linha → <code>&gt;</code> grava o resultado em <code>lista.txt</code>.</p></div>
     <p><strong>Pequenos comandos podem ser conectados para resolver tarefas maiores.</strong></p>
 
     <h3>Quando repetir comandos vira desperdício</h3>
