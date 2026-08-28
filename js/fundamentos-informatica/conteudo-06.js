@@ -55,14 +55,14 @@ window.fundamentosInformaticaLessons.push({
       <article>
         <figure class="historical-media">
           <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Graphic_card.jpg?width=500" alt="Placa de vídeo dedicada" width="500" height="375" loading="lazy" decoding="async">
-          <figcaption><strong>Placa de vídeo dedicada.</strong><span class="credit">Wikimedia Commons · CC BY-SA 3.0.</span></figcaption>
+          <figcaption><strong>Placa de vídeo dedicada.</strong><span class="credit">Drgulcu · CC BY-SA 3.0 · Wikimedia Commons.</span></figcaption>
         </figure>
         <strong>Placa de vídeo</strong><p>É um conjunto que pode reunir GPU, memória de vídeo, alimentação, refrigeração e interfaces.</p>
       </article>
       <article>
         <figure class="historical-media">
           <img src="https://commons.wikimedia.org/wiki/Special:FilePath/2023%20Dysk%20SSD%20Kingston%20NV2%202TB.jpg?width=500" alt="SSD em formato M.2" width="500" height="196" loading="lazy" decoding="async">
-          <figcaption><strong>SSD em formato M.2.</strong><span class="credit">Wikimedia Commons · consulte a licença na página do arquivo.</span></figcaption>
+          <figcaption><strong>SSD em formato M.2.</strong><span class="credit">Jacek Halicki · CC BY-SA 4.0 · Wikimedia Commons.</span></figcaption>
         </figure>
         <strong>SSD</strong><p>Armazena sistema, programas e arquivos de forma não volátil.</p>
       </article>
@@ -145,8 +145,8 @@ window.fundamentosInformaticaLessons.push({
       <li><a href="https://www.ibm.com/think/topics/central-processing-unit" target="_blank" rel="noopener">IBM — CPU</a></li>
       <li><a href="https://commons.wikimedia.org/wiki/File:Computer_Motherboard_Closeup.jpg" target="_blank" rel="noopener">Wikimedia Commons — placa-mãe</a></li>
       <li><a href="https://commons.wikimedia.org/wiki/File:Cpu.jpg" target="_blank" rel="noopener">Wikimedia Commons — CPU</a></li>
-      <li><a href="https://commons.wikimedia.org/wiki/File:Graphic_card.jpg" target="_blank" rel="noopener">Wikimedia Commons — placa de vídeo</a></li>
-      <li><a href="https://commons.wikimedia.org/wiki/Category:M.2_solid-state_drives" target="_blank" rel="noopener">Wikimedia Commons — SSD M.2</a></li>
+      <li><a href="https://commons.wikimedia.org/wiki/File:Graphic_card.jpg" target="_blank" rel="noopener">Wikimedia Commons — placa de vídeo (Drgulcu, CC BY-SA 3.0)</a></li>
+      <li><a href="https://commons.wikimedia.org/wiki/File:2023_Dysk_SSD_Kingston_NV2_2TB.jpg" target="_blank" rel="noopener">Wikimedia Commons — SSD M.2 (Jacek Halicki, CC BY-SA 4.0)</a></li>
     </ul></details>
   `
 });
