@@ -137,8 +137,15 @@
       if (block.textContent.includes('novo["id"] = len(produtos) + 1')) {
         block.textContent = block.textContent.replace(
           'novo["id"] = len(produtos) + 1',
-          'novo["id"] = max(produto["id"] for produto in produtos) + 1'
+          'novo["id"] = max((produto["id"] for produto in produtos), default=0) + 1'
         );
+      }
+
+      if (
+        block.textContent.includes('except IntegrityError as erro:') &&
+        !block.textContent.includes('from sqlalchemy.exc import IntegrityError')
+      ) {
+        block.textContent = 'from sqlalchemy.exc import IntegrityError\n\n' + block.textContent;
       }
     });
   }
