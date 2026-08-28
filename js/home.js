@@ -2,6 +2,23 @@
   const areasView = document.getElementById('areas');
   const moduleViews = Array.from(document.querySelectorAll('.modules-view[data-area]'));
 
+  const programacaoView = document.getElementById('programacao-desenvolvimento');
+  const reactNativeCard = programacaoView?.querySelector('a.module-card[href="pages/reactnative.html"]');
+  const backendCardExists = programacaoView?.querySelector('a.module-card[href="pages/backend-fastapi.html"]');
+
+  if (programacaoView && reactNativeCard && !backendCardExists) {
+    const backendCard = document.createElement('a');
+    backendCard.className = 'module-card';
+    backendCard.href = 'pages/backend-fastapi.html';
+    backendCard.innerHTML = `
+      <div class="module-head"><h3>Backend e APIs com Python e FastAPI</h3></div>
+      <div class="module-body">
+        <p>Cliente-servidor, HTTP, REST, FastAPI, validação, regras de negócio e construção progressiva de APIs.</p>
+        <span class="module-label">Backend</span>
+      </div>`;
+    reactNativeCard.insertAdjacentElement('afterend', backendCard);
+  }
+
   const ensinoMedioLink = document.querySelector('[data-area-link="ensino-medio"]');
   const areasGrid = ensinoMedioLink?.closest('.areas-grid');
   if (ensinoMedioLink && areasGrid) {
