@@ -158,6 +158,21 @@
     });
   }
 
+  function insertLessonVisual(lessonId) {
+    const html = window.backendFastapiVisuals?.[lessonId];
+    if (!lessonContent || !html) return;
+
+    const template = document.createElement('template');
+    template.innerHTML = html.trim();
+    const essence = lessonContent.querySelector('.essence');
+
+    if (essence) {
+      lessonContent.insertBefore(template.content, essence);
+    } else {
+      lessonContent.appendChild(template.content);
+    }
+  }
+
   function fallbackCopy(text) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
@@ -237,6 +252,7 @@
     lessonObjective.textContent = lesson.objective;
     lessonContent.innerHTML = lesson.content;
     normalizeCodeSamples();
+    insertLessonVisual(lesson.id);
     enhanceCodeBlocks();
     appendNavigation(block, lesson);
 
