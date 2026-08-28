@@ -48,7 +48,7 @@ Pergunta de controle antes de publicar: **“Esta frase ensina algo ao aluno ou 
 - Não repetir “lendas de informática” como fatos.
 - Expressões como “primeiro computador”, “primeiro programador” ou “inventou sozinho” devem receber qualificação quando houver disputa de critérios.
 - ENIAC é marco obrigatório.
-- A história do termo **bug** deve ser usada futuramente com a correção: o uso técnico antecede a mariposa do Harvard Mark II; o episódio de 1947 é uma brincadeira histórica memorável, não a origem do termo.
+- A história do termo **bug** deve registrar que o uso técnico antecede a mariposa do Harvard Mark II; o episódio de 1947 é uma brincadeira histórica memorável, não a origem do termo.
 - Personagens e datas só entram quando ajudam a fazer nascer um conceito necessário.
 
 ## Regra visual
@@ -60,6 +60,7 @@ Pergunta de controle antes de publicar: **“Esta frase ensina algo ao aluno ou 
 - Imagens devem ter resolução razoável, tamanho moderado e legenda pedagógica.
 - Créditos/licença ficam visíveis na legenda e fontes detalhadas podem ficar em bloco recolhível.
 - Imagens não devem existir só para decorar.
+- Quando a imagem vier de um repositório externo, usar versões redimensionadas e `srcset` quando disponível para reduzir tráfego no celular.
 
 ### Responsividade
 O site deve funcionar bem em celular, inclusive em telas estreitas e em “site para computador”.
@@ -88,11 +89,11 @@ Perguntas devem avaliar critério e explicação, não apenas datas e nomes.
 ### Ato 2 — Como funciona
 04. **O que é computador?** — definição, entrada, processamento, memória, saída, propósito geral/especializado, periféricos, microcontrolador, sistema computacional.
 05. **Bits e Bytes** — analógico/digital, sistema binário e conversão simples de base 2, bit, byte, dado/informação, ASCII, Unicode/UTF-8, imagem/RGB, áudio com amostragem e quantização, lógica digital em alto nível, unidades de dados, b × B.
-06. **Hardware** — CPU, núcleos, cache, RAM, armazenamento, GPU, placa-mãe, barramentos, fonte, interfaces.
-07. **Memória e armazenamento** — hierarquia cache–RAM–SSD/HDD, volatilidade, capacidade, velocidade.
-08. **Software e programação** — software, firmware, driver, programa, código, pensamento computacional, compilação/interpretação, bug/debugging.
-09. **Sistema Operacional** — boot, BIOS/UEFI, processos, memória, arquivos, usuários, permissões, serviços, GUI/terminal.
-10. **Arquivos e linha de comando** — caminhos, extensão/formato, sistema de arquivos, cópia/sincronização/backup, comandos, redirecionamento e pipes.
+06. **Hardware** — placa-mãe, CPU, ciclo buscar–decodificar–executar, clock, núcleos, cache, RAM, armazenamento, GPU, barramentos, fonte e refrigeração.
+07. **Memória e armazenamento** — registradores, cache, RAM, volatilidade, SSD/HDD, latência, SATA/PCIe/NVMe/M.2 e memória virtual. Checkpoint 2.
+08. **Software e programação** — programa/software/app, algoritmo, pensamento computacional, linguagem/código, compilação/interpretação, processo, firmware, driver, software livre/proprietário/open source e bug/debugging.
+09. **Sistema Operacional** — kernel, processos, escalonamento, memória, usuários, autenticação/autorização, sistema de arquivos, GUI/CLI, UEFI, bootloader e serviços.
+10. **Arquivos e linha de comando** — arquivo/formato/extensão, diretórios, caminhos, metadados, cópia/movimentação/exclusão, sincronização/backup, CMD, redirecionamento, pipes, Linux/Bash e permissões. Checkpoint 3.
 
 ### Ato 3 — Computadores se conectam
 11. **Redes** — LAN, interface, MAC, IP, switch, roteador, TCP/UDP e portas.
@@ -115,7 +116,7 @@ Depois do módulo principal, avaliar um capítulo/experiência separada em forma
 ## Arquitetura do módulo
 Regra central: **cada conteúdo tem uma única fonte de verdade**.
 - `index.html`: estrutura e carregamento;
-- `conteudo-00.js` a `conteudo-05.js`: conteúdo canônico das aulas já publicadas; a partir da Aula 06, novos blocos podem ser agrupados quando isso mantiver os arquivos manejáveis sem criar camadas corretivas;
+- `conteudo-00.js` a `conteudo-10.js`: conteúdo canônico das aulas já publicadas;
 - `interacoes.js`: interações reutilizáveis;
 - futuro `exercicios.js`: Aula 99;
 - `core.js`: menu, hash, renderização e navegação;
@@ -124,4 +125,4 @@ Regra central: **cada conteúdo tem uma única fonte de verdade**.
 Não criar camadas `ajuste-*`, `correcao-*` ou equivalentes para sobrescrever conteúdo. Corrigir sempre na fonte canônica.
 
 ## Estado atual
-Primeiro bloco 00–05 implementado como nova base pedagógica. O diagnóstico de entrada foi removido: Fundamentos começa efetivamente do zero. O primeiro checkpoint ocorre ao fim da Aula 03. A validação prática desse bloco orientará o desenvolvimento da Aula 06 em diante.
+Aulas 00–10 implementadas como base pedagógica publicada. O módulo começa efetivamente do zero, sem diagnóstico de entrada. Checkpoints principais aparecem ao fim das Aulas 03, 07 e 10, com verificações menores dentro das aulas. A próxima etapa narrativa inicia o Ato 3 com a Aula 11 — Redes.
