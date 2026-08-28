@@ -355,7 +355,7 @@ app.add_middleware(
         <h3>Priorize risco e regra</h3>
         <div class="mini-grid">
           <div class="mini-card"><strong>Contrato HTTP</strong>Status, estrutura de resposta, validações e erros importantes.</div>
-          <div class="mini-card"><strong>Segurança</strong>Login, token inválido, 401, 403, conta inativa, propriedade de recurso.</div>
+          <div class="mini-card"><strong>Segurança</strong>Login, token inválido, 401, 403, conta inativa e propriedade de recurso.</div>
           <div class="mini-card"><strong>Negócio</strong>Estoque, preço histórico, status, cancelamento e permissões.</div>
           <div class="mini-card"><strong>Persistência</strong>Transações, rollback, relacionamentos e dados que precisam sobreviver à operação.</div>
         </div>
@@ -370,9 +370,34 @@ def test_atendente_nao_pode_criar_usuario():
     ...
 
 
+def test_cliente_nao_consulta_pedido_de_outro_cliente():
+    ...
+
+
 def test_cancelamento_restaura_estoque_uma_vez():
     ...</pre>
         <p>O nome ajuda a suíte a funcionar também como documentação executável.</p>
+        <h3>Agora existe motivo para dividir main.py</h3>
+        <p>No começo, um único arquivo ajudava a enxergar a aplicação inteira. Depois de produtos, clientes, pedidos e segurança, ele pode ficar grande demais. Só agora surge uma necessidade concreta para <code class="inline-code">APIRouter</code>.</p>
+        <pre class="code-block"># routers/produtos.py
+from fastapi import APIRouter
+
+router = APIRouter(
+    prefix="/produtos",
+    tags=["Produtos"]
+)
+
+
+@router.get("")
+def listar_produtos(...):
+    ...</pre>
+        <p>No arquivo principal:</p>
+        <pre class="code-block">from fastapi import FastAPI
+from routers import produtos
+
+app = FastAPI(...)
+app.include_router(produtos.router)</pre>
+        <div class="note-box"><strong>Refatorar não muda o contrato.</strong>As URLs e regras continuam as mesmas. A suíte automatizada ajuda a provar que reorganizar arquivos não alterou o comportamento externo.</div>
         <h3>Execute tudo com um comando</h3>
         <pre class="code-block">python -m pytest -v</pre>
         <p>Durante o trabalho também podemos executar um arquivo ou teste específico, mas antes de publicar uma alteração relevante queremos executar a suíte completa.</p>
@@ -383,8 +408,8 @@ def test_cancelamento_restaura_estoque_uma_vez():
         <p>Ao encontrar um defeito importante, reproduza o comportamento em um teste que falhe, corrija o código e mantenha o teste. Assim aquela falha conhecida passa a ser vigiada contra regressões.</p>
         <div class="concept-box"><strong>Bom teste pergunta sobre comportamento.</strong>O que deve acontecer? O que não pode acontecer? Que efeito precisa permanecer verdadeiro depois da operação?</div>
         <h3>O caminho percorrido</h3>
-        <div class="flow">problema real\n↓\ncliente e servidor\n↓\nHTTP e API\n↓\nFastAPI e contratos\n↓\nregras de negócio\n↓\nSQLite + SQLAlchemy\n↓\ntransações e migrações\n↓\nautenticação e autorização\n↓\nintegração e testes</div>
-        <div class="bridge-box"><strong>Módulo-base concluído.</strong>A API agora não apenas executa regras: possui uma base para provar repetidamente comportamentos importantes enquanto evolui. Extensões futuras podem surgir por necessidade, sem desmontar a progressão construída.</div>
+        <div class="flow">problema real\n↓\ncliente e servidor\n↓\nHTTP e API\n↓\nFastAPI e contratos\n↓\nregras de negócio\n↓\nSQLite + SQLAlchemy\n↓\ntransações e migrações\n↓\nautenticação e autorização\n↓\nintegração e testes\n↓\norganização com APIRouter</div>
+        <div class="bridge-box"><strong>Módulo-base concluído.</strong>A API agora não apenas executa regras: possui persistência, segurança, testes e uma estrutura que pode continuar evoluindo por necessidade, sem desmontar a progressão construída.</div>
         <div class="essence"><strong>Essência</strong>Testar é transformar expectativas relevantes em verificações executáveis. A melhor suíte não é a maior; é a que protege contratos e regras importantes sem esconder o funcionamento do sistema.</div>`
     }
   ]
