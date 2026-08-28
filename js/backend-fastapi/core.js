@@ -133,6 +133,13 @@
           '.venv\\Scripts\\activate'
         );
       }
+
+      if (block.textContent.includes('novo["id"] = len(produtos) + 1')) {
+        block.textContent = block.textContent.replace(
+          'novo["id"] = len(produtos) + 1',
+          'novo["id"] = max(produto["id"] for produto in produtos) + 1'
+        );
+      }
     });
   }
 
