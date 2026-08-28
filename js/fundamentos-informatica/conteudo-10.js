@@ -10,7 +10,7 @@ window.fundamentosInformaticaLessons.push({
   technicalTitle: "arquivo • formato • extensão • diretório • caminho • metadados • backup • CLI • shell • redirecionamento • pipe • permissões • arquivo em lote",
   title: "Quando você salva um arquivo, onde ele fica — e como o sistema o encontra?",
   objective: "Compreender arquivos, formatos, caminhos, diretórios e permissões e experimentar operações seguras no Prompt de Comando, incluindo redirecionamento, pipes e automação em lote.",
-  content: `
+  content: String.raw`
     <div class="hero-box story-opening">
       <span class="eyebrow">Do clique ao caminho</span>
       <h2>Salvar <code>relatorio.pdf</code> parece simples, mas várias ideias trabalham juntas.</h2>
