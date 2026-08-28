@@ -158,6 +158,73 @@
     });
   }
 
+  function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    textarea.style.pointerEvents = 'none';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand('copy');
+    textarea.remove();
+
+    if (!copied) throw new Error('Falha ao copiar');
+  }
+
+  async function copyBlockText(block, button) {
+    const text = block.textContent;
+
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        fallbackCopy(text);
+      }
+
+      button.textContent = 'Copiado!';
+      button.classList.add('copied');
+      button.setAttribute('aria-label', 'Código ou comando copiado');
+
+      window.setTimeout(() => {
+        button.textContent = 'Copiar';
+        button.classList.remove('copied');
+        button.setAttribute('aria-label', 'Copiar código ou comando');
+      }, 1600);
+    } catch (_) {
+      button.textContent = 'Não copiou';
+
+      window.setTimeout(() => {
+        button.textContent = 'Copiar';
+      }, 1800);
+    }
+  }
+
+  function enhanceCodeBlocks() {
+    lessonContent?.querySelectorAll('.code-block').forEach((block) => {
+      if (block.parentElement?.classList.contains('code-block-wrap')) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrap';
+
+      const toolbar = document.createElement('div');
+      toolbar.className = 'code-block-toolbar';
+
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'copy-code-btn';
+      button.textContent = 'Copiar';
+      button.setAttribute('aria-label', 'Copiar código ou comando');
+      button.addEventListener('click', () => copyBlockText(block, button));
+
+      toolbar.appendChild(button);
+      block.parentNode.insertBefore(wrapper, block);
+      wrapper.appendChild(toolbar);
+      wrapper.appendChild(block);
+    });
+  }
+
   function renderLesson() {
     const block = getBlock(currentBlockId);
     const lesson = getLesson(block, currentLessonId);
@@ -170,6 +237,7 @@
     lessonObjective.textContent = lesson.objective;
     lessonContent.innerHTML = lesson.content;
     normalizeCodeSamples();
+    enhanceCodeBlocks();
     appendNavigation(block, lesson);
 
     const wantedHash = `#${lesson.id}`;
