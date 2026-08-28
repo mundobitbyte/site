@@ -17,7 +17,15 @@ window.fundamentosInformaticaLessons.push({
       <p>Também não existe uma letra “A” guardada fisicamente como letra. Para armazenar e processar informação, precisamos <strong>representá-la</strong> de uma forma que os circuitos consigam distinguir.</p>
     </div>
 
-    <h3>Analógico e digital</h3>
+    <h3>O mundo varia; o computador precisa registrar</h3>
+    <p>Pense num microfone captando uma voz. A pressão do ar muda continuamente. Um sensor de temperatura também pode produzir um sinal que acompanha pequenas variações do ambiente. Mas, se queremos <strong>guardar, copiar e processar</strong> essas medições num computador, precisamos transformá-las em valores que o sistema consiga distinguir e representar.</p>
+    <div class="concept-flow" aria-label="Da grandeza física à representação digital">
+      <div><strong>Mundo físico</strong><span>som, luz, temperatura</span></div><span class="flow-arrow">→</span>
+      <div><strong>Medição</strong><span>sinal varia</span></div><span class="flow-arrow">→</span>
+      <div><strong>Representação</strong><span>valores discretos</span></div>
+    </div>
+    <p>É dessa necessidade que nasce uma distinção importante: algumas grandezas podem variar de forma contínua; uma representação digital trabalha com estados ou valores <strong>discretos</strong>.</p>
+
     <div class="comparison-grid">
       <article>
         <strong>Analógico</strong>
@@ -34,12 +42,12 @@ window.fundamentosInformaticaLessons.push({
       <p>O ENIAC era digital e trabalhava principalmente com representação decimal. <strong>Binário</strong> é um caso de representação digital que utiliza dois símbolos ou estados.</p>
     </div>
 
+    <h3>Por que a computação moderna usa tanto dois estados?</h3>
+    <p>Se um circuito precisa diferenciar estados confiavelmente, trabalhar com duas faixas bem separadas é muito conveniente. Em vez de tentar representar dez símbolos físicos diferentes diretamente, podemos construir circuitos que distinguem duas condições e combiná-las para representar quantidades cada vez maiores.</p>
     <div class="definition-box">
       <span class="term">Sistema binário</span>
       <p>É um sistema de numeração de <strong>base 2</strong>, que utiliza apenas os algarismos <strong>0 e 1</strong>.</p>
     </div>
-
-    <h3>Por que dois estados?</h3>
     <p>Circuitos eletrônicos podem ser projetados para distinguir duas condições físicas com boa margem de segurança. Podemos representá-las, por convenção, como:</p>
 
     <div class="binary-states" aria-label="Dois estados binários">
