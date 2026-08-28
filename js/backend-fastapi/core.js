@@ -125,6 +125,17 @@
     if (nav.childElementCount) lessonContent.appendChild(nav);
   }
 
+  function normalizeCodeSamples() {
+    lessonContent?.querySelectorAll('.code-block').forEach((block) => {
+      if (block.textContent.includes('.venvScriptsactivate')) {
+        block.textContent = block.textContent.replace(
+          '.venvScriptsactivate',
+          '.venv\\Scripts\\activate'
+        );
+      }
+    });
+  }
+
   function renderLesson() {
     const block = getBlock(currentBlockId);
     const lesson = getLesson(block, currentLessonId);
@@ -136,6 +147,7 @@
     lessonTitle.textContent = `${lesson.number}. ${lesson.title}`;
     lessonObjective.textContent = lesson.objective;
     lessonContent.innerHTML = lesson.content;
+    normalizeCodeSamples();
     appendNavigation(block, lesson);
 
     const wantedHash = `#${lesson.id}`;
