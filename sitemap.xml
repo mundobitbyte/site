@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.mundobitbyte.com.br/</loc>
-    <priority>1.0</priority>
-  </url>
+  <url><loc>https://www.mundobitbyte.com.br/</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/fundamentos-informatica/index.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/programacao.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/visualg.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/python.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/appinventor.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/reactnative.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/backend-fastapi.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/git.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/bancodedados.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/arduino.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/arduino-exercicios.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/arduino-avaliacao-conceitual.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/tia.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/ia/index.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/ia/fundamentos.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/ia/vida-real.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/pages/ia/comunicacao.html</loc></url>
+  <url><loc>https://www.mundobitbyte.com.br/ds-matematica/index.html</loc></url>
 </urlset>
