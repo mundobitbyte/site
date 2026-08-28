@@ -80,6 +80,14 @@ button{font:inherit;touch-action:manipulation}
 
 .flow{background:#f8fbff;border:1px solid var(--line);border-radius:10px;padding:13px 14px;margin:13px 0;font-family:Consolas,"Courier New",monospace;white-space:pre-wrap;line-height:1.55;overflow-wrap:anywhere}
 .code-block{background:var(--code);color:#f8fafc;border-radius:10px;padding:13px 15px;margin:11px 0 14px;overflow:auto;font-family:Consolas,"Courier New",monospace;font-size:13px;line-height:1.5;white-space:pre}
+.code-block-wrap{margin:11px 0 14px;background:var(--code);border-radius:10px;overflow:hidden;box-shadow:0 1px 0 rgba(15,23,42,.08)}
+.code-block-wrap .code-block{margin:0;border-radius:0;box-shadow:none}
+.code-block-toolbar{display:flex;justify-content:flex-end;align-items:center;min-height:36px;padding:5px 7px;background:#0b1220;border-bottom:1px solid rgba(255,255,255,.1)}
+.copy-code-btn{border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.09);color:#e5edf8;border-radius:7px;padding:5px 10px;font-size:11.5px;font-weight:800;line-height:1.2;cursor:pointer;transition:background .15s ease,border-color .15s ease,transform .15s ease}
+.copy-code-btn:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.38)}
+.copy-code-btn:active{transform:translateY(1px)}
+.copy-code-btn:focus-visible{outline:2px solid #93c5fd;outline-offset:2px}
+.copy-code-btn.copied{background:#0f766e;border-color:#5eead4;color:#fff}
 .inline-code{background:#eef4fb;border:1px solid #d6e0ee;border-radius:5px;padding:1px 5px;font-family:Consolas,"Courier New",monospace;font-size:.95em}
 
 .mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:14px 0}
@@ -119,6 +127,8 @@ button{font:inherit;touch-action:manipulation}
   .mini-grid,.term-grid{grid-template-columns:1fr}
   .term-grid .head{display:none}
   .code-block{font-size:12px;padding:12px;max-width:100%}
+  .code-block-toolbar{min-height:34px;padding:4px 6px}
+  .copy-code-btn{min-height:30px;padding:5px 10px}
   .lesson-navigation{align-items:stretch}
   .lesson-navigation .action-button{flex:1 1 100%;text-align:center}
 }
