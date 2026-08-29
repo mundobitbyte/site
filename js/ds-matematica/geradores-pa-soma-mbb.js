@@ -13,7 +13,7 @@
   G.pa = function(level){
     if (![3,4,5].includes(level)) return base(level);
 
-    const useSum = Math.random() < (level === 5 ? 0.5 : 0.4);
+    const useSum = R(1,10) <= (level === 5 ? 5 : 4);
     if (!useSum) return base(level);
 
     if (level === 3){
