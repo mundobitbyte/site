@@ -14,9 +14,9 @@
   const section = `
     <section data-mbb-pa-soma>
       <div class="mbb-bridge-box">
-        <strong>Uma nova pergunta aparece naturalmente</strong>
+        <strong>Parte 2 — Quando a pergunta deixa de ser “qual termo?” e passa a ser “qual é o total?”</strong>
         <p>Até aqui aprendemos a responder perguntas como “quantos lugares existem na 30ª fileira?”. Mas imagine que o responsável pelo teatro faça outra pergunta: <strong>quantos lugares existem ao todo, somando da 1ª até a 30ª fileira?</strong></p>
-        <p>Agora não queremos um único termo. Queremos o <strong>total acumulado de vários termos da PA</strong>.</p>
+        <p>Agora não queremos um único termo. Queremos o <strong>total acumulado de vários termos da PA</strong>. É uma nova pergunta, mas ela nasce da mesma sequência que já entendemos.</p>
       </div>
 
       <h3>10. Somar termo por termo funciona — mas será que é o melhor caminho?</h3>
@@ -32,7 +32,7 @@
       <p>Isso funcionaria. Mas fazer 30 adições seria trabalhoso e esconderia um padrão muito mais interessante.</p>
 
       <h3>11. O truque não é decorar: é enxergar pares</h3>
-      <p>Escreva a soma uma vez na ordem normal e outra vez na ordem inversa:</p>
+      <p>Vamos chamar de <span class="math">S₃₀</span> a soma das 30 fileiras. Escreva essa soma uma vez na ordem normal e outra vez na ordem inversa:</p>
       <div class="mbb-equation-walk">
         <p><span class="math">S₃₀ = 20 + 25 + 30 + ... + 160 + 165</span></p>
         <p><span class="math">S₃₀ = 165 + 160 + 155 + ... + 25 + 20</span></p>
@@ -44,18 +44,31 @@
         <div class="mini-card"><strong>Terceiro par</strong><p><span class="math">30+155=185</span></p></div>
       </div>
       <p>Isso continua acontecendo até o fim. Em uma PA, termos que estão à mesma distância das extremidades formam pares com a mesma soma.</p>
-      <div class="note-box"><strong>Por que isso acontece?</strong><p>Enquanto avançamos pela esquerda, cada termo aumenta r. Enquanto avançamos pela direita, o termo correspondente diminui r. Um ganha exatamente o que o outro perde. Por isso a soma do par permanece constante.</p></div>
+      <div class="note-box"><strong>Por que isso acontece?</strong><p>Enquanto avançamos pela esquerda, cada termo aumenta <span class="math">r</span>. Enquanto avançamos pela direita, o termo correspondente diminui <span class="math">r</span>. Um ganha exatamente o que o outro perde. Por isso a soma do par permanece constante.</p></div>
 
       <h3>12. A fórmula da soma nasce desse padrão</h3>
-      <p>Quando somamos as duas linhas, temos 30 pares, e cada par vale 185:</p>
+      <p>No nosso exemplo, ao somar as duas linhas aparecem 30 resultados iguais a 185:</p>
       <div class="mbb-equation-walk">
         <p><span class="math">2S₃₀ = 30·185</span></p>
         <p><span class="math">2S₃₀ = 5550</span></p>
         <p><span class="math">S₃₀ = 5550/2 = 2775</span></p>
       </div>
       <p>O teatro possui <strong>2.775 lugares ao todo nas 30 fileiras</strong>.</p>
-      <div class="mbb-professor-pensa"><strong>Agora generalize.</strong><p>No lugar de 30 usamos n; no lugar de 20 usamos a₁; no lugar de 165 usamos aₙ. Assim aparece:</p><p><span class="formula">Sₙ = n(a₁+aₙ)/2</span></p></div>
-      <p>Leia a fórmula em português: <strong>“a soma dos n primeiros termos é o número de termos multiplicado pela média entre o primeiro e o último termo”</strong>.</p>
+
+      <div class="mbb-professor-pensa"><strong>Agora veja o mesmo raciocínio sem números específicos.</strong>
+        <p>Se uma PA tem <span class="math">n</span> termos, podemos escrever:</p>
+        <div class="mbb-equation-walk">
+          <p><span class="math">Sₙ = a₁ + a₂ + a₃ + ... + aₙ</span></p>
+          <p><span class="math">Sₙ = aₙ + aₙ₋₁ + aₙ₋₂ + ... + a₁</span></p>
+          <p><span class="math">2Sₙ = (a₁+aₙ) + (a₂+aₙ₋₁) + ...</span></p>
+        </div>
+        <p>Cada par tem a mesma soma <span class="math">a₁+aₙ</span>, e existem <span class="math">n</span> posições. Então:</p>
+        <div class="mbb-equation-walk">
+          <p><span class="math">2Sₙ = n(a₁+aₙ)</span></p>
+          <p><span class="formula">Sₙ = n(a₁+aₙ)/2</span></p>
+        </div>
+      </div>
+      <p>Leia a fórmula em português: <strong>“a soma dos n primeiros termos é o número de termos multiplicado pela média entre o primeiro e o último termo”</strong>. Aqui, média significa somar o primeiro e o último e dividir por 2.</p>
 
       <h3>13. O que significa Sₙ?</h3>
       <p>A letra <span class="math">S</span> lembra <strong>soma</strong>. O índice <span class="math">n</span> informa quantos termos estão sendo somados.</p>
@@ -63,24 +76,21 @@
       <div class="danger-box"><strong>Não confunda:</strong> <span class="math">a₁₀</span> é apenas o décimo termo; <span class="math">S₁₀</span> é a soma do primeiro até o décimo termo.</div>
 
       <h3>14. E se o último termo ainda não for conhecido?</h3>
-      <p>Não precisamos decorar outra fórmula independente. Já sabemos que:</p>
-      <p><span class="formula">aₙ=a₁+(n−1)r</span></p>
-      <p>Podemos substituir esse valor na fórmula da soma:</p>
+      <p>O caminho mais seguro continua sendo o que já entendemos: primeiro encontre <span class="math">aₙ</span> usando o termo geral e, depois, use esse resultado em <span class="math">Sₙ</span>.</p>
       <div class="mbb-equation-walk">
-        <p><span class="math">Sₙ = n(a₁+aₙ)/2</span></p>
-        <p><span class="math">Sₙ = n[a₁+a₁+(n−1)r]/2</span></p>
-        <p><span class="formula">Sₙ = n[2a₁+(n−1)r]/2</span></p>
+        <p><span class="math">aₙ=a₁+(n−1)r</span></p>
+        <p><span class="math">Sₙ=n(a₁+aₙ)/2</span></p>
       </div>
-      <p>É a mesma ideia escrita usando <span class="math">a₁</span>, <span class="math">r</span> e <span class="math">n</span>. Use a forma que combine melhor com os dados disponíveis.</p>
+      <div class="note-box"><strong>Atalho opcional — não é uma nova ideia para decorar.</strong><p>Se substituirmos <span class="math">aₙ=a₁+(n−1)r</span> dentro da fórmula da soma, chegamos a <span class="math">Sₙ=n[2a₁+(n−1)r]/2</span>. Alguns livros apresentam essa forma diretamente. Ela é apenas a combinação das duas fórmulas anteriores.</p></div>
 
       <h3>15. Uma notação que você pode encontrar: Σ</h3>
-      <p>Quando há muitos termos, a Matemática possui uma forma compacta de dizer “some todos eles”. O símbolo <span class="math">Σ</span> é a letra grega sigma maiúscula e representa um <strong>somatório</strong>.</p>
+      <div class="note-box"><strong>Leitura complementar — não precisa decorar agora.</strong><p>Quando há muitos termos, a Matemática possui uma forma compacta de dizer “some todos eles”. O símbolo <span class="math">Σ</span>, chamado sigma maiúsculo, representa um <strong>somatório</strong>.</p></div>
       <div class="example-box"><span class="card-title">A ideia antes da notação</span>
         <p>Em vez de escrever:</p>
         <p><span class="math">a₁+a₂+a₃+...+aₙ</span></p>
-        <p>podemos encontrar a escrita:</p>
-        <p><span class="formula">Σ aₖ, de k=1 até n</span></p>
-        <p>Ela quer dizer: comece no primeiro termo e continue somando até o enésimo termo. <strong>O símbolo não cria uma nova conta; apenas abrevia uma soma longa.</strong></p>
+        <p>um livro pode usar o símbolo <span class="math">Σ</span> acompanhado da indicação de onde a contagem começa e onde termina.</p>
+        <p>Por exemplo, “somar <span class="math">aₖ</span> para <span class="math">k</span> indo de 1 até <span class="math">n</span>” é uma forma compacta de pedir exatamente <span class="math">a₁+a₂+...+aₙ</span>.</p>
+        <p><strong>O símbolo não cria uma nova conta; apenas abrevia uma soma longa.</strong></p>
       </div>
 
       <h3>16. Na tecnologia e na programação: termo atual e total acumulado</h3>
