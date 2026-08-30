@@ -5,8 +5,9 @@
   const openings = {
     variacao: `
       <span class="card-title">Imagine a seguinte situação cotidiana:</span>
-      <p>Você entra em uma loja e vê castanhas vendidas a R$ 8 por 100 g. Se levar 200 g, paga R$ 16; se levar 300 g, paga R$ 24. Mais tarde, pede uma entrega: o aplicativo cobra R$ 8 para iniciar o serviço e mais R$ 4 por quilômetro.</p>
-      <p>Nos dois casos, aumentar a quantidade faz o preço aumentar. Mas há uma diferença escondida entre essas duas situações. <strong>Por que dobrar uma quantidade dobra exatamente um preço, mas não necessariamente o outro?</strong> É essa diferença que vamos descobrir.</p>
+      <p>Você entra em uma loja e vê castanhas vendidas a R$ 20 por quilo. Se comprar 2 kg, paga R$ 40.</p>
+      <p>Em outro momento, você usa um serviço de entrega que cobra R$ 10 de taxa fixa mais R$ 2 por quilômetro.</p>
+      <p>Nos dois casos, aumentar uma grandeza faz o preço aumentar. Mas há uma diferença escondida entre essas duas situações. <strong>Por que dobrar uma grandeza dobra exatamente um preço, mas não necessariamente o outro?</strong> É essa diferença que vamos descobrir.</p>
     `,
     algebra: `
       <span class="card-title">Imagine a seguinte situação cotidiana:</span>
