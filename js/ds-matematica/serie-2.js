@@ -33,7 +33,6 @@
       content:`
         <div class="s2-paper">
           <section class="s2-section">
-            <h1>Funções exponenciais e logarítmicas</h1>
             <p class="s2-lead">Antes de decorar fórmulas, vamos partir de uma situação que poderia acontecer em um projeto de Desenvolvimento de Sistemas.</p>
 
             <div class="s2-context">
@@ -137,7 +136,6 @@
             <div class="s2-note"><strong>Interpretação:</strong> 1.600 é a quantidade de acessos prevista pelo modelo após quatro etapas de duplicação.</div>
             <div class="s2-question"><strong>Conferência:</strong> 100 → 200 → 400 → 800 → 1.600. A sequência confirma o cálculo.</div>
           </section>
-
           <section class="s2-section">
             <h2>4. E se conhecermos o resultado?</h2>
             <p>Agora imagine que sabemos que o aplicativo chegou a <strong>3.200 acessos</strong>, mas queremos descobrir quantas duplicações ocorreram.</p>
