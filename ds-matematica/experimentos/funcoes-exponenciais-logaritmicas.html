@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Protótipo experimental do Mundo bit Byte para estudo de funções exponenciais e logarítmicas.">
+  <title>Funções exponenciais e logarítmicas | Experimento MbB</title>
+  <style>
+    :root{
+      --ink:#20304a;
+      --muted:#5a687b;
+      --paper:#fffef8;
+      --line:#dce8f5;
+      --margin:#ef9c9c;
+      --blue:#1769aa;
+      --blue-soft:#eaf5ff;
+      --yellow:#fff1a8;
+      --green:#e8f7e8;
+      --pink:#fff0f3;
+      --border:#cad7e5;
+      --shadow:0 10px 30px rgba(32,48,74,.10);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      line-height:1.65;
+      background:#eef3f8;
+    }
+    .topbar{
+      position:sticky;top:0;z-index:10;
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      padding:10px 18px;
+      background:rgba(255,255,255,.94);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid #dde5ee;
+    }
+    .brand{font-weight:800;letter-spacing:.01em}
+    .status{font-size:.82rem;color:var(--muted);background:#f3f6f9;border:1px solid #dce4ec;border-radius:999px;padding:4px 10px}
+    .notebook{
+      width:min(980px,calc(100% - 24px));
+      margin:24px auto 48px;
+      padding:34px 38px 48px 78px;
+      border:1px solid #d8e0e8;
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      background:
+        linear-gradient(90deg,transparent 0 49px,var(--margin) 49px 51px,transparent 51px),
+        repeating-linear-gradient(0deg,var(--paper) 0 31px,var(--line) 32px,var(--paper) 33px);
+    }
+    .eyebrow{display:inline-block;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);background:var(--blue-soft);border-radius:999px;padding:5px 10px}
+    h1,h2,h3{line-height:1.18;margin-top:0}
+    h1{font-size:clamp(2rem,6vw,3.55rem);margin:14px 0 8px}
+    h2{font-size:clamp(1.45rem,4vw,2.05rem);margin-bottom:12px}
+    h3{font-size:1.12rem;margin-bottom:8px}
+    p{margin:8px 0 14px}
+    .lead{font-size:1.12rem;max-width:760px}
+    .marker{background:linear-gradient(transparent 55%,var(--yellow) 55% 93%,transparent 93%);padding:0 .12em;font-weight:800}
+    .section{padding:28px 0 20px;border-bottom:1px dashed #b9c8d8}
+    .section:last-child{border-bottom:0}
+    .question,.note,.formula,.example,.checkpoint,.warning{
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px 18px;
+      margin:16px 0;
+      background:rgba(255,255,255,.88);
+      box-shadow:0 4px 14px rgba(32,48,74,.05);
+    }
+    .question{border-left:5px solid var(--blue);background:#f5fbff}
+    .note{border-left:5px solid #7bb87a;background:var(--green)}
+    .warning{border-left:5px solid #d87a8b;background:var(--pink)}
+    .formula{text-align:center;font-size:clamp(1.18rem,4vw,1.55rem);font-weight:800;background:#fffdf2}
+    .formula small{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-top:8px}
+    .example{background:#fff}
+    .example ol{margin:8px 0 0;padding-left:22px}
+    .example li{margin:7px 0}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}
+    .card{background:rgba(255,255,255,.9);border:1px solid var(--border);border-radius:14px;padding:16px}
+    .card strong{display:block;margin-bottom:4px}
+    table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;margin:14px 0}
+    th,td{border:1px solid #d7e1eb;padding:9px 10px;text-align:center}
+    th{background:#edf6ff}
+    .svg-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px;overflow:hidden}
+    svg{width:100%;height:auto;display:block}
+    .steps{counter-reset:step;display:grid;gap:10px;margin-top:14px}
+    .step{position:relative;padding:12px 14px 12px 48px;background:rgba(255,255,255,.88);border:1px solid var(--border);border-radius:12px}
+    .step::before{counter-increment:step;content:counter(step);position:absolute;left:13px;top:12px;width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:var(--blue);color:#fff;font-weight:800}
+    .checklist{list-style:none;padding:0;margin:12px 0}
+    .checklist li{margin:8px 0;padding-left:30px;position:relative}
+    .checklist li::before{content:"✓";position:absolute;left:4px;color:#2f7b3b;font-weight:900}
+    .mini-test{display:grid;gap:12px}
+    details{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+    summary{cursor:pointer;font-weight:750}
+    details p{margin:10px 0 2px}
+    code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;background:#eef3f7;border-radius:5px;padding:.12em .35em}
+    .footer-note{text-align:center;color:var(--muted);font-size:.86rem;margin-top:28px}
+    @media (max-width:720px){
+      .topbar{align-items:flex-start;flex-direction:column}
+      .notebook{width:min(100% - 12px,980px);margin:10px auto 28px;padding:26px 18px 36px 34px;background:linear-gradient(90deg,transparent 0 19px,var(--margin) 19px 21px,transparent 21px),repeating-linear-gradient(0deg,var(--paper) 0 31px,var(--line) 32px,var(--paper) 33px)}
+      .grid{grid-template-columns:1fr}
+      table{font-size:.9rem}
+    }
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Mundo bit Byte • Matemática</div>
+    <div class="status">Experimento isolado • não integrado ao menu</div>
+  </header>
+
+  <main class="notebook">
+    <section class="section">
+      <span class="eyebrow">Protótipo MbB • 2ª série</span>
+      <h1>Funções exponenciais e logarítmicas</h1>
+      <p class="lead">Antes de decorar fórmulas, vamos entender uma ideia simples: há situações em que uma quantidade muda <span class="marker">multiplicando sempre pelo mesmo fator</span>. É daí que nasce a função exponencial. O logaritmo aparece quando fazemos a pergunta inversa.</p>
+      <div class="question"><strong>Pergunta de partida</strong><br>Se uma quantidade dobra a cada etapa, quanto haverá depois de 5 etapas? E se eu souber o resultado, como descubro quantas etapas foram necessárias?</div>
+    </section>
+
+    <section class="section">
+      <h2>1. Crescer somando não é o mesmo que crescer multiplicando</h2>
+      <div class="grid">
+        <div class="card"><strong>Crescimento aditivo</strong>Começa em 2 e soma 2 a cada etapa:<br><code>2, 4, 6, 8, 10...</code></div>
+        <div class="card"><strong>Crescimento multiplicativo</strong>Começa em 2 e multiplica por 2 a cada etapa:<br><code>2, 4, 8, 16, 32...</code></div>
+      </div>
+      <p>No segundo caso, o aumento vai ficando cada vez maior porque o valor novo depende do valor que já foi acumulado.</p>
+      <div class="note"><strong>Ideia-chave:</strong> quando a variável aparece no expoente, estamos diante do tipo de comportamento que pode ser modelado por uma função exponencial.</div>
+    </section>
+
+    <section class="section">
+      <h2>2. Função exponencial</h2>
+      <p>A forma básica é:</p>
+      <div class="formula">f(x) = a<sup>x</sup><small>com a &gt; 0 e a ≠ 1</small></div>
+      <p><strong>x</strong> é a variável. <strong>a</strong> é a base. A base precisa ser positiva e diferente de 1 para que tenhamos a função exponencial real usual.</p>
+
+      <div class="grid">
+        <div class="card"><strong>Se a &gt; 1</strong>A função é crescente.<br>Ex.: <code>2<sup>x</sup></code>.</div>
+        <div class="card"><strong>Se 0 &lt; a &lt; 1</strong>A função é decrescente.<br>Ex.: <code>(1/2)<sup>x</sup></code>.</div>
+      </div>
+
+      <h3>Vamos enxergar em uma tabela</h3>
+      <table aria-label="Valores da função dois elevado a x">
+        <thead><tr><th>x</th><th>-2</th><th>-1</th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
+        <tbody><tr><th>2<sup>x</sup></th><td>1/4</td><td>1/2</td><td>1</td><td>2</td><td>4</td><td>8</td></tr></tbody>
+      </table>
+      <div class="checkpoint"><strong>Observe:</strong> qualquer base positiva elevada a zero vale 1. Por isso o gráfico de <code>a<sup>x</sup></code> sempre passa pelo ponto <code>(0,1)</code>.</div>
+
+      <div class="svg-wrap" aria-label="Esboço do gráfico de y igual a dois elevado a x">
+        <svg viewBox="0 0 620 300" role="img" aria-labelledby="expTitle expDesc">
+          <title id="expTitle">Gráfico de y igual a 2 elevado a x</title>
+          <desc id="expDesc">Curva crescente, sempre acima do eixo x, passando por zero vírgula um, um vírgula dois, dois vírgula quatro e três vírgula oito.</desc>
+          <line x1="45" y1="248" x2="590" y2="248" stroke="#5d6a79" stroke-width="2"/>
+          <line x1="285" y1="25" x2="285" y2="270" stroke="#5d6a79" stroke-width="2"/>
+          <text x="575" y="239" fill="#5d6a79">x</text><text x="295" y="38" fill="#5d6a79">y</text>
+          <path d="M75 240 C155 236,215 226,285 220 C335 213,370 195,405 165 C440 132,470 90,500 45" fill="none" stroke="#1769aa" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="285" cy="220" r="5" fill="#1769aa"/><circle cx="355" cy="195" r="5" fill="#1769aa"/><circle cx="425" cy="145" r="5" fill="#1769aa"/>
+          <text x="294" y="216" fill="#20304a">(0,1)</text><text x="363" y="190" fill="#20304a">(1,2)</text><text x="433" y="140" fill="#20304a">(2,4)</text>
+        </svg>
+      </div>
+      <ul class="checklist">
+        <li>Domínio: todos os números reais.</li>
+        <li>Imagem: somente valores positivos.</li>
+        <li>O gráfico nunca toca o eixo x.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>3. Exemplo resolvido: crescimento por duplicação</h2>
+      <p>Em um modelo simplificado, uma população de microrganismos começa com 100 indivíduos e dobra a cada hora.</p>
+      <div class="formula">P(t) = 100 · 2<sup>t</sup></div>
+      <div class="example">
+        <strong>Quantos indivíduos o modelo prevê após 4 horas?</strong>
+        <ol>
+          <li>O tempo é <code>t = 4</code>.</li>
+          <li>Substituímos: <code>P(4) = 100 · 2<sup>4</sup></code>.</li>
+          <li>Calculamos a potência: <code>2<sup>4</sup> = 16</code>.</li>
+          <li>Então: <code>P(4) = 100 · 16 = 1600</code>.</li>
+        </ol>
+      </div>
+      <div class="note"><strong>Interpretação:</strong> 1600 não é apenas “o resultado da conta”. É a quantidade prevista pelo modelo após quatro ciclos de duplicação.</div>
+      <div class="question"><strong>Conferência rápida:</strong> 100 → 200 → 400 → 800 → 1600. A sequência confirma o cálculo.</div>
+    </section>
+
+    <section class="section">
+      <h2>4. Agora surge a pergunta inversa</h2>
+      <p>Sabemos que <code>2<sup>4</sup> = 16</code>. Mas e se a pergunta for:</p>
+      <div class="question"><strong>“2 elevado a qual número dá 16?”</strong></div>
+      <p>A resposta é 4. O <span class="marker">logaritmo</span> é justamente a ferramenta que registra essa pergunta.</p>
+      <div class="formula">log<sub>2</sub>(16) = 4 <small>porque 2<sup>4</sup> = 16</small></div>
+    </section>
+
+    <section class="section">
+      <h2>5. Logaritmo, sem mistério</h2>
+      <div class="formula">log<sub>a</sub>(b) = x ⇔ a<sup>x</sup> = b<small>a &gt; 0, a ≠ 1 e b &gt; 0</small></div>
+      <p>Leia assim: <strong>“logaritmo de b na base a é o expoente x ao qual a deve ser elevada para produzir b.”</strong></p>
+
+      <div class="steps">
+        <div class="step"><strong>log<sub>10</sub>(1000)</strong><br>Pergunte: 10 elevado a quanto dá 1000?</div>
+        <div class="step"><strong>10<sup>3</sup> = 1000</strong><br>Logo, o expoente procurado é 3.</div>
+        <div class="step"><strong>Resposta:</strong> <code>log<sub>10</sub>(1000) = 3</code>.</div>
+      </div>
+
+      <div class="warning"><strong>Erro comum:</strong> achar que “log” é uma nova operação sem significado. Volte sempre à pergunta: <em>qual é o expoente?</em></div>
+    </section>
+
+    <section class="section">
+      <h2>6. Exponencial e logaritmo são operações inversas</h2>
+      <p>A exponencial vai do <strong>expoente para o resultado</strong>. O logaritmo faz o caminho contrário.</p>
+      <div class="grid">
+        <div class="card"><strong>Exponencial</strong><code>2<sup>5</sup> = 32</code><br>Conheço o expoente e descubro o resultado.</div>
+        <div class="card"><strong>Logaritmo</strong><code>log<sub>2</sub>(32) = 5</code><br>Conheço o resultado e descubro o expoente.</div>
+      </div>
+      <div class="note"><strong>Atalho mental seguro:</strong> sempre transforme o logaritmo em uma potência equivalente quando estiver aprendendo.</div>
+    </section>
+
+    <section class="section">
+      <h2>7. Onde isso aparece de verdade?</h2>
+      <div class="grid">
+        <div class="card"><strong>Juros compostos</strong>O capital é multiplicado repetidamente por um fator do tipo <code>(1+i)</code>.</div>
+        <div class="card"><strong>Crescimento e decaimento</strong>Modelos populacionais, radioatividade e outros fenômenos podem apresentar comportamento exponencial em condições adequadas.</div>
+        <div class="card"><strong>Escalas logarítmicas</strong>Logaritmos aparecem em modelos e escalas como pH e intensidade sonora.</div>
+        <div class="card"><strong>Computação</strong>Logaritmos ajudam a descrever quantas vezes podemos dividir um problema por um fator, ideia frequente em análise de algoritmos.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>8. O que você precisa guardar</h2>
+      <ul class="checklist">
+        <li>Exponencial: a variável está no expoente.</li>
+        <li><code>f(x)=a<sup>x</sup></code>, com <code>a&gt;0</code> e <code>a≠1</code>.</li>
+        <li>Se <code>a&gt;1</code>, há crescimento; se <code>0&lt;a&lt;1</code>, há decrescimento.</li>
+        <li>Logaritmo responde: “qual expoente produz este valor?”</li>
+        <li><code>log<sub>a</sub>(b)=x</code> equivale a <code>a<sup>x</sup>=b</code>.</li>
+        <li>Exponencial e logaritmo fazem caminhos inversos.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>9. Prática curta</h2>
+      <div class="mini-test">
+        <details><summary>1. Calcule 3<sup>4</sup>.</summary><p><strong>81.</strong> Pois 3 · 3 · 3 · 3 = 81.</p></details>
+        <details><summary>2. A função f(x)=(1/3)<sup>x</sup> é crescente ou decrescente?</summary><p><strong>Decrescente.</strong> A base está entre 0 e 1.</p></details>
+        <details><summary>3. Quanto vale log<sub>2</sub>(8)?</summary><p><strong>3.</strong> Porque 2<sup>3</sup> = 8.</p></details>
+        <details><summary>4. Quanto vale log<sub>10</sub>(0,01)?</summary><p><strong>-2.</strong> Porque 10<sup>-2</sup> = 0,01.</p></details>
+        <details><summary>5. Se Q(t)=50·2<sup>t</sup>, quanto vale Q(3)?</summary><p><strong>400.</strong> Q(3)=50·8=400.</p></details>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>10. Fechamento MbB</h2>
+      <div class="question"><strong>Tente explicar sem olhar:</strong><br>1) o que diferencia crescimento aditivo de crescimento exponencial;<br>2) o que significa <code>log<sub>2</sub>(16)=4</code>;<br>3) por que exponencial e logaritmo são operações inversas.</div>
+      <p>Se você consegue explicar essas três ideias com suas próprias palavras, já construiu a base conceitual do tópico. As propriedades e equações mais avançadas podem vir depois, sem precisar decorar tudo de uma vez.</p>
+    </section>
+
+    <p class="footer-note">Protótipo pedagógico experimental • Mundo bit Byte • Ainda não integrado à navegação do site.</p>
+  </main>
+</body>
+</html>
