@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Web I do Mundo bit Byte: aprenda HTML, acessibilidade e CSS enquanto constrói o site completo de um pequeno negócio local.">
+  <meta name="description" content="Web I do Mundo bit Byte: aprenda HTML, acessibilidade, CSS responsivo e JavaScript enquanto constrói o site completo de um pequeno negócio local.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
   <title>Web I — Capítulo 1 | Mundo bit Byte</title>
-  <link href="../../css/programacao-web.css?v=8" rel="stylesheet">
+  <link href="../../css/programacao-web.css?v=9" rel="stylesheet">
 </head>
 <body class="module-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -33,6 +33,7 @@
       <a class="chapter-link" href="#capitulo-4" data-chapter-link="capitulo-4">4. Formulários e acessibilidade</a>
       <a class="chapter-link" href="#capitulo-5" data-chapter-link="capitulo-5">5. Identidade visual com CSS</a>
       <a class="chapter-link" href="#capitulo-6" data-chapter-link="capitulo-6">6. Layout responsivo</a>
+      <a class="chapter-link" href="#capitulo-7" data-chapter-link="capitulo-7">7. JavaScript: comportamento e interação</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -2217,12 +2218,366 @@ img {
 
         <div class="chapter-footer">
           <a href="#capitulo-5" data-chapter-link="capitulo-5">← Capítulo 5</a>
-          <span aria-disabled="true">Próximo capítulo em breve</span>
+          <a href="#capitulo-7" data-chapter-link="capitulo-7">Capítulo 7 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-7" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 7 — JavaScript: comportamento e interação</h2>
+          <p class="chapter-meta">Arquivo externo, valores, condições, funções, DOM, eventos, filtros e melhoria progressiva.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-7">
+          <h3 id="contexto-7">O site funciona; agora ele pode responder às pessoas</h3>
+          <p>O site responsivo do <strong>Café Aurora</strong> já apresenta todo o conteúdo sem depender de programação. Agora a proprietária quer facilitar duas tarefas: filtrar os produtos do cardápio e acompanhar o tamanho da mensagem de contato.</p>
+          <p>JavaScript entrará como uma camada de comportamento. Se ele não carregar, os produtos e o formulário continuarão disponíveis. Essa ideia se chama <strong>melhoria progressiva</strong>.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-7">
+          <h3 id="objetivos-7">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Explicar o papel do JavaScript em relação ao HTML e ao CSS.</li>
+            <li>Conectar um arquivo <code class="inline-code">script.js</code> usando <code class="inline-code">defer</code>.</li>
+            <li>Trabalhar com valores, variáveis, condições e funções simples.</li>
+            <li>Localizar elementos no DOM e responder aos eventos <code class="inline-code">click</code> e <code class="inline-code">input</code>.</li>
+            <li>Construir um filtro de cardápio acessível e um contador de caracteres.</li>
+            <li>Usar o Console para observar mensagens e investigar erros.</li>
+            <li>Preservar o funcionamento básico da página sem JavaScript.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-7">
+          <h3 id="aula-1-7">Aula 1 — O primeiro arquivo JavaScript</h3>
+          <p>Crie a pasta <code class="inline-code">js</code> e, dentro dela, o arquivo <code class="inline-code">script.js</code>. Antes do fechamento de <code class="inline-code">body</code> em cada página, conecte o arquivo:</p>
+
+          <pre class="code-block"><code>&lt;script src="js/script.js" defer&gt;&lt;/script&gt;</code></pre>
+
+          <p><code class="inline-code">src</code> informa o caminho. <code class="inline-code">defer</code> permite que o navegador continue lendo o HTML e execute o script somente depois que o documento estiver analisado. Assim, o JavaScript encontra os elementos que precisa usar.</p>
+
+          <h4>Confirme a conexão no Console</h4>
+          <pre class="code-block"><code>console.log("JavaScript do Café Aurora conectado.");</code></pre>
+
+          <figure class="tool-figure">
+            <img src="../../img/programacao-web/devtools-console.webp" alt="Painel Console do Chrome DevTools exibindo uma mensagem e a linha para executar JavaScript" width="1320" height="814" loading="lazy">
+            <figcaption>Abra o Console com Ctrl + Shift + J no Windows/Linux ou Command + Option + J no macOS. A aparência pode variar conforme o navegador. Fonte: <a href="https://developer.chrome.com/docs/devtools/console/reference">documentação oficial do Chrome DevTools</a>.</figcaption>
+          </figure>
+
+          <p>Salve o arquivo, recarregue a página e procure a mensagem. Um erro vermelho geralmente informa o arquivo e a linha onde o navegador encontrou o problema; comece a leitura pela primeira mensagem causada pelo seu código.</p>
+
+          <h4>Valores e variáveis</h4>
+          <pre class="code-block"><code>const nomeDoCafe = "Café Aurora"; // texto
+const quantidadeDeProdutos = 3;  // número
+const estaAberto = true;         // verdadeiro ou falso
+let filtroAtual = "todos";       // valor que poderá mudar</code></pre>
+
+          <p>Use <code class="inline-code">const</code> quando a variável não será reatribuída e <code class="inline-code">let</code> quando seu valor precisará mudar. Nomes claros tornam o código mais fácil de explicar e revisar.</p>
+
+          <h4>Condição e função</h4>
+          <pre class="code-block"><code>function informarAtendimento(estaAberto) {
+  if (estaAberto) {
+    return "Estamos abertos.";
+  }
+
+  return "Estamos fechados no momento.";
+}
+
+console.log(informarAtendimento(estaAberto));</code></pre>
+
+          <div class="task-box">
+            <h4>Experimente</h4>
+            <p>Troque <code class="inline-code">true</code> por <code class="inline-code">false</code>, recarregue a página e explique por que a função devolveu outra mensagem. Depois restaure o valor.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-7">
+          <h3 id="aula-2-7">Aula 2 — DOM e eventos</h3>
+          <p>O navegador transforma o HTML em uma estrutura de objetos chamada <strong>DOM</strong>. JavaScript pode localizar um elemento nessa estrutura, ler ou alterar propriedades e reagir a ações da pessoa.</p>
+
+          <div class="mini-grid">
+            <div class="mini-card"><strong><code class="inline-code">querySelector()</code></strong><p>Localiza o primeiro elemento que corresponde a um seletor CSS.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">textContent</code></strong><p>Lê ou substitui o texto de um elemento sem interpretar HTML.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">addEventListener()</code></strong><p>Executa uma função quando um evento acontece.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">event</code></strong><p>Representa o acontecimento e fornece informações sobre ele.</p></div>
+          </div>
+
+          <p>Acrescente um parágrafo de retorno ao HTML:</p>
+          <pre class="code-block"><code>&lt;p id="aviso-cardapio"&gt;Todos os produtos estão visíveis.&lt;/p&gt;</code></pre>
+
+          <p>Depois localize-o e altere seu texto quando um botão for acionado:</p>
+          <pre class="code-block"><code>const aviso = document.querySelector("#aviso-cardapio");
+const botao = document.querySelector("#botao-destaques");
+
+if (aviso &amp;&amp; botao) {
+  botao.addEventListener("click", function () {
+    aviso.textContent = "Mostrando os destaques da casa.";
+  });
+}</code></pre>
+
+          <div class="concept-box">
+            <strong>O teste evita interromper o restante do arquivo.</strong>
+            <p>Se um seletor não encontrar o elemento, o valor será <code class="inline-code">null</code>. A condição confirma que os dois elementos existem antes de tentar usá-los.</p>
+          </div>
+
+          <div class="note-box">
+            <strong>Prefira eventos no arquivo JavaScript.</strong>
+            <p><code class="inline-code">addEventListener()</code> mantém estrutura e comportamento separados. Evite colocar <code class="inline-code">onclick</code> diretamente no HTML neste projeto.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Investigue no Console</h4>
+            <ol>
+              <li>Execute <code class="inline-code">document.querySelector("h1")</code> e observe o elemento localizado.</li>
+              <li>Troque o seletor por um ID inexistente e observe <code class="inline-code">null</code>.</li>
+              <li>Introduza temporariamente um erro de digitação no script, recarregue e use o nome do arquivo e a linha indicados no Console para corrigi-lo.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-7">
+          <h3 id="aula-3-7">Aula 3 — Filtro acessível para o cardápio</h3>
+          <p>Os filtros serão botões nativos. O rótulo de cada botão permanece estável e <code class="inline-code">aria-pressed</code> informa qual opção está ativa. Os controles começam ocultos e aparecem somente quando o JavaScript consegue prepará-los; sem script, todos os produtos continuam visíveis.</p>
+
+          <h4>Experimente o resultado</h4>
+          <section class="filter-playground" aria-labelledby="demo-filtro-titulo" data-js-demo-filter>
+            <h4 id="demo-filtro-titulo">Cardápio do Café Aurora</h4>
+            <div class="filter-controls" role="group" aria-label="Filtrar produtos" data-demo-filter-controls hidden>
+              <span>Filtrar por:</span>
+              <button type="button" data-demo-filter="todos" aria-pressed="true" aria-controls="demo-lista-produtos-7">Todos</button>
+              <button type="button" data-demo-filter="bebida" aria-pressed="false" aria-controls="demo-lista-produtos-7">Bebidas</button>
+              <button type="button" data-demo-filter="comida" aria-pressed="false" aria-controls="demo-lista-produtos-7">Comidas</button>
+            </div>
+            <p class="filter-status" role="status" data-demo-filter-status>3 produtos encontrados.</p>
+            <div class="filter-products" id="demo-lista-produtos-7">
+              <article data-demo-product="bebida"><img src="../../img/programacao-web/cafe-coado.webp" alt="" width="1536" height="1024" loading="lazy"><h5>Café coado</h5><p>Bebida</p></article>
+              <article data-demo-product="comida"><img src="../../img/programacao-web/pao-artesanal.webp" alt="" width="1536" height="1024" loading="lazy"><h5>Pão artesanal</h5><p>Comida</p></article>
+              <article data-demo-product="comida"><img src="../../img/programacao-web/bolo-caseiro.webp" alt="" width="1536" height="1024" loading="lazy"><h5>Bolo de laranja</h5><p>Comida</p></article>
+            </div>
+          </section>
+
+          <h4>Prepare o HTML do projeto</h4>
+          <pre class="code-block"><code>&lt;div class="filtros" role="group" aria-label="Filtrar produtos" data-filtros hidden&gt;
+  &lt;span&gt;Filtrar por:&lt;/span&gt;
+  &lt;button type="button" data-filtro="todos" aria-pressed="true"
+    aria-controls="lista-produtos"&gt;Todos&lt;/button&gt;
+  &lt;button type="button" data-filtro="bebida" aria-pressed="false"
+    aria-controls="lista-produtos"&gt;Bebidas&lt;/button&gt;
+  &lt;button type="button" data-filtro="comida" aria-pressed="false"
+    aria-controls="lista-produtos"&gt;Comidas&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;p data-status-filtro role="status"&gt;&lt;/p&gt;
+
+&lt;div class="grade-produtos" id="lista-produtos"&gt;
+  &lt;article data-categoria="bebida"&gt;...&lt;/article&gt;
+  &lt;article data-categoria="comida"&gt;...&lt;/article&gt;
+  &lt;article data-categoria="comida"&gt;...&lt;/article&gt;
+&lt;/div&gt;</code></pre>
+
+          <h4>Construa o comportamento por partes</h4>
+          <pre class="code-block"><code>const filtros = document.querySelector("[data-filtros]");
+const botoesFiltro = document.querySelectorAll("[data-filtro]");
+const produtos = document.querySelectorAll("[data-categoria]");
+const statusFiltro = document.querySelector("[data-status-filtro]");</code></pre>
+
+          <pre class="code-block"><code>function filtrarProdutos(categoria) {
+  let quantidadeVisivel = 0;
+
+  produtos.forEach(function (produto) {
+    const deveMostrar = categoria === "todos" ||
+      produto.dataset.categoria === categoria;
+
+    produto.hidden = !deveMostrar;
+    if (deveMostrar) quantidadeVisivel += 1;
+  });
+
+  const complemento = quantidadeVisivel === 1 ?
+    "produto encontrado" : "produtos encontrados";
+  statusFiltro.textContent = `${quantidadeVisivel} ${complemento}.`;
+}</code></pre>
+
+          <pre class="code-block"><code>botoesFiltro.forEach(function (botao) {
+  botao.addEventListener("click", function () {
+    botoesFiltro.forEach(function (item) {
+      item.setAttribute("aria-pressed", "false");
+    });
+
+    botao.setAttribute("aria-pressed", "true");
+    filtrarProdutos(botao.dataset.filtro);
+  });
+});</code></pre>
+
+          <details class="code-disclosure">
+            <summary>Código completo para conferência — filtro</summary>
+            <pre class="code-block"><code>const filtros = document.querySelector("[data-filtros]");
+const botoesFiltro = document.querySelectorAll("[data-filtro]");
+const produtos = document.querySelectorAll("[data-categoria]");
+const statusFiltro = document.querySelector("[data-status-filtro]");
+
+if (filtros &amp;&amp; botoesFiltro.length &amp;&amp; produtos.length &amp;&amp; statusFiltro) {
+  function filtrarProdutos(categoria) {
+    let quantidadeVisivel = 0;
+
+    produtos.forEach(function (produto) {
+      const deveMostrar = categoria === "todos" ||
+        produto.dataset.categoria === categoria;
+
+      produto.hidden = !deveMostrar;
+      if (deveMostrar) quantidadeVisivel += 1;
+    });
+
+    const complemento = quantidadeVisivel === 1 ?
+      "produto encontrado" : "produtos encontrados";
+    statusFiltro.textContent = `${quantidadeVisivel} ${complemento}.`;
+  }
+
+  botoesFiltro.forEach(function (botao) {
+    botao.addEventListener("click", function () {
+      botoesFiltro.forEach(function (item) {
+        item.setAttribute("aria-pressed", "false");
+      });
+
+      botao.setAttribute("aria-pressed", "true");
+      filtrarProdutos(botao.dataset.filtro);
+    });
+  });
+
+  filtros.hidden = false;
+  filtrarProdutos("todos");
+}</code></pre>
+          </details>
+
+          <div class="task-box">
+            <h4>Teste a melhoria progressiva</h4>
+            <p>Desative JavaScript no DevTools ou remova temporariamente a linha do script. Recarregue a página: os controles não devem aparecer, mas os três produtos precisam continuar visíveis. Depois restaure o arquivo.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-7">
+          <h3 id="aula-4-7">Aula 4 — Contador de caracteres e revisão</h3>
+          <p>O evento <code class="inline-code">input</code> acontece quando o valor de um campo muda. Usaremos <code class="inline-code">value.length</code> para contar caracteres e <code class="inline-code">textContent</code> para atualizar uma orientação já associada ao campo.</p>
+
+          <div class="counter-playground" data-js-demo-counter>
+            <label for="mensagem-demo-7">Mensagem de teste</label>
+            <p id="ajuda-mensagem-demo-7">Escreva até 120 caracteres. Nada será enviado.</p>
+            <textarea id="mensagem-demo-7" maxlength="120" rows="4" aria-describedby="ajuda-mensagem-demo-7 contador-demo-7" data-demo-counter-field></textarea>
+            <p id="contador-demo-7" class="character-counter" data-demo-counter-output>0 de 120 caracteres</p>
+          </div>
+
+          <h4>Atualize o HTML do formulário</h4>
+          <pre class="code-block"><code>&lt;label for="mensagem"&gt;Mensagem (obrigatória)&lt;/label&gt;
+&lt;p id="ajuda-mensagem"&gt;Escreva entre 10 e 500 caracteres.&lt;/p&gt;
+&lt;textarea id="mensagem" name="mensagem" minlength="10" maxlength="500"
+  aria-describedby="ajuda-mensagem contador-mensagem" required&gt;&lt;/textarea&gt;
+&lt;p id="contador-mensagem"&gt;0 de 500 caracteres&lt;/p&gt;</code></pre>
+
+          <h4>Escute cada alteração</h4>
+          <pre class="code-block"><code>const mensagem = document.querySelector("#mensagem");
+const contador = document.querySelector("#contador-mensagem");
+
+if (mensagem &amp;&amp; contador) {
+  mensagem.addEventListener("input", function () {
+    const quantidade = mensagem.value.length;
+    contador.textContent = `${quantidade} de 500 caracteres`;
+  });
+}</code></pre>
+
+          <div class="note-box">
+            <strong>Evite anúncios a cada tecla.</strong>
+            <p>O contador está relacionado ao campo por <code class="inline-code">aria-describedby</code>, mas não usa uma região viva. Atualizá-la a cada caractere poderia gerar interrupções excessivas para quem usa leitor de tela.</p>
+          </div>
+
+          <h4>Procedimento final de teste</h4>
+          <ol>
+            <li>Recarregue a página com o Console aberto e corrija o primeiro erro causado pelo seu script.</li>
+            <li>Use Tab, Espaço e Enter para operar todos os filtros sem mouse.</li>
+            <li>Confirme que somente os cards esperados ficam visíveis e que o status apresenta a quantidade.</li>
+            <li>Digite, apague e cole texto no campo; o contador deve acompanhar as três ações.</li>
+            <li>Teste o site sem JavaScript e confirme que conteúdo, links e formulário básico permanecem utilizáveis.</li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="erros-7">
+          <h3 id="erros-7">Erros comuns para revisar</h3>
+          <ul>
+            <li>Escrever um caminho incorreto para <code class="inline-code">script.js</code> ou esquecer de salvar o arquivo.</li>
+            <li>Confundir <code class="inline-code">=</code>, usado para atribuição, com <code class="inline-code">===</code>, usado para comparação estrita.</li>
+            <li>Usar um seletor que não corresponde ao HTML e tentar acessar uma propriedade de <code class="inline-code">null</code>.</li>
+            <li>Chamar a função no lugar de entregá-la ao evento: <code class="inline-code">addEventListener("click", filtrar())</code>.</li>
+            <li>Alterar o rótulo de um botão pressionado em vez de atualizar seu estado.</li>
+            <li>Esconder todos os produtos no HTML e tornar o conteúdo dependente de JavaScript.</li>
+            <li>Usar <code class="inline-code">innerHTML</code> quando apenas <code class="inline-code">textContent</code> é necessário.</li>
+            <li>Testar somente com o mouse e ignorar Console, teclado e funcionamento sem script.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="projeto-7">
+          <h3 id="projeto-7">Projeto aplicado — entrega do capítulo</h3>
+          <p>Conclua a primeira camada de comportamento do Café Aurora:</p>
+          <ul>
+            <li>arquivo <code class="inline-code">js/script.js</code> conectado com <code class="inline-code">defer</code>;</li>
+            <li>filtros do cardápio preparados somente quando JavaScript estiver disponível;</li>
+            <li>botões nativos com estado pressionado atualizado corretamente;</li>
+            <li>cards mostrados ou ocultados pela categoria;</li>
+            <li>mensagem de status com a quantidade encontrada;</li>
+            <li>contador relacionado ao campo de mensagem;</li>
+            <li>nenhum erro do projeto no Console;</li>
+            <li>conteúdo e formulário básico disponíveis sem JavaScript.</li>
+          </ul>
+          <p>Entregue os arquivos do site e uma breve explicação: qual necessidade cada interação resolve e o que permanece funcionando quando o script não carrega?</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-7">
+          <h3 id="check-7">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Sei diferenciar estrutura, apresentação e comportamento.</li>
+            <li>Conecto um arquivo JavaScript externo e explico o uso de <code class="inline-code">defer</code>.</li>
+            <li>Reconheço textos, números, booleanos, variáveis, condições e funções.</li>
+            <li>Localizo elementos e verifico se eles existem antes de usá-los.</li>
+            <li>Respondo aos eventos <code class="inline-code">click</code> e <code class="inline-code">input</code>.</li>
+            <li>Atualizo texto, estado e visibilidade sem retirar a semântica do HTML.</li>
+            <li>Uso o Console para confirmar mensagens e localizar erros.</li>
+            <li>Consigo explicar e testar a melhoria progressiva.</li>
+          </ul>
+        </section>
+
+        <section class="concept-box" aria-labelledby="fontes-7">
+          <h3 id="fontes-7">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_is_JavaScript">O que é JavaScript? — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector">querySelector() — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener">addEventListener() — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">textContent — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-pressed">aria-pressed — MDN</a></li>
+            <li><a href="https://developer.chrome.com/docs/devtools/console/reference">Console do Chrome DevTools — Chrome for Developers</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Web I concluído</strong>
+          <p>O Café Aurora agora reúne HTML semântico, formulário acessível, identidade visual, layout responsivo e uma primeira camada de comportamento com JavaScript. Você construiu um site completo, bonito, responsivo e funcional sem esconder a base que torna cada recurso compreensível.</p>
+        </div>
+
+        <section class="task-box" aria-labelledby="transferencia-7">
+          <h3 id="transferencia-7">Transfira o aprendizado</h3>
+          <p>Escolha apenas um contexto simples — biblioteca, feira comunitária ou oficina — e descreva uma interação útil com um botão, um evento e uma alteração no DOM. Indique também o que permaneceria disponível sem JavaScript. Não desenvolva outro site completo.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do Capítulo 7">
+          <strong>Checkpoint final para conferência</strong>
+          <p>Use este ZIP para conferir ou recuperar a versão completa com JavaScript depois de realizar sua própria construção e seus testes.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-capitulo-7.zip" download>Baixar checkpoint do Capítulo 7 (ZIP)</a>
+        </aside>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-6" data-chapter-link="capitulo-6">← Capítulo 6</a>
+          <span aria-disabled="true">Fim do Web I</span>
         </div>
       </article>
     </main>
   </div>
 
-  <script src="../../js/programacao-web.js?v=4"></script>
+  <script src="../../js/programacao-web.js?v=5"></script>
 </body>
 </html>

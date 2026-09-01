@@ -92,6 +92,54 @@
     });
   }
 
+  function setupJavaScriptDemos() {
+    document.querySelectorAll("[data-js-demo-filter]").forEach((demo) => {
+      const controls = demo.querySelector("[data-demo-filter-controls]");
+      const buttons = Array.from(demo.querySelectorAll("[data-demo-filter]"));
+      const products = Array.from(demo.querySelectorAll("[data-demo-product]"));
+      const status = demo.querySelector("[data-demo-filter-status]");
+
+      if (!controls || !buttons.length || !products.length || !status) return;
+
+      function applyFilter(category) {
+        let visibleProducts = 0;
+
+        products.forEach((product) => {
+          const shouldShow = category === "todos" || product.dataset.demoProduct === category;
+          product.hidden = !shouldShow;
+          if (shouldShow) visibleProducts += 1;
+        });
+
+        status.textContent = `${visibleProducts} ${visibleProducts === 1 ? "produto encontrado" : "produtos encontrados"}.`;
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          buttons.forEach((item) => item.setAttribute("aria-pressed", "false"));
+          button.setAttribute("aria-pressed", "true");
+          applyFilter(button.dataset.demoFilter);
+        });
+      });
+
+      controls.hidden = false;
+      applyFilter("todos");
+    });
+
+    document.querySelectorAll("[data-js-demo-counter]").forEach((demo) => {
+      const field = demo.querySelector("[data-demo-counter-field]");
+      const output = demo.querySelector("[data-demo-counter-output]");
+
+      if (!field || !output) return;
+
+      function updateCounter() {
+        output.textContent = `${field.value.length} de ${field.maxLength} caracteres`;
+      }
+
+      field.addEventListener("input", updateCounter);
+      updateCounter();
+    });
+  }
+
   function chapterFromHash() {
     const id = decodeURIComponent(window.location.hash.slice(1));
     return chapterIds.has(id) ? id : chapters[0].id;
@@ -177,5 +225,6 @@
   page.classList.add("js-ready");
   setupCopyButtons();
   setupDemoForms();
+  setupJavaScriptDemos();
   showChapter(chapterFromHash());
 }());
