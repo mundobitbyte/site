@@ -6,7 +6,7 @@
   <meta name="description" content="Web I do Mundo bit Byte: aprenda os fundamentos da Web e construa a página inicial de um pequeno negócio local com HTML.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
   <title>Web I — Capítulo 1 | Mundo bit Byte</title>
-  <link href="../../css/programacao-web.css?v=4" rel="stylesheet">
+  <link href="../../css/programacao-web.css?v=5" rel="stylesheet">
 </head>
 <body class="module-page">
   <header>
@@ -29,6 +29,7 @@
       <a class="chapter-link" href="#capitulo-1" data-chapter-link="capitulo-1">1. Da necessidade ao primeiro arquivo</a>
       <a class="chapter-link" href="#capitulo-2" data-chapter-link="capitulo-2">2. Construindo a página inicial</a>
       <a class="chapter-link" href="#capitulo-3" data-chapter-link="capitulo-3">3. Organizando o site em páginas</a>
+      <a class="chapter-link" href="#capitulo-4" data-chapter-link="capitulo-4">4. Formulários e acessibilidade</a>
     </nav>
 
     <main class="web-content" id="conteudo">
@@ -955,12 +956,435 @@ abertura        conteúdo          fechamento</code></pre>
 
         <div class="chapter-footer">
           <a href="#capitulo-2" data-chapter-link="capitulo-2">← Capítulo 2</a>
+          <a href="#capitulo-4" data-chapter-link="capitulo-4">Capítulo 4 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-4" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 4 — Formulários e acessibilidade</h2>
+          <p class="chapter-meta">Coleta de dados, validação nativa, rótulos, instruções e testes por teclado.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-4">
+          <h3 id="contexto-4">O visitante precisa conseguir entrar em contato</h3>
+          <p>O site do <strong>Café Aurora</strong> já informa produtos, história, endereço e horários. Entretanto, quem deseja tirar uma dúvida, consultar uma encomenda ou enviar uma sugestão ainda precisa sair do site.</p>
+          <p>Vamos preparar um formulário de contato compreensível para diferentes pessoas e dispositivos. Ele terá campos bem identificados e validação feita pelo navegador. O envio definitivo dependerá de um servidor, assunto que será desenvolvido no Web II.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-4">
+          <h3 id="objetivos-4">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Entender o caminho dos dados de um formulário.</li>
+            <li>Reconhecer a função de <code class="inline-code">form</code>, <code class="inline-code">label</code>, <code class="inline-code">input</code>, <code class="inline-code">select</code>, <code class="inline-code">textarea</code> e <code class="inline-code">button</code>.</li>
+            <li>Relacionar rótulos e campos com <code class="inline-code">for</code> e <code class="inline-code">id</code>.</li>
+            <li>Organizar campos relacionados com <code class="inline-code">fieldset</code> e <code class="inline-code">legend</code>.</li>
+            <li>Usar tipos de campo, <code class="inline-code">name</code>, <code class="inline-code">autocomplete</code>, <code class="inline-code">required</code>, limites e instruções.</li>
+            <li>Testar o formulário com teclado, ampliação e validação nativa.</li>
+            <li>Distinguir validação no navegador de validação no servidor.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-4">
+          <h3 id="aula-1-4">Aula 1 — O que acontece com os dados</h3>
+          <p>Um formulário é uma região com controles interativos usados para coletar informações. Quando o visitante envia os dados, o navegador prepara uma solicitação para um endereço capaz de recebê-los.</p>
+
+          <div class="flow" role="img" aria-label="Fluxo dos dados de um formulário">Pessoa preenche os campos
+          ↓
+Navegador verifica regras básicas
+          ↓
+Formulário envia uma solicitação HTTP
+          ↓
+Servidor valida e processa os dados
+          ↓
+Site apresenta uma resposta</div>
+
+          <div class="concept-box">
+            <strong>O limite deste capítulo</strong>
+            <p>No Web I, construiremos a parte que aparece no navegador. A rota do servidor que recebe, protege, armazena ou encaminha os dados será criada no Web II. Nenhum formulário apenas em HTML consegue, sozinho, enviar uma mensagem para a empresa.</p>
+          </div>
+
+          <h4>A estrutura inicial</h4>
+          <pre class="code-block"><code>&lt;form action="/enviar-contato" method="post"&gt;
+  &lt;!-- Os campos serão colocados aqui. --&gt;
+&lt;/form&gt;</code></pre>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Recurso</th><th>Função</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">action</code></td><td>Indica a rota que receberá os dados. <code class="inline-code">/enviar-contato</code> é uma rota futura e ainda não funciona no site estático.</td></tr>
+                <tr><td><code class="inline-code">method="post"</code></td><td>Envia os dados no corpo da solicitação. É adequado para mensagens e alterações, mas não substitui HTTPS nem segurança no servidor.</td></tr>
+                <tr><td><code class="inline-code">method="get"</code></td><td>Acrescenta os dados ao endereço. É comum em buscas e filtros compartilháveis, não em mensagens com dados pessoais.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="note-box">
+            <strong>Use somente dados fictícios nos testes.</strong>
+            <p>Não envie nomes, telefones, e-mails ou mensagens reais para serviços de demonstração. Um projeto deve solicitar apenas os dados realmente necessários e informar claramente como serão utilizados.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Pratique</h4>
+            <p>Classifique estas situações: busca de produtos, envio de mensagem, filtro por categoria e alteração de cadastro. Indique quais combinam com <code class="inline-code">GET</code> e quais combinam com <code class="inline-code">POST</code>, justificando cada escolha.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-4">
+          <h3 id="aula-2-4">Aula 2 — Campos identificados corretamente</h3>
+          <p>Todo campo precisa de um rótulo visível que explique o que deve ser informado. A associação explícita usa o atributo <code class="inline-code">for</code> no <code class="inline-code">label</code> e um <code class="inline-code">id</code> igual no controle.</p>
+
+          <pre class="code-block"><code>&lt;label for="nome"&gt;Nome completo (obrigatório)&lt;/label&gt;
+&lt;input
+  type="text"
+  id="nome"
+  name="nome"
+  autocomplete="name"
+  minlength="2"
+  required
+&gt;</code></pre>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Atributo</th><th>O que informa</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">type</code></td><td>Define o tipo de controle e pode oferecer teclado e validação adequados.</td></tr>
+                <tr><td><code class="inline-code">id</code></td><td>Identifica o elemento na página e permite ligá-lo ao rótulo e às instruções.</td></tr>
+                <tr><td><code class="inline-code">name</code></td><td>É o nome usado para representar o dado quando o formulário é enviado.</td></tr>
+                <tr><td><code class="inline-code">autocomplete</code></td><td>Explica ao navegador qual informação é esperada e permite preenchimento assistido.</td></tr>
+                <tr><td><code class="inline-code">minlength</code> e <code class="inline-code">maxlength</code></td><td>Definem limites de quantidade de caracteres.</td></tr>
+                <tr><td><code class="inline-code">required</code></td><td>Informa ao navegador e às tecnologias assistivas que o campo é obrigatório.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>E-mail e telefone</h4>
+          <pre class="code-block"><code>&lt;div&gt;
+  &lt;label for="email"&gt;E-mail (obrigatório)&lt;/label&gt;
+  &lt;input
+    type="email"
+    id="email"
+    name="email"
+    autocomplete="email"
+    required
+  &gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+  &lt;label for="telefone"&gt;Telefone (opcional)&lt;/label&gt;
+  &lt;p id="ajuda-telefone"&gt;Inclua o código de área.&lt;/p&gt;
+  &lt;input
+    type="tel"
+    id="telefone"
+    name="telefone"
+    autocomplete="tel"
+    aria-describedby="ajuda-telefone"
+  &gt;
+&lt;/div&gt;</code></pre>
+
+          <ul>
+            <li><code class="inline-code">type="email"</code> permite ao navegador verificar o formato básico e oferecer teclado apropriado.</li>
+            <li><code class="inline-code">type="tel"</code> favorece o teclado numérico em dispositivos móveis, mas não impõe sozinho um formato universal.</li>
+            <li><code class="inline-code">aria-describedby</code> conecta o campo a uma instrução complementar já visível.</li>
+          </ul>
+
+          <div class="note-box">
+            <strong>Placeholder não substitui label.</strong>
+            <p>O texto de <code class="inline-code">placeholder</code> desaparece durante a digitação e pode ter baixo contraste. Use um rótulo permanente e coloque formatos ou orientações em texto visível.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Experimente</h4>
+            <p>Crie os campos Nome, E-mail e Telefone. Clique em cada rótulo e confirme se o cursor vai para o campo correspondente. Depois, altere um <code class="inline-code">for</code> de propósito, observe a falha e corrija-o.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-4">
+          <h3 id="aula-3-4">Aula 3 — Montando o formulário completo</h3>
+          <p>No arquivo <code class="inline-code">contato.html</code>, mantenha as informações de localização e acrescente esta seção dentro de <code class="inline-code">main</code>:</p>
+
+          <pre class="code-block"><code>&lt;section aria-labelledby="fale-conosco"&gt;
+  &lt;h2 id="fale-conosco"&gt;Fale conosco&lt;/h2&gt;
+  &lt;p id="orientacao-formulario"&gt;
+    Os campos identificados como obrigatórios devem ser preenchidos.
+  &lt;/p&gt;
+
+  &lt;form
+    action="/enviar-contato"
+    method="post"
+    aria-describedby="orientacao-formulario"
+  &gt;
+    &lt;fieldset&gt;
+      &lt;legend&gt;Seus dados&lt;/legend&gt;
+
+      &lt;div&gt;
+        &lt;label for="nome"&gt;Nome completo (obrigatório)&lt;/label&gt;
+        &lt;input
+          type="text"
+          id="nome"
+          name="nome"
+          autocomplete="name"
+          minlength="2"
+          required
+        &gt;
+      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;label for="email"&gt;E-mail (obrigatório)&lt;/label&gt;
+        &lt;input
+          type="email"
+          id="email"
+          name="email"
+          autocomplete="email"
+          required
+        &gt;
+      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;label for="telefone"&gt;Telefone (opcional)&lt;/label&gt;
+        &lt;p id="ajuda-telefone"&gt;Inclua o código de área.&lt;/p&gt;
+        &lt;input
+          type="tel"
+          id="telefone"
+          name="telefone"
+          autocomplete="tel"
+          aria-describedby="ajuda-telefone"
+        &gt;
+      &lt;/div&gt;
+    &lt;/fieldset&gt;
+
+    &lt;fieldset&gt;
+      &lt;legend&gt;Sua mensagem&lt;/legend&gt;
+
+      &lt;div&gt;
+        &lt;label for="assunto"&gt;Assunto (obrigatório)&lt;/label&gt;
+        &lt;select id="assunto" name="assunto" required&gt;
+          &lt;option value="" selected disabled&gt;Selecione uma opção&lt;/option&gt;
+          &lt;option value="duvida"&gt;Dúvida&lt;/option&gt;
+          &lt;option value="encomenda"&gt;Encomenda&lt;/option&gt;
+          &lt;option value="sugestao"&gt;Sugestão&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;label for="mensagem"&gt;Mensagem (obrigatória)&lt;/label&gt;
+        &lt;p id="ajuda-mensagem"&gt;Escreva entre 10 e 500 caracteres.&lt;/p&gt;
+        &lt;textarea
+          id="mensagem"
+          name="mensagem"
+          rows="6"
+          minlength="10"
+          maxlength="500"
+          aria-describedby="ajuda-mensagem"
+          required
+        &gt;&lt;/textarea&gt;
+      &lt;/div&gt;
+    &lt;/fieldset&gt;
+
+    &lt;button type="submit"&gt;Enviar mensagem&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/section&gt;</code></pre>
+
+          <div class="concept-box">
+            <strong>Por que agrupar?</strong>
+            <ul>
+              <li><code class="inline-code">fieldset</code> reúne controles relacionados.</li>
+              <li><code class="inline-code">legend</code> dá um título ao grupo.</li>
+              <li><code class="inline-code">select</code> oferece opções predefinidas; cada <code class="inline-code">option</code> representa uma escolha.</li>
+              <li><code class="inline-code">textarea</code> recebe textos com várias linhas; <code class="inline-code">rows</code> sugere sua altura inicial.</li>
+              <li><code class="inline-code">button type="submit"</code> solicita a validação e o envio do formulário.</li>
+            </ul>
+          </div>
+
+          <section class="form-playground" aria-labelledby="teste-formulario">
+            <h4 id="teste-formulario">Teste o formulário no próprio módulo</h4>
+            <p id="instrucoes-demonstracao">Use somente dados inventados. A demonstração verifica os campos no navegador e não transmite nenhuma informação.</p>
+
+            <form class="demo-form" data-demo-form aria-labelledby="teste-formulario" aria-describedby="instrucoes-demonstracao" autocomplete="off">
+              <fieldset>
+                <legend>Seus dados</legend>
+                <div class="demo-form-grid">
+                  <div class="demo-field">
+                    <label for="demo-nome">Nome completo <span>(obrigatório)</span></label>
+                    <input type="text" id="demo-nome" name="demo-nome" minlength="2" required>
+                  </div>
+                  <div class="demo-field">
+                    <label for="demo-email">E-mail <span>(obrigatório)</span></label>
+                    <input type="email" id="demo-email" name="demo-email" required>
+                  </div>
+                  <div class="demo-field demo-field-full">
+                    <label for="demo-telefone">Telefone <span>(opcional)</span></label>
+                    <p id="demo-ajuda-telefone">Inclua o código de área.</p>
+                    <input type="tel" id="demo-telefone" name="demo-telefone" aria-describedby="demo-ajuda-telefone">
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>Sua mensagem</legend>
+                <div class="demo-form-grid">
+                  <div class="demo-field">
+                    <label for="demo-assunto">Assunto <span>(obrigatório)</span></label>
+                    <select id="demo-assunto" name="demo-assunto" required>
+                      <option value="" selected disabled>Selecione uma opção</option>
+                      <option value="duvida">Dúvida</option>
+                      <option value="encomenda">Encomenda</option>
+                      <option value="sugestao">Sugestão</option>
+                    </select>
+                  </div>
+                  <div class="demo-field demo-field-full">
+                    <label for="demo-mensagem">Mensagem <span>(obrigatória)</span></label>
+                    <p id="demo-ajuda-mensagem">Escreva entre 10 e 500 caracteres.</p>
+                    <textarea id="demo-mensagem" name="demo-mensagem" rows="5" minlength="10" maxlength="500" aria-describedby="demo-ajuda-mensagem" required></textarea>
+                  </div>
+                </div>
+              </fieldset>
+
+              <button class="demo-submit" type="submit">Testar envio</button>
+              <p class="demo-status" data-demo-status role="status" hidden></p>
+            </form>
+          </section>
+        </section>
+
+        <section aria-labelledby="aula-4-4">
+          <h3 id="aula-4-4">Aula 4 — Acessibilidade e testes reais</h3>
+          <p>Acessibilidade não é um recurso acrescentado no final. Ela começa na escolha de elementos nativos, na ordem lógica do documento e em instruções que não dependem apenas de cor, posição ou memória.</p>
+
+          <h4>Imagem para reconhecer o local</h4>
+          <p>Uma foto da fachada pode ajudar quem visitará o Café Aurora pela primeira vez. Baixe-a e salve na pasta <code class="inline-code">img</code>.</p>
+
+          <section class="download-resource" aria-labelledby="imagem-fachada">
+            <h4 id="imagem-fachada">Fachada do Café Aurora</h4>
+            <figure>
+              <img
+                src="../../img/programacao-web/fachada-cafe.jpg"
+                alt="Fachada clara do Café Aurora com porta verde, janelas de madeira, plantas e mesas externas"
+                width="1536"
+                height="1024"
+                loading="lazy"
+              >
+              <figcaption>
+                <p>Imagem didática criada para a página de contato do projeto fictício.</p>
+                <a class="download-button" href="../../img/programacao-web/fachada-cafe.jpg" download="fachada-cafe.jpg">↓ Baixar fachada-cafe.jpg</a>
+              </figcaption>
+            </figure>
+          </section>
+
+          <p>Acrescente a imagem à seção “Onde estamos”:</p>
+          <pre class="code-block"><code>&lt;figure&gt;
+  &lt;img
+    src="img/fachada-cafe.jpg"
+    alt="Fachada clara do Café Aurora com porta verde, janelas de madeira,
+      plantas e mesas externas"
+    width="1536"
+    height="1024"
+    loading="lazy"
+  &gt;
+  &lt;figcaption&gt;Reconheça nossa entrada pela porta verde.&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+
+          <h4>Teste usando somente o teclado</h4>
+          <ol>
+            <li>Pressione <strong>Tab</strong> para avançar pelos links, campos e botão.</li>
+            <li>Use <strong>Shift + Tab</strong> para voltar.</li>
+            <li>Confirme se a ordem acompanha a leitura da página.</li>
+            <li>Observe se o elemento ativo possui uma indicação visual de foco.</li>
+            <li>Use as setas para escolher uma opção em <code class="inline-code">select</code>.</li>
+            <li>Pressione <strong>Enter</strong> no botão de envio.</li>
+          </ol>
+
+          <h4>Teste a validação nativa</h4>
+          <ol>
+            <li>Tente enviar sem preencher campos obrigatórios.</li>
+            <li>Digite um e-mail sem formato válido.</li>
+            <li>Escreva uma mensagem com menos de 10 caracteres.</li>
+            <li>Corrija cada problema seguindo a orientação do navegador.</li>
+          </ol>
+
+          <div class="note-box">
+            <strong>Validação no navegador não basta.</strong>
+            <p>As regras HTML ajudam o visitante e reduzem erros, mas podem ser contornadas. Quando o servidor for construído, ele deverá validar novamente todos os dados antes de processá-los.</p>
+          </div>
+
+          <h4>Revisão de acessibilidade</h4>
+          <ul>
+            <li>Mantenha rótulos visíveis e associados aos controles.</li>
+            <li>Identifique campos obrigatórios em texto, além do atributo <code class="inline-code">required</code>.</li>
+            <li>Não remova a indicação visual de foco.</li>
+            <li>Não dependa somente de cor para comunicar erro ou obrigação.</li>
+            <li>Use HTML nativo antes de acrescentar atributos ARIA.</li>
+            <li>Amplie a página para 200% e confirme que ainda é possível ler e preencher tudo.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="erros-4">
+          <h3 id="erros-4">Erros comuns para revisar</h3>
+          <ul>
+            <li>Usar <code class="inline-code">placeholder</code> como único rótulo.</li>
+            <li>Criar <code class="inline-code">label</code> e campo com valores diferentes em <code class="inline-code">for</code> e <code class="inline-code">id</code>.</li>
+            <li>Esquecer o atributo <code class="inline-code">name</code>, fazendo o dado chegar sem identificação ao servidor.</li>
+            <li>Marcar um campo como obrigatório sem avisar isso no texto do rótulo.</li>
+            <li>Usar <code class="inline-code">type="text"</code> para tudo e perder recursos nativos de e-mail e telefone.</li>
+            <li>Criar regras rígidas para nomes ou telefones que rejeitam dados legítimos.</li>
+            <li>Remover o contorno de foco sem oferecer substituição visível.</li>
+            <li>Acreditar que <code class="inline-code">POST</code> ou validação HTML tornam os dados seguros.</li>
+            <li>Testar o formulário com informações pessoais verdadeiras.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="projeto-4">
+          <h3 id="projeto-4">Projeto aplicado — entrega do capítulo</h3>
+          <p>Atualize <code class="inline-code">contato.html</code> com:</p>
+          <ul>
+            <li>foto da fachada com texto alternativo e legenda;</li>
+            <li>formulário dividido em “Seus dados” e “Sua mensagem”;</li>
+            <li>rótulo visível e associação correta em todos os campos;</li>
+            <li>tipos, nomes, preenchimento assistido e obrigatoriedade adequados;</li>
+            <li>instruções visíveis para telefone e mensagem;</li>
+            <li>seleção de assunto e mensagem com limites;</li>
+            <li>teste completo por teclado e validação nativa.</li>
+          </ul>
+          <p>Peça a um colega que preencha o formulário usando somente o teclado e dados inventados. Observe sem orientá-lo e registre qualquer campo ou instrução que não tenha ficado claro.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-4">
+          <h3 id="check-4">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Consigo explicar por que o formulário ainda não envia mensagens de verdade.</li>
+            <li>Sei diferenciar <code class="inline-code">GET</code> e <code class="inline-code">POST</code> em situações básicas.</li>
+            <li>Todos os campos possuem rótulos corretamente associados.</li>
+            <li>Sei para que servem <code class="inline-code">id</code>, <code class="inline-code">name</code> e <code class="inline-code">autocomplete</code>.</li>
+            <li>Consigo agrupar campos com <code class="inline-code">fieldset</code> e <code class="inline-code">legend</code>.</li>
+            <li>O formulário pode ser percorrido em ordem lógica usando Tab.</li>
+            <li>As orientações permanecem visíveis durante o preenchimento.</li>
+            <li>Entendo que o servidor deverá validar os dados novamente.</li>
+          </ul>
+        </section>
+
+        <section class="concept-box" aria-labelledby="fontes-4">
+          <h3 id="fontes-4">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form" target="_blank" rel="noopener noreferrer">Elemento form — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label" target="_blank" rel="noopener noreferrer">Elemento label — MDN</a></li>
+            <li><a href="https://www.w3.org/WAI/tutorials/forms/" target="_blank" rel="noopener noreferrer">Tutorial de formulários acessíveis — W3C WAI</a></li>
+          </ul>
+        </section>
+
+        <section class="limit-box">
+          <strong>Até aqui</strong>
+          <p>O site já oferece conteúdo organizado, navegação e um formulário acessível no lado do navegador. A aparência ainda é básica de propósito. No próximo capítulo, começaremos a identidade visual com CSS, preservando toda a estrutura construída.</p>
+        </section>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-3" data-chapter-link="capitulo-3">← Capítulo 3</a>
           <span aria-disabled="true">Próximo capítulo em breve</span>
         </div>
       </article>
     </main>
   </div>
 
-  <script src="../../js/programacao-web.js?v=2"></script>
+  <script src="../../js/programacao-web.js?v=3"></script>
 </body>
 </html>

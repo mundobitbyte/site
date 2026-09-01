@@ -67,6 +67,23 @@
     });
   }
 
+  function setupDemoForms() {
+    document.querySelectorAll("[data-demo-form]").forEach((form) => {
+      const status = form.querySelector("[data-demo-status]");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!status) return;
+        status.textContent = "Teste concluído: os campos passaram pela validação do navegador e nenhum dado foi enviado.";
+        status.hidden = false;
+      });
+
+      form.addEventListener("input", () => {
+        if (status) status.hidden = true;
+      });
+    });
+  }
+
   function chapterFromHash() {
     const id = decodeURIComponent(window.location.hash.slice(1));
     return chapterIds.has(id) ? id : chapters[0].id;
@@ -126,5 +143,6 @@
 
   page.classList.add("js-ready");
   setupCopyButtons();
+  setupDemoForms();
   showChapter(chapterFromHash());
 }());
