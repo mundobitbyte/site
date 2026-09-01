@@ -10,6 +10,63 @@
 
   const chapterIds = new Set(chapters.map((chapter) => chapter.id));
 
+  function copyWithFallback(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.setAttribute("readonly", "");
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      return document.execCommand("copy");
+    } catch (error) {
+      return false;
+    } finally {
+      textArea.remove();
+    }
+  }
+
+  function setupCopyButtons() {
+    document.querySelectorAll("pre.code-block").forEach((codeBlock) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "code-block-wrap";
+      codeBlock.before(wrapper);
+      wrapper.appendChild(codeBlock);
+
+      const button = document.createElement("button");
+      button.className = "copy-code-button";
+      button.type = "button";
+      button.textContent = "Copiar";
+      button.setAttribute("aria-label", "Copiar código");
+      button.setAttribute("aria-live", "polite");
+      wrapper.appendChild(button);
+
+      button.addEventListener("click", async () => {
+        let copied = false;
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(codeBlock.textContent);
+            copied = true;
+          } else {
+            copied = copyWithFallback(codeBlock.textContent);
+          }
+        } catch (error) {
+          copied = copyWithFallback(codeBlock.textContent);
+        }
+
+        button.textContent = copied ? "Copiado!" : "Não foi possível";
+        button.classList.toggle("copy-error", !copied);
+        window.clearTimeout(button.resetTimer);
+        button.resetTimer = window.setTimeout(() => {
+          button.textContent = "Copiar";
+          button.classList.remove("copy-error");
+        }, 1800);
+      });
+    });
+  }
+
   function chapterFromHash() {
     const id = decodeURIComponent(window.location.hash.slice(1));
     return chapterIds.has(id) ? id : chapters[0].id;
@@ -68,5 +125,6 @@
   window.addEventListener("hashchange", () => showChapter(chapterFromHash()));
 
   page.classList.add("js-ready");
+  setupCopyButtons();
   showChapter(chapterFromHash());
 }());

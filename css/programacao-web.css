@@ -545,6 +545,116 @@ pre.code-block {
   tab-size: 2;
 }
 
+.code-block-wrap {
+  position: relative;
+  margin: 10px 0 15px;
+}
+
+.code-block-wrap pre.code-block {
+  margin: 0;
+  padding-top: 46px;
+}
+
+.copy-code-button {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  z-index: 2;
+  min-width: 67px;
+  padding: 5px 9px;
+  color: #e2e8f0;
+  background: #263349;
+  border: 1px solid #526177;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.copy-code-button:hover {
+  color: #fff;
+  background: #34445d;
+}
+
+.copy-code-button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.copy-code-button.copy-error {
+  min-width: 112px;
+  color: #fee2e2;
+  border-color: #f87171;
+}
+
+.download-resource {
+  margin: 14px 0 17px;
+  padding: 14px;
+  background: #f8fbff;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+}
+
+.download-resource h4 {
+  margin-top: 0;
+}
+
+.download-resource figure {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+.download-resource img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.download-resource figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 12px;
+}
+
+.download-resource figcaption p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.download-button {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 7px 11px;
+  color: #fff !important;
+  background: var(--primary);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.download-button:hover {
+  background: var(--primary-dark);
+}
+
+.download-button:focus-visible {
+  outline: 3px solid rgba(25, 103, 210, .35);
+  outline-offset: 3px;
+}
+
 code.inline-code {
   padding: 1px 5px;
   color: #163a68;
@@ -733,6 +843,16 @@ code.inline-code {
 
   .chapter-footer {
     align-items: stretch;
+  }
+
+  .download-resource figcaption {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .download-button {
+    justify-content: center;
+    white-space: normal;
   }
 
   .chapter-footer a,
