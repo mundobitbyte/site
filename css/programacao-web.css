@@ -752,24 +752,14 @@ pre.code-block {
   margin: 0 0 15px;
 }
 
-.css-preview-hero a {
+.css-preview-action {
   display: inline-block;
   padding: 9px 13px;
-  color: #244d3f !important;
+  color: #244d3f;
   background: #fff;
   border-radius: 7px;
   font-size: 12px;
   font-weight: 900;
-  text-decoration: none;
-}
-
-.css-preview-hero a:hover {
-  background: #fff8ed;
-}
-
-.css-preview-hero a:focus-visible {
-  outline: 3px solid #fbbf24;
-  outline-offset: 3px;
 }
 
 .css-preview-products {
