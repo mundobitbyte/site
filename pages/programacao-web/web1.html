@@ -6,7 +6,7 @@
   <meta name="description" content="Web I do Mundo bit Byte: aprenda os fundamentos da Web e construa a página inicial de um pequeno negócio local com HTML.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
   <title>Web I — Capítulo 1 | Mundo bit Byte</title>
-  <link href="../../css/programacao-web.css?v=3" rel="stylesheet">
+  <link href="../../css/programacao-web.css?v=4" rel="stylesheet">
 </head>
 <body class="module-page">
   <header>
@@ -28,6 +28,7 @@
       <h2>Capítulos disponíveis</h2>
       <a class="chapter-link" href="#capitulo-1" data-chapter-link="capitulo-1">1. Da necessidade ao primeiro arquivo</a>
       <a class="chapter-link" href="#capitulo-2" data-chapter-link="capitulo-2">2. Construindo a página inicial</a>
+      <a class="chapter-link" href="#capitulo-3" data-chapter-link="capitulo-3">3. Organizando o site em páginas</a>
     </nav>
 
     <main class="web-content" id="conteudo">
@@ -513,6 +514,447 @@ abertura        conteúdo          fechamento</code></pre>
 
         <div class="chapter-footer">
           <a href="#capitulo-1" data-chapter-link="capitulo-1">← Capítulo 1</a>
+          <a href="#capitulo-3" data-chapter-link="capitulo-3">Capítulo 3 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-3" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 3 — Organizando o site em páginas</h2>
+          <p class="chapter-meta">Planejamento, HTML semântico, múltiplas páginas e navegação consistente.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-3">
+          <h3 id="contexto-3">Quando uma página já não é suficiente</h3>
+          <p>A página inicial do <strong>Café Aurora</strong> passou a reunir apresentação, produtos, história, endereço e horários. O conteúdo existe, mas diferentes visitantes precisam procurar demais para encontrar o que desejam.</p>
+          <p>Uma pessoa pode querer consultar o cardápio; outra, conhecer a origem do café; outra precisa apenas do endereço. A solução não é continuar alongando a página: vamos organizar essas informações em páginas conectadas por um menu.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-3">
+          <h3 id="objetivos-3">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Planejar as páginas antes de começar a programá-las.</li>
+            <li>Organizar arquivos e imagens em uma estrutura previsível.</li>
+            <li>Usar <code class="inline-code">header</code>, <code class="inline-code">nav</code>, <code class="inline-code">main</code>, <code class="inline-code">section</code>, <code class="inline-code">article</code> e <code class="inline-code">footer</code>.</li>
+            <li>Reconhecer quando um agrupamento genérico com <code class="inline-code">div</code> é adequado.</li>
+            <li>Criar páginas diferentes com títulos e descrições próprios.</li>
+            <li>Construir um menu consistente usando caminhos relativos.</li>
+            <li>Testar a navegação e corrigir links quebrados.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-3">
+          <h3 id="aula-1-3">Aula 1 — Planejando antes de programar</h3>
+          <p>Antes de criar arquivos, organize as informações de acordo com as necessidades de quem visitará o site. Para o Café Aurora, quatro páginas resolvem o problema sem fragmentar demais o conteúdo:</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Página</th><th>Necessidade atendida</th><th>Arquivo</th></tr></thead>
+              <tbody>
+                <tr><td>Início</td><td>Entender rapidamente o que é o Café Aurora.</td><td><code class="inline-code">index.html</code></td></tr>
+                <tr><td>Cardápio</td><td>Conhecer produtos e destaques da casa.</td><td><code class="inline-code">cardapio.html</code></td></tr>
+                <tr><td>Sobre</td><td>Conhecer a história e a proposta do negócio.</td><td><code class="inline-code">sobre.html</code></td></tr>
+                <tr><td>Contato</td><td>Encontrar endereço, horários e formas de contato.</td><td><code class="inline-code">contato.html</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Mapa do site</h4>
+          <div class="flow" aria-label="Mapa das páginas do Café Aurora">Café Aurora
+├── Início
+├── Cardápio
+├── Sobre
+└── Contato</div>
+          <p>Esse desenho simples é um <strong>mapa do site</strong>. Ele mostra quais páginas existirão e como o conteúdo foi dividido. Neste projeto, todas poderão ser acessadas pelo menu principal.</p>
+
+          <h4>Estrutura de arquivos</h4>
+          <div class="flow" aria-label="Estrutura de arquivos do Café Aurora">cafe-aurora/
+├── index.html
+├── cardapio.html
+├── sobre.html
+├── contato.html
+└── img/
+    ├── ambiente-cafe.jpg
+    ├── cafe-coado.jpg
+    ├── pao-artesanal.jpg
+    └── bolo-caseiro.jpg</div>
+
+          <p>No explorador do VS Code, crie <code class="inline-code">cardapio.html</code>, <code class="inline-code">sobre.html</code> e <code class="inline-code">contato.html</code> na mesma pasta de <code class="inline-code">index.html</code>.</p>
+
+          <div class="note-box">
+            <strong>Cada página é um documento completo.</strong>
+            <p>Todos os arquivos precisam de <code class="inline-code">DOCTYPE</code>, <code class="inline-code">html</code>, <code class="inline-code">head</code> e <code class="inline-code">body</code>. Copiar a estrutura correta economiza tempo, mas o título, a descrição e o conteúdo devem ser adaptados para cada página.</p>
+          </div>
+
+          <h4>Título e descrição de cada página</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Arquivo</th><th><code class="inline-code">title</code></th><th>Resumo da descrição</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">index.html</code></td><td>Café Aurora — Café e produtos artesanais no bairro</td><td>Apresentação geral do café.</td></tr>
+                <tr><td><code class="inline-code">cardapio.html</code></td><td>Cardápio — Café Aurora</td><td>Cafés e produtos artesanais.</td></tr>
+                <tr><td><code class="inline-code">sobre.html</code></td><td>Sobre — Café Aurora</td><td>História e proposta do negócio.</td></tr>
+                <tr><td><code class="inline-code">contato.html</code></td><td>Contato — Café Aurora</td><td>Endereço, horários e contato.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="task-box">
+            <h4>Pratique</h4>
+            <p>Para cada página, escreva em uma frase o que o visitante espera encontrar. Se uma informação não se encaixar claramente em nenhuma delas, decida se está faltando uma página ou se o conteúdo não é necessário.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-3">
+          <h3 id="aula-2-3">Aula 2 — Dando significado à estrutura</h3>
+          <p>Até agora, usamos títulos, parágrafos, listas, links e imagens. O HTML também possui elementos que identificam as grandes regiões de uma página. Eles ajudam navegadores, mecanismos de busca, tecnologias assistivas e outros desenvolvedores a compreender a organização do documento.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Elemento</th><th>Quando usar</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">&lt;header&gt;</code></td><td>Conteúdo introdutório, como identificação do site e navegação inicial.</td></tr>
+                <tr><td><code class="inline-code">&lt;nav&gt;</code></td><td>Conjunto importante de links de navegação.</td></tr>
+                <tr><td><code class="inline-code">&lt;main&gt;</code></td><td>Conteúdo principal e exclusivo daquela página. Normalmente há apenas um por documento.</td></tr>
+                <tr><td><code class="inline-code">&lt;section&gt;</code></td><td>Grupo temático de conteúdo, geralmente identificado por um título.</td></tr>
+                <tr><td><code class="inline-code">&lt;article&gt;</code></td><td>Conteúdo que pode ser entendido como uma unidade independente, como um produto ou notícia.</td></tr>
+                <tr><td><code class="inline-code">&lt;footer&gt;</code></td><td>Informações finais, como autoria, direitos ou contato complementar.</td></tr>
+                <tr><td><code class="inline-code">&lt;div&gt;</code></td><td>Agrupamento sem significado próprio, útil quando nenhum elemento semântico descreve o conjunto.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="note-box">
+            <strong>Semântica não significa aparência.</strong>
+            <p>Trocar uma <code class="inline-code">div</code> por <code class="inline-code">header</code> não deixa a página automaticamente mais bonita. Esses elementos explicam o papel do conteúdo; o visual será construído com CSS.</p>
+          </div>
+
+          <h4>Nova estrutura da página inicial</h4>
+          <p>No <code class="inline-code">index.html</code>, mantenha o <code class="inline-code">head</code> construído no capítulo anterior e reorganize o <code class="inline-code">body</code>:</p>
+
+          <pre class="code-block"><code>&lt;body&gt;
+  &lt;header&gt;
+    &lt;p&gt;&lt;a href="index.html"&gt;Café Aurora&lt;/a&gt;&lt;/p&gt;
+
+    &lt;nav aria-label="Navegação principal"&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.html" aria-current="page"&gt;Início&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="cardapio.html"&gt;Cardápio&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="sobre.html"&gt;Sobre&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="contato.html"&gt;Contato&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;h1&gt;Café Aurora&lt;/h1&gt;
+    &lt;p&gt;Café, encontros e bons momentos no coração do bairro.&lt;/p&gt;
+
+    &lt;section aria-labelledby="destaques"&gt;
+      &lt;h2 id="destaques"&gt;Destaques da casa&lt;/h2&gt;
+      &lt;h3&gt;Café coado&lt;/h3&gt;
+      &lt;p&gt;Grãos selecionados e preparo cuidadoso.&lt;/p&gt;
+      &lt;h3&gt;Pães artesanais&lt;/h3&gt;
+      &lt;p&gt;Produção diária com ingredientes frescos.&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;section aria-labelledby="ambiente"&gt;
+      &lt;h2 id="ambiente"&gt;Um ambiente acolhedor&lt;/h2&gt;
+      &lt;figure&gt;
+        &lt;img
+          src="img/ambiente-cafe.jpg"
+          alt="Salão do Café Aurora com mesas de madeira e plantas"
+          width="1536"
+          height="1024"
+        &gt;
+        &lt;figcaption&gt;Um espaço para conversar, estudar ou trabalhar.&lt;/figcaption&gt;
+      &lt;/figure&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;&amp;copy; 2026 Café Aurora. Projeto educacional fictício.&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+
+          <ul>
+            <li><code class="inline-code">aria-label</code> dá um nome claro à região de navegação.</li>
+            <li><code class="inline-code">aria-labelledby</code> liga uma região ao título indicado pelo respectivo <code class="inline-code">id</code>.</li>
+            <li><code class="inline-code">aria-current="page"</code> informa qual link representa a página atual.</li>
+            <li>O caractere escrito como <code class="inline-code">&amp;copy;</code> é exibido como © no navegador.</li>
+          </ul>
+
+          <div class="task-box">
+            <h4>Pratique</h4>
+            <p>Observe o HTML anterior e explique por que o menu está em <code class="inline-code">nav</code>, o conteúdo exclusivo está em <code class="inline-code">main</code> e os dois assuntos principais estão em <code class="inline-code">section</code>.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-3">
+          <h3 id="aula-3-3">Aula 3 — Construindo a página do cardápio</h3>
+          <p>O cardápio precisa apresentar produtos reais do contexto do negócio. Baixe as três imagens e coloque-as na pasta <code class="inline-code">img</code> do seu projeto.</p>
+
+          <section class="resource-gallery" aria-labelledby="imagens-cardapio">
+            <h4 id="imagens-cardapio">Imagens prontas para o cardápio</h4>
+            <p>As imagens foram preparadas para esta atividade e possuem o mesmo tamanho e proporção.</p>
+            <div class="resource-grid">
+              <figure class="resource-card">
+                <img src="../../img/programacao-web/cafe-coado.jpg" alt="Xícara de café coado ao lado de uma pequena jarra" width="1536" height="1024" loading="lazy">
+                <figcaption>
+                  <strong>cafe-coado.jpg</strong>
+                  <a class="download-button" href="../../img/programacao-web/cafe-coado.jpg" download="cafe-coado.jpg">↓ Baixar imagem</a>
+                </figcaption>
+              </figure>
+              <figure class="resource-card">
+                <img src="../../img/programacao-web/pao-artesanal.jpg" alt="Pão artesanal cortado sobre uma mesa de madeira" width="1536" height="1024" loading="lazy">
+                <figcaption>
+                  <strong>pao-artesanal.jpg</strong>
+                  <a class="download-button" href="../../img/programacao-web/pao-artesanal.jpg" download="pao-artesanal.jpg">↓ Baixar imagem</a>
+                </figcaption>
+              </figure>
+              <figure class="resource-card">
+                <img src="../../img/programacao-web/bolo-caseiro.jpg" alt="Bolo caseiro de laranja com uma fatia servida" width="1536" height="1024" loading="lazy">
+                <figcaption>
+                  <strong>bolo-caseiro.jpg</strong>
+                  <a class="download-button" href="../../img/programacao-web/bolo-caseiro.jpg" download="bolo-caseiro.jpg">↓ Baixar imagem</a>
+                </figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <p>Depois de baixar as imagens, construa o arquivo <code class="inline-code">cardapio.html</code>:</p>
+
+          <pre class="code-block"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;meta
+    name="description"
+    content="Conheça os cafés e produtos artesanais do Café Aurora."
+  &gt;
+  &lt;title&gt;Cardápio — Café Aurora&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;p&gt;&lt;a href="index.html"&gt;Café Aurora&lt;/a&gt;&lt;/p&gt;
+
+    &lt;nav aria-label="Navegação principal"&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.html"&gt;Início&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="cardapio.html" aria-current="page"&gt;Cardápio&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="sobre.html"&gt;Sobre&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="contato.html"&gt;Contato&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;h1&gt;Cardápio&lt;/h1&gt;
+    &lt;p&gt;Conheça alguns dos destaques preparados no Café Aurora.&lt;/p&gt;
+
+    &lt;section aria-labelledby="destaques-cardapio"&gt;
+      &lt;h2 id="destaques-cardapio"&gt;Destaques da casa&lt;/h2&gt;
+
+      &lt;article&gt;
+        &lt;h3&gt;Café coado&lt;/h3&gt;
+        &lt;figure&gt;
+          &lt;img
+            src="img/cafe-coado.jpg"
+            alt="Xícara de café coado ao lado de uma pequena jarra"
+            width="1536"
+            height="1024"
+            loading="lazy"
+          &gt;
+          &lt;figcaption&gt;Café preparado na hora com grãos selecionados.&lt;/figcaption&gt;
+        &lt;/figure&gt;
+        &lt;p&gt;&lt;strong&gt;R$ 8,00&lt;/strong&gt;&lt;/p&gt;
+      &lt;/article&gt;
+
+      &lt;article&gt;
+        &lt;h3&gt;Pão artesanal&lt;/h3&gt;
+        &lt;figure&gt;
+          &lt;img
+            src="img/pao-artesanal.jpg"
+            alt="Pão artesanal cortado sobre uma mesa de madeira"
+            width="1536"
+            height="1024"
+            loading="lazy"
+          &gt;
+          &lt;figcaption&gt;Pão de fermentação lenta produzido diariamente.&lt;/figcaption&gt;
+        &lt;/figure&gt;
+        &lt;p&gt;&lt;strong&gt;R$ 12,00&lt;/strong&gt;&lt;/p&gt;
+      &lt;/article&gt;
+
+      &lt;article&gt;
+        &lt;h3&gt;Bolo caseiro de laranja&lt;/h3&gt;
+        &lt;figure&gt;
+          &lt;img
+            src="img/bolo-caseiro.jpg"
+            alt="Bolo caseiro de laranja com uma fatia servida"
+            width="1536"
+            height="1024"
+            loading="lazy"
+          &gt;
+          &lt;figcaption&gt;Receita caseira preparada com laranjas frescas.&lt;/figcaption&gt;
+        &lt;/figure&gt;
+        &lt;p&gt;&lt;strong&gt;R$ 9,00 a fatia&lt;/strong&gt;&lt;/p&gt;
+      &lt;/article&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;&amp;copy; 2026 Café Aurora. Projeto educacional fictício.&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+          <div class="concept-box">
+            <strong>Novos recursos usados no cardápio</strong>
+            <ul>
+              <li>Cada produto foi colocado em <code class="inline-code">article</code> porque forma uma unidade que pode ser compreendida separadamente.</li>
+              <li>O atributo <code class="inline-code">loading="lazy"</code> permite que o navegador adie o carregamento de imagens que ainda estão longe da área visível.</li>
+              <li>Os valores são fictícios e servem apenas para contextualizar o exercício.</li>
+            </ul>
+          </div>
+
+          <div class="task-box">
+            <h4>Experimente</h4>
+            <p>Abra <code class="inline-code">index.html</code>, acesse o Cardápio pelo menu e retorne ao Início. Depois, acesse diretamente <code class="inline-code">cardapio.html</code> pelo explorador do VS Code e confirme se as três imagens aparecem.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-3">
+          <h3 id="aula-4-3">Aula 4 — Sobre, contato e navegação consistente</h3>
+          <p>As páginas restantes aproveitarão a mesma estrutura. Copie <code class="inline-code">cardapio.html</code>, preserve cabeçalho, menu e rodapé, e substitua o <code class="inline-code">main</code>, o <code class="inline-code">title</code> e a descrição.</p>
+
+          <h4>Conteúdo principal de <code class="inline-code">sobre.html</code></h4>
+          <pre class="code-block"><code>&lt;main&gt;
+  &lt;h1&gt;Sobre o Café Aurora&lt;/h1&gt;
+
+  &lt;section aria-labelledby="nossa-historia"&gt;
+    &lt;h2 id="nossa-historia"&gt;Nossa história&lt;/h2&gt;
+    &lt;p&gt;O Café Aurora nasceu do desejo de criar um ponto de encontro
+      acolhedor para as pessoas do bairro.&lt;/p&gt;
+    &lt;p&gt;Valorizamos o preparo cuidadoso, os ingredientes frescos e o
+      atendimento próximo.&lt;/p&gt;
+  &lt;/section&gt;
+
+  &lt;section aria-labelledby="nosso-espaco"&gt;
+    &lt;h2 id="nosso-espaco"&gt;Nosso espaço&lt;/h2&gt;
+    &lt;figure&gt;
+      &lt;img
+        src="img/ambiente-cafe.jpg"
+        alt="Salão do Café Aurora com mesas de madeira e plantas"
+        width="1536"
+        height="1024"
+        loading="lazy"
+      &gt;
+      &lt;figcaption&gt;Um ambiente tranquilo no coração do bairro.&lt;/figcaption&gt;
+    &lt;/figure&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre>
+
+          <p>No menu de <code class="inline-code">sobre.html</code>, retire <code class="inline-code">aria-current</code> do link anterior e coloque-o no link Sobre:</p>
+          <pre class="code-block"><code>&lt;li&gt;&lt;a href="sobre.html" aria-current="page"&gt;Sobre&lt;/a&gt;&lt;/li&gt;</code></pre>
+
+          <h4>Conteúdo principal de <code class="inline-code">contato.html</code></h4>
+          <pre class="code-block"><code>&lt;main&gt;
+  &lt;h1&gt;Contato e localização&lt;/h1&gt;
+
+  &lt;section aria-labelledby="onde-estamos"&gt;
+    &lt;h2 id="onde-estamos"&gt;Onde estamos&lt;/h2&gt;
+    &lt;address&gt;
+      &lt;p&gt;Rua das Flores, 123 — Centro&lt;/p&gt;
+      &lt;p&gt;Telefone: (11) 0000-0000&lt;/p&gt;
+      &lt;p&gt;E-mail: contato@cafeaurora.example&lt;/p&gt;
+    &lt;/address&gt;
+  &lt;/section&gt;
+
+  &lt;section aria-labelledby="horarios"&gt;
+    &lt;h2 id="horarios"&gt;Horário de atendimento&lt;/h2&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Segunda a sexta: das 8h às 19h&lt;/li&gt;
+      &lt;li&gt;Sábado: das 8h às 18h&lt;/li&gt;
+      &lt;li&gt;Domingo: fechado&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre>
+
+          <div class="note-box">
+            <strong>Os dados são fictícios.</strong>
+            <p>O domínio <code class="inline-code">.example</code> é reservado para exemplos. Em um projeto real, substitua endereço, telefone e e-mail somente por informações confirmadas pelo responsável do negócio.</p>
+          </div>
+
+          <p>O elemento <code class="inline-code">address</code> representa informações de contato relacionadas à página ou ao conteúdo mais próximo. Ele não deve ser usado apenas para criar texto em itálico.</p>
+
+          <h4>O menu precisa ser igual em todas as páginas</h4>
+          <p>Como este é um site estático, o menu está escrito em cada arquivo. Sempre que acrescentar ou renomear uma página, revise todas as cópias. A única diferença será a posição de <code class="inline-code">aria-current="page"</code>.</p>
+
+          <div class="task-box">
+            <h4>Teste sistemático</h4>
+            <ol>
+              <li>Comece em <code class="inline-code">index.html</code> e abra cada item do menu.</li>
+              <li>Em cada página, clique novamente nos quatro links.</li>
+              <li>Confirme o título da aba, o título principal e a indicação da página atual.</li>
+              <li>Verifique se nenhuma imagem está quebrada.</li>
+              <li>Use o botão Voltar do navegador e observe o histórico de páginas.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section aria-labelledby="erros-3">
+          <h3 id="erros-3">Erros comuns para revisar</h3>
+          <ul>
+            <li>Criar uma nova página fora da pasta <code class="inline-code">cafe-aurora</code>.</li>
+            <li>Usar espaços, acentos ou letras maiúsculas de forma inconsistente nos nomes dos arquivos.</li>
+            <li>Copiar uma página e esquecer de alterar <code class="inline-code">title</code>, descrição ou <code class="inline-code">h1</code>.</li>
+            <li>Colocar mais de um <code class="inline-code">main</code> no mesmo documento.</li>
+            <li>Usar <code class="inline-code">section</code> apenas como uma caixa sem assunto ou título.</li>
+            <li>Deixar <code class="inline-code">aria-current="page"</code> em dois links do mesmo menu.</li>
+            <li>Corrigir o menu em uma página e esquecer as demais.</li>
+            <li>Escrever caminhos como <code class="inline-code">img\cafe-coado.jpg</code>; na Web, use a barra <code class="inline-code">/</code>.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="projeto-3">
+          <h3 id="projeto-3">Projeto aplicado — entrega do capítulo</h3>
+          <p>Entregue o site do Café Aurora com:</p>
+          <ul>
+            <li>quatro páginas completas e corretamente nomeadas;</li>
+            <li>título e descrição específicos em cada documento;</li>
+            <li>estrutura com <code class="inline-code">header</code>, <code class="inline-code">nav</code>, <code class="inline-code">main</code> e <code class="inline-code">footer</code>;</li>
+            <li>menu igual e funcional em todas as páginas;</li>
+            <li>página atual corretamente identificada;</li>
+            <li>cardápio com três produtos, imagens e textos alternativos;</li>
+            <li>página Sobre com história e imagem do ambiente;</li>
+            <li>página Contato com dados e horários claramente organizados.</li>
+          </ul>
+          <p>Troque de projeto com um colega. Ele deverá encontrar o cardápio, a história e o horário de sábado sem receber instruções. Registre qualquer dificuldade observada.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-3">
+          <h3 id="check-3">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Consigo explicar por que o conteúdo foi separado em quatro páginas.</li>
+            <li>Sei criar e nomear arquivos dentro da pasta correta.</li>
+            <li>Sei escolher entre <code class="inline-code">section</code>, <code class="inline-code">article</code> e <code class="inline-code">div</code>.</li>
+            <li>Minha página possui apenas um conteúdo principal em <code class="inline-code">main</code>.</li>
+            <li>O menu funciona a partir de qualquer página.</li>
+            <li>A página atual está indicada corretamente.</li>
+            <li>As imagens aparecem e possuem textos alternativos coerentes.</li>
+            <li>Consigo localizar e corrigir um link ou caminho quebrado.</li>
+          </ul>
+        </section>
+
+        <section class="limit-box">
+          <strong>Até aqui</strong>
+          <p>O Café Aurora já possui um site organizado e navegável, mas ainda não recebe dados do visitante. No próximo capítulo, criaremos o formulário de contato e aprofundaremos acessibilidade, rótulos, foco e validação dos campos.</p>
+        </section>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-2" data-chapter-link="capitulo-2">← Capítulo 2</a>
           <span aria-disabled="true">Próximo capítulo em breve</span>
         </div>
       </article>
