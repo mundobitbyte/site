@@ -6,7 +6,7 @@
   <meta name="description" content="Web I do Mundo bit Byte: aprenda HTML, acessibilidade e CSS enquanto constrói o site completo de um pequeno negócio local.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
   <title>Web I — Capítulo 1 | Mundo bit Byte</title>
-  <link href="../../css/programacao-web.css?v=6" rel="stylesheet">
+  <link href="../../css/programacao-web.css?v=7" rel="stylesheet">
 </head>
 <body class="module-page">
   <header>
@@ -31,6 +31,7 @@
       <a class="chapter-link" href="#capitulo-3" data-chapter-link="capitulo-3">3. Organizando o site em páginas</a>
       <a class="chapter-link" href="#capitulo-4" data-chapter-link="capitulo-4">4. Formulários e acessibilidade</a>
       <a class="chapter-link" href="#capitulo-5" data-chapter-link="capitulo-5">5. Identidade visual com CSS</a>
+      <a class="chapter-link" href="#capitulo-6" data-chapter-link="capitulo-6">6. Layout responsivo</a>
     </nav>
 
     <main class="web-content" id="conteudo">
@@ -1743,6 +1744,333 @@ textarea:focus-visible {
 
         <div class="chapter-footer">
           <a href="#capitulo-4" data-chapter-link="capitulo-4">← Capítulo 4</a>
+          <a href="#capitulo-6" data-chapter-link="capitulo-6">Capítulo 6 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-6" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 6 — Layout responsivo</h2>
+          <p class="chapter-meta">Medidas flexíveis, abordagem mobile first, Flexbox, Grid, media queries e testes de refluxo.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-6">
+          <h3 id="contexto-6">O mesmo site precisa funcionar em espaços muito diferentes</h3>
+          <p>A identidade visual do <strong>Café Aurora</strong> já está definida, mas a proprietária percebeu um problema: o cardápio fica agradável no computador e apertado no celular. Em algumas larguras, o menu ocupa espaço demais e os campos do formulário perdem clareza.</p>
+          <p>Não criaremos um segundo site para celulares. Faremos o mesmo conteúdo se reorganizar de acordo com o espaço disponível, sem esconder informações importantes e sem obrigar o visitante a ampliar ou arrastar a página para os lados.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-6">
+          <h3 id="objetivos-6">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Explicar o que torna um layout responsivo.</li>
+            <li>Construir primeiro uma organização simples para telas estreitas.</li>
+            <li>Usar medidas flexíveis, limites de largura e imagens fluidas.</li>
+            <li>Organizar itens em uma direção com Flexbox.</li>
+            <li>Organizar linhas e colunas com CSS Grid.</li>
+            <li>Criar media queries a partir da necessidade do conteúdo.</li>
+            <li>Preservar a ordem lógica e o acesso por teclado.</li>
+            <li>Testar o site em diferentes larguras e com ampliação.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-6">
+          <h3 id="aula-1-6">Aula 1 — Pensar do menor espaço para o maior</h3>
+          <p>Um layout responsivo combina conteúdo flexível, imagens adaptáveis e regras que reorganizam a página quando o espaço deixa de ser suficiente. A abordagem <strong>mobile first</strong> começa com uma coluna simples e acrescenta possibilidades conforme a largura aumenta.</p>
+
+          <div class="concept-box">
+            <strong>O ponto de mudança nasce do conteúdo.</strong>
+            <p>Não escolha uma media query porque determinado aparelho possui certa largura. Redimensione a página e observe quando menu, textos, campos ou cards deixam de funcionar bem. Esse é o momento de criar um <em>breakpoint</em>.</p>
+          </div>
+
+          <h4>Confirme a configuração de viewport</h4>
+          <p>O projeto já possui esta linha dentro de <code class="inline-code">head</code>. Ela faz a largura do documento acompanhar a largura disponível no dispositivo:</p>
+
+          <pre class="code-block"><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+
+          <div class="note-box">
+            <strong>Não bloqueie a ampliação.</strong>
+            <p>Não acrescente <code class="inline-code">user-scalable=no</code> nem limite máximo de zoom. Pessoas que precisam ampliar o conteúdo devem continuar no controle.</p>
+          </div>
+
+          <h4>Crie uma área central flexível</h4>
+          <pre class="code-block"><code>.container {
+  width: min(70rem, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}</code></pre>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Medida ou função</th><th>Uso neste capítulo</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">%</code></td><td>Representa uma parte do espaço disponível no elemento pai.</td></tr>
+                <tr><td><code class="inline-code">rem</code></td><td>É uma medida relativa ao tamanho-base de fonte configurado no navegador.</td></tr>
+                <tr><td><code class="inline-code">fr</code></td><td>Distribui frações do espaço disponível dentro de um Grid.</td></tr>
+                <tr><td><code class="inline-code">min()</code></td><td>Escolhe o menor valor entre as opções e impede que o conteúdo fique largo demais.</td></tr>
+                <tr><td><code class="inline-code">calc()</code></td><td>Combina medidas; no exemplo, reserva uma margem lateral total de <code class="inline-code">2rem</code>.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p><code class="inline-code">max-width: 100%</code> impede a imagem de ultrapassar seu contêiner. Isso ajusta sua apresentação, mas <strong>não reduz os bytes transferidos</strong>; a otimização do arquivo WebP continua necessária.</p>
+
+          <div class="task-box">
+            <h4>Experimente</h4>
+            <ol>
+              <li>Aplique a classe <code class="inline-code">container</code> ao conteúdo principal de cada página.</li>
+              <li>Reduza lentamente a largura do navegador.</li>
+              <li>Procure textos cortados, imagens maiores que a tela e rolagem horizontal.</li>
+              <li>Retire temporariamente <code class="inline-code">max-width: 100%</code> das imagens, observe o problema e restaure a regra.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-6">
+          <h3 id="aula-2-6">Aula 2 — Flexbox para organizar uma direção</h3>
+          <p>Flexbox organiza os filhos diretos de um contêiner em uma direção principal: linha ou coluna. Ele é adequado para menu, grupos de botões, cabeçalhos e regiões em que o conteúdo determina o espaço ocupado.</p>
+
+          <h4>Transforme a lista do menu em um contêiner flexível</h4>
+          <pre class="code-block"><code>.menu-lista {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .menu-lista {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}</code></pre>
+
+          <div class="mini-grid">
+            <div class="mini-card"><strong><code class="inline-code">display: flex</code></strong><p>Ativa o modelo flexível nos filhos diretos.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">flex-direction</code></strong><p>Define se o eixo principal será linha ou coluna.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">gap</code></strong><p>Cria espaço consistente entre os itens.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">flex-wrap</code></strong><p>Permite que itens passem para outra linha quando necessário.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">justify-content</code></strong><p>Distribui itens ao longo do eixo principal.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">align-items</code></strong><p>Alinha itens no eixo transversal.</p></div>
+          </div>
+
+          <h4>Um cabeçalho que aproveita o espaço</h4>
+          <pre class="code-block"><code>.cabecalho-conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}</code></pre>
+
+          <div class="note-box">
+            <strong>A ordem visual não deve contradizer a leitura.</strong>
+            <p>Evite usar <code class="inline-code">order</code> para criar uma sequência visual diferente do HTML. Leitores de tela e navegação por teclado seguem a ordem do documento, por isso o conteúdo precisa fazer sentido antes mesmo do CSS.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Pratique</h4>
+            <p>Teste o menu com nomes de links curtos e longos. Confirme que eles mudam de linha sem se sobrepor, permanecem clicáveis e mantêm a mesma ordem no HTML e na tela.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-6">
+          <h3 id="aula-3-6">Aula 3 — Grid para produtos em linhas e colunas</h3>
+          <p>CSS Grid controla linhas e colunas ao mesmo tempo. Ele é a escolha natural para o cardápio, pois os produtos precisam formar uma grade alinhada quando houver espaço e voltar para uma coluna em telas estreitas.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Necessidade</th><th>Escolha inicial</th><th>Exemplo</th></tr></thead>
+              <tbody>
+                <tr><td>Organizar em uma direção</td><td>Flexbox</td><td>Menu ou grupo de botões.</td></tr>
+                <tr><td>Controlar linhas e colunas</td><td>Grid</td><td>Cards de produtos ou galeria.</td></tr>
+                <tr><td>Alinhar conteúdo interno de um card</td><td>Flexbox</td><td>Empurrar preço e botão para o final.</td></tr>
+                <tr><td>Distribuir vários cards</td><td>Grid</td><td>Uma, duas ou três colunas.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <pre class="code-block"><code>.grade-produtos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 40rem) {
+  .grade-produtos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .grade-produtos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}</code></pre>
+
+          <p><code class="inline-code">1fr</code> cria uma coluna que ocupa o espaço disponível. <code class="inline-code">repeat()</code> evita repetição, enquanto <code class="inline-code">minmax(0, 1fr)</code> permite que as colunas encolham sem provocar estouro causado pelo conteúdo.</p>
+
+          <h4>Veja a grade responder ao espaço</h4>
+          <section class="responsive-preview" aria-label="Prévia responsiva do cardápio do Café Aurora">
+            <div class="responsive-preview-head">
+              <span>Cardápio do dia</span>
+              <strong>Feito com cuidado, servido perto de você</strong>
+            </div>
+            <div class="responsive-preview-grid">
+              <figure>
+                <img src="../../img/programacao-web/cafe-coado.webp" alt="Xícara de café coado ao lado de uma pequena jarra" width="1536" height="1024" loading="lazy">
+                <figcaption><strong>Café coado</strong><span>Preparado na hora.</span><b>R$ 8,00</b></figcaption>
+              </figure>
+              <figure>
+                <img src="../../img/programacao-web/pao-artesanal.webp" alt="Pão artesanal cortado sobre uma mesa de madeira" width="1536" height="1024" loading="lazy">
+                <figcaption><strong>Pão artesanal</strong><span>Fermentação natural.</span><b>R$ 12,00</b></figcaption>
+              </figure>
+              <figure>
+                <img src="../../img/programacao-web/bolo-caseiro.webp" alt="Bolo caseiro de laranja com uma fatia servida" width="1536" height="1024" loading="lazy">
+                <figcaption><strong>Bolo caseiro</strong><span>Receita da casa.</span><b>R$ 10,00</b></figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <p class="resource-links">Baixe novamente se precisar: <a href="../../img/programacao-web/cafe-coado.webp" download="cafe-coado.webp">café coado</a> · <a href="../../img/programacao-web/pao-artesanal.webp" download="pao-artesanal.webp">pão artesanal</a> · <a href="../../img/programacao-web/bolo-caseiro.webp" download="bolo-caseiro.webp">bolo caseiro</a>.</p>
+
+          <h4>Uma alternativa fluida</h4>
+          <p>Quando todos os cards podem ter uma largura mínima semelhante, o próprio Grid consegue criar e remover colunas sem media queries:</p>
+
+          <pre class="code-block"><code>.grade-produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  gap: 1.5rem;
+}</code></pre>
+
+          <div class="concept-box">
+            <strong>As duas soluções são válidas.</strong>
+            <p>A versão com media queries ensina onde a mudança acontece e oferece controle explícito. A versão com <code class="inline-code">auto-fit</code> responde ao espaço do próprio contêiner. Escolha pela necessidade do componente, não pela quantidade de código.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-6">
+          <h3 id="aula-4-6">Aula 4 — Media queries, formulário e testes de refluxo</h3>
+          <p>Uma media query aplica regras somente quando determinada condição é atendida. Na abordagem mobile first, o CSS fora da consulta atende primeiro as telas estreitas; regras com <code class="inline-code">min-width</code> melhoram a organização quando há espaço.</p>
+
+          <pre class="code-block"><code>.formulario-grade {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 48rem) {
+  .formulario-grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .campo-largo {
+    grid-column: 1 / -1;
+  }
+}</code></pre>
+
+          <p>No celular, todos os campos ficam em uma coluna. A partir de <code class="inline-code">48rem</code>, campos curtos podem ocupar duas colunas; a classe <code class="inline-code">campo-largo</code> faz mensagem e botão atravessarem a grade inteira.</p>
+
+          <h4>Tipografia que cresce dentro de limites</h4>
+          <pre class="code-block"><code>.apresentacao h1 {
+  font-size: clamp(2rem, 7vw, 4.5rem);
+}</code></pre>
+
+          <p><code class="inline-code">clamp()</code> recebe um valor mínimo, um valor flexível e um máximo. O título cresce com a largura, mas nunca fica menor que <code class="inline-code">2rem</code> nem maior que <code class="inline-code">4.5rem</code>.</p>
+
+          <h4>Procedimento de teste</h4>
+          <ol>
+            <li>Abra as ferramentas de desenvolvimento do navegador e ative o modo responsivo.</li>
+            <li>Teste larguras próximas de 320, 768 e 1280 CSS pixels, sem tratá-las como modelos específicos.</li>
+            <li>Arraste a largura lentamente entre esses pontos; problemas costumam aparecer nos intervalos.</li>
+            <li>Teste orientação vertical e horizontal.</li>
+            <li>Em uma janela de 1280 CSS pixels, amplie para 400% e confirme que o conteúdo reflui sem rolagem horizontal da página.</li>
+            <li>Percorra menu, links, campos e botões usando somente Tab e Shift + Tab.</li>
+            <li>Confirme que nenhuma informação desaparece quando a largura diminui.</li>
+          </ol>
+
+          <div class="note-box">
+            <strong><code class="inline-code">overflow-x: hidden</code> não conserta o layout.</strong>
+            <p>Essa regra pode apenas esconder o conteúdo que ultrapassou a tela. Localize a causa: largura fixa, imagem sem limite, palavra longa, coluna rígida ou espaçamento excessivo.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Auditoria em dupla</h4>
+            <p>Um aluno controla a largura e a ampliação; o outro registra o primeiro ponto em que cada região deixa de funcionar. Corrijam a causa e repitam o teste sem orientar o navegador para um aparelho específico.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="erros-6">
+          <h3 id="erros-6">Erros comuns para revisar</h3>
+          <ul>
+            <li>Criar larguras fixas maiores que o espaço disponível.</li>
+            <li>Escolher breakpoints copiando nomes de aparelhos.</li>
+            <li>Usar Flexbox para forçar alinhamento de várias linhas e colunas.</li>
+            <li>Usar Grid quando uma simples linha flexível resolveria.</li>
+            <li>Esquecer <code class="inline-code">flex-wrap</code> em um menu com muitos itens.</li>
+            <li>Reordenar visualmente o conteúdo e prejudicar teclado e leitores de tela.</li>
+            <li>Ocultar conteúdo importante na versão estreita.</li>
+            <li>Bloquear zoom ou reduzir demais a fonte para fazer tudo caber.</li>
+            <li>Resolver estouro apenas com <code class="inline-code">overflow-x: hidden</code>.</li>
+            <li>Testar somente em duas larguras prontas e ignorar os intervalos.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="projeto-6">
+          <h3 id="projeto-6">Projeto aplicado — entrega do capítulo</h3>
+          <p>Torne responsivas as quatro páginas do Café Aurora:</p>
+          <ul>
+            <li>área central com largura máxima e margens flexíveis;</li>
+            <li>imagens que não ultrapassam seus contêineres;</li>
+            <li>menu e cabeçalho organizados com Flexbox;</li>
+            <li>cardápio com Grid de uma, duas e três colunas;</li>
+            <li>formulário de uma coluna no espaço estreito e duas quando houver espaço;</li>
+            <li>breakpoints criados quando o conteúdo realmente precisar;</li>
+            <li>ordem lógica preservada no HTML e no teclado;</li>
+            <li>teste contínuo entre 320 e 1280 CSS pixels e com ampliação de 400%.</li>
+          </ul>
+          <p>Entregue três capturas da mesma página — estreita, intermediária e ampla — e uma lista curta das decisões tomadas. Não basta mostrar que “coube”: explique por que Flexbox, Grid ou media query foi usado em cada região.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-6">
+          <h3 id="check-6">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Consigo explicar por que responsividade não significa criar outro site.</li>
+            <li>Começo pelo fluxo simples e acrescento colunas quando há espaço.</li>
+            <li>Sei escolher entre Flexbox e Grid em situações comuns.</li>
+            <li>Entendo eixo principal, eixo transversal, linha, coluna e espaçamento.</li>
+            <li>Crio breakpoints de acordo com o conteúdo.</li>
+            <li>Sei usar <code class="inline-code">minmax()</code>, <code class="inline-code">repeat()</code> e <code class="inline-code">fr</code>.</li>
+            <li>Não escondo conteúdo nem bloqueio ampliação para fazê-lo caber.</li>
+            <li>Consigo testar refluxo, teclado e larguras intermediárias.</li>
+          </ul>
+        </section>
+
+        <section class="concept-box" aria-labelledby="fontes-6">
+          <h3 id="fontes-6">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design" target="_blank" rel="noopener noreferrer">Design responsivo — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout/Basic_concepts" target="_blank" rel="noopener noreferrer">Conceitos básicos de Flexbox — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Basic_concepts" target="_blank" rel="noopener noreferrer">Conceitos básicos de Grid — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Media_queries" target="_blank" rel="noopener noreferrer">Fundamentos de media queries — MDN</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/reflow" target="_blank" rel="noopener noreferrer">Refluxo do conteúdo — W3C WAI</a></li>
+          </ul>
+        </section>
+
+        <section class="limit-box">
+          <strong>Até aqui</strong>
+          <p>O site já possui estrutura semântica, conteúdo, formulário, identidade visual e layout responsivo. No próximo capítulo, JavaScript acrescentará comportamento e interação sem retirar o funcionamento básico do HTML.</p>
+        </section>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-5" data-chapter-link="capitulo-5">← Capítulo 5</a>
           <span aria-disabled="true">Próximo capítulo em breve</span>
         </div>
       </article>
