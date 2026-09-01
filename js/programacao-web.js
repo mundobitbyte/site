@@ -3,6 +3,7 @@
 
   const page = document.querySelector(".module-page");
   const content = document.querySelector(".web-content");
+  const chapterMenu = document.querySelector(".chapter-menu");
   const chapters = Array.from(document.querySelectorAll("[data-chapter]"));
   const links = Array.from(document.querySelectorAll("[data-chapter-link]"));
 
@@ -10,7 +11,10 @@
 
   const chapterIds = new Set(chapters.map((chapter) => chapter.id));
 
-  function copyWithFallback(text) {
+  function legacyCopyFallback(text) {
+    if (typeof document.execCommand !== "function") return false;
+
+    const previousFocus = document.activeElement;
     const textArea = document.createElement("textarea");
     textArea.value = text;
     textArea.setAttribute("readonly", "");
@@ -24,6 +28,9 @@
       return false;
     } finally {
       textArea.remove();
+      if (previousFocus instanceof HTMLElement) {
+        previousFocus.focus({ preventScroll: true });
+      }
     }
   }
 
@@ -50,10 +57,11 @@
             await navigator.clipboard.writeText(codeBlock.textContent);
             copied = true;
           } else {
-            copied = copyWithFallback(codeBlock.textContent);
+            copied = legacyCopyFallback(codeBlock.textContent);
           }
         } catch (error) {
-          copied = copyWithFallback(codeBlock.textContent);
+          // Último recurso para navegadores sem a API moderna de Clipboard.
+          copied = legacyCopyFallback(codeBlock.textContent);
         }
 
         button.textContent = copied ? "Copiado!" : "Não foi possível";
@@ -89,9 +97,30 @@
     return chapterIds.has(id) ? id : chapters[0].id;
   }
 
+  function prefersReducedMotion() {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function keepActiveChapterVisible(activeLink) {
+    if (!chapterMenu || !activeLink || window.innerWidth > 1050) return;
+
+    const menuRect = chapterMenu.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+    const isOutside = linkRect.left < menuRect.left + 8 || linkRect.right > menuRect.right - 8;
+
+    if (isOutside) {
+      const targetLeft = activeLink.offsetLeft - (chapterMenu.clientWidth - activeLink.offsetWidth) / 2;
+      chapterMenu.scrollTo({
+        left: Math.max(0, targetLeft),
+        behavior: prefersReducedMotion() ? "auto" : "smooth"
+      });
+    }
+  }
+
   function showChapter(id, options = {}) {
     const activeId = chapterIds.has(id) ? id : chapters[0].id;
     const activeChapter = chapters.find((chapter) => chapter.id === activeId);
+    let activeMenuLink = null;
 
     chapters.forEach((chapter) => {
       chapter.hidden = chapter.id !== activeId;
@@ -100,21 +129,25 @@
     links.forEach((link) => {
       const isActive = link.dataset.chapterLink === activeId;
       link.classList.toggle("active", isActive);
-      if (isActive) {
-        link.setAttribute("aria-current", "page");
+      if (isActive && link.classList.contains("chapter-link")) {
+        link.setAttribute("aria-current", "location");
+        activeMenuLink = link;
       } else {
         link.removeAttribute("aria-current");
       }
     });
 
+    keepActiveChapterVisible(activeMenuLink);
+
     const chapterNumber = activeId.replace("capitulo-", "");
     document.title = `Web I — Capítulo ${chapterNumber} | Mundo bit Byte`;
 
     if (options.resetScroll) {
+      const behavior = prefersReducedMotion() ? "auto" : "smooth";
       if (content && window.innerWidth > 1050) {
-        content.scrollTo({ top: 0, behavior: "smooth" });
+        content.scrollTo({ top: 0, behavior });
       } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior });
       }
     }
 

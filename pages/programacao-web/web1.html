@@ -6,9 +6,10 @@
   <meta name="description" content="Web I do Mundo bit Byte: aprenda HTML, acessibilidade e CSS enquanto constrói o site completo de um pequeno negócio local.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
   <title>Web I — Capítulo 1 | Mundo bit Byte</title>
-  <link href="../../css/programacao-web.css?v=7" rel="stylesheet">
+  <link href="../../css/programacao-web.css?v=8" rel="stylesheet">
 </head>
 <body class="module-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
   <header>
     <div class="header-left">
       <a class="portal-link" href="../programacao-web.html">← Programação Web</a>
@@ -34,7 +35,7 @@
       <a class="chapter-link" href="#capitulo-6" data-chapter-link="capitulo-6">6. Layout responsivo</a>
     </nav>
 
-    <main class="web-content" id="conteudo">
+    <main class="web-content" id="conteudo" tabindex="-1">
       <article class="chapter" id="capitulo-1" data-chapter>
         <div class="chapter-header">
           <span class="chapter-kicker">Web I • 4 horas</span>
@@ -94,7 +95,7 @@ O navegador interpreta e exibe a página</div>
 
         <section aria-labelledby="aula-2-1">
           <h3 id="aula-2-1">Aula 2 — Seu primeiro contato com HTML</h3>
-          <p>Antes de organizar um projeto completo, vamos experimentar duas marcações no <a href="https://developer.mozilla.org/en-US/play" target="_blank" rel="noopener noreferrer">Playground da MDN</a>. Ele permite alterar um pequeno exemplo e observar o resultado imediatamente.</p>
+          <p>Antes de organizar um projeto completo, vamos experimentar duas marcações no <a href="https://developer.mozilla.org/en-US/play" target="_blank" rel="noopener noreferrer">Playground da MDN (abre em nova aba)</a>. Ele permite alterar um pequeno exemplo e observar o resultado imediatamente.</p>
 
           <pre class="code-block"><code>&lt;h1&gt;Café Aurora&lt;/h1&gt;
 &lt;p&gt;Café, encontros e bons momentos no coração do bairro.&lt;/p&gt;</code></pre>
@@ -119,7 +120,7 @@ O navegador interpreta e exibe a página</div>
         <section aria-labelledby="aula-3-1">
           <h3 id="aula-3-1">Aula 3 — Preparando o projeto no VS Code</h3>
           <ol>
-            <li>Instale o <a href="https://code.visualstudio.com/docs/setup/windows" target="_blank" rel="noopener noreferrer">VS Code para Windows</a>. Em computador compartilhado, siga a orientação do professor antes de instalar.</li>
+            <li>Instale o <a href="https://code.visualstudio.com/docs/setup/windows">VS Code para Windows</a>. Em computador compartilhado, siga a orientação do professor antes de instalar.</li>
             <li>Crie uma pasta chamada <code class="inline-code">cafe-aurora</code>.</li>
             <li>No VS Code, use <strong>Arquivo → Abrir Pasta</strong> e selecione essa pasta.</li>
           </ol>
@@ -130,6 +131,17 @@ O navegador interpreta e exibe a página</div>
           </div>
 
           <p>No painel lateral do VS Code, crie o arquivo <code class="inline-code">index.html</code>. O nome <code class="inline-code">index</code> é tradicionalmente usado para a página inicial de uma pasta ou de um site.</p>
+
+          <div class="tool-grid" aria-label="Referências visuais do VS Code">
+            <figure class="tool-figure">
+              <img src="../../img/programacao-web/vscode-pasta-aberta.webp" alt="VS Code com uma pasta de projeto aberta no painel Explorer à esquerda" width="1100" height="825" loading="lazy">
+              <figcaption>A pasta aberta aparece no Explorer. Fonte: <a href="https://code.visualstudio.com/docs/editing/getting-started/editor-tutorial">documentação oficial do VS Code</a>.</figcaption>
+            </figure>
+            <figure class="tool-figure">
+              <img src="../../img/programacao-web/vscode-criar-index.webp" alt="Botão New File destacado no Explorer do VS Code para criar o arquivo index.html" width="1272" height="350" loading="lazy">
+              <figcaption>Use o botão de novo arquivo e digite <code class="inline-code">index.html</code>. Fonte: <a href="https://code.visualstudio.com/docs/editing/getting-started/editor-tutorial">documentação oficial do VS Code</a>.</figcaption>
+            </figure>
+          </div>
 
           <div class="note-box">
             <strong>Pasta aberta não é arquivo aberto.</strong>
@@ -170,7 +182,7 @@ O navegador interpreta e exibe a página</div>
           </div>
 
           <h4>Visualizando a página</h4>
-          <p>No painel de extensões do VS Code, procure <strong>Live Preview</strong> e confirme que o publicador é <strong>Microsoft</strong>. A página oficial da extensão está no <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server" target="_blank" rel="noopener noreferrer">Visual Studio Marketplace</a>. Depois de instalada, use a opção de visualização para abrir seu arquivo.</p>
+          <p>No painel de extensões do VS Code, procure <strong>Live Preview</strong> e confirme que o publicador é <strong>Microsoft</strong>. A página oficial da extensão está no <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server">Visual Studio Marketplace</a>. Depois de instalada, clique com o botão direito em <code class="inline-code">index.html</code> e escolha <strong>Show Preview</strong>.</p>
 
           <div class="note-box">
             <strong>Visualização local não é publicação.</strong>
@@ -184,6 +196,19 @@ O navegador interpreta e exibe a página</div>
               <li>Altere o conteúdo de <code class="inline-code">&lt;h1&gt;</code> e <code class="inline-code">&lt;p&gt;</code>.</li>
               <li>Salve o arquivo e recarregue a visualização, se necessário.</li>
             </ol>
+          </div>
+
+          <h4>Primeiro contato com DevTools</h4>
+          <p>Na página aberta no navegador, clique com o botão direito sobre o título e escolha <strong>Inspecionar</strong>. No painel <strong>Elements</strong>, localize o <code class="inline-code">h1</code>, dê dois cliques em seu texto e troque-o temporariamente por “Café Aurora — teste”.</p>
+
+          <figure class="tool-figure">
+            <img src="../../img/programacao-web/devtools-elements.webp" alt="Chrome DevTools no painel Elements com o texto de um elemento HTML em edição" width="1100" height="624" loading="lazy">
+            <figcaption>O painel Elements permite localizar e experimentar mudanças no HTML exibido. Fonte: <a href="https://developer.chrome.com/docs/devtools/dom">documentação oficial do Chrome DevTools</a>.</figcaption>
+          </figure>
+
+          <div class="note-box">
+            <strong>Inspecionar não altera seu arquivo.</strong>
+            <p>A mudança existe somente naquela visualização. Recarregue a página e o texto original voltará. Para tornar a alteração permanente, edite e salve o <code class="inline-code">index.html</code> no VS Code.</p>
           </div>
 
           <h4>Erros comuns</h4>
@@ -220,6 +245,17 @@ O navegador interpreta e exibe a página</div>
           <strong>Até aqui</strong>
           <p>Temos um primeiro documento correto e funcional. Ainda não usamos cores, imagens, menus, CSS ou JavaScript. A página ganhará conteúdo e estrutura antes de receber a identidade visual.</p>
         </section>
+
+        <section class="task-box" aria-labelledby="transferencia-1">
+          <h3 id="transferencia-1">Transfira o aprendizado</h3>
+          <p>Sem criar outro site completo, imagine uma barbearia, papelaria ou projeto comunitário. Escreva apenas um <code class="inline-code">h1</code>, um parágrafo de apresentação e um título de aba adequados a esse novo contexto.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do Capítulo 1">
+          <strong>Checkpoint para conferência</strong>
+          <p>Use este arquivo somente para recuperar ou comparar sua pasta depois de tentar a construção prática.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-capitulo-1.zip" download>Baixar checkpoint do Capítulo 1 (ZIP)</a>
+        </aside>
 
         <div class="chapter-footer">
           <span aria-disabled="true">← Início do Web I</span>
@@ -421,7 +457,9 @@ abertura        conteúdo          fechamento</code></pre>
         <section aria-labelledby="codigo-final-2">
           <h3 id="codigo-final-2">Versão consolidada da página</h3>
           <p>Compare seu arquivo com esta versão. Não copie apenas por copiar: identifique a função de cada elemento.</p>
-          <pre class="code-block"><code>&lt;!DOCTYPE html&gt;
+          <details class="code-disclosure">
+            <summary>Código completo para conferência</summary>
+            <pre class="code-block"><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="pt-BR"&gt;
 &lt;head&gt;
   &lt;meta charset="UTF-8"&gt;
@@ -468,6 +506,22 @@ abertura        conteúdo          fechamento</code></pre>
   &lt;p&gt;&lt;strong&gt;De segunda a sábado, das 8h às 19h.&lt;/strong&gt;&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
+          </details>
+        </section>
+
+        <section aria-labelledby="validacao-html">
+          <h3 id="validacao-html">Valide o HTML antes de avançar</h3>
+          <p>O validador ajuda a encontrar erros de marcação que o navegador pode tentar corrigir silenciosamente. Salve seu arquivo e abra o <a href="https://validator.w3.org/nu/" target="_blank" rel="noopener noreferrer">HTML Checker do W3C (abre em nova aba)</a>.</p>
+          <ol>
+            <li>Escolha a opção de enviar o arquivo ou copie o conteúdo de <code class="inline-code">index.html</code> para o campo de texto.</li>
+            <li>Inicie a verificação e leia a primeira mensagem de erro, observando a linha indicada.</li>
+            <li>Corrija primeiro problemas simples, como uma tag sem fechamento ou um <code class="inline-code">id</code> repetido.</li>
+            <li>Salve e valide novamente até não restarem erros de marcação.</li>
+          </ol>
+          <div class="note-box">
+            <strong>Uma mensagem pode provocar outras.</strong>
+            <p>Comece pelo primeiro erro: ao fechar uma tag esquecida, várias mensagens seguintes podem desaparecer. A validação complementa — e não substitui — a leitura do conteúdo, os testes no navegador e a verificação de acessibilidade.</p>
+          </div>
         </section>
 
         <section aria-labelledby="erros-2">
@@ -513,6 +567,11 @@ abertura        conteúdo          fechamento</code></pre>
         <section class="limit-box">
           <strong>Até aqui</strong>
           <p>A página já tem conteúdo significativo e navegação interna, mas sua aparência ainda é simples. HTML organiza o conteúdo; CSS cuidará do visual; JavaScript acrescentará comportamentos. No próximo capítulo, criaremos outras páginas e uma navegação estruturada.</p>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-2">
+          <h3 id="transferencia-2">Transfira o aprendizado</h3>
+          <p>Escolha outro negócio local e escreva somente a hierarquia de títulos de sua página inicial. Inclua um <code class="inline-code">h1</code> e dois <code class="inline-code">h2</code>, explicando quais perguntas reais cada seção responde.</p>
         </section>
 
         <div class="chapter-footer">
@@ -636,7 +695,9 @@ abertura        conteúdo          fechamento</code></pre>
           <h4>Nova estrutura da página inicial</h4>
           <p>No <code class="inline-code">index.html</code>, mantenha o <code class="inline-code">head</code> construído no capítulo anterior e reorganize o <code class="inline-code">body</code>:</p>
 
-          <pre class="code-block"><code>&lt;body&gt;
+          <details class="code-disclosure">
+            <summary>Estrutura completa do body para conferência</summary>
+            <pre class="code-block"><code>&lt;body&gt;
   &lt;header&gt;
     &lt;p&gt;&lt;a href="index.html"&gt;Café Aurora&lt;/a&gt;&lt;/p&gt;
 
@@ -680,6 +741,7 @@ abertura        conteúdo          fechamento</code></pre>
     &lt;p&gt;&amp;copy; 2026 Café Aurora. Projeto educacional fictício.&lt;/p&gt;
   &lt;/footer&gt;
 &lt;/body&gt;</code></pre>
+          </details>
 
           <ul>
             <li><code class="inline-code">aria-label</code> dá um nome claro à região de navegação.</li>
@@ -728,7 +790,9 @@ abertura        conteúdo          fechamento</code></pre>
 
           <p>Depois de baixar as imagens, construa o arquivo <code class="inline-code">cardapio.html</code>:</p>
 
-          <pre class="code-block"><code>&lt;!DOCTYPE html&gt;
+          <details class="code-disclosure">
+            <summary>Código completo de cardapio.html para conferência</summary>
+            <pre class="code-block"><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="pt-BR"&gt;
 &lt;head&gt;
   &lt;meta charset="UTF-8"&gt;
@@ -812,12 +876,13 @@ abertura        conteúdo          fechamento</code></pre>
   &lt;/footer&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
+          </details>
 
           <div class="concept-box">
             <strong>Novos recursos usados no cardápio</strong>
             <ul>
               <li>Cada produto foi colocado em <code class="inline-code">article</code> porque forma uma unidade que pode ser compreendida separadamente.</li>
-              <li>O atributo <code class="inline-code">loading="lazy"</code> permite que o navegador adie o carregamento de imagens que ainda estão longe da área visível.</li>
+              <li>O atributo <code class="inline-code">loading="lazy"</code> permite que o navegador adie o carregamento de imagens que ainda estão longe da área visível. Use-o principalmente abaixo da área inicial; a imagem principal que aparece logo ao abrir a página normalmente não deve ser carregada dessa forma.</li>
               <li>Os valores são fictícios e servem apenas para contextualizar o exercício.</li>
             </ul>
           </div>
@@ -870,8 +935,8 @@ abertura        conteúdo          fechamento</code></pre>
     &lt;h2 id="onde-estamos"&gt;Onde estamos&lt;/h2&gt;
     &lt;address&gt;
       &lt;p&gt;Rua das Flores, 123 — Centro&lt;/p&gt;
-      &lt;p&gt;Telefone: (11) 0000-0000&lt;/p&gt;
-      &lt;p&gt;E-mail: contato@cafeaurora.example&lt;/p&gt;
+      &lt;p&gt;Telefone: &lt;a href="tel:+551100000000"&gt;(11) 0000-0000&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;E-mail: &lt;a href="mailto:contato@cafeaurora.example"&gt;contato@cafeaurora.example&lt;/a&gt;&lt;/p&gt;
     &lt;/address&gt;
   &lt;/section&gt;
 
@@ -891,6 +956,11 @@ abertura        conteúdo          fechamento</code></pre>
           </div>
 
           <p>O elemento <code class="inline-code">address</code> representa informações de contato relacionadas à página ou ao conteúdo mais próximo. Ele não deve ser usado apenas para criar texto em itálico.</p>
+
+          <div class="concept-box">
+            <strong>Links que iniciam uma ação</strong>
+            <p><code class="inline-code">tel:</code> pode abrir o aplicativo de chamadas e <code class="inline-code">mailto:</code> pode abrir o aplicativo de e-mail configurado. Eles não fazem a ligação nem enviam a mensagem automaticamente, e o texto visível deve continuar informando o destino.</p>
+          </div>
 
           <h4>O menu precisa ser igual em todas as páginas</h4>
           <p>Como este é um site estático, o menu está escrito em cada arquivo. Sempre que acrescentar ou renomear uma página, revise todas as cópias. A única diferença será a posição de <code class="inline-code">aria-current="page"</code>.</p>
@@ -955,6 +1025,17 @@ abertura        conteúdo          fechamento</code></pre>
           <strong>Até aqui</strong>
           <p>O Café Aurora já possui um site organizado e navegável, mas ainda não recebe dados do visitante. No próximo capítulo, criaremos o formulário de contato e aprofundaremos acessibilidade, rótulos, foco e validação dos campos.</p>
         </section>
+
+        <section class="task-box" aria-labelledby="transferencia-3">
+          <h3 id="transferencia-3">Transfira o aprendizado</h3>
+          <p>Para uma oficina de bicicletas ou biblioteca comunitária, esboce apenas um mapa com três páginas e indique qual delas teria <code class="inline-code">aria-current="page"</code> em cada visita. Não desenvolva o segundo site.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do Capítulo 3">
+          <strong>Checkpoint para conferência</strong>
+          <p>Use este ZIP para retomar as quatro páginas, depois de comparar sua própria navegação e seus caminhos.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-capitulo-3.zip" download>Baixar checkpoint do Capítulo 3 (ZIP)</a>
+        </aside>
 
         <div class="chapter-footer">
           <a href="#capitulo-2" data-chapter-link="capitulo-2">← Capítulo 2</a>
@@ -1107,7 +1188,9 @@ Site apresenta uma resposta</div>
           <h3 id="aula-3-4">Aula 3 — Montando o formulário completo</h3>
           <p>No arquivo <code class="inline-code">contato.html</code>, mantenha as informações de localização e acrescente esta seção dentro de <code class="inline-code">main</code>:</p>
 
-          <pre class="code-block"><code>&lt;section aria-labelledby="fale-conosco"&gt;
+          <details class="code-disclosure">
+            <summary>Código completo do formulário para conferência</summary>
+            <pre class="code-block"><code>&lt;section aria-labelledby="fale-conosco"&gt;
   &lt;h2 id="fale-conosco"&gt;Fale conosco&lt;/h2&gt;
   &lt;p id="orientacao-formulario"&gt;
     Os campos identificados como obrigatórios devem ser preenchidos.
@@ -1188,6 +1271,7 @@ Site apresenta uma resposta</div>
     &lt;button type="submit"&gt;Enviar mensagem&lt;/button&gt;
   &lt;/form&gt;
 &lt;/section&gt;</code></pre>
+          </details>
 
           <div class="concept-box">
             <strong>Por que agrupar?</strong>
@@ -1368,9 +1452,9 @@ Site apresenta uma resposta</div>
         <section class="concept-box" aria-labelledby="fontes-4">
           <h3 id="fontes-4">Referências para consulta</h3>
           <ul>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form" target="_blank" rel="noopener noreferrer">Elemento form — MDN</a></li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label" target="_blank" rel="noopener noreferrer">Elemento label — MDN</a></li>
-            <li><a href="https://www.w3.org/WAI/tutorials/forms/" target="_blank" rel="noopener noreferrer">Tutorial de formulários acessíveis — W3C WAI</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form">Elemento form — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label">Elemento label — MDN</a></li>
+            <li><a href="https://www.w3.org/WAI/tutorials/forms/">Tutorial de formulários acessíveis — W3C WAI</a></li>
           </ul>
         </section>
 
@@ -1378,6 +1462,17 @@ Site apresenta uma resposta</div>
           <strong>Até aqui</strong>
           <p>O site já oferece conteúdo organizado, navegação e um formulário acessível no lado do navegador. A aparência ainda é básica de propósito. No próximo capítulo, começaremos a identidade visual com CSS, preservando toda a estrutura construída.</p>
         </section>
+
+        <section class="task-box" aria-labelledby="transferencia-4">
+          <h3 id="transferencia-4">Transfira o aprendizado</h3>
+          <p>Imagine um formulário curto para solicitar orçamento de um conserto. Liste três campos, escolha o <code class="inline-code">type</code> de cada um e indique quais seriam obrigatórios. Não programe outro formulário completo.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do Capítulo 4">
+          <strong>Checkpoint para conferência</strong>
+          <p>Use este ZIP para recuperar a versão com formulário, sem substituir seus testes de rótulos, teclado e validação.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-capitulo-4.zip" download>Baixar checkpoint do Capítulo 4 (ZIP)</a>
+        </aside>
 
         <div class="chapter-footer">
           <a href="#capitulo-3" data-chapter-link="capitulo-3">← Capítulo 3</a>
@@ -1462,7 +1557,7 @@ Site apresenta uma resposta</div>
           <div class="task-box">
             <h4>Experimente</h4>
             <ol>
-              <li>Teste a regra no <a href="https://developer.mozilla.org/en-US/play" target="_blank" rel="noopener noreferrer">Playground da MDN</a>.</li>
+              <li>Teste a regra no <a href="https://developer.mozilla.org/en-US/play" target="_blank" rel="noopener noreferrer">Playground da MDN (abre em nova aba)</a>.</li>
               <li>Troque apenas a cor de fundo e observe o resultado.</li>
               <li>Remova um ponto e vírgula e depois uma chave. Compare os efeitos e restaure o código correto.</li>
               <li>Copie a regra para <code class="inline-code">styles.css</code> e confirme a mudança nas quatro páginas.</li>
@@ -1521,6 +1616,14 @@ h3 {
             <strong>Comece simples.</strong>
             <p>Evite usar <code class="inline-code">!important</code> para esconder conflitos e não escolha elementos pelo <code class="inline-code">id</code> apenas para estilizá-los. Classes pequenas e nomes baseados na função do componente deixam a folha mais previsível.</p>
           </div>
+
+          <h4>Confira a cascata no DevTools</h4>
+          <ol>
+            <li>Inspecione um link com a classe <code class="inline-code">botao</code>.</li>
+            <li>No painel <strong>Styles</strong>, marque e desmarque temporariamente a propriedade <code class="inline-code">color</code> para ver qual regra vence.</li>
+            <li>Abra <strong>Computed</strong> e procure <code class="inline-code">color</code> para localizar o valor final realmente aplicado.</li>
+          </ol>
+          <p>Esses testes também desaparecem ao recarregar a página. Depois de compreender o resultado, faça a correção permanente em <code class="inline-code">styles.css</code>.</p>
 
           <div class="task-box">
             <h4>Pratique</h4>
@@ -1730,16 +1833,21 @@ textarea:focus-visible {
         <section class="concept-box" aria-labelledby="fontes-5">
           <h3 id="fontes-5">Referências para consulta</h3>
           <ul>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics" target="_blank" rel="noopener noreferrer">Fundamentos de estilização com CSS — MDN</a></li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Introduction" target="_blank" rel="noopener noreferrer">Introdução à cascata — MDN</a></li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Box_model/Introduction" target="_blank" rel="noopener noreferrer">Introdução ao modelo de caixa — MDN</a></li>
-            <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum" target="_blank" rel="noopener noreferrer">Contraste mínimo — W3C WAI</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics">Fundamentos de estilização com CSS — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Introduction">Introdução à cascata — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Box_model/Introduction">Introdução ao modelo de caixa — MDN</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum">Contraste mínimo — W3C WAI</a></li>
           </ul>
         </section>
 
         <section class="limit-box">
           <strong>Até aqui</strong>
           <p>O Café Aurora agora possui uma identidade visual consistente, reutilizável e acessível. No próximo capítulo, usaremos Flexbox, Grid e media queries para organizar o conteúdo em diferentes larguras de tela.</p>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-5">
+          <h3 id="transferencia-5">Transfira o aprendizado</h3>
+          <p>Para uma livraria de bairro, proponha apenas três variáveis de cor e uma classe reutilizável. Explique como manteria contraste e foco visível sem reconstruir o projeto.</p>
         </section>
 
         <div class="chapter-footer">
@@ -1819,6 +1927,29 @@ img {
           </div>
 
           <p><code class="inline-code">max-width: 100%</code> impede a imagem de ultrapassar seu contêiner. Isso ajusta sua apresentação, mas <strong>não reduz os bytes transferidos</strong>; a otimização do arquivo WebP continua necessária.</p>
+
+          <h4>Entregue uma imagem adequada ao espaço</h4>
+          <p><code class="inline-code">srcset</code> oferece arquivos de larguras diferentes. <code class="inline-code">sizes</code> informa quanto espaço a imagem tende a ocupar; com esses dados, o navegador escolhe uma candidata antes de baixar o arquivo.</p>
+
+          <pre class="code-block"><code>&lt;img
+  src="img/ambiente-cafe-1024.webp"
+  srcset="
+    img/ambiente-cafe-640.webp 640w,
+    img/ambiente-cafe-1024.webp 1024w,
+    img/ambiente-cafe.webp 1536w
+  "
+  sizes="(max-width: 48rem) calc(100vw - 2rem), 70rem"
+  alt="Salão do Café Aurora com mesas de madeira e plantas"
+  width="1536"
+  height="1024"
+&gt;</code></pre>
+
+          <ul>
+            <li>Os valores <code class="inline-code">640w</code>, <code class="inline-code">1024w</code> e <code class="inline-code">1536w</code> descrevem a largura real de cada arquivo.</li>
+            <li>O navegador considera o espaço previsto e a densidade da tela; não é preciso escolher a imagem com JavaScript.</li>
+            <li>Use <code class="inline-code">picture</code> quando a versão estreita precisar de outro recorte ou enquadramento, e não apenas de menos pixels. O Café Aurora mantém o mesmo enquadramento, por isso <code class="inline-code">srcset</code> é suficiente aqui.</li>
+          </ul>
+          <p class="resource-links">Arquivos do exemplo: <a href="../../img/programacao-web/ambiente-cafe-640.webp" download>640 px</a> · <a href="../../img/programacao-web/ambiente-cafe-1024.webp" download>1024 px</a> · <a href="../../img/programacao-web/ambiente-cafe.webp" download>1536 px</a>.</p>
 
           <div class="task-box">
             <h4>Experimente</h4>
@@ -1986,6 +2117,10 @@ img {
           <p><code class="inline-code">clamp()</code> recebe um valor mínimo, um valor flexível e um máximo. O título cresce com a largura, mas nunca fica menor que <code class="inline-code">2rem</code> nem maior que <code class="inline-code">4.5rem</code>.</p>
 
           <h4>Procedimento de teste</h4>
+          <figure class="tool-figure">
+            <img src="../../img/programacao-web/devtools-modo-responsivo.webp" alt="Chrome DevTools com a barra de dispositivos e uma página exibida em largura móvel" width="1100" height="783" loading="lazy">
+            <figcaption>Ative a barra de dispositivos e arraste as alças para testar larguras intermediárias. Fonte: <a href="https://developer.chrome.com/docs/devtools/device-mode">documentação oficial do Chrome DevTools</a>.</figcaption>
+          </figure>
           <ol>
             <li>Abra as ferramentas de desenvolvimento do navegador e ative o modo responsivo.</li>
             <li>Teste larguras próximas de 320, 768 e 1280 CSS pixels, sem tratá-las como modelos específicos.</li>
@@ -2056,11 +2191,11 @@ img {
         <section class="concept-box" aria-labelledby="fontes-6">
           <h3 id="fontes-6">Referências para consulta</h3>
           <ul>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design" target="_blank" rel="noopener noreferrer">Design responsivo — MDN</a></li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout/Basic_concepts" target="_blank" rel="noopener noreferrer">Conceitos básicos de Flexbox — MDN</a></li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Basic_concepts" target="_blank" rel="noopener noreferrer">Conceitos básicos de Grid — MDN</a></li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Media_queries" target="_blank" rel="noopener noreferrer">Fundamentos de media queries — MDN</a></li>
-            <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/reflow" target="_blank" rel="noopener noreferrer">Refluxo do conteúdo — W3C WAI</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design">Design responsivo — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout/Basic_concepts">Conceitos básicos de Flexbox — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Basic_concepts">Conceitos básicos de Grid — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Media_queries">Fundamentos de media queries — MDN</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/reflow">Refluxo do conteúdo — W3C WAI</a></li>
           </ul>
         </section>
 
@@ -2068,6 +2203,17 @@ img {
           <strong>Até aqui</strong>
           <p>O site já possui estrutura semântica, conteúdo, formulário, identidade visual e layout responsivo. No próximo capítulo, JavaScript acrescentará comportamento e interação sem retirar o funcionamento básico do HTML.</p>
         </section>
+
+        <section class="task-box" aria-labelledby="transferencia-6">
+          <h3 id="transferencia-6">Transfira o aprendizado</h3>
+          <p>Imagine três cards de oficinas em um evento comunitário. Indique se usaria Flexbox ou Grid, em qual situação criaria um breakpoint e quais duas larguras de imagem ofereceria. Registre a decisão sem iniciar outro projeto.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do Capítulo 6">
+          <strong>Checkpoint final para conferência</strong>
+          <p>Use este ZIP para conferir ou recuperar a versão responsiva completa depois de realizar sua própria construção e seus testes.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-capitulo-6.zip" download>Baixar checkpoint do Capítulo 6 (ZIP)</a>
+        </aside>
 
         <div class="chapter-footer">
           <a href="#capitulo-5" data-chapter-link="capitulo-5">← Capítulo 5</a>
@@ -2077,6 +2223,6 @@ img {
     </main>
   </div>
 
-  <script src="../../js/programacao-web.js?v=3"></script>
+  <script src="../../js/programacao-web.js?v=4"></script>
 </body>
 </html>
