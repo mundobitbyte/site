@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Web I do Mundo bit Byte: aprenda os fundamentos da Web e construa a página inicial de um pequeno negócio local com HTML.">
+  <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
+  <title>Web I — Capítulo 1 | Mundo bit Byte</title>
+  <link href="../../css/programacao-web.css?v=1" rel="stylesheet">
+</head>
+<body class="module-page">
+  <header>
+    <div class="header-left">
+      <a class="portal-link" href="../programacao-web.html">← Programação Web</a>
+      <h1>Programação Web I</h1>
+    </div>
+    <div class="brand">Professor Ronaldo Lavestein</div>
+  </header>
+
+  <nav class="level-menu" aria-label="Níveis de Programação Web">
+    <span class="level-menu-item active" aria-current="page">Web I — Sites</span>
+    <span class="level-menu-item is-disabled" aria-disabled="true">Web II — Sistemas <small>Em breve</small></span>
+    <span class="level-menu-item is-disabled" aria-disabled="true">Web III — APIs e Frameworks <small>Em breve</small></span>
+  </nav>
+
+  <div class="web-layout">
+    <nav class="chapter-menu" aria-label="Capítulos disponíveis">
+      <h2>Capítulos disponíveis</h2>
+      <a class="chapter-link" href="#capitulo-1" data-chapter-link="capitulo-1">1. Da necessidade ao primeiro arquivo</a>
+      <a class="chapter-link" href="#capitulo-2" data-chapter-link="capitulo-2">2. Construindo a página inicial</a>
+    </nav>
+
+    <main class="web-content" id="conteudo">
+      <article class="chapter" id="capitulo-1" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • 4 horas</span>
+          <h2 tabindex="-1">Capítulo 1 — Da necessidade ao primeiro arquivo</h2>
+          <p class="chapter-meta">Fundamentos da Web, primeiro experimento e preparação do projeto.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-1">
+          <h3 id="contexto-1">Uma situação real para começar</h3>
+          <p>O <strong>Café Aurora</strong> é um pequeno café de bairro. Hoje, informações como endereço, horário e produtos aparecem apenas em publicações de redes sociais e acabam se perdendo.</p>
+          <p>A proprietária quer um lugar simples e confiável onde qualquer pessoa possa conhecer o café. Antes de pensar em cores ou animações, precisamos responder: o que é um site, quais arquivos o formam e como o navegador consegue mostrá-los?</p>
+        </section>
+
+        <section aria-labelledby="objetivos-1">
+          <h3 id="objetivos-1">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Diferenciar Internet, Web, site e página.</li>
+            <li>Entender o papel do navegador, do servidor e do endereço.</li>
+            <li>Fazer um primeiro experimento com HTML.</li>
+            <li>Criar e abrir uma pasta de projeto no VS Code.</li>
+            <li>Criar o arquivo <code class="inline-code">index.html</code> com a estrutura mínima correta.</li>
+            <li>Visualizar, alterar e salvar a primeira página do Café Aurora.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-1">
+          <h3 id="aula-1-1">Aula 1 — Como a Web funciona</h3>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>Internet</strong><p>É a infraestrutura que conecta computadores e redes ao redor do mundo.</p></div>
+            <div class="mini-card"><strong>Web</strong><p>É um dos serviços que usa a Internet para disponibilizar páginas interligadas.</p></div>
+            <div class="mini-card"><strong>Site</strong><p>É um conjunto organizado de páginas e recursos relacionados.</p></div>
+            <div class="mini-card"><strong>Página</strong><p>É um documento individual que o navegador interpreta e apresenta.</p></div>
+          </div>
+
+          <h4>As três tecnologias que encontraremos</h4>
+          <ul>
+            <li><strong>HTML:</strong> organiza e dá significado ao conteúdo.</li>
+            <li><strong>CSS:</strong> cuida da apresentação visual e do layout.</li>
+            <li><strong>JavaScript:</strong> acrescenta comportamento e interação.</li>
+          </ul>
+          <p>Neste começo, nosso foco será o HTML. Assim, cada tecnologia entra quando surge uma necessidade real no projeto.</p>
+
+          <h4>O caminho de uma página</h4>
+          <div class="flow" role="img" aria-label="Fluxo do navegador até a página">Você digita um endereço
+        ↓
+O navegador faz uma solicitação
+        ↓
+O servidor envia os arquivos
+        ↓
+O navegador interpreta e exibe a página</div>
+
+          <div class="task-box">
+            <h4>Pratique</h4>
+            <p>Abra três sites que você usa. Em cada um, identifique o endereço, o navegador utilizado e pelo menos duas páginas diferentes do mesmo site.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-1">
+          <h3 id="aula-2-1">Aula 2 — Seu primeiro contato com HTML</h3>
+          <p>Antes de organizar um projeto completo, vamos experimentar duas marcações no <a href="https://developer.mozilla.org/en-US/play" target="_blank" rel="noopener noreferrer">Playground da MDN</a>. Ele permite alterar um pequeno exemplo e observar o resultado imediatamente.</p>
+
+          <pre class="code-block"><code>&lt;h1&gt;Café Aurora&lt;/h1&gt;
+&lt;p&gt;Café, encontros e bons momentos no coração do bairro.&lt;/p&gt;</code></pre>
+
+          <p>As marcações <code class="inline-code">&lt;h1&gt;</code> e <code class="inline-code">&lt;p&gt;</code> são chamadas de <strong>tags</strong>. A primeira indica o título principal; a segunda, um parágrafo. A maior parte dos elementos possui uma tag de abertura, conteúdo e uma tag de fechamento.</p>
+
+          <div class="task-box">
+            <h4>Experimente</h4>
+            <ol>
+              <li>Troque o nome do café pelo nome de outro pequeno negócio.</li>
+              <li>Altere a frase do parágrafo.</li>
+              <li>Apague apenas uma tag de fechamento e observe o que acontece. Depois, corrija.</li>
+            </ol>
+          </div>
+
+          <div class="note-box">
+            <strong>Por que não faremos todo o site aqui?</strong>
+            <p>Esse ambiente é excelente para testar trechos curtos. Um site real precisa de pasta própria, documento completo, imagens, várias páginas e arquivos separados. Por isso, agora passaremos ao ambiente principal do projeto.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-1">
+          <h3 id="aula-3-1">Aula 3 — Preparando o projeto no VS Code</h3>
+          <ol>
+            <li>Instale o <a href="https://code.visualstudio.com/docs/setup/windows" target="_blank" rel="noopener noreferrer">VS Code para Windows</a>. Em computador compartilhado, siga a orientação do professor antes de instalar.</li>
+            <li>Crie uma pasta chamada <code class="inline-code">cafe-aurora</code>.</li>
+            <li>No VS Code, use <strong>Arquivo → Abrir Pasta</strong> e selecione essa pasta.</li>
+          </ol>
+
+          <div class="concept-box">
+            <strong>Um nome simples evita problemas.</strong>
+            <p>Em nomes de arquivos e pastas para a Web, prefira letras minúsculas, sem espaços e sem acentos. Quando precisar separar palavras, use hífen: <code class="inline-code">cafe-aurora</code>.</p>
+          </div>
+
+          <p>No painel lateral do VS Code, crie o arquivo <code class="inline-code">index.html</code>. O nome <code class="inline-code">index</code> é tradicionalmente usado para a página inicial de uma pasta ou de um site.</p>
+
+          <div class="note-box">
+            <strong>Pasta aberta não é arquivo aberto.</strong>
+            <p>A pasta representa o projeto inteiro. Dentro dela ficarão os documentos, imagens, estilos e scripts que construiremos nos próximos capítulos.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-1">
+          <h3 id="aula-4-1">Aula 4 — O primeiro documento completo</h3>
+          <p>Digite no arquivo <code class="inline-code">index.html</code>:</p>
+
+          <pre class="code-block"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Café Aurora&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Café Aurora&lt;/h1&gt;
+  &lt;p&gt;Café, encontros e bons momentos no coração do bairro.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Trecho</th><th>Função</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">&lt;!DOCTYPE html&gt;</code></td><td>Informa que o documento usa o HTML atual.</td></tr>
+                <tr><td><code class="inline-code">&lt;html lang="pt-BR"&gt;</code></td><td>É o elemento principal e informa o idioma da página.</td></tr>
+                <tr><td><code class="inline-code">&lt;head&gt;</code></td><td>Reúne configurações e informações sobre o documento.</td></tr>
+                <tr><td><code class="inline-code">charset</code></td><td>Permite exibir corretamente acentos e outros caracteres.</td></tr>
+                <tr><td><code class="inline-code">viewport</code></td><td>Prepara a página para diferentes larguras de tela.</td></tr>
+                <tr><td><code class="inline-code">&lt;title&gt;</code></td><td>Define o texto mostrado na aba do navegador.</td></tr>
+                <tr><td><code class="inline-code">&lt;body&gt;</code></td><td>Contém o que será apresentado na página.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Visualizando a página</h4>
+          <p>No painel de extensões do VS Code, procure <strong>Live Preview</strong> e confirme que o publicador é <strong>Microsoft</strong>. A página oficial da extensão está no <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server" target="_blank" rel="noopener noreferrer">Visual Studio Marketplace</a>. Depois de instalada, use a opção de visualização para abrir seu arquivo.</p>
+
+          <div class="note-box">
+            <strong>Visualização local não é publicação.</strong>
+            <p>Neste momento, a página funciona apenas no seu computador. Colocar o site na Internet será uma etapa posterior do projeto.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Experimente</h4>
+            <ol>
+              <li>Troque o texto de <code class="inline-code">&lt;title&gt;</code> e observe a aba.</li>
+              <li>Altere o conteúdo de <code class="inline-code">&lt;h1&gt;</code> e <code class="inline-code">&lt;p&gt;</code>.</li>
+              <li>Salve o arquivo e recarregue a visualização, se necessário.</li>
+            </ol>
+          </div>
+
+          <h4>Erros comuns</h4>
+          <ul>
+            <li>Salvar como <code class="inline-code">index.html.txt</code>.</li>
+            <li>Criar o arquivo fora da pasta <code class="inline-code">cafe-aurora</code>.</li>
+            <li>Esquecer o fechamento de uma tag.</li>
+            <li>Alterar o arquivo e não salvá-lo antes de verificar o resultado.</li>
+            <li>Digitar conteúdo visível fora do elemento <code class="inline-code">&lt;body&gt;</code>.</li>
+          </ul>
+
+          <div class="task-box">
+            <h4>Prática aplicada</h4>
+            <p>Antes de <code class="inline-code">&lt;/body&gt;</code>, acrescente:</p>
+            <pre class="code-block"><code>&lt;h2&gt;Uma pausa especial no seu dia&lt;/h2&gt;
+&lt;p&gt;Conheça cafés selecionados, receitas artesanais e um ambiente acolhedor.&lt;/p&gt;</code></pre>
+            <p><strong>Desafio:</strong> reescreva o parágrafo como se você estivesse recebendo uma pessoa que nunca visitou o Café Aurora.</p>
+          </div>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-1">
+          <h3 id="check-1">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Consigo explicar a diferença entre Internet, Web, site e página.</li>
+            <li>Sei qual é o papel do navegador e do servidor.</li>
+            <li>Criei e abri corretamente a pasta do projeto.</li>
+            <li>Meu arquivo se chama <code class="inline-code">index.html</code>.</li>
+            <li>A página possui a estrutura mínima e abre no navegador.</li>
+            <li>Consigo alterar um texto, salvar e visualizar o resultado.</li>
+          </ul>
+        </section>
+
+        <section class="limit-box">
+          <strong>Até aqui</strong>
+          <p>Temos um primeiro documento correto e funcional. Ainda não usamos cores, imagens, menus, CSS ou JavaScript. A página ganhará conteúdo e estrutura antes de receber a identidade visual.</p>
+        </section>
+
+        <div class="chapter-footer">
+          <span aria-disabled="true">← Início do Web I</span>
+          <a href="#capitulo-2" data-chapter-link="capitulo-2">Capítulo 2 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-2" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 2 — Construindo a página inicial</h2>
+          <p class="chapter-meta">Conteúdo, hierarquia, listas, links, imagens e informações do documento.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-2">
+          <h3 id="contexto-2">O que a página precisa comunicar?</h3>
+          <p>A primeira versão abre no navegador, mas ainda não responde às perguntas de quem visita o Café Aurora: o que ele oferece, quais são seus diferenciais, em que horário funciona e por que vale a pena conhecê-lo?</p>
+          <p>Neste capítulo, construiremos uma página inicial bem organizada. Ela ainda será simples visualmente, porque primeiro o conteúdo precisa estar correto e compreensível.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-2">
+          <h3 id="objetivos-2">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Reconhecer elementos, tags, conteúdo e atributos.</li>
+            <li>Organizar títulos e subtítulos em uma hierarquia coerente.</li>
+            <li>Usar parágrafos, ênfase, listas e comentários.</li>
+            <li>Criar links internos e externos e entender caminhos relativos.</li>
+            <li>Inserir imagens com texto alternativo e dimensões.</li>
+            <li>Melhorar o título e a descrição da página.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-2">
+          <h3 id="aula-1-2">Aula 1 — Elementos, atributos e hierarquia</h3>
+          <p>Observe a estrutura de um elemento:</p>
+          <pre class="code-block"><code>&lt;p&gt;Café, encontros e bons momentos.&lt;/p&gt;
+│                 │                  │
+abertura        conteúdo          fechamento</code></pre>
+
+          <p>Alguns elementos recebem <strong>atributos</strong>, informações adicionais escritas na tag de abertura. Em <code class="inline-code">&lt;html lang="pt-BR"&gt;</code>, por exemplo, <code class="inline-code">lang</code> informa o idioma do documento.</p>
+
+          <h4>Títulos formam uma hierarquia</h4>
+          <p>O HTML oferece títulos de <code class="inline-code">&lt;h1&gt;</code> a <code class="inline-code">&lt;h6&gt;</code>. Eles não devem ser escolhidos pelo tamanho visual, mas pelo nível de cada assunto.</p>
+          <ul>
+            <li><code class="inline-code">&lt;h1&gt;</code>: assunto principal da página.</li>
+            <li><code class="inline-code">&lt;h2&gt;</code>: grandes seções desse assunto.</li>
+            <li><code class="inline-code">&lt;h3&gt;</code>: subdivisões de uma seção.</li>
+          </ul>
+
+          <pre class="code-block"><code>&lt;h1&gt;Café Aurora&lt;/h1&gt;
+
+&lt;h2&gt;Destaques da casa&lt;/h2&gt;
+&lt;h3&gt;Café coado&lt;/h3&gt;
+&lt;p&gt;Grãos selecionados e preparo cuidadoso.&lt;/p&gt;
+
+&lt;h3&gt;Pães artesanais&lt;/h3&gt;
+&lt;p&gt;Produção diária com ingredientes frescos.&lt;/p&gt;</code></pre>
+
+          <div class="note-box">
+            <strong>Aparência vem depois.</strong>
+            <p>Não pule de <code class="inline-code">&lt;h1&gt;</code> para <code class="inline-code">&lt;h4&gt;</code> apenas porque o tamanho parece melhor. O CSS será usado mais adiante para controlar a aparência.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-2">
+          <h3 id="aula-2-2">Aula 2 — Textos, listas e comentários</h3>
+          <p>Use <code class="inline-code">&lt;strong&gt;</code> quando uma informação tiver forte importância e <code class="inline-code">&lt;em&gt;</code> para dar ênfase ao trecho.</p>
+          <pre class="code-block"><code>&lt;p&gt;&lt;strong&gt;Aberto de segunda a sábado.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Um espaço &lt;em&gt;acolhedor&lt;/em&gt; para sua pausa.&lt;/p&gt;</code></pre>
+
+          <h4>Listas não ordenadas</h4>
+          <p>Use <code class="inline-code">&lt;ul&gt;</code> quando a ordem dos itens não altera o sentido:</p>
+          <pre class="code-block"><code>&lt;ul&gt;
+  &lt;li&gt;Cafés especiais&lt;/li&gt;
+  &lt;li&gt;Pães artesanais&lt;/li&gt;
+  &lt;li&gt;Opções vegetarianas&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+          <h4>Listas ordenadas</h4>
+          <p>Use <code class="inline-code">&lt;ol&gt;</code> quando a sequência importa:</p>
+          <pre class="code-block"><code>&lt;ol&gt;
+  &lt;li&gt;Escolha seu café&lt;/li&gt;
+  &lt;li&gt;Selecione um acompanhamento&lt;/li&gt;
+  &lt;li&gt;Faça seu pedido no balcão&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+
+          <h4>Comentários no código</h4>
+          <pre class="code-block"><code>&lt;!-- Esta seção será ampliada quando o cardápio estiver pronto. --&gt;</code></pre>
+          <p>Comentários ajudam a registrar decisões para quem edita o arquivo e não aparecem na página. Mesmo assim, fazem parte do código enviado ao navegador: nunca coloque senhas, dados pessoais ou informações secretas neles.</p>
+
+          <div class="task-box">
+            <h4>Pratique</h4>
+            <p>Transforme o texto abaixo em uma lista HTML adequada: “Wi-Fi, tomadas disponíveis, ambiente climatizado e espaço para bicicletas”. Explique por que escolheu <code class="inline-code">&lt;ul&gt;</code> ou <code class="inline-code">&lt;ol&gt;</code>.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-2">
+          <h3 id="aula-3-2">Aula 3 — Links e caminhos</h3>
+          <p>Um link é criado com o elemento <code class="inline-code">&lt;a&gt;</code>. O atributo <code class="inline-code">href</code> informa o destino.</p>
+
+          <h4>Link para uma parte da própria página</h4>
+          <pre class="code-block"><code>&lt;a href="#diferenciais"&gt;Conheça nossos diferenciais&lt;/a&gt;
+
+&lt;h2 id="diferenciais"&gt;Nossos diferenciais&lt;/h2&gt;</code></pre>
+          <p>O valor após <code class="inline-code">#</code> deve ser igual ao <code class="inline-code">id</code> do elemento de destino. Cada <code class="inline-code">id</code> deve ser único na página.</p>
+
+          <h4>Endereço absoluto</h4>
+          <p>Um endereço absoluto contém o destino completo e costuma apontar para outro site:</p>
+          <pre class="code-block"><code>&lt;a href="https://developer.mozilla.org/pt-BR/"&gt;Consultar a MDN&lt;/a&gt;</code></pre>
+
+          <h4>Caminho relativo</h4>
+          <p>Um caminho relativo parte da localização do arquivo atual. Quando criarmos uma segunda página na mesma pasta, o link poderá ser:</p>
+          <pre class="code-block"><code>&lt;a href="cardapio.html"&gt;Ver cardápio&lt;/a&gt;</code></pre>
+
+          <div class="note-box">
+            <strong>Não crie um destino inexistente.</strong>
+            <p>Esse link só deverá entrar no projeto quando o arquivo <code class="inline-code">cardapio.html</code> existir. Assim evitamos uma navegação quebrada.</p>
+          </div>
+
+          <div class="concept-box">
+            <strong>Link e botão têm funções diferentes.</strong>
+            <p>Use links para navegar até outro local ou documento. Botões serão usados para executar ações, principalmente quando começarmos o JavaScript. Evite <code class="inline-code">href="#"</code> como destino improvisado.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Pratique</h4>
+            <p>Crie um link próximo ao início da página que leve até uma seção com <code class="inline-code">id="destaques"</code>. Teste o link e confirme se o endereço do navegador passou a terminar em <code class="inline-code">#destaques</code>.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-2">
+          <h3 id="aula-4-2">Aula 4 — Imagens e informações da página</h3>
+          <p>Dentro da pasta <code class="inline-code">cafe-aurora</code>, crie uma pasta chamada <code class="inline-code">img</code>. A organização ficará assim:</p>
+          <div class="flow" aria-label="Estrutura de pastas do projeto">cafe-aurora/
+├── index.html
+└── img/
+    └── ambiente-cafe.jpg</div>
+
+          <p>Use uma foto produzida por você, fornecida pelo responsável do negócio ou obtida com autorização de uso. Renomeie o arquivo de modo descritivo antes de colocá-lo na pasta.</p>
+
+          <pre class="code-block"><code>&lt;img
+  src="img/ambiente-cafe.jpg"
+  alt="Salão do Café Aurora com mesas de madeira e plantas"
+  width="1200"
+  height="800"
+&gt;</code></pre>
+
+          <ul>
+            <li><code class="inline-code">src</code> indica onde o arquivo está.</li>
+            <li><code class="inline-code">alt</code> comunica o conteúdo ou a função da imagem a quem não consegue vê-la.</li>
+            <li><code class="inline-code">width</code> e <code class="inline-code">height</code> informam suas proporções e ajudam o navegador a reservar o espaço correto.</li>
+          </ul>
+
+          <div class="note-box">
+            <strong>Um bom texto alternativo depende do contexto.</strong>
+            <p>Descreva o que é importante para compreender a página, sem começar por “imagem de”. Se a imagem for apenas decorativa e não comunicar nada, use <code class="inline-code">alt=""</code>.</p>
+          </div>
+
+          <h4>Imagem com legenda</h4>
+          <pre class="code-block"><code>&lt;figure&gt;
+  &lt;img
+    src="img/ambiente-cafe.jpg"
+    alt="Salão do Café Aurora com mesas de madeira e plantas"
+    width="1200"
+    height="800"
+  &gt;
+  &lt;figcaption&gt;Um espaço tranquilo para conversar, estudar ou trabalhar.&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+
+          <h4>Título e descrição do documento</h4>
+          <p>Dentro de <code class="inline-code">&lt;head&gt;</code>, atualize:</p>
+          <pre class="code-block"><code>&lt;title&gt;Café Aurora — Café e produtos artesanais no bairro&lt;/title&gt;
+&lt;meta
+  name="description"
+  content="Conheça o Café Aurora, seus cafés especiais, produtos artesanais, ambiente e horário de atendimento."
+&gt;</code></pre>
+          <p>O título identifica a página na aba e em outros contextos. A descrição resume o conteúdo para mecanismos de busca e compartilhamentos, embora sua exibição não seja garantida.</p>
+        </section>
+
+        <section aria-labelledby="codigo-final-2">
+          <h3 id="codigo-final-2">Versão consolidada da página</h3>
+          <p>Compare seu arquivo com esta versão. Não copie apenas por copiar: identifique a função de cada elemento.</p>
+          <pre class="code-block"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;meta
+    name="description"
+    content="Conheça o Café Aurora, seus cafés especiais, produtos artesanais, ambiente e horário de atendimento."
+  &gt;
+  &lt;title&gt;Café Aurora — Café e produtos artesanais no bairro&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Café Aurora&lt;/h1&gt;
+  &lt;p&gt;Café, encontros e bons momentos no coração do bairro.&lt;/p&gt;
+
+  &lt;a href="#destaques"&gt;Conheça nossos destaques&lt;/a&gt;
+
+  &lt;h2 id="destaques"&gt;Destaques da casa&lt;/h2&gt;
+
+  &lt;h3&gt;Café coado&lt;/h3&gt;
+  &lt;p&gt;Grãos selecionados e preparo cuidadoso.&lt;/p&gt;
+
+  &lt;h3&gt;Pães artesanais&lt;/h3&gt;
+  &lt;p&gt;Produção diária com ingredientes frescos.&lt;/p&gt;
+
+  &lt;h2&gt;Nossos diferenciais&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Cafés especiais&lt;/li&gt;
+    &lt;li&gt;Pães artesanais&lt;/li&gt;
+    &lt;li&gt;Opções vegetarianas&lt;/li&gt;
+    &lt;li&gt;Wi-Fi e tomadas disponíveis&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;figure&gt;
+    &lt;img
+      src="img/ambiente-cafe.jpg"
+      alt="Salão do Café Aurora com mesas de madeira e plantas"
+      width="1200"
+      height="800"
+    &gt;
+    &lt;figcaption&gt;Um espaço tranquilo para conversar, estudar ou trabalhar.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+
+  &lt;h2&gt;Horário de atendimento&lt;/h2&gt;
+  &lt;p&gt;&lt;strong&gt;De segunda a sábado, das 8h às 19h.&lt;/strong&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </section>
+
+        <section aria-labelledby="erros-2">
+          <h3 id="erros-2">Erros comuns para revisar</h3>
+          <ul>
+            <li>Escolher títulos pelo tamanho visual e quebrar a hierarquia.</li>
+            <li>Usar listas apenas para produzir recuos.</li>
+            <li>Repetir o mesmo <code class="inline-code">id</code> em vários elementos.</li>
+            <li>Criar um link para um arquivo que ainda não existe.</li>
+            <li>Usar caminho local do computador, como <code class="inline-code">C:\Fotos\...</code>, no atributo <code class="inline-code">src</code>.</li>
+            <li>Esquecer o <code class="inline-code">alt</code> ou escrever uma descrição que não ajuda.</li>
+            <li>Usar imagens muito grandes sem necessidade ou sem autorização.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="projeto-2">
+          <h3 id="projeto-2">Projeto aplicado — entrega do capítulo</h3>
+          <p>Complete a página inicial do Café Aurora com:</p>
+          <ul>
+            <li>um título principal e uma frase de apresentação;</li>
+            <li>pelo menos duas seções com hierarquia correta;</li>
+            <li>uma lista adequada ao conteúdo;</li>
+            <li>um link interno funcionando;</li>
+            <li>uma imagem autorizada, com nome organizado, texto alternativo e dimensões;</li>
+            <li>título de aba e descrição coerentes com a página.</li>
+          </ul>
+          <p>Depois, peça a um colega que navegue pela página sem explicar o código. Registre uma informação que ele encontrou facilmente e uma que precisou procurar.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-2">
+          <h3 id="check-2">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Consigo explicar o que são elemento, tag, conteúdo e atributo.</li>
+            <li>Meus títulos representam a organização do conteúdo.</li>
+            <li>Sei decidir entre lista ordenada e não ordenada.</li>
+            <li>Meus links têm destinos reais e funcionam.</li>
+            <li>Sei construir um caminho relativo para uma imagem.</li>
+            <li>A imagem possui texto alternativo útil e dimensões informadas.</li>
+            <li>A página comunica o que o Café Aurora oferece.</li>
+          </ul>
+        </section>
+
+        <section class="limit-box">
+          <strong>Até aqui</strong>
+          <p>A página já tem conteúdo significativo e navegação interna, mas sua aparência ainda é simples. HTML organiza o conteúdo; CSS cuidará do visual; JavaScript acrescentará comportamentos. No próximo capítulo, criaremos outras páginas e uma navegação estruturada.</p>
+        </section>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-1" data-chapter-link="capitulo-1">← Capítulo 1</a>
+          <span aria-disabled="true">Próximo capítulo em breve</span>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script src="../../js/programacao-web.js?v=1"></script>
+</body>
+</html>
