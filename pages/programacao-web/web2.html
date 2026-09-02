@@ -28,6 +28,7 @@
     <nav class="chapter-menu" aria-label="Capítulos disponíveis">
       <h2>Capítulos disponíveis</h2>
       <a class="chapter-link" href="#capitulo-1" data-chapter-link="capitulo-1">1. Do site à primeira resposta do servidor</a>
+      <a class="chapter-link" href="#capitulo-2" data-chapter-link="capitulo-2">2. A URL conversa com o servidor</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -415,6 +416,280 @@ if ($pedidosAbertos) {
 
         <div class="chapter-footer">
           <a href="web1.html#capitulo-11">← Revisar o fim do Web I</a>
+          <a href="#capitulo-2" data-chapter-link="capitulo-2">Capítulo 2 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-2" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 2 — A URL conversa com o servidor</h2>
+          <p class="chapter-meta">Query String, método GET, <code class="inline-code">$_GET</code>, valores padrão e validação por lista permitida.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-2">
+          <h3 id="contexto-2">Um filtro útil que ninguém consegue compartilhar</h3>
+          <p>O cardápio do <strong>Café Aurora</strong> já possui botões para mostrar bebidas ou comidas. Uma cliente filtra somente as bebidas e quer enviar aquela seleção a uma amiga. Porém, ao copiar o endereço, as duas recebem a página completa: o filtro aconteceu apenas naquele navegador e não passou a fazer parte da URL.</p>
+          <p>Para uma campanha do café, a proprietária também gostaria de publicar um endereço que já abrisse os alimentos: <code class="inline-code">cardapio.php?categoria=comida</code>. O servidor precisa ler essa informação, verificar se ela é aceitável e devolver o cardápio correspondente.</p>
+          <p>Neste capítulo, a URL deixará de ser apenas um endereço fixo. Ela passará a transportar um pedido de consulta. Isso prepara o caminho para buscas e formulários sem misturar ainda alteração de dados ou banco de dados.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-2">
+          <h3 id="objetivos-2">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Reconhecer caminho, Query String, parâmetro, nome e valor.</li>
+            <li>Entender quando o método GET é adequado.</li>
+            <li>Ler um parâmetro com a superglobal <code class="inline-code">$_GET</code>.</li>
+            <li>Definir um valor padrão com o operador <code class="inline-code">??</code>.</li>
+            <li>Validar uma categoria usando array e <code class="inline-code">in_array()</code>.</li>
+            <li>Construir um formulário de consulta com <code class="inline-code">method="get"</code>.</li>
+            <li>Renderizar somente os produtos solicitados.</li>
+            <li>Observar a nova requisição no painel Network.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-2">
+          <h3 id="aula-1-2">Aula 1 — Lendo a intenção escrita na URL</h3>
+
+          <h4>Entender: decomponha o endereço</h4>
+          <div class="flow" role="img" aria-label="Partes da URL do cardápio filtrado">http://localhost:8000/cardapio.php?categoria=bebida
+└────── origem ──────┘└── caminho ──┘└── Query String ──┘
+                                      nome     valor</div>
+          <ul>
+            <li>O sinal <code class="inline-code">?</code> inicia a <strong>Query String</strong>.</li>
+            <li><code class="inline-code">categoria</code> é o nome do parâmetro.</li>
+            <li><code class="inline-code">bebida</code> é o valor enviado.</li>
+            <li>Quando há mais parâmetros, o caractere <code class="inline-code">&amp;</code> separa cada par.</li>
+          </ul>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Endereço</th><th>Pedido feito ao servidor</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">cardapio.php</code></td><td>Mostrar a categoria padrão.</td></tr>
+                <tr><td><code class="inline-code">cardapio.php?categoria=bebida</code></td><td>Mostrar bebidas.</td></tr>
+                <tr><td><code class="inline-code">cardapio.php?categoria=comida</code></td><td>Mostrar comidas.</td></tr>
+                <tr><td><code class="inline-code">cardapio.php?categoria=inventada</code></td><td>Valor inválido: a aplicação deverá recuperar um padrão seguro.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Quando usar GET</h4>
+          <p>GET é adequado para <strong>consultar</strong> algo sem alterar o estado do sistema. O resultado pode ser recarregado, favoritado e compartilhado. Filtros e buscas são bons exemplos.</p>
+          <div class="note-box">
+            <strong>A URL não é lugar para segredos.</strong>
+            <p>A Query String pode aparecer no histórico, em registros do servidor e ao copiar o endereço. Nunca envie senha, número de cartão ou outro dado sensível dessa forma. Usar POST depois não eliminará, sozinho, a necessidade de HTTPS e proteção dos dados.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Experimente</h4>
+            <p>Com o servidor local ativo, digite manualmente os quatro endereços da tabela. Por enquanto, a página ainda será igual. Registre o que aparece depois de <code class="inline-code">?</code> em cada teste e explique por que o navegador já consegue enviar a informação mesmo antes de programarmos sua leitura.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-2">
+          <h3 id="aula-2-2">Aula 2 — Recebendo e validando a categoria</h3>
+          <p>Renomeie <code class="inline-code">public/cardapio.html</code> para <code class="inline-code">public/cardapio.php</code>. Depois, atualize em todas as páginas os links que ainda apontam para o nome antigo. O conteúdo visual continua válido; a nova extensão permite que o servidor execute PHP antes de responder.</p>
+
+          <h4>Leia o valor recebido</h4>
+          <p>No início de <code class="inline-code">cardapio.php</code>, antes do <code class="inline-code">DOCTYPE</code>, escreva:</p>
+          <pre class="code-block"><code>&lt;?php
+$categoria = $_GET["categoria"] ?? "todos";
+?&gt;</code></pre>
+          <div class="mini-grid">
+            <div class="mini-card"><strong><code class="inline-code">$_GET</code></strong><p>Array especial com os parâmetros recebidos pela Query String.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">["categoria"]</code></strong><p>Acessa o valor associado a esse nome.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">??</code></strong><p>Usa o valor da esquerda quando ele existe; caso contrário, usa o padrão da direita.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">"todos"</code></strong><p>Evita erro e mantém um comportamento previsível quando não há parâmetro.</p></div>
+          </div>
+
+          <h4>Receber não significa confiar</h4>
+          <p>Qualquer pessoa pode alterar a URL. Portanto, não basta verificar se o parâmetro existe. Defina os únicos valores aceitos e recupere o padrão se chegar algo diferente:</p>
+          <pre class="code-block"><code>$categoriasPermitidas = ["todos", "bebida", "comida"];
+
+if (!in_array($categoria, $categoriasPermitidas, true)) {
+    $categoria = "todos";
+}</code></pre>
+          <ul>
+            <li><code class="inline-code">[...]</code> cria um array com valores relacionados.</li>
+            <li><code class="inline-code">in_array()</code> procura a categoria dentro do array.</li>
+            <li><code class="inline-code">!</code> inverte o resultado: o bloco executa quando o valor <strong>não</strong> está na lista.</li>
+            <li>O terceiro argumento <code class="inline-code">true</code> exige comparação estrita de valor e tipo.</li>
+          </ul>
+
+          <div class="concept-box">
+            <strong>Validação e escape resolvem problemas diferentes.</strong>
+            <p>A validação decide se o dado pertence ao conjunto aceito pela regra. Quando um texto livre recebido de alguém precisar aparecer no HTML, também será necessário tratá-lo para aquele contexto, por exemplo com <code class="inline-code">htmlspecialchars()</code>. Aqui a categoria só continua depois de pertencer à lista permitida.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Teste os limites</h4>
+            <p>Experimente <code class="inline-code">bebida</code>, <code class="inline-code">BEBIDA</code>, um valor vazio e <code class="inline-code">inventada</code>. Preveja o resultado antes de recarregar. A aplicação aceita somente os valores definidos exatamente.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-2">
+          <h3 id="aula-3-2">Aula 3 — Criando uma consulta que qualquer pessoa consegue usar</h3>
+          <p>Digitar parâmetros manualmente ajuda a compreender o mecanismo, mas não é uma interface adequada para clientes. Acrescente antes da grade de produtos:</p>
+          <pre class="code-block"><code>&lt;form method="get" action="cardapio.php"&gt;
+  &lt;label for="categoria"&gt;Categoria&lt;/label&gt;
+  &lt;select id="categoria" name="categoria"&gt;
+    &lt;option value="todos"&lt;?php if ($categoria === "todos") { echo " selected"; } ?&gt;&gt;Todos&lt;/option&gt;
+    &lt;option value="bebida"&lt;?php if ($categoria === "bebida") { echo " selected"; } ?&gt;&gt;Bebidas&lt;/option&gt;
+    &lt;option value="comida"&lt;?php if ($categoria === "comida") { echo " selected"; } ?&gt;&gt;Comidas&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;button type="submit"&gt;Consultar no servidor&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+          <ul>
+            <li><code class="inline-code">method="get"</code> coloca os controles bem-sucedidos na Query String.</li>
+            <li><code class="inline-code">action="cardapio.php"</code> indica quem receberá a consulta.</li>
+            <li>O atributo <code class="inline-code">name</code> fornece o nome do parâmetro; <code class="inline-code">value</code>, seu valor.</li>
+            <li><code class="inline-code">===</code> compara valor e tipo sem conversões automáticas.</li>
+            <li><code class="inline-code">selected</code> mantém visível a opção usada na resposta atual.</li>
+          </ul>
+
+          <h4>Renderize somente o grupo pedido</h4>
+          <p>Envolva o card do café coado com a condição de bebida:</p>
+          <pre class="code-block"><code>&lt;?php if ($categoria === "todos" || $categoria === "bebida"): ?&gt;
+  &lt;article data-categoria="bebida"&gt;
+    &lt;!-- Preserve aqui o card completo do café coado. --&gt;
+  &lt;/article&gt;
+&lt;?php endif; ?&gt;</code></pre>
+          <p>Nos dois cards de alimento, use a mesma estrutura trocando <code class="inline-code">bebida</code> por <code class="inline-code">comida</code>. O operador <code class="inline-code">||</code> significa “ou”: o card aparece quando a consulta pede todos <strong>ou</strong> sua categoria específica. A forma com dois-pontos e <code class="inline-code">endif</code> facilita reconhecer onde começa e termina uma condição misturada ao HTML.</p>
+
+          <details class="code-disclosure">
+            <summary>Código completo para conferência — controle do cardápio</summary>
+            <pre class="code-block"><code>&lt;?php
+$categoria = $_GET["categoria"] ?? "todos";
+$categoriasPermitidas = ["todos", "bebida", "comida"];
+
+if (!in_array($categoria, $categoriasPermitidas, true)) {
+    $categoria = "todos";
+}
+?&gt;
+
+&lt;form method="get" action="cardapio.php"&gt;
+  &lt;label for="categoria"&gt;Categoria&lt;/label&gt;
+  &lt;select id="categoria" name="categoria"&gt;
+    &lt;option value="todos"&lt;?php if ($categoria === "todos") { echo " selected"; } ?&gt;&gt;Todos&lt;/option&gt;
+    &lt;option value="bebida"&lt;?php if ($categoria === "bebida") { echo " selected"; } ?&gt;&gt;Bebidas&lt;/option&gt;
+    &lt;option value="comida"&lt;?php if ($categoria === "comida") { echo " selected"; } ?&gt;&gt;Comidas&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;button type="submit"&gt;Consultar no servidor&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;div class="grade-produtos" id="lista-produtos"&gt;
+  &lt;?php if ($categoria === "todos" || $categoria === "bebida"): ?&gt;
+    &lt;article data-categoria="bebida"&gt;
+      &lt;h3&gt;Café coado&lt;/h3&gt;
+      &lt;img src="img/cafe-coado.webp" alt="Xícara de café coado ao lado de uma pequena jarra" width="960" height="640" loading="lazy"&gt;
+      &lt;p&gt;Preparado na hora com grãos selecionados. &lt;strong&gt;R$ 8,00&lt;/strong&gt;&lt;/p&gt;
+    &lt;/article&gt;
+  &lt;?php endif; ?&gt;
+
+  &lt;?php if ($categoria === "todos" || $categoria === "comida"): ?&gt;
+    &lt;article data-categoria="comida"&gt;
+      &lt;h3&gt;Pão artesanal&lt;/h3&gt;
+      &lt;img src="img/pao-artesanal.webp" alt="Pão artesanal cortado sobre uma mesa de madeira" width="960" height="640" loading="lazy"&gt;
+      &lt;p&gt;Fermentação lenta e produção diária. &lt;strong&gt;R$ 12,00&lt;/strong&gt;&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article data-categoria="comida"&gt;
+      &lt;h3&gt;Bolo caseiro de laranja&lt;/h3&gt;
+      &lt;img src="img/bolo-caseiro.webp" alt="Bolo caseiro de laranja com uma fatia servida" width="960" height="640" loading="lazy"&gt;
+      &lt;p&gt;Receita da casa com laranjas frescas. &lt;strong&gt;R$ 9,00 a fatia&lt;/strong&gt;&lt;/p&gt;
+    &lt;/article&gt;
+  &lt;?php endif; ?&gt;
+&lt;/div&gt;</code></pre>
+          </details>
+        </section>
+
+        <section aria-labelledby="aula-4-2">
+          <h3 id="aula-4-2">Aula 4 — Servidor e navegador trabalhando sem competir</h3>
+          <p>O Café Aurora já possuía um filtro rápido em JavaScript. Agora existem duas camadas úteis: o servidor entrega a categoria solicitada na URL; depois que a página chega, o JavaScript pode permitir novas trocas instantâneas naquele navegador.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Ação</th><th>Onde acontece</th><th>Produz nova requisição?</th><th>Pode ser compartilhada?</th></tr></thead>
+              <tbody>
+                <tr><td>Enviar o formulário GET</td><td>Servidor PHP</td><td>Sim</td><td>Sim, pela URL resultante.</td></tr>
+                <tr><td>Clicar no filtro rápido</td><td>JavaScript no navegador</td><td>Não</td><td>Não, enquanto a URL não mudar.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>No checkpoint, o JavaScript preserva a categoria inicial recebida do servidor quando atualiza os produtos pelo JSON. Isso mantém a melhoria do Web I sem apagar o comportamento novo do Web II.</p>
+
+          <h4>Entregue a categoria inicial ao JavaScript</h4>
+          <p>No elemento <code class="inline-code">body</code> de <code class="inline-code">cardapio.php</code>, registre a categoria que já foi validada:</p>
+          <pre class="code-block"><code>&lt;body data-categoria-inicial="&lt;?= $categoria ?&gt;"&gt;</code></pre>
+          <p>No início de <code class="inline-code">js/script.js</code>, leia esse atributo e substitua a chamada inicial <code class="inline-code">filtrarProdutos("todos")</code>:</p>
+          <pre class="code-block"><code>const categoriaInicial = document.body.dataset.categoriaInicial || "todos";
+
+botoesFiltro.forEach(function (item) {
+  item.setAttribute(
+    "aria-pressed",
+    String(item.dataset.filtro === categoriaInicial)
+  );
+});
+
+filtrarProdutos(categoriaInicial);</code></pre>
+          <p><code class="inline-code">data-categoria-inicial</code> transporta para o navegador um valor já aprovado pelo servidor. A propriedade <code class="inline-code">dataset.categoriaInicial</code> lê esse valor; <code class="inline-code">String()</code> converte o resultado booleano para o texto esperado por <code class="inline-code">aria-pressed</code>.</p>
+
+          <h4>Veja as duas requisições no Network</h4>
+          <ol>
+            <li>Abra Network e limpe a lista.</li>
+            <li>Escolha <strong>Bebidas</strong> no formulário e envie.</li>
+            <li>Localize o documento <code class="inline-code">cardapio.php?categoria=bebida</code>.</li>
+            <li>Depois, clique em <strong>Comidas</strong> no filtro rápido e confirme que não surgiu outro documento.</li>
+          </ol>
+
+          <div class="task-box">
+            <h4>Aplicar: produza um endereço verificável</h4>
+            <p>Gere a consulta de comidas pelo formulário, copie a URL, abra-a em uma janela privativa e confirme que o primeiro HTML já contém apenas os alimentos. Depois teste uma categoria inválida e comprove que o sistema volta a “todos”.</p>
+          </div>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-2">
+          <h3 id="check-2">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Identifico a Query String e seus pares de nome e valor.</li>
+            <li>Escolho GET para consultas que podem ser repetidas e compartilhadas.</li>
+            <li>Leio um parâmetro com <code class="inline-code">$_GET</code> sem gerar aviso quando ele não existe.</li>
+            <li>Defino e explico um valor padrão com <code class="inline-code">??</code>.</li>
+            <li>Não confio em uma categoria apenas porque ela chegou pela interface criada por mim.</li>
+            <li>Uso uma lista permitida para limitar os valores aceitos.</li>
+            <li>Relaciono <code class="inline-code">name</code> e <code class="inline-code">value</code> aos dados produzidos pelo formulário.</li>
+            <li>Distingo filtro executado no servidor e filtro executado no navegador.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-2">
+          <h3 id="transferencia-2">Transfira o aprendizado</h3>
+          <p>Uma oficina de bicicletas quer compartilhar listas por tipo de serviço: revisão, freio ou pneu. Sem criar outro sistema, escreva três URLs possíveis, defina o array de valores permitidos e explique o que a aplicação deverá fazer com <code class="inline-code">?servico=motor</code>. Não use dados pessoais no endereço.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do segundo capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP contém <code class="inline-code">cardapio.php</code>, filtro GET validado, integração com o JavaScript existente e todas as imagens WebP. Use-o depois de construir a sua versão.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-2.zip" download>Baixar checkpoint do Capítulo 2 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-2">
+          <h3 id="fontes-2">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://www.php.net/manual/en/reserved.variables.get.php"><code class="inline-code">$_GET</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/language.operators.comparison.php">Operador de coalescência nula — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/function.in-array.php"><code class="inline-code">in_array()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/tutorial.forms.php">Formulários e tratamento de saída — Manual do PHP</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/GET">Método GET — MDN</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>O que fica para a próxima necessidade</strong>
+          <p>GET consulta e torna o estado visível na URL. Para enviar o formulário de contato e criar um pedido, precisaremos trabalhar com POST, validar textos livres e produzir mensagens de sucesso ou erro sem duplicar operações.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-1" data-chapter-link="capitulo-1">← Capítulo 1</a>
           <span aria-disabled="true">Próximo capítulo em preparação</span>
         </div>
       </article>
