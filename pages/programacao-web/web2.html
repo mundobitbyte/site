@@ -31,6 +31,7 @@
       <a class="chapter-link" href="#capitulo-2" data-chapter-link="capitulo-2">2. A URL conversa com o servidor</a>
       <a class="chapter-link" href="#capitulo-3" data-chapter-link="capitulo-3">3. O formulário chega ao servidor</a>
       <a class="chapter-link" href="#capitulo-4" data-chapter-link="capitulo-4">4. Uma confirmação sem reenvio</a>
+      <a class="chapter-link" href="#capitulo-5" data-chapter-link="capitulo-5">5. O Café ganha memória permanente</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -1282,6 +1283,307 @@ if ($formularioEnviado) {
 
         <div class="chapter-footer">
           <a href="#capitulo-3" data-chapter-link="capitulo-3">← Capítulo 3</a>
+          <a href="#capitulo-5" data-chapter-link="capitulo-5">Capítulo 5 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-5" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 5 — O Café ganha memória permanente</h2>
+          <p class="chapter-meta">SQLite, PDO, arquivo de banco, tabela, colunas, restrições e inicialização segura.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-5">
+          <h3 id="contexto-5">A confirmação apareceu, mas onde ficou a mensagem?</h3>
+          <p>O formulário do <strong>Café Aurora</strong> já valida os campos, evita o reenvio ao atualizar e mostra uma confirmação temporária. Porém, no dia seguinte, a proprietária não consegue consultar a encomenda: a sessão serviu para atravessar uma requisição, não para construir o histórico do negócio.</p>
+          <p>Mensagens reais precisam permanecer organizadas mesmo depois que o navegador fecha ou o servidor reinicia. Elas também precisam de identidade, data de criação e regras que impeçam registros incompletos. Essa responsabilidade pertence a um banco de dados.</p>
+          <p>Neste capítulo, prepararemos um banco SQLite e a tabela que receberá as mensagens. O formulário ainda não gravará dados. Primeiro, o aluno precisa compreender onde a informação será guardada, como o PHP se conecta e quais regras a estrutura deve proteger.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-5">
+          <h3 id="objetivos-5">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Distinguir sessão, arquivo de conteúdo e banco de dados.</li>
+            <li>Entender por que SQLite é adequado para esta etapa.</li>
+            <li>Reconhecer banco, tabela, linha, coluna, chave primária e restrição.</li>
+            <li>Verificar e habilitar o driver <code class="inline-code">pdo_sqlite</code>.</li>
+            <li>Manter o banco e o código de acesso fora da pasta pública.</li>
+            <li>Criar uma conexão por PDO e compreender seu DSN.</li>
+            <li>Preparar uma tabela com <code class="inline-code">CREATE TABLE</code>.</li>
+            <li>Executar uma inicialização repetível e conferir seu resultado.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-5">
+          <h3 id="aula-1-5">Aula 1 — Escolhendo a memória certa</h3>
+
+          <h4>Entender: nem toda informação deve morar no mesmo lugar</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Recurso</th><th>Serve para</th><th>No Café Aurora</th></tr></thead>
+              <tbody>
+                <tr><td>JSON público</td><td>Conteúdo relativamente estável entregue ao navegador.</td><td>Produtos e preços do cardápio educacional.</td></tr>
+                <tr><td>Sessão</td><td>Estado temporário associado a uma navegação.</td><td>Confirmação mostrada uma única vez.</td></tr>
+                <tr><td>Banco de dados</td><td>Registros persistentes, estruturados e consultáveis.</td><td>Histórico futuro das mensagens recebidas.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Persistir significa manter a informação além da requisição atual. Isso não autoriza guardar tudo: o negócio deve coletar apenas o necessário, definir por quanto tempo conservar e proteger o acesso.</p>
+
+          <h4>Por que SQLite agora</h4>
+          <p>SQLite mantém o banco em um arquivo e não exige instalar um serviço de banco separado. Ele é apropriado para aprendizagem, protótipos e aplicações de menor porte executadas em um único servidor. O PHP acessará esse arquivo pelo driver PDO_SQLITE.</p>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>SQLite</strong><p>É o mecanismo de banco que lê e grava o arquivo.</p></div>
+            <div class="mini-card"><strong>PDO</strong><p>É a interface do PHP para trabalhar com diferentes bancos.</p></div>
+            <div class="mini-card"><strong>PDO_SQLITE</strong><p>É o driver que conecta a interface PDO ao SQLite.</p></div>
+            <div class="mini-card"><strong>SQL</strong><p>É a linguagem usada para definir e consultar a estrutura.</p></div>
+          </div>
+          <div class="note-box">
+            <strong>SQLite não é “um MySQL menor”.</strong>
+            <p>São bancos com arquiteturas diferentes. SQLite simplifica uma aplicação em um único servidor e com volume moderado de escrita. MySQL pode ser mais adequado quando vários servidores ou muitos processos precisam escrever simultaneamente. Neste curso, começar com SQLite reduz infraestrutura sem reduzir o cuidado com modelagem e segurança.</p>
+          </div>
+
+          <h4>Modele a primeira tabela</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Coluna</th><th>Tipo declarado</th><th>Regra</th><th>Finalidade</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">id</code></td><td>INTEGER</td><td>Chave primária</td><td>Identifica cada mensagem.</td></tr>
+                <tr><td><code class="inline-code">nome</code></td><td>TEXT</td><td>Obrigatório; mínimo 2</td><td>Identifica quem escreveu.</td></tr>
+                <tr><td><code class="inline-code">email</code></td><td>TEXT</td><td>Obrigatório</td><td>Permite responder.</td></tr>
+                <tr><td><code class="inline-code">telefone</code></td><td>TEXT</td><td>Opcional</td><td>Canal alternativo.</td></tr>
+                <tr><td><code class="inline-code">assunto</code></td><td>TEXT</td><td>Três valores permitidos</td><td>Classifica a mensagem.</td></tr>
+                <tr><td><code class="inline-code">mensagem</code></td><td>TEXT</td><td>Entre 10 e 500</td><td>Registra o conteúdo.</td></tr>
+                <tr><td><code class="inline-code">criada_em</code></td><td>TEXT</td><td>Data padrão</td><td>Registra quando chegou.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Em SQLite, o tipo declarado orienta como os valores são tratados, mas sua tipagem é flexível. Por isso também usaremos <code class="inline-code">NOT NULL</code> e <code class="inline-code">CHECK</code> para explicitar regras importantes.</p>
+        </section>
+
+        <section aria-labelledby="aula-2-5">
+          <h3 id="aula-2-5">Aula 2 — Preparando o driver e protegendo o arquivo</h3>
+
+          <h4>Confirme os módulos disponíveis</h4>
+          <p>No terminal do VS Code no Windows, execute:</p>
+          <pre class="code-block"><code>php -m | findstr /I "PDO sqlite"</code></pre>
+          <p>Procure por <code class="inline-code">PDO</code> e <code class="inline-code">pdo_sqlite</code>. Em macOS ou Linux, use:</p>
+          <pre class="code-block"><code>php -m | grep -Ei "PDO|sqlite"</code></pre>
+
+          <h4>Se <code class="inline-code">pdo_sqlite</code> não aparecer</h4>
+          <ol>
+            <li>Execute <code class="inline-code">php --ini</code> e localize o arquivo de configuração carregado.</li>
+            <li>Se o Windows informar que não carregou nenhum, copie <code class="inline-code">C:\php\php.ini-development</code> para <code class="inline-code">C:\php\php.ini</code>.</li>
+            <li>No <code class="inline-code">php.ini</code>, localize <code class="inline-code">;extension=pdo_sqlite</code> e remova apenas o ponto e vírgula inicial.</li>
+            <li>Confirme que a pasta indicada por <code class="inline-code">extension_dir</code> contém as extensões da instalação.</li>
+            <li>Encerre e reinicie o servidor PHP; depois execute novamente o comando de conferência.</li>
+          </ol>
+
+          <div class="concept-box">
+            <strong>Ative somente o que o projeto precisa.</strong>
+            <p>O PDO fornece a interface, mas cada tipo de banco exige seu driver. O driver SQLite não precisa de endereço, usuário ou senha porque acessará um arquivo local.</p>
+          </div>
+
+          <h4>Crie uma área privada do projeto</h4>
+          <p>Acrescente as pastas <code class="inline-code">src</code> e <code class="inline-code">dados</code> na raiz, ao lado de <code class="inline-code">public</code>:</p>
+          <div class="flow" role="img" aria-label="Estrutura do projeto com código, banco e pasta pública">cafe-aurora-web2/
+├── dados/
+│   └── LEIA-ME.txt
+├── src/
+│   ├── banco.php
+│   └── inicializar-banco.php
+├── public/
+│   ├── index.php
+│   ├── cardapio.php
+│   └── contato.php
+├── .gitignore
+└── LEIA-ME.txt</div>
+          <p>A opção <code class="inline-code">-t public</code> do servidor impede que o navegador solicite diretamente os arquivos de <code class="inline-code">dados</code> e <code class="inline-code">src</code>. A aplicação PHP continua conseguindo acessá-los pelo sistema de arquivos.</p>
+
+          <h4>Não versione o banco local</h4>
+          <p>No arquivo <code class="inline-code">.gitignore</code>, acrescente:</p>
+          <pre class="code-block"><code>/dados/*.sqlite
+/dados/*.sqlite-shm
+/dados/*.sqlite-wal</code></pre>
+          <p>Um banco de desenvolvimento pode conter dados pessoais. Mantê-lo fora do Git evita uma publicação acidental, mas não substitui permissões, backups e controle de acesso.</p>
+        </section>
+
+        <section aria-labelledby="aula-3-5">
+          <h3 id="aula-3-5">Aula 3 — Criando a conexão PDO</h3>
+          <p>Crie <code class="inline-code">src/banco.php</code>. A função abaixo concentra o endereço e as opções da conexão em um único lugar:</p>
+          <pre class="code-block"><code>&lt;?php
+function conectarBanco(): PDO
+{
+    $caminhoBanco =
+        dirname(__DIR__) . "/dados/cafe-aurora.sqlite";
+
+    return new PDO(
+        "sqlite:" . $caminhoBanco,
+        null,
+        null,
+        [
+            PDO::ATTR_ERRMODE =&gt; PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE =&gt; PDO::FETCH_ASSOC
+        ]
+    );
+}</code></pre>
+
+          <div class="mini-grid">
+            <div class="mini-card"><strong><code class="inline-code">dirname(__DIR__)</code></strong><p>Parte de <code class="inline-code">src</code> e volta para a raiz do projeto.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">sqlite:</code></strong><p>Inicia o DSN e escolhe o driver da conexão.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">new PDO(...)</code></strong><p>Cria um objeto que representa a conexão.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">PDO::</code></strong><p>Acessa constantes pertencentes à classe PDO.</p></div>
+          </div>
+          <p>DSN é a descrição da origem dos dados. Para SQLite, ele contém o nome do driver e o caminho do arquivo. Os dois valores <code class="inline-code">null</code> ocupam as posições de usuário e senha, que não são usados nesta conexão local.</p>
+
+          <h4>Defina um comportamento previsível</h4>
+          <ul>
+            <li><code class="inline-code">PDO::ERRMODE_EXCEPTION</code> transforma falhas do banco em exceções que o programa pode tratar.</li>
+            <li><code class="inline-code">PDO::FETCH_ASSOC</code> prepara consultas futuras para devolver colunas por seus nomes.</li>
+            <li>Centralizar a conexão evita repetir o caminho e as opções em cada página.</li>
+          </ul>
+
+          <div class="task-box">
+            <h4>Experimente o caminho</h4>
+            <p>Antes de executar, explique qual caminho será produzido por <code class="inline-code">dirname(__DIR__)</code> quando o arquivo está em <code class="inline-code">src</code>. Confirme também que o destino não começa por <code class="inline-code">public</code>.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-5">
+          <h3 id="aula-4-5">Aula 4 — Criando a tabela de forma repetível</h3>
+
+          <h4>Escreva a estrutura em SQL</h4>
+          <p>Em <code class="inline-code">src/inicializar-banco.php</code>, a instrução principal será:</p>
+          <pre class="code-block"><code>CREATE TABLE IF NOT EXISTS mensagens (
+    id INTEGER PRIMARY KEY,
+    nome TEXT NOT NULL CHECK (length(nome) &gt;= 2),
+    email TEXT NOT NULL,
+    telefone TEXT,
+    assunto TEXT NOT NULL
+        CHECK (assunto IN ('duvida', 'encomenda', 'sugestao')),
+    mensagem TEXT NOT NULL
+        CHECK (length(mensagem) BETWEEN 10 AND 500),
+    criada_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+)</code></pre>
+          <ul>
+            <li><code class="inline-code">IF NOT EXISTS</code> permite repetir a inicialização sem tentar recriar uma tabela já existente.</li>
+            <li><code class="inline-code">INTEGER PRIMARY KEY</code> fornece uma identidade inteira única. Não precisamos de <code class="inline-code">AUTOINCREMENT</code> neste caso.</li>
+            <li><code class="inline-code">NOT NULL</code> impede ausência de valor.</li>
+            <li><code class="inline-code">CHECK</code> rejeita valores que desrespeitam a expressão.</li>
+            <li><code class="inline-code">DEFAULT CURRENT_TIMESTAMP</code> fornece a data e hora em UTC quando o registro for criado; a apresentação no horário local será tratada depois.</li>
+          </ul>
+
+          <h4>Execute SQL e trate uma possível falha</h4>
+          <p><code class="inline-code">$pdo-&gt;exec($sql)</code> executa uma instrução que não precisa devolver linhas. O operador <code class="inline-code">-&gt;</code> acessa um método do objeto. Como conexão, pasta ou SQL podem falhar, <code class="inline-code">try</code> delimita a tentativa e <code class="inline-code">catch</code> trata a exceção.</p>
+
+          <details class="code-disclosure">
+            <summary>Código completo para conferência — inicialização do banco</summary>
+            <pre class="code-block"><code>&lt;?php
+require_once __DIR__ . "/banco.php";
+
+if (!extension_loaded("pdo_sqlite")) {
+    fwrite(STDERR, "O driver pdo_sqlite não está ativo." . PHP_EOL);
+    exit(1);
+}
+
+try {
+    $pdo = conectarBanco();
+
+    $sql = "
+        CREATE TABLE IF NOT EXISTS mensagens (
+            id INTEGER PRIMARY KEY,
+            nome TEXT NOT NULL CHECK (length(nome) &gt;= 2),
+            email TEXT NOT NULL,
+            telefone TEXT,
+            assunto TEXT NOT NULL
+                CHECK (assunto IN ('duvida', 'encomenda', 'sugestao')),
+            mensagem TEXT NOT NULL
+                CHECK (length(mensagem) BETWEEN 10 AND 500),
+            criada_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+    ";
+
+    $pdo-&gt;exec($sql);
+
+    $quantidade = (int) $pdo
+        -&gt;query("SELECT COUNT(*) FROM mensagens")
+        -&gt;fetchColumn();
+
+    echo "Banco e tabela preparados com sucesso." . PHP_EOL;
+    echo "Mensagens cadastradas: $quantidade" . PHP_EOL;
+} catch (PDOException $erro) {
+    fwrite(
+        STDERR,
+        "Não foi possível preparar o banco: " .
+        $erro-&gt;getMessage() .
+        PHP_EOL
+    );
+    exit(1);
+}</code></pre>
+          </details>
+
+          <h4>Programe e confira</h4>
+          <p>Na raiz do projeto, execute:</p>
+          <pre class="code-block"><code>php -l src/banco.php
+php -l src/inicializar-banco.php
+php src/inicializar-banco.php</code></pre>
+          <p>O terminal deve informar que o banco e a tabela foram preparados e que existem zero mensagens. O arquivo <code class="inline-code">dados/cafe-aurora.sqlite</code> surgirá nesse momento.</p>
+
+          <div class="task-box">
+            <h4>Aplicar: prove que a inicialização é segura para repetição</h4>
+            <ol>
+              <li>Execute o inicializador pela primeira vez e localize o novo arquivo.</li>
+              <li>Execute exatamente o mesmo comando novamente.</li>
+              <li>Confirme que não aparece erro de tabela existente e que a contagem continua zero.</li>
+              <li>Tente abrir o arquivo SQLite como texto e observe que esse não é seu formato de edição; feche sem salvar.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-5">
+          <h3 id="check-5">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Sei por que sessão e banco de dados não são equivalentes.</li>
+            <li>Explico os papéis de SQLite, PDO e PDO_SQLITE.</li>
+            <li>Reconheço tabela, linha, coluna, chave primária e restrição.</li>
+            <li>Confirmo se o driver está ativo antes de procurar erros no código.</li>
+            <li>Mantenho banco e conexão fora da pasta pública.</li>
+            <li>Leio o caminho e o DSN usados pela conexão.</li>
+            <li>Interpreto <code class="inline-code">NOT NULL</code>, <code class="inline-code">CHECK</code> e <code class="inline-code">DEFAULT</code>.</li>
+            <li>Inicializo a estrutura mais de uma vez sem apagar dados.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-5">
+          <h3 id="transferencia-5">Transfira o aprendizado</h3>
+          <p>Uma clínica veterinária quer registrar pedidos de retorno com tutor, contato, nome do animal, motivo e data de criação. Sem construir outro sistema, proponha as colunas, escolha a chave primária e indique quais valores devem ser obrigatórios. Justifique também por que o arquivo do banco não deve ficar na pasta pública.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do quinto capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP contém a conexão PDO, o inicializador da tabela, a pasta privada de dados, proteção no Git e todas as imagens WebP e funcionalidades anteriores. Use-o depois de construir a sua versão.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-5.zip" download>Baixar checkpoint do Capítulo 5 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-5">
+          <h3 id="fontes-5">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://www.php.net/manual/en/book.pdo.php">PDO — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/ref.pdo-sqlite.php">Driver PDO_SQLITE — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/pdo.installation.php">Instalação e drivers PDO — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/pdo.construct.php">Conexão com <code class="inline-code">PDO</code> — Manual do PHP</a></li>
+            <li><a href="https://www.sqlite.org/lang_createtable.html"><code class="inline-code">CREATE TABLE</code> — documentação do SQLite</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Banco preparado não significa formulário conectado</strong>
+          <p>A tabela existe, mas ainda contém zero registros. No próximo capítulo, o POST validado será protegido contra CSRF e usará um comando preparado para inserir a mensagem. Essa separação evita apresentar conexão, modelagem, segurança e gravação como uma única etapa obscura.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-4" data-chapter-link="capitulo-4">← Capítulo 4</a>
           <span aria-disabled="true">Próximo capítulo em preparação</span>
         </div>
       </article>
