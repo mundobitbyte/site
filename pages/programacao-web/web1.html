@@ -6,7 +6,7 @@
   <meta name="description" content="Web I do Mundo bit Byte: aprenda HTML, acessibilidade, CSS responsivo e JavaScript enquanto constrói o site completo de um pequeno negócio local.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
   <title>Web I — Capítulo 1 | Mundo bit Byte</title>
-  <link href="../../css/programacao-web.css?v=11" rel="stylesheet">
+  <link href="../../css/programacao-web.css?v=12" rel="stylesheet">
 </head>
 <body class="module-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -36,6 +36,7 @@
       <a class="chapter-link" href="#capitulo-7" data-chapter-link="capitulo-7">7. JavaScript: comportamento e interação</a>
       <a class="chapter-link" href="#capitulo-8" data-chapter-link="capitulo-8">8. Arrays, objetos e repetições</a>
       <a class="chapter-link" href="#capitulo-9" data-chapter-link="capitulo-9">9. Fetch e JSON</a>
+      <a class="chapter-link" href="#capitulo-10" data-chapter-link="capitulo-10">10. Web Storage</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -3322,12 +3323,424 @@ calcularPedido();</code></pre>
 
         <div class="chapter-footer">
           <a href="#capitulo-8" data-chapter-link="capitulo-8">← Capítulo 8</a>
+          <a href="#capitulo-10" data-chapter-link="capitulo-10">Capítulo 10 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-10" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 10 — Web Storage</h2>
+          <p class="chapter-meta">Persistência no navegador, chave e valor, conversão com JSON, recuperação segura e inspeção pelo DevTools.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-10">
+          <h3 id="contexto-10">O pedido desaparece quando a página é recarregada</h3>
+          <p>Na simulação do <strong>Café Aurora</strong>, a pessoa seleciona produtos e vê o total. Porém, ao recarregar ou fechar a página, a seleção é perdida porque existe apenas na memória durante aquela execução do JavaScript.</p>
+          <p>Vamos guardar somente os identificadores escolhidos no próprio navegador. Quando a página abrir novamente, o site buscará os produtos atuais no JSON e restaurará as escolhas válidas, mantendo preços e descrições em uma única fonte.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-10">
+          <h3 id="objetivos-10">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Explicar quando um dado precisa continuar disponível após o recarregamento.</li>
+            <li>Distinguir <code class="inline-code">localStorage</code> de <code class="inline-code">sessionStorage</code>.</li>
+            <li>Usar <code class="inline-code">setItem()</code>, <code class="inline-code">getItem()</code> e <code class="inline-code">removeItem()</code>.</li>
+            <li>Converter arrays com <code class="inline-code">JSON.stringify()</code> e <code class="inline-code">JSON.parse()</code>.</li>
+            <li>Salvar e restaurar a seleção do pedido sem duplicar os dados dos produtos.</li>
+            <li>Tratar armazenamento indisponível ou conteúdo inválido sem interromper a página.</li>
+            <li>Inspecionar chaves e valores no painel Application do DevTools.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-10">
+          <h3 id="aula-1-10">Aula 1 — Dados que permanecem no navegador</h3>
+          <p>A <strong>Web Storage API</strong> oferece espaços de armazenamento formados por pares de chave e valor. Tanto a chave quanto o valor são gravados como texto e ficam separados por origem — combinação de protocolo, domínio e porta.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Recurso</th><th>Duração</th><th>Exemplo adequado</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">localStorage</code></td><td>Continua disponível depois que o navegador é fechado e aberto.</td><td>Preferência ou rascunho simples naquele dispositivo.</td></tr>
+                <tr><td><code class="inline-code">sessionStorage</code></td><td>Dura enquanto a sessão daquela aba estiver aberta.</td><td>Etapa temporária de uma tarefa naquela aba.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Comece com um valor textual no Console:</p>
+
+          <pre class="code-block"><code>localStorage.setItem("cafeAurora:filtro", "comida");
+
+const filtroSalvo = localStorage.getItem("cafeAurora:filtro");
+console.log(filtroSalvo);
+
+localStorage.removeItem("cafeAurora:filtro");</code></pre>
+
+          <div class="mini-grid">
+            <div class="mini-card"><strong><code class="inline-code">setItem()</code></strong><p>Cria uma chave ou substitui seu valor.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">getItem()</code></strong><p>Obtém o texto salvo ou devolve <code class="inline-code">null</code>.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">removeItem()</code></strong><p>Remove somente a chave indicada.</p></div>
+            <div class="mini-card"><strong>Nome da chave</strong><p>O prefixo <code class="inline-code">cafeAurora:</code> evita nomes genéricos e facilita a identificação.</p></div>
+          </div>
+
+          <div class="note-box">
+            <strong>Evite <code class="inline-code">clear()</code> neste projeto.</strong>
+            <p>Ele apaga todas as chaves do armazenamento daquela origem, inclusive as criadas por outras partes do site. Para limpar apenas o pedido, use <code class="inline-code">removeItem()</code> com a chave correspondente.</p>
+          </div>
+
+          <p>Esse dado pertence àquele navegador, perfil, dispositivo e origem. Ele não vira cadastro, não acompanha automaticamente a pessoa em outro aparelho e pode ser apagado nas configurações do navegador.</p>
+
+          <div class="task-box">
+            <h4>Experimente</h4>
+            <ol>
+              <li>Execute as três instruções separadamente no Console.</li>
+              <li>Recarregue depois de <code class="inline-code">setItem()</code> e confirme que o valor permanece.</li>
+              <li>Execute <code class="inline-code">removeItem()</code> e confirme que <code class="inline-code">getItem()</code> devolve <code class="inline-code">null</code>.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-10">
+          <h3 id="aula-2-10">Aula 2 — Convertendo a seleção com JSON</h3>
+          <p>O pedido contém vários identificadores, mas o armazenamento aceita texto. <code class="inline-code">JSON.stringify()</code> transforma o array em texto; <code class="inline-code">JSON.parse()</code> reconstrói o array quando o dado é lido.</p>
+
+          <pre class="code-block"><code>const selecionados = ["cafe-coado", "bolo-laranja"];
+const texto = JSON.stringify(selecionados);
+
+localStorage.setItem("cafeAurora:pedido", texto);
+
+const registro = localStorage.getItem("cafeAurora:pedido");
+const pedidoSalvo = JSON.parse(registro);
+
+console.log(pedidoSalvo);</code></pre>
+
+          <div class="concept-box">
+            <strong>Guarde escolhas, não cópias do cardápio.</strong>
+            <p>Salvamos apenas <code class="inline-code">["cafe-coado", "bolo-laranja"]</code>. Nomes e preços continuam em <code class="inline-code">produtos.json</code>; assim, uma atualização de preço não deixa uma cópia antiga armazenada no pedido.</p>
+          </div>
+
+          <h4>Experimente no próprio módulo</h4>
+          <section class="order-playground storage-playground" aria-labelledby="storage-demo-titulo" data-js-demo-storage>
+            <h4 id="storage-demo-titulo">Pedido que pode ser recuperado</h4>
+            <p>Selecione produtos, salve e recarregue esta página. O exemplo usa uma chave exclusiva deste exercício.</p>
+            <fieldset class="order-options">
+              <legend>Produtos</legend>
+              <label><span><input type="checkbox" value="cafe-coado" data-price="8"> Café coado — R$ 8,00</span></label>
+              <label><span><input type="checkbox" value="pao-artesanal" data-price="12"> Pão artesanal — R$ 12,00</span></label>
+              <label><span><input type="checkbox" value="bolo-laranja" data-price="9"> Bolo de laranja — R$ 9,00</span></label>
+            </fieldset>
+            <div class="order-result">
+              <p data-demo-storage-result role="status">Nenhum produto selecionado.</p>
+              <div class="storage-actions">
+                <button type="button" data-demo-storage-save>Salvar pedido</button>
+                <button type="button" data-demo-storage-clear>Limpar pedido</button>
+              </div>
+            </div>
+            <p class="storage-status" data-demo-storage-status role="status">Nenhum pedido salvo neste navegador.</p>
+          </section>
+
+          <div class="task-box">
+            <h4>Observe a transformação</h4>
+            <p>Depois de salvar o exemplo, execute <code class="inline-code">localStorage.getItem("mbb:web1:pedido-demo-v1")</code> no Console. O resultado terá colchetes e aspas porque é um array representado como texto JSON.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-10">
+          <h3 id="aula-3-10">Aula 3 — Salvando o pedido do Café Aurora</h3>
+          <p>No arquivo <code class="inline-code">cardapio.html</code>, acrescente uma mensagem específica depois do resumo do pedido:</p>
+
+          <pre class="code-block"><code>&lt;p class="status-persistencia"
+   data-status-persistencia
+   role="status"&gt;
+  Nenhum pedido salvo neste navegador.
+&lt;/p&gt;</code></pre>
+
+          <p>No início da parte do pedido em <code class="inline-code">script.js</code>, selecione essa mensagem e defina uma chave clara:</p>
+
+          <pre class="code-block"><code>const CHAVE_PEDIDO = "cafeAurora:pedido";
+const statusPersistencia = document.querySelector(
+  "[data-status-persistencia]"
+);</code></pre>
+
+          <h4>Obtenha somente os identificadores marcados</h4>
+          <pre class="code-block"><code>function obterIdsSelecionados() {
+  return Array.from(itensPedido)
+    .filter(function (item) {
+      return item.checked;
+    })
+    .map(function (item) {
+      return item.value;
+    });
+}</code></pre>
+
+          <h4>Grave uma seleção pequena</h4>
+          <pre class="code-block"><code>function salvarPedido() {
+  const ids = obterIdsSelecionados();
+
+  try {
+    if (ids.length === 0) {
+      localStorage.removeItem(CHAVE_PEDIDO);
+      statusPersistencia.textContent =
+        "Nenhum pedido salvo neste navegador.";
+      return;
+    }
+
+    localStorage.setItem(CHAVE_PEDIDO, JSON.stringify(ids));
+    statusPersistencia.textContent =
+      "Pedido salvo neste navegador.";
+  } catch (erro) {
+    console.error("Não foi possível salvar o pedido:", erro);
+    statusPersistencia.textContent =
+      "A seleção funciona, mas não pôde ser salva.";
+  }
+}</code></pre>
+
+          <p>O <code class="inline-code">try...catch</code> é necessário porque o navegador ou suas configurações podem impedir o armazenamento. Mesmo nesse caso, a seleção e o cálculo continuam funcionando durante a visita atual.</p>
+        </section>
+
+        <section aria-labelledby="aula-4-10">
+          <h3 id="aula-4-10">Aula 4 — Restaurando, validando e inspecionando</h3>
+          <p>Um valor salvo pode estar ausente, antigo ou inválido. Antes de marcar os campos, confirme que o conteúdo reconstruído é um array de textos. Identificadores que não existem mais no cardápio serão simplesmente ignorados.</p>
+
+          <pre class="code-block"><code>function restaurarPedido() {
+  try {
+    const registro = localStorage.getItem(CHAVE_PEDIDO);
+    if (!registro) return;
+
+    const ids = JSON.parse(registro);
+    const listaValida = Array.isArray(ids) &&
+      ids.every(function (id) {
+        return typeof id === "string";
+      });
+
+    if (!listaValida) {
+      throw new TypeError("O pedido salvo não possui o formato esperado.");
+    }
+
+    let quantidadeRestaurada = 0;
+    itensPedido.forEach(function (item) {
+      item.checked = ids.includes(item.value);
+      if (item.checked) quantidadeRestaurada += 1;
+    });
+
+    statusPersistencia.textContent = quantidadeRestaurada > 0
+      ? "Pedido anterior restaurado."
+      : "O pedido salvo não contém produtos atuais.";
+  } catch (erro) {
+    console.error("Não foi possível restaurar o pedido:", erro);
+    statusPersistencia.textContent =
+      "O pedido salvo não pôde ser lido. Faça uma nova seleção.";
+  }
+}</code></pre>
+
+          <h4>Conecte a persistência aos eventos existentes</h4>
+          <p>Substitua o bloco antigo que registrava os eventos de mudança e limpeza por esta versão:</p>
+          <pre class="code-block"><code>itensPedido.forEach(function (item) {
+  item.addEventListener("change", function () {
+    calcularPedido();
+    salvarPedido();
+  });
+});
+
+limparPedido.addEventListener("click", function () {
+  itensPedido.forEach(function (item) {
+    item.checked = false;
+  });
+  calcularPedido();
+  salvarPedido();
+});</code></pre>
+
+          <p>Como o pedido depende dos produtos carregados no capítulo anterior, restaure a seleção somente depois do sucesso do <code class="inline-code">fetch()</code>:</p>
+
+          <pre class="code-block"><code>pedido.hidden = false;
+limparPedido.hidden = false;
+restaurarPedido();
+calcularPedido();</code></pre>
+
+          <details class="code-disclosure">
+            <summary>Código completo para conferência — persistência do pedido</summary>
+            <pre class="code-block"><code>const CHAVE_PEDIDO = "cafeAurora:pedido";
+const statusPersistencia = document.querySelector(
+  "[data-status-persistencia]"
+);
+
+function obterIdsSelecionados() {
+  return Array.from(itensPedido)
+    .filter(function (item) {
+      return item.checked;
+    })
+    .map(function (item) {
+      return item.value;
+    });
+}
+
+function salvarPedido() {
+  const ids = obterIdsSelecionados();
+
+  try {
+    if (ids.length === 0) {
+      localStorage.removeItem(CHAVE_PEDIDO);
+      statusPersistencia.textContent =
+        "Nenhum pedido salvo neste navegador.";
+      return;
+    }
+
+    localStorage.setItem(CHAVE_PEDIDO, JSON.stringify(ids));
+    statusPersistencia.textContent =
+      "Pedido salvo neste navegador.";
+  } catch (erro) {
+    console.error("Não foi possível salvar o pedido:", erro);
+    statusPersistencia.textContent =
+      "A seleção funciona, mas não pôde ser salva.";
+  }
+}
+
+function restaurarPedido() {
+  try {
+    const registro = localStorage.getItem(CHAVE_PEDIDO);
+    if (!registro) return;
+
+    const ids = JSON.parse(registro);
+    const listaValida = Array.isArray(ids) &&
+      ids.every(function (id) {
+        return typeof id === "string";
+      });
+
+    if (!listaValida) {
+      throw new TypeError("O pedido salvo não possui o formato esperado.");
+    }
+
+    let quantidadeRestaurada = 0;
+    itensPedido.forEach(function (item) {
+      item.checked = ids.includes(item.value);
+      if (item.checked) quantidadeRestaurada += 1;
+    });
+    statusPersistencia.textContent = quantidadeRestaurada > 0
+      ? "Pedido anterior restaurado."
+      : "O pedido salvo não contém produtos atuais.";
+  } catch (erro) {
+    console.error("Não foi possível restaurar o pedido:", erro);
+    statusPersistencia.textContent =
+      "O pedido salvo não pôde ser lido. Faça uma nova seleção.";
+  }
+}
+
+if (pedido && itensPedido.length && resumoPedido &&
+    limparPedido && statusPersistencia) {
+  itensPedido.forEach(function (item) {
+    item.addEventListener("change", function () {
+      calcularPedido();
+      salvarPedido();
+    });
+  });
+
+  limparPedido.addEventListener("click", function () {
+    itensPedido.forEach(function (item) {
+      item.checked = false;
+    });
+    calcularPedido();
+    salvarPedido();
+  });
+}</code></pre>
+          </details>
+
+          <h4>Confira no painel Application</h4>
+          <figure class="tool-figure">
+            <img src="../../img/programacao-web/devtools-local-storage.webp" alt="Chrome DevTools no painel Application com Local Storage aberto e uma tabela de chaves e valores" width="1776" height="1208" loading="lazy">
+            <figcaption>Abra Application, expanda Local Storage e escolha a origem do site. Localize <code class="inline-code">cafeAurora:pedido</code>, confira seu valor e teste a remoção da chave. A aparência pode variar. Fonte: <a href="https://developer.chrome.com/docs/devtools/storage/localstorage/">documentação oficial do Chrome DevTools</a>.</figcaption>
+          </figure>
+
+          <p>O projeto em um servidor local e o site publicado possuem origens diferentes. Portanto, um pedido salvo durante o desenvolvimento não aparecerá automaticamente no endereço público.</p>
+
+          <div class="warning-box">
+            <strong>Armazenamento local não é cofre.</strong>
+            <p>Não grave senha, cartão, documento, token de acesso ou informação pessoal sensível. Scripts executados naquela origem podem acessar esses dados. Use Web Storage apenas para informações pequenas e não sensíveis.</p>
+          </div>
+
+          <div class="note-box">
+            <strong>Use para dados pequenos.</strong>
+            <p>Web Storage é síncrono: suas operações acontecem na linha principal. Ele serve bem para preferências e estados simples, mas não para imagens, grandes catálogos ou uma base de dados completa.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="erros-10">
+          <h3 id="erros-10">Erros comuns para revisar</h3>
+          <ul>
+            <li>Tentar salvar um array diretamente e obter um texto inadequado.</li>
+            <li>Chamar <code class="inline-code">JSON.parse()</code> quando <code class="inline-code">getItem()</code> devolveu <code class="inline-code">null</code>.</li>
+            <li>Salvar preços e descrições que já pertencem ao arquivo JSON.</li>
+            <li>Usar uma chave genérica como <code class="inline-code">dados</code> ou <code class="inline-code">pedido</code>.</li>
+            <li>Usar <code class="inline-code">clear()</code> e apagar dados de outras partes do site.</li>
+            <li>Restaurar a seleção antes de os produtos necessários terem sido carregados.</li>
+            <li>Confiar no armazenamento como lugar seguro para dados sensíveis.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="projeto-10">
+          <h3 id="projeto-10">Projeto aplicado — entrega do capítulo</h3>
+          <p>Atualize o Café Aurora com:</p>
+          <ul>
+            <li>chave <code class="inline-code">cafeAurora:pedido</code>;</li>
+            <li>armazenamento somente dos identificadores selecionados;</li>
+            <li>conversão segura com <code class="inline-code">JSON.stringify()</code> e <code class="inline-code">JSON.parse()</code>;</li>
+            <li>restauração depois do carregamento dos produtos;</li>
+            <li>mensagens de pedido salvo, restaurado ou indisponível;</li>
+            <li>limpeza apenas da chave do pedido;</li>
+            <li>tratamento de falha sem interromper o cálculo atual.</li>
+          </ul>
+          <p>Entregue o projeto e dois registros: a chave no painel Application e o pedido restaurado após recarregar a página.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-10">
+          <h3 id="check-10">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Escolho entre <code class="inline-code">localStorage</code> e <code class="inline-code">sessionStorage</code> conforme a duração necessária.</li>
+            <li>Uso os métodos da Web Storage API em vez de propriedades diretas.</li>
+            <li>Sei que chaves e valores são armazenados como texto.</li>
+            <li>Converto arrays para JSON e valido o valor ao recuperá-lo.</li>
+            <li>Salvo apenas os identificadores, preservando o JSON como fonte dos produtos.</li>
+            <li>Restauro o pedido no momento correto do carregamento.</li>
+            <li>Removo apenas a chave necessária e não armazeno informação sensível.</li>
+            <li>Localizo e interpreto o dado no painel Application.</li>
+          </ul>
+        </section>
+
+        <section class="concept-box" aria-labelledby="fontes-10">
+          <h3 id="fontes-10">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API">Usando a Web Storage API — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">Window.localStorage — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem">Storage.setItem() — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">JSON.stringify() — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse">JSON.parse() — MDN</a></li>
+            <li><a href="https://developer.chrome.com/docs/devtools/storage/localstorage/">Inspecionando Local Storage — Chrome for Developers</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Até aqui</strong>
+          <p>O Café Aurora carrega o cardápio de um arquivo JSON e recupera uma seleção simples naquele navegador. No próximo capítulo, o projeto será revisado como produto completo: qualidade, testes e publicação.</p>
+        </div>
+
+        <section class="task-box" aria-labelledby="transferencia-10">
+          <h3 id="transferencia-10">Transfira o aprendizado</h3>
+          <p>Imagine o site de uma pequena livraria. Decida se a categoria escolhida pelo visitante deveria usar <code class="inline-code">localStorage</code> ou <code class="inline-code">sessionStorage</code>, proponha uma chave clara e justifique em duas frases. Não desenvolva outro projeto completo.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do Capítulo 10">
+          <strong>Checkpoint final para conferência</strong>
+          <p>Use este ZIP para conferir ou recuperar a versão com persistência do pedido depois de realizar sua própria construção e seus testes.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-capitulo-10.zip" download>Baixar checkpoint do Capítulo 10 (ZIP)</a>
+        </aside>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-9" data-chapter-link="capitulo-9">← Capítulo 9</a>
           <span aria-disabled="true">Próximo capítulo em breve</span>
         </div>
       </article>
     </main>
   </div>
 
-  <script src="../../js/programacao-web.js?v=7"></script>
+  <script src="../../js/programacao-web.js?v=8"></script>
 </body>
 </html>

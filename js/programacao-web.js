@@ -245,6 +245,83 @@
         }
       });
     });
+
+    document.querySelectorAll("[data-js-demo-storage]").forEach((demo) => {
+      const inputs = Array.from(demo.querySelectorAll('input[type="checkbox"]'));
+      const result = demo.querySelector("[data-demo-storage-result]");
+      const status = demo.querySelector("[data-demo-storage-status]");
+      const saveButton = demo.querySelector("[data-demo-storage-save]");
+      const clearButton = demo.querySelector("[data-demo-storage-clear]");
+      const storageKey = "mbb:web1:pedido-demo-v1";
+
+      if (!inputs.length || !result || !status || !saveButton || !clearButton) return;
+
+      function formatPrice(value) {
+        return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+      }
+
+      function selectedIds() {
+        return inputs.filter((input) => input.checked).map((input) => input.value);
+      }
+
+      function updateResult() {
+        const selected = inputs.filter((input) => input.checked);
+        const total = selected.reduce((sum, input) => sum + Number(input.dataset.price), 0);
+        result.textContent = selected.length === 0
+          ? "Nenhum produto selecionado."
+          : `${selected.length} ${selected.length === 1 ? "item" : "itens"} — ${formatPrice(total)}`;
+      }
+
+      function restoreOrder() {
+        try {
+          const stored = localStorage.getItem(storageKey);
+          if (!stored) return;
+
+          const ids = JSON.parse(stored);
+          const isValid = Array.isArray(ids) && ids.every((id) => typeof id === "string");
+          if (!isValid) throw new TypeError("Formato de pedido inválido.");
+
+          inputs.forEach((input) => { input.checked = ids.includes(input.value); });
+          status.textContent = "Pedido anterior restaurado neste exemplo.";
+        } catch (error) {
+          console.error("Falha ao restaurar a demonstração de Web Storage:", error);
+          status.textContent = "O pedido salvo não pôde ser lido. Faça uma nova seleção.";
+        }
+      }
+
+      inputs.forEach((input) => input.addEventListener("change", updateResult));
+
+      saveButton.addEventListener("click", () => {
+        const ids = selectedIds();
+        try {
+          if (ids.length === 0) {
+            localStorage.removeItem(storageKey);
+            status.textContent = "Nenhum pedido salvo neste navegador.";
+          } else {
+            localStorage.setItem(storageKey, JSON.stringify(ids));
+            status.textContent = "Pedido salvo. Recarregue a página para testar.";
+          }
+        } catch (error) {
+          console.error("Falha ao salvar a demonstração de Web Storage:", error);
+          status.textContent = "A seleção funciona, mas o navegador não permitiu salvá-la.";
+        }
+      });
+
+      clearButton.addEventListener("click", () => {
+        inputs.forEach((input) => { input.checked = false; });
+        updateResult();
+        try {
+          localStorage.removeItem(storageKey);
+          status.textContent = "Seleção e pedido salvo foram removidos.";
+        } catch (error) {
+          console.error("Falha ao limpar a demonstração de Web Storage:", error);
+          status.textContent = "A seleção foi limpa, mas o dado salvo não pôde ser removido.";
+        }
+      });
+
+      restoreOrder();
+      updateResult();
+    });
   }
 
   function chapterFromHash() {
