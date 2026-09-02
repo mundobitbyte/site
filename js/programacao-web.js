@@ -92,6 +92,24 @@
     });
   }
 
+  function setupChapter10CheckpointNote() {
+    const downloadLink = document.querySelector('a[href$="cafe-aurora-capitulo-10.zip"]');
+    if (!downloadLink) return;
+
+    const checkpoint = downloadLink.closest(".checkpoint-box");
+    if (!checkpoint || checkpoint.querySelector("[data-capitulo-10-live-preview]")) return;
+
+    const note = document.createElement("p");
+    note.setAttribute("data-capitulo-10-live-preview", "");
+
+    const strong = document.createElement("strong");
+    strong.textContent = "Importante: ";
+    note.appendChild(strong);
+    note.append("depois de descompactar, abra a pasta no VS Code e execute o projeto pelo Live Preview (servidor local). Não abra index.html por duplo clique, pois o fetch() do JSON pode ser bloqueado em file://.");
+
+    checkpoint.insertBefore(note, downloadLink);
+  }
+
   function setupJavaScriptDemos() {
     document.querySelectorAll("[data-js-demo-filter]").forEach((demo) => {
       const controls = demo.querySelector("[data-demo-filter-controls]");
@@ -425,6 +443,7 @@
   page.classList.add("js-ready");
   setupCopyButtons();
   setupDemoForms();
+  setupChapter10CheckpointNote();
   setupJavaScriptDemos();
   showChapter(chapterFromHash());
 }());
