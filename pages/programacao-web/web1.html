@@ -585,31 +585,31 @@ abertura        conteúdo          fechamento</code></pre>
         <div class="chapter-header">
           <span class="chapter-kicker">Web I • 8 horas</span>
           <h2 tabindex="-1">Capítulo 3 — Organizando o site em páginas</h2>
-          <p class="chapter-meta">Planejamento, HTML semântico, múltiplas páginas e navegação consistente.</p>
+          <p class="chapter-meta">Da página única a um site com páginas conectadas, estrutura semântica e navegação consistente.</p>
         </div>
 
         <section class="hero-box" aria-labelledby="contexto-3">
           <h3 id="contexto-3">Quando uma página já não é suficiente</h3>
-          <p>A página inicial do <strong>Café Aurora</strong> passou a reunir apresentação, produtos, história, endereço e horários. O conteúdo existe, mas diferentes visitantes precisam procurar demais para encontrar o que desejam.</p>
-          <p>Uma pessoa pode querer consultar o cardápio; outra, conhecer a origem do café; outra precisa apenas do endereço. A solução não é continuar alongando a página: vamos organizar essas informações em páginas conectadas por um menu.</p>
+          <p>No capítulo anterior, a página inicial do <strong>Café Aurora</strong> ficou útil: ela apresenta o negócio, mostra destaques, informa horários e já possui uma imagem. Mas, à medida que o conteúdo cresce, encontrar uma informação específica começa a exigir mais procura.</p>
+          <p>Imagine três visitantes: um quer apenas consultar o cardápio, outro deseja conhecer a história do café e um terceiro procura endereço e horário. Em vez de empilhar tudo na mesma página, vamos separar essas necessidades em páginas próprias e conectá-las de forma clara.</p>
         </section>
 
         <section aria-labelledby="objetivos-3">
           <h3 id="objetivos-3">O que você vai aprender</h3>
           <ul class="check-list">
-            <li>Planejar as páginas antes de começar a programá-las.</li>
-            <li>Organizar arquivos e imagens em uma estrutura previsível.</li>
-            <li>Usar <code class="inline-code">header</code>, <code class="inline-code">nav</code>, <code class="inline-code">main</code>, <code class="inline-code">section</code>, <code class="inline-code">article</code> e <code class="inline-code">footer</code>.</li>
-            <li>Reconhecer quando um agrupamento genérico com <code class="inline-code">div</code> é adequado.</li>
-            <li>Criar páginas diferentes com títulos e descrições próprios.</li>
-            <li>Construir um menu consistente usando caminhos relativos.</li>
-            <li>Testar a navegação e corrigir links quebrados.</li>
+            <li>Planejar as páginas de acordo com o que cada visitante precisa encontrar.</li>
+            <li>Criar e nomear documentos dentro de uma estrutura de arquivos previsível.</li>
+            <li>Conectar as páginas com um menu e caminhos relativos.</li>
+            <li>Organizar as grandes regiões com <code class="inline-code">header</code>, <code class="inline-code">nav</code>, <code class="inline-code">main</code>, <code class="inline-code">section</code> e <code class="inline-code">footer</code>.</li>
+            <li>Usar <code class="inline-code">article</code> e <code class="inline-code">div</code> quando a necessidade do conteúdo justificar cada um.</li>
+            <li>Manter títulos, descrições, imagens e navegação coerentes entre as páginas.</li>
+            <li>Testar o site e localizar links ou caminhos quebrados.</li>
           </ul>
         </section>
 
         <section aria-labelledby="aula-1-3">
           <h3 id="aula-1-3">Aula 1 — Planejando antes de programar</h3>
-          <p>Antes de criar arquivos, organize as informações de acordo com as necessidades de quem visitará o site. Para o Café Aurora, quatro páginas resolvem o problema sem fragmentar demais o conteúdo:</p>
+          <p>Antes de abrir novos arquivos no VS Code, pense no que cada pessoa procura. Quem deseja apenas o horário não deveria precisar percorrer a história e todos os produtos; quem abriu o cardápio espera encontrar os itens sem procurar no restante da página. Para o Café Aurora, quatro páginas atendem bem essas necessidades sem fragmentar demais o site:</p>
 
           <div class="table-wrap">
             <table>
@@ -629,7 +629,7 @@ abertura        conteúdo          fechamento</code></pre>
 ├── Cardápio
 ├── Sobre
 └── Contato</div>
-          <p>Esse desenho simples é um <strong>mapa do site</strong>. Ele mostra quais páginas existirão e como o conteúdo foi dividido. Neste projeto, todas poderão ser acessadas pelo menu principal.</p>
+          <p>Esse desenho simples é um <strong>mapa do site</strong>. Antes de escrever código, ele permite enxergar quais páginas existirão e qual pergunta cada uma deverá responder. No Café Aurora, todas serão alcançadas pelo mesmo menu principal.</p>
 
           <h4>Estrutura de arquivos</h4>
           <div class="flow" role="img" aria-label="Estrutura de arquivos do Café Aurora">cafe-aurora/
@@ -643,11 +643,11 @@ abertura        conteúdo          fechamento</code></pre>
     ├── pao-artesanal.webp
     └── bolo-caseiro.webp</div>
 
-          <p>No explorador do VS Code, crie <code class="inline-code">cardapio.html</code>, <code class="inline-code">sobre.html</code> e <code class="inline-code">contato.html</code> na mesma pasta de <code class="inline-code">index.html</code>.</p>
+          <p>Agora transforme o plano em arquivos. No explorador do VS Code, crie <code class="inline-code">cardapio.html</code>, <code class="inline-code">sobre.html</code> e <code class="inline-code">contato.html</code> na mesma pasta de <code class="inline-code">index.html</code>.</p>
 
           <div class="note-box">
             <strong>Cada página é um documento completo.</strong>
-            <p>Todos os arquivos precisam de <code class="inline-code">DOCTYPE</code>, <code class="inline-code">html</code>, <code class="inline-code">head</code> e <code class="inline-code">body</code>. Copiar a estrutura correta economiza tempo, mas o título, a descrição e o conteúdo devem ser adaptados para cada página.</p>
+            <p>Todos os arquivos precisam de <code class="inline-code">DOCTYPE</code>, <code class="inline-code">html</code>, <code class="inline-code">head</code> e <code class="inline-code">body</code>. Copiar a estrutura correta economiza tempo, mas cada página precisa assumir sua própria identidade: título, descrição e conteúdo devem dizer claramente onde o visitante está.</p>
           </div>
 
           <h4>Título e descrição de cada página</h4>
@@ -670,8 +670,9 @@ abertura        conteúdo          fechamento</code></pre>
         </section>
 
         <section aria-labelledby="aula-2-3">
-          <h3 id="aula-2-3">Aula 2 — Dando significado à estrutura</h3>
-          <p>Até agora, usamos títulos, parágrafos, listas, links e imagens. O HTML também possui elementos que identificam as grandes regiões de uma página. Eles ajudam navegadores, mecanismos de busca, tecnologias assistivas e outros desenvolvedores a compreender a organização do documento.</p>
+          <h3 id="aula-2-3">Aula 2 — Conectando as páginas e dando significado à estrutura</h3>
+          <p>Agora existem quatro arquivos, mas arquivos isolados ainda não formam uma boa experiência de navegação. Se alguém estiver no Cardápio, precisa conseguir voltar ao Início, conhecer a história ou encontrar o Contato sem procurar outro caminho. Essa necessidade é o motivo de criarmos um menu comum às páginas.</p>
+          <p>Ao mesmo tempo, o documento passa a ter regiões com papéis diferentes: uma área de identificação, a navegação, o conteúdo principal, assuntos internos e informações finais. O HTML possui elementos semânticos para deixar esses papéis explícitos.</p>
 
           <div class="table-wrap">
             <table>
@@ -681,20 +682,18 @@ abertura        conteúdo          fechamento</code></pre>
                 <tr><td><code class="inline-code">&lt;nav&gt;</code></td><td>Conjunto importante de links de navegação.</td></tr>
                 <tr><td><code class="inline-code">&lt;main&gt;</code></td><td>Conteúdo principal e exclusivo daquela página. Normalmente há apenas um por documento.</td></tr>
                 <tr><td><code class="inline-code">&lt;section&gt;</code></td><td>Grupo temático de conteúdo, geralmente identificado por um título.</td></tr>
-                <tr><td><code class="inline-code">&lt;article&gt;</code></td><td>Conteúdo que pode ser entendido como uma unidade independente, como um produto ou notícia.</td></tr>
                 <tr><td><code class="inline-code">&lt;footer&gt;</code></td><td>Informações finais, como autoria, direitos ou contato complementar.</td></tr>
-                <tr><td><code class="inline-code">&lt;div&gt;</code></td><td>Agrupamento sem significado próprio, útil quando nenhum elemento semântico descreve o conjunto.</td></tr>
               </tbody>
             </table>
           </div>
 
           <div class="note-box">
             <strong>Semântica não significa aparência.</strong>
-            <p>Trocar uma <code class="inline-code">div</code> por <code class="inline-code">header</code> não deixa a página automaticamente mais bonita. Esses elementos explicam o papel do conteúdo; o visual será construído com CSS.</p>
+            <p>Usar <code class="inline-code">header</code>, <code class="inline-code">nav</code> ou <code class="inline-code">main</code> não deixa a página automaticamente mais bonita. Esses elementos explicam o papel do conteúdo; a aparência será construída com CSS.</p>
           </div>
 
-          <h4>Nova estrutura da página inicial</h4>
-          <p>No <code class="inline-code">index.html</code>, mantenha o <code class="inline-code">head</code> construído no capítulo anterior e reorganize o <code class="inline-code">body</code>:</p>
+          <h4>O menu conecta o site; a semântica explica cada região</h4>
+          <p>Como os quatro documentos HTML estão na mesma pasta, caminhos como <code class="inline-code">href="cardapio.html"</code> partem da página atual e encontram o arquivo vizinho. Agora aplique essa navegação e reorganize o <code class="inline-code">body</code> de <code class="inline-code">index.html</code>:</p>
 
           <details class="code-disclosure">
             <summary>Estrutura completa do body para conferência</summary>
@@ -753,13 +752,14 @@ abertura        conteúdo          fechamento</code></pre>
 
           <div class="task-box">
             <h4>Pratique</h4>
-            <p>Observe o HTML anterior e explique por que o menu está em <code class="inline-code">nav</code>, o conteúdo exclusivo está em <code class="inline-code">main</code> e os dois assuntos principais estão em <code class="inline-code">section</code>.</p>
+            <p>Abra a página e use o menu para ir ao Cardápio e voltar ao Início. Depois, observe o HTML e explique por que os links estão em <code class="inline-code">nav</code>, o conteúdo exclusivo está em <code class="inline-code">main</code> e os dois assuntos principais estão em <code class="inline-code">section</code>.</p>
           </div>
         </section>
 
         <section aria-labelledby="aula-3-3">
           <h3 id="aula-3-3">Aula 3 — Construindo a página do cardápio</h3>
-          <p>O cardápio precisa apresentar produtos reais do contexto do negócio. Baixe as três imagens e coloque-as na pasta <code class="inline-code">img</code> do seu projeto.</p>
+          <p>Com as páginas conectadas, surge outra necessidade de organização. O Cardápio reunirá vários produtos dentro do mesmo assunto, mas cada produto possui nome, imagem, descrição e preço e pode ser entendido como uma unidade. É nesse contexto que <code class="inline-code">article</code> passa a fazer sentido.</p>
+          <p>Baixe as três imagens e coloque-as na pasta <code class="inline-code">img</code> do seu projeto.</p>
 
           <section class="resource-gallery" aria-labelledby="imagens-cardapio">
             <h4 id="imagens-cardapio">Imagens prontas para o cardápio</h4>
@@ -880,9 +880,11 @@ abertura        conteúdo          fechamento</code></pre>
           </details>
 
           <div class="concept-box">
-            <strong>Novos recursos usados no cardápio</strong>
+            <strong>O que a estrutura do cardápio nos ajuda a distinguir</strong>
             <ul>
-              <li>Cada produto foi colocado em <code class="inline-code">article</code> porque forma uma unidade que pode ser compreendida separadamente.</li>
+              <li><code class="inline-code">section</code> reúne o assunto “Destaques da casa”.</li>
+              <li>Cada produto está em <code class="inline-code">article</code> porque forma uma unidade que pode ser compreendida separadamente.</li>
+              <li>Quando for necessário agrupar elementos apenas para organização ou layout, sem um significado próprio para o conteúdo, <code class="inline-code">div</code> é o agrupamento genérico adequado.</li>
               <li>O atributo <code class="inline-code">loading="lazy"</code> permite que o navegador adie o carregamento de imagens que ainda estão longe da área visível. Use-o principalmente abaixo da área inicial; a imagem principal que aparece logo ao abrir a página normalmente não deve ser carregada dessa forma.</li>
               <li>Os valores são fictícios e servem apenas para contextualizar o exercício.</li>
             </ul>
@@ -895,8 +897,8 @@ abertura        conteúdo          fechamento</code></pre>
         </section>
 
         <section aria-labelledby="aula-4-3">
-          <h3 id="aula-4-3">Aula 4 — Sobre, contato e navegação consistente</h3>
-          <p>As páginas restantes aproveitarão a mesma estrutura. Copie <code class="inline-code">cardapio.html</code>, preserve cabeçalho, menu e rodapé, e substitua o <code class="inline-code">main</code>, o <code class="inline-code">title</code> e a descrição.</p>
+          <h3 id="aula-4-3">Aula 4 — Completando o site sem perder a orientação</h3>
+          <p>O Cardápio já mostra a vantagem de separar o conteúdo em páginas. Agora precisamos garantir que, ao entrar em Sobre ou Contato, o visitante continue sentindo que está no mesmo site. Por isso, as páginas restantes reutilizarão cabeçalho, menu e rodapé, mudando apenas o conteúdo principal e as informações próprias de cada documento.</p>
 
           <h4>Conteúdo principal de <code class="inline-code">sobre.html</code></h4>
           <pre class="code-block"><code>&lt;main&gt;
@@ -964,10 +966,10 @@ abertura        conteúdo          fechamento</code></pre>
           </div>
 
           <h4>O menu precisa ser igual em todas as páginas</h4>
-          <p>Como este é um site estático, o menu está escrito em cada arquivo. Sempre que acrescentar ou renomear uma página, revise todas as cópias. A única diferença será a posição de <code class="inline-code">aria-current="page"</code>.</p>
+          <p>Imagine clicar em Contato e encontrar os itens do menu em outra ordem ou com nomes diferentes. Mesmo que os links funcionem, a navegação passa a parecer instável. Como este é um site estático, o menu está escrito em cada arquivo: sempre que acrescentar ou renomear uma página, revise todas as cópias. A única diferença será a posição de <code class="inline-code">aria-current="page"</code>.</p>
 
           <div class="task-box">
-            <h4>Teste sistemático</h4>
+            <h4>Teste como visitante</h4>
             <ol>
               <li>Comece em <code class="inline-code">index.html</code> e abra cada item do menu.</li>
               <li>Em cada página, clique novamente nos quatro links.</li>
