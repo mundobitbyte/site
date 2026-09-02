@@ -32,6 +32,7 @@
       <a class="chapter-link" href="#capitulo-3" data-chapter-link="capitulo-3">3. O formulário chega ao servidor</a>
       <a class="chapter-link" href="#capitulo-4" data-chapter-link="capitulo-4">4. Uma confirmação sem reenvio</a>
       <a class="chapter-link" href="#capitulo-5" data-chapter-link="capitulo-5">5. O Café ganha memória permanente</a>
+      <a class="chapter-link" href="#capitulo-6" data-chapter-link="capitulo-6">6. A mensagem vira registro</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -1584,6 +1585,374 @@ php src/inicializar-banco.php</code></pre>
 
         <div class="chapter-footer">
           <a href="#capitulo-4" data-chapter-link="capitulo-4">← Capítulo 4</a>
+          <a href="#capitulo-6" data-chapter-link="capitulo-6">Capítulo 6 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-6" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 6 — A mensagem vira registro</h2>
+          <p class="chapter-meta">CSRF, token de sessão, comando preparado, INSERT, tratamento de falhas e fluxo PRG completo.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-6">
+          <h3 id="contexto-6">Agora o botão Enviar precisa cumprir sua promessa</h3>
+          <p>O banco do <strong>Café Aurora</strong> está pronto, mas a proprietária continua sem histórico: o formulário valida os campos e confirma o envio, porém nenhum registro chega à tabela. Ligar as duas partes parece apenas executar um <code class="inline-code">INSERT</code>, mas esse atalho criaria riscos.</p>
+          <p>Dados vindos do navegador não devem ser encaixados diretamente em SQL. Além disso, uma página externa poderia tentar provocar um envio usando o navegador de outra pessoa. Antes de gravar, o sistema precisa distinguir o comando dos valores e confirmar que o formulário veio da sessão que o exibiu.</p>
+          <p>Neste capítulo, cada POST válido poderá criar um registro no SQLite, sem a duplicação comum causada por atualizar a página de confirmação. Faremos isso preservando a validação, o escape de saída e o padrão POST–Redirect–GET já construídos.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-6">
+          <h3 id="objetivos-6">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Reconhecer o limite de confiança entre navegador e servidor.</li>
+            <li>Entender, gerar, enviar e verificar um token CSRF.</li>
+            <li>Distinguir instrução SQL, marcador e valor.</li>
+            <li>Preparar e executar um <code class="inline-code">INSERT</code> com PDO.</li>
+            <li>Representar o telefone opcional como <code class="inline-code">null</code>.</li>
+            <li>Tratar uma falha do banco sem expor detalhes técnicos à pessoa usuária.</li>
+            <li>Manter o PRG depois da gravação.</li>
+            <li>Comprovar que a tabela recebeu apenas os registros esperados.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-6">
+          <h3 id="aula-1-6">Aula 1 — Proteger antes de gravar</h3>
+
+          <h4>Entender: o navegador está fora da área de confiança</h4>
+          <p>Os atributos HTML ajudam quem preenche o formulário, mas podem ser alterados ou ignorados. Por isso, a validação em PHP continua obrigatória. Agora acrescentaremos duas proteções com responsabilidades diferentes:</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Proteção</th><th>Evita</th><th>Não substitui</th></tr></thead>
+              <tbody>
+                <tr><td>Comando preparado</td><td>Que valores sejam interpretados como parte da instrução SQL.</td><td>Validação, autorização e regras do banco.</td></tr>
+                <tr><td>Token CSRF</td><td>Que outra origem provoque uma alteração sem apresentar o token da sessão.</td><td>Controle de robôs, limite de envios e autenticação.</td></tr>
+                <tr><td>Escape na saída</td><td>Que texto exibido seja interpretado como marcação HTML.</td><td>Proteção do SQL e validação de entrada.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>O fluxo seguro da mensagem</h4>
+          <div class="flow" role="img" aria-label="Fluxo do formulário protegido até o banco">1. GET exibe o formulário e o token da sessão
+        ↓
+2. POST devolve campos e token ao servidor
+        ↓
+3. PHP confere token e valida os campos
+        ↓
+4. PDO prepara o SQL e envia os valores separados
+        ↓
+5. SQLite grava uma linha
+        ↓
+6. PHP redireciona para um novo GET</div>
+          <p>O token CSRF será secreto, imprevisível e associado à sessão. Ele viajará em um campo oculto do formulário, nunca na URL. O servidor aceitará a alteração somente quando o valor recebido corresponder ao guardado na sessão.</p>
+
+          <div class="task-box">
+            <h4>Experimente antes de programar</h4>
+            <p>Desenhe o fluxo em seis passos e marque onde cada decisão acontece. Se você colocou a validação apenas no navegador ou o redirecionamento antes da gravação, corrija o desenho antes de seguir.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-6">
+          <h3 id="aula-2-6">Aula 2 — Criando e conferindo o token CSRF</h3>
+
+          <h4>Gere um token para a sessão</h4>
+          <p>Depois de <code class="inline-code">session_start()</code>, crie o token somente se a sessão ainda não possuir um valor válido:</p>
+          <pre class="code-block"><code>if (!isset($_SESSION["csrf_token"]) ||
+    !is_string($_SESSION["csrf_token"])) {
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+}
+
+$csrfToken = $_SESSION["csrf_token"];</code></pre>
+          <ul>
+            <li><code class="inline-code">random_bytes(32)</code> produz 32 bytes aleatórios adequados para uso criptográfico.</li>
+            <li><code class="inline-code">bin2hex(...)</code> transforma esses bytes em 64 caracteres hexadecimais fáceis de transportar no HTML.</li>
+            <li>Guardar o valor em <code class="inline-code">$_SESSION</code> permite compará-lo quando o POST chegar.</li>
+          </ul>
+
+          <h4>Envie o valor em um campo oculto</h4>
+          <p>Logo após a abertura do formulário, acrescente:</p>
+          <pre class="code-block"><code>&lt;input
+  type="hidden"
+  name="csrf_token"
+  value="&lt;?= escapar($csrfToken) ?&gt;"
+&gt;</code></pre>
+          <p><code class="inline-code">hidden</code> não torna o valor secreto para a pessoa que usa o navegador. Ele apenas não cria um controle visível. O segredo importante é outro: uma página de origem diferente não deve conseguir ler o token gerado para esta sessão.</p>
+
+          <h4>Compare no servidor</h4>
+          <p>No início do processamento do POST, obtenha o valor como texto e faça uma comparação apropriada:</p>
+          <pre class="code-block"><code>$tokenRecebido = $_POST["csrf_token"] ?? "";
+
+$tokenValido = is_string($tokenRecebido) &amp;&amp;
+    hash_equals($csrfToken, $tokenRecebido);
+
+if (!$tokenValido) {
+    http_response_code(403);
+    $erroGeral =
+        "Não foi possível confirmar este envio. " .
+        "Atualize a página e tente novamente.";
+}</code></pre>
+          <p><code class="inline-code">hash_equals()</code> compara as duas sequências de forma resistente a ataques de temporização. O valor conhecido da sessão aparece primeiro; o recebido, depois. Token ausente ou diferente impede a gravação, e o status <code class="inline-code">403</code> informa que o servidor recusou a operação.</p>
+
+          <div class="note-box">
+            <strong>Por que usar CSRF em um formulário público?</strong>
+            <p>A proteção dificulta envios forjados por outra página usando a sessão do navegador. Como não há login, ela não impede um robô de visitar o formulário, obter seu próprio token e enviar mensagens. Essa limitação será tratada como um problema diferente, não escondida sob o nome “segurança”.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-6">
+          <h3 id="aula-3-6">Aula 3 — Inserindo valores sem montar SQL com texto</h3>
+
+          <h4>Separe a instrução dos dados</h4>
+          <p>Inclua a conexão preparada no capítulo anterior:</p>
+          <pre class="code-block"><code>require_once dirname(__DIR__) . "/src/banco.php";</code></pre>
+          <p>Depois que token e campos forem aprovados, prepare o comando:</p>
+          <pre class="code-block"><code>$pdo = conectarBanco();
+
+$comando = $pdo-&gt;prepare(
+    "INSERT INTO mensagens
+        (nome, email, telefone, assunto, mensagem)
+     VALUES
+        (:nome, :email, :telefone, :assunto, :mensagem)"
+);</code></pre>
+          <p>Os nomes iniciados por dois-pontos são marcadores. Eles reservam posições para valores; não são variáveis PHP e não recebem aspas manuais.</p>
+
+          <h4>Execute com os valores validados</h4>
+          <pre class="code-block"><code>$comando-&gt;execute([
+    "nome" =&gt; $nome,
+    "email" =&gt; $email,
+    "telefone" =&gt; $telefone !== "" ? $telefone : null,
+    "assunto" =&gt; $assunto,
+    "mensagem" =&gt; $mensagem
+]);</code></pre>
+          <ul>
+            <li>As chaves do array correspondem aos marcadores da instrução.</li>
+            <li>Um telefone vazio vira <code class="inline-code">null</code>, isto é, ausência de valor no banco.</li>
+            <li><code class="inline-code">criada_em</code> não aparece porque a tabela já possui um valor padrão.</li>
+            <li><code class="inline-code">id</code> também não aparece: o SQLite fornece a próxima identidade inteira.</li>
+          </ul>
+
+          <div class="warning-box">
+            <strong>Não concatene dados na instrução.</strong>
+            <p>Montar SQL com <code class="inline-code">$nome</code>, <code class="inline-code">$email</code> ou qualquer texto recebido mistura dado e comando. Marcadores servem para valores. Nomes de tabela, colunas e palavras da linguagem SQL não devem vir livremente do formulário.</p>
+          </div>
+
+          <h4>Trate a falha e preserve o PRG</h4>
+          <pre class="code-block"><code>try {
+    // conectar, preparar e executar...
+
+    $_SESSION["mensagem_temporaria"] =
+        "Mensagem registrada com sucesso.";
+    header("Location: contato.php", true, 303);
+    exit;
+} catch (PDOException $erro) {
+    error_log($erro-&gt;getMessage());
+    $erroGeral =
+        "Não foi possível registrar a mensagem agora. " .
+        "Tente novamente.";
+}</code></pre>
+          <p>O detalhe técnico vai para o registro de erros do servidor; a página mostra uma orientação segura. O redirecionamento acontece somente depois da execução bem-sucedida. Se o banco falhar, não devemos anunciar sucesso.</p>
+        </section>
+
+        <section aria-labelledby="aula-4-6">
+          <h3 id="aula-4-6">Aula 4 — Integrando e testando a gravação</h3>
+
+          <h4>Ajuste a mensagem da interface</h4>
+          <p>Como os dados agora são persistidos, substitua a orientação antiga por uma descrição verdadeira:</p>
+          <pre class="code-block"><code>&lt;p id="orientacao-formulario"&gt;
+  Os campos identificados como obrigatórios devem ser
+  preenchidos. A mensagem será armazenada para atendimento.
+&lt;/p&gt;</code></pre>
+
+          <details class="code-disclosure">
+            <summary>Código completo para conferência — processamento do formulário</summary>
+            <pre class="code-block"><code>&lt;?php
+session_start();
+require_once dirname(__DIR__) . "/src/banco.php";
+
+function tamanhoTexto(string $texto): int
+{
+    if (function_exists("mb_strlen")) {
+        return mb_strlen($texto);
+    }
+
+    return strlen($texto);
+}
+
+function escapar(string $valor): string
+{
+    return htmlspecialchars(
+        $valor,
+        ENT_QUOTES | ENT_SUBSTITUTE,
+        "UTF-8"
+    );
+}
+
+function textoPost(string $campo): string
+{
+    $valor = $_POST[$campo] ?? "";
+    return is_string($valor) ? trim($valor) : "";
+}
+
+if (!isset($_SESSION["csrf_token"]) ||
+    !is_string($_SESSION["csrf_token"])) {
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+}
+
+$csrfToken = $_SESSION["csrf_token"];
+
+$mensagemTemporaria =
+    $_SESSION["mensagem_temporaria"] ?? "";
+unset($_SESSION["mensagem_temporaria"]);
+
+$formularioEnviado =
+    ($_SERVER["REQUEST_METHOD"] ?? "GET") === "POST";
+$erros = [];
+$erroGeral = "";
+$assuntosPermitidos = [
+    "duvida" =&gt; "Dúvida",
+    "encomenda" =&gt; "Encomenda",
+    "sugestao" =&gt; "Sugestão"
+];
+
+$nome = textoPost("nome");
+$email = textoPost("email");
+$telefone = textoPost("telefone");
+$assunto = textoPost("assunto");
+$mensagem = textoPost("mensagem");
+
+if ($formularioEnviado) {
+    $tokenRecebido = $_POST["csrf_token"] ?? "";
+    $tokenValido = is_string($tokenRecebido) &amp;&amp;
+        hash_equals($csrfToken, $tokenRecebido);
+
+    if (!$tokenValido) {
+        http_response_code(403);
+        $erroGeral =
+            "Não foi possível confirmar este envio. " .
+            "Atualize a página e tente novamente.";
+    }
+
+    if (tamanhoTexto($nome) &lt; 2) {
+        $erros["nome"] =
+            "Informe um nome com pelo menos 2 caracteres.";
+    }
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erros["email"] =
+            "Informe um endereço de e-mail válido.";
+    }
+
+    if (!array_key_exists($assunto, $assuntosPermitidos)) {
+        $erros["assunto"] =
+            "Escolha um assunto disponível.";
+    }
+
+    $tamanhoMensagem = tamanhoTexto($mensagem);
+    if ($tamanhoMensagem &lt; 10 || $tamanhoMensagem &gt; 500) {
+        $erros["mensagem"] =
+            "Escreva uma mensagem entre 10 e 500 caracteres.";
+    }
+
+    if ($erros === [] &amp;&amp; $erroGeral === "") {
+        try {
+            $pdo = conectarBanco();
+            $comando = $pdo-&gt;prepare(
+                "INSERT INTO mensagens
+                    (nome, email, telefone, assunto, mensagem)
+                 VALUES
+                    (:nome, :email, :telefone, :assunto, :mensagem)"
+            );
+            $comando-&gt;execute([
+                "nome" =&gt; $nome,
+                "email" =&gt; $email,
+                "telefone" =&gt;
+                    $telefone !== "" ? $telefone : null,
+                "assunto" =&gt; $assunto,
+                "mensagem" =&gt; $mensagem
+            ]);
+
+            $_SESSION["mensagem_temporaria"] =
+                "Mensagem registrada com sucesso.";
+            header("Location: contato.php", true, 303);
+            exit;
+        } catch (PDOException $erro) {
+            error_log($erro-&gt;getMessage());
+            $erroGeral =
+                "Não foi possível registrar a mensagem agora. " .
+                "Tente novamente.";
+        }
+    }
+}
+?&gt;</code></pre>
+          </details>
+          <p>O restante do HTML permanece. Além da orientação e do campo oculto, ajuste apenas o resumo para também mostrar <code class="inline-code">$erroGeral</code> quando existir. O checkpoint contém a página completa para conferência.</p>
+
+          <h4>Programe e teste em ordem</h4>
+          <ol>
+            <li>Execute <code class="inline-code">php src/inicializar-banco.php</code> antes de iniciar o servidor.</li>
+            <li>Confira a sintaxe com <code class="inline-code">php -l public/contato.php</code>.</li>
+            <li>Inicie <code class="inline-code">php -S localhost:8000 -t public</code>.</li>
+            <li>Envie uma mensagem válida e confirme o redirecionamento seguido da mensagem de sucesso.</li>
+            <li>Execute novamente <code class="inline-code">php src/inicializar-banco.php</code>; a contagem deve aumentar para 1.</li>
+            <li>Atualize a página de confirmação e confira que a contagem continua 1.</li>
+          </ol>
+
+          <div class="task-box">
+            <h4>Use o DevTools para provar as proteções</h4>
+            <ol>
+              <li>No painel Elements, localize o campo <code class="inline-code">csrf_token</code>, remova-o temporariamente e envie o formulário. O servidor deve recusar a gravação.</li>
+              <li>Recarregue a página: a alteração no painel desaparece porque o arquivo não foi modificado.</li>
+              <li>Envie novamente usando o nome <code class="inline-code">Ana O'Connor</code>. O apóstrofo deve ser tratado como dado, e a tabela deve continuar existindo.</li>
+              <li>Confira a contagem depois de cada teste e explique por que apenas um deles cria registro.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-6">
+          <h3 id="check-6">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Explico por que a validação HTML não protege sozinha o servidor.</li>
+            <li>Diferencio CSRF, injeção de SQL e interpretação de HTML.</li>
+            <li>Gero o token com uma fonte aleatória apropriada.</li>
+            <li>Envio o token em campo oculto e o comparo no servidor.</li>
+            <li>Separo instrução SQL e valores por marcadores.</li>
+            <li>Gravo telefone vazio como ausência de valor.</li>
+            <li>Não mostro mensagens internas do banco à pessoa usuária.</li>
+            <li>Comprovo que atualizar a confirmação não duplica o registro.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-6">
+          <h3 id="transferencia-6">Transfira o aprendizado</h3>
+          <p>A clínica veterinária do desafio anterior decidiu registrar pedidos de retorno. Sem criar outro projeto completo, escreva o <code class="inline-code">INSERT</code> preparado com marcadores para tutor, contato, animal e motivo. Indique onde o token CSRF será criado, enviado e conferido e explique por que nenhuma dessas etapas substitui a validação dos campos.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do sexto capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP contém a gravação por comando preparado, token CSRF, tratamento de falha e fluxo PRG completo, além do banco inicializável, das funcionalidades anteriores e de todas as imagens WebP. Use-o depois de construir a sua versão.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-6.zip" download>Baixar checkpoint do Capítulo 6 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-6">
+          <h3 id="fontes-6">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://www.php.net/manual/en/pdo.prepare.php"><code class="inline-code">PDO::prepare()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/pdostatement.execute.php"><code class="inline-code">PDOStatement::execute()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/function.random-bytes.php"><code class="inline-code">random_bytes()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/function.hash-equals.php"><code class="inline-code">hash_equals()</code> — Manual do PHP</a></li>
+            <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Prevenção de CSRF — OWASP</a></li>
+            <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">Prevenção de injeção de SQL — OWASP</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Gravar com segurança não encerra a responsabilidade</strong>
+          <p>O formulário agora protege o SQL e verifica o token da sessão, mas ainda não possui controle de abuso, idempotência contra envios repetidos, autenticação, painel de atendimento, política de retenção, backup ou publicação em servidor PHP. No próximo capítulo, a proprietária precisará consultar os registros sem expor dados pessoais ao público.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-5" data-chapter-link="capitulo-5">← Capítulo 5</a>
           <span aria-disabled="true">Próximo capítulo em preparação</span>
         </div>
       </article>
