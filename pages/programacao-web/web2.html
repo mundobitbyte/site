@@ -30,6 +30,7 @@
       <a class="chapter-link" href="#capitulo-1" data-chapter-link="capitulo-1">1. Do site à primeira resposta do servidor</a>
       <a class="chapter-link" href="#capitulo-2" data-chapter-link="capitulo-2">2. A URL conversa com o servidor</a>
       <a class="chapter-link" href="#capitulo-3" data-chapter-link="capitulo-3">3. O formulário chega ao servidor</a>
+      <a class="chapter-link" href="#capitulo-4" data-chapter-link="capitulo-4">4. Uma confirmação sem reenvio</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -1010,6 +1011,277 @@ if ($formularioEnviado) {
 
         <div class="chapter-footer">
           <a href="#capitulo-2" data-chapter-link="capitulo-2">← Capítulo 2</a>
+          <a href="#capitulo-4" data-chapter-link="capitulo-4">Capítulo 4 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-4" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 4 — Uma confirmação sem reenvio</h2>
+          <p class="chapter-meta">Redirecionamento, status 303, padrão POST–Redirect–GET, sessões e mensagens temporárias.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-4">
+          <h3 id="contexto-4">A mensagem foi aceita. Por que o navegador quer enviá-la de novo?</h3>
+          <p>Depois de preencher corretamente o contato do <strong>Café Aurora</strong>, a cliente recebe a confirmação. Em seguida, atualiza a página para conferir o horário do café. O navegador avisa que precisa reenviar os dados do formulário. Se essa operação já gravasse uma encomenda, o mesmo pedido poderia ser processado novamente.</p>
+          <p>Isso acontece porque a página visível ainda é a resposta do próprio POST. Atualizar significa repetir a última requisição. A aplicação precisa concluir o processamento e levar a pessoa para uma nova requisição GET, que pode ser recarregada sem repetir o formulário.</p>
+          <p>Há um detalhe: depois do redirecionamento, o POST terminou. Como a nova requisição saberá que deve mostrar a confirmação? Usaremos uma sessão para transportar somente uma mensagem curta, exibida uma vez e removida.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-4">
+          <h3 id="objetivos-4">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Reconhecer por que atualizar uma resposta POST pode reenviar dados.</li>
+            <li>Compreender o padrão POST–Redirect–GET.</li>
+            <li>Enviar um cabeçalho de redirecionamento com <code class="inline-code">header()</code>.</li>
+            <li>Usar o status 303 para solicitar uma nova navegação GET.</li>
+            <li>Encerrar o processamento com <code class="inline-code">exit</code>.</li>
+            <li>Iniciar uma sessão e trabalhar com <code class="inline-code">$_SESSION</code>.</li>
+            <li>Criar uma mensagem temporária, apresentada uma única vez.</li>
+            <li>Observar redirecionamento, status e cookie de sessão no DevTools.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-4">
+          <h3 id="aula-1-4">Aula 1 — Enxergando o reenvio acidental</h3>
+
+          <h4>Entender: a página atual nasceu de qual requisição?</h4>
+          <p>No fim do capítulo anterior, um envio válido produz diretamente uma resposta HTML. A barra de endereço mostra <code class="inline-code">contato.php</code>, mas o documento foi obtido por POST. O endereço sozinho não revela o método usado.</p>
+          <div class="flow" role="img" aria-label="Fluxo anterior em que a resposta continua ligada ao POST">1. Formulário envia POST para contato.php
+        ↓
+2. PHP valida os campos
+        ↓
+3. A própria resposta POST mostra a confirmação
+        ↓
+4. Atualizar tenta repetir o POST</div>
+
+          <div class="task-box">
+            <h4>Experimente o problema antes de corrigi-lo</h4>
+            <ol>
+              <li>Abra o checkpoint do Capítulo 3 e inicie o servidor local.</li>
+              <li>Envie uma mensagem válida usando dados fictícios.</li>
+              <li>Pressione o botão de atualizar do navegador.</li>
+              <li>Leia o aviso de reenvio, cancele a operação e explique o risco se o sistema já gravasse pedidos.</li>
+            </ol>
+          </div>
+
+          <h4>O fluxo que queremos construir</h4>
+          <div class="flow" role="img" aria-label="Padrão POST Redirect GET aplicado ao formulário">1. POST recebe e valida
+        ↓ resposta 303
+2. Navegador solicita contato.php com GET
+        ↓ resposta 200
+3. GET mostra a confirmação temporária
+        ↓
+4. Atualizar repete somente o GET</div>
+          <p>Esse encadeamento é conhecido como <strong>POST–Redirect–GET</strong>, ou PRG. Ele reduz reenvios causados por atualização e pelo botão voltar. Não substitui validação, HTTPS nem outras proteções da operação.</p>
+        </section>
+
+        <section aria-labelledby="aula-2-4">
+          <h3 id="aula-2-4">Aula 2 — Uma pequena memória entre requisições</h3>
+          <p>HTTP não entrega automaticamente ao próximo acesso as variáveis criadas no POST. Uma <strong>sessão</strong> permite manter dados associados àquele navegador entre requisições. Em uma configuração comum, o servidor guarda os dados e o navegador recebe um cookie com o identificador da sessão.</p>
+
+          <h4>Inicie ou retome a sessão</h4>
+          <p>Na primeira linha PHP de <code class="inline-code">contato.php</code>, antes de qualquer HTML, espaço fora do PHP ou texto enviado ao navegador, acrescente:</p>
+          <pre class="code-block"><code>session_start();</code></pre>
+          <p><code class="inline-code">session_start()</code> cria uma sessão ou retoma a sessão identificada na requisição. Ela também pode enviar cabeçalhos HTTP; por isso precisa executar antes da saída da página.</p>
+
+          <h4>Leia e remova uma mensagem de uso único</h4>
+          <p>Logo depois das funções do arquivo, recupere a mensagem e retire-a da sessão:</p>
+          <pre class="code-block"><code>$mensagemTemporaria = $_SESSION["mensagem_temporaria"] ?? "";
+unset($_SESSION["mensagem_temporaria"]);</code></pre>
+          <ul>
+            <li><code class="inline-code">$_SESSION</code> é o array da sessão atual.</li>
+            <li><code class="inline-code">?? ""</code> oferece um padrão quando não há mensagem.</li>
+            <li><code class="inline-code">unset()</code> remove a entrada da sessão.</li>
+            <li>A variável local continua com o texto durante a resposta atual; na próxima atualização, a sessão já não o possui.</li>
+          </ul>
+
+          <div class="concept-box">
+            <strong>Temporária não significa pública.</strong>
+            <p>Guarde apenas o necessário. Neste exercício, a sessão transporta uma frase de confirmação controlada pela aplicação, não nome, e-mail, telefone nem mensagem da cliente. O identificador da sessão também não deve ser copiado ou compartilhado.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-4">
+          <h3 id="aula-3-4">Aula 3 — Redirecionando depois da validação</h3>
+          <p>No Capítulo 3, o resultado válido apenas alterava <code class="inline-code">$mensagemAceita</code>. Substitua essa atribuição pelo armazenamento temporário e pelo redirecionamento:</p>
+          <pre class="code-block"><code>if ($erros === []) {
+    $_SESSION["mensagem_temporaria"] =
+        "Mensagem recebida e validada. " .
+        "Nesta demonstração, ela ainda não foi armazenada nem enviada.";
+
+    header("Location: contato.php", true, 303);
+    exit;
+}</code></pre>
+          <div class="mini-grid">
+            <div class="mini-card"><strong><code class="inline-code">$_SESSION[...]</code></strong><p>Guarda a confirmação para a próxima requisição.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">Location</code></strong><p>Indica o endereço que o navegador deverá solicitar.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">303</code></strong><p>Orienta o navegador a buscar o destino com GET.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">exit</code></strong><p>Impede que o PHP continue gerando a resposta antiga.</p></div>
+          </div>
+
+          <div class="note-box">
+            <strong>Cabeçalho vem antes do conteúdo.</strong>
+            <p><code class="inline-code">header()</code> não consegue alterar normalmente os cabeçalhos depois que a saída começou. Mantenha sessão, validação e redirecionamento no bloco PHP anterior ao <code class="inline-code">DOCTYPE</code>. Não tente esconder o problema ativando saída em buffer sem compreender sua causa.</p>
+          </div>
+
+          <h4>Mostre a mensagem trazida pelo GET</h4>
+          <p>No HTML, substitua a antiga condição de sucesso:</p>
+          <pre class="code-block"><code>&lt;?php if ($mensagemTemporaria !== ""): ?&gt;
+  &lt;div class="mensagem-sucesso" role="status"&gt;
+    &lt;strong&gt;&lt;?= escapar($mensagemTemporaria) ?&gt;&lt;/strong&gt;
+  &lt;/div&gt;
+&lt;?php elseif ($formularioEnviado): ?&gt;
+  &lt;!-- Preserve aqui o resumo de erros do Capítulo 3. --&gt;
+&lt;?php endif; ?&gt;</code></pre>
+          <p>Um POST inválido não redireciona: a mesma resposta preserva os valores e mostra os erros para correção. Somente o caminho válido produz 303 e uma página GET limpa.</p>
+
+          <details class="code-disclosure">
+            <summary>Código completo para conferência — sessão e PRG</summary>
+            <pre class="code-block"><code>&lt;?php
+session_start();
+
+function tamanhoTexto(string $texto): int
+{
+    if (function_exists("mb_strlen")) {
+        return mb_strlen($texto);
+    }
+    return strlen($texto);
+}
+
+function escapar(string $valor): string
+{
+    return htmlspecialchars($valor, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
+}
+
+function textoPost(string $campo): string
+{
+    $valor = $_POST[$campo] ?? "";
+    return is_string($valor) ? trim($valor) : "";
+}
+
+$mensagemTemporaria = $_SESSION["mensagem_temporaria"] ?? "";
+unset($_SESSION["mensagem_temporaria"]);
+
+$formularioEnviado = ($_SERVER["REQUEST_METHOD"] ?? "GET") === "POST";
+$erros = [];
+$assuntosPermitidos = [
+    "duvida" =&gt; "Dúvida",
+    "encomenda" =&gt; "Encomenda",
+    "sugestao" =&gt; "Sugestão"
+];
+
+$nome = textoPost("nome");
+$email = textoPost("email");
+$telefone = textoPost("telefone");
+$assunto = textoPost("assunto");
+$mensagem = textoPost("mensagem");
+
+if ($formularioEnviado) {
+    if (tamanhoTexto($nome) &lt; 2) {
+        $erros["nome"] = "Informe um nome com pelo menos 2 caracteres.";
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erros["email"] = "Informe um endereço de e-mail válido.";
+    }
+    if (!array_key_exists($assunto, $assuntosPermitidos)) {
+        $erros["assunto"] = "Escolha um assunto disponível.";
+    }
+    $tamanhoMensagem = tamanhoTexto($mensagem);
+    if ($tamanhoMensagem &lt; 10 || $tamanhoMensagem &gt; 500) {
+        $erros["mensagem"] =
+            "Escreva uma mensagem entre 10 e 500 caracteres.";
+    }
+
+    if ($erros === []) {
+        $_SESSION["mensagem_temporaria"] =
+            "Mensagem recebida e validada. " .
+            "Nesta demonstração, ela ainda não foi armazenada nem enviada.";
+
+        header("Location: contato.php", true, 303);
+        exit;
+    }
+}
+?&gt;</code></pre>
+          </details>
+        </section>
+
+        <section aria-labelledby="aula-4-4">
+          <h3 id="aula-4-4">Aula 4 — Provando o novo fluxo no navegador</h3>
+
+          <h4>Acompanhe POST, 303 e GET</h4>
+          <ol>
+            <li>Abra Network, ative <strong>Preserve log</strong> ou <strong>Preservar registro</strong> e limpe a lista.</li>
+            <li>Envie uma mensagem válida.</li>
+            <li>Localize a requisição POST com status 303 e confira o cabeçalho <code class="inline-code">Location: contato.php</code>.</li>
+            <li>Localize logo depois a requisição GET com status 200.</li>
+            <li>Atualize a página: deverá surgir outro GET, sem aviso de reenvio e sem repetir a confirmação.</li>
+          </ol>
+
+          <h4>Localize a sessão sem expor seu identificador</h4>
+          <p>No DevTools, abra <strong>Application → Cookies</strong> ou a área equivalente do seu navegador. Na configuração padrão do PHP, você geralmente encontrará um cookie chamado <code class="inline-code">PHPSESSID</code>. Ele identifica a sessão; a frase de confirmação continua no servidor. Não copie o valor para relatórios ou capturas compartilhadas.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Teste</th><th>Resultado esperado</th></tr></thead>
+              <tbody>
+                <tr><td>Abrir o contato diretamente</td><td>GET 200, sem confirmação.</td></tr>
+                <tr><td>Enviar dados inválidos</td><td>POST 200 com erros e valores preservados.</td></tr>
+                <tr><td>Enviar dados válidos</td><td>POST 303, seguido de GET 200 com confirmação.</td></tr>
+                <tr><td>Atualizar depois do sucesso</td><td>Novo GET 200, sem reenvio e sem nova confirmação.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="task-box">
+            <h4>Aplicar: explique com evidências</h4>
+            <p>Execute os quatro testes da tabela e registre método, status e mensagem visível. Depois explique, em três frases, por que a confirmação aparece uma vez mesmo sendo criada durante outra requisição.</p>
+          </div>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-4">
+          <h3 id="check-4">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Reconheço quando a página atual ainda é uma resposta POST.</li>
+            <li>Explico as três etapas do padrão POST–Redirect–GET.</li>
+            <li>Uso 303 para tornar explícita a navegação seguinte por GET.</li>
+            <li>Coloco <code class="inline-code">session_start()</code> e <code class="inline-code">header()</code> antes da saída.</li>
+            <li>Entendo por que <code class="inline-code">exit</code> deve vir depois do redirecionamento.</li>
+            <li>Uso <code class="inline-code">$_SESSION</code> para uma mensagem temporária.</li>
+            <li>Removo a mensagem depois da leitura para que apareça uma única vez.</li>
+            <li>Comprovo o fluxo pelo Network sem divulgar o identificador da sessão.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-4">
+          <h3 id="transferencia-4">Transfira o aprendizado</h3>
+          <p>Uma biblioteca comunitária possui um formulário para reservar um livro. Sem desenvolver outro sistema, desenhe o fluxo POST–Redirect–GET, escreva uma confirmação temporária adequada e explique o que poderia acontecer se uma reserva real fosse processada novamente ao atualizar a resposta POST.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do quarto capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP contém o formulário com sessão, mensagem temporária e padrão POST–Redirect–GET, além das validações anteriores e de todas as imagens WebP. Use-o depois de construir a sua versão.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-4.zip" download>Baixar checkpoint do Capítulo 4 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-4">
+          <h3 id="fontes-4">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://www.php.net/manual/en/function.session-start.php"><code class="inline-code">session_start()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/reserved.variables.session.php"><code class="inline-code">$_SESSION</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/function.header.php"><code class="inline-code">header()</code> — Manual do PHP</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/303">Status 303 See Other — MDN</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>O que o PRG resolve — e o que não resolve</strong>
+          <p>O redirecionamento evita o reenvio comum ao atualizar, mas não grava a mensagem, não impede todos os envios duplicados e não protege sozinho uma operação contra requisições forjadas. Antes de alterar dados reais, o sistema também precisará de proteção CSRF e, depois, de persistência confiável.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-3" data-chapter-link="capitulo-3">← Capítulo 3</a>
           <span aria-disabled="true">Próximo capítulo em preparação</span>
         </div>
       </article>
