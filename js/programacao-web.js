@@ -192,9 +192,9 @@
 
     if (options.resetScroll) {
       if (content && window.innerWidth > 1050) {
-        content.scrollTo({ top: 0, behavior: "auto" });
+        content.scrollTo({ top: 0, behavior: "instant" });
       } else {
-        window.scrollTo({ top: 0, behavior: "auto" });
+        window.scrollTo({ top: 0, behavior: "instant" });
       }
     }
 
