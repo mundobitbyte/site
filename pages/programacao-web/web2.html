@@ -33,6 +33,7 @@
       <a class="chapter-link" href="#capitulo-4" data-chapter-link="capitulo-4">4. Uma confirmação sem reenvio</a>
       <a class="chapter-link" href="#capitulo-5" data-chapter-link="capitulo-5">5. O Café ganha memória permanente</a>
       <a class="chapter-link" href="#capitulo-6" data-chapter-link="capitulo-6">6. A mensagem vira registro</a>
+      <a class="chapter-link" href="#capitulo-7" data-chapter-link="capitulo-7">7. As mensagens chegam à proprietária</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -1953,6 +1954,255 @@ if ($formularioEnviado) {
 
         <div class="chapter-footer">
           <a href="#capitulo-5" data-chapter-link="capitulo-5">← Capítulo 5</a>
+          <a href="#capitulo-7" data-chapter-link="capitulo-7">Capítulo 7 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-7" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 7 — As mensagens chegam à proprietária</h2>
+          <p class="chapter-meta">Autenticação, hash de senha, sessão protegida, SELECT, filtro parametrizado, ordenação, limite e saída segura.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-7">
+          <h3 id="contexto-7">Guardar mensagens só tem valor quando a pessoa certa consegue lê-las</h3>
+          <p>O formulário do <strong>Café Aurora</strong> já registra dúvidas, encomendas e sugestões. Entretanto, abrir o banco manualmente não faz parte da rotina de uma proprietária, e criar uma página pública com nomes, e-mails, telefones e mensagens seria uma falha grave de privacidade.</p>
+          <p>A solução será uma pequena área administrativa. Antes de consultar o banco, o sistema exigirá uma credencial, associará o acesso aprovado à sessão e impedirá que a resposta com dados pessoais seja armazenada pelo navegador. Somente depois disso executará o <code class="inline-code">SELECT</code>.</p>
+          <p>Você construirá a operação de <strong>leitura</strong> do CRUD sem tratar segurança como um botão mágico. A autenticação desta etapa é uma base didática responsável; ao final, seus limites também ficarão explícitos.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-7">
+          <h3 id="objetivos-7">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Distinguir autenticação, autorização e proteção da rota.</li>
+            <li>Gerar um hash de senha e verificar a credencial sem guardar a senha original.</li>
+            <li>Renovar a identificação da sessão depois da entrada.</li>
+            <li>Impedir o acesso direto ao painel sem uma sessão autenticada.</li>
+            <li>Consultar registros com <code class="inline-code">SELECT</code>, <code class="inline-code">ORDER BY</code> e <code class="inline-code">LIMIT</code>.</li>
+            <li>Aplicar um filtro permitido com consulta preparada.</li>
+            <li>Escapar cada dado antes de mostrá-lo no HTML.</li>
+            <li>Encerrar a sessão por uma requisição protegida.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-7">
+          <h3 id="aula-1-7">Aula 1 — Definindo quem pode entrar</h3>
+
+          <h4>Entender: três perguntas diferentes</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Pergunta</th><th>Responsabilidade</th><th>No Café Aurora</th></tr></thead>
+              <tbody>
+                <tr><td>Quem é você?</td><td>Autenticação</td><td>Confere usuário e senha.</td></tr>
+                <tr><td>O que você pode fazer?</td><td>Autorização</td><td>Permite que a pessoa autenticada consulte o painel.</td></tr>
+                <tr><td>Esta página está protegida?</td><td>Controle de acesso</td><td>Interrompe a rota antes da consulta quando não há sessão válida.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Ocultar o link, usar uma pasta chamada <code class="inline-code">admin</code> ou acrescentar <code class="inline-code">noindex</code> não responde a essas perguntas. Qualquer endereço conhecido ainda pode ser solicitado. A verificação precisa acontecer no PHP antes que os dados sejam lidos ou enviados.</p>
+
+          <h4>Não guarde a senha original</h4>
+          <p>Crie <code class="inline-code">src/criar-administrador.php</code> para receber a credencial no terminal. Depois de validar usuário e tamanho mínimo da senha, transforme-a:</p>
+          <pre class="code-block"><code>$configuracao = [
+    "usuario" =&gt; $usuario,
+    "senha_hash" =&gt; password_hash($senha, PASSWORD_DEFAULT)
+];</code></pre>
+          <p><code class="inline-code">password_hash()</code> aplica um algoritmo próprio para senhas e inclui as informações necessárias para a verificação futura. O arquivo gerado ficará em <code class="inline-code">dados/administrador.php</code>, fora da raiz pública e ignorado pelo Git.</p>
+
+          <div class="warning-box">
+            <strong>Hash não é criptografia reversível.</strong>
+            <p>Na entrada, o programa não “descriptografa” a senha. Ele usa <code class="inline-code">password_verify()</code> para verificar se o texto informado corresponde ao hash armazenado. Mesmo assim, o arquivo deve continuar protegido: quem obtém o hash pode tentar adivinhar senhas fora do sistema.</p>
+          </div>
+
+          <h4>Crie sua credencial local</h4>
+          <pre class="code-block"><code>php src/criar-administrador.php</code></pre>
+          <p>Escolha uma senha exclusiva para o exercício, com pelo menos 12 caracteres. Não reutilize a senha de e-mail, rede social ou qualquer serviço real.</p>
+        </section>
+
+        <section aria-labelledby="aula-2-7">
+          <h3 id="aula-2-7">Aula 2 — Transformando a entrada em uma sessão protegida</h3>
+
+          <h4>Configure o cookie antes de iniciar a sessão</h4>
+          <p>Em <code class="inline-code">src/autenticacao.php</code>, concentre as funções de acesso. A sessão deve começar com parâmetros apropriados:</p>
+          <pre class="code-block"><code>session_set_cookie_params([
+    "httponly" =&gt; true,
+    "secure" =&gt; !empty($_SERVER["HTTPS"]),
+    "samesite" =&gt; "Lax"
+]);
+session_start();</code></pre>
+          <ul>
+            <li><code class="inline-code">httponly</code> impede a leitura normal do cookie por JavaScript.</li>
+            <li><code class="inline-code">secure</code> exige HTTPS quando a aplicação está sendo servida por HTTPS.</li>
+            <li><code class="inline-code">samesite</code> reduz o envio do cookie em certos contextos iniciados por outros sites.</li>
+          </ul>
+
+          <h4>Verifique a credencial e renove a sessão</h4>
+          <pre class="code-block"><code>$usuarioCorreto = hash_equals(
+    $administrador["usuario"],
+    trim($usuario)
+);
+$senhaCorreta = password_verify(
+    $senha,
+    $administrador["senha_hash"]
+);
+
+if ($usuarioCorreto &amp;&amp; $senhaCorreta) {
+    session_regenerate_id(true);
+    $_SESSION["administrador_autenticado"] = true;
+    header("Location: painel.php", true, 303);
+    exit;
+}</code></pre>
+          <p><code class="inline-code">session_regenerate_id(true)</code> troca a identificação da sessão depois da autenticação e remove a anterior. A mensagem de erro deve permanecer genérica: “Usuário ou senha inválidos” não revela qual parte estava correta.</p>
+
+          <h4>Proteja a rota antes de consultar</h4>
+          <p>No início de <code class="inline-code">public/admin/painel.php</code>, inicie a sessão e interrompa quem ainda não entrou:</p>
+          <pre class="code-block"><code>iniciarSessaoSegura();
+exigirAutenticacao();
+header("Cache-Control: no-store");</code></pre>
+          <p>O cabeçalho <code class="inline-code">no-store</code> orienta navegadores e intermediários a não armazenar a resposta. Ele não substitui autenticação. Do mesmo modo, <code class="inline-code">noindex</code> orienta buscadores, mas não controla acesso.</p>
+
+          <div class="task-box">
+            <h4>Teste a porta, não apenas a placa</h4>
+            <ol>
+              <li>Abra diretamente <code class="inline-code">/admin/painel.php</code> sem entrar.</li>
+              <li>Confirme o redirecionamento para <code class="inline-code">entrar.php</code>.</li>
+              <li>Entre com uma credencial incorreta e observe a resposta genérica.</li>
+              <li>Entre corretamente e confira, no DevTools, a nova solicitação e o cabeçalho <code class="inline-code">Cache-Control</code>.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-7">
+          <h3 id="aula-3-7">Aula 3 — Lendo os registros com critérios claros</h3>
+
+          <h4>Consulte somente o necessário</h4>
+          <pre class="code-block"><code>$consulta = $pdo-&gt;query(
+    "SELECT id, nome, email, telefone, assunto, mensagem, criada_em
+     FROM mensagens
+     ORDER BY criada_em DESC, id DESC
+     LIMIT 50"
+);
+
+$mensagens = $consulta-&gt;fetchAll();</code></pre>
+          <div class="concept-grid">
+            <div class="mini-card"><strong><code class="inline-code">SELECT</code></strong><p>Escolhe explicitamente as colunas que a página usará.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">ORDER BY</code></strong><p>Coloca primeiro os registros mais recentes e usa o ID como desempate.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">LIMIT 50</code></strong><p>Impede que uma página cresça sem controle nesta primeira versão.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">fetchAll()</code></strong><p>Obtém todas as linhas devolvidas por esta consulta limitada.</p></div>
+          </div>
+
+          <h4>Valide o filtro antes de construir a consulta</h4>
+          <p>O filtro virá da URL, portanto continua sendo dado externo. Aproveite a mesma lista fechada usada no formulário:</p>
+          <pre class="code-block"><code>$assuntosPermitidos = [
+    "" =&gt; "Todos",
+    "duvida" =&gt; "Dúvida",
+    "encomenda" =&gt; "Encomenda",
+    "sugestao" =&gt; "Sugestão"
+];
+
+$assunto = $_GET["assunto"] ?? "";
+$assunto = is_string($assunto) &amp;&amp;
+    array_key_exists($assunto, $assuntosPermitidos)
+        ? $assunto
+        : "";</code></pre>
+          <p>Quando houver assunto, use um marcador para o valor:</p>
+          <pre class="code-block"><code>$consulta = $pdo-&gt;prepare(
+    "SELECT id, nome, email, telefone, assunto, mensagem, criada_em
+     FROM mensagens
+     WHERE assunto = :assunto
+     ORDER BY criada_em DESC, id DESC
+     LIMIT 50"
+);
+$consulta-&gt;execute(["assunto" =&gt; $assunto]);</code></pre>
+
+          <div class="note-box">
+            <strong>Por que existem duas consultas?</strong>
+            <p>Sem filtro, não precisamos inventar uma condição artificial. Com filtro, o valor é enviado separadamente. Em ambos os casos, palavras SQL, colunas, ordenação e limite permanecem definidos pelo programa, não pela URL.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-7">
+          <h3 id="aula-4-7">Aula 4 — Mostrando dados sem transformá-los em código</h3>
+
+          <h4>Escape na fronteira de saída</h4>
+          <p>Crie uma função específica para o painel:</p>
+          <pre class="code-block"><code>function escaparPainel(string $valor): string
+{
+    return htmlspecialchars(
+        $valor,
+        ENT_QUOTES | ENT_SUBSTITUTE,
+        "UTF-8"
+    );
+}</code></pre>
+          <p>Aplique a função a nome, e-mail, telefone, assunto, mensagem e valores usados em atributos HTML. Para preservar quebras de linha da mensagem, escape primeiro e somente depois use <code class="inline-code">nl2br()</code>:</p>
+          <pre class="code-block"><code>&lt;td&gt;
+  &lt;?= nl2br(escaparPainel($registro["mensagem"])) ?&gt;
+&lt;/td&gt;</code></pre>
+          <p>Inverter a ordem faria <code class="inline-code">htmlspecialchars()</code> neutralizar também os elementos <code class="inline-code">&lt;br&gt;</code> criados pelo programa.</p>
+
+          <h4>Dê estrutura à tabela</h4>
+          <p>Use <code class="inline-code">caption</code>, cabeçalhos com <code class="inline-code">scope="col"</code> e uma região com rolagem horizontal em telas estreitas. A responsividade não deve ocultar colunas nem misturar o contato de uma pessoa com a mensagem de outra.</p>
+
+          <h4>Encerre a sessão como uma alteração de estado</h4>
+          <p>O botão Sair deve enviar <code class="inline-code">POST</code> com o token CSRF. Depois da conferência, limpe os dados, remova o cookie e destrua a sessão. Um link GET não é adequado para uma ação que muda o estado de autenticação.</p>
+
+          <div class="task-box">
+            <h4>Faça um teste que comprova a proteção de saída</h4>
+            <ol>
+              <li>No formulário público, envie uma mensagem contendo <code class="inline-code">&lt;strong&gt;teste&lt;/strong&gt;</code>.</li>
+              <li>Abra o painel e confirme que as marcas aparecem como texto, não como formatação.</li>
+              <li>Filtre cada assunto e confirme que uma opção inventada na URL não altera a instrução SQL.</li>
+              <li>Saia, use o botão Voltar do navegador e confirme que o painel exige autenticação novamente.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-7">
+          <h3 id="check-7">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Explico por que esconder um endereço não protege seus dados.</li>
+            <li>Não guardo nem reutilizo senhas reais no exercício.</li>
+            <li>Diferencio hash de senha e criptografia reversível.</li>
+            <li>Renovo a identificação da sessão depois da autenticação.</li>
+            <li>Protejo a rota antes de executar o <code class="inline-code">SELECT</code>.</li>
+            <li>Uso ordenação e limite explícitos na leitura.</li>
+            <li>Mantenho valores externos fora da estrutura da instrução SQL.</li>
+            <li>Escapo cada dado no momento de gerar o HTML.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-7">
+          <h3 id="transferencia-7">Transfira o aprendizado</h3>
+          <p>A clínica veterinária precisa consultar pedidos de retorno por tipo de animal. Desenhe a tela protegida, defina as colunas que realmente precisam ser exibidas e escreva uma consulta com filtro parametrizado, ordenação e limite. Depois, identifique quais valores precisam ser escapados antes de aparecer no HTML.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do sétimo capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP contém criação local de credencial, autenticação por sessão, painel protegido, consulta e filtro parametrizados, saída escapada, encerramento seguro e todas as funcionalidades anteriores. Use-o depois de construir a sua versão.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-7.zip" download>Baixar checkpoint do Capítulo 7 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-7">
+          <h3 id="fontes-7">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://www.php.net/manual/en/function.password-hash.php"><code class="inline-code">password_hash()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/function.password-verify.php"><code class="inline-code">password_verify()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/function.session-regenerate-id.php"><code class="inline-code">session_regenerate_id()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/pdostatement.fetchall.php"><code class="inline-code">fetchAll()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.sqlite.org/lang_select.html"><code class="inline-code">SELECT</code> — documentação do SQLite</a></li>
+            <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html">Autenticação — OWASP</a></li>
+            <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html">Gerenciamento de sessão — OWASP</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Uma base didática não é um sistema de identidade completo</strong>
+          <p>O painel já exige credencial, protege a rota e evita exibir dados como HTML, mas ainda não possui limite de tentativas, recuperação de senha, HTTPS obrigatório, perfis de autorização, auditoria, expiração por inatividade ou política de retenção. O próximo capítulo continuará o CRUD e permitirá registrar o andamento de cada atendimento.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-6" data-chapter-link="capitulo-6">← Capítulo 6</a>
           <span aria-disabled="true">Próximo capítulo em preparação</span>
         </div>
       </article>
