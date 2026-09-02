@@ -191,11 +191,10 @@
     document.title = `Web I — Capítulo ${chapterNumber} | Mundo bit Byte`;
 
     if (options.resetScroll) {
-      const behavior = prefersReducedMotion() ? "auto" : "smooth";
       if (content && window.innerWidth > 1050) {
-        content.scrollTo({ top: 0, behavior });
+        content.scrollTo({ top: 0, behavior: "auto" });
       } else {
-        window.scrollTo({ top: 0, behavior });
+        window.scrollTo({ top: 0, behavior: "auto" });
       }
     }
 
