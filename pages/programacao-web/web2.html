@@ -34,6 +34,7 @@
       <a class="chapter-link" href="#capitulo-5" data-chapter-link="capitulo-5">5. O Café ganha memória permanente</a>
       <a class="chapter-link" href="#capitulo-6" data-chapter-link="capitulo-6">6. A mensagem vira registro</a>
       <a class="chapter-link" href="#capitulo-7" data-chapter-link="capitulo-7">7. As mensagens chegam à proprietária</a>
+      <a class="chapter-link" href="#capitulo-8" data-chapter-link="capitulo-8">8. Cada mensagem ganha andamento</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -2203,6 +2204,268 @@ $consulta-&gt;execute(["assunto" =&gt; $assunto]);</code></pre>
 
         <div class="chapter-footer">
           <a href="#capitulo-6" data-chapter-link="capitulo-6">← Capítulo 6</a>
+          <a href="#capitulo-8" data-chapter-link="capitulo-8">Capítulo 8 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-8" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 8 — Cada mensagem ganha andamento</h2>
+          <p class="chapter-meta">Evolução da tabela, estados permitidos, formulário administrativo, UPDATE parametrizado, WHERE, linhas afetadas e PRG.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-8">
+          <h3 id="contexto-8">Ler não basta quando o atendimento precisa continuar</h3>
+          <p>A proprietária do <strong>Café Aurora</strong> já consegue entrar no painel e consultar as mensagens. Depois de alguns dias, surge outro problema: ela não sabe quais contatos acabaram de chegar, quais estão sendo tratados e quais já receberam resposta.</p>
+          <p>Apagar uma mensagem respondida eliminaria o histórico. Deixar tudo misturado faria pedidos importantes se perderem. O sistema precisa representar o andamento do trabalho e permitir que uma única mensagem mude de estado.</p>
+          <p>Neste capítulo, você construirá o <strong>Update</strong> do CRUD. Antes de alterar dados, evoluirá a estrutura do banco sem apagar registros existentes. Depois, cada atualização passará por autenticação, token CSRF, validação, comando preparado e uma cláusula <code class="inline-code">WHERE</code> específica.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-8">
+          <h3 id="objetivos-8">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Distinguir evolução de estrutura e alteração de registros.</li>
+            <li>Adicionar colunas a uma tabela existente sem recriá-la.</li>
+            <li>Definir estados permitidos no PHP e no banco.</li>
+            <li>Enviar ID, estado e token por um formulário administrativo.</li>
+            <li>Validar campos ocultos como qualquer outro dado externo.</li>
+            <li>Executar <code class="inline-code">UPDATE</code> parametrizado com <code class="inline-code">WHERE</code>.</li>
+            <li>Verificar quantas linhas foram afetadas.</li>
+            <li>Aplicar POST–Redirect–GET e preservar o filtro do painel.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-8">
+          <h3 id="aula-1-8">Aula 1 — Preparando o banco para acompanhar o trabalho</h3>
+
+          <h4>Entender: registro e estrutura não são a mesma coisa</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Mudança</th><th>Exemplo</th><th>Comando principal</th></tr></thead>
+              <tbody>
+                <tr><td>Estrutura da tabela</td><td>Acrescentar as colunas <code class="inline-code">status</code> e <code class="inline-code">atualizada_em</code>.</td><td><code class="inline-code">ALTER TABLE</code></td></tr>
+                <tr><td>Conteúdo de um registro</td><td>Mudar a mensagem 12 de “nova” para “em atendimento”.</td><td><code class="inline-code">UPDATE</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>O banco de quem começou no Capítulo 5 já possui a tabela <code class="inline-code">mensagens</code>. Alterar apenas o <code class="inline-code">CREATE TABLE IF NOT EXISTS</code> não modifica essa tabela antiga. Por isso, o inicializador precisa reconhecer quais colunas já existem.</p>
+
+          <h4>Inspecione antes de alterar</h4>
+          <pre class="code-block"><code>$colunas = $pdo-&gt;query(
+    "PRAGMA table_info(mensagens)"
+)-&gt;fetchAll();
+
+$nomesColunas = array_column($colunas, "name");</code></pre>
+          <p><code class="inline-code">PRAGMA table_info</code> devolve informações sobre as colunas. <code class="inline-code">array_column()</code> extrai somente os nomes, permitindo decidir se cada pequena migração ainda é necessária.</p>
+
+          <h4>Adicione somente o que falta</h4>
+          <pre class="code-block"><code>if (!in_array("status", $nomesColunas, true)) {
+    $pdo-&gt;exec(
+        "ALTER TABLE mensagens
+         ADD COLUMN status TEXT NOT NULL DEFAULT 'nova'
+         CHECK (status IN ('nova', 'em_atendimento', 'respondida'))"
+    );
+}
+
+if (!in_array("atualizada_em", $nomesColunas, true)) {
+    $pdo-&gt;exec(
+        "ALTER TABLE mensagens
+         ADD COLUMN atualizada_em TEXT"
+    );
+}</code></pre>
+          <div class="concept-grid">
+            <div class="mini-card"><strong><code class="inline-code">DEFAULT 'nova'</code></strong><p>Dá um estado coerente aos registros antigos e aos novos.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">CHECK</code></strong><p>Impede que o banco aceite um estado fora da lista.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">atualizada_em</code></strong><p>Começa vazia e recebe a data quando o andamento muda.</p></div>
+          </div>
+
+          <div class="note-box">
+            <strong>Esta é uma migração didática e idempotente.</strong>
+            <p>Execute as mudanças dentro de uma transação: se uma delas falhar, faça <code class="inline-code">rollBack()</code>; se todas funcionarem, faça <code class="inline-code">commit()</code>. Repetir o inicializador não deve duplicar colunas nem apagar mensagens. Projetos maiores registram versões de esquema e usam ferramentas próprias de migração, mas a ideia central permanece: transformar uma estrutura conhecida em outra de maneira controlada.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-8">
+          <h3 id="aula-2-8">Aula 2 — Enviando a intenção de mudar uma mensagem</h3>
+
+          <h4>Inclua o estado na leitura</h4>
+          <p>O painel precisa receber as novas colunas para exibir a situação atual:</p>
+          <pre class="code-block"><code>SELECT id, nome, email, telefone, assunto, mensagem,
+       criada_em, status, atualizada_em
+FROM mensagens
+ORDER BY criada_em DESC, id DESC
+LIMIT 50</code></pre>
+
+          <h4>Crie um formulário para cada registro</h4>
+          <pre class="code-block"><code>&lt;form method="post" action="atualizar-status.php"&gt;
+  &lt;input type="hidden" name="csrf_token"
+         value="&lt;?= escaparPainel($csrfToken) ?&gt;"&gt;
+  &lt;input type="hidden" name="id"
+         value="&lt;?= (int) $registro["id"] ?&gt;"&gt;
+
+  &lt;label for="status-&lt;?= (int) $registro["id"] ?&gt;"&gt;
+    Andamento
+  &lt;/label&gt;
+  &lt;select id="status-&lt;?= (int) $registro["id"] ?&gt;"
+          name="status"&gt;
+    &lt;!-- Gere somente as opções permitidas. --&gt;
+  &lt;/select&gt;
+  &lt;button type="submit"&gt;Atualizar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+          <p>O ID identifica a linha que deverá mudar. O token confirma que a solicitação veio da sessão que exibiu o formulário. O estado informa o novo valor. Os três campos podem ser modificados fora da interface, portanto todos precisam ser verificados no servidor.</p>
+
+          <div class="warning-box">
+            <strong><code class="inline-code">hidden</code> significa invisível, não confiável.</strong>
+            <p>O navegador envia campos ocultos como envia qualquer outro campo. Uma pessoa pode alterá-los pelo DevTools ou construir outra requisição. O servidor não deve confiar no ID apenas porque a tela não permite digitá-lo.</p>
+          </div>
+
+          <h4>Preserve o contexto de trabalho</h4>
+          <p>Se a proprietária estiver vendo apenas encomendas, a atualização não deve devolvê-la à lista completa sem necessidade. Envie também <code class="inline-code">assunto_retorno</code>, valide-o pela lista fechada e use-o somente para reconstruir o redirecionamento.</p>
+        </section>
+
+        <section aria-labelledby="aula-3-8">
+          <h3 id="aula-3-8">Aula 3 — Atualizando exatamente uma linha</h3>
+
+          <h4>Comece protegendo a rota</h4>
+          <p>Crie <code class="inline-code">public/admin/atualizar-status.php</code>. Antes de ler os campos, exija autenticação, aceite somente POST e confira o token:</p>
+          <pre class="code-block"><code>iniciarSessaoSegura();
+exigirAutenticacao();
+
+if (($_SERVER["REQUEST_METHOD"] ?? "GET") !== "POST") {
+    header("Allow: POST");
+    http_response_code(405);
+    exit("Método não permitido.");
+}
+
+if (!tokenCsrfValido($_POST["csrf_token"] ?? "")) {
+    http_response_code(403);
+    exit("Não foi possível confirmar a alteração.");
+}</code></pre>
+
+          <h4>Valide identidade e estado</h4>
+          <pre class="code-block"><code>$id = filter_var(
+    $_POST["id"] ?? "",
+    FILTER_VALIDATE_INT,
+    ["options" =&gt; ["min_range" =&gt; 1]]
+);
+
+$statusPermitidos = [
+    "nova",
+    "em_atendimento",
+    "respondida"
+];
+
+$status = $_POST["status"] ?? "";
+$status = is_string($status) ? $status : "";</code></pre>
+          <p>Um inteiro positivo ainda pode apontar para uma linha inexistente; essa diferença será descoberta depois da execução. Já um estado fora da lista deve ser rejeitado antes de chegar ao banco.</p>
+
+          <h4>Separe comando e valores</h4>
+          <pre class="code-block"><code>$comando = $pdo-&gt;prepare(
+    "UPDATE mensagens
+     SET status = :status,
+         atualizada_em = CURRENT_TIMESTAMP
+     WHERE id = :id"
+);
+
+$comando-&gt;execute([
+    "status" =&gt; $status,
+    "id" =&gt; $id
+]);</code></pre>
+          <div class="warning-box">
+            <strong>Sem <code class="inline-code">WHERE</code>, todas as mensagens mudariam.</strong>
+            <p>O marcador protege os valores contra interpretação como SQL, mas não corrige uma instrução logicamente perigosa. Segurança também depende de escrever o comando certo. Antes de executar um <code class="inline-code">UPDATE</code> ou <code class="inline-code">DELETE</code>, localize e explique sua condição.</p>
+          </div>
+
+          <h4>Confira o efeito real</h4>
+          <pre class="code-block"><code>if ($comando-&gt;rowCount() === 1) {
+    $_SESSION["aviso_admin"] = [
+        "tipo" =&gt; "sucesso",
+        "texto" =&gt; "Andamento atualizado com sucesso."
+    ];
+} else {
+    $_SESSION["aviso_admin"] = [
+        "tipo" =&gt; "erro",
+        "texto" =&gt; "A mensagem informada não foi encontrada."
+    ];
+}</code></pre>
+          <p>Como <code class="inline-code">id</code> é a chave primária, a condição pode localizar no máximo uma linha. A aplicação espera modificar exatamente uma. Zero indica que o ID não encontrou um registro; qualquer resultado diferente do esperado não deve ser tratado como sucesso.</p>
+        </section>
+
+        <section aria-labelledby="aula-4-8">
+          <h3 id="aula-4-8">Aula 4 — Confirmando sem repetir a alteração</h3>
+
+          <h4>Use uma mensagem temporária e redirecione</h4>
+          <p>Depois do processamento, preserve o filtro permitido e transforme o POST em um novo GET:</p>
+          <pre class="code-block"><code>$destino = "painel.php";
+
+if ($assuntoRetorno !== "") {
+    $destino .= "?assunto=" . rawurlencode($assuntoRetorno);
+}
+
+header("Location: " . $destino, true, 303);
+exit;</code></pre>
+          <p>O painel lê <code class="inline-code">$_SESSION["aviso_admin"]</code>, remove a mensagem da sessão e a mostra uma única vez. Atualizar a página repete apenas o GET do painel, não o <code class="inline-code">UPDATE</code>.</p>
+
+          <h4>Teste o caminho feliz e as recusas</h4>
+          <div class="task-box">
+            <ol>
+              <li>Execute novamente <code class="inline-code">php src/inicializar-banco.php</code> e confirme que os registros continuam no banco.</li>
+              <li>Mude uma mensagem de “Nova” para “Em atendimento” e depois para “Respondida”.</li>
+              <li>Recarregue o painel e confirme que o estado permanece.</li>
+              <li>Altere o ID para zero no DevTools: nenhuma outra linha deve mudar.</li>
+              <li>Crie uma opção de estado inventada: o PHP deve recusá-la.</li>
+              <li>Remova o token: a resposta deve ser 403.</li>
+              <li>Abra o endereço de atualização por GET: a resposta deve ser 405.</li>
+              <li>Filtre por encomenda, atualize uma linha e confirme que o filtro permanece ativo.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-8">
+          <h3 id="check-8">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Explico por que alterar o <code class="inline-code">CREATE TABLE</code> não atualiza sozinho uma tabela existente.</li>
+            <li>Faço uma pequena migração sem apagar os registros.</li>
+            <li>Valido campos ocultos no servidor.</li>
+            <li>Recuso método, token, ID e estado inadequados.</li>
+            <li>Uso marcadores tanto para o novo valor quanto para o identificador.</li>
+            <li>Localizo e explico a cláusula <code class="inline-code">WHERE</code>.</li>
+            <li>Confiro a quantidade de linhas afetadas.</li>
+            <li>Evito repetir o <code class="inline-code">UPDATE</code> ao atualizar a página.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-8">
+          <h3 id="transferencia-8">Transfira o aprendizado</h3>
+          <p>A clínica veterinária quer acompanhar pedidos de retorno como “aguardando”, “contato realizado” e “consulta marcada”. Defina a nova coluna, o valor padrão e a restrição do banco. Depois escreva um <code class="inline-code">UPDATE</code> preparado que altere somente o pedido identificado e explique como você comprovaria que nenhuma outra linha mudou.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do oitavo capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP contém migração segura da tabela, estados de atendimento, formulário por registro, rota protegida, <code class="inline-code">UPDATE</code> parametrizado, verificação de linha afetada, PRG e todas as funcionalidades anteriores. Use-o depois de construir a sua versão.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-8.zip" download>Baixar checkpoint do Capítulo 8 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-8">
+          <h3 id="fontes-8">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://www.sqlite.org/lang_altertable.html"><code class="inline-code">ALTER TABLE</code> — documentação do SQLite</a></li>
+            <li><a href="https://www.sqlite.org/pragma.html#pragma_table_info"><code class="inline-code">PRAGMA table_info</code> — documentação do SQLite</a></li>
+            <li><a href="https://www.sqlite.org/lang_update.html"><code class="inline-code">UPDATE</code> — documentação do SQLite</a></li>
+            <li><a href="https://www.php.net/manual/en/function.filter-var.php"><code class="inline-code">filter_var()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/pdostatement.rowcount.php"><code class="inline-code">rowCount()</code> — Manual do PHP</a></li>
+            <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Prevenção de CSRF — OWASP</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Atualizar o estado não define sozinho a política do histórico</strong>
+          <p>O sistema agora cria, lê e atualiza mensagens, mas ainda não decidiu por quanto tempo deve guardar dados pessoais nem como remover um registro sem exclusão acidental. O próximo capítulo concluirá o CRUD com exclusão controlada e uma política simples de retenção.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-7" data-chapter-link="capitulo-7">← Capítulo 7</a>
           <span aria-disabled="true">Próximo capítulo em preparação</span>
         </div>
       </article>
