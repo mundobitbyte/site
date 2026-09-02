@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Web II do Mundo bit Byte: aprenda programação no servidor com PHP enquanto transforma o site do Café Aurora em um sistema Web.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web2.html">
-  <title>Web II — Capítulo 1 | Mundo bit Byte</title>
+  <title>Web II — Sistemas | Mundo bit Byte</title>
   <link href="../../css/programacao-web.css?v=13" rel="stylesheet">
 </head>
 <body class="module-page" data-module-title="Web II">
@@ -29,6 +29,7 @@
       <h2>Capítulos disponíveis</h2>
       <a class="chapter-link" href="#capitulo-1" data-chapter-link="capitulo-1">1. Do site à primeira resposta do servidor</a>
       <a class="chapter-link" href="#capitulo-2" data-chapter-link="capitulo-2">2. A URL conversa com o servidor</a>
+      <a class="chapter-link" href="#capitulo-3" data-chapter-link="capitulo-3">3. O formulário chega ao servidor</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -690,6 +691,325 @@ filtrarProdutos(categoriaInicial);</code></pre>
 
         <div class="chapter-footer">
           <a href="#capitulo-1" data-chapter-link="capitulo-1">← Capítulo 1</a>
+          <a href="#capitulo-3" data-chapter-link="capitulo-3">Capítulo 3 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-3" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 3 — O formulário chega ao servidor</h2>
+          <p class="chapter-meta">Método POST, <code class="inline-code">$_POST</code>, validação no servidor, escape de saída e respostas acessíveis.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-3">
+          <h3 id="contexto-3">A cliente preencheu tudo. O café recebeu alguma coisa?</h3>
+          <p>Uma cliente quer encomendar vinte pães para uma reunião. Ela encontra o formulário do <strong>Café Aurora</strong>, informa nome, e-mail, assunto e mensagem e pressiona “Enviar”. Até agora, o navegador tenta acessar um endereço que não existe. O formulário parece pronto, mas ninguém do café consegue receber nem conferir os dados.</p>
+          <p>A validação do próprio HTML ajuda quem está preenchendo, porém alguém pode alterá-la no DevTools ou enviar uma requisição sem usar a nossa página. O servidor precisa tratar cada valor como informação ainda não confiável, aplicar as regras do negócio e devolver uma resposta clara.</p>
+          <p>Neste capítulo, o PHP receberá e validará a mensagem. Para manter cada aprendizagem visível, ainda não enviaremos e-mail nem gravaremos dados: uma confirmação significará somente que os dados passaram pelas regras desta demonstração.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-3">
+          <h3 id="objetivos-3">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Distinguir GET e POST conforme a intenção da operação.</li>
+            <li>Relacionar <code class="inline-code">method</code>, <code class="inline-code">action</code> e <code class="inline-code">name</code> ao envio do formulário.</li>
+            <li>Detectar uma requisição POST e ler campos com <code class="inline-code">$_POST</code>.</li>
+            <li>Normalizar textos com <code class="inline-code">trim()</code>.</li>
+            <li>Validar presença, tamanho, e-mail e opções permitidas no servidor.</li>
+            <li>Escapar valores apresentados no HTML com <code class="inline-code">htmlspecialchars()</code>.</li>
+            <li>Preservar os dados válidos e mostrar erros associados aos campos.</li>
+            <li>Investigar o envio no painel Network do DevTools.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-3">
+          <h3 id="aula-1-3">Aula 1 — Escolhendo POST pela intenção</h3>
+
+          <h4>Entender: consultar não é o mesmo que entregar uma mensagem</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Situação</th><th>Método</th><th>Onde os dados seguem</th><th>Exemplo</th></tr></thead>
+              <tbody>
+                <tr><td>Consultar sem alterar o sistema</td><td>GET</td><td>Normalmente na URL</td><td>Filtrar o cardápio.</td></tr>
+                <tr><td>Enviar dados para processamento</td><td>POST</td><td>No corpo da requisição</td><td>Entregar uma mensagem de contato.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>POST evita colocar o conteúdo do formulário na URL e expressa que estamos solicitando um processamento. Entretanto, <strong>POST não criptografa dados</strong>. Em produção, HTTPS continua necessário, e o formulário não deve pedir informações que o negócio não precisa.</p>
+
+          <h4>Prepare a página que receberá os dados</h4>
+          <ol>
+            <li>Renomeie <code class="inline-code">public/contato.html</code> para <code class="inline-code">public/contato.php</code>.</li>
+            <li>Atualize em todas as páginas os links que ainda apontam para <code class="inline-code">contato.html</code>.</li>
+            <li>No formulário, troque o destino por <code class="inline-code">action="contato.php"</code> e preserve <code class="inline-code">method="post"</code>.</li>
+          </ol>
+          <pre class="code-block"><code>&lt;form action="contato.php" method="post" aria-describedby="orientacao-formulario"&gt;</code></pre>
+          <p><code class="inline-code">action</code> identifica o recurso que processará os dados. <code class="inline-code">method</code> define como a requisição será feita. Cada controle só ganha um par no envio quando possui <code class="inline-code">name</code>.</p>
+
+          <div class="task-box">
+            <h4>Experimente antes de programar</h4>
+            <p>Envie o formulário e observe Network. Localize o documento <code class="inline-code">contato.php</code>, o método POST e a seção <strong>Payload</strong> ou <strong>Carga útil</strong>. Use dados fictícios. A página ainda não responderá de forma especial, mas o navegador já terá transportado os pares de nome e valor.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-3">
+          <h3 id="aula-2-3">Aula 2 — Recebendo sem confiar</h3>
+          <p>No início de <code class="inline-code">contato.php</code>, descubra se a página foi aberta normalmente ou recebeu um envio:</p>
+          <pre class="code-block"><code>&lt;?php
+$formularioEnviado = ($_SERVER["REQUEST_METHOD"] ?? "GET") === "POST";
+$mensagemAceita = false;
+$erros = [];
+?&gt;</code></pre>
+          <p><code class="inline-code">$_SERVER["REQUEST_METHOD"]</code> informa o método HTTP usado. A comparação estrita produz <code class="inline-code">true</code> apenas para POST. As outras variáveis guardarão o resultado da validação.</p>
+
+          <h4>Leia e normalize os campos</h4>
+          <p>Como cada controle deve produzir um único texto, crie uma função que também recuse formatos inesperados:</p>
+          <pre class="code-block"><code>function textoPost(string $campo): string
+{
+    $valor = $_POST[$campo] ?? "";
+    return is_string($valor) ? trim($valor) : "";
+}
+
+$nome = textoPost("nome");
+$email = textoPost("email");
+$telefone = textoPost("telefone");
+$assunto = textoPost("assunto");
+$mensagem = textoPost("mensagem");</code></pre>
+          <ul>
+            <li><code class="inline-code">$_POST</code> reúne os pares enviados por este formulário POST.</li>
+            <li><code class="inline-code">?? ""</code> fornece texto vazio quando um campo não chegou.</li>
+            <li><code class="inline-code">is_string()</code> confirma que chegou um único texto, como o formulário espera.</li>
+            <li><code class="inline-code">trim()</code> remove espaços do início e do fim; não corrige nem valida o conteúdo.</li>
+          </ul>
+
+          <div class="concept-box">
+            <strong>O navegador ajuda; o servidor decide.</strong>
+            <p><code class="inline-code">required</code>, <code class="inline-code">type="email"</code> e limites de tamanho oferecem retorno imediato, mas não são uma barreira de segurança. As mesmas regras relevantes precisam existir no PHP.</p>
+          </div>
+
+          <h4>Experimento no Elements</h4>
+          <ol>
+            <li>Inspecione o campo de mensagem.</li>
+            <li>Apague temporariamente <code class="inline-code">required</code> e <code class="inline-code">minlength="10"</code> no painel Elements.</li>
+            <li>Tente enviar uma mensagem vazia.</li>
+            <li>Recarregue a página e confirme que os atributos voltaram: a alteração no DevTools não modificou o arquivo.</li>
+          </ol>
+          <p>Esse teste demonstra por que o servidor não pode depender somente das restrições do HTML.</p>
+        </section>
+
+        <section aria-labelledby="aula-3-3">
+          <h3 id="aula-3-3">Aula 3 — Aplicando regras claras</h3>
+          <p>O café aceita três assuntos e precisa de informações suficientes para responder. Defina as opções no PHP e valide apenas quando houver envio:</p>
+          <pre class="code-block"><code>$assuntosPermitidos = [
+    "duvida" =&gt; "Dúvida",
+    "encomenda" =&gt; "Encomenda",
+    "sugestao" =&gt; "Sugestão"
+];
+
+if ($formularioEnviado) {
+    if (tamanhoTexto($nome) &lt; 2) {
+        $erros["nome"] = "Informe um nome com pelo menos 2 caracteres.";
+    }
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erros["email"] = "Informe um endereço de e-mail válido.";
+    }
+
+    if (!array_key_exists($assunto, $assuntosPermitidos)) {
+        $erros["assunto"] = "Escolha um assunto disponível.";
+    }
+
+    $tamanhoMensagem = tamanhoTexto($mensagem);
+    if ($tamanhoMensagem &lt; 10 || $tamanhoMensagem &gt; 500) {
+        $erros["mensagem"] = "Escreva uma mensagem entre 10 e 500 caracteres.";
+    }
+
+    if ($erros === []) {
+        $mensagemAceita = true;
+    }
+}</code></pre>
+          <ul>
+            <li>O array associativo liga o valor técnico ao rótulo apresentado.</li>
+            <li><code class="inline-code">array_key_exists()</code> impede assuntos inventados fora do formulário.</li>
+            <li><code class="inline-code">filter_var()</code> verifica o formato do e-mail; não confirma que a caixa postal existe.</li>
+            <li>O telefone é opcional e ainda não tem uma regra de negócio que justifique rejeitá-lo.</li>
+          </ul>
+
+          <h4>Conte caracteres sem depender de uma única instalação</h4>
+          <p>Antes da validação, crie uma função pequena. Quando a extensão <code class="inline-code">mbstring</code> está disponível, ela conta caracteres multibyte corretamente; o retorno alternativo evita interromper o exercício em uma instalação sem essa extensão.</p>
+          <pre class="code-block"><code>function tamanhoTexto(string $texto): int
+{
+    if (function_exists("mb_strlen")) {
+        return mb_strlen($texto);
+    }
+
+    return strlen($texto);
+}</code></pre>
+
+          <div class="note-box">
+            <strong>Validar não é “limpar até aceitar”.</strong>
+            <p>Uma regra deve dizer claramente se o valor serve para aquela finalidade. Alterar silenciosamente o que a pessoa escreveu pode mudar seu significado. Quando houver erro, preserve o valor seguro para exibição e peça uma correção.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-3">
+          <h3 id="aula-4-3">Aula 4 — Respondendo com segurança e clareza</h3>
+
+          <h4>Escape no momento de escrever no HTML</h4>
+          <p>Um nome pode conter caracteres que o navegador interpretaria como marcação. Crie esta função antes do HTML:</p>
+          <pre class="code-block"><code>function escapar(string $valor): string
+{
+    return htmlspecialchars(
+        $valor,
+        ENT_QUOTES | ENT_SUBSTITUTE,
+        "UTF-8"
+    );
+}</code></pre>
+          <p>Validação responde “este dado atende à regra?”. Escape responde “como mostrar este texto com segurança neste HTML?”. São etapas complementares, não substitutas.</p>
+
+          <h4>Mostre um resumo que também ajuda a corrigir</h4>
+          <pre class="code-block"><code>&lt;?php if ($mensagemAceita): ?&gt;
+  &lt;div class="mensagem-sucesso" role="status"&gt;
+    &lt;strong&gt;Mensagem recebida e validada.&lt;/strong&gt;
+    &lt;p&gt;Nesta demonstração, ela ainda não foi armazenada nem enviada.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;?php elseif ($formularioEnviado): ?&gt;
+  &lt;div class="resumo-erros" role="alert"&gt;
+    &lt;strong&gt;Revise os campos indicados:&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;?php foreach ($erros as $campo =&gt; $erro): ?&gt;
+        &lt;li&gt;&lt;a href="#&lt;?= escapar($campo) ?&gt;"&gt;&lt;?= escapar($erro) ?&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;?php endforeach; ?&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;?php endif; ?&gt;</code></pre>
+
+          <h4>Preserve um valor para a pessoa não recomeçar</h4>
+          <pre class="code-block"><code>&lt;input
+  type="text"
+  id="nome"
+  name="nome"
+  value="&lt;?= escapar($nome) ?&gt;"
+  minlength="2"
+  required
+&gt;</code></pre>
+          <p>Aplique o mesmo princípio ao e-mail, telefone e mensagem. No <code class="inline-code">select</code>, use uma comparação estrita para devolver <code class="inline-code">selected</code> à opção recebida. O checkpoint contém a página completa.</p>
+
+          <details class="code-disclosure">
+            <summary>Código completo para conferência — processamento PHP</summary>
+            <pre class="code-block"><code>&lt;?php
+function tamanhoTexto(string $texto): int
+{
+    if (function_exists("mb_strlen")) {
+        return mb_strlen($texto);
+    }
+
+    return strlen($texto);
+}
+
+function escapar(string $valor): string
+{
+    return htmlspecialchars($valor, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
+}
+
+function textoPost(string $campo): string
+{
+    $valor = $_POST[$campo] ?? "";
+    return is_string($valor) ? trim($valor) : "";
+}
+
+$formularioEnviado = ($_SERVER["REQUEST_METHOD"] ?? "GET") === "POST";
+$mensagemAceita = false;
+$erros = [];
+$assuntosPermitidos = [
+    "duvida" =&gt; "Dúvida",
+    "encomenda" =&gt; "Encomenda",
+    "sugestao" =&gt; "Sugestão"
+];
+
+$nome = textoPost("nome");
+$email = textoPost("email");
+$telefone = textoPost("telefone");
+$assunto = textoPost("assunto");
+$mensagem = textoPost("mensagem");
+
+if ($formularioEnviado) {
+    if (tamanhoTexto($nome) &lt; 2) {
+        $erros["nome"] = "Informe um nome com pelo menos 2 caracteres.";
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erros["email"] = "Informe um endereço de e-mail válido.";
+    }
+    if (!array_key_exists($assunto, $assuntosPermitidos)) {
+        $erros["assunto"] = "Escolha um assunto disponível.";
+    }
+    $tamanhoMensagem = tamanhoTexto($mensagem);
+    if ($tamanhoMensagem &lt; 10 || $tamanhoMensagem &gt; 500) {
+        $erros["mensagem"] = "Escreva uma mensagem entre 10 e 500 caracteres.";
+    }
+
+    $mensagemAceita = $erros === [];
+}</code></pre>
+          </details>
+
+          <h4>Investigue a resposta no Network</h4>
+          <ol>
+            <li>Envie dados válidos e abra a requisição <code class="inline-code">contato.php</code>.</li>
+            <li>Confirme método POST, status 200 e os campos em Payload.</li>
+            <li>Repita com um e-mail inválido usando a alteração temporária no Elements.</li>
+            <li>Compare a resposta HTML e confirme que o PHP rejeitou o dado mesmo sem a proteção do navegador.</li>
+          </ol>
+
+          <div class="task-box">
+            <h4>Aplicar: teste como desenvolvedor e como cliente</h4>
+            <p>Crie uma tabela com pelo menos cinco casos: envio vazio, nome curto, e-mail inválido, assunto inventado e preenchimento válido. Antes de executar, escreva o resultado esperado. Depois compare com a mensagem apresentada e corrija qualquer regra ambígua.</p>
+          </div>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-3">
+          <h3 id="check-3">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Escolho POST para entregar dados a um processamento e sei que ele não substitui HTTPS.</li>
+            <li>Explico o papel de <code class="inline-code">method</code>, <code class="inline-code">action</code> e <code class="inline-code">name</code>.</li>
+            <li>Detecto o método da requisição e leio valores de <code class="inline-code">$_POST</code>.</li>
+            <li>Repito no servidor as regras importantes do formulário.</li>
+            <li>Distingo normalização, validação e escape de saída.</li>
+            <li>Uso lista permitida para valores fechados e <code class="inline-code">filter_var()</code> para o formato do e-mail.</li>
+            <li>Apresento erros claros sem obrigar a pessoa a preencher tudo novamente.</li>
+            <li>Localizo carga útil e resposta no Network.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-3">
+          <h3 id="transferencia-3">Transfira o aprendizado</h3>
+          <p>Uma oficina de bicicletas quer receber pedidos de agendamento com nome, e-mail, tipo de serviço e descrição do problema. Sem construir outro projeto, defina quais campos são obrigatórios, uma lista de serviços permitidos e quatro testes de validação. Explique também qual informação pessoal você decidiria <strong>não</strong> pedir nessa primeira conversa.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do terceiro capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP contém <code class="inline-code">contato.php</code> completo, validação no servidor, respostas acessíveis, preservação dos campos e todas as imagens WebP. Use-o depois de construir a sua versão.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-3.zip" download>Baixar checkpoint do Capítulo 3 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-3">
+          <h3 id="fontes-3">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://www.php.net/manual/en/reserved.variables.post.php"><code class="inline-code">$_POST</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/function.filter-var.php"><code class="inline-code">filter_var()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/function.htmlspecialchars.php"><code class="inline-code">htmlspecialchars()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/tutorial.forms.php">Formulários — Manual do PHP</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/POST">Método POST — MDN</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Uma confirmação honesta</strong>
+          <p>Neste capítulo, “recebida” significa que a requisição chegou ao PHP e passou pela validação. A mensagem ainda desaparece ao terminar a resposta. O próximo passo será manter informações entre requisições e evitar reenvios acidentais antes de introduzir persistência permanente.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-2" data-chapter-link="capitulo-2">← Capítulo 2</a>
           <span aria-disabled="true">Próximo capítulo em preparação</span>
         </div>
       </article>
