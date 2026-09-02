@@ -186,6 +186,65 @@
       result.hidden = false;
       updateOrder();
     });
+
+    document.querySelectorAll("[data-js-demo-fetch]").forEach((demo) => {
+      const loadButton = demo.querySelector("[data-demo-fetch-load]");
+      const status = demo.querySelector("[data-demo-fetch-status]");
+      const productsArea = demo.querySelector("[data-demo-fetch-products]");
+
+      if (!loadButton || !status || !productsArea) return;
+
+      function createProductCard(product) {
+        const card = document.createElement("article");
+        const image = document.createElement("img");
+        const title = document.createElement("h5");
+        const description = document.createElement("p");
+        const price = document.createElement("strong");
+
+        image.src = `../../img/programacao-web/${product.imagem}`;
+        image.alt = product.alt;
+        image.width = 1536;
+        image.height = 1024;
+        image.loading = "lazy";
+        title.textContent = product.nome;
+        description.textContent = `${product.descricao} `;
+        price.textContent = product.preco.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL"
+        });
+
+        description.append(price);
+        card.append(image, title, description);
+        return card;
+      }
+
+      loadButton.addEventListener("click", async () => {
+        loadButton.disabled = true;
+        status.textContent = "Carregando produtos...";
+
+        try {
+          const response = await fetch("../../downloads/programacao-web/produtos-cafe-aurora.json");
+          if (!response.ok) throw new Error(`Falha HTTP: ${response.status}`);
+
+          const products = await response.json();
+          if (!Array.isArray(products) || products.length === 0) {
+            throw new TypeError("A resposta não contém uma lista válida.");
+          }
+
+          const fragment = document.createDocumentFragment();
+          products.forEach((product) => fragment.append(createProductCard(product)));
+          productsArea.replaceChildren(fragment);
+          productsArea.hidden = false;
+          status.textContent = `Carregamento concluído: ${products.length} produtos.`;
+          loadButton.textContent = "Carregar novamente";
+        } catch (error) {
+          console.error("Falha na demonstração de Fetch:", error);
+          status.textContent = "Não foi possível carregar os dados. Tente novamente.";
+        } finally {
+          loadButton.disabled = false;
+        }
+      });
+    });
   }
 
   function chapterFromHash() {

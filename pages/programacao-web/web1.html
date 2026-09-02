@@ -6,7 +6,7 @@
   <meta name="description" content="Web I do Mundo bit Byte: aprenda HTML, acessibilidade, CSS responsivo e JavaScript enquanto constrói o site completo de um pequeno negócio local.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
   <title>Web I — Capítulo 1 | Mundo bit Byte</title>
-  <link href="../../css/programacao-web.css?v=10" rel="stylesheet">
+  <link href="../../css/programacao-web.css?v=11" rel="stylesheet">
 </head>
 <body class="module-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -35,6 +35,7 @@
       <a class="chapter-link" href="#capitulo-6" data-chapter-link="capitulo-6">6. Layout responsivo</a>
       <a class="chapter-link" href="#capitulo-7" data-chapter-link="capitulo-7">7. JavaScript: comportamento e interação</a>
       <a class="chapter-link" href="#capitulo-8" data-chapter-link="capitulo-8">8. Arrays, objetos e repetições</a>
+      <a class="chapter-link" href="#capitulo-9" data-chapter-link="capitulo-9">9. Fetch e JSON</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -2920,12 +2921,413 @@ if (pedido &amp;&amp; itensPedido.length &amp;&amp; resumoPedido &amp;&amp; limp
 
         <div class="chapter-footer">
           <a href="#capitulo-7" data-chapter-link="capitulo-7">← Capítulo 7</a>
+          <a href="#capitulo-9" data-chapter-link="capitulo-9">Capítulo 9 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-9" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 9 — Fetch e JSON</h2>
+          <p class="chapter-meta">Dados externos, requisições HTTP, código assíncrono, estados da interface e atualização segura do cardápio.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-9">
+          <h3 id="contexto-9">O cardápio muda sem exigir alterações no script</h3>
+          <p>Os produtos do <strong>Café Aurora</strong> já estão organizados em um array de objetos. Porém, nomes, preços e descrições continuam dentro de <code class="inline-code">script.js</code>. Cada mudança mistura conteúdo com comportamento.</p>
+          <p>Vamos transferir esses dados para <code class="inline-code">dados/produtos.json</code> e carregá-los com <code class="inline-code">fetch()</code>. O JavaScript passa a buscar, verificar e apresentar informações; se a busca falhar, o cardápio básico que já existe no HTML permanece disponível.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-9">
+          <h3 id="objetivos-9">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Explicar o que é JSON e reconhecer suas regras básicas.</li>
+            <li>Criar e validar o arquivo <code class="inline-code">produtos.json</code>.</li>
+            <li>Entender requisição, resposta, método GET e códigos 200 e 404.</li>
+            <li>Usar <code class="inline-code">fetch()</code>, <code class="inline-code">async</code> e <code class="inline-code">await</code>.</li>
+            <li>Verificar <code class="inline-code">response.ok</code> antes de ler os dados.</li>
+            <li>Tratar falhas com <code class="inline-code">try...catch</code>.</li>
+            <li>Representar carregamento, sucesso e erro de forma compreensível.</li>
+            <li>Inspecionar a requisição no painel Network.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-9">
+          <h3 id="aula-1-9">Aula 1 — Separando os dados com JSON</h3>
+          <p><strong>JSON</strong> é um formato textual usado para representar dados estruturados. Ele se parece com objetos e arrays de JavaScript, mas possui regras próprias e não executa comandos.</p>
+
+          <div class="mini-grid">
+            <div class="mini-card"><strong>Chaves entre aspas</strong><p>Propriedades e textos usam aspas duplas.</p></div>
+            <div class="mini-card"><strong>Valores simples</strong><p>Texto, número, booleano, <code class="inline-code">null</code>, objeto ou array.</p></div>
+            <div class="mini-card"><strong>Sem comentários</strong><p>JSON não aceita comentários com <code class="inline-code">//</code> ou <code class="inline-code">/* */</code>.</p></div>
+            <div class="mini-card"><strong>Sem vírgula final</strong><p>O último item não recebe vírgula depois dele.</p></div>
+          </div>
+
+          <p>Crie a pasta <code class="inline-code">dados</code> e o arquivo <code class="inline-code">produtos.json</code>:</p>
+
+          <pre class="code-block"><code>[
+  {
+    "id": "cafe-coado",
+    "nome": "Café coado",
+    "categoria": "bebida",
+    "preco": 8,
+    "imagem": "cafe-coado.webp",
+    "alt": "Xícara de café coado ao lado de uma pequena jarra",
+    "descricao": "Preparado na hora com grãos selecionados."
+  },
+  {
+    "id": "pao-artesanal",
+    "nome": "Pão artesanal",
+    "categoria": "comida",
+    "preco": 12,
+    "imagem": "pao-artesanal.webp",
+    "alt": "Pão artesanal cortado sobre uma mesa de madeira",
+    "descricao": "Fermentação lenta e produção diária."
+  },
+  {
+    "id": "bolo-laranja",
+    "nome": "Bolo de laranja",
+    "categoria": "comida",
+    "preco": 9,
+    "imagem": "bolo-caseiro.webp",
+    "alt": "Bolo caseiro de laranja com uma fatia servida",
+    "descricao": "Receita da casa com laranjas frescas."
+  }
+]</code></pre>
+
+          <p class="resource-links"><a href="../../downloads/programacao-web/produtos-cafe-aurora.json" download="produtos.json">Baixar o arquivo produtos.json do Café Aurora</a>.</p>
+
+          <div class="task-box">
+            <h4>Experimente</h4>
+            <ol>
+              <li>Abra o arquivo no VS Code e confirme que cada produto possui as mesmas propriedades.</li>
+              <li>Acrescente uma vírgula após o último objeto e observe o aviso do editor.</li>
+              <li>Retire a vírgula, salve e use a formatação do documento para conferir a estrutura.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-9">
+          <h3 id="aula-2-9">Aula 2 — Requisição, resposta e código assíncrono</h3>
+          <p><code class="inline-code">fetch()</code> faz uma requisição HTTP e devolve uma <strong>Promise</strong>: um objeto que representa um resultado que chegará depois. Uma função marcada com <code class="inline-code">async</code> pode usar <code class="inline-code">await</code> para aguardar cada etapa sem bloquear toda a página.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Parte</th><th>No projeto</th></tr></thead>
+              <tbody>
+                <tr><td>Requisição</td><td>O navegador pede <code class="inline-code">dados/produtos.json</code>.</td></tr>
+                <tr><td>GET</td><td>Método usado para obter um recurso sem modificá-lo.</td></tr>
+                <tr><td>Resposta</td><td>O servidor devolve status, cabeçalhos e conteúdo.</td></tr>
+                <tr><td>200</td><td>O arquivo foi encontrado e a resposta ocorreu normalmente.</td></tr>
+                <tr><td>404</td><td>O caminho solicitado não foi encontrado.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Faça a primeira busca</h4>
+          <pre class="code-block"><code>async function carregarProdutos() {
+  const resposta = await fetch("dados/produtos.json");
+  const produtos = await resposta.json();
+  console.table(produtos);
+}
+
+carregarProdutos();</code></pre>
+
+          <div class="note-box">
+            <strong>Use um servidor local.</strong>
+            <p>Não abra apenas o arquivo com endereço iniciado por <code class="inline-code">file://</code>. Execute o projeto com Live Preview ou outro servidor local; assim, a requisição acontece por HTTP como ocorrerá no site publicado.</p>
+          </div>
+
+          <h4>Confira no painel Network</h4>
+          <figure class="tool-figure">
+            <img src="../../img/programacao-web/devtools-network.webp" alt="Chrome DevTools com o painel Network aberto e uma lista de requisições com status, tipo, tamanho e tempo" width="1742" height="1520" loading="lazy">
+            <figcaption>Abra Network, recarregue a página e filtre por Fetch/XHR. Procure <code class="inline-code">produtos.json</code> e confira Status, Type, Preview e Response. A aparência pode variar. Fonte: <a href="https://developer.chrome.com/docs/devtools/network/">documentação oficial do Chrome DevTools</a>.</figcaption>
+          </figure>
+
+          <div class="task-box">
+            <h4>Investigue</h4>
+            <p>Troque temporariamente o caminho para <code class="inline-code">dados/produto.json</code>, recarregue e localize o status 404 no painel Network. Depois restaure o nome correto.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-9">
+          <h3 id="aula-3-9">Aula 3 — Verificar e tratar respostas</h3>
+          <p><code class="inline-code">fetch()</code> pode receber uma resposta 404 sem entrar automaticamente no tratamento de erro. Por isso, verifique <code class="inline-code">response.ok</code>, que será verdadeiro para respostas na faixa de sucesso.</p>
+
+          <pre class="code-block"><code>async function carregarProdutos() {
+  try {
+    const resposta = await fetch("dados/produtos.json");
+
+    if (!resposta.ok) {
+      throw new Error(`Falha HTTP: ${resposta.status}`);
+    }
+
+    const produtos = await resposta.json();
+    console.table(produtos);
+  } catch (erro) {
+    console.error("Não foi possível carregar os produtos:", erro);
+  }
+}</code></pre>
+
+          <p><code class="inline-code">try</code> delimita as etapas que podem falhar. <code class="inline-code">throw</code> cria uma falha quando a resposta HTTP não é satisfatória. <code class="inline-code">catch</code> recebe o erro para registro e recuperação da interface.</p>
+
+          <h4>Represente cada estado</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Estado</th><th>Mensagem útil</th><th>O que preservar</th></tr></thead>
+              <tbody>
+                <tr><td>Carregando</td><td>“Atualizando o cardápio...”</td><td>Não apague a versão existente antes da resposta.</td></tr>
+                <tr><td>Sucesso</td><td>“Cardápio atualizado: 3 produtos.”</td><td>Mostre os dados recebidos.</td></tr>
+                <tr><td>Erro</td><td>“Não foi possível atualizar. Exibindo a versão disponível.”</td><td>Mantenha os cards do HTML.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <pre class="code-block"><code>const statusCarregamento = document.querySelector("[data-status-carregamento]");
+
+statusCarregamento.textContent = "Atualizando o cardápio...";
+
+// Depois do sucesso:
+statusCarregamento.textContent = `Cardápio atualizado: ${produtos.length} produtos.`;
+
+// Dentro de catch:
+statusCarregamento.textContent =
+  "Não foi possível atualizar. Exibindo a versão disponível.";</code></pre>
+
+          <div class="concept-box">
+            <strong>Uma mensagem amigável não substitui o diagnóstico.</strong>
+            <p>A pessoa vê uma orientação simples na página; o desenvolvedor consulta o erro técnico no Console e a requisição no Network. Cada público recebe a informação adequada.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-9">
+          <h3 id="aula-4-9">Aula 4 — Atualizando o cardápio com segurança</h3>
+          <p>Criaremos os elementos com métodos do DOM e preencheremos conteúdo com <code class="inline-code">textContent</code>. Assim, os dados são tratados como texto e não como marcação HTML executável.</p>
+
+          <h4>Experimente uma busca real</h4>
+          <section class="fetch-playground" aria-labelledby="fetch-demo-titulo" data-js-demo-fetch>
+            <h4 id="fetch-demo-titulo">Produtos recebidos do JSON</h4>
+            <p>O botão busca o arquivo contextualizado usado nesta aula.</p>
+            <button type="button" data-demo-fetch-load>Carregar produtos do JSON</button>
+            <p class="fetch-status" role="status" data-demo-fetch-status>Pronto para carregar.</p>
+            <div class="fetch-demo-products" data-demo-fetch-products hidden></div>
+          </section>
+
+          <h4>Prepare o HTML</h4>
+          <pre class="code-block"><code>&lt;p data-status-carregamento role="status"&gt;
+  Cardápio disponível.
+&lt;/p&gt;
+
+&lt;div class="grade-produtos" id="lista-produtos"&gt;
+  &lt;!-- Preserve aqui os cards básicos construídos em HTML. --&gt;
+&lt;/div&gt;</code></pre>
+
+          <h4>Crie um card sem usar <code class="inline-code">innerHTML</code></h4>
+          <pre class="code-block"><code>function criarCard(produto) {
+  const card = document.createElement("article");
+  const titulo = document.createElement("h3");
+  const imagem = document.createElement("img");
+  const descricao = document.createElement("p");
+  const preco = document.createElement("strong");
+
+  card.dataset.categoria = produto.categoria;
+  titulo.textContent = produto.nome;
+  imagem.src = `img/${produto.imagem}`;
+  imagem.alt = produto.alt;
+  descricao.textContent = `${produto.descricao} `;
+  preco.textContent = produto.preco.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
+
+  descricao.append(preco);
+  card.append(titulo, imagem, descricao);
+  return card;
+}</code></pre>
+
+          <pre class="code-block"><code>function apresentarProdutos(produtos) {
+  const fragmento = document.createDocumentFragment();
+
+  produtos.forEach(function (produto) {
+    fragmento.append(criarCard(produto));
+  });
+
+  listaProdutos.replaceChildren(fragmento);
+}</code></pre>
+
+          <details class="code-disclosure">
+            <summary>Código completo para conferência — carregamento do cardápio</summary>
+            <pre class="code-block"><code>let produtos = [];
+const listaProdutos = document.querySelector("#lista-produtos");
+const statusCarregamento = document.querySelector("[data-status-carregamento]");
+
+function criarCard(produto) {
+  const card = document.createElement("article");
+  const titulo = document.createElement("h3");
+  const imagem = document.createElement("img");
+  const descricao = document.createElement("p");
+  const preco = document.createElement("strong");
+
+  card.dataset.categoria = produto.categoria;
+  titulo.textContent = produto.nome;
+  imagem.src = `img/${produto.imagem}`;
+  imagem.alt = produto.alt;
+  imagem.width = 960;
+  imagem.height = 640;
+  imagem.loading = "lazy";
+  descricao.textContent = `${produto.descricao} `;
+  preco.textContent = produto.preco.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
+
+  descricao.append(preco);
+  card.append(titulo, imagem, descricao);
+  return card;
+}
+
+function apresentarProdutos(produtos) {
+  const fragmento = document.createDocumentFragment();
+  produtos.forEach(function (produto) {
+    fragmento.append(criarCard(produto));
+  });
+  listaProdutos.replaceChildren(fragmento);
+}
+
+async function carregarProdutos() {
+  if (!listaProdutos || !statusCarregamento) return;
+  statusCarregamento.textContent = "Atualizando o cardápio...";
+
+  try {
+    const resposta = await fetch("dados/produtos.json");
+    if (!resposta.ok) {
+      throw new Error(`Falha HTTP: ${resposta.status}`);
+    }
+
+    const dados = await resposta.json();
+    if (!Array.isArray(dados) || dados.length === 0) {
+      throw new TypeError("A resposta não contém uma lista válida de produtos.");
+    }
+
+    produtos = dados;
+    apresentarProdutos(produtos);
+    statusCarregamento.textContent =
+      `Cardápio atualizado: ${produtos.length} produtos.`;
+  } catch (erro) {
+    console.error("Não foi possível carregar os produtos:", erro);
+    statusCarregamento.textContent =
+      "Não foi possível atualizar. Exibindo a versão disponível.";
+  }
+}
+
+carregarProdutos();</code></pre>
+          </details>
+
+          <h4>Reutilize os dados na simulação de pedido</h4>
+          <p>Substitua o array fixo do capítulo anterior por <code class="inline-code">let produtos = []</code>. Mostre a simulação somente depois do sucesso da busca, quando o cálculo já puder localizar os produtos recebidos:</p>
+
+          <pre class="code-block"><code>produtos = dados;
+apresentarProdutos(produtos);
+
+pedido.hidden = false;
+limparPedido.hidden = false;
+calcularPedido();</code></pre>
+
+          <div class="note-box">
+            <strong>Mova, não duplique.</strong>
+            <p>Retire do bloco antigo as linhas que exibiam a simulação imediatamente. Se a busca falhar, o cardápio HTML continua visível e a simulação que depende dos novos dados permanece oculta.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Teste os três estados</h4>
+            <ol>
+              <li>Use uma limitação de rede no painel Network e observe “Atualizando o cardápio...”.</li>
+              <li>Restaure a conexão e confirme a mensagem de sucesso e os três cards.</li>
+              <li>Bloqueie <code class="inline-code">produtos.json</code> ou erre o caminho e confirme que os cards do HTML permanecem.</li>
+              <li>Verifique Console, Network, teclado e diferentes larguras antes de concluir.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section aria-labelledby="erros-9">
+          <h3 id="erros-9">Erros comuns para revisar</h3>
+          <ul>
+            <li>Usar aspas simples, comentários ou vírgula final dentro do JSON.</li>
+            <li>Abrir a página com <code class="inline-code">file://</code> e esperar que a busca funcione como em um servidor.</li>
+            <li>Esquecer que <code class="inline-code">fetch()</code> e <code class="inline-code">response.json()</code> são assíncronos.</li>
+            <li>Não verificar <code class="inline-code">response.ok</code> antes de ler o corpo.</li>
+            <li>Ocultar o cardápio básico antes de saber se a busca funcionou.</li>
+            <li>Mostrar detalhes técnicos do erro para o visitante.</li>
+            <li>Usar <code class="inline-code">no-cors</code> como tentativa de corrigir uma API que não permite acesso.</li>
+            <li>Inserir dados recebidos diretamente com <code class="inline-code">innerHTML</code>.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="projeto-9">
+          <h3 id="projeto-9">Projeto aplicado — entrega do capítulo</h3>
+          <p>Atualize o Café Aurora com:</p>
+          <ul>
+            <li>pasta <code class="inline-code">dados</code> e arquivo JSON válido;</li>
+            <li>busca por HTTP usando <code class="inline-code">fetch()</code> e <code class="inline-code">await</code>;</li>
+            <li>verificação de <code class="inline-code">response.ok</code>;</li>
+            <li>tratamento de falha com <code class="inline-code">try...catch</code>;</li>
+            <li>mensagens de carregamento, sucesso e erro;</li>
+            <li>cards criados com DOM e <code class="inline-code">textContent</code>;</li>
+            <li>cardápio HTML preservado quando o arquivo não estiver disponível;</li>
+            <li>teste documentado no Console e no painel Network.</li>
+          </ul>
+          <p>Entregue o projeto e três registros: requisição 200, erro 404 provocado durante o teste e página mantendo o conteúdo alternativo.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-9">
+          <h3 id="check-9">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Reconheço a diferença entre objeto JavaScript e texto JSON.</li>
+            <li>Escrevo JSON válido com aspas duplas e sem vírgula final.</li>
+            <li>Entendo requisição, resposta, GET, 200 e 404.</li>
+            <li>Uso <code class="inline-code">async</code> e <code class="inline-code">await</code> em uma busca simples.</li>
+            <li>Verifico a resposta antes de chamar <code class="inline-code">json()</code>.</li>
+            <li>Trato carregamento, sucesso e erro sem apagar o conteúdo disponível.</li>
+            <li>Atualizo o DOM tratando os dados como texto.</li>
+            <li>Localizo e interpreto a requisição no painel Network.</li>
+          </ul>
+        </section>
+
+        <section class="concept-box" aria-labelledby="fontes-9">
+          <h3 id="fontes-9">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">Usando Fetch — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Response/ok">Response.ok — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Response/json">Response.json() — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">Funções async — MDN</a></li>
+            <li><a href="https://developer.chrome.com/docs/devtools/network/">Atividade de rede no DevTools — Chrome for Developers</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Até aqui</strong>
+          <p>O Café Aurora já carrega dados separados do comportamento e se recupera quando a requisição falha. No próximo capítulo, o navegador poderá guardar preferências simples do visitante com Web Storage.</p>
+        </div>
+
+        <section class="task-box" aria-labelledby="transferencia-9">
+          <h3 id="transferencia-9">Transfira o aprendizado</h3>
+          <p>Imagine uma agenda cultural com três eventos. Defina quais propriedades iriam para <code class="inline-code">eventos.json</code>, qual mensagem apareceria durante a busca e o que a página preservaria em caso de erro. Não desenvolva outro projeto completo.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do Capítulo 9">
+          <strong>Checkpoint final para conferência</strong>
+          <p>Use este ZIP para conferir ou recuperar a versão com Fetch e JSON depois de realizar sua própria construção e seus testes.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-capitulo-9.zip" download>Baixar checkpoint do Capítulo 9 (ZIP)</a>
+        </aside>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-8" data-chapter-link="capitulo-8">← Capítulo 8</a>
           <span aria-disabled="true">Próximo capítulo em breve</span>
         </div>
       </article>
     </main>
   </div>
 
-  <script src="../../js/programacao-web.js?v=6"></script>
+  <script src="../../js/programacao-web.js?v=7"></script>
 </body>
 </html>
