@@ -6,7 +6,7 @@
   <meta name="description" content="Web I do Mundo bit Byte: aprenda HTML, acessibilidade, CSS responsivo e JavaScript enquanto constrói o site completo de um pequeno negócio local.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
   <title>Web I — Capítulo 1 | Mundo bit Byte</title>
-  <link href="../../css/programacao-web.css?v=9" rel="stylesheet">
+  <link href="../../css/programacao-web.css?v=10" rel="stylesheet">
 </head>
 <body class="module-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -34,6 +34,7 @@
       <a class="chapter-link" href="#capitulo-5" data-chapter-link="capitulo-5">5. Identidade visual com CSS</a>
       <a class="chapter-link" href="#capitulo-6" data-chapter-link="capitulo-6">6. Layout responsivo</a>
       <a class="chapter-link" href="#capitulo-7" data-chapter-link="capitulo-7">7. JavaScript: comportamento e interação</a>
+      <a class="chapter-link" href="#capitulo-8" data-chapter-link="capitulo-8">8. Arrays, objetos e repetições</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -2557,8 +2558,8 @@ if (mensagem &amp;&amp; contador) {
         </section>
 
         <div class="limit-box">
-          <strong>Web I concluído</strong>
-          <p>O Café Aurora agora reúne HTML semântico, formulário acessível, identidade visual, layout responsivo e uma primeira camada de comportamento com JavaScript. Você construiu um site completo, bonito, responsivo e funcional sem esconder a base que torna cada recurso compreensível.</p>
+          <strong>Até aqui</strong>
+          <p>O Café Aurora agora reúne HTML semântico, formulário acessível, identidade visual, layout responsivo e uma primeira camada de comportamento. No próximo capítulo, os dados do cardápio serão organizados em coleções para evitar repetição e preparar futuras integrações com JSON.</p>
         </div>
 
         <section class="task-box" aria-labelledby="transferencia-7">
@@ -2574,12 +2575,357 @@ if (mensagem &amp;&amp; contador) {
 
         <div class="chapter-footer">
           <a href="#capitulo-6" data-chapter-link="capitulo-6">← Capítulo 6</a>
-          <span aria-disabled="true">Fim do Web I</span>
+          <a href="#capitulo-8" data-chapter-link="capitulo-8">Capítulo 8 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-8" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 8 — Arrays, objetos e repetições</h2>
+          <p class="chapter-meta">Coleções, dados estruturados, laços e uma simulação de pedido do Café Aurora.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-8">
+          <h3 id="contexto-8">Quando três produtos se tornam muitos</h3>
+          <p>O cardápio do <strong>Café Aurora</strong> começou pequeno, mas poderá receber novos cafés, pães e bolos. Criar uma variável e repetir o mesmo código para cada item tornaria a manutenção lenta e sujeita a erros.</p>
+          <p>Vamos guardar produtos relacionados em um <strong>array</strong>, descrever cada produto com um <strong>objeto</strong> e usar repetições para trabalhar com a coleção. Ao final, esses dados alimentarão uma simulação de pedido sem substituir o cardápio disponível no HTML.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-8">
+          <h3 id="objetivos-8">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Criar arrays e acessar itens por posição.</li>
+            <li>Consultar <code class="inline-code">length</code> e acrescentar um item com <code class="inline-code">push()</code>.</li>
+            <li>Representar um produto com propriedades de um objeto.</li>
+            <li>Percorrer uma coleção com <code class="inline-code">for...of</code> e <code class="inline-code">forEach()</code>.</li>
+            <li>Usar <code class="inline-code">filter()</code> e <code class="inline-code">find()</code> em necessidades simples.</li>
+            <li>Calcular a quantidade e o total de uma seleção.</li>
+            <li>Inspecionar coleções com <code class="inline-code">console.table()</code>.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-8">
+          <h3 id="aula-1-8">Aula 1 — Arrays: vários valores em uma coleção</h3>
+          <p>Um array guarda uma sequência de valores em uma única variável. Os colchetes delimitam a coleção e as vírgulas separam seus itens:</p>
+
+          <pre class="code-block"><code>const nomesDosProdutos = [
+  "Café coado",
+  "Pão artesanal",
+  "Bolo de laranja"
+];</code></pre>
+
+          <p>As posições começam em zero. Portanto, <code class="inline-code">nomesDosProdutos[0]</code> contém o primeiro nome e <code class="inline-code">nomesDosProdutos[2]</code> contém o terceiro.</p>
+
+          <pre class="code-block"><code>console.log(nomesDosProdutos[0]); // Café coado
+console.log(nomesDosProdutos.length); // 3
+
+nomesDosProdutos.push("Capuccino");
+console.log(nomesDosProdutos.length); // 4</code></pre>
+
+          <div class="concept-box">
+            <strong><code class="inline-code">const</code> protege a referência, não congela o array.</strong>
+            <p>Não podemos atribuir outro array à mesma variável, mas métodos como <code class="inline-code">push()</code> ainda podem modificar seu conteúdo. Use essa possibilidade de forma consciente.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Experimente</h4>
+            <p>Acrescente uma bebida, mostre o último item usando <code class="inline-code">nomesDosProdutos[nomesDosProdutos.length - 1]</code> e explique por que é necessário subtrair um.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-8">
+          <h3 id="aula-2-8">Aula 2 — Objetos: dados que pertencem ao mesmo produto</h3>
+          <p>Um nome isolado não informa categoria nem preço. Um objeto reúne dados relacionados em pares formados por propriedade e valor:</p>
+
+          <pre class="code-block"><code>const cafeCoado = {
+  id: "cafe-coado",
+  nome: "Café coado",
+  categoria: "bebida",
+  preco: 8,
+  disponivel: true
+};</code></pre>
+
+          <p>A notação de ponto acessa uma propriedade conhecida. A notação de colchetes é útil quando o nome da propriedade vem de uma variável.</p>
+
+          <pre class="code-block"><code>console.log(cafeCoado.nome); // Café coado
+console.log(cafeCoado.preco); // 8
+
+const propriedade = "categoria";
+console.log(cafeCoado[propriedade]); // bebida</code></pre>
+
+          <h4>Combine array e objetos</h4>
+          <pre class="code-block"><code>const produtos = [
+  { id: "cafe-coado", nome: "Café coado", categoria: "bebida", preco: 8 },
+  { id: "pao-artesanal", nome: "Pão artesanal", categoria: "comida", preco: 12 },
+  { id: "bolo-laranja", nome: "Bolo de laranja", categoria: "comida", preco: 9 }
+];
+
+console.table(produtos);</code></pre>
+
+          <p><code class="inline-code">console.table()</code> apresenta o array de objetos em linhas e colunas no Console. É uma ferramenta de inspeção; não altera a página.</p>
+
+          <div class="task-box">
+            <h4>Pratique</h4>
+            <p>Acrescente o objeto do capuccino com ID único, categoria <code class="inline-code">bebida</code> e preço numérico. Confira no Console se todas as propriedades aparecem na mesma coluna.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-8">
+          <h3 id="aula-3-8">Aula 3 — Repetir, filtrar e localizar</h3>
+          <p>Quando a mesma ação deve alcançar todos os itens, uma repetição evita copiar e colar comandos. <code class="inline-code">for...of</code> deixa explícito que cada produto da coleção será visitado:</p>
+
+          <pre class="code-block"><code>for (const produto of produtos) {
+  console.log(`${produto.nome}: R$ ${produto.preco}`);
+}</code></pre>
+
+          <p>O método <code class="inline-code">forEach()</code> também executa uma função para cada item. Ele já apareceu no filtro do capítulo anterior:</p>
+
+          <pre class="code-block"><code>produtos.forEach(function (produto) {
+  console.log(produto.nome);
+});</code></pre>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Recurso</th><th>Resultado</th><th>Uso no Café Aurora</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">for...of</code></td><td>Visita os itens em sequência.</td><td>Somar preços selecionados.</td></tr>
+                <tr><td><code class="inline-code">forEach()</code></td><td>Executa uma função para cada item.</td><td>Associar eventos aos controles.</td></tr>
+                <tr><td><code class="inline-code">filter()</code></td><td>Cria um novo array com os itens aprovados pelo teste.</td><td>Separar somente as bebidas.</td></tr>
+                <tr><td><code class="inline-code">find()</code></td><td>Devolve o primeiro item encontrado ou <code class="inline-code">undefined</code>.</td><td>Localizar um produto pelo ID.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <pre class="code-block"><code>const bebidas = produtos.filter(function (produto) {
+  return produto.categoria === "bebida";
+});
+
+const produtoEscolhido = produtos.find(function (produto) {
+  return produto.id === "pao-artesanal";
+});
+
+console.log(bebidas);
+console.log(produtoEscolhido);</code></pre>
+
+          <div class="note-box">
+            <strong>Não confunda resultado com alteração.</strong>
+            <p><code class="inline-code">filter()</code> cria outro array; ele não remove itens de <code class="inline-code">produtos</code>. Já <code class="inline-code">find()</code> devolve um único item e deve ser verificado antes do uso.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-8">
+          <h3 id="aula-4-8">Aula 4 — Aplicação: simulação de pedido</h3>
+          <p>Agora a coleção será usada para localizar cada item marcado e somar os preços. Esta é uma simulação local: ela não envia nem reserva um pedido.</p>
+
+          <section class="order-playground" aria-labelledby="pedido-demo-titulo" data-js-demo-order>
+            <h4 id="pedido-demo-titulo">Monte um pedido de teste</h4>
+            <p>Marque produtos para calcular o total. Nenhum pedido será enviado.</p>
+            <fieldset class="order-options" data-demo-order-controls hidden>
+              <legend>Produtos</legend>
+              <label><img src="../../img/programacao-web/cafe-coado.webp" alt="" width="1536" height="1024" loading="lazy"><span><input type="checkbox" value="cafe-coado" data-name="Café coado" data-price="8"> Café coado — R$ 8,00</span></label>
+              <label><img src="../../img/programacao-web/pao-artesanal.webp" alt="" width="1536" height="1024" loading="lazy"><span><input type="checkbox" value="pao-artesanal" data-name="Pão artesanal" data-price="12"> Pão artesanal — R$ 12,00</span></label>
+              <label><img src="../../img/programacao-web/bolo-caseiro.webp" alt="" width="1536" height="1024" loading="lazy"><span><input type="checkbox" value="bolo-laranja" data-name="Bolo de laranja" data-price="9"> Bolo de laranja — R$ 9,00</span></label>
+            </fieldset>
+            <div class="order-result" data-demo-order-result hidden>
+              <p role="status" data-demo-order-status>Nenhum produto selecionado.</p>
+              <button type="button" data-demo-order-clear>Limpar seleção</button>
+            </div>
+          </section>
+          <p class="resource-links">Imagens usadas no experimento: <a href="../../img/programacao-web/cafe-coado.webp" download="cafe-coado.webp">café coado</a> · <a href="../../img/programacao-web/pao-artesanal.webp" download="pao-artesanal.webp">pão artesanal</a> · <a href="../../img/programacao-web/bolo-caseiro.webp" download="bolo-caseiro.webp">bolo de laranja</a>.</p>
+
+          <h4>Prepare a estrutura</h4>
+          <pre class="code-block"><code>&lt;fieldset data-pedido hidden&gt;
+  &lt;legend&gt;Simulação de pedido&lt;/legend&gt;
+  &lt;label&gt;&lt;input type="checkbox" value="cafe-coado" data-item-pedido&gt;
+    Café coado — R$ 8,00&lt;/label&gt;
+  &lt;label&gt;&lt;input type="checkbox" value="pao-artesanal" data-item-pedido&gt;
+    Pão artesanal — R$ 12,00&lt;/label&gt;
+  &lt;label&gt;&lt;input type="checkbox" value="bolo-laranja" data-item-pedido&gt;
+    Bolo de laranja — R$ 9,00&lt;/label&gt;
+&lt;/fieldset&gt;
+&lt;p data-resumo-pedido role="status"&gt;&lt;/p&gt;
+&lt;button type="button" data-limpar-pedido hidden&gt;Limpar seleção&lt;/button&gt;</code></pre>
+
+          <h4>Calcule por etapas</h4>
+          <pre class="code-block"><code>function calcularPedido() {
+  let quantidade = 0;
+  let total = 0;
+
+  for (const item of itensPedido) {
+    if (!item.checked) continue;
+
+    const produto = produtos.find(function (produto) {
+      return produto.id === item.value;
+    });
+
+    if (!produto) continue;
+    quantidade += 1;
+    total += produto.preco;
+  }
+
+  const rotulo = quantidade === 1 ? "item" : "itens";
+  resumoPedido.textContent = quantidade === 0
+    ? "Nenhum produto selecionado."
+    : `${quantidade} ${rotulo} — ${formatarPreco(total)}`;
+}</code></pre>
+
+          <pre class="code-block"><code>function formatarPreco(valor) {
+  return valor.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
+}</code></pre>
+
+          <details class="code-disclosure">
+            <summary>Código completo para conferência — simulação de pedido</summary>
+            <pre class="code-block"><code>const produtos = [
+  { id: "cafe-coado", nome: "Café coado", categoria: "bebida", preco: 8 },
+  { id: "pao-artesanal", nome: "Pão artesanal", categoria: "comida", preco: 12 },
+  { id: "bolo-laranja", nome: "Bolo de laranja", categoria: "comida", preco: 9 }
+];
+
+const pedido = document.querySelector("[data-pedido]");
+const itensPedido = document.querySelectorAll("[data-item-pedido]");
+const resumoPedido = document.querySelector("[data-resumo-pedido]");
+const limparPedido = document.querySelector("[data-limpar-pedido]");
+
+if (pedido &amp;&amp; itensPedido.length &amp;&amp; resumoPedido &amp;&amp; limparPedido) {
+  function formatarPreco(valor) {
+    return valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    });
+  }
+
+  function calcularPedido() {
+    let quantidade = 0;
+    let total = 0;
+
+    for (const item of itensPedido) {
+      if (!item.checked) continue;
+
+      const produto = produtos.find(function (produto) {
+        return produto.id === item.value;
+      });
+
+      if (!produto) continue;
+      quantidade += 1;
+      total += produto.preco;
+    }
+
+    const rotulo = quantidade === 1 ? "item" : "itens";
+    resumoPedido.textContent = quantidade === 0
+      ? "Nenhum produto selecionado."
+      : `${quantidade} ${rotulo} — ${formatarPreco(total)}`;
+  }
+
+  itensPedido.forEach(function (item) {
+    item.addEventListener("change", calcularPedido);
+  });
+
+  limparPedido.addEventListener("click", function () {
+    itensPedido.forEach(function (item) {
+      item.checked = false;
+    });
+    calcularPedido();
+  });
+
+  pedido.hidden = false;
+  limparPedido.hidden = false;
+  calcularPedido();
+}</code></pre>
+          </details>
+
+          <div class="task-box">
+            <h4>Teste e explique</h4>
+            <ol>
+              <li>Marque um, dois e três produtos e confira os totais manualmente.</li>
+              <li>Use somente teclado para marcar itens e limpar a seleção.</li>
+              <li>Altere temporariamente o valor de um checkbox para um ID inexistente e confirme que o código não quebra.</li>
+              <li>Desative JavaScript e confirme que o cardápio original continua disponível.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section aria-labelledby="erros-8">
+          <h3 id="erros-8">Erros comuns para revisar</h3>
+          <ul>
+            <li>Esperar que a primeira posição de um array seja <code class="inline-code">1</code>.</li>
+            <li>Acessar uma propriedade inexistente e não investigar o valor <code class="inline-code">undefined</code>.</li>
+            <li>Repetir manualmente comandos que deveriam percorrer a coleção.</li>
+            <li>Modificar o array enquanto ele está sendo percorrido sem compreender o efeito.</li>
+            <li>Usar <code class="inline-code">filter()</code> quando precisa de somente um item.</li>
+            <li>Usar o resultado de <code class="inline-code">find()</code> sem verificar se algo foi encontrado.</li>
+            <li>Guardar preços como textos contendo <code class="inline-code">R$</code> em vez de números.</li>
+            <li>Apresentar a simulação como se fosse um pedido realmente enviado.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="projeto-8">
+          <h3 id="projeto-8">Projeto aplicado — entrega do capítulo</h3>
+          <p>Acrescente ao Café Aurora:</p>
+          <ul>
+            <li>array de objetos com ID, nome, categoria e preço dos produtos;</li>
+            <li>inspeção dos dados com <code class="inline-code">console.table()</code> durante o desenvolvimento;</li>
+            <li>simulação de pedido preparada somente quando JavaScript estiver disponível;</li>
+            <li>cálculo seguro de quantidade e total;</li>
+            <li>valor monetário formatado para reais;</li>
+            <li>botão para limpar a seleção;</li>
+            <li>operação completa por teclado e nenhum erro do projeto no Console.</li>
+          </ul>
+          <p>Entregue o site e descreva por que array e objetos facilitam a inclusão de novos produtos.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-8">
+          <h3 id="check-8">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Sei criar, consultar e ampliar um array.</li>
+            <li>Entendo por que a primeira posição tem índice zero.</li>
+            <li>Represento dados relacionados com propriedades de um objeto.</li>
+            <li>Percorro uma coleção sem copiar o mesmo comando.</li>
+            <li>Distingo <code class="inline-code">forEach()</code>, <code class="inline-code">filter()</code> e <code class="inline-code">find()</code>.</li>
+            <li>Verifico resultados que podem ser <code class="inline-code">undefined</code>.</li>
+            <li>Calculo um total mantendo preços como números.</li>
+            <li>Preservo o conteúdo essencial quando JavaScript não está disponível.</li>
+          </ul>
+        </section>
+
+        <section class="concept-box" aria-labelledby="fontes-8">
+          <h3 id="fontes-8">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Arrays — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects">Trabalhando com objetos — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of">for...of — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">filter() — MDN</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find">find() — MDN</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Até aqui</strong>
+          <p>Os produtos já podem ser representados, percorridos e consultados como dados. No próximo capítulo, essa coleção sairá do arquivo JavaScript e será carregada de um arquivo JSON com Fetch.</p>
+        </div>
+
+        <section class="task-box" aria-labelledby="transferencia-8">
+          <h3 id="transferencia-8">Transfira o aprendizado</h3>
+          <p>Modele três livros de uma pequena biblioteca em um array de objetos com ID, título, categoria e disponibilidade. Explique qual repetição usaria para listar os títulos e como encontraria um livro pelo ID. Não crie outro projeto completo.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do Capítulo 8">
+          <strong>Checkpoint final para conferência</strong>
+          <p>Use este ZIP para conferir ou recuperar a versão com dados e simulação de pedido depois de realizar sua própria construção e seus testes.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-capitulo-8.zip" download>Baixar checkpoint do Capítulo 8 (ZIP)</a>
+        </aside>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-7" data-chapter-link="capitulo-7">← Capítulo 7</a>
+          <span aria-disabled="true">Próximo capítulo em breve</span>
         </div>
       </article>
     </main>
   </div>
 
-  <script src="../../js/programacao-web.js?v=5"></script>
+  <script src="../../js/programacao-web.js?v=6"></script>
 </body>
 </html>

@@ -138,6 +138,54 @@
       field.addEventListener("input", updateCounter);
       updateCounter();
     });
+
+    document.querySelectorAll("[data-js-demo-order]").forEach((demo) => {
+      const controls = demo.querySelector("[data-demo-order-controls]");
+      const result = demo.querySelector("[data-demo-order-result]");
+      const status = demo.querySelector("[data-demo-order-status]");
+      const clearButton = demo.querySelector("[data-demo-order-clear]");
+      const inputs = Array.from(demo.querySelectorAll('input[type="checkbox"]'));
+
+      if (!controls || !result || !status || !clearButton || !inputs.length) return;
+
+      const products = inputs.map((input) => ({
+        id: input.value,
+        name: input.dataset.name,
+        price: Number(input.dataset.price)
+      }));
+
+      function formatPrice(value) {
+        return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+      }
+
+      function updateOrder() {
+        let quantity = 0;
+        let total = 0;
+
+        for (const input of inputs) {
+          if (!input.checked) continue;
+          const product = products.find((item) => item.id === input.value);
+          if (!product) continue;
+          quantity += 1;
+          total += product.price;
+        }
+
+        status.textContent = quantity === 0
+          ? "Nenhum produto selecionado."
+          : `${quantity} ${quantity === 1 ? "item" : "itens"} — ${formatPrice(total)}`;
+        clearButton.disabled = quantity === 0;
+      }
+
+      inputs.forEach((input) => input.addEventListener("change", updateOrder));
+      clearButton.addEventListener("click", () => {
+        inputs.forEach((input) => { input.checked = false; });
+        updateOrder();
+      });
+
+      controls.hidden = false;
+      result.hidden = false;
+      updateOrder();
+    });
   }
 
   function chapterFromHash() {
