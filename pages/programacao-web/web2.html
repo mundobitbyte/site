@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Web II do Mundo bit Byte: aprenda programação no servidor com PHP enquanto transforma o site do Café Aurora em um sistema Web.">
+  <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web2.html">
+  <title>Web II — Capítulo 1 | Mundo bit Byte</title>
+  <link href="../../css/programacao-web.css?v=13" rel="stylesheet">
+</head>
+<body class="module-page" data-module-title="Web II">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header>
+    <div class="header-left">
+      <a class="portal-link" href="../programacao-web.html">← Programação Web</a>
+      <h1>Programação Web II</h1>
+    </div>
+    <div class="brand">Professor Ronaldo Lavestein</div>
+  </header>
+
+  <nav class="level-menu" aria-label="Níveis de Programação Web">
+    <a class="level-menu-item" href="web1.html">Web I — Sites</a>
+    <span class="level-menu-item active" aria-current="page">Web II — Sistemas</span>
+    <span class="level-menu-item is-disabled" aria-disabled="true">Web III — APIs e Frameworks <small>Em breve</small></span>
+  </nav>
+
+  <div class="web-layout">
+    <nav class="chapter-menu" aria-label="Capítulos disponíveis">
+      <h2>Capítulos disponíveis</h2>
+      <a class="chapter-link" href="#capitulo-1" data-chapter-link="capitulo-1">1. Do site à primeira resposta do servidor</a>
+    </nav>
+
+    <main class="web-content" id="conteudo" tabindex="-1">
+      <article class="chapter" id="capitulo-1" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 1 — Do site à primeira resposta do servidor</h2>
+          <p class="chapter-meta">Cliente e servidor, HTTP, ambiente PHP e a primeira página dinâmica do Café Aurora.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-1">
+          <h3 id="contexto-1">O pedido chegou ao navegador, mas não chegou ao café</h3>
+          <p>No Web I, o <strong>Café Aurora</strong> ganhou um site completo. A pessoa pode consultar o cardápio, filtrar produtos e montar uma seleção. Porém, essa seleção permanece no próprio navegador: a proprietária não recebe o pedido e não consegue informar, de um único lugar, se a cozinha ainda está aceitando encomendas.</p>
+          <p>Imagine uma manhã movimentada. Às 10h, a proprietária precisa interromper novos pedidos por vinte minutos. Alterar um arquivo HTML, publicar novamente e esperar a atualização não é uma boa operação para o dia a dia. O site precisa consultar uma decisão tomada pelo negócio e devolver uma página adequada naquele momento.</p>
+          <p>É aqui que o Web II começa: o navegador continua exibindo HTML, CSS e JavaScript, mas uma aplicação no <strong>servidor</strong> passa a receber solicitações, executar regras e preparar respostas. Neste capítulo, ainda não salvaremos pedidos em banco de dados. Primeiro, vamos compreender e construir esse caminho.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-1">
+          <h3 id="objetivos-1">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Distinguir página estática, página dinâmica, cliente e servidor.</li>
+            <li>Acompanhar uma solicitação e uma resposta HTTP.</li>
+            <li>Preparar um ambiente local com PHP e confirmar a instalação.</li>
+            <li>Organizar o projeto com uma pasta pública.</li>
+            <li>Executar o servidor de desenvolvimento do PHP.</li>
+            <li>Usar variáveis, tipos básicos, <code class="inline-code">echo</code> e uma decisão com <code class="inline-code">if</code>.</li>
+            <li>Combinar PHP e HTML sem perder a estrutura construída no Web I.</li>
+            <li>Verificar sintaxe e observar a resposta no DevTools.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-1">
+          <h3 id="aula-1-1">Aula 1 — O que muda quando o site vira sistema</h3>
+
+          <h4>Entender: duas páginas podem parecer iguais e funcionar de modos diferentes</h4>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Quando alguém acessa</th><th>Página estática</th><th>Página dinâmica</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>O servidor faz o quê?</td><td>Entrega um arquivo que já estava pronto.</td><td>Executa código e produz a resposta.</td></tr>
+                <tr><td>O conteúdo pode depender de uma regra?</td><td>Não sem alterar o arquivo ou usar código no navegador.</td><td>Sim. A aplicação decide antes de responder.</td></tr>
+                <tr><td>O navegador recebe PHP?</td><td>Não há PHP.</td><td>Não. Ele recebe o resultado, normalmente HTML.</td></tr>
+                <tr><td>Exemplo no Café Aurora</td><td>História e endereço do café.</td><td>Status atual dos pedidos e, futuramente, pedidos salvos.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p><strong>Dinâmica</strong> não significa apenas ter animações. Um filtro feito com JavaScript no navegador é interativo, mas não dá à proprietária uma visão central dos pedidos. Neste curso, uma página dinâmica no servidor é aquela cuja resposta pode ser construída por uma aplicação conforme dados e regras.</p>
+
+          <h4>O caminho da primeira página PHP</h4>
+          <div class="flow" role="img" aria-label="Fluxo entre navegador e servidor PHP">1. Navegador pede  http://localhost:8000/
+        ↓ solicitação HTTP
+2. Servidor local encontra public/index.php
+        ↓ executa o código PHP
+3. PHP prepara um documento HTML
+        ↓ resposta HTTP
+4. Navegador interpreta e mostra o HTML</div>
+
+          <div class="concept-box">
+            <strong>Cliente e servidor são papéis.</strong>
+            <p>Neste exemplo, o navegador é o cliente porque inicia a solicitação. O programa PHP atende no servidor. Durante o desenvolvimento, os dois rodam no mesmo computador, mas continuam desempenhando papéis diferentes.</p>
+          </div>
+
+          <h4>HTTP em linguagem simples</h4>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>URL</strong><p>Indica qual recurso o cliente deseja acessar.</p></div>
+            <div class="mini-card"><strong>Requisição</strong><p>Mensagem enviada pelo cliente ao servidor.</p></div>
+            <div class="mini-card"><strong>Resposta</strong><p>Mensagem devolvida com status, cabeçalhos e conteúdo.</p></div>
+            <div class="mini-card"><strong>Status 200</strong><p>Indica que a solicitação foi atendida com sucesso.</p></div>
+          </div>
+
+          <div class="task-box">
+            <h4>Experimente antes de programar</h4>
+            <ol>
+              <li>Abra o site publicado do Café Aurora ou outra página do projeto.</li>
+              <li>Abra o DevTools com <kbd>F12</kbd> e selecione <strong>Network</strong>.</li>
+              <li>Recarregue a página e selecione a primeira linha do tipo <strong>document</strong>.</li>
+              <li>Localize o endereço solicitado, o método <strong>GET</strong> e o código de status.</li>
+            </ol>
+            <p>Você não precisa memorizar todos os campos. A meta é reconhecer que abrir uma página produz uma solicitação e uma resposta observáveis.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-1">
+          <h3 id="aula-2-1">Aula 2 — Preparando o ambiente PHP</h3>
+          <p>No Web I, o navegador conseguia abrir os arquivos diretamente. Agora precisamos de um programa que leia <code class="inline-code">index.php</code>, execute as instruções e entregue apenas o resultado. Usaremos o PHP 8.5 e seu servidor embutido para desenvolvimento local.</p>
+
+          <div class="note-box">
+            <strong>O servidor embutido é uma bancada de aprendizagem.</strong>
+            <p>Ele é adequado para desenvolver e testar no próprio computador. Não é um servidor completo de produção e não deve ser exposto à Internet.</p>
+          </div>
+
+          <h4>Instalação no Windows</h4>
+          <ol>
+            <li>Acesse a <a href="https://windows.php.net/download/">página oficial do PHP para Windows</a>.</li>
+            <li>Na versão 8.5, escolha o pacote <strong>x64 Non Thread Safe</strong> em ZIP. Essa opção é adequada ao uso pela linha de comando deste curso.</li>
+            <li>Extraia o conteúdo para uma pasta simples, por exemplo <code class="inline-code">C:\php</code>.</li>
+            <li>Adicione <code class="inline-code">C:\php</code> à variável de usuário <strong>Path</strong> e reinicie o VS Code.</li>
+            <li>Se o Windows informar que falta um componente de execução, instale o <strong>Visual C++ Redistributable 2015–2022 x64</strong> indicado na própria página do PHP.</li>
+          </ol>
+          <p>Em macOS ou Linux, instale uma versão 8.5 suportada pelo gerenciador de pacotes do sistema e faça a mesma conferência abaixo. Em laboratório, siga o procedimento definido pelo responsável pelos computadores.</p>
+
+          <h4>Confirme no terminal do VS Code</h4>
+          <p>Abra <strong>Terminal → Novo Terminal</strong> e execute:</p>
+          <pre class="code-block"><code>php -v</code></pre>
+          <p>A primeira linha deve informar PHP 8.5. O número depois de 8.5 pode ser diferente, pois correções são publicadas ao longo do tempo.</p>
+
+          <div class="concept-box">
+            <strong>O comando não foi reconhecido?</strong>
+            <p>Confirme se <code class="inline-code">php.exe</code> está dentro de <code class="inline-code">C:\php</code>, revise o Path e feche completamente o VS Code antes de abri-lo outra vez. Digitar apenas o caminho no ajuste de validação do editor não torna o comando disponível no terminal.</p>
+          </div>
+
+          <h4>Validação do editor</h4>
+          <p>O VS Code já oferece suporte básico a PHP e usa o executável para verificar sintaxe. Se o PHP estiver instalado, mas o editor não o localizar, abra as configurações em JSON e informe:</p>
+          <pre class="code-block"><code>"php.validate.executablePath": "C:/php/php.exe"</code></pre>
+
+          <div class="task-box">
+            <h4>Checkpoint do ambiente</h4>
+            <p>Antes de avançar, registre a linha da versão apresentada por <code class="inline-code">php -v</code>. Se ela não aparecer, resolva a instalação agora: os próximos passos dependem desse comando.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-1">
+          <h3 id="aula-3-1">Aula 3 — Reorganizando o Café Aurora e iniciando o servidor</h3>
+          <p>Faça uma cópia da versão final criada no Web I e nomeie a nova pasta como <code class="inline-code">cafe-aurora-web2</code>. Assim, a versão publicada continua preservada enquanto o sistema evolui.</p>
+
+          <h4>Crie uma fronteira pública</h4>
+          <p>Dentro da nova pasta, crie <code class="inline-code">public</code> e mova para ela as páginas, imagens, estilos, scripts e dados do site. O arquivo de orientações pode permanecer na raiz. Depois, renomeie <code class="inline-code">index.html</code> para <code class="inline-code">index.php</code> e atualize os links que ainda apontam para <code class="inline-code">index.html</code>.</p>
+
+          <div class="flow" role="img" aria-label="Estrutura inicial do projeto Web II">cafe-aurora-web2/
+├── LEIA-ME.txt
+└── public/
+    ├── index.php
+    ├── cardapio.html
+    ├── sobre.html
+    ├── contato.html
+    ├── css/
+    ├── dados/
+    ├── img/
+    └── js/</div>
+
+          <div class="concept-box">
+            <strong>Por que criar <code class="inline-code">public</code>?</strong>
+            <p>Ela marca o que o servidor pode entregar diretamente ao navegador. Nos próximos capítulos, configurações e classes poderão ficar fora dessa fronteira. Essa organização reduz confusão agora e prepara uma estrutura mais segura.</p>
+          </div>
+
+          <h4>Inicie o servidor na raiz do projeto</h4>
+          <pre class="code-block"><code>php -S localhost:8000 -t public</code></pre>
+          <ul>
+            <li><code class="inline-code">php</code> inicia o interpretador.</li>
+            <li><code class="inline-code">-S</code> solicita o servidor de desenvolvimento.</li>
+            <li><code class="inline-code">localhost:8000</code> define o endereço e a porta.</li>
+            <li><code class="inline-code">-t public</code> define a pasta pública do projeto.</li>
+          </ul>
+          <p>Mantenha esse terminal aberto e visite <code class="inline-code">http://localhost:8000</code>. Para encerrar o servidor, volte ao terminal e pressione <kbd>Ctrl</kbd> + <kbd>C</kbd>.</p>
+
+          <div class="note-box">
+            <strong>Abrir o arquivo não é executar PHP.</strong>
+            <p>Um endereço iniciado por <code class="inline-code">file:///</code> abre o arquivo diretamente e ignora o servidor. Durante o Web II, entre pelo endereço <code class="inline-code">http://localhost:8000</code>.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Experimente uma falha controlada</h4>
+            <ol>
+              <li>Com o servidor funcionando, confirme que a página abre.</li>
+              <li>Encerre o processo com <kbd>Ctrl</kbd> + <kbd>C</kbd> e recarregue o navegador.</li>
+              <li>Explique por que os arquivos continuam no computador, mas o endereço deixa de responder.</li>
+              <li>Inicie o servidor novamente.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-1">
+          <h3 id="aula-4-1">Aula 4 — A primeira resposta dinâmica do Café Aurora</h3>
+          <p>Agora a proprietária precisa comunicar três informações: o nome do negócio, se os pedidos estão abertos e o tempo estimado de preparo. Em vez de repetir textos pelo HTML, vamos representar esses dados no início de <code class="inline-code">public/index.php</code>.</p>
+
+          <h4>Programar: entre no modo PHP</h4>
+          <p>Na primeira linha do arquivo, acrescente:</p>
+          <pre class="code-block"><code>&lt;?php
+$nomeNegocio = "Café Aurora";
+$pedidosAbertos = true;
+$tempoEstimado = 25;
+</code></pre>
+          <div class="mini-grid">
+            <div class="mini-card"><strong><code class="inline-code">&lt;?php</code></strong><p>Inicia um trecho que será executado pelo PHP.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">$</code></strong><p>Identifica uma variável em PHP.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">=</code></strong><p>Atribui um valor à variável.</p></div>
+            <div class="mini-card"><strong><code class="inline-code">;</code></strong><p>Encerra a instrução.</p></div>
+          </div>
+
+          <h4>Reconheça os tipos sem complicar</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Valor</th><th>Tipo</th><th>Uso neste caso</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">"Café Aurora"</code></td><td><code class="inline-code">string</code></td><td>Texto com o nome do negócio.</td></tr>
+                <tr><td><code class="inline-code">true</code></td><td><code class="inline-code">bool</code></td><td>Representa sim/não: pedidos estão abertos?</td></tr>
+                <tr><td><code class="inline-code">25</code></td><td><code class="inline-code">int</code></td><td>Número inteiro de minutos.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Decida a mensagem com <code class="inline-code">if</code></h4>
+          <p>A aplicação deve preparar uma mensagem para cada situação. Acrescente antes do HTML:</p>
+          <pre class="code-block"><code>if ($pedidosAbertos) {
+    $mensagemStatus = "Pedidos para retirada estão abertos.";
+    $mensagemTempo = "Tempo estimado: $tempoEstimado minutos.";
+} else {
+    $mensagemStatus = "Pedidos para retirada estão encerrados.";
+    $mensagemTempo = "Consulte novamente durante o horário de atendimento.";
+}
+?&gt;</code></pre>
+          <p>O bloco do <code class="inline-code">if</code> é executado quando a condição vale <code class="inline-code">true</code>. O bloco do <code class="inline-code">else</code> cobre a outra situação. As chaves delimitam cada bloco.</p>
+
+          <div class="task-box">
+            <h4>Experimente a regra</h4>
+            <p>Salve com <code class="inline-code">$pedidosAbertos = true</code>, recarregue a página e anote a mensagem. Depois troque somente para <code class="inline-code">false</code>. A interface deverá mudar sem você reescrever os parágrafos no HTML.</p>
+          </div>
+
+          <h4>Mostre os valores dentro do HTML</h4>
+          <p>Substitua o texto fixo do título principal e acrescente a nova seção de atendimento:</p>
+          <pre class="code-block"><code>&lt;h1&gt;&lt;?= $nomeNegocio ?&gt;&lt;/h1&gt;
+
+&lt;section aria-labelledby="status-pedidos"&gt;
+  &lt;h2 id="status-pedidos"&gt;Pedidos para retirada&lt;/h2&gt;
+  &lt;p&gt;&lt;?= $mensagemStatus ?&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;?= $mensagemTempo ?&gt;&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+          <p>A forma <code class="inline-code">&lt;?= ... ?&gt;</code> imprime um valor no ponto exato do documento. Ela é uma forma curta de usar <code class="inline-code">echo</code>. Os valores deste exemplo foram definidos pelo próprio programa; dados recebidos de pessoas exigirão validação e saída segura, assunto dos próximos capítulos.</p>
+
+          <details class="code-disclosure">
+            <summary>Código completo para conferência — public/index.php</summary>
+            <pre class="code-block"><code>&lt;?php
+$nomeNegocio = "Café Aurora";
+$pedidosAbertos = true;
+$tempoEstimado = 25;
+
+if ($pedidosAbertos) {
+    $mensagemStatus = "Pedidos para retirada estão abertos.";
+    $mensagemTempo = "Tempo estimado: $tempoEstimado minutos.";
+} else {
+    $mensagemStatus = "Pedidos para retirada estão encerrados.";
+    $mensagemTempo = "Consulte novamente durante o horário de atendimento.";
+}
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;meta name="description" content="Conheça o Café Aurora, seus produtos artesanais, ambiente e horário de atendimento."&gt;
+  &lt;title&gt;Café Aurora — Café e produtos artesanais no bairro&lt;/title&gt;
+  &lt;link rel="stylesheet" href="css/styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a class="skip-link" href="#conteudo"&gt;Pular para o conteúdo&lt;/a&gt;
+  &lt;header&gt;
+    &lt;p&gt;&lt;a href="index.php"&gt;Café Aurora&lt;/a&gt;&lt;/p&gt;
+    &lt;nav aria-label="Navegação principal"&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.php" aria-current="page"&gt;Início&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="cardapio.html"&gt;Cardápio&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="sobre.html"&gt;Sobre&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="contato.html"&gt;Contato&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;main id="conteudo" tabindex="-1"&gt;
+    &lt;h1&gt;&lt;?= $nomeNegocio ?&gt;&lt;/h1&gt;
+    &lt;p&gt;Café, encontros e bons momentos no coração do bairro.&lt;/p&gt;
+    &lt;section aria-labelledby="status-pedidos"&gt;
+      &lt;h2 id="status-pedidos"&gt;Pedidos para retirada&lt;/h2&gt;
+      &lt;p&gt;&lt;?= $mensagemStatus ?&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;?= $mensagemTempo ?&gt;&lt;/p&gt;
+    &lt;/section&gt;
+    &lt;section aria-labelledby="destaques"&gt;
+      &lt;h2 id="destaques"&gt;Destaques da casa&lt;/h2&gt;
+      &lt;p&gt;Cafés selecionados, pães artesanais e receitas preparadas diariamente.&lt;/p&gt;
+      &lt;p&gt;&lt;a href="cardapio.html"&gt;Conheça o cardápio&lt;/a&gt;&lt;/p&gt;
+    &lt;/section&gt;
+    &lt;section aria-labelledby="ambiente"&gt;
+      &lt;h2 id="ambiente"&gt;Um ambiente acolhedor&lt;/h2&gt;
+      &lt;figure&gt;
+        &lt;img
+          src="img/ambiente-cafe-1024.webp"
+          srcset="img/ambiente-cafe-640.webp 640w, img/ambiente-cafe-1024.webp 1024w, img/ambiente-cafe.webp 1280w"
+          sizes="(max-width: 48rem) calc(100vw - 2rem), 70rem"
+          alt="Salão do Café Aurora com mesas de madeira e plantas"
+          width="1280"
+          height="853"
+        &gt;
+        &lt;figcaption&gt;Um espaço para conversar, estudar ou trabalhar.&lt;/figcaption&gt;
+      &lt;/figure&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;&lt;p&gt;&amp;copy; 2026 Café Aurora. Projeto educacional fictício.&lt;/p&gt;&lt;/footer&gt;
+  &lt;script src="js/script.js" defer&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </details>
+        </section>
+
+        <section aria-labelledby="aula-5-1">
+          <h3 id="aula-5-1">Aula 5 — Conferindo o que o servidor realmente entregou</h3>
+
+          <h4>Verifique a sintaxe sem abrir o navegador</h4>
+          <p>Em outro terminal, ainda na raiz do projeto, execute:</p>
+          <pre class="code-block"><code>php -l public/index.php</code></pre>
+          <p>A resposta esperada informa que nenhum erro de sintaxe foi detectado. Esse teste encontra problemas de escrita da linguagem, como um ponto e vírgula ausente; ele não prova que a regra de negócio está correta.</p>
+
+          <h4>Observe a resposta no navegador</h4>
+          <ol>
+            <li>Com o servidor ativo, acesse <code class="inline-code">http://localhost:8000</code>.</li>
+            <li>Use <strong>Ver código-fonte da página</strong> pelo menu do navegador.</li>
+            <li>Procure <code class="inline-code">$pedidosAbertos</code> e depois procure a mensagem apresentada na tela.</li>
+          </ol>
+          <p>A variável não aparece, mas o texto produzido aparece. Isso comprova uma ideia central: o PHP foi executado no servidor; o navegador recebeu o HTML resultante.</p>
+
+          <h4>Volte ao Network</h4>
+          <p>No DevTools, selecione a requisição do documento e observe:</p>
+          <ul>
+            <li><strong>Headers:</strong> endereço, método <code class="inline-code">GET</code> e status <code class="inline-code">200</code>;</li>
+            <li><strong>Response:</strong> o HTML devolvido pelo servidor;</li>
+            <li><strong>Initiator:</strong> a navegação que iniciou a solicitação.</li>
+          </ul>
+
+          <div class="note-box">
+            <strong>Não confunda código-fonte com painel Elements.</strong>
+            <p>O código-fonte mostra a resposta original recebida. O painel Elements mostra o documento depois que o navegador o interpretou e depois de possíveis alterações feitas por JavaScript.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Aplicar: faça uma mudança completa</h4>
+            <ol>
+              <li>Altere o tempo estimado para 40 minutos.</li>
+              <li>Verifique a sintaxe com <code class="inline-code">php -l</code>.</li>
+              <li>Recarregue a página e confira a interface.</li>
+              <li>Confirme no código-fonte que o navegador recebeu o novo texto, mas não recebeu a variável PHP.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-1">
+          <h3 id="check-1">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Explico por que o Café Aurora precisa de código no servidor.</li>
+            <li>Diferencio cliente, servidor, requisição e resposta.</li>
+            <li>Confirmo a instalação com <code class="inline-code">php -v</code>.</li>
+            <li>Sei por que o projeto possui uma pasta <code class="inline-code">public</code>.</li>
+            <li>Inicio e encerro o servidor local conscientemente.</li>
+            <li>Uso variáveis com texto, booleano e número inteiro.</li>
+            <li>Uso <code class="inline-code">if</code> e <code class="inline-code">else</code> para representar uma regra simples.</li>
+            <li>Confirmo que o navegador recebe HTML, não o código PHP.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-1">
+          <h3 id="transferencia-1">Transfira o aprendizado</h3>
+          <p>Uma pequena clínica precisa mostrar se ainda aceita encaixes no dia e o tempo médio de espera. Sem criar outro site, escreva três variáveis adequadas, indique o tipo de cada uma e monte apenas a decisão <code class="inline-code">if/else</code> que produziria as duas mensagens. Depois explique por que essa informação faz mais sentido no servidor do que fixada no HTML.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do primeiro capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP preserva o projeto final do Web I, já organizado em <code class="inline-code">public</code>, com <code class="inline-code">index.php</code> e as imagens WebP. Use-o depois de realizar a construção ou quando precisar recuperar esta etapa.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-1.zip" download>Baixar checkpoint do Capítulo 1 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-1">
+          <h3 id="fontes-1">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://www.php.net/supported-versions.php">Versões suportadas do PHP — PHP.net</a></li>
+            <li><a href="https://www.php.net/manual/en/features.commandline.webserver.php">Servidor Web embutido — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/language.variables.basics.php">Variáveis — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/control-structures.if.php">Estrutura <code class="inline-code">if</code> — Manual do PHP</a></li>
+            <li><a href="https://code.visualstudio.com/docs/languages/php">PHP no VS Code — documentação oficial</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>O que ainda não estamos fazendo</strong>
+          <p>O status ainda nasce em uma variável escrita no arquivo. Nos próximos capítulos, o sistema receberá dados por URL e formulário, manterá informações entre solicitações e chegará ao banco de dados. Cada recurso entrará quando uma necessidade real do Café Aurora o justificar.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="web1.html#capitulo-11">← Revisar o fim do Web I</a>
+          <span aria-disabled="true">Próximo capítulo em preparação</span>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script src="../../js/programacao-web.js?v=10"></script>
+</body>
+</html>

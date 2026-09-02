@@ -6,6 +6,7 @@
   const chapterMenu = document.querySelector(".chapter-menu");
   const chapters = Array.from(document.querySelectorAll("[data-chapter]"));
   const links = Array.from(document.querySelectorAll("[data-chapter-link]"));
+  const moduleTitle = page?.dataset.moduleTitle || "Programação Web";
 
   if (!page || !chapters.length) return;
 
@@ -407,7 +408,7 @@
     keepActiveChapterVisible(activeMenuLink);
 
     const chapterNumber = activeId.replace("capitulo-", "");
-    document.title = `Web I — Capítulo ${chapterNumber} | Mundo bit Byte`;
+    document.title = `${moduleTitle} — Capítulo ${chapterNumber} | Mundo bit Byte`;
 
     if (options.resetScroll) {
       if (content && window.innerWidth > 1050) {
