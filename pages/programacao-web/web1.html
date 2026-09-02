@@ -6,7 +6,7 @@
   <meta name="description" content="Web I do Mundo bit Byte: aprenda HTML, acessibilidade, CSS responsivo e JavaScript enquanto constrói o site completo de um pequeno negócio local.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
   <title>Web I — Capítulo 1 | Mundo bit Byte</title>
-  <link href="../../css/programacao-web.css?v=12" rel="stylesheet">
+  <link href="../../css/programacao-web.css?v=13" rel="stylesheet">
 </head>
 <body class="module-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -37,6 +37,7 @@
       <a class="chapter-link" href="#capitulo-8" data-chapter-link="capitulo-8">8. Arrays, objetos e repetições</a>
       <a class="chapter-link" href="#capitulo-9" data-chapter-link="capitulo-9">9. Fetch e JSON</a>
       <a class="chapter-link" href="#capitulo-10" data-chapter-link="capitulo-10">10. Web Storage</a>
+      <a class="chapter-link" href="#capitulo-11" data-chapter-link="capitulo-11">11. Testes e publicação</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -3735,12 +3736,291 @@ if (pedido && itensPedido.length && resumoPedido &&
 
         <div class="chapter-footer">
           <a href="#capitulo-9" data-chapter-link="capitulo-9">← Capítulo 9</a>
-          <span aria-disabled="true">Próximo capítulo em breve</span>
+          <a href="#capitulo-11" data-chapter-link="capitulo-11">Capítulo 11 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-11" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 11 — Testes, qualidade e publicação</h2>
+          <p class="chapter-meta">Critérios de conclusão, testes manuais e automáticos, correções finais e publicação responsável do Café Aurora.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-11">
+          <h3 id="contexto-11">Funcionar no computador do autor ainda não encerra o projeto</h3>
+          <p>O site do <strong>Café Aurora</strong> possui conteúdo, identidade visual, páginas, formulário, responsividade, interações, dados externos e persistência local. Agora ele precisa ser verificado como um produto que outras pessoas realmente usarão.</p>
+          <p>Neste capítulo, cada teste terá uma ação e um resultado esperado. O objetivo não é perseguir uma nota perfeita em uma ferramenta, mas encontrar problemas reais, corrigi-los e confirmar novamente antes e depois da publicação.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-11">
+          <h3 id="objetivos-11">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Definir critérios objetivos para considerar o site pronto.</li>
+            <li>Testar navegação, teclado, ampliação, responsividade e jornadas completas.</li>
+            <li>Validar todas as páginas HTML e interpretar erros simples.</li>
+            <li>Usar Console, Network, Application e Lighthouse com finalidade clara.</li>
+            <li>Distinguir verificação automática de teste manual.</li>
+            <li>Publicar um site estático pelo GitHub Pages.</li>
+            <li>Repetir os testes essenciais no endereço público.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-11">
+          <h3 id="aula-1-11">Aula 1 — Definindo quando o site está pronto</h3>
+          <p>Um projeto está pronto para publicação quando atende a critérios verificáveis. “Parece bom” é uma percepção útil, mas não substitui a confirmação de que os caminhos principais funcionam.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Jornada</th><th>Ação de teste</th><th>Resultado esperado</th></tr></thead>
+              <tbody>
+                <tr><td>Navegação</td><td>Abrir Início, Cardápio, Sobre e Contato.</td><td>Todos os links chegam à página correta e identificam a página atual.</td></tr>
+                <tr><td>Cardápio</td><td>Filtrar bebidas e comidas.</td><td>Os cards e a quantidade visível correspondem ao filtro.</td></tr>
+                <tr><td>Dados</td><td>Recarregar, alterar temporariamente o caminho do JSON e depois restaurá-lo.</td><td>O sucesso atualiza os cards; a falha preserva o conteúdo HTML.</td></tr>
+                <tr><td>Pedido</td><td>Selecionar produtos, recarregar e limpar.</td><td>Total correto, seleção restaurada e chave específica removida.</td></tr>
+                <tr><td>Contato</td><td>Enviar vazio, corrigir os campos e enviar novamente.</td><td>A validação orienta o preenchimento e nenhum dado real é enviado.</td></tr>
+                <tr><td>Responsividade</td><td>Redimensionar continuamente e testar teclado e ampliação.</td><td>Não há conteúdo perdido, sobreposto ou inacessível.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Complete a acessibilidade de todas as páginas</h4>
+          <p>O módulo já possui um link “Pular para o conteúdo”. Aplique a mesma solução ao Café Aurora: coloque o link como primeiro elemento dentro de <code class="inline-code">body</code> e identifique o conteúdo principal.</p>
+
+          <pre class="code-block"><code>&lt;body&gt;
+  &lt;a class="skip-link" href="#conteudo"&gt;
+    Pular para o conteúdo
+  &lt;/a&gt;
+
+  &lt;header&gt;...&lt;/header&gt;
+  &lt;main id="conteudo" tabindex="-1"&gt;
+    ...
+  &lt;/main&gt;
+&lt;/body&gt;</code></pre>
+
+          <pre class="code-block"><code>.skip-link {
+  position: absolute;
+  top: -5rem;
+  left: 1rem;
+  z-index: 10;
+  padding: .65rem .9rem;
+  color: #fff;
+  background: #1b1b1b;
+  border-radius: .4rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}</code></pre>
+
+          <p><code class="inline-code">tabindex="-1"</code> permite que o destino receba foco quando o link é acionado, sem acrescentá-lo à sequência normal da tecla Tab.</p>
+
+          <div class="task-box">
+            <h4>Teste sem mouse</h4>
+            <ol>
+              <li>Recarregue a página e pressione Tab uma vez.</li>
+              <li>Confirme que “Pular para o conteúdo” aparece e possui foco visível.</li>
+              <li>Pressione Enter e confirme que o foco chega ao conteúdo principal.</li>
+              <li>Continue com Tab por menus, filtros, pedido, formulário e links.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-11">
+          <h3 id="aula-2-11">Aula 2 — Validando código e investigando falhas</h3>
+          <p>Use o <a href="https://validator.w3.org/nu/">validador de HTML do W3C</a>. Enquanto o projeto estiver local, escolha o envio de arquivo e valide separadamente <code class="inline-code">index.html</code>, <code class="inline-code">cardapio.html</code>, <code class="inline-code">sobre.html</code> e <code class="inline-code">contato.html</code>.</p>
+
+          <div class="mini-grid">
+            <div class="mini-card"><strong>Erro</strong><p>Indica uma estrutura que deve ser investigada e corrigida.</p></div>
+            <div class="mini-card"><strong>Aviso</strong><p>Pede análise; nem sempre representa um defeito no contexto.</p></div>
+            <div class="mini-card"><strong>Linha</strong><p>Ajuda a localizar o problema, mas a causa pode estar algumas linhas antes.</p></div>
+            <div class="mini-card"><strong>Nova validação</strong><p>Depois da correção, valide novamente para detectar efeitos colaterais.</p></div>
+          </div>
+
+          <div class="note-box">
+            <strong>Corrija a causa, não somente a linha indicada.</strong>
+            <p>Uma tag não fechada pode gerar vários erros posteriores. Comece pelo primeiro erro, revise a estrutura ao redor, corrija e valide novamente antes de alterar outros pontos.</p>
+          </div>
+
+          <h4>Use cada painel para uma pergunta</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Painel</th><th>Pergunta de teste</th></tr></thead>
+              <tbody>
+                <tr><td>Elements e Styles</td><td>O elemento correto existe e quais regras estão realmente aplicadas?</td></tr>
+                <tr><td>Console</td><td>Há erro de JavaScript durante alguma jornada?</td></tr>
+                <tr><td>Network</td><td>Todos os arquivos carregaram sem 404? O JSON respondeu corretamente?</td></tr>
+                <tr><td>Application</td><td>A chave do pedido contém apenas os identificadores esperados?</td></tr>
+                <tr><td>Modo de dispositivos</td><td>O layout continua utilizável em larguras diferentes?</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <section class="release-checklist" aria-labelledby="liberacao-titulo" data-js-demo-release>
+            <h4 id="liberacao-titulo">Painel de liberação do projeto</h4>
+            <p>Marque um item somente depois de executar o teste.</p>
+            <fieldset>
+              <legend>Verificações finais</legend>
+              <label><input type="checkbox"> Quatro páginas validadas sem erros de HTML</label>
+              <label><input type="checkbox"> Navegação e formulário testados com teclado</label>
+              <label><input type="checkbox"> Layout testado com redimensionamento e ampliação a 200%</label>
+              <label><input type="checkbox"> Console sem erros do projeto</label>
+              <label><input type="checkbox"> Network sem arquivos ausentes</label>
+              <label><input type="checkbox"> Fetch testado em sucesso e falha</label>
+              <label><input type="checkbox"> Pedido salvo, restaurado e removido</label>
+              <label><input type="checkbox"> Conteúdo, contatos e imagens revisados</label>
+            </fieldset>
+            <p class="release-progress" data-demo-release-status role="status">0 de 8 verificações concluídas.</p>
+          </section>
+        </section>
+
+        <section aria-labelledby="aula-3-11">
+          <h3 id="aula-3-11">Aula 3 — Usando Lighthouse sem depender da nota</h3>
+          <p>O Lighthouse executa verificações automáticas de desempenho, acessibilidade, boas práticas e SEO. Ele ajuda a encontrar indícios, mas não consegue decidir sozinho se o texto é claro, se a jornada faz sentido ou se todo o site funciona apenas com teclado.</p>
+
+          <figure class="tool-figure">
+            <img src="../../img/programacao-web/devtools-lighthouse.webp" alt="Chrome DevTools aberto na guia Lighthouse com opções de dispositivo e categorias de auditoria" width="3024" height="1982" loading="lazy">
+            <figcaption>Abra o Café Aurora, acesse a guia Lighthouse, escolha Mobile e execute “Analyze page load”. Depois repita em Desktop. A aparência pode variar. Fonte: <a href="https://developer.chrome.com/docs/lighthouse/overview/">documentação oficial do Chrome DevTools</a>.</figcaption>
+          </figure>
+
+          <h4>Como interpretar o relatório</h4>
+          <ol>
+            <li>Leia a descrição da verificação, não apenas a pontuação.</li>
+            <li>Comece pelos problemas que afetam acesso, carregamento ou compreensão.</li>
+            <li>Faça uma alteração por vez e confirme que ela não prejudicou outra parte.</li>
+            <li>Execute novamente e registre o que realmente melhorou.</li>
+          </ol>
+
+          <div class="warning-box">
+            <strong>Uma nota alta não prova que o site está perfeito.</strong>
+            <p>Ferramentas automáticas cobrem apenas parte da qualidade e podem produzir resultados diferentes conforme computador, rede e momento do teste. A liberação depende do conjunto: validação, testes manuais, jornadas e auditoria automática.</p>
+          </div>
+
+          <div class="task-box">
+            <h4>Registre uma melhoria real</h4>
+            <p>Escolha um apontamento compreendido por você, confirme o problema na página, aplique uma correção pequena e repita o teste. Anote: problema, evidência, mudança e resultado. Não altere o projeto apenas para aumentar um número.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-11">
+          <h3 id="aula-4-11">Aula 4 — Publicando com GitHub Pages</h3>
+          <p>O Café Aurora é um site estático: o navegador recebe HTML, CSS, JavaScript, JSON e imagens. O GitHub Pages consegue publicar esses arquivos sem servidor próprio. O formulário permanece demonstrativo porque ainda não existe um serviço para receber mensagens.</p>
+
+          <h4>Faça a revisão antes do envio</h4>
+          <ul>
+            <li>mantenha <code class="inline-code">index.html</code> na raiz do projeto;</li>
+            <li>preserve as pastas <code class="inline-code">css</code>, <code class="inline-code">js</code>, <code class="inline-code">dados</code> e <code class="inline-code">img</code>;</li>
+            <li>confira letras maiúsculas e minúsculas nos nomes dos arquivos;</li>
+            <li>remova senhas, documentos e qualquer dado pessoal real;</li>
+            <li>não envie arquivos temporários ou imagens que o site não utiliza.</li>
+          </ul>
+
+          <h4>Publique a partir da branch principal</h4>
+          <ol>
+            <li>Crie no GitHub um repositório público chamado <code class="inline-code">cafe-aurora</code>.</li>
+            <li>Envie o conteúdo da pasta do projeto e registre a alteração na branch <code class="inline-code">main</code>. O arquivo <code class="inline-code">index.html</code> deve aparecer na raiz do repositório, não dentro de outra pasta.</li>
+            <li>Abra <strong>Settings → Pages</strong>.</li>
+            <li>Em <strong>Build and deployment</strong>, escolha <strong>Deploy from a branch</strong>.</li>
+            <li>Selecione <code class="inline-code">main</code>, a pasta <code class="inline-code">/(root)</code> e salve.</li>
+            <li>Aguarde a publicação e use o botão <strong>Visit site</strong> quando aparecer.</li>
+          </ol>
+
+          <figure class="tool-figure">
+            <img src="../../img/programacao-web/github-pages-fonte.webp" alt="Configuração do GitHub Pages com o seletor da branch de publicação e o botão Save" width="1614" height="296" loading="lazy">
+            <figcaption>Na configuração da fonte, escolha a branch <code class="inline-code">main</code>. A interface pode variar. Fonte: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">documentação oficial do GitHub Pages</a>.</figcaption>
+          </figure>
+
+          <div class="note-box">
+            <strong>A publicação pode levar alguns minutos.</strong>
+            <p>O GitHub informa que alterações podem demorar até dez minutos para aparecer. Se houver falha, confira o histórico de execução do Pages e corrija a causa antes de reenviar arquivos aleatoriamente.</p>
+          </div>
+
+          <h4>Repita os testes no endereço público</h4>
+          <p>Abra todas as páginas pelo endereço publicado, confira Console e Network, teste o cardápio, o formulário e o pedido. O <code class="inline-code">localStorage</code> do servidor local não é o mesmo do domínio público; faça uma nova seleção para testar a persistência na nova origem.</p>
+
+          <div class="warning-box">
+            <strong>Publicado significa público.</strong>
+            <p>Não coloque no repositório senhas, chaves privadas, dados pessoais ou informações que não possam ser expostas. Apagar depois não garante que um segredo deixe de existir no histórico.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="erros-11">
+          <h3 id="erros-11">Erros comuns para revisar</h3>
+          <ul>
+            <li>Testar somente a página inicial e esquecer as demais jornadas.</li>
+            <li>Corrigir vários pontos ao mesmo tempo e não saber qual mudança causou regressão.</li>
+            <li>Considerar a pontuação do Lighthouse como garantia de acessibilidade.</li>
+            <li>Publicar uma pasta sem <code class="inline-code">index.html</code> na raiz escolhida.</li>
+            <li>Usar caminhos que funcionam no computador, mas não respeitam maiúsculas e minúsculas no servidor.</li>
+            <li>Esquecer de testar novamente o Fetch e o Web Storage no domínio público.</li>
+            <li>Enviar credenciais ou dados reais para um repositório público.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="projeto-11">
+          <h3 id="projeto-11">Projeto final — entrega do Web I</h3>
+          <p>Entregue:</p>
+          <ul>
+            <li>pasta final organizada e sem arquivos desnecessários;</li>
+            <li>quatro páginas com link “Pular para o conteúdo”;</li>
+            <li>HTML validado e jornadas testadas;</li>
+            <li>registro de uma melhoria orientada pelo Lighthouse;</li>
+            <li>repositório público sem dados sensíveis;</li>
+            <li>endereço do Café Aurora publicado e funcionando;</li>
+            <li>evidências do teste local e da confirmação no endereço público.</li>
+          </ul>
+          <p>A entrega não precisa obter pontuação perfeita. Ela precisa demonstrar decisões compreendidas, funcionamento verificável, recuperação de falhas e ausência de problemas conhecidos que impeçam o uso.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-11">
+          <h3 id="check-11">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Transformo requisitos em ações de teste e resultados esperados.</li>
+            <li>Uso teclado, ampliação e redimensionamento nos testes manuais.</li>
+            <li>Valido cada documento HTML e começo pelo primeiro erro encontrado.</li>
+            <li>Escolho o painel do DevTools conforme a pergunta que preciso responder.</li>
+            <li>Interpreto o Lighthouse como apoio, não como aprovação automática.</li>
+            <li>Publico a estrutura correta sem expor dados sensíveis.</li>
+            <li>Repito as jornadas essenciais no domínio público.</li>
+            <li>Consigo explicar por que o Café Aurora está pronto para entrega.</li>
+          </ul>
+        </section>
+
+        <section class="concept-box" aria-labelledby="fontes-11">
+          <h3 id="fontes-11">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://validator.w3.org/nu/">Validador de HTML — W3C</a></li>
+            <li><a href="https://www.w3.org/WAI/test-evaluate/preliminary/">Verificações iniciais de acessibilidade — W3C WAI</a></li>
+            <li><a href="https://developer.chrome.com/docs/lighthouse/overview/">Introdução ao Lighthouse — Chrome for Developers</a></li>
+            <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">Criando um site no GitHub Pages — GitHub Docs</a></li>
+            <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">Configurando a fonte de publicação — GitHub Docs</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Web I concluído</strong>
+          <p>Você partiu de uma necessidade real e construiu um site completo, responsivo, acessível, interativo, capaz de carregar e preservar dados, testado e publicável. Web II e Web III permanecem indicados no portal, mas serão desenvolvidos somente em etapas futuras.</p>
+        </div>
+
+        <section class="task-box" aria-labelledby="transferencia-11">
+          <h3 id="transferencia-11">Transfira o aprendizado</h3>
+          <p>Imagine que o site de uma barbearia local será publicado amanhã. Escreva cinco testes indispensáveis, cada um com ação e resultado esperado, e indique qual deles não poderia ser comprovado apenas pelo Lighthouse. Não construa outro site.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint final do Web I">
+          <strong>Projeto final para conferência</strong>
+          <p>Use este ZIP para conferir ou recuperar a versão final do Café Aurora depois de concluir seus próprios testes e sua publicação.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web1-final.zip" download>Baixar projeto final do Web I (ZIP)</a>
+        </aside>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-10" data-chapter-link="capitulo-10">← Capítulo 10</a>
+          <span aria-disabled="true">Fim do Web I</span>
         </div>
       </article>
     </main>
   </div>
 
-  <script src="../../js/programacao-web.js?v=8"></script>
+  <script src="../../js/programacao-web.js?v=9"></script>
 </body>
 </html>

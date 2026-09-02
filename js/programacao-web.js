@@ -322,6 +322,23 @@
       restoreOrder();
       updateResult();
     });
+
+    document.querySelectorAll("[data-js-demo-release]").forEach((checklist) => {
+      const items = Array.from(checklist.querySelectorAll('input[type="checkbox"]'));
+      const status = checklist.querySelector("[data-demo-release-status]");
+
+      if (!items.length || !status) return;
+
+      function updateReleaseProgress() {
+        const completed = items.filter((item) => item.checked).length;
+        status.textContent = completed === items.length
+          ? `${completed} de ${items.length} verificações concluídas. Faça a conferência final antes de publicar.`
+          : `${completed} de ${items.length} verificações concluídas.`;
+      }
+
+      items.forEach((item) => item.addEventListener("change", updateReleaseProgress));
+      updateReleaseProgress();
+    });
   }
 
   function chapterFromHash() {
