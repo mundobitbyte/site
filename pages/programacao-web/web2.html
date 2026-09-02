@@ -35,6 +35,7 @@
       <a class="chapter-link" href="#capitulo-6" data-chapter-link="capitulo-6">6. A mensagem vira registro</a>
       <a class="chapter-link" href="#capitulo-7" data-chapter-link="capitulo-7">7. As mensagens chegam à proprietária</a>
       <a class="chapter-link" href="#capitulo-8" data-chapter-link="capitulo-8">8. Cada mensagem ganha andamento</a>
+      <a class="chapter-link" href="#capitulo-9" data-chapter-link="capitulo-9">9. Excluir exige critério</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -2466,6 +2467,253 @@ exit;</code></pre>
 
         <div class="chapter-footer">
           <a href="#capitulo-7" data-chapter-link="capitulo-7">← Capítulo 7</a>
+          <a href="#capitulo-9" data-chapter-link="capitulo-9">Capítulo 9 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-9" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 9 — Excluir exige critério</h2>
+          <p class="chapter-meta">Ciclo de vida dos dados, retenção, confirmação explícita, DELETE parametrizado, WHERE defensivo, linhas afetadas e PRG.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-9">
+          <h3 id="contexto-9">Guardar tudo para sempre também cria um problema</h3>
+          <p>O painel do <strong>Café Aurora</strong> já separa mensagens novas, em atendimento e respondidas. Meses depois, a proprietária percebe que contatos antigos continuam guardando nomes, e-mails, telefones e textos que já não ajudam no atendimento.</p>
+          <p>Um clique apressado pode destruir um registro ainda necessário. Mas conservar dados pessoais sem finalidade também aumenta exposição e desorganiza o trabalho. A decisão correta não é “apagar tudo” nem “guardar tudo”: é definir <strong>por que</strong> cada dado existe, <strong>quando</strong> ele deixa de ser necessário e <strong>quem</strong> pode eliminá-lo.</p>
+          <p>Neste capítulo, você concluirá o CRUD com o <strong>Delete</strong>. O sistema permitirá excluir somente uma mensagem respondida, mediante autenticação, POST, token CSRF, confirmação explícita e uma condição que protege até mesmo contra alteração indevida da interface.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-9">
+          <h3 id="objetivos-9">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Relacionar coleta, uso, retenção e descarte no ciclo de vida dos dados.</li>
+            <li>Distinguir exclusão, arquivamento, anonimização e cópia de segurança.</li>
+            <li>Definir uma regra de negócio antes de oferecer o botão de exclusão.</li>
+            <li>Exigir confirmação sem confiar apenas na interface.</li>
+            <li>Proteger a rota com autenticação, POST e token CSRF.</li>
+            <li>Executar <code class="inline-code">DELETE</code> parametrizado com <code class="inline-code">WHERE</code> defensivo.</li>
+            <li>Conferir a quantidade de linhas afetadas e aplicar POST–Redirect–GET.</li>
+            <li>Testar tanto o sucesso quanto as tentativas que devem ser recusadas.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-9">
+          <h3 id="aula-1-9">Aula 1 — Decidindo antes de apagar</h3>
+
+          <h4>Entender: o dado percorre um ciclo</h4>
+          <div class="flow" role="img" aria-label="Ciclo de vida simplificado dos dados">1. Coletar somente o necessário
+        ↓
+2. Usar para a finalidade informada
+        ↓
+3. Manter enquanto houver necessidade
+        ↓
+4. Revisar e descartar com segurança</div>
+          <p>A mensagem existe para permitir contato e atendimento. Quando esse trabalho termina, o negócio deve avaliar se ainda há uma finalidade legítima ou alguma obrigação que justifique a conservação. O exemplo didático não inventará um prazo universal: negócios diferentes podem ter finalidades e obrigações diferentes.</p>
+
+          <div class="warning-box">
+            <strong>“Noventa dias” não é uma resposta automática da LGPD.</strong>
+            <p>A lei trabalha com finalidade, necessidade e hipóteses de conservação, não com um único prazo para qualquer mensagem. Em um sistema real, a política deve ser documentada com orientação jurídica e administrativa adequada ao negócio. Aqui, o critério técnico será simples: somente mensagens respondidas e sem necessidade operacional poderão ser removidas individualmente.</p>
+          </div>
+
+          <h4>Escolha a ação correta</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Ação</th><th>O que acontece</th><th>Quando pode fazer sentido</th></tr></thead>
+              <tbody>
+                <tr><td>Excluir</td><td>Remove o registro da base ativa.</td><td>Quando a finalidade terminou e não existe motivo para conservar.</td></tr>
+                <tr><td>Arquivar</td><td>Retira da rotina, mas mantém os dados identificáveis.</td><td>Quando ainda existe uma necessidade real de consulta.</td></tr>
+                <tr><td>Anonimizar</td><td>Busca impedir a associação do dado a uma pessoa.</td><td>Quando a análise pode continuar sem identificação, usando método adequado.</td></tr>
+                <tr><td>Fazer backup</td><td>Cria uma cópia para recuperação.</td><td>Para continuidade e restauração, com acesso e prazo próprios.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Backup não é botão “Desfazer” do painel. Uma exclusão na base ativa pode continuar presente em cópias temporárias de segurança até o encerramento do ciclo dessas cópias. Por isso, retenção e backup precisam de regras coerentes.</p>
+        </section>
+
+        <section aria-labelledby="aula-2-9">
+          <h3 id="aula-2-9">Aula 2 — Tornando a intenção inequívoca</h3>
+
+          <h4>Mostre a ação somente no momento adequado</h4>
+          <p>No painel, mantenha a atualização para todos os estados, mas ofereça a exclusão apenas quando a mensagem estiver respondida. Isso reduz enganos sem substituir a validação do servidor.</p>
+          <pre class="code-block"><code>&lt;?php if ($registro["status"] === "respondida"): ?&gt;
+  &lt;form method="post" action="excluir-mensagem.php"
+        class="formulario-exclusao"&gt;
+    &lt;input type="hidden" name="csrf_token"
+           value="&lt;?= escaparPainel($csrfToken) ?&gt;"&gt;
+    &lt;input type="hidden" name="id"
+           value="&lt;?= (int) $registro["id"] ?&gt;"&gt;
+    &lt;input type="hidden" name="assunto_retorno"
+           value="&lt;?= escaparPainel($assunto) ?&gt;"&gt;
+
+    &lt;label&gt;
+      &lt;input type="checkbox" name="confirmacao"
+             value="excluir" required&gt;
+      Confirmo a exclusão desta mensagem respondida
+    &lt;/label&gt;
+    &lt;button type="submit"&gt;Excluir mensagem&lt;/button&gt;
+  &lt;/form&gt;
+&lt;?php endif; ?&gt;</code></pre>
+
+          <div class="concept-grid">
+            <div class="mini-card"><strong>Texto específico</strong><p>Explica qual registro será eliminado e evita um “OK” ambíguo.</p></div>
+            <div class="mini-card"><strong>Ação separada</strong><p>Atualizar e excluir usam formulários e rotas diferentes.</p></div>
+            <div class="mini-card"><strong>Estilo de perigo</strong><p>A cor e o texto distinguem a ação destrutiva, sem depender somente da cor.</p></div>
+          </div>
+
+          <div class="warning-box">
+            <strong><code class="inline-code">required</code> melhora a experiência, mas não protege o servidor.</strong>
+            <p>Uma requisição pode ser construída sem usar o formulário. O PHP ainda precisa conferir o valor exato de <code class="inline-code">confirmacao</code>, além do ID, da sessão e do token.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-9">
+          <h3 id="aula-3-9">Aula 3 — Excluindo uma única mensagem respondida</h3>
+
+          <h4>Proteja a rota antes de tocar no banco</h4>
+          <p>Crie <code class="inline-code">public/admin/excluir-mensagem.php</code> e repita as barreiras das outras ações administrativas:</p>
+          <pre class="code-block"><code>iniciarSessaoSegura();
+exigirAutenticacao();
+
+if (($_SERVER["REQUEST_METHOD"] ?? "GET") !== "POST") {
+    header("Allow: POST");
+    http_response_code(405);
+    exit("Método não permitido.");
+}
+
+if (!tokenCsrfValido($_POST["csrf_token"] ?? "")) {
+    http_response_code(403);
+    exit("Não foi possível confirmar a exclusão.");
+}</code></pre>
+
+          <h4>Valide o ID e a confirmação</h4>
+          <pre class="code-block"><code>$id = filter_var(
+    $_POST["id"] ?? "",
+    FILTER_VALIDATE_INT,
+    ["options" =&gt; ["min_range" =&gt; 1]]
+);
+
+$confirmacao = $_POST["confirmacao"] ?? "";
+$confirmacao = is_string($confirmacao) ? $confirmacao : "";
+
+if ($id === false || $confirmacao !== "excluir") {
+    // Registre um aviso de erro e não execute DELETE.
+}</code></pre>
+
+          <h4>Coloque a regra também no <code class="inline-code">WHERE</code></h4>
+          <pre class="code-block"><code>$comando = $pdo-&gt;prepare(
+    "DELETE FROM mensagens
+     WHERE id = :id
+       AND status = 'respondida'"
+);
+
+$comando-&gt;execute(["id" =&gt; $id]);</code></pre>
+          <p>O ID limita a operação a uma linha. A condição do estado impede a exclusão de uma mensagem nova ou em atendimento, mesmo que alguém altere o HTML. O marcador mantém o valor externo separado da estrutura SQL.</p>
+
+          <div class="warning-box">
+            <strong>Sem <code class="inline-code">WHERE</code>, o <code class="inline-code">DELETE</code> remove todas as linhas.</strong>
+            <p>Faça uma pausa obrigatória antes de executar: leia a instrução, aponte a condição e diga quantos registros ela pode atingir. Ferramentas e permissões ajudam, mas não compensam uma lógica destrutiva escrita incorretamente.</p>
+          </div>
+
+          <h4>Trate sucesso como exatamente uma linha removida</h4>
+          <pre class="code-block"><code>if ($comando-&gt;rowCount() === 1) {
+    $_SESSION["aviso_admin"] = [
+        "tipo" =&gt; "sucesso",
+        "texto" =&gt; "Mensagem excluída com sucesso."
+    ];
+} else {
+    $_SESSION["aviso_admin"] = [
+        "tipo" =&gt; "erro",
+        "texto" =&gt; "A mensagem não existe ou ainda não pode ser excluída."
+    ];
+}</code></pre>
+          <p>Zero linhas não deve virar sucesso: o ID pode não existir ou o registro pode não estar respondido. A mensagem de retorno não revela detalhes desnecessários, mas orienta a pessoa autenticada.</p>
+
+          <div class="note-box">
+            <strong>Uma única instrução <code class="inline-code">DELETE</code> já é atômica no SQLite.</strong>
+            <p>Não acrescente uma transação apenas para parecer mais seguro. Use <code class="inline-code">beginTransaction()</code> quando várias operações relacionadas precisarem ser confirmadas ou desfeitas como uma unidade, por exemplo registrar uma auditoria e excluir o dado. Neste exercício, a condição completa está na única instrução executada.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-9">
+          <h3 id="aula-4-9">Aula 4 — Comprovando que a exclusão está sob controle</h3>
+
+          <h4>Redirecione e preserve o filtro</h4>
+          <p>Depois da tentativa, reconstrua somente um destino permitido e responda com 303. Atualizar o painel repetirá o GET, não a exclusão:</p>
+          <pre class="code-block"><code>$destino = "painel.php";
+
+if ($assuntoRetorno !== "") {
+    $destino .= "?assunto=" . rawurlencode($assuntoRetorno);
+}
+
+header("Location: " . $destino, true, 303);
+exit;</code></pre>
+
+          <h4>Teste o que deve funcionar e o que deve falhar</h4>
+          <div class="task-box">
+            <ol>
+              <li>Cadastre três mensagens e deixe cada uma em um estado diferente.</li>
+              <li>Confirme que somente a respondida mostra o formulário de exclusão.</li>
+              <li>Tente enviar sem marcar a confirmação: o navegador deve impedir.</li>
+              <li>Remova a confirmação no DevTools e envie: o servidor deve recusar.</li>
+              <li>Altere o ID para o registro em atendimento: nenhuma linha deve ser removida.</li>
+              <li>Remova o token: a resposta deve ser 403.</li>
+              <li>Abra a rota por GET: a resposta deve ser 405.</li>
+              <li>Exclua a mensagem respondida e confirme que exatamente ela desapareceu.</li>
+              <li>Atualize a página: nenhuma exclusão adicional deve ocorrer.</li>
+              <li>Repita o teste com um filtro ativo e confirme que ele permanece.</li>
+            </ol>
+          </div>
+
+          <h4>Registre uma política simples antes de automatizar</h4>
+          <p>O Café Aurora deve documentar: finalidade das mensagens, responsáveis, critérios de encerramento, condições de conservação, forma de descarte e tratamento das cópias de segurança. Uma rotina automática só deve existir depois que essas decisões estiverem corretas. Automatizar uma regra errada apenas produz erros mais rapidamente.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-9">
+          <h3 id="check-9">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Explico por que guardar dados indefinidamente também gera risco.</li>
+            <li>Não invento um prazo universal de retenção.</li>
+            <li>Diferencio exclusão, arquivo, anonimização e backup.</li>
+            <li>Exijo confirmação na interface e novamente no servidor.</li>
+            <li>Recuso GET, sessão ausente, token inválido e ID inadequado.</li>
+            <li>Uso <code class="inline-code">WHERE</code> com ID e estado permitido.</li>
+            <li>Confiro se exatamente uma linha foi removida.</li>
+            <li>Evito repetir o <code class="inline-code">DELETE</code> ao atualizar a página.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-9">
+          <h3 id="transferencia-9">Transfira o aprendizado</h3>
+          <p>A clínica veterinária terminou um pedido de retorno, mas o histórico pode conter informação necessária ao prontuário. Antes de programar, separe o que é simples contato do que integra outro registro sujeito a regras próprias. Depois, desenhe uma exclusão individual que só aceite pedidos encerrados, exija confirmação no servidor e comprove quantas linhas foram removidas.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do nono capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP contém exclusão individual de mensagens respondidas, confirmação explícita, rota protegida, <code class="inline-code">DELETE</code> parametrizado com condição defensiva, verificação de linha afetada, PRG, preservação do filtro e todas as funcionalidades anteriores. Use-o depois de construir a sua versão.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-9.zip" download>Baixar checkpoint do Capítulo 9 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-9">
+          <h3 id="fontes-9">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://www.sqlite.org/lang_delete.html"><code class="inline-code">DELETE</code> — documentação do SQLite</a></li>
+            <li><a href="https://www.php.net/manual/en/pdostatement.rowcount.php"><code class="inline-code">rowCount()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/function.filter-var.php"><code class="inline-code">filter_var()</code> — Manual do PHP</a></li>
+            <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Prevenção de CSRF — OWASP</a></li>
+            <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">Lei Geral de Proteção de Dados Pessoais — Presidência da República</a></li>
+            <li><a href="https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/glossario-anpd/p">Princípios de proteção de dados — ANPD</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>CRUD completo não significa sistema concluído</strong>
+          <p>O Café Aurora agora cria, lê, atualiza e exclui registros com controles básicos. Ainda dependemos principalmente de testes manuais e repetitivos. O próximo capítulo transformará comportamentos importantes em testes que possam ser executados novamente a cada mudança.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-8" data-chapter-link="capitulo-8">← Capítulo 8</a>
           <span aria-disabled="true">Próximo capítulo em preparação</span>
         </div>
       </article>
