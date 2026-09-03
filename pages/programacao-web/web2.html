@@ -36,6 +36,7 @@
       <a class="chapter-link" href="#capitulo-7" data-chapter-link="capitulo-7">7. As mensagens chegam à proprietária</a>
       <a class="chapter-link" href="#capitulo-8" data-chapter-link="capitulo-8">8. Cada mensagem ganha andamento</a>
       <a class="chapter-link" href="#capitulo-9" data-chapter-link="capitulo-9">9. Excluir exige critério</a>
+      <a class="chapter-link" href="#capitulo-10" data-chapter-link="capitulo-10">10. O teste pode ser repetido</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -2714,6 +2715,273 @@ exit;</code></pre>
 
         <div class="chapter-footer">
           <a href="#capitulo-8" data-chapter-link="capitulo-8">← Capítulo 8</a>
+          <a href="#capitulo-10" data-chapter-link="capitulo-10">Capítulo 10 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-10" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 10 — O teste pode ser repetido</h2>
+          <p class="chapter-meta">Risco de regressão, código testável, Arrange–Act–Assert, SQLite em memória, executor de testes, saída do processo e limites da cobertura.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-10">
+          <h3 id="contexto-10">A regra continua segura depois da próxima mudança?</h3>
+          <p>O <strong>Café Aurora</strong> já concluiu o CRUD. Para conferir a exclusão, o aluno cadastra mensagens, muda estados, tenta IDs inadequados e observa o resultado. O procedimento funciona, mas precisa ser repetido manualmente sempre que o código muda.</p>
+          <p>Agora imagine uma manutenção simples: outro programador reorganiza a rota e, sem perceber, remove a condição <code class="inline-code">status = 'respondida'</code>. A página ainda abre, o botão ainda funciona e uma mensagem respondida ainda pode ser excluída. Apenas o caso proibido revelaria a regressão.</p>
+          <p>Neste capítulo, você separará a operação de banco em uma função reutilizável e criará testes que preparam um banco temporário, executam a mesma função da aplicação e verificam automaticamente o resultado. O banco real e os dados do painel não serão tocados.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-10">
+          <h3 id="objetivos-10">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Explicar regressão e o valor de uma verificação repetível.</li>
+            <li>Distinguir teste manual, unitário, de integração e ponta a ponta.</li>
+            <li>Organizar um teste em preparar, executar e verificar.</li>
+            <li>Extrair acesso ao banco para uma função que possa ser chamada fora da rota.</li>
+            <li>Criar um banco SQLite exclusivo em memória.</li>
+            <li>Construir um pequeno executor de testes sem dependências externas.</li>
+            <li>Usar mensagens de falha e código de saída para indicar o resultado.</li>
+            <li>Reconhecer o que a suíte protege e o que ainda exige outros testes.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-10">
+          <h3 id="aula-1-10">Aula 1 — Transformando uma conferência em especificação executável</h3>
+
+          <h4>Entender: clicar uma vez não prova o futuro</h4>
+          <p>Um teste manual responde se um comportamento funcionou naquele momento e naquele caminho percorrido. Um teste automatizado registra entradas, ação e resultado esperado em código. Ele pode ser repetido depois de uma correção, refatoração ou nova funcionalidade.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Tipo</th><th>Foco</th><th>Exemplo no Café Aurora</th></tr></thead>
+              <tbody>
+                <tr><td>Manual</td><td>Uso real, apresentação e percepção humana.</td><td>Confirmar que o formulário de exclusão está compreensível no celular.</td></tr>
+                <tr><td>Unitário</td><td>Uma unidade pequena, isolada de banco, rede e interface.</td><td>Validar uma função pura que aceite apenas estados previstos.</td></tr>
+                <tr><td>Integração</td><td>Colaboração entre partes reais.</td><td>Executar a função de repositório contra um SQLite em memória.</td></tr>
+                <tr><td>Ponta a ponta</td><td>Fluxo completo pelo sistema.</td><td>Entrar, marcar a confirmação, enviar o POST e observar o painel.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>O teste deste capítulo é de <strong>integração</strong>: usa PDO, o driver SQLite, uma tabela real e a instrução SQL de produção. Chamar qualquer teste de “unitário” apenas porque ele é automatizado esconderia dependências importantes.</p>
+
+          <h4>Escreva o comportamento antes do mecanismo</h4>
+          <div class="concept-grid">
+            <div class="mini-card"><strong>Deve permitir</strong><p>Uma mensagem respondida identificada é removida.</p></div>
+            <div class="mini-card"><strong>Deve impedir</strong><p>Uma mensagem nova ou em atendimento permanece.</p></div>
+            <div class="mini-card"><strong>Deve limitar</strong><p>Excluir um ID não modifica outro registro.</p></div>
+          </div>
+          <p>Essas frases são regras observáveis. Detalhes como nome de variável ou quantidade de linhas da função podem mudar sem quebrar o contrato. Um bom teste protege comportamento relevante, não a aparência interna do código.</p>
+        </section>
+
+        <section aria-labelledby="aula-2-10">
+          <h3 id="aula-2-10">Aula 2 — Fazendo a aplicação e o teste chamarem o mesmo código</h3>
+
+          <h4>Extraia a operação da rota</h4>
+          <p>Crie <code class="inline-code">src/repositorio-mensagens.php</code>. A função recebe a conexão pronta e o ID, executa a exclusão defensiva e devolve se exatamente uma linha foi removida:</p>
+          <pre class="code-block"><code>&lt;?php
+function excluirMensagemRespondida(PDO $pdo, int $id): bool
+{
+    $comando = $pdo-&gt;prepare(
+        "DELETE FROM mensagens
+         WHERE id = :id
+           AND status = 'respondida'"
+    );
+
+    $comando-&gt;execute(["id" =&gt; $id]);
+
+    return $comando-&gt;rowCount() === 1;
+}</code></pre>
+          <p>A função não abre a conexão por conta própria. Quem chama decide se entregará o banco do sistema ou um banco exclusivo de teste. Essa passagem explícita da dependência torna o código mais flexível e reduz a chance de o teste tocar dados reais.</p>
+
+          <h4>Use a função na rota existente</h4>
+          <pre class="code-block"><code>require_once dirname(__DIR__, 2) .
+    "/src/repositorio-mensagens.php";
+
+$pdo = conectarBanco();
+$excluiu = excluirMensagemRespondida($pdo, $id);
+
+if ($excluiu) {
+    // Registre o aviso de sucesso.
+} else {
+    // A mensagem não existe ou não está respondida.
+}</code></pre>
+
+          <div class="warning-box">
+            <strong>Não copie o SQL para dentro do teste.</strong>
+            <p>Se o teste executar uma versão própria da instrução, ele poderá continuar verde enquanto a rota usa outra versão defeituosa. Aplicação e teste devem chamar a mesma função de produção.</p>
+          </div>
+
+          <div class="note-box">
+            <strong>Refatorar preserva o comportamento.</strong>
+            <p>A rota continua validando autenticação, método, CSRF, ID, confirmação e filtro. Somente a responsabilidade de conversar com o banco foi deslocada para um arquivo apropriado. Antes e depois da mudança, a regra externa deve permanecer a mesma.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-10">
+          <h3 id="aula-3-10">Aula 3 — Preparando um laboratório descartável</h3>
+
+          <h4>Crie um banco novo para cada teste</h4>
+          <p>Em <code class="inline-code">tests/exclusao-mensagem-test.php</code>, abra <code class="inline-code">sqlite::memory:</code>. O conteúdo existirá somente naquela conexão e desaparecerá quando o processo terminar:</p>
+          <pre class="code-block"><code>function criarBancoTeste(): PDO
+{
+    $pdo = new PDO("sqlite::memory:", null, null, [
+        PDO::ATTR_ERRMODE =&gt; PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE =&gt; PDO::FETCH_ASSOC
+    ]);
+
+    $pdo-&gt;exec(
+        "CREATE TABLE mensagens (
+            id INTEGER PRIMARY KEY,
+            status TEXT NOT NULL
+        )"
+    );
+
+    $pdo-&gt;exec(
+        "INSERT INTO mensagens (id, status) VALUES
+         (1, 'nova'),
+         (2, 'em_atendimento'),
+         (3, 'respondida'),
+         (4, 'respondida')"
+    );
+
+    return $pdo;
+}</code></pre>
+          <p>Cada caso chama <code class="inline-code">criarBancoTeste()</code>. Assim, um teste não depende da ordem nem das alterações deixadas pelo anterior. O conjunto inicial conhecido é chamado de <strong>fixture</strong>.</p>
+
+          <h4>Use preparar, executar e verificar</h4>
+          <pre class="code-block"><code>$pdo = criarBancoTeste();                    // Arrange
+
+$excluiu = excluirMensagemRespondida(       // Act
+    $pdo,
+    3
+);
+
+verificar($excluiu,                         // Assert
+    "A mensagem respondida deveria ser excluída."
+);
+
+$quantidade = (int) $pdo
+    -&gt;query("SELECT COUNT(*) FROM mensagens WHERE id = 3")
+    -&gt;fetchColumn();
+
+verificar($quantidade === 0,
+    "O registro 3 ainda está no banco."
+);</code></pre>
+          <p>A organização <strong>Arrange–Act–Assert</strong> deixa clara a preparação, a ação principal e a comprovação. Comentários podem ajudar no início, mas a estrutura e os nomes devem tornar cada etapa reconhecível.</p>
+
+          <h4>Crie verificações que falhem com explicação</h4>
+          <pre class="code-block"><code>function verificar(bool $condicao, string $mensagem): void
+{
+    if (!$condicao) {
+        throw new RuntimeException($mensagem);
+    }
+}
+
+function testar(string $descricao, callable $teste): bool
+{
+    try {
+        $teste();
+        echo "[OK] $descricao" . PHP_EOL;
+        return true;
+    } catch (Throwable $erro) {
+        echo "[FALHOU] $descricao" . PHP_EOL;
+        echo "  " . $erro-&gt;getMessage() . PHP_EOL;
+        return false;
+    }
+}</code></pre>
+          <p><code class="inline-code">verificar()</code> interrompe o caso quando uma expectativa não é atendida. <code class="inline-code">testar()</code> captura a falha, mostra o comportamento afetado e permite que os próximos casos também sejam executados.</p>
+        </section>
+
+        <section aria-labelledby="aula-4-10">
+          <h3 id="aula-4-10">Aula 4 — Executando, provocando falha e interpretando o resultado</h3>
+
+          <h4>Rode toda a suíte com um comando</h4>
+          <pre class="code-block"><code>php tests/exclusao-mensagem-test.php</code></pre>
+          <p>A saída esperada apresenta quatro casos aprovados e termina com um resumo. O arquivo retorna código <code class="inline-code">0</code> quando tudo passa e <code class="inline-code">1</code> quando existe falha. Editores, scripts e futuras ferramentas de integração contínua usam esse código para decidir se a execução foi bem-sucedida.</p>
+
+          <div class="terminal-block"><code>[OK] exclui uma mensagem respondida
+[OK] não exclui uma mensagem nova
+[OK] não exclui uma mensagem em atendimento
+[OK] exclui somente o ID informado
+
+4 teste(s), 0 falha(s).</code></div>
+
+          <h4>Comprove que o teste detecta o defeito</h4>
+          <ol>
+            <li>Execute a suíte e confirme que todos os casos passam.</li>
+            <li>Temporariamente, retire <code class="inline-code">AND status = 'respondida'</code> da função.</li>
+            <li>Execute novamente: os casos proibidos devem falhar.</li>
+            <li>Restaure a condição e confirme que a suíte volta a passar.</li>
+          </ol>
+          <p>Um teste que nunca foi visto falhar pode estar verificando a coisa errada. Essa alteração controlada demonstra que a suíte realmente vigia a regra. Não publique nem mantenha o defeito provocado.</p>
+
+          <h4>Confira o código de saída</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Terminal</th><th>Comando após os testes</th></tr></thead>
+              <tbody>
+                <tr><td>PowerShell</td><td><code class="inline-code">$LASTEXITCODE</code></td></tr>
+                <tr><td>Prompt de Comando</td><td><code class="inline-code">echo %ERRORLEVEL%</code></td></tr>
+                <tr><td>Linux ou macOS</td><td><code class="inline-code">echo $?</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="warning-box">
+            <strong>Quatro testes não significam sistema totalmente testado.</strong>
+            <p>A suíte cobre a regra SQL de exclusão e seu efeito no banco. Ela não abre o navegador, não autentica, não envia o formulário e não avalia acessibilidade ou aparência. Os testes manuais do Capítulo 9 continuam úteis até que outros níveis sejam construídos.</p>
+          </div>
+
+          <h4>Entenda por que começamos sem framework</h4>
+          <p>O pequeno executor torna visíveis caso, expectativa, falha, resumo e código de saída. Em projetos reais, não convém ampliar indefinidamente uma ferramenta caseira. O PHPUnit oferece organização, asserções, seleção de testes, relatórios e integração com outras ferramentas. O próximo passo será migrar esta suíte para uma ferramenta de mercado sem perder o entendimento construído aqui.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-10">
+          <h3 id="check-10">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Explico o que é regressão com um exemplo do sistema.</li>
+            <li>Não confundo teste automatizado com teste unitário.</li>
+            <li>Separo preparação, execução e verificação.</li>
+            <li>Faço teste e aplicação chamarem o mesmo código de produção.</li>
+            <li>Uso um banco em memória que não toca os dados reais.</li>
+            <li>Crio um estado inicial independente para cada caso.</li>
+            <li>Leio mensagem, resumo e código de saída.</li>
+            <li>Reconheço comportamentos ainda não cobertos pela suíte.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-10">
+          <h3 id="transferencia-10">Transfira o aprendizado</h3>
+          <p>A clínica veterinária permite encerrar apenas pedidos com estado “consulta realizada”. Extraia a operação para uma função que receba PDO e ID. Depois crie um banco SQLite em memória e automatize três provas: o estado permitido é removido, o estado “aguardando” permanece e um ID inexistente não produz sucesso.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do décimo capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP contém a operação de exclusão extraída para um repositório, a rota usando o mesmo código de produção, banco SQLite em memória, executor didático, quatro casos automatizados, resumo, código de saída e todas as funcionalidades anteriores. Use-o depois de construir a sua versão.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-10.zip" download>Baixar checkpoint do Capítulo 10 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-10">
+          <h3 id="fontes-10">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://www.php.net/manual/en/ref.pdo-sqlite.connection.php">Conexão PDO_SQLITE e banco em memória — Manual do PHP</a></li>
+            <li><a href="https://www.sqlite.org/inmemorydb.html">Bancos em memória — documentação do SQLite</a></li>
+            <li><a href="https://www.php.net/manual/en/class.throwable.php"><code class="inline-code">Throwable</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/class.runtimeexception.php"><code class="inline-code">RuntimeException</code> — Manual do PHP</a></li>
+            <li><a href="https://docs.phpunit.de/en/13.3/writing-tests-for-phpunit.html">Escrita de testes e Arrange–Act–Assert — PHPUnit</a></li>
+            <li><a href="https://phpunit.de/">PHPUnit — site oficial</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Um executor didático não substitui uma ferramenta de testes</strong>
+          <p>A suíte já detecta regressões importantes sem tocar o banco real, mas ainda não oferece recursos profissionais de organização, seleção e relatório. O próximo capítulo levará os mesmos comportamentos ao PHPUnit e preparará uma rotina padronizada de testes.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-9" data-chapter-link="capitulo-9">← Capítulo 9</a>
           <span aria-disabled="true">Próximo capítulo em preparação</span>
         </div>
       </article>
