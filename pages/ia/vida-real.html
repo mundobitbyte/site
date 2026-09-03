@@ -22,7 +22,7 @@
 <a class="side-link" href="#lab4">Lab 04 · Organização</a>
 <a class="side-link" href="#lab5">Lab 05 · Linguagem</a>
 <a class="side-link" href="#lab6">Lab 06 · Imagem</a>
-<a class="side-link" href="#lab7">Lab 07 · Rotina</a>
+<a class="side-link" href="#lab7">Lab 07 · Orçamentos</a>
 <a class="side-link" href="#lab8">Lab 08 · Print de erro</a>
 <a class="side-link" href="#lab9">Lab 09 · PDF</a>
 <a class="side-link" href="#configurar">Instruções mínimas</a>
@@ -37,7 +37,7 @@
 <div>
 <span class="badge">Módulo 2 · IA aplicada</span>
 <h1>IA na Vida Real</h1>
-<p class="lead">Você recebe uma mensagem difícil de responder, precisa remarcar uma reunião, organizar a troca de celular, explicar segurança digital para alguém, criar uma arte para um evento, entender um erro pela tela ou estudar um PDF grande. É nesse tipo de situação que a IA começa a mostrar utilidade real — desde que receba o contexto verdadeiro e que você continue responsável pelo resultado.</p>
+<p class="lead">Você recebe uma mensagem difícil de responder, precisa remarcar uma reunião, organizar a troca de celular, explicar segurança digital para alguém, criar uma arte para um evento, comparar propostas, entender um erro pela tela ou estudar um PDF grande. É nesse tipo de situação que a IA começa a mostrar utilidade real — desde que receba o contexto verdadeiro e que você continue responsável pelo resultado.</p>
 <div class="hero-actions">
 <a class="button" href="#lab1">Começar laboratórios</a>
 <a class="button secondary" href="#fluxo">Entender o fluxo</a>
@@ -242,15 +242,25 @@ Não coloque textos, logotipos ou informações inventadas dentro da imagem. Evi
 <div class="note good" style="margin-top:16px"><h3>O que observar</h3><p>A imagem parece uma situação escolar plausível? Há espaço para a informação real do evento? A IA inventou texto, marcas ou equipamentos incoerentes?</p></div>
 </section>
 <section class="content-card connector" id="lab7">
-<div class="section-kicker">Laboratório 07 · Rotina doméstica</div>
-<h2>9. Planejar um jantar rápido com o que já existe em casa</h2>
-<p>Nem todo uso de IA precisa ser acadêmico ou profissional. Uma tarefa comum também pode mostrar a importância de fornecer restrições reais em vez de aceitar uma receita genérica da internet.</p>
-<div class="note idea"><h3>Imagine esta situação</h3><p>Você chega em casa tarde, tem cerca de 20 minutos, não quer usar forno e gostaria de aproveitar o frango e o arroz que já estão prontos para evitar desperdício.</p></div>
+<div class="section-kicker">Laboratório 07 · Comparação para decidir melhor</div>
+<h2>9. Comparar dois orçamentos sem deixar a IA escolher só pelo menor preço</h2>
+<p>Uma decisão cotidiana fica difícil quando duas propostas parecem semelhantes, mas descrevem serviços de formas diferentes. A IA pode ajudar a organizar a comparação — desde que não invente qualidade, garantia ou especificações que não foram informadas.</p>
+<div class="note idea"><h3>Imagine esta situação</h3><p>Seu notebook está lento e você pediu orçamento em duas assistências técnicas. Uma proposta é mais barata, mas traz menos detalhes. Antes de decidir, você quer descobrir se está realmente comparando a mesma coisa.</p></div>
 <div class="grid-2">
-<div class="note warn"><h3>O que existe</h3><div class="prompt"><span class="prompt-text">arroz cozido, frango desfiado, ovos, tomate, queijo, cebola; 20 minutos; sem forno</span></div></div>
-<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Cheguei em casa tarde e quero preparar um jantar em até 20 minutos, sem usar forno. Já tenho arroz cozido e frango desfiado e quero aproveitar essas sobras. Também tenho ovos, tomate, queijo e cebola.
+<div class="note warn"><h3>Dois orçamentos recebidos</h3><div class="prompt"><span class="prompt-text">Orçamento A — R$ 320: SSD 480 GB, instalação, migração dos arquivos do usuário e 90 dias de garantia do serviço.
 
-Sugira duas opções simples usando principalmente o que já tenho. Para cada uma, indique a ordem de preparo e o tempo aproximado. Não inclua ingredientes obrigatórios que eu não citei; se sugerir algo opcional, deixe isso claro.</span></div></div>
+Orçamento B — R$ 250: “upgrade de SSD + instalação completa”. Não informa capacidade, marca/modelo do SSD, migração de arquivos nem garantia.</span></div></div>
+<div class="note good"><h3>Prompt completo pronto para copiar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Recebi dois orçamentos para melhorar meu notebook e quero compará-los sem assumir que o mais barato é automaticamente melhor.
+
+Orçamento A — R$ 320: SSD 480 GB, instalação, migração dos arquivos do usuário e 90 dias de garantia do serviço.
+
+Orçamento B — R$ 250: “upgrade de SSD + instalação completa”. Não informa capacidade, marca/modelo do SSD, migração de arquivos nem garantia.
+
+Faça uma tabela comparando somente o que está explicitamente informado. Depois:
+1. marque o que NÃO É POSSÍVEL COMPARAR ainda;
+2. liste as perguntas que eu deveria fazer à assistência B antes de decidir;
+3. não invente qualidade, desempenho, marca, garantia ou serviços ausentes;
+4. não escolha por mim: explique quais diferenças podem alterar a decisão depois que as informações faltantes forem obtidas.</span></div></div>
 </div>
 <div aria-label="Escolha uma IA para testar" class="tool-grid">
 <a class="tool-button" href="https://chat.openai.com/" rel="noopener" target="_blank">ChatGPT</a>
@@ -259,7 +269,7 @@ Sugira duas opções simples usando principalmente o que já tenho. Para cada um
 <a class="tool-button" href="https://copilot.microsoft.com/" rel="noopener" target="_blank">Copilot</a>
 <a class="tool-button" href="https://www.perplexity.ai/" rel="noopener" target="_blank">Perplexity</a>
 </div>
-<div class="note warn" style="margin-top:16px"><h3>Validação prática</h3><p>A proposta respeitou tempo, utensílios e ingredientes? O uso doméstico parece simples, mas continua exigindo conferir se a resposta cabe na sua realidade.</p></div>
+<div class="note warn" style="margin-top:16px"><h3>O que observar</h3><p>A IA distinguiu preço de escopo? Transformou ausência de informação em “ponto a confirmar” ou inventou detalhes? Uma boa comparação deixa mais claro o que ainda precisa ser perguntado antes da decisão.</p></div>
 </section>
 <section class="content-card connector" id="lab8">
 <div class="section-kicker">Laboratório 08 · Leitura de captura de tela</div>
