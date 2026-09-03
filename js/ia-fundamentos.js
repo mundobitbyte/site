@@ -5,20 +5,22 @@ options.forEach(option => {
   option.addEventListener('click', () => {
     options.forEach(o => o.classList.remove('selected'));
     option.classList.add('selected');
-    feedback.classList.add('show');
+    if (feedback) feedback.classList.add('show');
   });
 });
 
-const flowSteps = document.querySelectorAll('.flow-step');
+const flowSteps = document.querySelectorAll('#fluxoPrincipal .flow-step');
 const flowDetail = document.getElementById('flowDetail');
 
-flowSteps.forEach(step => {
-  step.addEventListener('click', () => {
-    flowSteps.forEach(s => s.classList.remove('active'));
-    step.classList.add('active');
-    flowDetail.textContent = step.dataset.info;
+if (flowDetail) {
+  flowSteps.forEach(step => {
+    step.addEventListener('click', () => {
+      flowSteps.forEach(s => s.classList.remove('active'));
+      step.classList.add('active');
+      flowDetail.textContent = step.dataset.info;
+    });
   });
-});
+}
 
 function toggleBox(id) {
   const el = document.getElementById(id);
@@ -55,7 +57,7 @@ function copyPrompt(id, btn) {
   });
 }
 
-const validationSteps = document.querySelectorAll('#validacao-final .flow-step');
+const validationSteps = document.querySelectorAll('#fluxoValidacao .flow-step');
 const validationDetail = document.getElementById('flowDetailValidacao');
 
 if (validationDetail) {
