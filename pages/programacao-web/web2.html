@@ -37,6 +37,7 @@
       <a class="chapter-link" href="#capitulo-8" data-chapter-link="capitulo-8">8. Cada mensagem ganha andamento</a>
       <a class="chapter-link" href="#capitulo-9" data-chapter-link="capitulo-9">9. Excluir exige critério</a>
       <a class="chapter-link" href="#capitulo-10" data-chapter-link="capitulo-10">10. O teste pode ser repetido</a>
+      <a class="chapter-link" href="#capitulo-11" data-chapter-link="capitulo-11">11. A suíte entra no padrão</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -2982,6 +2983,236 @@ function testar(string $descricao, callable $teste): bool
 
         <div class="chapter-footer">
           <a href="#capitulo-9" data-chapter-link="capitulo-9">← Capítulo 9</a>
+          <a href="#capitulo-11" data-chapter-link="capitulo-11">Capítulo 11 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-11" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 11 — A suíte entra no padrão</h2>
+          <p class="chapter-meta">Composer, dependências de desenvolvimento, autoload, PHPUnit 13, configuração da suíte, asserções, TestDox e execução seletiva.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-11">
+          <h3 id="contexto-11">Como outra pessoa instala e executa os testes?</h3>
+          <p>O executor criado no capítulo anterior cumpriu uma função importante: tornou visíveis os casos, as verificações, as falhas e o código de saída. Mas o <strong>Café Aurora</strong> agora precisa ser retomado por outra pessoa, em outro computador, sem depender de arquivos copiados à mão ou comandos lembrados de memória.</p>
+          <p>Neste capítulo, os mesmos quatro comportamentos serão migrados para o PHPUnit. O Composer registrará as dependências do projeto, criará o carregamento automático e oferecerá um único comando para a suíte. O banco continuará sendo um SQLite em memória, novo para cada teste; a mudança está na infraestrutura, não na regra protegida.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-11">
+          <h3 id="objetivos-11">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Explicar a diferença entre gerenciador de dependências, framework de testes e executor.</li>
+            <li>Distinguir <code class="inline-code">composer.json</code>, <code class="inline-code">composer.lock</code> e <code class="inline-code">vendor/</code>.</li>
+            <li>Declarar requisitos de execução e dependências exclusivas de desenvolvimento.</li>
+            <li>Carregar o código da aplicação pelo autoload do Composer.</li>
+            <li>Migrar os quatro casos para uma classe <code class="inline-code">TestCase</code>.</li>
+            <li>Trocar verificações caseiras por asserções expressivas do PHPUnit.</li>
+            <li>Configurar e executar a suíte com um comando estável.</li>
+            <li>Selecionar um caso, provocar uma falha e interpretar o relatório.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-11">
+          <h3 id="aula-1-11">Aula 1 — Tornando as dependências explícitas</h3>
+
+          <h4>Entender: cada arquivo responde a uma pergunta</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Item</th><th>O que registra</th><th>Vai para o repositório?</th></tr></thead>
+              <tbody>
+                <tr><td><code class="inline-code">composer.json</code></td><td>Requisitos, faixas de versão, autoload e comandos do projeto.</td><td>Sim.</td></tr>
+                <tr><td><code class="inline-code">composer.lock</code></td><td>Versões exatas resolvidas pelo Composer.</td><td>Sim, neste projeto de aplicação.</td></tr>
+                <tr><td><code class="inline-code">vendor/</code></td><td>Pacotes baixados e autoload gerado para aquela instalação.</td><td>Não; pode ser reconstruído.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>O arquivo JSON declara a intenção; o arquivo de trava registra a resolução; a pasta <code class="inline-code">vendor/</code> é o resultado instalado. Confundir esses papéis produz instalações enormes ou diferentes entre computadores.</p>
+
+          <h4>Confira o ambiente</h4>
+          <pre class="code-block"><code>php -v
+composer --version
+php -m | findstr /I "PDO sqlite mbstring xml"</code></pre>
+          <p>Este módulo usa PHP 8.5. O PHPUnit 13 exige PHP 8.4 ou superior, portanto as versões são compatíveis. No Linux ou macOS, substitua <code class="inline-code">findstr</code> por <code class="inline-code">grep -Ei</code>.</p>
+
+          <div class="note-box">
+            <strong>Instale o Composer pela fonte oficial.</strong>
+            <p>O procedimento de instalação pode mudar e inclui verificações de integridade. Consulte a página oficial indicada nas referências, conclua a instalação e só então confirme <code class="inline-code">composer --version</code>.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-2-11">
+          <h3 id="aula-2-11">Aula 2 — Descrevendo o projeto com Composer</h3>
+
+          <h4>Experimentar: crie <code class="inline-code">composer.json</code></h4>
+          <pre class="code-block"><code>{
+  "name": "mundobitbyte/cafe-aurora-web2",
+  "description": "Projeto didático do curso de Programação Web II",
+  "type": "project",
+  "require": {
+    "php": "^8.5",
+    "ext-pdo": "*",
+    "ext-pdo_sqlite": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^13.0"
+  },
+  "autoload": {
+    "files": [
+      "src/repositorio-mensagens.php"
+    ]
+  },
+  "scripts": {
+    "test": "phpunit --testdox"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}</code></pre>
+          <p><code class="inline-code">require</code> descreve o que a aplicação precisa para funcionar. <code class="inline-code">require-dev</code> contém ferramentas usadas para desenvolver e verificar o projeto. O PHPUnit não é necessário para servir as páginas ao visitante, por isso pertence ao segundo grupo.</p>
+          <p>As entradas <code class="inline-code">ext-pdo</code> e <code class="inline-code">ext-pdo_sqlite</code> não baixam extensões do PHP. Elas fazem o Composer interromper a instalação com uma explicação quando o ambiente não possui capacidades exigidas pelo sistema.</p>
+
+          <h4>Experimente a primeira instalação</h4>
+          <pre class="code-block"><code>composer validate
+composer install</code></pre>
+          <p>Como o checkpoint ainda não possui <code class="inline-code">composer.lock</code>, a primeira instalação resolve versões compatíveis, grava a trava e cria <code class="inline-code">vendor/</code>. Depois disso, mantenha o lock no controle de versão e use <code class="inline-code">composer install</code> para repetir aquelas versões. Use <code class="inline-code">composer update</code> somente quando a equipe decidir atualizar dependências e revisar a nova trava.</p>
+
+          <div class="warning-box">
+            <strong>Não envie <code class="inline-code">vendor/</code> ao repositório.</strong>
+            <p>Adicione <code class="inline-code">/vendor/</code> e <code class="inline-code">/.phpunit.cache/</code> ao <code class="inline-code">.gitignore</code>. Não ignore <code class="inline-code">composer.lock</code>: ele é parte da reprodução desta aplicação.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-11">
+          <h3 id="aula-3-11">Aula 3 — Migrando os casos para PHPUnit</h3>
+
+          <h4>Programar: configure a descoberta da suíte</h4>
+          <p>Crie <code class="inline-code">phpunit.xml</code> na raiz. O bootstrap carrega o arquivo gerado pelo Composer; a suíte procura classes de teste na pasta <code class="inline-code">tests</code>:</p>
+          <pre class="code-block"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;phpunit bootstrap="vendor/autoload.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache"&gt;
+  &lt;testsuites&gt;
+    &lt;testsuite name="integração"&gt;
+      &lt;directory&gt;tests&lt;/directory&gt;
+    &lt;/testsuite&gt;
+  &lt;/testsuites&gt;
+&lt;/phpunit&gt;</code></pre>
+
+          <h4>Transforme funções em métodos de teste</h4>
+          <pre class="code-block"><code>&lt;?php
+declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
+
+final class ExclusaoMensagemTest extends TestCase
+{
+    public function testExcluiUmaMensagemRespondida(): void
+    {
+        $pdo = $this-&gt;criarBancoTeste();
+
+        $excluiu = excluirMensagemRespondida($pdo, 3);
+
+        self::assertTrue($excluiu);
+        self::assertSame(0, $this-&gt;quantidadeMensagem($pdo, 3));
+    }
+
+    public function testNaoExcluiUmaMensagemNova(): void
+    {
+        $pdo = $this-&gt;criarBancoTeste();
+
+        $excluiu = excluirMensagemRespondida($pdo, 1);
+
+        self::assertFalse($excluiu);
+        self::assertSame(1, $this-&gt;quantidadeMensagem($pdo, 1));
+    }
+}</code></pre>
+          <p>A classe herda infraestrutura de <code class="inline-code">TestCase</code>. Métodos públicos iniciados por <code class="inline-code">test</code> são descobertos como casos. <code class="inline-code">assertTrue()</code>, <code class="inline-code">assertFalse()</code> e <code class="inline-code">assertSame()</code> registram expectativas e produzem relatórios sem as funções <code class="inline-code">verificar()</code> e <code class="inline-code">testar()</code>.</p>
+
+          <div class="note-box">
+            <strong>A classificação do teste não mudou.</strong>
+            <p>Usar PHPUnit não transforma o caso em teste unitário. Como PDO, driver SQLite e SQL real colaboram, ele continua sendo um teste de integração.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-11">
+          <h3 id="aula-4-11">Aula 4 — Executando uma rotina profissional</h3>
+
+          <h4>Aplicar: rode toda a suíte</h4>
+          <pre class="code-block"><code>composer test</code></pre>
+          <p>O script chama a cópia do PHPUnit instalada no próprio projeto e ativa o relatório TestDox. Assim, todos usam a dependência declarada pelo projeto, sem exigir uma instalação global do framework.</p>
+          <div class="terminal-block"><code>Exclusao Mensagem
+ ✔ Exclui uma mensagem respondida
+ ✔ Não exclui uma mensagem nova
+ ✔ Não exclui uma mensagem em atendimento
+ ✔ Exclui somente o id informado
+
+OK (4 tests, 8 assertions)</code></div>
+
+          <h4>Isole um comportamento durante a investigação</h4>
+          <pre class="code-block"><code>vendor\bin\phpunit --filter testNaoExcluiUmaMensagemNova</code></pre>
+          <p>No Linux ou macOS, use <code class="inline-code">vendor/bin/phpunit</code>. O filtro acelera a investigação local, mas não substitui a execução da suíte completa antes de concluir a mudança.</p>
+
+          <h4>Pratique vermelho, verde e refatoração</h4>
+          <ol>
+            <li>Rode <code class="inline-code">composer test</code> e confirme os quatro casos verdes.</li>
+            <li>Retire temporariamente a condição <code class="inline-code">status = 'respondida'</code> do repositório.</li>
+            <li>Rode o caso filtrado e leia valores esperado e obtido na falha.</li>
+            <li>Restaure a regra e execute novamente toda a suíte.</li>
+            <li>Melhore nomes ou remova repetição sem mudar o comportamento; mantenha a suíte verde.</li>
+          </ol>
+
+          <div class="warning-box">
+            <strong>Ferramenta profissional não elimina teste manual.</strong>
+            <p>A suíte ainda não envia HTTP, valida sessão ou CSRF, abre o navegador, mede acessibilidade nem avalia a experiência da confirmação. Ela protege a integração entre a função de exclusão e o banco. O relatório deve ser lido dentro desse limite.</p>
+          </div>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-11">
+          <h3 id="check-11">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Explico o papel de Composer e PHPUnit sem tratá-los como a mesma ferramenta.</li>
+            <li>Versiono <code class="inline-code">composer.json</code> e <code class="inline-code">composer.lock</code>, mas não <code class="inline-code">vendor/</code>.</li>
+            <li>Separo dependências da aplicação e de desenvolvimento.</li>
+            <li>Carrego o código de produção pelo autoload.</li>
+            <li>Reconheço cada caso, ação e asserção na classe de teste.</li>
+            <li>Executo a suíte inteira com <code class="inline-code">composer test</code>.</li>
+            <li>Uso filtro apenas para investigação e volto à suíte completa.</li>
+            <li>Descrevo com precisão o que os quatro testes não cobrem.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-11">
+          <h3 id="transferencia-11">Transfira o aprendizado</h3>
+          <p>Na clínica veterinária, migre os três casos do encerramento de pedidos para PHPUnit. Declare a versão de PHP, PDO, SQLite e PHPUnit no Composer; configure o autoload; use uma fixture independente para cada caso; crie um script <code class="inline-code">composer test</code>; provoque uma falha controlada e explique o relatório antes de restaurar a regra.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint do décimo primeiro capítulo do Web II">
+          <strong>Checkpoint para conferência e retomada</strong>
+          <p>O ZIP contém configuração do Composer, autoload, script de testes, configuração do PHPUnit, quatro casos migrados para <code class="inline-code">TestCase</code>, banco SQLite em memória e todas as funcionalidades anteriores. A pasta de dependências não acompanha o arquivo: execute <code class="inline-code">composer install</code> para reconstruí-la.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-11.zip" download>Baixar checkpoint do Capítulo 11 (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-11">
+          <h3 id="fontes-11">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://getcomposer.org/download/">Download e instalação — Composer</a></li>
+            <li><a href="https://getcomposer.org/doc/01-basic-usage.md">Uso básico, instalação e arquivo de trava — Composer</a></li>
+            <li><a href="https://getcomposer.org/doc/04-schema.md">Esquema de <code class="inline-code">composer.json</code> — Composer</a></li>
+            <li><a href="https://docs.phpunit.de/en/13.3/installation.html">Instalação e requisitos — PHPUnit 13.3</a></li>
+            <li><a href="https://docs.phpunit.de/en/13.3/writing-tests-for-phpunit.html">Escrita de testes — PHPUnit 13.3</a></li>
+            <li><a href="https://docs.phpunit.de/en/13.3/configuration.html">Configuração da suíte — PHPUnit 13.3</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>A suíte está padronizada; o produto ainda precisa ser encerrado</strong>
+          <p>O projeto agora instala sua ferramenta de testes de modo repetível e protege uma regra crítica com uma suíte reconhecida pelo ecossistema PHP. O capítulo final reunirá critérios de entrega, testes do fluxo completo, configuração segura, operação, documentação e uma revisão consciente do que está pronto — e do que não está.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-10" data-chapter-link="capitulo-10">← Capítulo 10</a>
           <span aria-disabled="true">Próximo capítulo em preparação</span>
         </div>
       </article>
