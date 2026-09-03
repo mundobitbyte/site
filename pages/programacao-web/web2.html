@@ -38,6 +38,7 @@
       <a class="chapter-link" href="#capitulo-9" data-chapter-link="capitulo-9">9. Excluir exige critério</a>
       <a class="chapter-link" href="#capitulo-10" data-chapter-link="capitulo-10">10. O teste pode ser repetido</a>
       <a class="chapter-link" href="#capitulo-11" data-chapter-link="capitulo-11">11. A suíte entra no padrão</a>
+      <a class="chapter-link" href="#capitulo-12" data-chapter-link="capitulo-12">12. Pronto para entregar?</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -3213,7 +3214,226 @@ OK (4 tests, 8 assertions)</code></div>
 
         <div class="chapter-footer">
           <a href="#capitulo-10" data-chapter-link="capitulo-10">← Capítulo 10</a>
-          <span aria-disabled="true">Próximo capítulo em preparação</span>
+          <a href="#capitulo-12" data-chapter-link="capitulo-12">Capítulo 12 →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-12" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web II • 8 horas</span>
+          <h2 tabindex="-1">Capítulo 12 — Pronto para entregar?</h2>
+          <p class="chapter-meta">Critérios de aceite, ambiente de execução, configuração externa, erros e logs, backup, restauração, implantação e passagem do sistema.</p>
+        </div>
+
+        <section class="hero-box" aria-labelledby="contexto-12">
+          <h3 id="contexto-12">Amanhã o sistema será usado sem você ao lado</h3>
+          <p>O <strong>Café Aurora</strong> começará a atender às 7 horas. No computador do aluno, o formulário registra mensagens, o painel exige login e a suíte está verde. Porém, no servidor contratado podem faltar o driver SQLite, permissão para gravar, uma pasta persistente ou a configuração correta da raiz pública.</p>
+          <p>“Funcionou aqui” comprova apenas um ambiente. Entregar exige tornar requisitos visíveis, ensaiar o caminho completo, proteger dados, preparar recuperação e deixar instruções que outra pessoa consiga seguir. Neste capítulo final, você transformará o projeto construído em uma entrega verificável — sem afirmar que um sistema pequeno está pronto para qualquer escala.</p>
+        </section>
+
+        <section aria-labelledby="objetivos-12">
+          <h3 id="objetivos-12">O que você vai aprender</h3>
+          <ul class="check-list">
+            <li>Distinguir código concluído, versão candidata e sistema entregue.</li>
+            <li>Explicar por que o GitHub Pages publica o curso, mas não executa o projeto PHP.</li>
+            <li>Verificar versão, extensões e permissão de gravação antes da implantação.</li>
+            <li>Separar o caminho do banco do código por variável de ambiente.</li>
+            <li>Diferenciar apresentação de erros em desenvolvimento e registro em produção.</li>
+            <li>Criar um backup consistente e planejar um ensaio de restauração.</li>
+            <li>Executar um teste de aceitação do fluxo público e administrativo.</li>
+            <li>Registrar evidências, responsáveis, limites e próximos passos.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="aula-1-12">
+          <h3 id="aula-1-12">Aula 1 — Definindo o que significa entregar</h3>
+
+          <h4>Entender: endereço publicado não garante sistema executado</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Parte</th><th>O que o GitHub Pages faz</th><th>O que a aplicação exige</th></tr></thead>
+              <tbody>
+                <tr><td>Curso Mundo bit Byte</td><td>Entrega HTML, CSS, JavaScript e os ZIPs ao navegador.</td><td>Continua publicado como conteúdo estático.</td></tr>
+                <tr><td>Café Aurora do Web II</td><td>Armazena e distribui o código, mas não executa PHP.</td><td>Servidor com PHP 8.5, PDO_SQLITE e armazenamento persistente.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>O projeto baixado precisa de processamento no servidor. A hospedagem escolhida deve permitir definir a pasta <code class="inline-code">public/</code> como raiz acessível, gravar o SQLite fora dela, manter os dados entre implantações e oferecer HTTPS. Se um desses requisitos não puder ser comprovado, o ambiente ainda não foi aceito.</p>
+
+          <h4>Transforme expectativa em critério observável</h4>
+          <div class="concept-grid">
+            <div class="mini-card"><strong>Funciona</strong><p>As jornadas essenciais produzem o resultado esperado.</p></div>
+            <div class="mini-card"><strong>Protege</strong><p>Código interno, banco, credencial e erros não são expostos.</p></div>
+            <div class="mini-card"><strong>Recupera</strong><p>Há backup e a restauração foi ensaiada em uma cópia.</p></div>
+            <div class="mini-card"><strong>Transfere</strong><p>Outra pessoa consegue instalar, verificar e operar.</p></div>
+          </div>
+          <p>Uma frase como “está tudo certo” não é evidência. Um critério de aceite contém ação, resultado esperado e registro da conferência. A versão que passará por esses critérios é a <strong>candidata à entrega</strong>.</p>
+        </section>
+
+        <section aria-labelledby="aula-2-12">
+          <h3 id="aula-2-12">Aula 2 — Verificando o ambiente antes do usuário</h3>
+
+          <h4>Experimentar: execute uma inspeção repetível</h4>
+          <p>O checkpoint acrescenta <code class="inline-code">src/verificar-ambiente.php</code>. Ele confere PHP 8.5, PDO, o driver SQLite e a pasta que receberá o banco:</p>
+          <pre class="code-block"><code>$verificacoes = [
+    "PHP 8.5 ou superior" =&gt;
+        version_compare(PHP_VERSION, "8.5.0", "&gt;="),
+    "extensão PDO ativa" =&gt; extension_loaded("pdo"),
+    "driver pdo_sqlite ativo" =&gt; extension_loaded("pdo_sqlite"),
+    "pasta do banco existente" =&gt; is_dir($pastaBanco),
+    "pasta do banco gravável" =&gt;
+        is_dir($pastaBanco) &amp;&amp; is_writable($pastaBanco)
+];</code></pre>
+          <pre class="code-block"><code>composer check</code></pre>
+          <p>O comando executa primeiro a inspeção do ambiente e depois a suíte PHPUnit. Ele retorna código diferente de zero diante de uma falha, o que permite interromper uma entrega inadequada. Ainda assim, uma verificação técnica não substitui a navegação real.</p>
+
+          <h4>Não use o servidor de desenvolvimento em produção</h4>
+          <p><code class="inline-code">php -S localhost:8000 -t public</code> continua útil no laboratório. O próprio Manual do PHP alerta que o servidor embutido não é um servidor completo e não deve ser usado em rede pública. O ambiente final precisa de um servidor Web mantido para produção.</p>
+
+          <div class="warning-box">
+            <strong>Erro útil ao programador pode vazar informação ao visitante.</strong>
+            <p>Em desenvolvimento, exibir erros acelera a correção. Em produção, mantenha <code class="inline-code">display_errors</code> desativado e <code class="inline-code">log_errors</code> ativo na configuração do PHP. O usuário recebe uma resposta segura; a equipe consulta o registro do servidor. O local do log depende da hospedagem e deve ser documentado.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-3-12">
+          <h3 id="aula-3-12">Aula 3 — Separando dados e preparando recuperação</h3>
+
+          <h4>Programar: permita configurar o caminho do banco</h4>
+          <pre class="code-block"><code>function caminhoBanco(): string
+{
+    $caminhoConfigurado = getenv("CAFE_AURORA_DB_PATH");
+
+    if (is_string($caminhoConfigurado) &amp;&amp;
+        trim($caminhoConfigurado) !== "") {
+        return trim($caminhoConfigurado);
+    }
+
+    return dirname(__DIR__) .
+        "/dados/cafe-aurora.sqlite";
+}</code></pre>
+          <p>Sem configuração, o laboratório continua usando <code class="inline-code">dados/cafe-aurora.sqlite</code>. No servidor, <code class="inline-code">CAFE_AURORA_DB_PATH</code> pode apontar para o armazenamento persistente definido pela hospedagem. O valor não precisa ser gravado no repositório.</p>
+
+          <h4>Crie uma cópia consistente do SQLite</h4>
+          <pre class="code-block"><code>$pdo = conectarBanco();
+$destinoSql = $pdo-&gt;quote($destino);
+
+if ($destinoSql === false) {
+    throw new RuntimeException(
+        "O destino do backup não pôde ser preparado."
+    );
+}
+
+$pdo-&gt;exec("VACUUM INTO $destinoSql");</code></pre>
+          <pre class="code-block"><code>composer backup</code></pre>
+          <p><code class="inline-code">VACUUM INTO</code> produz uma cópia consistente do banco em outro arquivo. O script confirma origem, destino e tamanho antes de declarar sucesso. Por padrão, usa <code class="inline-code">backups/</code>; no servidor, <code class="inline-code">CAFE_AURORA_BACKUP_DIR</code> pode indicar outra pasta protegida e persistente. Esses arquivos são ignorados pelo Git porque podem conter dados pessoais.</p>
+
+          <div class="note-box">
+            <strong>Backup criado não é recuperação comprovada.</strong>
+            <p>Guarde uma cópia protegida fora do servidor e ensaie a restauração em outro diretório ou em uma cópia do projeto. Preserve sempre o banco atual; nunca teste apagando a única base válida. Depois da restauração, repita as jornadas essenciais.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="aula-4-12">
+          <h3 id="aula-4-12">Aula 4 — Aplicando o ensaio de entrega</h3>
+
+          <h4>Aplicar: percorra o sistema como visitante e proprietária</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Jornada</th><th>Ação principal</th><th>Resultado esperado</th></tr></thead>
+              <tbody>
+                <tr><td>Páginas públicas</td><td>Abrir início, cardápio, sobre e contato.</td><td>Conteúdo disponível sem erro e navegação coerente.</td></tr>
+                <tr><td>Contato válido</td><td>Enviar uma mensagem e atualizar a página.</td><td>Um registro e nenhuma repetição pelo recarregamento.</td></tr>
+                <tr><td>Validação</td><td>Enviar campos ausentes ou inadequados.</td><td>Recusa compreensível, sem gravar dados inválidos.</td></tr>
+                <tr><td>Autenticação</td><td>Tentar senha errada e depois a correta.</td><td>Recusa inicial e acesso protegido ao painel.</td></tr>
+                <tr><td>Andamento</td><td>Filtrar e mudar o estado de uma mensagem.</td><td>Alteração única, filtro preservado e PRG funcionando.</td></tr>
+                <tr><td>Exclusão</td><td>Tentar excluir estados proibido e permitido.</td><td>Somente o registro respondido e confirmado é removido.</td></tr>
+                <tr><td>Saída</td><td>Encerrar a sessão e voltar ao painel.</td><td>Novo login exigido.</td></tr>
+                <tr><td>Acesso</td><td>Usar teclado, ampliação e tela estreita.</td><td>Fluxo essencial legível e operável.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Separe preparação, implantação e aceitação</h4>
+          <ol>
+            <li>Em desenvolvimento, execute <code class="inline-code">composer install</code> e <code class="inline-code">composer check</code>.</li>
+            <li>Crie um backup e registre qual versão está sendo entregue.</li>
+            <li>No servidor, defina a raiz <code class="inline-code">public/</code>, o caminho persistente do banco, HTTPS, erros e logs.</li>
+            <li>Instale com <code class="inline-code">composer install --no-dev --optimize-autoloader</code>.</li>
+            <li>Pelo terminal do servidor, verifique o ambiente, inicialize o banco e crie uma credencial exclusiva.</li>
+            <li>No endereço final, execute o teste de aceitação e registre problemas encontrados.</li>
+            <li>Entregue instruções, responsáveis, frequência de backup e limites conhecidos.</li>
+          </ol>
+          <p>A rota de exclusão também passa a carregar o repositório por <code class="inline-code">vendor/autoload.php</code>. Assim, a instalação declarada pelo Composer deixa de ser apenas uma convenção dos testes e integra a execução da aplicação.</p>
+
+          <div class="warning-box">
+            <strong>Não corrija silenciosamente durante a conferência.</strong>
+            <p>Se um critério falhar, interrompa a entrega, registre a evidência, corrija a causa e repita a suíte e as jornadas afetadas. Marcar um checklist sem executar a ação apenas esconde risco.</p>
+          </div>
+        </section>
+
+        <section class="task-box" aria-labelledby="projeto-12">
+          <h3 id="projeto-12">Projeto final — entrega do Web II</h3>
+          <p>Entregue:</p>
+          <ul>
+            <li>código organizado com apenas <code class="inline-code">public/</code> exposto pelo servidor;</li>
+            <li><code class="inline-code">composer.json</code> e <code class="inline-code">composer.lock</code> versionados, sem <code class="inline-code">vendor/</code>;</li>
+            <li><code class="inline-code">composer check</code> aprovado antes da implantação;</li>
+            <li>caminho persistente do banco configurado fora da raiz pública;</li>
+            <li>erros ocultos do visitante e disponíveis no log da equipe;</li>
+            <li>backup recente e restauração ensaiada em uma cópia;</li>
+            <li>teste de aceitação concluído no endereço final;</li>
+            <li>checklist com evidências, responsáveis e limites conhecidos.</li>
+          </ul>
+          <p>A entrega não precisa prometer escala ilimitada nem cobertura perfeita. Ela precisa demonstrar funcionamento, proteção, recuperação e transferência compatíveis com o escopo construído.</p>
+        </section>
+
+        <section class="ok-box" aria-labelledby="check-12">
+          <h3 id="check-12">Verifique sua aprendizagem</h3>
+          <ul class="check-list">
+            <li>Distingo publicação de arquivos e execução de PHP no servidor.</li>
+            <li>Transformo requisitos do ambiente em verificações observáveis.</li>
+            <li>Mantenho dados, credencial, backups e código interno fora da raiz pública.</li>
+            <li>Configuro o caminho do banco sem alterar o código.</li>
+            <li>Separo erro mostrado em desenvolvimento de erro registrado em produção.</li>
+            <li>Não confundo arquivo de backup com restauração comprovada.</li>
+            <li>Executo testes automatizados e jornadas manuais antes da entrega.</li>
+            <li>Consigo explicar o que está pronto e quais limites permanecem.</li>
+          </ul>
+        </section>
+
+        <section class="task-box" aria-labelledby="transferencia-12">
+          <h3 id="transferencia-12">Transfira o aprendizado</h3>
+          <p>Uma clínica veterinária receberá amanhã seu sistema de pedidos de retorno. Escreva seis critérios indispensáveis: ambiente, raiz pública, registro válido, acesso administrativo, backup com restauração e passagem para outra pessoa. Para cada critério, indique ação, resultado esperado e evidência. Não construa outro sistema.</p>
+        </section>
+
+        <aside class="checkpoint-box" aria-label="Checkpoint final do Web II">
+          <strong>Projeto final para conferência</strong>
+          <p>O ZIP reúne todos os capítulos e acrescenta caminho configurável para o banco, verificação do ambiente, backup consistente, comandos Composer, checklist de entrega e instruções de implantação. Use-o depois de concluir sua própria versão.</p>
+          <a class="download-button" href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-12.zip" download>Baixar projeto final do Web II (ZIP)</a>
+        </aside>
+
+        <section class="concept-box" aria-labelledby="fontes-12">
+          <h3 id="fontes-12">Referências para consulta</h3>
+          <ul>
+            <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">GitHub Pages e linguagens do servidor — GitHub Docs</a></li>
+            <li><a href="https://www.php.net/manual/en/features.commandline.webserver.php">Servidor Web embutido — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/function.getenv.php"><code class="inline-code">getenv()</code> — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/language.errors.basics.php">Exibição de erros em produção — Manual do PHP</a></li>
+            <li><a href="https://www.php.net/manual/en/errorfunc.configuration.php">Configuração de logs de erro — Manual do PHP</a></li>
+            <li><a href="https://getcomposer.org/doc/03-cli.md">Comandos de instalação — Composer</a></li>
+            <li><a href="https://www.sqlite.org/lang_vacuum.html"><code class="inline-code">VACUUM INTO</code> — SQLite</a></li>
+          </ul>
+        </section>
+
+        <div class="limit-box">
+          <strong>Web II concluído</strong>
+          <p>Você partiu de um site estático e construiu um sistema no servidor: recebeu e validou formulários, evitou reenvio, persistiu com SQLite, criou painel autenticado, protegeu alterações, completou o CRUD, automatizou uma regra com PHPUnit e preparou entrega e recuperação. O Web III poderá avançar para arquitetura, APIs, serviços e frameworks sem apagar os fundamentos compreendidos aqui.</p>
+        </div>
+
+        <div class="chapter-footer">
+          <a href="#capitulo-11" data-chapter-link="capitulo-11">← Capítulo 11</a>
+          <span aria-disabled="true">Fim do Web II</span>
         </div>
       </article>
     </main>
