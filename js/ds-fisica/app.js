@@ -62,9 +62,9 @@
 
     chapters.forEach((chapter, chapterIndex) => {
       if (!currentGroup || currentGroup.dataset.groupName !== chapter.group) {
-        currentGroup = document.createElement('section');
-        currentGroup.className = 'menu-group';
-        currentGroup.dataset.groupName = chapter.group;
+        const groupSection = document.createElement('section');
+        groupSection.className = 'menu-group';
+        groupSection.dataset.groupName = chapter.group;
 
         const toggle = document.createElement('button');
         toggle.type = 'button';
@@ -72,21 +72,23 @@
         toggle.setAttribute('aria-expanded', 'false');
         toggle.innerHTML = `<span>${chapter.group}</span><span class="menu-group-chevron" aria-hidden="true">⌄</span>`;
 
-        currentItems = document.createElement('div');
-        currentItems.className = 'menu-group-items';
-        currentItems.hidden = true;
+        const groupItems = document.createElement('div');
+        groupItems.className = 'menu-group-items';
+        groupItems.hidden = true;
         const groupId = `physics-menu-group-${menu.children.length + 1}`;
-        currentItems.id = groupId;
+        groupItems.id = groupId;
         toggle.setAttribute('aria-controls', groupId);
 
         toggle.addEventListener('click', () => {
-          const willOpen = currentItems.hidden;
-          if (willOpen) openOnlyGroup(currentGroup);
-          else setGroupOpen(currentGroup, false);
+          const willOpen = groupItems.hidden;
+          if (willOpen) openOnlyGroup(groupSection);
+          else setGroupOpen(groupSection, false);
         });
 
-        currentGroup.append(toggle, currentItems);
-        menu.appendChild(currentGroup);
+        groupSection.append(toggle, groupItems);
+        menu.appendChild(groupSection);
+        currentGroup = groupSection;
+        currentItems = groupItems;
       }
 
       const button = document.createElement('button');
