@@ -139,11 +139,17 @@ a{color:var(--primary-dark)}
   .site-header{padding:0 10px}
   .site-header .module-back{font-size:12px;padding:5px 9px}
   .site-header>strong{font-size:13px}
-  .series-home{padding:18px 10px 30px}
-  .intro-card{padding:20px}
-  .intro-card h1{font-size:27px}
-  .series-grid,.diagnostic-intro,.review-grid,.result-grid,.pending-list{grid-template-columns:1fr}
-  .series-card{min-height:125px}
+  .series-home{padding:14px 10px 20px}
+  .intro-card{padding:16px;margin-bottom:12px}
+  .eyebrow{margin-bottom:7px;padding:4px 8px;font-size:10.5px}
+  .intro-card h1{font-size:25px;margin-bottom:6px}
+  .intro-card p{font-size:13.5px;line-height:1.4}
+  .series-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .series-card{min-height:90px;padding:14px}
+  .series-card.active{grid-column:1/-1;min-height:104px}
+  .series-label{font-size:20px}
+  .series-card strong{font-size:13px}
+  .diagnostic-intro,.review-grid,.result-grid,.pending-list{grid-template-columns:1fr}
   .course-toolbar{padding:6px 8px}
   .content-area{padding:8px}
   .lesson-heading h2{font-size:20px}
