@@ -9,7 +9,7 @@
       <span class="lesson-kicker">Uma história para investigar</span>
       <div class="hero-box physics-story">
         <strong class="card-title">Você combinou de encontrar um amigo no clube do bairro para jogar bola. Como não conhece bem o caminho, abre um aplicativo de mapas no celular, escolhe o clube como destino e inicia uma rota de bicicleta. A tela informa: “faltam 2,4 km • chegada em cerca de 8 min”.</strong>
-        <p>Agora a situação está clara: o destino foi escolhido e a rota começou. Mesmo assim, os 8 minutos são uma previsão. Você ainda pode parar num semáforo, reduzir numa curva ou até errar uma rua. Então surge a pergunta: <strong>como o aplicativo consegue estimar o tempo de chegada antes de o percurso terminar?</strong></p>
+        <p>A rota está definida, mas os 8 minutos ainda são apenas uma estimativa. Você pode parar num semáforo, reduzir numa curva ou até errar uma rua. Então surge uma pergunta que precisa de resposta: <strong>como o aplicativo consegue estimar o tempo de chegada antes de o percurso terminar?</strong></p>
         <div class="quick-question" data-choice-question data-correct="b">
           <strong>Antes de continuar, faça uma aposta</strong>
           <p>Se o aplicativo de mapas soubesse apenas que faltam 2,4 km, isso bastaria para prever o tempo de chegada?</p>
@@ -73,7 +73,7 @@
 
     <section>
       <h3>3. A rota pode ser reconstruída a partir de posições registradas ao longo do tempo</h3>
-      <p>Você corrige o caminho. Durante a rota, o aplicativo atualiza sua posição usando a localização estimada pelo celular. Para estudar o movimento, imagine que, num trecho reto, registramos estes dados:</p>
+      <p>Você corrige o caminho. Durante a rota, o aplicativo atualiza sua posição usando a localização estimada pelo celular. Em um trecho reto, registramos quatro dessas posições ao longo do tempo:</p>
 
       <div class="table-wrap"><table><thead><tr><th>Tempo</th><th>Posição</th><th>O que aconteceu?</th></tr></thead><tbody><tr><td>0 s</td><td>0 m</td><td>início do trecho</td></tr><tr><td>20 s</td><td>100 m</td><td>avançou 100 m</td></tr><tr><td>40 s</td><td>200 m</td><td>avançou mais 100 m</td></tr><tr><td>60 s</td><td>300 m</td><td>mantém o padrão</td></tr></tbody></table></div>
 
@@ -97,14 +97,16 @@
     </section>
 
     <section>
-      <h3>4. “8 minutos”: será que a previsão do aplicativo faz sentido?</h3>
-      <p>Voltamos à informação inicial: faltam <strong>2,4 km</strong> e o aplicativo prevê <strong>8 minutos</strong>. Em vez de aceitar o número, vamos reconstruir o raciocínio.</p>
+      <h3>4. “8 minutos”: de onde veio essa previsão?</h3>
+      <p>Agora podemos responder à pergunta do início. Para este <strong>modelo simplificado</strong>, vamos considerar que o aplicativo estima para esse percurso de bicicleta um ritmo médio de cerca de <strong>300 m por minuto</strong>, equivalente a aproximadamente <strong>18 km/h</strong>. Esse ritmo é uma estimativa usada pelo modelo; ele não é obtido apenas da distância.</p>
 
-      <div class="quick-question" data-choice-question data-correct="b"><strong>Faça uma estimativa antes da conta</strong><p>Se você percorresse aproximadamente 300 m por minuto, 2,4 km levariam perto de:</p><div class="choice-row"><button type="button" data-choice="a">2 min</button><button type="button" data-choice="b">8 min</button><button type="button" data-choice="c">30 min</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Boa estimativa: 2.400 ÷ 300 = 8 minutos." data-wrong-text="Transforme 2,4 km em 2.400 m e compare com 300 m por minuto."></div></div>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>Faça a previsão com esse ritmo</strong><p>Se você percorresse aproximadamente 300 m por minuto, 2,4 km levariam perto de:</p><div class="choice-row"><button type="button" data-choice="a">2 min</button><button type="button" data-choice="b">8 min</button><button type="button" data-choice="c">30 min</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Isso: 2.400 ÷ 300 = 8 minutos." data-wrong-text="Transforme 2,4 km em 2.400 m e compare com 300 m por minuto."></div></div>
 
-      <p>Agora queremos uma medida que diga <strong>quanto a posição varia em cada unidade de tempo</strong>. Primeiro fazemos a conta com significado:</p>
-      <div class="equation-walk"><div><span>1</span><p>2,4 km = <strong>2.400 m</strong>.</p></div><div><span>2</span><p>8 min = <strong>480 s</strong>.</p></div><div><span>3</span><p>2.400 ÷ 480 = <strong>5 m a cada segundo</strong>.</p></div></div>
+      <div class="equation-walk"><div><span>1</span><p>Distância restante: 2,4 km = <strong>2.400 m</strong>.</p></div><div><span>2</span><p>Ritmo médio estimado: <strong>300 m/min</strong>.</p></div><div><span>3</span><p>Tempo previsto: 2.400 ÷ 300 = <strong>8 min</strong>.</p></div></div>
 
+      <div class="note-box"><strong>Então por que apareceram 8 minutos?</strong><p>Porque, neste exemplo, a previsão combina a distância restante de <strong>2.400 m</strong> com um ritmo médio estimado de <strong>300 m por minuto</strong>. Dividindo um pelo outro, obtemos <strong>8 minutos</strong>. Na vida real, aplicativos usam modelos mais ricos e podem atualizar a previsão quando seu ritmo, o caminho ou as condições do percurso mudam.</p></div>
+
+      <p>O mesmo ritmo de 300 m por minuto corresponde a <strong>5 m por segundo</strong>. Essa relação nos leva a uma medida importante: quanto a posição varia em cada unidade de tempo.</p>
       <p>Depois que a relação ficou clara, damos a ela um nome: <strong>velocidade média</strong> no trecho.</p>
       <div class="formula-box"><span class="formula-name">A fórmula registra o raciocínio que acabamos de fazer</span><div class="big-formula">v<sub>m</sub> = Δs / Δt</div><p>Neste trajeto sem retorno, Δs = 2.400 m e Δt = 480 s, então v<sub>m</sub> = <strong>5 m/s</strong>. Multiplicando por 3,6, isso corresponde a <strong>18 km/h</strong>.</p></div>
 
@@ -171,7 +173,7 @@
 
       <p>Por isso, no <strong>movimento circular</strong>, mesmo que a rapidez permaneça constante, existe aceleração: o vetor velocidade está mudando de direção a cada instante.</p>
       <div class="note-box"><strong>Pare e explique</strong><p>Se o velocímetro mostra sempre 15 km/h numa rotatória, por que não podemos concluir que a velocidade é constante?</p><details><summary>Compare sua explicação</summary><p>Porque o velocímetro mostra apenas o módulo da velocidade. Na curva, a direção muda; portanto a velocidade muda e existe aceleração.</p></details></div>
-      <p>A causa dessa mudança de direção será estudada no capítulo seguinte. Aqui, nossa tarefa é reconhecer e descrever o movimento.</p>
+      <p>Essa mudança de direção exige uma aceleração voltada para o centro da curva. No capítulo seguinte veremos quais forças podem produzir essa aceleração.</p>
     </section>
 
     <section>
@@ -225,7 +227,7 @@
 
       <div class="quick-question" data-choice-question data-correct="c"><strong>Conecte com a queda livre</strong><p>Duas bolas começam da mesma altura ao mesmo tempo. Uma é apenas solta; a outra sai horizontalmente. Desprezando o ar, qual chega primeiro ao chão?</p><div class="choice-row"><button type="button" data-choice="a">A que foi solta</button><button type="button" data-choice="b">A que saiu horizontalmente</button><button type="button" data-choice="c">Chegam praticamente juntas</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Correto. Na vertical, as duas começam com velocidade vertical zero e sofrem a mesma aceleração g; o movimento horizontal não aumenta o tempo de queda." data-wrong-text="Compare somente o movimento vertical das duas bolas."></div></div>
 
-      <div class="note-box"><strong>Agora o lançamento de projétil não é uma fórmula nova isolada</strong><p>Estamos reutilizando duas ideias que já construímos: movimento aproximadamente uniforme na horizontal e queda acelerada na vertical. A trajetória curva aparece quando os dois movimentos acontecem ao mesmo tempo.</p></div>
+      <div class="note-box"><strong>O lançamento horizontal combina duas ideias já conhecidas</strong><p>O movimento é aproximadamente uniforme na horizontal e acelerado pela gravidade na vertical. A trajetória curva aparece porque os dois movimentos acontecem ao mesmo tempo.</p></div>
     </section>
 
     <section>
@@ -233,6 +235,7 @@
       <p>No começo, o número parecia quase mágico. Agora conseguimos desmontar parte do problema:</p>
       <div class="three-col"><div class="example-box"><strong class="card-title">Onde estou?</strong><p>Precisamos de referencial e posição.</p></div><div class="example-box"><strong class="card-title">Como cheguei aqui?</strong><p>Distância, tempo, tabela e gráfico ajudam a reconstruir o trajeto.</p></div><div class="example-box"><strong class="card-title">Quando chego?</strong><p>Velocidade, aceleração e modelos de movimento permitem fazer previsões.</p></div></div>
       <p>Na vida real, aplicativos de navegação usam mapas, trânsito, sensores e modelos muito mais ricos. Mas a base física continua reconhecível: <strong>posição muda com o tempo</strong>, e essa mudança pode ser medida, representada e prevista.</p>
+      <div class="note-box"><strong>Resposta à pergunta do início</strong><p>Neste exemplo simplificado, os <strong>8 minutos</strong> vieram de uma conta concreta: <strong>2.400 m ÷ 300 m/min = 8 min</strong>. A distância sozinha não produz o tempo; foi necessário combiná-la com um ritmo médio estimado para a bicicleta.</p></div>
       <div class="note-box"><strong>O fio da aula</strong><p>Referencial resolveu “onde?”. Distância e variação de posição resolveram “quanto mudou?”. Gráfico mostrou “como mudou no tempo?”. Velocidade mediu o ritmo da mudança. Aceleração apareceu quando a velocidade deixou de ser constante. Depois usamos essas ideias para interpretar curvas, quedas e lançamentos.</p></div>
     </section>
 
@@ -264,7 +267,7 @@
       <div class="challenge-box"><strong>Desafio MbB — produza a história de um movimento</strong><p>Em um local seguro, caminhe por um pequeno trajeto e registre sua posição em pelo menos cinco instantes. Monte uma tabela e um gráfico posição × tempo. Depois escreva poucas linhas explicando onde você esteve mais rápido, se houve uma parada ou mudança de ritmo e qual evidência no gráfico sustenta sua conclusão. O objetivo não é fazer uma conta isolada: é <strong>usar dados para contar o que aconteceu</strong>.</p></div>
     </section>
 
-    <details class="curriculum-box"><summary>Conexão com o plano de curso</summary><p>Esta investigação trabalha os objetos de Cinemática previstos para a 1ª série: <strong>espaço, tempo, distância, velocidade, aceleração, equação horária, movimento circular, queda livre e lançamento de projétil</strong>. A ordem foi reorganizada didaticamente para que cada conceito apareça quando uma situação cria a necessidade de compreendê-lo.</p></details>
+    <details class="curriculum-box"><summary>Conexão com o plano de curso</summary><p>Esta investigação trabalha os objetos de Cinemática previstos para a 1ª série: <strong>espaço, tempo, distância, velocidade, aceleração, equação horária, movimento circular, queda livre e lançamento de projétil</strong>.</p></details>
   `;
 
   function initChapterLabs(root) {
