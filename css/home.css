@@ -19,7 +19,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -47,6 +47,32 @@ header h1 {
   font-weight: 900;
   line-height: 1.15;
   letter-spacing: -.3px;
+}
+
+.portal-home-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, .38);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.portal-home-back:hover {
+  background: rgba(255, 255, 255, .24);
+}
+
+.portal-home-back:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, .45);
+  outline-offset: 2px;
 }
 
 .brand {
@@ -113,6 +139,10 @@ main {
 
 .js-ready .modules-view {
   margin-top: 0;
+}
+
+.js-ready .modules-toolbar {
+  display: none;
 }
 
 .view-heading {
@@ -378,6 +408,11 @@ main {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .portal-home-back {
+    padding: 5px 9px;
+    font-size: 12px;
   }
 
   .brand {
