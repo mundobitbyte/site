@@ -9,6 +9,7 @@
   const course = $('#courseView');
   const menu = $('#lessonMenu');
   const content = $('#lessonContent');
+  const moduleBack = $('[data-module-back]');
 
   const chapters = [
     { group:'Antes de começar', menu:'00 Avaliação Diagnóstica', id:'diagnostico', enabled:true },
@@ -29,6 +30,14 @@
     if (!button) return;
     $$('.menu-item', menu).forEach(item => item.classList.remove('active'));
     button.classList.add('active');
+  }
+
+  function syncBack() {
+    if (!moduleBack || !course) return;
+    const inCourse = !course.hidden;
+    moduleBack.textContent = inCourse ? '← Séries' : '← Mundo bit Byte';
+    moduleBack.href = inCourse ? 'index.html' : '../index.html';
+    moduleBack.setAttribute('aria-label', inCourse ? 'Voltar para as séries' : 'Voltar ao Mundo bit Byte');
   }
 
   function buildMenu() {
@@ -76,6 +85,8 @@
   }
 
   buildMenu();
+  syncBack();
+  if (course) new MutationObserver(syncBack).observe(course, { attributes:true, attributeFilter:['hidden'] });
 
   $('.series-card.active')?.addEventListener('click', openCourse);
   $('#backToSeries')?.addEventListener('click', () => {
