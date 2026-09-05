@@ -1,3 +1,52 @@
+(() => {
+  const style = document.createElement('style');
+  style.textContent = `
+    body > header{
+      height:46px !important;
+      min-height:46px !important;
+      max-height:46px !important;
+      padding:0 16px !important;
+      display:flex !important;
+      flex-direction:row !important;
+      align-items:center !important;
+      justify-content:space-between !important;
+      gap:12px !important;
+      text-align:left !important;
+    }
+    body > header .header-left{
+      display:flex !important;
+      flex-direction:row !important;
+      align-items:center !important;
+      justify-content:flex-start !important;
+      gap:12px !important;
+      min-width:0 !important;
+      flex:1 1 auto !important;
+      text-align:left !important;
+    }
+    body > header h1{
+      margin:0 !important;
+      text-align:left !important;
+    }
+    body > header .brand{
+      margin-left:auto !important;
+      text-align:right !important;
+    }
+    @media(max-width:760px){
+      body > header{
+        padding:0 10px !important;
+        gap:8px !important;
+      }
+      body > header .header-left{
+        gap:8px !important;
+      }
+      body > header .brand{
+        display:none !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+})();
+
 function copyCode(id){
   const code = document.getElementById(id);
   if(code && navigator.clipboard){
