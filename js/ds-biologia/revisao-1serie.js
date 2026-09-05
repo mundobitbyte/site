@@ -48,7 +48,7 @@
 
         ${q('D','Bacia hidrográfica','Por que proteger apenas o trecho visível de um rio pode ser insuficiente?',[['a','porque uso do solo e poluição em outras partes da bacia podem alterar escoamento, sedimentos e qualidade da água'],['b','porque rios não recebem água de afluentes'],['c','porque toda bacia precisa ser totalmente fechada ao uso humano']],'a','Correto. A bacia conecta áreas por fluxos de água e materiais; ações a montante podem afetar trechos a jusante.','Pense no caminho que água, sedimentos e contaminantes percorrem pelo sistema de drenagem.')}
 
-        ${q('E','Conservação','Qual proposta é mais cientificamente responsável para um córrego urbano degradado?',[['a','escolher uma ação única antes de investigar'],['b','identificar fontes e mecanismos, envolver os atores relevantes, aplicar medidas adequadas e monitorar resultados'],['c','soltar espécies de outros locais para aumentar rapidamente a biodiversidade']],'b','Correto. Conservação eficaz combina diagnóstico, intervenção coerente e acompanhamento.', 'Intervenções ambientais sem diagnóstico podem falhar ou criar novos problemas.')}
+        ${q('E','Conservação','Qual proposta é mais cientificamente responsável para um córrego urbano degradado?',[['a','escolher uma ação única antes de investigar'],['b','identificar fontes e mecanismos, envolver os atores relevantes, aplicar medidas adequadas e monitorar resultados'],['c','soltar espécies de outros locais para aumentar rapidamente a biodiversidade']],'b','Correto. Conservação eficaz combina diagnóstico, intervenção coerente e acompanhamento.','Intervenções ambientais sem diagnóstico podem falhar ou criar novos problemas.')}
       </section>`);
   }
 
@@ -96,9 +96,9 @@
 
         <div class="note-box"><strong>Especiação não costuma ser um “salto instantâneo”</strong><p>Quando o fluxo gênico entre populações diminui, mutação, deriva e seleção podem fazê-las divergir ao longo de muitas gerações. Barreiras reprodutivas podem surgir gradualmente. A separação geográfica é um caminho importante, mas não é o único.</p></div>
 
-        ${q('D','Conceito de espécie','Por que o conceito biológico de espécie não pode ser aplicado da mesma maneira a fósseis ou organismos estritamente assexuados?',[['a','porque depende de informações sobre reprodução e fluxo gênico que nesses casos podem não estar disponíveis ou não se aplicar'],['b','porque fósseis não pertencem a nenhum grupo biológico'],['c','porque somente animais podem formar espécies']],'a','Correto. Diferentes situações exigem outros conjuntos de evidências para delimitar linhagens.', 'O conceito é uma ferramenta científica com domínio de aplicação, não uma definição que resolve todos os casos.')}
+        ${q('D','Conceito de espécie','Por que o conceito biológico de espécie não pode ser aplicado da mesma maneira a fósseis ou organismos estritamente assexuados?',[['a','porque depende de informações sobre reprodução e fluxo gênico que nesses casos podem não estar disponíveis ou não se aplicar'],['b','porque fósseis não pertencem a nenhum grupo biológico'],['c','porque somente animais podem formar espécies']],'a','Correto. Diferentes situações exigem outros conjuntos de evidências para delimitar linhagens.','O conceito é uma ferramenta científica com domínio de aplicação, não uma definição que resolve todos os casos.')}
 
-        ${q('E','Especiação','Qual cenário descreve melhor um processo de especiação?',[['a','duas populações reduzem fluxo gênico e acumulam diferenças ao longo das gerações até surgir isolamento reprodutivo'],['b','um indivíduo decide tornar-se uma espécie nova'],['c','uma população muda de nome sem mudança biológica']],'a','Correto. Especiação envolve divergência de populações e evolução do isolamento reprodutivo.', 'Evolução e especiação ocorrem em populações ao longo de gerações, não por decisão individual.')}
+        ${q('E','Especiação','Qual cenário descreve melhor um processo de especiação?',[['a','duas populações reduzem fluxo gênico e acumulam diferenças ao longo das gerações até surgir isolamento reprodutivo'],['b','um indivíduo decide tornar-se uma espécie nova'],['c','uma população muda de nome sem mudança biológica']],'a','Correto. Especiação envolve divergência de populações e evolução do isolamento reprodutivo.','Evolução e especiação ocorrem em populações ao longo de gerações, não por decisão individual.')}
       </section>`);
   }
 
@@ -107,24 +107,32 @@
     const map = sectionStartingWith(root, 'Mapa final de revisão');
     if (!map) return;
 
+    [...root.querySelectorAll('.challenge-box > strong')].forEach(title => {
+      const match = title.textContent.trim().match(/^(4[1-6])\.\s*(.+)$/);
+      if (!match) return;
+      title.textContent = `Desafio ${Number(match[1]) - 40} — ${match[2]}`;
+    });
+
+    [...root.querySelectorAll('table tbody tr')].forEach(row => {
+      const firstCell = row.cells?.[0];
+      if (firstCell?.textContent.trim() === 'seleção e filogenia') {
+        firstCell.textContent = 'seleção, filogenia, espécie e especiação';
+      }
+    });
+
     map.insertAdjacentHTML('beforebegin', `
       <section data-review-addition="bio99-lapidacao">
         <h3>Nível 6 — Conservação, ciclos e formação de espécies</h3>
         <p>Estas questões fecham os pontos acrescentados na auditoria final da 1ª série.</p>
 
-        ${q('41','Bacia hidrográfica','Uma indústria lança contaminantes em um afluente a montante. Por que isso pode afetar áreas distantes?',[['a','porque água e materiais podem ser transportados pela rede de drenagem'],['b','porque cada trecho do rio é isolado'],['c','porque contaminantes não se deslocam em água']],'a','Correto. Bacias conectam áreas por fluxos de água, sedimentos e substâncias.', 'Analise a conectividade do sistema de drenagem.')}
+        ${q('41','Bacia hidrográfica','Uma indústria lança contaminantes em um afluente a montante. Por que isso pode afetar áreas distantes?',[['a','porque água e materiais podem ser transportados pela rede de drenagem'],['b','porque cada trecho do rio é isolado'],['c','porque contaminantes não se deslocam em água']],'a','Correto. Bacias conectam áreas por fluxos de água, sedimentos e substâncias.','Analise a conectividade do sistema de drenagem.')}
+        ${q('42','Unidade de conservação','Qual afirmação é mais adequada?',[['a','todas as unidades de conservação possuem exatamente as mesmas regras'],['b','áreas protegidas podem ter categorias e objetivos de manejo diferentes'],['c','conservação significa necessariamente retirar toda população humana de qualquer área']],'b','Correto. Objetivos e regras variam conforme a categoria e o contexto.','Evite tratar toda área protegida como uma categoria única.')}
+        ${q('43','Interferência nos ciclos','Por que não é adequado afirmar que todo agrotóxico terá o mesmo destino ambiental?',[['a','porque propriedades da substância, dose, solo, clima e aplicação alteram transporte e persistência'],['b','porque nenhum produto pode alcançar água ou solo'],['c','porque todos desaparecem imediatamente']],'a','Correto. O destino ambiental depende do composto e das condições de uso.','Produtos diferentes têm propriedades e rotas ambientais diferentes.')}
+        ${q('44','Restauração','Qual distinção é mais correta?',[['a','plantar árvores é sempre igual a restaurar um ecossistema inteiro'],['b','restauração busca recuperar funções e relações ecológicas; plantio arbóreo pode ser uma ferramenta dentro desse processo'],['c','restauração não envolve vegetação']],'b','Correto. Recuperar cobertura arbórea e restaurar um ecossistema podem se sobrepor, mas não são conceitos idênticos.','Pense em funções, diversidade e relações ecológicas, não apenas número de árvores.')}
+        ${q('45','Espécie','Qual é um limite do conceito biológico de espécie?',[['a','é difícil aplicá-lo diretamente a fósseis e organismos estritamente assexuados'],['b','não funciona para nenhum organismo sexuado'],['c','só pode ser usado em plantas']],'a','Correto. Ele depende de critérios de reprodução e fluxo gênico.','Conceitos científicos possuem condições de aplicação.')}
+        ${q('46','Especiação','O que pode favorecer divergência entre duas populações?',[['a','redução do fluxo gênico acompanhada de mutação, deriva e/ou seleção ao longo das gerações'],['b','necessidade consciente de formar uma nova espécie'],['c','troca de nome popular']],'a','Correto. A divergência populacional pode levar ao isolamento reprodutivo.','Especiação é processo evolutivo populacional, não decisão individual.')}
 
-        ${q('42','Unidade de conservação','Qual afirmação é mais adequada?',[['a','todas as unidades de conservação possuem exatamente as mesmas regras'],['b','áreas protegidas podem ter categorias e objetivos de manejo diferentes'],['c','conservação significa necessariamente retirar toda população humana de qualquer área']],'b','Correto. Objetivos e regras variam conforme a categoria e o contexto.', 'Evite tratar toda área protegida como uma categoria única.')}
-
-        ${q('43','Interferência nos ciclos','Por que não é adequado afirmar que todo agrotóxico terá o mesmo destino ambiental?',[['a','porque propriedades da substância, dose, solo, clima e aplicação alteram transporte e persistência'],['b','porque nenhum produto pode alcançar água ou solo'],['c','porque todos desaparecem imediatamente']],'a','Correto. O destino ambiental depende do composto e das condições de uso.', 'Produtos diferentes têm propriedades e rotas ambientais diferentes.')}
-
-        ${q('44','Restauração','Qual distinção é mais correta?',[['a','plantar árvores é sempre igual a restaurar um ecossistema inteiro'],['b','restauração busca recuperar funções e relações ecológicas; plantio arbóreo pode ser uma ferramenta dentro desse processo'],['c','restauração não envolve vegetação']],'b','Correto. Recuperar cobertura arbórea e restaurar um ecossistema podem se sobrepor, mas não são conceitos idênticos.', 'Pense em funções, diversidade e relações ecológicas, não apenas número de árvores.')}
-
-        ${q('45','Espécie','Qual é um limite do conceito biológico de espécie?',[['a','é difícil aplicá-lo diretamente a fósseis e organismos estritamente assexuados'],['b','não funciona para nenhum organismo sexuado'],['c','só pode ser usado em plantas']],'a','Correto. Ele depende de critérios de reprodução e fluxo gênico.', 'Conceitos científicos possuem condições de aplicação.')}
-
-        ${q('46','Especiação','O que pode favorecer divergência entre duas populações?',[['a','redução do fluxo gênico acompanhada de mutação, deriva e/ou seleção ao longo das gerações'],['b','necessidade consciente de formar uma nova espécie'],['c','troca de nome popular']],'a','Correto. A divergência populacional pode levar ao isolamento reprodutivo.', 'Especiação é processo evolutivo populacional, não decisão individual.')}
-
-        <div class="challenge-box"><strong>Desafio final da auditoria — da bacia à evolução</strong><p>Uma estrada fragmenta uma mata que protege as nascentes de uma bacia. Anos depois, duas populações de um pequeno animal ficam quase sem contato entre os fragmentos. Explique, em uma única cadeia de raciocínio, <strong>1)</strong> dois efeitos ecológicos possíveis da fragmentação, <strong>2)</strong> por que a bacia também pode ser afetada, <strong>3)</strong> como restauração/corredores poderiam ajudar e <strong>4)</strong> por que reduzir o fluxo gênico não significa que uma nova espécie surgirá imediatamente.</p><details><summary>O que uma boa resposta deve conectar?</summary><p>Hábitat e conectividade; escoamento/infiltração/qualidade da água; restauração e corredores; fluxo gênico; divergência ao longo das gerações e possível evolução de isolamento reprodutivo. A resposta deve deixar claro que especiação é uma possibilidade evolutiva, não consequência automática de qualquer fragmentação.</p></details></div>
+        <div class="challenge-box"><strong>Desafio 7 — da bacia à evolução</strong><p>Uma estrada fragmenta uma mata que protege as nascentes de uma bacia. Anos depois, duas populações de um pequeno animal ficam quase sem contato entre os fragmentos. Explique, em uma única cadeia de raciocínio, <strong>1)</strong> dois efeitos ecológicos possíveis da fragmentação, <strong>2)</strong> por que a bacia também pode ser afetada, <strong>3)</strong> como restauração/corredores poderiam ajudar e <strong>4)</strong> por que reduzir o fluxo gênico não significa que uma nova espécie surgirá imediatamente.</p><details><summary>O que uma boa resposta deve conectar?</summary><p>Hábitat e conectividade; escoamento/infiltração/qualidade da água; restauração e corredores; fluxo gênico; divergência ao longo das gerações e possível evolução de isolamento reprodutivo. A resposta deve deixar claro que especiação é uma possibilidade evolutiva, não consequência automática de qualquer fragmentação.</p></details></div>
       </section>`);
   }
 
@@ -139,9 +147,21 @@
 
   MBB.showLesson = (config = {}) => {
     const adjusted = { ...config };
+
+    if (adjusted.title === 'Por que mexer em uma espécie pode alterar todo o ecossistema?') {
+      adjusted.technical = 'Ecossistemas • relações, níveis tróficos, sucessão, biomas, conservação e bacias';
+      adjusted.objective = '<strong>Objetivo:</strong> compreender níveis de organização, fatores bióticos e abióticos, cadeias e teias alimentares, fluxo de energia, dinâmica populacional, sucessão, biomas, impactos ambientais, conservação e bacias hidrográficas.';
+    }
+
+    if (adjusted.title === 'Como sabemos que populações mudam ao longo das gerações?') {
+      adjusted.technical = 'Evolução • seleção, espécie, especiação, filogenia e ancestralidade';
+      adjusted.objective = '<strong>Objetivo:</strong> compreender mecanismos evolutivos e evidências de ancestralidade, interpretando seleção natural, conceito de espécie, especiação, homologia, filogenias, convergência, radiação adaptativa, endossimbiose e evolução humana.';
+    }
+
     if (adjusted.title === 'Você consegue usar a Biologia para explicar sistemas vivos?') {
       adjusted.objective = '<strong>Objetivo:</strong> consolidar os capítulos 01 a 10 por meio de 46 questões objetivas e 7 desafios integradores, identificando o que já foi compreendido e o que precisa ser revisado.';
     }
+
     originalShowLesson(adjusted);
     const root = document.getElementById('lessonContent');
     if (root) applyReview(adjusted, root);
