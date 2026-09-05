@@ -32,6 +32,24 @@
     ensinoMedioView.insertBefore(matematicaGroup, firstSubjectGroup);
   }
 
+  const naturezaGroup = ensinoMedioView?.querySelector('[aria-labelledby="natureza-title"]');
+  const fisicaPlaceholder = naturezaGroup
+    ? Array.from(naturezaGroup.querySelectorAll('article.module-card.is-disabled')).find((card) => card.querySelector('h3')?.textContent.trim() === 'Física')
+    : null;
+
+  if (fisicaPlaceholder) {
+    const fisicaCard = document.createElement('a');
+    fisicaCard.className = 'module-card';
+    fisicaCard.href = 'ds-fisica/index.html';
+    fisicaCard.innerHTML = `
+      <div class="module-head"><h3>Física</h3></div>
+      <div class="module-body">
+        <p>Física da 1ª série com investigação de situações reais, avaliação diagnóstica, revisão adaptativa e construção gradual dos conceitos.</p>
+        <span class="module-label">Diagnóstico disponível</span>
+      </div>`;
+    fisicaPlaceholder.replaceWith(fisicaCard);
+  }
+
   if (!areasView || moduleViews.length === 0) {
     return;
   }
