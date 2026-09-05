@@ -40,12 +40,6 @@
   }
 
   const ensinoMedioView = document.getElementById('ensino-medio');
-  const matematicaGroup = ensinoMedioView?.querySelector('[aria-labelledby="matematica-area-title"]');
-  const firstSubjectGroup = ensinoMedioView?.querySelector('.subject-group');
-  if (ensinoMedioView && matematicaGroup && firstSubjectGroup && matematicaGroup !== firstSubjectGroup) {
-    ensinoMedioView.insertBefore(matematicaGroup, firstSubjectGroup);
-  }
-
   const naturezaGroup = ensinoMedioView?.querySelector('[aria-labelledby="natureza-title"]');
   const fisicaPlaceholder = naturezaGroup
     ? Array.from(naturezaGroup.querySelectorAll('article.module-card.is-disabled')).find((card) => card.querySelector('h3')?.textContent.trim() === 'Física')
@@ -63,6 +57,27 @@
       </div>`;
     fisicaPlaceholder.replaceWith(fisicaCard);
   }
+
+  function prioritizeAvailableSubjects() {
+    if (!ensinoMedioView) return;
+
+    const groups = Array.from(ensinoMedioView.children).filter((element) => element.classList.contains('subject-group'));
+
+    groups.forEach((group) => {
+      const grid = group.querySelector('.modules-grid');
+      if (!grid) return;
+      const cards = Array.from(grid.children).filter((element) => element.classList.contains('module-card'));
+      const available = cards.filter((card) => !card.classList.contains('is-disabled'));
+      const unavailable = cards.filter((card) => card.classList.contains('is-disabled'));
+      [...available, ...unavailable].forEach((card) => grid.appendChild(card));
+    });
+
+    const availableGroups = groups.filter((group) => group.querySelector('.module-card:not(.is-disabled)'));
+    const unavailableGroups = groups.filter((group) => !group.querySelector('.module-card:not(.is-disabled)'));
+    [...availableGroups, ...unavailableGroups].forEach((group) => ensinoMedioView.appendChild(group));
+  }
+
+  prioritizeAvailableSubjects();
 
   if (!areasView || moduleViews.length === 0) {
     return;
