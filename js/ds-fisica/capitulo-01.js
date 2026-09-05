@@ -8,7 +8,7 @@
     <section class="physics-opening">
       <span class="lesson-kicker">Uma história para investigar</span>
       <div class="hero-box physics-story">
-        <strong class="card-title">Você combinou de encontrar um amigo na quadra. Ao sair de casa de bicicleta, o celular mostra: “2,4 km • 8 min”.</strong>
+        <strong class="card-title">Você combinou de encontrar um amigo no clube do bairro para jogar bola. Ao sair de casa de bicicleta, o celular mostra: “2,4 km • 8 min”.</strong>
         <p>Parece uma informação simples. Mas o aplicativo está fazendo uma previsão sobre algo que ainda nem aconteceu. Ele não sabe se você vai parar num semáforo, diminuir numa curva ou errar uma rua. Mesmo assim, estima quando você chegará.</p>
         <div class="quick-question" data-choice-question data-correct="b">
           <strong>Antes de continuar, faça uma aposta</strong>
@@ -23,7 +23,7 @@
     <section>
       <h3>1. O celular começa com uma pergunta muito simples: onde você está?</h3>
       <p>Você ainda está em frente de casa. Para o aplicativo, dizer apenas “estou na rua” não basta. Ele precisa localizar você em relação a algum sistema de referência.</p>
-      <p>Vamos simplificar a rua como uma linha. Escolhemos o portão da sua casa como <strong>posição 0 m</strong>. Se você avançar no sentido da quadra, as posições aumentam.</p>
+      <p>Vamos simplificar a rua como uma linha. Escolhemos o portão da sua casa como <strong>posição 0 m</strong>. Se você avançar no sentido do clube, as posições aumentam.</p>
 
       <div class="visual-box">
         <strong class="card-title">A rua virou uma linha de posições</strong>
@@ -49,7 +49,7 @@
 
       <div class="note-box">
         <strong>Pare e explique em uma frase</strong>
-        <p>Se a quadra fosse escolhida como posição 0 m em vez da sua casa, sua posição mudaria de número mesmo sem você sair do lugar? Tente responder antes de continuar.</p>
+        <p>Se a entrada do clube fosse escolhida como posição 0 m em vez da sua casa, sua posição mudaria de número mesmo sem você sair do lugar? Tente responder antes de continuar.</p>
         <details><summary>Compare sua explicação</summary><p>Sim. A posição é um número definido em relação ao referencial escolhido. Mudar o referencial pode mudar o número associado à posição, embora o corpo continue no mesmo lugar físico.</p></details>
       </div>
     </section>
@@ -116,7 +116,7 @@
           <label>Velocidade no trecho <strong><span id="tripSpeedValue">5,0</span> m/s</strong><input id="tripSpeedRange" type="range" min="1" max="10" step="0.5" value="5"></label>
           <label>Tempo pedalando <strong><span id="tripTimeValue">120</span> s</strong><input id="tripTimeRange" type="range" min="0" max="480" step="10" value="120"></label>
         </div>
-        <div class="motion-track" aria-hidden="true"><span class="track-start">casa</span><div id="tripLabCar" class="lab-car">🚲</div><span class="track-end">quadra • 2.400 m</span></div>
+        <div class="motion-track" aria-hidden="true"><span class="track-start">casa</span><div id="tripLabCar" class="lab-car">🚲</div><span class="track-end">clube • 2.400 m</span></div>
         <div class="lab-result"><span>Posição: <strong><span id="tripPositionValue">600</span> m</strong></span><span>Faltam: <strong><span id="tripRemainingValue">1.800</span> m</strong></span><span>Se mantiver o ritmo: <strong><span id="tripEtaValue">6,0</span> min</strong></span></div>
         <p>Faça dois testes: primeiro mantenha o tempo e aumente a velocidade; depois mantenha a velocidade e aumente o tempo. Observe o que cada grandeza faz antes de pensar em qualquer equação.</p>
       </div>
@@ -152,7 +152,7 @@
 
     <section>
       <h3>7. A rotatória quebra uma ideia: o velocímetro pode não mudar, mas a velocidade pode</h3>
-      <p>Faltando pouco para a quadra, você entra numa rotatória mantendo o velocímetro próximo de <strong>15 km/h</strong>. Antes da curva, você seguia para a frente; durante a curva, a direção da bicicleta muda continuamente.</p>
+      <p>Faltando pouco para o clube, você entra numa rotatória mantendo o velocímetro próximo de <strong>15 km/h</strong>. Antes da curva, você seguia para a frente; durante a curva, a direção da bicicleta muda continuamente.</p>
 
       <div class="quick-question" data-choice-question data-correct="b"><strong>Faça sua aposta antes da explicação</strong><p>Enquanto contorna a rotatória com o mesmo valor aproximado no velocímetro, existe aceleração?</p><div class="choice-row"><button type="button" data-choice="a">Não, porque o número do velocímetro quase não muda</button><button type="button" data-choice="b">Sim, porque a direção da velocidade muda</button><button type="button" data-choice="c">Só existe aceleração quando a bicicleta parte do repouso</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Exatamente. A velocidade inclui módulo e direção. Mudar a direção também é mudar a velocidade." data-wrong-text="Compare para onde a bicicleta aponta antes, durante e depois da curva."></div></div>
 
@@ -175,8 +175,8 @@
     </section>
 
     <section>
-      <h3>8. Você chega à quadra. Uma bola escapa da mão e cai: ela mantém a mesma velocidade?</h3>
-      <p>Enquanto espera seu amigo, uma bola escapa da mão de alguém e cai praticamente a partir do repouso. Em vez de pensar apenas “ela vai para baixo”, observe o que acontece <strong>a cada intervalo de tempo</strong>.</p>
+      <h3>8. Você chega ao clube. Perto da quadra, uma bola escapa da mão: ela mantém a mesma velocidade?</h3>
+      <p>Já na área esportiva, enquanto você e seu amigo se preparam para jogar, uma bola escapa da mão de alguém e cai praticamente a partir do repouso. Em vez de pensar apenas “ela vai para baixo”, observe o que acontece <strong>a cada intervalo de tempo</strong>.</p>
 
       <div class="quick-question" data-choice-question data-correct="b"><strong>Faça uma hipótese</strong><p>Desprezando a resistência do ar, o que acontece com o módulo da velocidade durante a queda?</p><div class="choice-row"><button type="button" data-choice="a">Permanece constante</button><button type="button" data-choice="b">Aumenta com o tempo</button><button type="button" data-choice="c">Diminui até zero</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Isso. A queda livre é um movimento acelerado: o módulo da velocidade aumenta enquanto a bola cai." data-wrong-text="Compare o início da queda com instantes posteriores."></div></div>
 
@@ -205,8 +205,8 @@
     </section>
 
     <section>
-      <h3>9. A mesma bola rola pelo banco e sai pela borda: ela avança e cai ao mesmo tempo</h3>
-      <p>Alguns minutos depois, a bola que estava sobre um banco é empurrada sem querer, rola e sai pela borda com velocidade horizontal. Agora aparece uma pergunta nova: <strong>ao perder o apoio, ela para de avançar para começar a cair?</strong></p>
+      <h3>9. A mesma bola rola por um banco ao lado da quadra e sai pela borda: ela avança e cai ao mesmo tempo</h3>
+      <p>Alguns minutos depois, a bola que estava sobre um banco ao lado da quadra é empurrada sem querer, rola e sai pela borda com velocidade horizontal. Agora aparece uma pergunta nova: <strong>ao perder o apoio, ela para de avançar para começar a cair?</strong></p>
 
       <div class="quick-question" data-choice-question data-correct="b"><strong>Faça sua previsão</strong><p>No modelo sem resistência do ar, logo depois de sair horizontalmente da borda, a bola:</p><div class="choice-row"><button type="button" data-choice="a">Para horizontalmente e só depois cai</button><button type="button" data-choice="b">Continua avançando enquanto cai</button><button type="button" data-choice="c">Fica parada no ar por um instante</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Isso. O movimento horizontal continua enquanto, ao mesmo tempo, a gravidade produz a queda vertical." data-wrong-text="Pense no que faria a bola perder instantaneamente toda a velocidade horizontal."></div></div>
 
@@ -245,7 +245,7 @@
       <span class="lesson-kicker">Checkpoint — o trajeto de volta</span>
       <h3>12. Você consegue usar as ideias sem depender da história original?</h3>
 
-      <div class="quick-question" data-choice-question data-correct="b"><strong>1. Referencial</strong><p>Na volta, você escolhe a quadra como posição 0 m. Sua casa pode ter uma posição diferente da usada na ida?</p><div class="choice-row"><button type="button" data-choice="a">Não, posições são universais</button><button type="button" data-choice="b">Sim, porque o referencial mudou</button><button type="button" data-choice="c">Só se mudar a distância real</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Correto. O número associado à posição depende do referencial escolhido." data-wrong-text="Lembre que o zero da nossa linha foi uma escolha."></div></div>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>1. Referencial</strong><p>Na volta, você escolhe a entrada do clube como posição 0 m. Sua casa pode ter uma posição diferente da usada na ida?</p><div class="choice-row"><button type="button" data-choice="a">Não, posições são universais</button><button type="button" data-choice="b">Sim, porque o referencial mudou</button><button type="button" data-choice="c">Só se mudar a distância real</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Correto. O número associado à posição depende do referencial escolhido." data-wrong-text="Lembre que o zero da nossa linha foi uma escolha."></div></div>
 
       <div class="quick-question" data-choice-question data-correct="a"><strong>2. Distância</strong><p>Você avança 100 m, percebe que esqueceu algo e retorna 40 m. Quanto percorreu?</p><div class="choice-row"><button type="button" data-choice="a">140 m</button><button type="button" data-choice="b">60 m</button><button type="button" data-choice="c">40 m</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A distância soma todo o caminho: 100 + 40 = 140 m." data-wrong-text="Não confunda caminho percorrido com variação de posição."></div></div>
 
