@@ -29,16 +29,6 @@
     if (!menu || !button) return;
     $$('.menu-item', menu).forEach((item) => item.classList.remove('active'));
     button.classList.add('active');
-
-    const targetGroup = button.closest('.menu-group');
-    $$('.menu-group', menu).forEach((group) => {
-      const open = group === targetGroup;
-      const toggle = $('.menu-group-toggle', group);
-      const items = $('.menu-group-items', group);
-      if (items) items.hidden = !open;
-      if (toggle) toggle.setAttribute('aria-expanded', String(open));
-      group.classList.toggle('is-open', open);
-    });
   };
 
   MBB.closeMobileMenu = () => {

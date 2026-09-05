@@ -26,25 +26,10 @@
     { group:'Prática', menu:'99 Exercícios e desafios', id:'exercicios' }
   ];
 
-  function setGroupOpen(group, open) {
-    if (!group) return;
-    const toggle = $('.menu-group-toggle', group);
-    const items = $('.menu-group-items', group);
-    if (!toggle || !items) return;
-    items.hidden = !open;
-    toggle.setAttribute('aria-expanded', String(open));
-    group.classList.toggle('is-open', open);
-  }
-
-  function openOnlyGroup(targetGroup) {
-    $$('.menu-group', menu).forEach((group) => setGroupOpen(group, group === targetGroup));
-  }
-
   function setActive(button) {
     if (!button) return;
     $$('.menu-item', menu).forEach(item => item.classList.remove('active'));
     button.classList.add('active');
-    openOnlyGroup(button.closest('.menu-group'));
   }
 
   function syncBack() {
@@ -57,38 +42,14 @@
 
   function buildMenu() {
     menu.innerHTML = '';
-    let currentGroup = null;
-    let currentItems = null;
-
-    chapters.forEach((chapter, chapterIndex) => {
-      if (!currentGroup || currentGroup.dataset.groupName !== chapter.group) {
-        const groupSection = document.createElement('section');
-        groupSection.className = 'menu-group';
-        groupSection.dataset.groupName = chapter.group;
-
-        const toggle = document.createElement('button');
-        toggle.type = 'button';
-        toggle.className = 'menu-group-toggle';
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.innerHTML = `<span>${chapter.group}</span><span class="menu-group-chevron" aria-hidden="true">⌄</span>`;
-
-        const groupItems = document.createElement('div');
-        groupItems.className = 'menu-group-items';
-        groupItems.hidden = true;
-        const groupId = `physics-menu-group-${menu.children.length + 1}`;
-        groupItems.id = groupId;
-        toggle.setAttribute('aria-controls', groupId);
-
-        toggle.addEventListener('click', () => {
-          const willOpen = groupItems.hidden;
-          if (willOpen) openOnlyGroup(groupSection);
-          else setGroupOpen(groupSection, false);
-        });
-
-        groupSection.append(toggle, groupItems);
-        menu.appendChild(groupSection);
-        currentGroup = groupSection;
-        currentItems = groupItems;
+    let lastGroup = '';
+    chapters.forEach((chapter) => {
+      if (chapter.group !== lastGroup) {
+        const heading = document.createElement('div');
+        heading.className = 'menu-group-title';
+        heading.textContent = chapter.group;
+        menu.appendChild(heading);
+        lastGroup = chapter.group;
       }
 
       const button = document.createElement('button');
@@ -96,7 +57,6 @@
       button.className = `menu-item${chapter.enabled ? '' : ' pending'}`;
       button.textContent = chapter.menu;
       button.dataset.lessonId = chapter.id;
-      button.dataset.chapterIndex = String(chapterIndex);
 
       if (!chapter.enabled) {
         button.disabled = true;
@@ -107,16 +67,12 @@
           MBB.showDiagnostic?.();
         });
       }
-      currentItems.appendChild(button);
+      menu.appendChild(button);
     });
-
-    const firstGroup = $('.menu-group', menu);
-    setGroupOpen(firstGroup, true);
   }
 
   MBB.getMenuButton = (startsWith) => $$('.menu-item', menu).find(button => button.textContent.trim().startsWith(startsWith));
-  MBB.setActiveMenu = setActive;
-  MBB.openMenuGroupFor = (button) => openOnlyGroup(button?.closest('.menu-group'));
+  MBB.setActiveMenu = MBB.setActiveMenu || setActive;
   MBB.courseContent = content;
 
   function openCourse() {
@@ -137,7 +93,7 @@
     course.hidden = true;
     home.hidden = false;
     menu.classList.remove('open');
-    window.scrollTo({ top:0, behavior:'auto' });
+    window.scrollTo({ top:0, behavior:'smooth' });
   });
 
   $('#openMenu')?.addEventListener('click', () => {
