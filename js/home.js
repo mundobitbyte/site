@@ -44,6 +44,23 @@
     fisicaPlaceholder.replaceWith(fisicaCard);
   }
 
+  const quimicaPlaceholder = naturezaGroup
+    ? Array.from(naturezaGroup.querySelectorAll('article.module-card.is-disabled')).find((card) => card.querySelector('h3')?.textContent.trim() === 'Química')
+    : null;
+
+  if (quimicaPlaceholder) {
+    const quimicaCard = document.createElement('a');
+    quimicaCard.className = 'module-card';
+    quimicaCard.href = 'ds-quimica/index.html';
+    quimicaCard.innerHTML = `
+      <div class="module-head"><h3>Química</h3></div>
+      <div class="module-body">
+        <p>Química da 1ª série com situações reais, avaliação diagnóstica, revisão direcionada e construção gradual dos modelos e conceitos.</p>
+        <span class="module-label">Diagnóstico disponível</span>
+      </div>`;
+    quimicaPlaceholder.replaceWith(quimicaCard);
+  }
+
   function prioritizeAvailableSubjects() {
     if (!ensinoMedioView) return;
 
