@@ -73,6 +73,7 @@
   const validAreas = new Set(moduleViews.map((view) => view.dataset.area));
   const areaLinks = Array.from(document.querySelectorAll('[data-area-link]'));
   const backLinks = Array.from(document.querySelectorAll('[data-back]'));
+  const backToolbars = Array.from(document.querySelectorAll('.modules-toolbar'));
 
   function areaFromLocation() {
     let hash = window.location.hash.replace(/^#/, '');
@@ -194,5 +195,8 @@
   }
 
   document.documentElement.classList.add('js-ready');
+  backToolbars.forEach((toolbar) => {
+    toolbar.style.display = 'block';
+  });
   render(initialArea, { focusHeading: false, scrollTop: Boolean(initialArea) });
 })();
