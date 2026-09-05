@@ -1,6 +1,20 @@
 (() => {
   const areasView = document.getElementById('areas');
   const moduleViews = Array.from(document.querySelectorAll('.modules-view[data-area]'));
+  const header = document.querySelector('body > header');
+  const headerTitle = header?.querySelector('h1');
+
+  let headerBack = header?.querySelector('[data-home-shell-back]');
+  if (header && headerTitle && !headerBack) {
+    headerBack = document.createElement('button');
+    headerBack.type = 'button';
+    headerBack.className = 'portal-home-back';
+    headerBack.dataset.homeShellBack = '';
+    headerBack.textContent = '← Mundo bit Byte';
+    headerBack.setAttribute('aria-label', 'Voltar ao Mundo bit Byte');
+    headerBack.hidden = true;
+    header.insertBefore(headerBack, headerTitle);
+  }
 
   const programacaoView = document.getElementById('programacao-desenvolvimento');
   const reactNativeCard = programacaoView?.querySelector('a.module-card[href="pages/reactnative.html"]');
@@ -71,11 +85,18 @@
     return validAreas.has(hash) ? hash : null;
   }
 
+  function syncHeader(target) {
+    const inSubview = Boolean(target);
+    if (headerTitle) headerTitle.hidden = inSubview;
+    if (headerBack) headerBack.hidden = !inSubview;
+  }
+
   function render(area, options = {}) {
     const { focusHeading = false, scrollTop = false } = options;
     const target = area ? moduleViews.find((view) => view.dataset.area === area) : null;
 
     areasView.hidden = Boolean(target);
+    syncHeader(target);
 
     moduleViews.forEach((view) => {
       view.hidden = view !== target;
@@ -153,6 +174,8 @@
       returnToAreas();
     });
   });
+
+  headerBack?.addEventListener('click', returnToAreas);
 
   window.addEventListener('popstate', () => {
     render(areaFromLocation(), { focusHeading: true, scrollTop: true });
