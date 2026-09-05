@@ -22,7 +22,7 @@
 
       <div class="equation-walk"><div><span>1</span><p>No nosso modelo simplificado, a corrente exerce uma força média de <strong>5.000 N</strong> na direção do movimento.</p></div><div><span>2</span><p>Durante esse trecho, o trem percorre <strong>40 m</strong> ao longo da pista.</p></div><div><span>3</span><p>Força e deslocamento têm a mesma direção.</p></div></div>
       <div class="formula-box"><span class="formula-name">Trabalho no caso de força e deslocamento na mesma direção</span><div class="big-formula">W = F · d</div><p>No exemplo: 5.000 × 40 = <strong>200.000 J</strong>. O joule (J) é a unidade de energia e de trabalho.</p></div>
-      <div class="note-box"><strong>E se a força não apontar na mesma direção do movimento?</strong><p>Em situações gerais, o ângulo entre força e deslocamento precisa ser considerado. Aqui usamos o caso alinhado porque ele permite enxergar com clareza a transferência de energia feita pela corrente.</p></div>
+      <div class="note-box"><strong>E se a força não apontar na mesma direção do movimento?</strong><p>Em situações gerais, o ângulo entre força e deslocamento precisa ser considerado. Quando ambos têm a mesma direção, usamos W = F·d. Se houver ângulo entre eles, é a componente da força na direção do deslocamento que contribui para o trabalho.</p></div>
     </section>
 
     <section>
