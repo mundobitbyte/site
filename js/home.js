@@ -50,6 +50,128 @@
     fisicaPlaceholder.replaceWith(fisicaCard);
   }
 
+  function pageSize() {
+    if (window.matchMedia('(max-width: 640px)').matches) return 2;
+    if (window.matchMedia('(max-width: 980px)').matches) return 4;
+    return 6;
+  }
+
+  function setupPagedGrid(grid) {
+    if (!grid || grid.dataset.mbbPagerReady === 'true') return;
+
+    const items = Array.from(grid.children).filter((item) => item.matches('.area-card, .module-card'));
+    if (!items.length) return;
+
+    grid.dataset.mbbPagerReady = 'true';
+    let firstIndex = 0;
+    let lastPageSize = pageSize();
+
+    const pager = document.createElement('nav');
+    pager.className = 'grid-pager';
+    pager.setAttribute('aria-label', 'Navegação dos cartões');
+    pager.innerHTML = `
+      <button class="grid-pager-button" type="button" data-grid-prev>← Anteriores</button>
+      <div class="grid-pager-status" aria-live="polite">
+        <strong data-grid-range></strong>
+        <span data-grid-page></span>
+      </div>
+      <button class="grid-pager-button" type="button" data-grid-next>Próximos →</button>`;
+    grid.insertAdjacentElement('afterend', pager);
+
+    const prev = pager.querySelector('[data-grid-prev]');
+    const next = pager.querySelector('[data-grid-next]');
+    const range = pager.querySelector('[data-grid-range]');
+    const page = pager.querySelector('[data-grid-page]');
+
+    function renderPager() {
+      const size = pageSize();
+      if (size !== lastPageSize) {
+        firstIndex = Math.floor(firstIndex / size) * size;
+        lastPageSize = size;
+      }
+
+      const totalPages = Math.max(1, Math.ceil(items.length / size));
+      firstIndex = Math.min(firstIndex, Math.max(0, (totalPages - 1) * size));
+      const currentPage = Math.floor(firstIndex / size) + 1;
+      const endIndex = Math.min(firstIndex + size, items.length);
+
+      items.forEach((item, index) => {
+        item.hidden = index < firstIndex || index >= endIndex;
+      });
+
+      pager.hidden = totalPages <= 1;
+      prev.disabled = firstIndex === 0;
+      next.disabled = endIndex >= items.length;
+      range.textContent = `${firstIndex + 1}–${endIndex} de ${items.length}`;
+      page.textContent = `Página ${currentPage} de ${totalPages}`;
+    }
+
+    prev.addEventListener('click', () => {
+      firstIndex = Math.max(0, firstIndex - pageSize());
+      renderPager();
+    });
+
+    next.addEventListener('click', () => {
+      if (firstIndex + pageSize() >= items.length) return;
+      firstIndex += pageSize();
+      renderPager();
+    });
+
+    let resizeTimer = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(renderPager, 100);
+    });
+
+    grid.mbbRenderPager = renderPager;
+    renderPager();
+  }
+
+  function setupSubjectNavigation() {
+    if (!ensinoMedioView || ensinoMedioView.dataset.subjectNavReady === 'true') return;
+    const groups = Array.from(ensinoMedioView.querySelectorAll(':scope > .subject-group'));
+    if (groups.length <= 1) return;
+
+    ensinoMedioView.dataset.subjectNavReady = 'true';
+    const nav = document.createElement('nav');
+    nav.className = 'subject-nav';
+    nav.setAttribute('aria-label', 'Áreas do conhecimento do Ensino Médio');
+
+    const buttons = groups.map((group, index) => {
+      const heading = group.querySelector('.subject-group-heading h3');
+      if (!group.id) group.id = `ensino-medio-area-${index + 1}`;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'subject-nav-button';
+      button.textContent = heading?.textContent?.trim() || `Área ${index + 1}`;
+      button.setAttribute('aria-controls', group.id);
+      button.setAttribute('aria-pressed', 'false');
+      nav.appendChild(button);
+      return button;
+    });
+
+    const headingBlock = ensinoMedioView.querySelector('.view-heading');
+    headingBlock?.insertAdjacentElement('afterend', nav);
+
+    function activate(index) {
+      groups.forEach((group, groupIndex) => {
+        const active = groupIndex === index;
+        group.hidden = !active;
+        buttons[groupIndex].classList.toggle('active', active);
+        buttons[groupIndex].setAttribute('aria-pressed', String(active));
+        if (active) {
+          group.querySelectorAll('.modules-grid').forEach((grid) => grid.mbbRenderPager?.());
+        }
+      });
+    }
+
+    buttons.forEach((button, index) => button.addEventListener('click', () => activate(index)));
+    activate(0);
+  }
+
+  document.querySelectorAll('.areas-grid, .modules-grid').forEach(setupPagedGrid);
+  setupSubjectNavigation();
+
   if (!areasView || moduleViews.length === 0) {
     return;
   }
@@ -76,6 +198,7 @@
     const target = area ? moduleViews.find((view) => view.dataset.area === area) : null;
 
     areasView.hidden = Boolean(target);
+    document.body.classList.toggle('mbb-subview', Boolean(target));
 
     moduleViews.forEach((view) => {
       view.hidden = view !== target;
@@ -83,6 +206,7 @@
 
     if (target) {
       document.title = `${target.dataset.title} — Mundo bit Byte`;
+      target.querySelectorAll('.areas-grid, .modules-grid').forEach((grid) => grid.mbbRenderPager?.());
 
       if (focusHeading) {
         const heading = target.querySelector('h2[tabindex="-1"]');
@@ -92,6 +216,7 @@
       }
     } else {
       document.title = defaultTitle;
+      areasView.querySelectorAll('.areas-grid').forEach((grid) => grid.mbbRenderPager?.());
     }
 
     if (scrollTop) {
