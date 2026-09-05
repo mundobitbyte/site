@@ -6,272 +6,143 @@
 
   const lessonHtml = `
     <section class="physics-opening">
-      <span class="lesson-kicker">Comece por uma situação real</span>
+      <span class="lesson-kicker">Uma história para investigar</span>
       <div class="hero-box physics-story">
-        <strong class="card-title">Por que cinto, airbag e zonas de deformação ajudam numa colisão?</strong>
-        <p>Quando um carro para bruscamente, a velocidade de quem está dentro precisa mudar em pouco tempo. A mudança do movimento pode ser a mesma, mas a força média depende de <strong>quanto tempo essa mudança leva</strong>.</p>
-        <p class="central-question"><strong>Pergunta que vai guiar esta aula:</strong> como massa, velocidade, força e tempo se conectam durante uma batida?</p>
+        <strong class="card-title">Você está pesquisando a segurança de um carro e abre um vídeo de crash test. Em poucos décimos de segundo, o veículo vai de uma velocidade alta praticamente ao repouso.</strong>
+        <p>A primeira reação é pensar apenas na “força da batida”. Mas o vídeo mostra mais: o carro deforma, o cinto segura o ocupante e o airbag aumenta o tempo de contato. Para entender por que isso importa, precisamos acompanhar <strong>quanto movimento existia antes, quanto ele mudou e em quanto tempo a mudança aconteceu</strong>.</p>
+        <div class="quick-question" data-choice-question data-correct="b"><strong>Antes de continuar, faça uma aposta</strong><p>Se duas pessoas têm a mesma mudança de movimento, mas uma para em 0,05 s e outra em 0,50 s, em qual caso a força média tende a ser menor?</p><div class="choice-row"><button type="button" data-choice="a">Na parada de 0,05 s</button><button type="button" data-choice="b">Na parada de 0,50 s</button><button type="button" data-choice="c">O tempo não interfere</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Essa é a pista: distribuir a mudança por mais tempo pode reduzir a força média." data-wrong-text="Imagine fazer a mesma mudança de movimento de modo quase instantâneo ou mais gradual."></div></div>
+        <p class="central-question"><strong>Nossa missão:</strong> reconstruir o crash test e descobrir por que massa, velocidade, tempo de contato e tipo de colisão mudam o resultado.</p>
       </div>
     </section>
 
     <section>
-      <h3>1. Quantidade de movimento: massa e velocidade contam juntas</h3>
-      <p>Compare uma bola leve e um carrinho pesado movendo-se com a mesma velocidade. Parar o carrinho exige uma mudança de movimento maior. Para representar isso, usamos a <strong>quantidade de movimento</strong>, também chamada de momento linear.</p>
-
-      <div class="momentum-comparison">
-        <div><strong>Objeto A</strong><span>1 kg</span><span>4 m/s →</span><b>p = 4 kg·m/s</b></div>
-        <div><strong>Objeto B</strong><span>3 kg</span><span>4 m/s →</span><b>p = 12 kg·m/s</b></div>
-      </div>
-
-      <div class="formula-box">
-        <span class="formula-name">Quantidade de movimento</span>
-        <div class="big-formula">p = m · v</div>
-        <p><strong>m</strong> é a massa e <strong>v</strong> é a velocidade. Como a velocidade tem direção e sentido, a quantidade de movimento também tem.</p>
-      </div>
-
-      <div class="note-box"><strong>O sinal pode representar o sentido</strong><p>Em movimentos sobre uma linha reta, podemos escolher a direita como positiva. Assim, 5 m/s para a direita pode ser +5 m/s e 5 m/s para a esquerda, −5 m/s.</p></div>
-
-      <div class="quick-question" data-choice-question data-correct="b">
-        <strong>Verificação rápida</strong>
-        <p>Um carrinho de 2 kg move-se a 3 m/s para a direita. Qual é o módulo de sua quantidade de movimento?</p>
-        <div class="choice-row"><button type="button" data-choice="a">1,5 kg·m/s</button><button type="button" data-choice="b">6 kg·m/s</button><button type="button" data-choice="c">9 kg·m/s</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="p = m·v = 2·3 = 6 kg·m/s." data-wrong-text="Multiplique a massa pela velocidade."></div>
-      </div>
+      <h3>1. Antes da batida, o carro já carrega uma “quantidade de movimento”</h3>
+      <p>Compare um carrinho de supermercado e um automóvel movendo-se com a mesma velocidade. Parar o automóvel exige uma mudança muito maior. A massa importa. Agora compare o mesmo automóvel a 20 km/h e a 80 km/h: a velocidade também importa.</p>
+      <p>Precisamos de uma grandeza que reúna essas duas informações. Ela é a <strong>quantidade de movimento</strong>, ou momento linear.</p>
+      <div class="formula-box"><span class="formula-name">A fórmula aparece porque massa e velocidade precisam entrar juntas</span><div class="big-formula">p = m · v</div><p>Em uma linha reta, podemos escolher a direita como sentido positivo. Assim o sinal da velocidade também registra o sentido da quantidade de movimento.</p></div>
+      <div class="example-box"><strong class="card-title">Exemplo construído</strong><p>Um carrinho de teste de 800 kg desloca-se a 10 m/s para a direita.</p><ol class="reason-steps"><li>m = 800 kg.</li><li>v = +10 m/s.</li><li>p = 800·10 = <strong>8.000 kg·m/s para a direita</strong>.</li></ol></div>
+      <div class="quick-question" data-choice-question data-correct="c"><strong>Faça a previsão</strong><p>Se a massa dobrar e a velocidade permanecer igual, a quantidade de movimento:</p><div class="choice-row"><button type="button" data-choice="a">cai pela metade</button><button type="button" data-choice="b">não muda</button><button type="button" data-choice="c">dobra</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="p é diretamente proporcional à massa." data-wrong-text="Mantenha v e observe p = m·v."></div></div>
     </section>
 
     <section>
-      <h3>2. Impulso: uma força atuando durante um intervalo de tempo</h3>
-      <p>Uma força pode agir por pouco ou muito tempo. O efeito acumulado dessa ação sobre o movimento é representado pelo <strong>impulso</strong>.</p>
-
-      <div class="impulse-scene" aria-label="Comparação entre uma força grande por pouco tempo e uma força menor por mais tempo">
-        <div><strong>Força maior</strong><span class="impulse-bar short"></span><small>tempo curto</small></div>
-        <div><strong>Força menor</strong><span class="impulse-bar long"></span><small>tempo maior</small></div>
-      </div>
-
-      <div class="formula-box">
-        <span class="formula-name">Força média constante no intervalo</span>
-        <div class="big-formula">I = F · Δt</div>
-        <p>A unidade do impulso é <strong>N·s</strong>, equivalente a kg·m/s.</p>
-      </div>
-
-      <div class="example-box"><strong class="card-title">Exemplo guiado</strong><p>Uma força média de 200 N atua durante 0,30 s.</p><ol class="reason-steps"><li>Identifique F = 200 N.</li><li>Identifique Δt = 0,30 s.</li><li>I = 200·0,30 = <strong>60 N·s</strong>.</li></ol></div>
+      <h3>2. No impacto, o que importa não é só a força: importa por quanto tempo ela atua</h3>
+      <p>Durante a colisão, as forças atuam por um intervalo curto. Para representar o efeito acumulado de uma força ao longo desse tempo, usamos o <strong>impulso</strong>.</p>
+      <div class="equation-walk"><div><span>1</span><p>Uma força média atua durante um intervalo Δt.</p></div><div><span>2</span><p>Se ela agir por mais tempo, seu efeito acumulado pode aumentar.</p></div><div><span>3</span><p>Precisamos juntar força e tempo na mesma grandeza.</p></div></div>
+      <div class="formula-box"><span class="formula-name">Impulso para uma força média constante</span><div class="big-formula">I = F · Δt</div><p>A unidade é N·s. Um impulso de 60 N·s pode resultar, por exemplo, de 200 N por 0,30 s.</p></div>
+      <div class="note-box"><strong>Não decore sem ligar ao fenômeno</strong><p>Impulso não é “força maior”. É o efeito da força <strong>ao longo do tempo</strong>.</p></div>
     </section>
 
     <section>
-      <h3>3. Teorema do impulso: mudar o movimento exige impulso</h3>
-      <p>O elo central do capítulo é este: o impulso resultante sobre um corpo corresponde à <strong>variação de sua quantidade de movimento</strong>.</p>
-
-      <div class="concept-flow">
-        <div><strong>antes</strong><span>p<sub>i</sub></span></div><div class="flow-arrow">→</div><div><strong>impulso</strong><span>I</span></div><div class="flow-arrow">→</div><div><strong>depois</strong><span>p<sub>f</sub></span></div>
-      </div>
-
-      <div class="formula-box"><span class="formula-name">Teorema do impulso</span><div class="big-formula">I = Δp = p<sub>f</sub> − p<sub>i</sub></div><p>Se a massa permanecer constante, a mudança de velocidade produz a mudança da quantidade de movimento.</p></div>
-
-      <div class="quick-question" data-choice-question data-correct="c">
-        <strong>Pense antes de calcular</strong>
-        <p>Uma bola de 0,5 kg estava parada e passa a 8 m/s para a direita. Qual é o módulo da variação de sua quantidade de movimento?</p>
-        <div class="choice-row"><button type="button" data-choice="a">0,0625 kg·m/s</button><button type="button" data-choice="b">8,5 kg·m/s</button><button type="button" data-choice="c">4 kg·m/s</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="Δp = m·(vf−vi) = 0,5·8 = 4 kg·m/s." data-wrong-text="A bola partiu do repouso: compare o momento final com zero."></div>
-      </div>
+      <h3>3. Agora conectamos as duas partes: o impulso é a mudança da quantidade de movimento</h3>
+      <p>No crash test, o veículo tinha uma quantidade de movimento antes e quase nenhuma depois. A colisão produziu uma grande mudança. O elo entre a ação das forças durante o impacto e essa mudança é o <strong>teorema do impulso</strong>.</p>
+      <div class="formula-box"><span class="formula-name">O que a colisão realmente precisa produzir</span><div class="big-formula">I = Δp = p<sub>f</sub> − p<sub>i</sub></div><p>Se a massa permanece aproximadamente constante, mudar a velocidade significa mudar a quantidade de movimento.</p></div>
+      <div class="example-box"><strong class="card-title">Do movimento ao impulso</strong><p>Um corpo de 70 kg passa de 10 m/s para 0.</p><ol class="reason-steps"><li>p<sub>i</sub> = 70·10 = 700 kg·m/s.</li><li>p<sub>f</sub> = 0.</li><li>Δp = −700 kg·m/s. O sinal indica sentido oposto ao movimento inicial; o módulo da mudança é <strong>700 kg·m/s</strong>.</li></ol></div>
     </section>
 
     <section>
-      <h3>4. Segurança em colisões: aumentar o tempo pode reduzir a força média</h3>
-      <p>Se uma pessoa precisa ir de uma velocidade inicial até o repouso, a variação de quantidade de movimento é determinada por sua massa e pela mudança de velocidade. O que dispositivos de segurança podem fazer é <strong>aumentar o intervalo de tempo da desaceleração</strong>.</p>
-
-      <div class="safety-collision-grid">
-        <div><strong>Parada quase instantânea</strong><div class="collision-time tiny"></div><p>Mesmo Δp em tempo muito curto → força média maior.</p></div>
-        <div><strong>Parada mais prolongada</strong><div class="collision-time safer"></div><p>Mesmo Δp distribuído em mais tempo → força média menor.</p></div>
-      </div>
-
-      <div class="example-box"><strong class="card-title">Compare os números</strong><p>Considere uma pessoa de 70 kg reduzindo sua velocidade de 10 m/s para 0.</p><ol class="reason-steps"><li>O módulo da variação é |Δp| = 70·10 = <strong>700 kg·m/s</strong>.</li><li>Se isso ocorre em 0,05 s, a força média tem módulo aproximado de <strong>14.000 N</strong>.</li><li>Se ocorre em 0,50 s, a força média cai para cerca de <strong>1.400 N</strong>.</li></ol></div>
-
-      <div class="note-box"><strong>Importante</strong><p>Cinto e airbag não “eliminam” a mudança de movimento. Eles ajudam a controlar como ela acontece e distribuem forças de maneira mais segura. Uma colisão real envolve muitos detalhes além deste modelo introdutório.</p></div>
+      <h3>4. É aqui que cinto, airbag e deformação deixam de parecer “acessórios”</h3>
+      <p>Para levar a pessoa de uma velocidade inicial até o repouso, a mudança de quantidade de movimento é determinada pela massa e pela mudança de velocidade. Dispositivos de segurança não fazem essa mudança desaparecer. Eles ajudam a <strong>aumentar o tempo em que ela ocorre</strong> e a distribuir melhor as forças pelo corpo.</p>
+      <div class="example-box"><strong class="card-title">Mesma mudança, tempos diferentes</strong><p>Para |Δp| = 700 kg·m/s:</p><ol class="reason-steps"><li>Em 0,05 s: F<sub>média</sub> ≈ 700/0,05 = <strong>14.000 N</strong>.</li><li>Em 0,50 s: F<sub>média</sub> ≈ 700/0,50 = <strong>1.400 N</strong>.</li><li>O tempo ficou 10 vezes maior e a força média caiu por um fator 10 neste modelo simplificado.</li></ol></div>
+      <div class="note-box"><strong>Modelo não é acidente real</strong><p>Uma colisão real envolve deformações, diferentes regiões do corpo, orientação, materiais e muitos outros fatores. Aqui isolamos uma relação física para compreender por que aumentar o tempo de desaceleração pode ser importante.</p></div>
+      <div class="quick-question" data-choice-question data-correct="a"><strong>Pare e explique</strong><p>Por que dizer “o airbag diminui a velocidade” é uma explicação incompleta?</p><div class="choice-row"><button type="button" data-choice="a">Porque o ponto central é como a mudança de movimento acontece ao longo do tempo e como as forças são distribuídas</button><button type="button" data-choice="b">Porque o airbag aumenta a massa da pessoa</button><button type="button" data-choice="c">Porque velocidade não existe em colisões</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Exato. A pessoa precisa reduzir a velocidade de qualquer forma; o modo e o tempo dessa mudança são decisivos." data-wrong-text="A pergunta é como ocorre a desaceleração, não apenas se ela ocorre."></div></div>
     </section>
 
     <section>
-      <h3>5. Conservação da quantidade de movimento</h3>
-      <p>Durante uma colisão, os corpos exercem forças uns sobre os outros. Essas forças internas aparecem em pares. Se o impulso externo sobre o sistema for desprezível durante o curto intervalo da colisão, a <strong>quantidade de movimento total do sistema se conserva</strong>.</p>
-
-      <div class="collision-before-after">
-        <div class="collision-panel"><span>Antes</span><div class="cart-token blue">A →</div><div class="cart-token purple">B</div><strong>p<sub>total, antes</sub></strong></div>
-        <div class="collision-arrow">→</div>
-        <div class="collision-panel"><span>Depois</span><div class="cart-token blue">A</div><div class="cart-token purple">B →</div><strong>p<sub>total, depois</sub></strong></div>
-      </div>
-
-      <div class="formula-box"><span class="formula-name">Sistema isolado durante a colisão</span><div class="big-formula">Σp<sub>antes</sub> = Σp<sub>depois</sub></div><p>Em uma dimensão: m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂.</p></div>
-
-      <div class="example-box"><strong class="card-title">Colisão perfeitamente inelástica</strong><p>Um carrinho de 2 kg a 4 m/s encontra outro de 2 kg parado e eles ficam unidos.</p><ol class="reason-steps"><li>Antes: p = 2·4 + 2·0 = 8 kg·m/s.</li><li>Depois: a massa total é 4 kg.</li><li>4·v = 8 → <strong>v = 2 m/s</strong>.</li></ol></div>
+      <h3>5. O engenheiro agora troca o carro real por dois carrinhos de laboratório</h3>
+      <p>Para estudar colisões sem todas as complicações de um automóvel, podemos usar dois carrinhos sobre uma pista. Durante o curto intervalo do choque, eles exercem forças um sobre o outro. Se o impulso externo for desprezível, a <strong>quantidade de movimento total do sistema</strong> permanece a mesma antes e depois.</p>
+      <div class="formula-box"><span class="formula-name">Conservação da quantidade de movimento</span><div class="big-formula">Σp<sub>antes</sub> = Σp<sub>depois</sub></div><p>Em uma dimensão: m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂.</p></div>
+      <div class="example-box"><strong class="card-title">Quando os carrinhos grudam</strong><p>Um carrinho de 2 kg a 4 m/s encontra outro de 2 kg parado e os dois seguem unidos.</p><ol class="reason-steps"><li>Antes: p = 2·4 + 2·0 = 8 kg·m/s.</li><li>Depois: massa total = 4 kg.</li><li>4·v = 8 → <strong>v = 2 m/s</strong>.</li></ol></div>
+      <div class="note-box"><strong>O que foi conservado?</strong><p>A quantidade de movimento total. Isso não significa que a energia cinética total tenha permanecido igual.</p></div>
     </section>
 
     <section>
-      <h3>6. Colisão elástica e inelástica não significam a mesma coisa</h3>
-      <p>Em qualquer colisão de um sistema adequadamente isolado, a quantidade de movimento total se conserva. O que muda entre os tipos de choque é o comportamento da <strong>energia cinética</strong>.</p>
+      <h3>6. Nem toda batida “quica” do mesmo jeito</h3>
+      <p>No laboratório, algumas colisões fazem os carrinhos se separar quase sem perda de energia cinética; outras produzem deformação, som e aquecimento; em um caso extremo, os corpos ficam unidos.</p>
+      <div class="two-col"><div class="example-box"><strong class="card-title">Choque elástico ideal</strong><p>Conservam-se a quantidade de movimento total e a energia cinética total.</p></div><div class="example-box"><strong class="card-title">Choque inelástico</strong><p>A quantidade de movimento total do sistema isolado se conserva, mas parte da energia cinética se transforma em outras formas.</p></div></div>
+      <p>Quando os corpos seguem juntos depois, temos um choque <strong>perfeitamente inelástico</strong>.</p>
 
-      <div class="collision-types">
-        <article><strong>Elástica</strong><p>A quantidade de movimento total se conserva e a energia cinética total também.</p><span>Exemplo ideal: esferas rígidas em modelos de laboratório.</span></article>
-        <article><strong>Inelástica</strong><p>A quantidade de movimento total se conserva, mas parte da energia cinética se transforma em outras formas.</p><span>Som, deformação, aquecimento...</span></article>
-        <article><strong>Perfeitamente inelástica</strong><p>Os corpos seguem juntos depois da colisão. É o caso extremo de inelasticidade.</p><span>v₁ = v₂ depois do choque.</span></article>
-      </div>
-
-      <div class="quick-question" data-choice-question data-correct="a">
-        <strong>Uma confusão comum</strong>
-        <p>Em um choque inelástico de um sistema isolado, o que continua conservado?</p>
-        <div class="choice-row"><button type="button" data-choice="a">A quantidade de movimento total</button><button type="button" data-choice="b">Obrigatoriamente a energia cinética total</button><button type="button" data-choice="c">A velocidade de cada corpo</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="A quantidade de movimento total do sistema se conserva; a energia cinética total pode diminuir." data-wrong-text="Separe conservação de momento da conservação de energia cinética."></div>
-      </div>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>Separe as duas conservações</strong><p>Em uma colisão inelástica de um sistema isolado, qual afirmação é correta?</p><div class="choice-row"><button type="button" data-choice="a">A energia cinética total sempre se conserva</button><button type="button" data-choice="b">A quantidade de movimento total se conserva, mas a energia cinética total pode diminuir</button><button type="button" data-choice="c">Nenhuma grandeza pode ser analisada</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Essa distinção é essencial." data-wrong-text="Não trate conservação de momento e de energia cinética como a mesma coisa."></div></div>
     </section>
 
     <section>
-      <h3>7. Coeficiente de restituição: quanto os corpos se separam depois da batida?</h3>
-      <p>O <strong>coeficiente de restituição</strong> compara a velocidade relativa de afastamento depois da colisão com a velocidade relativa de aproximação antes dela.</p>
-
-      <div class="formula-box"><span class="formula-name">Choques frontais em uma dimensão</span><div class="big-formula">e = velocidade relativa de afastamento / velocidade relativa de aproximação</div><p>Em situações usuais de colisão passiva, 0 ≤ e ≤ 1.</p></div>
-
-      <div class="restitution-scale">
-        <div><strong>e = 0</strong><span>perfeitamente inelástica</span></div>
-        <div><strong>0 &lt; e &lt; 1</strong><span>inelástica</span></div>
-        <div><strong>e = 1</strong><span>elástica ideal</span></div>
-      </div>
-
-      <div class="note-box"><strong>Não é uma porcentagem de energia</strong><p>O coeficiente de restituição é definido a partir de <strong>velocidades relativas</strong>. Não devemos interpretá-lo diretamente como “porcentagem de energia que sobrou”.</p></div>
+      <h3>7. Precisamos de uma medida para dizer “quanto a colisão rebate”</h3>
+      <p>O <strong>coeficiente de restituição</strong> compara a velocidade relativa com que os corpos se afastam depois do choque com a velocidade relativa de aproximação antes dele.</p>
+      <div class="formula-box"><span class="formula-name">Em uma colisão frontal</span><div class="big-formula">e = velocidade relativa de afastamento / velocidade relativa de aproximação</div><p>Em modelos usuais de colisão passiva, 0 ≤ e ≤ 1: e = 1 corresponde ao choque elástico ideal; e = 0 ao perfeitamente inelástico.</p></div>
+      <div class="note-box"><strong>Não transforme e em “porcentagem de energia”</strong><p>O coeficiente de restituição é definido a partir de <strong>velocidades relativas</strong>, não diretamente da porcentagem de energia cinética restante.</p></div>
     </section>
 
     <section>
-      <h3>8. Laboratório interativo: varie massas, velocidades e restituição</h3>
+      <h3>8. Laboratório: faça dois carrinhos realmente se aproximarem antes de calcular o “depois”</h3>
       <div class="interactive-lab" id="collisionLab">
         <div class="lab-heading"><span class="lesson-kicker">Laboratório interativo</span><h4>Colisão em linha reta</h4></div>
-        <p>Considere a direita como sentido positivo. O modelo usa conservação da quantidade de movimento e o coeficiente de restituição para calcular as velocidades depois do choque.</p>
+        <p>Adotamos a direita como sentido positivo. Para garantir que exista colisão no modelo, o carrinho A começa à esquerda e sua velocidade inicial é sempre maior que a de B.</p>
         <div class="collision-lab-controls">
           <label>Massa A <strong><span id="m1Value">2</span> kg</strong><input id="m1Range" type="range" min="1" max="5" step="1" value="2"></label>
-          <label>Velocidade A antes <strong><span id="u1Value">4</span> m/s</strong><input id="u1Range" type="range" min="-6" max="6" step="1" value="4"></label>
+          <label>Velocidade A antes <strong><span id="u1Value">4</span> m/s</strong><input id="u1Range" type="range" min="2" max="8" step="1" value="4"></label>
           <label>Massa B <strong><span id="m2Value">1</span> kg</strong><input id="m2Range" type="range" min="1" max="5" step="1" value="1"></label>
-          <label>Velocidade B antes <strong><span id="u2Value">0</span> m/s</strong><input id="u2Range" type="range" min="-6" max="6" step="1" value="0"></label>
+          <label>Velocidade B antes <strong><span id="u2Value">0</span> m/s</strong><input id="u2Range" type="range" min="-4" max="1" step="1" value="0"></label>
           <label>Restituição <strong>e = <span id="eValue">1,0</span></strong><input id="eRange" type="range" min="0" max="1" step="0.1" value="1"></label>
         </div>
-
-        <div class="collision-lab-scene">
-          <div class="collision-lane before"><span>ANTES</span><div class="lab-collision-cart a" id="cartABefore">A</div><div class="lab-collision-cart b" id="cartBBefore">B</div></div>
-          <div class="collision-lane after"><span>DEPOIS</span><div class="lab-collision-cart a" id="cartAAfter">A</div><div class="lab-collision-cart b" id="cartBAfter">B</div></div>
-        </div>
-
-        <div class="collision-results">
-          <div><span>vA depois</span><strong id="v1Result">0,0 m/s</strong></div>
-          <div><span>vB depois</span><strong id="v2Result">0,0 m/s</strong></div>
-          <div><span>p total antes</span><strong id="pBeforeResult">0,0 kg·m/s</strong></div>
-          <div><span>p total depois</span><strong id="pAfterResult">0,0 kg·m/s</strong></div>
-          <div><span>Ec antes</span><strong id="kBeforeResult">0,0 J</strong></div>
-          <div><span>Ec depois</span><strong id="kAfterResult">0,0 J</strong></div>
-        </div>
-        <p id="collisionConclusion" class="collision-conclusion"></p>
+        <div class="collision-lab-scene"><div class="collision-lane before"><span>ANTES</span><div class="lab-collision-cart a" id="cartABefore">A →</div><div class="lab-collision-cart b" id="cartBBefore">B •</div></div><div class="collision-lane after"><span>DEPOIS</span><div class="lab-collision-cart a" id="cartAAfter">A</div><div class="lab-collision-cart b" id="cartBAfter">B</div></div></div>
+        <div class="collision-results"><div><span>vA depois</span><strong id="v1Result">—</strong></div><div><span>vB depois</span><strong id="v2Result">—</strong></div><div><span>p total antes</span><strong id="pBeforeResult">—</strong></div><div><span>p total depois</span><strong id="pAfterResult">—</strong></div><div><span>Ec antes</span><strong id="kBeforeResult">—</strong></div><div><span>Ec depois</span><strong id="kAfterResult">—</strong></div></div>
+        <div class="note-box" id="collisionConclusion"></div>
+        <p>Primeiro mude apenas e. Depois altere uma massa ou velocidade. Tente prever qual resultado será mais sensível antes de mover o controle.</p>
       </div>
     </section>
 
     <section>
-      <h3>9. Experimento MbB: carrinhos ou moedas</h3>
-      <div class="experiment-box">
-        <strong class="card-title">Observe o que muda antes e depois</strong>
-        <ol class="reason-steps">
-          <li>Use dois carrinhos de brinquedo ou duas moedas sobre uma superfície lisa.</li>
-          <li>Faça uma colisão frontal suave e observe os sentidos antes e depois.</li>
-          <li>Repita alterando apenas uma condição: massa, velocidade inicial ou material de contato.</li>
-          <li>Registre o que parece permanecer e o que claramente muda.</li>
-          <li>Se puder gravar em câmera lenta, compare os movimentos quadro a quadro.</li>
-        </ol>
-        <p class="safety-note"><strong>Segurança:</strong> use objetos leves, velocidades baixas e uma área livre. Não lance objetos em direção a pessoas, animais ou superfícies frágeis.</p>
-      </div>
+      <h3>9. Experimento simples: bola e superfícies diferentes</h3>
+      <div class="experiment-box"><strong class="card-title">Observe o quanto a bola retorna</strong><p>Deixe a mesma bola cair da mesma altura sobre superfícies diferentes e compare a altura aproximada do primeiro retorno. Não é uma medição completa de e, mas ajuda a perceber que materiais e deformações mudam o comportamento do choque.</p><p class="safety-note"><strong>Segurança:</strong> use bola leve, altura pequena e área livre de objetos frágeis.</p></div>
     </section>
 
     <section class="chapter-checkpoint">
-      <span class="lesson-kicker">Checkpoint</span>
-      <h3>10. Agora conecte as ideias</h3>
-
-      <div class="quick-question" data-choice-question data-correct="b"><strong>1. Momento</strong><p>Dois objetos têm a mesma velocidade. Qual tem maior quantidade de movimento?</p><div class="choice-row"><button type="button" data-choice="a">Sempre o mais leve</button><button type="button" data-choice="b">O de maior massa</button><button type="button" data-choice="c">Os dois necessariamente têm o mesmo momento</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Com a mesma velocidade, p = m·v cresce com a massa." data-wrong-text="Compare as massas na expressão p = m·v."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="c"><strong>2. Impulso</strong><p>Uma força média de 100 N atua por 0,2 s. Qual é o impulso?</p><div class="choice-row"><button type="button" data-choice="a">500 N·s</button><button type="button" data-choice="b">100,2 N·s</button><button type="button" data-choice="c">20 N·s</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="I = F·Δt = 100·0,2 = 20 N·s." data-wrong-text="Multiplique força pelo intervalo de tempo."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="a"><strong>3. Airbag</strong><p>Para uma mesma variação de quantidade de movimento, aumentar o tempo da colisão tende a:</p><div class="choice-row"><button type="button" data-choice="a">diminuir a força média</button><button type="button" data-choice="b">aumentar obrigatoriamente a força média</button><button type="button" data-choice="c">zerar o impulso</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Como I = Fmédia·Δt, distribuir a mesma variação em mais tempo reduz a força média." data-wrong-text="O impulso precisa continuar compatível com a mesma Δp."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="b"><strong>4. Sistema isolado</strong><p>Em uma colisão de dois carrinhos com impulso externo desprezível, o que é igual antes e depois?</p><div class="choice-row"><button type="button" data-choice="a">A velocidade de cada carrinho</button><button type="button" data-choice="b">A quantidade de movimento total</button><button type="button" data-choice="c">A energia cinética de cada carrinho</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A soma vetorial das quantidades de movimento é conservada." data-wrong-text="A conservação vale para a quantidade de movimento total do sistema."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="c"><strong>5. Choque elástico</strong><p>Além do momento total, qual grandeza também se conserva em uma colisão elástica ideal?</p><div class="choice-row"><button type="button" data-choice="a">A aceleração</button><button type="button" data-choice="b">A força instantânea</button><button type="button" data-choice="c">A energia cinética total</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Esse é o traço que distingue a colisão elástica ideal." data-wrong-text="Em choques elásticos ideais, momento total e energia cinética total se conservam."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="a"><strong>6. Perfeitamente inelástico</strong><p>Depois da colisão, os corpos:</p><div class="choice-row"><button type="button" data-choice="a">seguem juntos</button><button type="button" data-choice="b">sempre voltam com velocidades iguais e opostas</button><button type="button" data-choice="c">ficam necessariamente parados</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Seguir juntos é a característica do caso perfeitamente inelástico." data-wrong-text="Eles compartilham a mesma velocidade final, que não precisa ser zero."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="b"><strong>7. Restituição</strong><p>Um choque idealmente elástico tem coeficiente de restituição:</p><div class="choice-row"><button type="button" data-choice="a">0</button><button type="button" data-choice="b">1</button><button type="button" data-choice="c">10</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Para e = 1, a velocidade relativa de afastamento iguala a de aproximação." data-wrong-text="Na escala introdutória, e = 1 representa o choque elástico ideal."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="c"><strong>8. Direção</strong><p>Se adotamos direita como positiva, um corpo de 2 kg a 3 m/s para a esquerda tem quantidade de movimento:</p><div class="choice-row"><button type="button" data-choice="a">+6 kg·m/s</button><button type="button" data-choice="b">0</button><button type="button" data-choice="c">−6 kg·m/s</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="v = −3 m/s, então p = 2·(−3) = −6 kg·m/s." data-wrong-text="O sinal acompanha o sentido escolhido para a velocidade."></div></div>
-
-      <div class="challenge-box">
-        <strong>Desafio MbB — carrinhos que grudam</strong>
-        <p>Um carrinho A de 3 kg move-se a +4 m/s. Um carrinho B de 1 kg move-se a −2 m/s. Eles colidem e ficam unidos. Qual é a velocidade do conjunto imediatamente depois?</p>
-        <details><summary>Ver resolução depois de tentar</summary><ol class="reason-steps"><li>p antes = 3·4 + 1·(−2) = 12 − 2 = 10 kg·m/s.</li><li>Massa total depois = 3 + 1 = 4 kg.</li><li>4·v = 10.</li><li><strong>v = +2,5 m/s</strong>, portanto o conjunto segue para a direita.</li></ol></details>
-      </div>
+      <span class="lesson-kicker">Depois do crash test</span>
+      <h3>10. Você consegue explicar a colisão antes de escolher uma fórmula?</h3>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>1. Momento</strong><p>Um corpo de 2 kg move-se a 3 m/s. Qual o módulo de p?</p><div class="choice-row"><button type="button" data-choice="a">1,5</button><button type="button" data-choice="b">6 kg·m/s</button><button type="button" data-choice="c">9</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="p = 2·3 = 6 kg·m/s." data-wrong-text="Multiplique massa por velocidade."></div></div>
+      <div class="quick-question" data-choice-question data-correct="c"><strong>2. Impulso</strong><p>200 N atuam por 0,30 s. Qual o impulso?</p><div class="choice-row"><button type="button" data-choice="a">0,0015 N·s</button><button type="button" data-choice="b">200,3 N·s</button><button type="button" data-choice="c">60 N·s</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="I = F·Δt = 60 N·s." data-wrong-text="Multiplique força pelo intervalo."></div></div>
+      <div class="quick-question" data-choice-question data-correct="a"><strong>3. Segurança</strong><p>Para a mesma |Δp|, aumentar o tempo de parada tende a:</p><div class="choice-row"><button type="button" data-choice="a">reduzir a força média</button><button type="button" data-choice="b">aumentar a massa</button><button type="button" data-choice="c">eliminar a gravidade</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="F média ≈ Δp/Δt." data-wrong-text="Mantenha a mudança e aumente o tempo."></div></div>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>4. Sistema</strong><p>Quando o impulso externo é desprezível durante a colisão:</p><div class="choice-row"><button type="button" data-choice="a">cada velocidade se conserva</button><button type="button" data-choice="b">a quantidade de movimento total se conserva</button><button type="button" data-choice="c">os corpos precisam grudar</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A conservação vale para o total do sistema." data-wrong-text="Não confunda grandeza total com velocidade individual."></div></div>
+      <div class="quick-question" data-choice-question data-correct="c"><strong>5. Inelástico</strong><p>Num choque inelástico isolado:</p><div class="choice-row"><button type="button" data-choice="a">p total desaparece</button><button type="button" data-choice="b">Ec total sempre aumenta</button><button type="button" data-choice="c">p total se conserva, mas Ec total pode diminuir</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Correto." data-wrong-text="Separe as duas conservações."></div></div>
+      <div class="quick-question" data-choice-question data-correct="a"><strong>6. e = 1</strong><p>O que representa e = 1 no modelo ideal?</p><div class="choice-row"><button type="button" data-choice="a">choque elástico</button><button type="button" data-choice="b">corpos grudados</button><button type="button" data-choice="c">sem movimento antes</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="e = 1 corresponde ao choque elástico ideal." data-wrong-text="Veja a escala de restituição."></div></div>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>7. e = 0</strong><p>Em um choque perfeitamente inelástico:</p><div class="choice-row"><button type="button" data-choice="a">os corpos se afastam com máxima velocidade relativa</button><button type="button" data-choice="b">os corpos seguem juntos depois</button><button type="button" data-choice="c">a quantidade de movimento total vira zero sempre</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="É o caso extremo de inelasticidade." data-wrong-text="Pense na velocidade relativa de afastamento nula."></div></div>
+      <div class="quick-question" data-choice-question data-correct="c"><strong>8. Antes da conta</strong><p>Qual pergunta deve vir antes de usar conservação de momento?</p><div class="choice-row"><button type="button" data-choice="a">Qual fórmula parece mais bonita?</button><button type="button" data-choice="b">Qual carro é mais novo?</button><button type="button" data-choice="c">Qual sistema estou analisando e o impulso externo é desprezível no intervalo?</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A escolha do sistema vem antes da equação." data-wrong-text="Conservação depende das condições do sistema."></div></div>
+      <div class="challenge-box"><strong>Desafio MbB</strong><p>Explique para alguém, sem começar por fórmulas, por que cinto, airbag e zonas de deformação podem reduzir danos. Depois use as ideias de Δp, impulso e tempo para sustentar sua explicação.</p></div>
     </section>
 
-    <details class="curriculum-box">
-      <summary>Conexão com o plano de curso</summary>
-      <p>Este capítulo desenvolve os objetos de conhecimento previstos para conservação da quantidade de movimento: <strong>impulso, quantidade de movimento, conservação, choques mecânicos, coeficiente de restituição e colisões elásticas e inelásticas</strong>.</p>
-    </details>`;
+    <details class="curriculum-box"><summary>Conexão com o plano de curso</summary><p>O capítulo desenvolve os objetos previstos para <strong>conservação da quantidade de movimento — impulso e choques mecânicos, incluindo coeficiente de restituição e colisões elásticas e inelásticas</strong>. A quantidade de movimento é introduzida como conceito necessário para compreender esses objetos.</p></details>
+  `;
 
   function initCollisionLab(root) {
     const m1 = $('#m1Range', root), u1 = $('#u1Range', root), m2 = $('#m2Range', root), u2 = $('#u2Range', root), e = $('#eRange', root);
     if (!m1 || !u1 || !m2 || !u2 || !e) return;
-
-    const format = (value, digits = 1) => Number(value).toLocaleString('pt-BR', { minimumFractionDigits: digits, maximumFractionDigits: digits });
-    const directionText = (value) => value > 0 ? '→' : value < 0 ? '←' : '•';
-
+    const format = (value, digits = 1) => Number(value).toLocaleString('pt-BR',{minimumFractionDigits:digits,maximumFractionDigits:digits});
+    const arrow = (value) => value > 0 ? '→' : value < 0 ? '←' : '•';
     const draw = () => {
-      const M1 = Number(m1.value), U1 = Number(u1.value), M2 = Number(m2.value), U2 = Number(u2.value), E = Number(e.value);
-      const denominator = M1 + M2;
-      const V1 = (M1 * U1 + M2 * U2 - M2 * E * (U1 - U2)) / denominator;
-      const V2 = (M1 * U1 + M2 * U2 + M1 * E * (U1 - U2)) / denominator;
-      const pBefore = M1 * U1 + M2 * U2;
-      const pAfter = M1 * V1 + M2 * V2;
-      const kBefore = 0.5 * M1 * U1 * U1 + 0.5 * M2 * U2 * U2;
-      const kAfter = 0.5 * M1 * V1 * V1 + 0.5 * M2 * V2 * V2;
-
-      $('#m1Value', root).textContent = M1;
-      $('#u1Value', root).textContent = U1;
-      $('#m2Value', root).textContent = M2;
-      $('#u2Value', root).textContent = U2;
-      $('#eValue', root).textContent = format(E, 1);
-      $('#v1Result', root).textContent = `${format(V1)} m/s ${directionText(V1)}`;
-      $('#v2Result', root).textContent = `${format(V2)} m/s ${directionText(V2)}`;
-      $('#pBeforeResult', root).textContent = `${format(pBefore)} kg·m/s`;
-      $('#pAfterResult', root).textContent = `${format(pAfter)} kg·m/s`;
-      $('#kBeforeResult', root).textContent = `${format(kBefore)} J`;
-      $('#kAfterResult', root).textContent = `${format(kAfter)} J`;
-
-      const afterLoss = kBefore > 0 ? Math.max(0, (1 - kAfter / kBefore) * 100) : 0;
-      const conclusion = $('#collisionConclusion', root);
-      if (conclusion) {
-        conclusion.innerHTML = E === 1
-          ? '<strong>Choque elástico ideal:</strong> neste modelo, a quantidade de movimento e a energia cinética total permanecem iguais antes e depois.'
-          : E === 0
-            ? `<strong>Choque perfeitamente inelástico:</strong> os carrinhos saem com a mesma velocidade. A energia cinética diminui cerca de ${format(afterLoss, 0)}% neste exemplo.`
-            : `<strong>Choque inelástico:</strong> a quantidade de movimento total permanece, mas a energia cinética diminui cerca de ${format(afterLoss, 0)}% neste exemplo.`;
-      }
-
-      const aBefore = $('#cartABefore', root), bBefore = $('#cartBBefore', root), aAfter = $('#cartAAfter', root), bAfter = $('#cartBAfter', root);
-      if (aBefore) aBefore.textContent = `A ${directionText(U1)}`;
-      if (bBefore) bBefore.textContent = `B ${directionText(U2)}`;
-      if (aAfter) aAfter.textContent = `A ${directionText(V1)}`;
-      if (bAfter) bAfter.textContent = `B ${directionText(V2)}`;
+      const M1=Number(m1.value), U1=Number(u1.value), M2=Number(m2.value), U2=Number(u2.value), E=Number(e.value);
+      const den=M1+M2;
+      const V1=(M1*U1+M2*U2-M2*E*(U1-U2))/den;
+      const V2=(M1*U1+M2*U2+M1*E*(U1-U2))/den;
+      const p0=M1*U1+M2*U2, p1=M1*V1+M2*V2;
+      const k0=.5*M1*U1*U1+.5*M2*U2*U2, k1=.5*M1*V1*V1+.5*M2*V2*V2;
+      $('#m1Value',root).textContent=M1; $('#u1Value',root).textContent=U1; $('#m2Value',root).textContent=M2; $('#u2Value',root).textContent=U2; $('#eValue',root).textContent=format(E);
+      $('#v1Result',root).textContent=`${format(V1)} m/s ${arrow(V1)}`; $('#v2Result',root).textContent=`${format(V2)} m/s ${arrow(V2)}`;
+      $('#pBeforeResult',root).textContent=`${format(p0)} kg·m/s`; $('#pAfterResult',root).textContent=`${format(p1)} kg·m/s`; $('#kBeforeResult',root).textContent=`${format(k0)} J`; $('#kAfterResult',root).textContent=`${format(k1)} J`;
+      $('#cartABefore',root).textContent=`A ${arrow(U1)}`; $('#cartBBefore',root).textContent=`B ${arrow(U2)}`; $('#cartAAfter',root).textContent=`A ${arrow(V1)}`; $('#cartBAfter',root).textContent=`B ${arrow(V2)}`;
+      const loss=k0>0?Math.max(0,(1-k1/k0)*100):0;
+      const box=$('#collisionConclusion',root);
+      if(box) box.innerHTML=E===1?'<strong>Choque elástico ideal:</strong> p total e Ec total permanecem no modelo.':E===0?`<strong>Perfeitamente inelástico:</strong> os carrinhos saem com a mesma velocidade; Ec diminui cerca de ${format(loss,0)}%.`:`<strong>Choque inelástico:</strong> p total permanece; Ec diminui cerca de ${format(loss,0)}%.`;
     };
-
-    [m1, u1, m2, u2, e].forEach((input) => input.addEventListener('input', draw));
-    draw();
+    [m1,u1,m2,u2,e].forEach(input=>input.addEventListener('input',draw)); draw();
   }
 
   MBB.enableChapter?.('04 Batidas, impulsos e colisões', () => {
     MBB.showLesson({
-      unit: 'Energia e matéria',
-      technical: 'Quantidade de movimento • impulso • conservação • colisões',
-      title: 'Batidas, impulsos e colisões',
-      objective: '<strong>Propósito:</strong> compreender como a quantidade de movimento muda, por que o tempo de colisão importa e como prever o resultado de choques usando conservação e coeficiente de restituição.',
-      html: lessonHtml,
-      init: initCollisionLab
+      unit:'Energia e matéria',
+      technical:'Quantidade de movimento • impulso • conservação • colisões',
+      title:'Batidas, impulsos e colisões',
+      objective:'<strong>Propósito:</strong> investigar um crash test para compreender como quantidade de movimento, impulso, tempo de colisão e conservação explicam choques e dispositivos de segurança.',
+      html:lessonHtml,
+      init:initCollisionLab
     });
   });
 })();
