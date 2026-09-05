@@ -1,422 +1,240 @@
 (() => {
   'use strict';
 
+  const MBB = window.MBBPhysics = window.MBBPhysics || {};
   const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-
-  const menu = $('#lessonMenu');
-  const content = $('#lessonContent');
-  const openMenu = $('#openMenu');
-  if (!menu || !content) return;
 
   const lessonHtml = `
     <section class="physics-opening">
-      <span class="lesson-kicker">Imagine esta situação</span>
+      <span class="lesson-kicker">Uma história para investigar</span>
       <div class="hero-box physics-story">
-        <strong class="card-title">O ônibus arranca, freia, faz uma curva e começa a subir uma ladeira</strong>
-        <p>Você sente o corpo reagir em cada momento. Ao arrancar, parece que vai para trás. Na freada, tende a seguir para a frente. Na curva, sente o corpo deslocar para o lado. Na subida, o motor precisa trabalhar de outro jeito.</p>
-        <p class="central-question"><strong>Pergunta que vai guiar esta aula:</strong> o que realmente faz um movimento mudar?</p>
+        <strong class="card-title">Você está em pé num ônibus a caminho da escola. Uma mão segura a barra; a mochila está nas costas. O ônibus arranca.</strong>
+        <p>Seu corpo parece ficar para trás. Alguns minutos depois, o motorista freia e você tende a ir para a frente. Na rotatória, seu corpo parece escapar para o lado. Nada disso acontece porque o ônibus “tem vontade” de empurrar você: existe uma relação entre <strong>interações, forças e mudanças do movimento</strong>.</p>
+        <div class="quick-question" data-choice-question data-correct="b">
+          <strong>Antes de continuar, faça uma aposta</strong>
+          <p>Se o ônibus já estiver andando em linha reta e mantiver exatamente a mesma velocidade, ele precisa de uma força resultante para a frente só para continuar andando?</p>
+          <div class="choice-row"><button type="button" data-choice="a">Sim, senão o movimento desaparece</button><button type="button" data-choice="b">Não necessariamente; força resultante está ligada à mudança da velocidade</button><button type="button" data-choice="c">Só se houver passageiros</button></div>
+          <div class="choice-feedback" data-choice-feedback data-correct-text="Essa é a ideia que vamos construir: movimento e força resultante não são a mesma coisa." data-wrong-text="Lembre do capítulo anterior: aceleração aparece quando a velocidade muda em valor ou direção."></div>
+        </div>
+        <p class="central-question"><strong>Nossa missão:</strong> acompanhar essa viagem e descobrir por que você se desequilibra, como o ônibus acelera e freia, o que o mantém numa curva e por que massa, atrito e inclinação mudam o resultado.</p>
       </div>
       <div id="diagnosticRecall" class="diagnostic-recall" aria-live="polite"></div>
     </section>
 
     <section>
-      <h3>1. Força não é movimento: força é interação</h3>
-      <p>Um objeto pode estar em movimento sem que exista uma força resultante empurrando-o na direção do movimento. O papel da <strong>força resultante</strong> é mudar o estado de movimento: aumentar a velocidade, diminuir, mudar a direção ou produzir uma combinação dessas mudanças.</p>
+      <h3>1. O ônibus arranca, mas seu corpo tenta manter o que já estava fazendo</h3>
+      <p>Antes da partida, você e o ônibus estavam parados em relação à rua. Quando o ônibus começa a acelerar para a frente, seus pés acompanham o piso porque há contato e atrito. O restante do corpo, porém, tende a manter o estado que possuía por um instante. Por isso você sente como se fosse “jogado para trás”.</p>
+      <p>Na freada acontece o inverso: o ônibus reduz sua velocidade, mas seu corpo tende a continuar avançando. Essa tendência de resistir a mudanças no estado de movimento recebe o nome de <strong>inércia</strong>.</p>
 
-      <div class="visual-box">
-        <strong class="card-title">O mesmo carrinho em três situações</strong>
-        <svg class="lesson-visual" viewBox="0 0 760 285" role="img" aria-label="Três situações de um carrinho: forças equilibradas, força resultante para a direita e força resultante para a esquerda.">
-          <defs><marker id="arrowForce02" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="c2-arrow-fill"/></marker></defs>
-          <g transform="translate(30 25)">
-            <text x="95" y="20" class="c2-visual-title">forças equilibradas</text>
-            <rect x="95" y="82" width="110" height="58" rx="10" class="c2-cart"/><circle cx="118" cy="151" r="14" class="c2-wheel"/><circle cx="182" cy="151" r="14" class="c2-wheel"/>
-            <line x1="92" y1="108" x2="38" y2="108" class="c2-force-arrow" marker-end="url(#arrowForce02)"/><line x1="208" y1="108" x2="262" y2="108" class="c2-force-arrow" marker-end="url(#arrowForce02)"/>
-            <text x="75" y="188" class="c2-caption">resultante = 0</text>
-          </g>
-          <g transform="translate(260 25)">
-            <text x="83" y="20" class="c2-visual-title">resultante para a direita</text>
-            <rect x="95" y="82" width="110" height="58" rx="10" class="c2-cart"/><circle cx="118" cy="151" r="14" class="c2-wheel"/><circle cx="182" cy="151" r="14" class="c2-wheel"/>
-            <line x1="92" y1="108" x2="58" y2="108" class="c2-force-arrow muted" marker-end="url(#arrowForce02)"/><line x1="208" y1="108" x2="285" y2="108" class="c2-force-arrow" marker-end="url(#arrowForce02)"/>
-            <text x="78" y="188" class="c2-caption">aceleração →</text>
-          </g>
-          <g transform="translate(505 25)">
-            <text x="73" y="20" class="c2-visual-title">resultante para a esquerda</text>
-            <rect x="95" y="82" width="110" height="58" rx="10" class="c2-cart"/><circle cx="118" cy="151" r="14" class="c2-wheel"/><circle cx="182" cy="151" r="14" class="c2-wheel"/>
-            <line x1="92" y1="108" x2="18" y2="108" class="c2-force-arrow" marker-end="url(#arrowForce02)"/><line x1="208" y1="108" x2="242" y2="108" class="c2-force-arrow muted" marker-end="url(#arrowForce02)"/>
-            <text x="75" y="188" class="c2-caption">aceleração ←</text>
-          </g>
-        </svg>
-        <p class="visual-caption">Não olhe apenas para uma força isolada. Pergunte sempre: <strong>qual é a resultante de todas as forças que atuam neste corpo?</strong></p>
+      <div class="note-box">
+        <strong>Pare e explique antes de ver o nome da lei</strong>
+        <p>Se o ônibus freia e você tende a seguir para a frente, existe realmente uma nova força misteriosa empurrando seu corpo para a frente?</p>
+        <details><summary>Compare sua explicação</summary><p>Não. Seu corpo já estava em movimento e tende a manter esse estado enquanto o ônibus reduz sua velocidade. A mudança exige uma força resultante. Essa é a ideia central da <strong>Primeira Lei de Newton</strong>.</p></details>
       </div>
 
-      <div class="quick-question" data-choice-question data-correct="c">
-        <strong>Verificação rápida</strong>
-        <p>Um carrinho se move em linha reta com velocidade constante. Qual é a conclusão mais adequada sobre a força resultante nele?</p>
-        <div class="choice-row"><button type="button" data-choice="a">Deve apontar para a frente</button><button type="button" data-choice="b">Deve apontar para trás</button><button type="button" data-choice="c">Pode ser zero</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="Velocidade constante em linha reta não exige força resultante diferente de zero." data-wrong-text="Movimento e força resultante não são a mesma coisa. A força resultante está ligada à mudança da velocidade."></div>
-      </div>
-    </section>
-
-    <section>
-      <h3>2. Primeira Lei de Newton: o corpo não muda sozinho</h3>
-      <p>Quando a força resultante é zero, um corpo tende a manter seu estado: se estava parado, permanece parado; se já se movia em linha reta com velocidade constante, tende a continuar assim. Essa resistência a mudar o estado de movimento é chamada de <strong>inércia</strong>.</p>
-
-      <div class="visual-box">
-        <strong class="card-title">Por que o passageiro tende a seguir para a frente quando o ônibus freia?</strong>
-        <svg class="lesson-visual" viewBox="0 0 760 300" role="img" aria-label="Ônibus em movimento que freia enquanto o passageiro tende a continuar para a frente por inércia.">
-          <defs><marker id="arrowInertia02" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="c2-arrow-fill"/></marker></defs>
-          <rect x="75" y="105" width="530" height="105" rx="24" class="c2-bus"/><rect x="120" y="125" width="92" height="48" rx="8" class="c2-window"/><rect x="230" y="125" width="92" height="48" rx="8" class="c2-window"/><rect x="340" y="125" width="92" height="48" rx="8" class="c2-window"/>
-          <circle cx="170" cy="220" r="28" class="c2-wheel"/><circle cx="520" cy="220" r="28" class="c2-wheel"/>
-          <circle cx="388" cy="130" r="15" class="c2-person"/><line x1="388" y1="145" x2="410" y2="190" class="c2-person-line"/><line x1="404" y1="163" x2="437" y2="170" class="c2-person-line"/>
-          <line x1="105" y1="75" x2="330" y2="75" class="c2-motion-arrow" marker-end="url(#arrowInertia02)"/><text x="145" y="58" class="c2-caption">movimento antes da freada</text>
-          <line x1="405" y1="82" x2="535" y2="82" class="c2-inertia-arrow" marker-end="url(#arrowInertia02)"/><text x="390" y="58" class="c2-caption">tendência do corpo</text>
-          <text x="610" y="160" class="c2-brake">FREIO</text>
-        </svg>
+      <div class="formula-box">
+        <span class="formula-name">Primeira Lei de Newton, em linguagem de movimento</span>
+        <div class="big-formula">ΣF = 0 → a = 0</div>
+        <p>Se a força resultante é zero, não há aceleração: o corpo permanece em repouso ou continua em movimento retilíneo com velocidade constante.</p>
       </div>
 
       <div id="diagnosticCompare" class="ok-box diagnostic-compare"></div>
 
       <div class="experiment-box">
-        <strong class="card-title">Experimento simples: a moeda e o cartão</strong>
-        <p>Coloque um cartão rígido sobre um copo plástico e uma moeda sobre o cartão. Dê um toque rápido e horizontal no cartão. O cartão sai, enquanto a moeda tende a manter seu estado e cai quase verticalmente no copo.</p>
+        <strong class="card-title">Experimente sem ônibus: moeda, cartão e copo</strong>
+        <p>Coloque um cartão rígido sobre um copo plástico e uma moeda sobre o cartão. Dê um toque rápido e horizontal no cartão. O cartão sai; a moeda tende a manter seu estado e cai quase verticalmente no copo.</p>
         <p class="safety-note"><strong>Segurança:</strong> use copo plástico, superfície estável e faça o movimento longe da borda da mesa.</p>
       </div>
     </section>
 
     <section>
-      <h3>3. Segunda Lei de Newton: mesma força, efeitos diferentes</h3>
-      <p>Empurrar um carrinho de supermercado vazio e outro carregado deixa uma ideia evidente: com a <strong>mesma força resultante</strong>, o carrinho de menor massa muda sua velocidade mais rapidamente.</p>
-
-      <div class="equation-walk">
-        <div><span>1</span><p>Primeiro descubra a <strong>força resultante</strong>.</p></div>
-        <div><span>2</span><p>Depois observe a <strong>massa</strong>: quanto maior, maior a resistência à aceleração.</p></div>
-        <div><span>3</span><p>A <strong>aceleração</strong> mostra quanto a velocidade muda.</p></div>
-      </div>
-
-      <div class="formula-box">
-        <span class="formula-name">Agora a relação matemática faz sentido</span>
-        <div class="big-formula">F<sub>R</sub> = m · a</div>
-        <p>A unidade de força no Sistema Internacional é o <strong>newton (N)</strong>. Uma força resultante de 1 N produz aceleração de 1 m/s² em uma massa de 1 kg.</p>
-      </div>
-
-      <div class="interactive-lab force-lab" id="forceLab">
-        <div class="lab-heading"><span class="lesson-kicker">Laboratório interativo</span><h4>Empurre o carrinho e observe a resultante</h4></div>
-        <div class="force-lab-controls">
-          <label>Força aplicada <strong><span id="appliedForceValue">30</span> N</strong><input id="appliedForceRange" type="range" min="20" max="60" step="5" value="30"></label>
-          <label>Força resistente <strong><span id="resistForceValue">10</span> N</strong><input id="resistForceRange" type="range" min="0" max="20" step="5" value="10"></label>
-          <label>Massa do carrinho <strong><span id="massValue">5</span> kg</strong><input id="massRange" type="range" min="2" max="20" step="1" value="5"></label>
-        </div>
-        <div class="force-lab-scene">
-          <div class="force-arrow-left" id="resistArrow"><span>resistente</span></div>
-          <div class="force-cart" aria-hidden="true"><span></span><i></i><i></i></div>
-          <div class="force-arrow-right" id="appliedArrow"><span>aplicada</span></div>
-        </div>
-        <div class="force-lab-result">
-          <div><span>Força resultante</span><strong id="resultantValue">20 N →</strong></div>
-          <div><span>Aceleração</span><strong id="accelerationValue">4,0 m/s²</strong></div>
-          <div><span>Leitura física</span><strong id="forceInterpretation">o carrinho acelera para a direita</strong></div>
-        </div>
-        <p>Teste duas estratégias: primeiro mantenha a massa e aumente a força resultante; depois mantenha as forças e aumente a massa. Observe o que acontece com a aceleração.</p>
-      </div>
-
-      <div class="quick-question" data-choice-question data-correct="b">
-        <strong>Interprete antes de calcular</strong>
-        <p>Dois carrinhos recebem a mesma força resultante. Um tem 4 kg e o outro 8 kg. Qual tende a ter maior aceleração?</p>
-        <div class="choice-row"><button type="button" data-choice="a">O de 8 kg</button><button type="button" data-choice="b">O de 4 kg</button><button type="button" data-choice="c">Os dois sempre aceleram igual</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="Com a mesma força resultante, a menor massa apresenta maior aceleração." data-wrong-text="Use a ideia F = m·a: mantendo F, aumentar a massa reduz a aceleração."></div>
-      </div>
-    </section>
-
-    <section>
-      <h3>4. As forças que aparecem o tempo todo</h3>
-      <p>Em vez de decorar uma lista, observe <strong>quem interage com quem</strong>. Isso ajuda a descobrir quais forças realmente atuam no corpo analisado.</p>
-
-      <div class="force-cards">
-        <article>
-          <strong>Peso</strong>
-          <p>É a força gravitacional exercida pela Terra sobre o corpo. Próximo à superfície terrestre:</p>
-          <span class="mini-formula">P = m · g</span>
-          <small>Nos exercícios iniciais, podemos usar g ≈ 10 m/s² quando indicado.</small>
-        </article>
-        <article>
-          <strong>Normal</strong>
-          <p>É a força de contato exercida por uma superfície, perpendicular a ela. <strong>Não é automaticamente igual ao peso.</strong></p>
-        </article>
-        <article>
-          <strong>Tração</strong>
-          <p>É a força transmitida por cordas, cabos ou fios tensionados. Sua direção acompanha o cabo que puxa o corpo.</p>
-        </article>
-      </div>
+      <h3>2. Então o que faz o ônibus realmente acelerar?</h3>
+      <p>Agora imagine o ônibus parado no ponto. O motor faz as rodas interagirem com o chão e a pista exerce forças sobre os pneus. Se, considerando todas as forças horizontais, sobra uma resultante para a frente, a velocidade do ônibus muda: ele acelera.</p>
+      <p>Isso nos obriga a separar duas ideias: <strong>força</strong> é uma interação; <strong>força resultante</strong> é o efeito combinado das forças que atuam no corpo escolhido.</p>
 
       <div class="visual-box">
-        <strong class="card-title">Três diagramas de forças</strong>
-        <svg class="lesson-visual" viewBox="0 0 780 350" role="img" aria-label="Diagramas de forças de um livro sobre mesa, uma luminária suspensa e uma caixa puxada por uma corda.">
-          <defs><marker id="arrowBodies02" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="c2-arrow-fill"/></marker></defs>
-          <g transform="translate(25 25)">
-            <text x="70" y="20" class="c2-visual-title">livro sobre a mesa</text>
-            <rect x="80" y="160" width="130" height="38" rx="5" class="c2-object"/><rect x="42" y="198" width="205" height="18" class="c2-surface"/>
-            <line x1="145" y1="158" x2="145" y2="82" class="c2-normal-arrow" marker-end="url(#arrowBodies02)"/><text x="153" y="96" class="c2-force-label">N</text>
-            <line x1="145" y1="200" x2="145" y2="278" class="c2-weight-arrow" marker-end="url(#arrowBodies02)"/><text x="153" y="266" class="c2-force-label">P</text>
-          </g>
-          <g transform="translate(275 25)">
-            <text x="65" y="20" class="c2-visual-title">objeto suspenso</text>
-            <line x1="145" y1="50" x2="145" y2="152" class="c2-rope"/><circle cx="145" cy="184" r="32" class="c2-object-round"/>
-            <line x1="145" y1="150" x2="145" y2="83" class="c2-tension-arrow" marker-end="url(#arrowBodies02)"/><text x="154" y="96" class="c2-force-label">T</text>
-            <line x1="145" y1="217" x2="145" y2="287" class="c2-weight-arrow" marker-end="url(#arrowBodies02)"/><text x="154" y="275" class="c2-force-label">P</text>
-          </g>
-          <g transform="translate(520 25)">
-            <text x="52" y="20" class="c2-visual-title">caixa puxada</text>
-            <rect x="72" y="160" width="125" height="58" rx="7" class="c2-object"/><line x1="197" y1="170" x2="265" y2="120" class="c2-rope"/>
-            <line x1="198" y1="170" x2="262" y2="123" class="c2-tension-arrow" marker-end="url(#arrowBodies02)"/><text x="245" y="108" class="c2-force-label">T</text>
-            <line x1="135" y1="158" x2="135" y2="82" class="c2-normal-arrow" marker-end="url(#arrowBodies02)"/><text x="144" y="96" class="c2-force-label">N</text>
-            <line x1="135" y1="220" x2="135" y2="292" class="c2-weight-arrow" marker-end="url(#arrowBodies02)"/><text x="144" y="280" class="c2-force-label">P</text>
-          </g>
+        <strong class="card-title">Uma seta não conta a história inteira</strong>
+        <svg class="lesson-visual" viewBox="0 0 760 250" role="img" aria-label="Ônibus com forças horizontais em sentidos opostos e uma resultante para a direita.">
+          <defs><marker id="c2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="c2-arrow-fill"/></marker></defs>
+          <rect x="235" y="95" width="290" height="85" rx="22" class="c2-bus"/><circle cx="295" cy="190" r="24" class="c2-wheel"/><circle cx="470" cy="190" r="24" class="c2-wheel"/>
+          <line x1="530" y1="130" x2="680" y2="130" class="c2-force-arrow" marker-end="url(#c2a)"/><text x="555" y="110" class="c2-caption">forças para a frente</text>
+          <line x1="230" y1="150" x2="125" y2="150" class="c2-force-arrow muted" marker-end="url(#c2a)"/><text x="82" y="178" class="c2-caption">resistências</text>
+          <text x="285" y="55" class="c2-visual-title">se a soma não zera, aparece aceleração</text>
         </svg>
-      </div>
-
-      <div class="example-box">
-        <strong class="card-title">Exemplo guiado: quanto pesa um corpo de 6 kg?</strong>
-        <p>Usando g ≈ 10 m/s², primeiro interprete: cada quilograma recebe aproximadamente 10 N de força gravitacional.</p>
-        <ol class="reason-steps"><li>massa: 6 kg;</li><li>gravidade aproximada: 10 m/s²;</li><li>peso: P = 6 · 10 = <strong>60 N</strong>.</li></ol>
-        <p><strong>Atenção:</strong> massa é medida em kg; peso é uma força e é medido em N.</p>
-      </div>
-    </section>
-
-    <section>
-      <h3>5. Atrito: a força que pode atrapalhar ou salvar</h3>
-      <p>Sem atrito seria difícil caminhar, arrancar com um carro ou fazer uma curva. Ao mesmo tempo, o atrito pode dificultar o deslizamento de uma caixa. Ele atua no contato entre superfícies e se opõe à tendência de deslizamento relativo.</p>
-
-      <div class="comparison-grid c2-comparison">
-        <div><strong>Quando queremos atrito</strong><p>pneus no asfalto, sapato no chão, freios, objetos que não devem escorregar.</p></div>
-        <div><strong>Quando queremos reduzir atrito</strong><p>rolamentos, lubrificação, peças móveis e sistemas em que o atrito desperdiça energia.</p></div>
-      </div>
-
-      <div class="quick-question" data-choice-question data-correct="a">
-        <strong>Física no cotidiano</strong>
-        <p>Por que um carro pode ter mais dificuldade para frear em uma pista muito escorregadia?</p>
-        <div class="choice-row"><button type="button" data-choice="a">Porque a interação pneu-pista oferece menos força de atrito disponível</button><button type="button" data-choice="b">Porque a massa do carro desaparece</button><button type="button" data-choice="c">Porque a gravidade deixa de atuar</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="A frenagem depende da interação entre pneus e pista; menos aderência reduz a capacidade de produzir a força necessária." data-wrong-text="A massa e a gravidade continuam existindo. Pense na interação entre pneu e superfície."></div>
-      </div>
-    </section>
-
-    <section>
-      <h3>6. Plano inclinado: a gravidade continua vertical, mas o efeito muda</h3>
-      <p>Em uma rampa, o peso continua apontando verticalmente para baixo. A superfície, porém, está inclinada. Por isso a força normal muda de direção e parte do efeito do peso tende a fazer o corpo descer ao longo da rampa.</p>
-
-      <div class="visual-box">
-        <strong class="card-title">Leia as direções antes de fazer contas</strong>
-        <svg class="lesson-visual" viewBox="0 0 760 360" role="img" aria-label="Caixa sobre um plano inclinado com vetores peso para baixo, normal perpendicular ao plano e tendência de movimento para baixo da rampa.">
-          <defs><marker id="arrowRamp02" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="c2-arrow-fill"/></marker></defs>
-          <polygon points="90,300 650,300 650,80" class="c2-ramp"/>
-          <g transform="rotate(-21.5 410 185)"><rect x="350" y="145" width="120" height="80" rx="8" class="c2-object"/></g>
-          <line x1="410" y1="185" x2="410" y2="315" class="c2-weight-arrow" marker-end="url(#arrowRamp02)"/><text x="424" y="294" class="c2-force-label">peso</text>
-          <line x1="410" y1="185" x2="360" y2="60" class="c2-normal-arrow" marker-end="url(#arrowRamp02)"/><text x="320" y="67" class="c2-force-label">normal</text>
-          <line x1="392" y1="215" x2="250" y2="270" class="c2-tendency-arrow" marker-end="url(#arrowRamp02)"/><text x="208" y="294" class="c2-force-label">tendência de descer</text>
-          <text x="505" y="330" class="c2-caption">a normal é perpendicular à superfície</text>
-        </svg>
-      </div>
-
-      <div class="note-box"><strong>Uma armadilha comum</strong><p>Em uma superfície horizontal simples, normal e peso podem ter o mesmo valor. Em uma rampa, isso já não é verdade automaticamente. A direção da superfície mudou.</p></div>
-    </section>
-
-    <section>
-      <h3>7. Terceira Lei de Newton: forças aparecem em pares de interação</h3>
-      <p>Quando o corpo A exerce força sobre o corpo B, o corpo B exerce uma força de mesma intensidade e direção, mas sentido oposto, sobre o corpo A. É o par de <strong>ação e reação</strong>.</p>
-
-      <div class="visual-box">
-        <strong class="card-title">Dois patinadores se empurram</strong>
-        <svg class="lesson-visual" viewBox="0 0 760 285" role="img" aria-label="Dois patinadores se empurrando e se afastando em sentidos opostos, com forças iguais e opostas atuando em corpos diferentes.">
-          <defs><marker id="arrowPair02" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="c2-arrow-fill"/></marker></defs>
-          <line x1="75" y1="235" x2="685" y2="235" class="c2-floor"/>
-          <g transform="translate(230 75)"><circle cx="0" cy="0" r="20" class="c2-person"/><line x1="0" y1="20" x2="18" y2="95" class="c2-person-line"/><line x1="12" y1="45" x2="65" y2="58" class="c2-person-line"/><line x1="17" y1="95" x2="-15" y2="135" class="c2-person-line"/><line x1="17" y1="95" x2="50" y2="135" class="c2-person-line"/></g>
-          <g transform="translate(530 75)"><circle cx="0" cy="0" r="20" class="c2-person alt"/><line x1="0" y1="20" x2="-18" y2="95" class="c2-person-line alt"/><line x1="-12" y1="45" x2="-65" y2="58" class="c2-person-line alt"/><line x1="-17" y1="95" x2="15" y2="135" class="c2-person-line alt"/><line x1="-17" y1="95" x2="-50" y2="135" class="c2-person-line alt"/></g>
-          <line x1="350" y1="135" x2="245" y2="135" class="c2-pair-arrow" marker-end="url(#arrowPair02)"/><line x1="410" y1="135" x2="515" y2="135" class="c2-pair-arrow" marker-end="url(#arrowPair02)"/>
-          <text x="260" y="118" class="c2-caption">força em A</text><text x="435" y="118" class="c2-caption">força em B</text>
-        </svg>
-        <p class="visual-caption">As duas forças não se anulam entre si porque atuam em <strong>corpos diferentes</strong>.</p>
+        <p class="visual-caption">Escolha sempre o corpo analisado e só depois some as forças que atuam nele.</p>
       </div>
 
       <div class="quick-question" data-choice-question data-correct="c">
-        <strong>Evite a confusão clássica</strong>
-        <p>O peso de um livro e a força normal da mesa sobre o livro formam um par de ação e reação?</p>
-        <div class="choice-row"><button type="button" data-choice="a">Sim, porque têm sentidos opostos</button><button type="button" data-choice="b">Sim, sempre que os valores forem iguais</button><button type="button" data-choice="c">Não, porque as duas forças atuam no mesmo corpo</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="Pares de ação e reação atuam em corpos diferentes. Peso e normal atuam ambos no livro." data-wrong-text="Sentidos opostos não bastam. Procure em quais corpos as forças atuam."></div>
+        <strong>Leia antes da fórmula</strong>
+        <p>O ônibus recebe 8.000 N efetivos para a frente e 8.000 N de forças resistentes para trás. O que esperamos da aceleração horizontal?</p>
+        <div class="choice-row"><button type="button" data-choice="a">Acelera para a frente</button><button type="button" data-choice="b">Acelera para trás</button><button type="button" data-choice="c">É zero</button></div>
+        <div class="choice-feedback" data-choice-feedback data-correct-text="As forças se equilibram: a resultante horizontal é zero." data-wrong-text="Compare os sentidos e os módulos antes de pensar no movimento."></div>
       </div>
     </section>
 
     <section>
-      <h3>8. Curvas: mudar a direção também é acelerar</h3>
-      <p>No capítulo anterior vimos que, em movimento circular, a direção da velocidade muda o tempo todo. Logo, existe aceleração mesmo que o valor da rapidez permaneça constante. Para produzir essa mudança é necessária uma <strong>força resultante dirigida para o centro</strong>: a força centrípeta.</p>
+      <h3>3. O mesmo motorista, dois ônibus diferentes: por que a massa importa?</h3>
+      <p>Pense agora em dois ônibus recebendo a mesma força resultante: um praticamente vazio e outro lotado. O lotado tem maior massa. A experiência cotidiana sugere que ele responde mais lentamente: para a mesma resultante, sua aceleração é menor.</p>
+      <p>Agora já temos a relação que precisamos: mais força resultante tende a produzir mais aceleração; mais massa, mantendo a força, tende a produzir menos aceleração.</p>
 
-      <div class="visual-box">
-        <strong class="card-title">A velocidade aponta ao longo da trajetória; a resultante aponta para o centro</strong>
-        <svg class="lesson-visual" viewBox="0 0 760 360" role="img" aria-label="Carro em trajetória circular com vetor velocidade tangente e força centrípeta apontando para o centro da curva.">
-          <defs><marker id="arrowCircle02" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="c2-arrow-fill"/></marker></defs>
-          <circle cx="370" cy="185" r="125" class="c2-orbit"/><circle cx="370" cy="185" r="10" class="c2-center"/><text x="385" y="178" class="c2-caption">centro</text>
-          <g transform="translate(495 170)"><rect x="-28" y="-16" width="56" height="32" rx="9" class="c2-car"/><circle cx="-17" cy="19" r="7" class="c2-wheel"/><circle cx="17" cy="19" r="7" class="c2-wheel"/></g>
-          <line x1="495" y1="185" x2="395" y2="185" class="c2-centripetal-arrow" marker-end="url(#arrowCircle02)"/><text x="412" y="166" class="c2-force-label">F centrípeta</text>
-          <line x1="500" y1="165" x2="500" y2="70" class="c2-velocity-arrow" marker-end="url(#arrowCircle02)"/><text x="512" y="88" class="c2-force-label">velocidade</text>
-        </svg>
+      <div class="equation-walk">
+        <div><span>1</span><p>Descubra a <strong>força resultante</strong>.</p></div>
+        <div><span>2</span><p>Observe a <strong>massa</strong> do corpo.</p></div>
+        <div><span>3</span><p>Relacione isso à <strong>aceleração</strong>.</p></div>
       </div>
 
       <div class="formula-box">
-        <span class="formula-name">Quando precisamos calcular a resultante radial</span>
-        <div class="big-formula">F<sub>c</sub> = m · v² / r</div>
-        <p>A força centrípeta <strong>não é uma nova força misteriosa</strong>. É o nome dado à resultante que aponta para o centro. Dependendo da situação, ela pode ser produzida por atrito, tração, gravidade ou outra interação.</p>
+        <span class="formula-name">A fórmula aparece porque queremos prever a aceleração</span>
+        <div class="big-formula">F<sub>R</sub> = m · a</div>
+        <p>Essa é a <strong>Segunda Lei de Newton</strong>. Se conhecemos a resultante e a massa, podemos prever: <strong>a = F<sub>R</sub>/m</strong>. A unidade de força é o newton (N).</p>
       </div>
 
-      <div class="quick-question" data-choice-question data-correct="b">
-        <strong>Conexão com a estrada</strong>
-        <p>Em uma curva plana, qual interação normalmente ajuda a produzir a força centrípeta sobre um automóvel?</p>
-        <div class="choice-row"><button type="button" data-choice="a">A força normal apontando para a frente</button><button type="button" data-choice="b">O atrito entre pneus e pista</button><button type="button" data-choice="c">A massa do carro</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="Em uma curva plana, o atrito pneu-pista pode fornecer a resultante horizontal apontando para o centro." data-wrong-text="Pergunte qual interação horizontal consegue apontar para o centro da curva."></div>
+      <div class="example-box">
+        <strong class="card-title">Exemplo construído</strong>
+        <p>Um carrinho de 5 kg recebe 30 N para a direita e 10 N para a esquerda.</p>
+        <ol class="reason-steps"><li>Resultante: 30 − 10 = <strong>20 N para a direita</strong>.</li><li>Massa: <strong>5 kg</strong>.</li><li>Aceleração: a = 20/5 = <strong>4 m/s² para a direita</strong>.</li></ol>
+        <p>Perceba a ordem: primeiro entendemos as forças; só depois usamos a fórmula.</p>
+      </div>
+
+      <div class="interactive-lab force-lab" id="forceLab">
+        <div class="lab-heading"><span class="lesson-kicker">Laboratório interativo</span><h4>Faça a resultante mudar e veja a aceleração nascer</h4></div>
+        <div class="force-lab-controls">
+          <label>Força aplicada <strong><span id="appliedForceValue">30</span> N</strong><input id="appliedForceRange" type="range" min="20" max="60" step="5" value="30"></label>
+          <label>Força resistente <strong><span id="resistForceValue">10</span> N</strong><input id="resistForceRange" type="range" min="0" max="20" step="5" value="10"></label>
+          <label>Massa <strong><span id="massValue">5</span> kg</strong><input id="massRange" type="range" min="2" max="20" step="1" value="5"></label>
+        </div>
+        <div class="force-lab-result"><div><span>Resultante</span><strong id="resultantValue">20 N →</strong></div><div><span>Aceleração</span><strong id="accelerationValue">4,0 m/s²</strong></div><div><span>Leitura</span><strong id="forceInterpretation">acelera para a direita</strong></div></div>
+        <p>Faça dois testes: mantenha a massa e aumente a resultante; depois mantenha as forças e aumente a massa. Antes de mover cada controle, tente prever o resultado.</p>
       </div>
     </section>
 
     <section>
-      <h3>9. Como analisar qualquer situação de forças</h3>
-      <div class="analysis-steps">
-        <div><span>1</span><strong>Escolha o corpo</strong><p>Decida exatamente qual objeto será analisado.</p></div>
-        <div><span>2</span><strong>Liste as interações</strong><p>Terra, superfície, corda, pessoa, ar, pneus etc.</p></div>
-        <div><span>3</span><strong>Desenhe as forças</strong><p>Use setas partindo do corpo e respeite suas direções.</p></div>
-        <div><span>4</span><strong>Encontre a resultante</strong><p>Veja quais forças se equilibram e quais não.</p></div>
-        <div><span>5</span><strong>Relacione com o movimento</strong><p>Se a resultante não é zero, procure a aceleração correspondente.</p></div>
+      <h3>4. Você olha para a mochila e percebe que nem toda força aponta para a frente</h3>
+      <p>Enquanto o ônibus segue, a Terra puxa sua mochila para baixo: essa força é o <strong>peso</strong>. A alça tensionada puxa a mochila para cima: é uma <strong>tração</strong>. Quando você está em pé, o piso empurra seus pés numa direção perpendicular à superfície: é a <strong>força normal</strong>.</p>
+      <p>Esses nomes ficam mais fáceis quando perguntamos <strong>quem está interagindo com quem</strong>: Terra–mochila, alça–mochila, piso–pessoa.</p>
+
+      <div class="formula-box">
+        <span class="formula-name">Para prever o peso perto da superfície da Terra</span>
+        <div class="big-formula">P = m · g</div>
+        <p>Uma mochila de 7 kg, usando g ≈ 10 m/s², tem peso aproximado de <strong>70 N</strong>. Massa continua sendo 7 kg; peso é força e é medido em newtons.</p>
       </div>
+
+      <div class="note-box"><strong>Não transforme normal em regra decorada</strong><p>A normal não é “sempre igual ao peso”. Ela é a força perpendicular exercida pela superfície. Em situações simples de apoio horizontal pode ter o mesmo módulo do peso, mas isso depende do conjunto de forças e do movimento.</p></div>
+    </section>
+
+    <section>
+      <h3>5. Começa a chover justamente antes da freada</h3>
+      <p>O motorista pisa no freio. Para o ônibus reduzir a velocidade sem deslizar, os pneus precisam interagir adequadamente com a pista. Em piso molhado ou contaminado, a aderência disponível pode diminuir.</p>
+      <p>O <strong>atrito</strong> não é simplesmente uma força que “sempre atrapalha”. Sem atrito, seria difícil caminhar, arrancar, frear ou fazer uma curva. Ele se opõe à tendência de deslizamento relativo entre superfícies em contato.</p>
+
+      <div class="quick-question" data-choice-question data-correct="a"><strong>Faça a previsão</strong><p>Se a aderência pneu–pista diminuir muito, o que pode acontecer numa frenagem?</p><div class="choice-row"><button type="button" data-choice="a">A força horizontal disponível pode ser insuficiente e a distância de frenagem aumentar</button><button type="button" data-choice="b">A massa do ônibus desaparece</button><button type="button" data-choice="c">A gravidade deixa de atuar</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Exato. A frenagem depende da interação entre pneus e pista." data-wrong-text="Massa e gravidade continuam existindo; concentre-se no contato pneu–pista."></div></div>
+    </section>
+
+    <section>
+      <h3>6. O ônibus entra na rotatória: o velocímetro quase não muda, mas o movimento muda</h3>
+      <p>No capítulo 1 você viu que velocidade inclui direção. Na rotatória, mesmo que a rapidez fique aproximadamente constante, a direção muda continuamente. Portanto existe aceleração.</p>
+      <p>Se há aceleração apontando para o centro da curva, a <strong>resultante das forças horizontais</strong> também precisa apontar para o centro. Chamamos essa resultante radial de <strong>força centrípeta</strong>.</p>
+
+      <div class="visual-box">
+        <strong class="card-title">Na curva, procure o centro</strong>
+        <svg class="lesson-visual" viewBox="0 0 700 310" role="img" aria-label="Veículo em trajetória circular com velocidade tangente e resultante centrípeta apontando para o centro.">
+          <defs><marker id="c2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="c2-arrow-fill"/></marker></defs>
+          <circle cx="330" cy="165" r="115" class="c2-orbit"/><circle cx="330" cy="165" r="9" class="c2-center"/>
+          <rect x="435" y="150" width="58" height="30" rx="8" class="c2-car"/>
+          <line x1="435" y1="165" x2="350" y2="165" class="c2-centripetal-arrow" marker-end="url(#c2b)"/><text x="360" y="145" class="c2-force-label">resultante</text>
+          <line x1="465" y1="145" x2="465" y2="65" class="c2-velocity-arrow" marker-end="url(#c2b)"/><text x="478" y="80" class="c2-force-label">velocidade</text>
+        </svg>
+        <p class="visual-caption">Velocidade tangente à trajetória; resultante para o centro.</p>
+      </div>
+
+      <div class="formula-box"><span class="formula-name">Quando precisamos calcular a resultante que mantém a curva</span><div class="big-formula">F<sub>c</sub> = m · v² / r</div><p>Não é uma “nova força” além das demais. Dependendo da situação, atrito, tração ou gravidade podem fornecer a resultante centrípeta.</p></div>
+
+      <div class="quick-question" data-choice-question data-correct="b"><strong>Conecte duas partes da viagem</strong><p>Por que pista escorregadia também pode ser perigosa numa curva plana?</p><div class="choice-row"><button type="button" data-choice="a">Porque a velocidade deixa de ter direção</button><button type="button" data-choice="b">Porque pode faltar atrito suficiente para fornecer a resultante dirigida ao centro</button><button type="button" data-choice="c">Porque o peso se torna zero</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Isso. A curva exige mudança de direção e, portanto, uma resultante para o centro." data-wrong-text="Junte as ideias de atrito e mudança da direção da velocidade."></div></div>
+    </section>
+
+    <section>
+      <h3>7. Perto da escola, o ônibus sobe uma rampa</h3>
+      <p>A gravidade não “gira” junto com a rua: o peso continua verticalmente para baixo. O que muda é a orientação da superfície. A força normal continua perpendicular ao piso inclinado, e parte do efeito do peso fica associada à tendência de descer a rampa.</p>
+      <div class="note-box"><strong>Desenhe antes de calcular</strong><p>Em plano inclinado, comece pelo corpo, desenhe o peso vertical e a normal perpendicular à superfície. Só depois escolha eixos convenientes. Isso evita a falsa regra “normal = peso”.</p></div>
+    </section>
+
+    <section>
+      <h3>8. Você desce do ônibus e começa a caminhar: surge a Terceira Lei de Newton</h3>
+      <p>Para avançar, seu pé empurra o chão para trás. Ao mesmo tempo, o chão exerce uma força sobre você para a frente. São forças da mesma interação, com mesma intensidade e direção, sentidos opostos e <strong>atuando em corpos diferentes</strong>.</p>
+      <p>Esse par é descrito pela <strong>Terceira Lei de Newton</strong>: se A exerce força em B, B exerce força em A.</p>
+
+      <div class="quick-question" data-choice-question data-correct="c"><strong>Evite a confusão clássica</strong><p>O peso de um livro e a normal da mesa sobre esse mesmo livro formam um par de ação e reação?</p><div class="choice-row"><button type="button" data-choice="a">Sim, porque apontam em sentidos opostos</button><button type="button" data-choice="b">Sim, sempre que tiverem o mesmo valor</button><button type="button" data-choice="c">Não; ambas atuam no livro, e pares de ação e reação atuam em corpos diferentes</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Exatamente. Para procurar o par, troque os corpos da interação." data-wrong-text="Sentidos opostos não bastam. Pergunte em quais corpos as forças atuam."></div></div>
+    </section>
+
+    <section>
+      <h3>9. Um método para não se perder em problemas de forças</h3>
+      <div class="equation-walk"><div><span>1</span><p><strong>Escolha o corpo</strong> que será analisado.</p></div><div><span>2</span><p><strong>Liste as interações</strong>: Terra, piso, corda, pneu, pessoa etc.</p></div><div><span>3</span><p><strong>Desenhe as forças</strong> com direção e sentido.</p></div><div><span>4</span><p><strong>Encontre a resultante</strong> e só então relacione com a aceleração.</p></div></div>
     </section>
 
     <section class="chapter-checkpoint">
-      <span class="lesson-kicker">Exercícios excelentes, não repetição de fórmula</span>
-      <h3>10. Checkpoint — você consegue explicar as forças?</h3>
+      <span class="lesson-kicker">A viagem de volta</span>
+      <h3>10. Você consegue reconstruir o que aconteceu sem decorar uma lista?</h3>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>1. Partida</strong><p>Ao arrancar, por que seu corpo tende a manter o estado anterior?</p><div class="choice-row"><button type="button" data-choice="a">Porque o peso desaparece</button><button type="button" data-choice="b">Por inércia</button><button type="button" data-choice="c">Por causa da força centrípeta</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A inércia é a tendência de manter o estado de movimento." data-wrong-text="Volte à primeira situação da viagem."></div></div>
+      <div class="quick-question" data-choice-question data-correct="c"><strong>2. Resultante</strong><p>50 N para a direita e 20 N para a esquerda atuam numa caixa. Qual é a resultante?</p><div class="choice-row"><button type="button" data-choice="a">70 N para a direita</button><button type="button" data-choice="b">30 N para a esquerda</button><button type="button" data-choice="c">30 N para a direita</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="50 − 20 = 30 N, no sentido da maior força." data-wrong-text="As forças têm sentidos opostos."></div></div>
+      <div class="quick-question" data-choice-question data-correct="a"><strong>3. Segunda Lei</strong><p>Uma resultante de 24 N atua numa massa de 6 kg. Qual é a aceleração?</p><div class="choice-row"><button type="button" data-choice="a">4 m/s²</button><button type="button" data-choice="b">18 m/s²</button><button type="button" data-choice="c">144 m/s²</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="a = F/m = 24/6 = 4 m/s²." data-wrong-text="Isole a em F = m·a."></div></div>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>4. Mochila</strong><p>Usando g ≈ 10 m/s², qual é o peso aproximado de uma mochila de 7 kg?</p><div class="choice-row"><button type="button" data-choice="a">7 N</button><button type="button" data-choice="b">70 N</button><button type="button" data-choice="c">700 N</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="P = m·g = 70 N." data-wrong-text="Massa e peso não são a mesma grandeza."></div></div>
+      <div class="quick-question" data-choice-question data-correct="a"><strong>5. Chuva</strong><p>Qual interação é decisiva para frear e fazer uma curva plana sem deslizar?</p><div class="choice-row"><button type="button" data-choice="a">Atrito pneu–pista</button><button type="button" data-choice="b">Cor do veículo</button><button type="button" data-choice="c">Som do motor</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A aderência pneu–pista é essencial para produzir forças horizontais." data-wrong-text="Pense no contato com a rua."></div></div>
+      <div class="quick-question" data-choice-question data-correct="c"><strong>6. Rampa</strong><p>Em uma rampa, qual afirmação é correta?</p><div class="choice-row"><button type="button" data-choice="a">O peso fica perpendicular à rampa</button><button type="button" data-choice="b">A gravidade deixa de atuar</button><button type="button" data-choice="c">O peso continua vertical e a normal fica perpendicular à superfície</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A superfície muda de orientação; a gravidade não." data-wrong-text="Desenhe o peso antes da rampa."></div></div>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>7. Rotatória</strong><p>Rapidez constante numa curva significa aceleração zero?</p><div class="choice-row"><button type="button" data-choice="a">Sim</button><button type="button" data-choice="b">Não, porque a direção da velocidade muda</button><button type="button" data-choice="c">Só à noite</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Velocidade inclui direção." data-wrong-text="Compare rapidez com velocidade vetorial."></div></div>
+      <div class="quick-question" data-choice-question data-correct="c"><strong>8. Caminhada</strong><p>Quando você empurra o chão para trás e o chão empurra você para a frente, essas forças:</p><div class="choice-row"><button type="button" data-choice="a">Se anulam porque atuam em você</button><button type="button" data-choice="b">São duas forças inventadas</button><button type="button" data-choice="c">Formam um par de interação em corpos diferentes</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="É a Terceira Lei de Newton." data-wrong-text="Identifique em qual corpo atua cada força."></div></div>
 
-      <div class="quick-question" data-choice-question data-correct="b"><strong>1. Inércia</strong><p>Ao puxar rapidamente uma toalha sob objetos leves, alguns tendem a permanecer quase no mesmo lugar. Qual ideia explica isso?</p><div class="choice-row"><button type="button" data-choice="a">Peso zero</button><button type="button" data-choice="b">Inércia</button><button type="button" data-choice="c">Ação e reação</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A inércia é a tendência de resistir a mudanças no estado de movimento." data-wrong-text="Pense na tendência de manter o estado que o corpo já possuía."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="c"><strong>2. Resultante</strong><p>Uma pessoa empurra uma caixa com 50 N para a direita e uma força resistente de 20 N atua para a esquerda. Qual é a resultante horizontal?</p><div class="choice-row"><button type="button" data-choice="a">70 N para a direita</button><button type="button" data-choice="b">30 N para a esquerda</button><button type="button" data-choice="c">30 N para a direita</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="As forças têm sentidos opostos: 50 − 20 = 30 N para a direita." data-wrong-text="Como os sentidos são opostos, subtraia os módulos e mantenha o sentido da maior força."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="a"><strong>3. Segunda Lei</strong><p>Uma força resultante de 24 N atua sobre um corpo de 6 kg. Qual é a aceleração?</p><div class="choice-row"><button type="button" data-choice="a">4 m/s²</button><button type="button" data-choice="b">18 m/s²</button><button type="button" data-choice="c">144 m/s²</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="a = F/m = 24/6 = 4 m/s²." data-wrong-text="Reorganize F = m·a: para descobrir a aceleração, divida a força pela massa."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="b"><strong>4. Peso</strong><p>Usando g ≈ 10 m/s², qual é o peso aproximado de uma mochila de 7 kg?</p><div class="choice-row"><button type="button" data-choice="a">7 N</button><button type="button" data-choice="b">70 N</button><button type="button" data-choice="c">700 N</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="P = m·g = 7·10 = 70 N." data-wrong-text="Massa e peso não têm a mesma unidade. Use P = m·g."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="c"><strong>5. Plano inclinado</strong><p>Qual afirmação é correta para uma caixa apoiada em uma rampa?</p><div class="choice-row"><button type="button" data-choice="a">O peso fica perpendicular à rampa</button><button type="button" data-choice="b">A gravidade deixa de atuar</button><button type="button" data-choice="c">O peso continua vertical e a normal fica perpendicular à superfície</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A orientação da rampa muda a direção da normal, não a direção da gravidade." data-wrong-text="A gravidade continua apontando para baixo, independentemente da inclinação da superfície."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="a"><strong>6. Ação e reação</strong><p>Ao nadar, uma pessoa empurra a água para trás e a água exerce força sobre a pessoa. Qual lei descreve esse par de interação?</p><div class="choice-row"><button type="button" data-choice="a">Terceira Lei de Newton</button><button type="button" data-choice="b">Lei da gravitação apenas</button><button type="button" data-choice="c">Princípio de Pascal</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="As forças de interação aparecem em corpos diferentes, com sentidos opostos." data-wrong-text="Procure a lei que descreve pares de forças entre dois corpos em interação."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="b"><strong>7. Curva</strong><p>Um carro faz uma curva com rapidez aproximadamente constante. Podemos dizer que sua aceleração é zero?</p><div class="choice-row"><button type="button" data-choice="a">Sim, porque o velocímetro não mudou</button><button type="button" data-choice="b">Não, porque a direção da velocidade está mudando</button><button type="button" data-choice="c">Sim, porque toda curva anula as forças</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Velocidade inclui direção. Mudar a direção significa acelerar." data-wrong-text="Rapidez constante não significa velocidade vetorial constante quando a direção muda."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="c"><strong>8. Diagrama de forças</strong><p>Qual deve ser o primeiro passo para desenhar corretamente as forças de uma situação?</p><div class="choice-row"><button type="button" data-choice="a">Somar todos os números do problema</button><button type="button" data-choice="b">Escolher uma fórmula qualquer</button><button type="button" data-choice="c">Definir qual corpo está sendo analisado</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Definir o corpo evita misturar forças que atuam em objetos diferentes." data-wrong-text="Antes de desenhar setas, diga exatamente qual objeto será analisado."></div></div>
-
-      <div class="challenge-box"><strong>Desafio MbB</strong><p>Um carro entra em uma curva e começa a derrapar em pista molhada. Explique, sem começar por fórmulas, por que reduzir a aderência entre pneu e pista pode impedir que o carro acompanhe a curva. Depois relacione sua explicação à ideia de força centrípeta.</p><details><summary>Conferir uma boa linha de raciocínio</summary><p>Para acompanhar uma curva, a direção da velocidade precisa mudar. Isso exige uma resultante apontando para o centro. Em uma curva plana, o atrito entre pneu e pista pode fornecer essa resultante. Se a aderência diminui demais, a força disponível pode ser insuficiente e o carro deixa de seguir a trajetória desejada.</p></details></div>
+      <div class="challenge-box"><strong>Desafio MbB</strong><p>Conte a viagem do ônibus usando apenas quatro ideias: inércia, resultante, atrito e força centrípeta. Para cada uma, escolha um acontecimento real da história e explique a relação causa → efeito sem começar por fórmulas.</p></div>
     </section>
 
-    <details class="curriculum-box">
-      <summary>Conexão com o plano de curso</summary>
-      <p>Este capítulo trabalha os objetos de conhecimento previstos para Física na 1ª série relacionados à Dinâmica: Leis de Newton, forças peso, tração e normal, força de atrito, plano inclinado e força centrípeta. O impulso será aprofundado no capítulo de quantidade de movimento e colisões, onde aparece conectado ao restante desse conjunto.</p>
-    </details>
+    <details class="curriculum-box"><summary>Conexão com o plano de curso</summary><p>O capítulo desenvolve os objetos previstos de Dinâmica: Leis de Newton; forças peso, tração e normal; atrito; plano inclinado; força centrípeta. As fórmulas aparecem depois das situações que tornam essas relações necessárias.</p></details>
   `;
 
-  function initChoiceQuestions(root) {
-    $$('[data-choice-question]', root).forEach((box) => {
-      const correct = box.dataset.correct;
-      const feedback = $('[data-choice-feedback]', box);
-      $$('[data-choice]', box).forEach((button) => {
-        button.addEventListener('click', () => {
-          const ok = button.dataset.choice === correct;
-          $$('[data-choice]', box).forEach((item) => item.classList.remove('is-selected', 'is-correct', 'is-wrong'));
-          button.classList.add('is-selected', ok ? 'is-correct' : 'is-wrong');
-          if (feedback) {
-            feedback.className = `choice-feedback ${ok ? 'is-correct' : 'is-wrong'}`;
-            feedback.innerHTML = `<strong>${ok ? 'Correto.' : 'Ainda não.'}</strong> ${ok ? feedback.dataset.correctText : feedback.dataset.wrongText}`;
-          }
-        });
-      });
-    });
-  }
-
-  function initDiagnosticRecall(root) {
+  function initDiagnostic(root) {
     const recall = $('#diagnosticRecall', root);
     const compare = $('#diagnosticCompare', root);
     if (!recall || !compare) return;
-
-    const options = [
-      'O corpo tende a continuar o movimento que possuía.',
-      'A frenagem cria uma força que empurra o passageiro para a frente.',
-      'A gravidade aumenta durante a frenagem.',
-      'Ainda não sei.'
-    ];
-
+    const options = ['O corpo tende a continuar o movimento que possuía.','A frenagem cria uma força que empurra o passageiro para a frente.','A gravidade aumenta durante a frenagem.','Ainda não sei.'];
     let selected = null;
     try {
       const saved = JSON.parse(localStorage.getItem('mbbPhysicsDiagnostic') || '{}');
       const value = saved?.firstAttempt?.conceptions?.['Concepção inicial: movimento e força'];
       if (Number.isInteger(value)) selected = value;
-    } catch (_) {
-      selected = null;
-    }
-
+    } catch (_) {}
     if (selected === null) {
-      recall.innerHTML = '<strong>Conexão com a avaliação diagnóstica</strong><p>Lembra da questão do ônibus freando? Agora vamos construir a explicação física que estava por trás daquela situação.</p>';
-      compare.innerHTML = '<strong>Agora podemos responder.</strong><p>O passageiro tende a continuar com o movimento que possuía. Essa tendência é a inércia; não é uma força misteriosa empurrando-o para a frente.</p>';
+      recall.innerHTML = '<strong>Conexão com o diagnóstico</strong><p>A questão do ônibus freando já apareceu no começo do curso. Agora vamos construir a explicação.</p>';
+      compare.innerHTML = '<strong>Agora podemos responder.</strong><p>O passageiro tende a manter o movimento que possuía. Essa tendência é a inércia.</p>';
       return;
     }
-
-    recall.innerHTML = `<strong>Sua ideia no começo do curso</strong><p>Na avaliação diagnóstica você marcou: <em>“${options[selected]}”</em> Guarde essa resposta por alguns minutos; ainda não vamos julgá-la.</p>`;
-    compare.innerHTML = selected === 0
-      ? '<strong>Sua intuição já apontava para a ideia física.</strong><p>Agora você pode dar nome e fundamento ao raciocínio: a tendência de manter o estado de movimento é a <strong>inércia</strong>.</p>'
-      : '<strong>Compare com sua ideia inicial.</strong><p>O corpo não é empurrado para a frente pela frenagem. Ele tende a manter o movimento que já possuía enquanto o ônibus reduz sua velocidade. Essa tendência é a <strong>inércia</strong>.</p>';
+    recall.innerHTML = `<strong>Sua ideia no começo do curso</strong><p>Você marcou: <em>“${options[selected]}”</em>. Guarde essa resposta enquanto acompanha a primeira parte da viagem.</p>`;
+    compare.innerHTML = selected === 0 ? '<strong>Sua intuição já apontava para a ideia física.</strong><p>Agora ela tem nome: <strong>inércia</strong>.</p>' : '<strong>Compare com sua ideia inicial.</strong><p>A frenagem não cria uma força para a frente; seu corpo tende a manter o movimento anterior.</p>';
   }
 
   function initForceLab(root) {
     const applied = $('#appliedForceRange', root);
     const resist = $('#resistForceRange', root);
     const mass = $('#massRange', root);
-    const appliedArrow = $('#appliedArrow', root);
-    const resistArrow = $('#resistArrow', root);
-    if (!applied || !resist || !mass || !appliedArrow || !resistArrow) return;
-
+    if (!applied || !resist || !mass) return;
     const draw = () => {
-      const fa = Number(applied.value);
-      const fr = Number(resist.value);
-      const m = Number(mass.value);
-      const resultant = fa - fr;
-      const acceleration = resultant / m;
-
+      const fa = Number(applied.value), fr = Number(resist.value), m = Number(mass.value);
+      const result = fa - fr, acc = result / m;
       $('#appliedForceValue', root).textContent = fa;
       $('#resistForceValue', root).textContent = fr;
       $('#massValue', root).textContent = m;
-      $('#resultantValue', root).textContent = resultant === 0 ? '0 N' : `${resultant} N →`;
-      $('#accelerationValue', root).textContent = `${acceleration.toLocaleString('pt-BR', { minimumFractionDigits:1, maximumFractionDigits:2 })} m/s²`;
-      $('#forceInterpretation', root).textContent = resultant === 0 ? 'não há aceleração horizontal' : 'o carrinho acelera para a direita';
-
-      appliedArrow.style.setProperty('--arrow-size', `${70 + fa * 2.1}px`);
-      resistArrow.style.setProperty('--arrow-size', `${38 + fr * 3.2}px`);
+      $('#resultantValue', root).textContent = result === 0 ? '0 N' : `${Math.abs(result)} N ${result > 0 ? '→' : '←'}`;
+      $('#accelerationValue', root).textContent = `${Math.abs(acc).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:2})} m/s²`;
+      $('#forceInterpretation', root).textContent = result === 0 ? 'sem aceleração horizontal' : `acelera para ${result > 0 ? 'a direita' : 'a esquerda'}`;
     };
-
-    applied.addEventListener('input', draw);
-    resist.addEventListener('input', draw);
-    mass.addEventListener('input', draw);
-    draw();
+    applied.addEventListener('input', draw); resist.addEventListener('input', draw); mass.addEventListener('input', draw); draw();
   }
 
-  function showChapter() {
-    $('#unitName').textContent = 'Movimento e forças';
-    $('#technicalTitle').textContent = 'Dinâmica • Leis de Newton e forças';
-    $('#lessonTitle').textContent = 'Por que as coisas mudam de movimento?';
-    $('#lessonObjective').innerHTML = '<strong>Propósito:</strong> compreender como as forças e suas resultantes explicam acelerações, equilíbrio, atrito, rampas e movimentos em curvas.';
-    content.innerHTML = lessonHtml;
-    initChoiceQuestions(content);
-    initDiagnosticRecall(content);
-    initForceLab(content);
-    menu.classList.remove('open');
-    openMenu?.setAttribute('aria-expanded', 'false');
-    if (content.scrollTo) content.scrollTo({ top:0, behavior:'auto' });
-  }
-
-  const chapterButton = $$('.menu-item', menu).find((button) => button.textContent.trim().startsWith('02 Por que as coisas mudam de movimento?'));
-  if (!chapterButton) return;
-
-  chapterButton.disabled = false;
-  chapterButton.title = '';
-  chapterButton.classList.remove('pending');
-  chapterButton.dataset.physicsLesson = 'forcas';
-  chapterButton.addEventListener('click', showChapter);
+  MBB.enableChapter?.('02 Por que as coisas mudam de movimento?', () => {
+    MBB.showLesson({
+      unit: 'Movimento e forças',
+      technical: 'Dinâmica • Leis de Newton e forças',
+      title: 'Por que as coisas mudam de movimento?',
+      objective: '<strong>Propósito:</strong> descobrir, numa viagem de ônibus, como interações e forças resultantes explicam aceleração, inércia, atrito, rampas e curvas.',
+      html: lessonHtml,
+      init(root) { initDiagnostic(root); initForceLab(root); }
+    });
+  });
 })();
