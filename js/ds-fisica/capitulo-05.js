@@ -6,293 +6,105 @@
 
   const lessonHtml = `
     <section class="physics-opening">
-      <span class="lesson-kicker">Comece por uma situação real</span>
+      <span class="lesson-kicker">Uma história para investigar</span>
       <div class="hero-box physics-story">
-        <strong class="card-title">Na praia, o aplicativo marca 32 °C. A areia queima os pés, mas a água está bem mais fria.</strong>
-        <p>Horas depois, a areia esfria rapidamente enquanto o mar permanece relativamente mais quente. O Sol atingiu os dois lugares, mas eles não responderam do mesmo modo.</p>
-        <p class="central-question"><strong>Pergunta que vai guiar esta aula:</strong> o que a temperatura realmente mede, por que ela não é a mesma coisa que calor e por que materiais diferentes aquecem e dilatam de formas diferentes?</p>
+        <strong class="card-title">Você chega à praia às 14h. O aplicativo mostra 32 °C. Pisa na areia e tira o pé rapidamente; entra no mar e a água parece muito mais fria.</strong>
+        <p>Se “está 32 °C”, como a areia pode parecer tão quente e a água tão diferente? Horas depois, ao anoitecer, acontece quase o contrário: a areia esfria depressa e o mar conserva melhor sua temperatura.</p>
+        <div class="quick-question" data-choice-question data-correct="c"><strong>Antes de continuar, faça uma aposta</strong><p>Os 32 °C do aplicativo significam que ar, areia, água, guarda-sol e seu corpo estão todos exatamente a 32 °C?</p><div class="choice-row"><button type="button" data-choice="a">Sim, porque existe uma única temperatura no lugar</button><button type="button" data-choice="b">Sim, desde que esteja fazendo Sol</button><button type="button" data-choice="c">Não; o aplicativo informa uma medida do ar em condições específicas, e diferentes corpos podem ter outras temperaturas</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Essa distinção será essencial para resolver o mistério da praia." data-wrong-text="Pense no que exatamente o sensor meteorológico está medindo."></div></div>
+        <p class="central-question"><strong>Nossa missão:</strong> acompanhar uma tarde na praia e descobrir o que temperatura mede, o que chamamos de calor, por que usamos escalas, por que materiais dilatam e por que areia e água respondem de maneira tão diferente à energia recebida.</p>
       </div>
     </section>
 
     <section>
-      <h3>1. Temperatura não é quantidade de calor</h3>
-      <p>A <strong>temperatura</strong> indica o estado térmico de um corpo. Em uma interpretação microscópica introdutória, ela está relacionada ao grau de agitação das partículas. Já <strong>calor</strong> é energia sendo transferida entre corpos ou regiões por causa de uma diferença de temperatura.</p>
-
-      <svg class="lesson-visual" viewBox="0 0 760 250" role="img" aria-label="Dois recipientes com partículas menos agitadas e mais agitadas e uma seta de transferência de energia do mais quente para o mais frio">
-        <text x="80" y="32" class="visual-title">Menor temperatura</text>
-        <rect x="55" y="55" width="235" height="140" rx="16" fill="#eef5ff" stroke="#9fc1ec" stroke-width="2"/>
-        <circle cx="105" cy="105" r="8" fill="#1967d2"/><circle cx="160" cy="140" r="8" fill="#1967d2"/><circle cx="220" cy="95" r="8" fill="#1967d2"/><circle cx="245" cy="160" r="8" fill="#1967d2"/><circle cx="120" cy="165" r="8" fill="#1967d2"/>
-        <line x1="95" y1="105" x2="114" y2="105" stroke="#1967d2" stroke-width="3"/><line x1="151" y1="140" x2="168" y2="140" stroke="#1967d2" stroke-width="3"/><line x1="211" y1="95" x2="229" y2="95" stroke="#1967d2" stroke-width="3"/>
-
-        <text x="500" y="32" class="visual-title">Maior temperatura</text>
-        <rect x="470" y="55" width="235" height="140" rx="16" fill="#fff4ef" stroke="#efb09a" stroke-width="2"/>
-        <circle cx="520" cy="105" r="8" fill="#b42318"/><circle cx="575" cy="140" r="8" fill="#b42318"/><circle cx="635" cy="95" r="8" fill="#b42318"/><circle cx="660" cy="160" r="8" fill="#b42318"/><circle cx="535" cy="165" r="8" fill="#b42318"/>
-        <line x1="500" y1="105" x2="540" y2="105" stroke="#b42318" stroke-width="3"/><line x1="555" y1="140" x2="595" y2="140" stroke="#b42318" stroke-width="3"/><line x1="615" y1="95" x2="655" y2="95" stroke="#b42318" stroke-width="3"/>
-
-        <line x1="440" y1="125" x2="320" y2="125" stroke="#d08700" stroke-width="5"/>
-        <polygon points="320,125 340,114 340,136" fill="#d08700"/>
-        <text x="342" y="108" class="visual-note">transferência de energia</text>
-        <text x="274" y="230" class="visual-note">O fluxo líquido ocorre do corpo de maior temperatura para o de menor temperatura.</text>
-      </svg>
-
-      <div class="note-box"><strong>Uma distinção essencial</strong><p>Um corpo pode ter temperatura alta e pouca energia térmica total, enquanto outro, muito maior, pode estar a uma temperatura menor e envolver muito mais energia. Temperatura não mede “quanto calor existe dentro” de um objeto.</p></div>
-
-      <div class="quick-question" data-choice-question data-correct="b">
-        <strong>Verificação rápida</strong>
-        <p>Dois corpos com temperaturas diferentes são colocados em contato. Em qual situação ocorre transferência líquida de energia por calor?</p>
-        <div class="choice-row"><button type="button" data-choice="a">Do mais frio para o mais quente</button><button type="button" data-choice="b">Do mais quente para o mais frio</button><button type="button" data-choice="c">Não existe transferência</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="Enquanto houver diferença de temperatura, a transferência líquida de energia ocorre do mais quente para o mais frio." data-wrong-text="Pense em qual corpo perde energia e qual ganha energia até o equilíbrio térmico."></div>
-      </div>
+      <h3>1. Primeiro precisamos separar sensação de medida</h3>
+      <p>Seu pé percebe a areia como “muito quente” e a água como “fria”, mas sensação não é um instrumento de medida. A pele troca energia com o ambiente, e a rapidez dessa troca depende de várias condições.</p>
+      <p>A <strong>temperatura</strong> é uma grandeza física associada ao estado térmico. Em uma introdução microscópica, podemos relacioná-la ao grau de agitação das partículas. Já <strong>calor</strong> é energia em transferência por causa de uma diferença de temperatura.</p>
+      <div class="note-box"><strong>Uma frase que evita muita confusão</strong><p>Um corpo não “contém calor” como se calor fosse uma substância guardada dentro dele. Quando há diferença de temperatura, pode ocorrer <strong>transferência de energia por calor</strong>.</p></div>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>Contato térmico</strong><p>Se um corpo mais quente é colocado em contato com outro mais frio, qual é o sentido líquido da transferência de energia por calor?</p><div class="choice-row"><button type="button" data-choice="a">Do mais frio para o mais quente</button><button type="button" data-choice="b">Do mais quente para o mais frio</button><button type="button" data-choice="c">Não pode haver transferência</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A transferência líquida ocorre do corpo de maior temperatura para o de menor temperatura até o equilíbrio térmico." data-wrong-text="Pense em qual corpo perde energia e qual ganha."></div></div>
     </section>
 
     <section>
-      <h3>2. Termômetros e escalas: como transformar sensação em medida</h3>
-      <p>Nossa sensação térmica não é um instrumento de medida confiável. Um <strong>termômetro</strong> usa alguma propriedade física que varia com a temperatura e associa essa variação a uma escala.</p>
-
-      <svg class="lesson-visual" viewBox="0 0 760 300" role="img" aria-label="Comparação das escalas Celsius, Kelvin e Fahrenheit em três temperaturas de referência">
-        <text x="95" y="30" class="visual-title">Celsius</text><text x="345" y="30" class="visual-title">Kelvin</text><text x="585" y="30" class="visual-title">Fahrenheit</text>
-        <line x1="135" y1="65" x2="135" y2="250" stroke="#70829a" stroke-width="8" stroke-linecap="round"/>
-        <line x1="380" y1="65" x2="380" y2="250" stroke="#70829a" stroke-width="8" stroke-linecap="round"/>
-        <line x1="625" y1="65" x2="625" y2="250" stroke="#70829a" stroke-width="8" stroke-linecap="round"/>
-        <circle cx="135" cy="250" r="18" fill="#1967d2"/><circle cx="380" cy="250" r="18" fill="#1967d2"/><circle cx="625" cy="250" r="18" fill="#1967d2"/>
-        <line x1="115" y1="205" x2="155" y2="205" stroke="#41536b" stroke-width="2"/><text x="72" y="210" class="visual-note">0 °C</text>
-        <line x1="360" y1="205" x2="400" y2="205" stroke="#41536b" stroke-width="2"/><text x="302" y="210" class="visual-note">273,15 K</text>
-        <line x1="605" y1="205" x2="645" y2="205" stroke="#41536b" stroke-width="2"/><text x="548" y="210" class="visual-note">32 °F</text>
-        <line x1="115" y1="90" x2="155" y2="90" stroke="#b42318" stroke-width="2"/><text x="60" y="95" class="visual-note">100 °C</text>
-        <line x1="360" y1="90" x2="400" y2="90" stroke="#b42318" stroke-width="2"/><text x="295" y="95" class="visual-note">373,15 K</text>
-        <line x1="605" y1="90" x2="645" y2="90" stroke="#b42318" stroke-width="2"/><text x="548" y="95" class="visual-note">212 °F</text>
-        <text x="155" y="278" class="visual-note">referências usuais à pressão atmosférica padrão</text>
-      </svg>
-
-      <div class="three-col">
-        <div class="example-box"><strong class="card-title">Celsius (°C)</strong><p>Muito usada no cotidiano no Brasil.</p></div>
-        <div class="example-box"><strong class="card-title">Kelvin (K)</strong><p>Escala absoluta usada amplamente em ciência. Não se escreve “grau Kelvin”.</p></div>
-        <div class="example-box"><strong class="card-title">Fahrenheit (°F)</strong><p>Usada em alguns países, como os Estados Unidos.</p></div>
-      </div>
-
-      <div class="formula-box"><span class="formula-name">Conversões úteis</span><div class="big-formula">K = °C + 273,15 &nbsp;&nbsp; | &nbsp;&nbsp; °F = 1,8·°C + 32</div><p>Uma diferença de 1 K tem o mesmo tamanho de uma diferença de 1 °C.</p></div>
-
-      <div class="interactive-lab" id="scaleLab">
-        <div class="lab-heading"><span class="lesson-kicker">Laboratório interativo</span><h4>Converta uma mesma temperatura entre três escalas</h4></div>
-        <div class="lab-controls">
-          <label>Temperatura em Celsius <strong><span id="celsiusValue">25</span> °C</strong><input id="celsiusRange" type="range" min="-40" max="100" step="1" value="25"></label>
-        </div>
-        <div class="lab-result" aria-live="polite"><strong id="kelvinValue">298,15 K</strong><span>e</span><strong id="fahrenheitValue">77 °F</strong></div>
-        <p>Experimente 0 °C, 25 °C e 100 °C e observe como cada escala representa a mesma condição térmica.</p>
-      </div>
+      <h3>2. “Mas o aplicativo marcou 32 °C”: que temperatura é essa?</h3>
+      <p>O valor mostrado pelo aplicativo costuma vir de medições ou modelos meteorológicos referentes à <strong>temperatura do ar</strong>. Para medir o ar adequadamente, o sensor deve ser protegido da radiação solar direta e instalado em condições padronizadas.</p>
+      <p>Um termômetro encostado no asfalto, dentro de um carro fechado ou sobre a areia ao Sol pode indicar valores bem diferentes porque está medindo outra condição térmica.</p>
+      <div class="two-col"><div class="example-box"><strong class="card-title">Temperatura do ar</strong><p>Grandeza medida por instrumentos em condições meteorológicas apropriadas.</p></div><div class="example-box"><strong class="card-title">Sensação térmica</strong><p>Percepção influenciada por vento, umidade, radiação e trocas de energia com o corpo.</p></div></div>
+      <div class="note-box"><strong>Tempo e clima também não são sinônimos</strong><p>O <strong>tempo</strong> descreve condições atmosféricas em curto prazo. O <strong>clima</strong> envolve padrões observados ao longo de períodos muito maiores. Uma tarde quente não define sozinha o clima de uma região.</p></div>
     </section>
 
     <section>
-      <h3>3. Temperatura do ar, tempo e clima: medir bem importa</h3>
-      <p>Quando um aplicativo informa “32 °C”, ele está se referindo à <strong>temperatura do ar medida em condições meteorológicas controladas</strong>, evitando que o sensor seja aquecido diretamente pelo Sol. Um termômetro deixado sobre o asfalto ou dentro de um carro fechado pode indicar outra temperatura porque está medindo uma situação local diferente.</p>
-
-      <div class="two-col">
-        <div class="example-box"><strong class="card-title">Temperatura do ar</strong><p>É uma grandeza física medida com instrumentos. Deve ser distinguida da temperatura de superfícies como asfalto, telhado, areia ou lataria.</p></div>
-        <div class="example-box"><strong class="card-title">Sensação térmica</strong><p>É uma percepção influenciada por fatores como vento e umidade. Ela não substitui a medida da temperatura do ar.</p></div>
-      </div>
-
-      <div class="note-box"><strong>Tempo e clima não são sinônimos</strong><p>O <strong>tempo</strong> descreve condições atmosféricas em curto prazo. O <strong>clima</strong> envolve padrões observados ao longo de períodos muito maiores. Temperaturas medidas ao longo do tempo ajudam a construir essas análises.</p></div>
-
-      <div class="quick-question" data-choice-question data-correct="c">
-        <strong>Pense como um investigador</strong>
-        <p>Para representar melhor a temperatura do ar, qual situação é mais adequada?</p>
-        <div class="choice-row"><button type="button" data-choice="a">Termômetro sobre o capô ao Sol</button><button type="button" data-choice="b">Termômetro encostado no asfalto</button><button type="button" data-choice="c">Sensor protegido da radiação solar direta e em contato com o ar</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="Assim reduzimos a influência do aquecimento direto do sensor e medimos melhor o ar ao redor." data-wrong-text="Superfícies expostas ao Sol podem atingir temperaturas muito diferentes da temperatura do ar."></div>
-      </div>
+      <h3>3. Um amigo olha outro aplicativo e diz: “aqui aparece 89,6 °F”</h3>
+      <p>O fenômeno físico é o mesmo, mas diferentes escalas usam números diferentes para representar a temperatura. No Brasil é comum usar Celsius; em ciência, Kelvin é fundamental; em alguns países, Fahrenheit aparece no cotidiano.</p>
+      <div class="formula-box"><span class="formula-name">Agora as fórmulas têm um motivo: traduzir a mesma condição entre escalas</span><div class="big-formula">K = °C + 273,15 &nbsp;&nbsp; | &nbsp;&nbsp; °F = 1,8·°C + 32</div><p>32 °C correspondem a 305,15 K e 89,6 °F. Em Kelvin não usamos o símbolo de grau.</p></div>
+      <div class="interactive-lab" id="scaleLab"><div class="lab-heading"><span class="lesson-kicker">Laboratório interativo</span><h4>Troque a escala sem trocar o fenômeno</h4></div><div class="lab-controls"><label>Temperatura em Celsius <strong><span id="celsiusValue">25</span> °C</strong><input id="celsiusRange" type="range" min="-40" max="100" step="1" value="25"></label></div><div class="lab-result" aria-live="polite"><strong id="kelvinValue">298,15 K</strong><span>e</span><strong id="fahrenheitValue">77 °F</strong></div><p>Experimente 0 °C, 32 °C e 100 °C. A condição física é a mesma; o número muda porque a escala mudou.</p></div>
     </section>
 
     <section>
-      <h3>4. Dilatação térmica: aquecer pode mudar dimensões</h3>
-      <p>Ao variar a temperatura, muitos materiais mudam ligeiramente suas dimensões. Esse efeito é chamado de <strong>dilatação térmica</strong>. Em sólidos, podemos observar mudanças no comprimento, na área e no volume.</p>
-
-      <svg class="lesson-visual" viewBox="0 0 760 260" role="img" aria-label="Barra metálica mais curta em temperatura menor e mais longa em temperatura maior, com junta de dilatação em uma ponte">
-        <text x="70" y="35" class="visual-title">Mais fria</text>
-        <rect x="70" y="70" width="245" height="32" rx="6" fill="#9fc1ec"/>
-        <line x1="70" y1="122" x2="315" y2="122" stroke="#41536b" stroke-width="2"/><text x="160" y="145" class="visual-note">comprimento L₀</text>
-        <text x="445" y="35" class="visual-title">Mais quente</text>
-        <rect x="420" y="70" width="295" height="32" rx="6" fill="#efb09a"/>
-        <line x1="420" y1="122" x2="715" y2="122" stroke="#41536b" stroke-width="2"/><text x="520" y="145" class="visual-note">L₀ + ΔL</text>
-        <rect x="100" y="185" width="230" height="28" fill="#70829a"/><rect x="360" y="185" width="230" height="28" fill="#70829a"/>
-        <line x1="330" y1="180" x2="360" y2="218" stroke="#d08700" stroke-width="4"/>
-        <text x="285" y="243" class="visual-note">espaço previsto para a expansão</text>
-      </svg>
-
-      <div class="formula-box"><span class="formula-name">Dilatação linear de muitos sólidos em intervalos moderados de temperatura</span><div class="big-formula">ΔL = L₀ · α · ΔT</div><p><strong>α</strong> depende do material. A fórmula modela a variação de comprimento quando o coeficiente pode ser tratado como aproximadamente constante.</p></div>
-
-      <div class="three-col">
-        <div class="example-box"><strong class="card-title">Sólidos</strong><p>Pontes, trilhos, estruturas metálicas e fios precisam considerar pequenas variações dimensionais.</p></div>
-        <div class="example-box"><strong class="card-title">Líquidos</strong><p>A variação de volume de um líquido pode ser usada em termômetros de líquido, desde que o recipiente também seja considerado.</p></div>
-        <div class="example-box"><strong class="card-title">Gases</strong><p>Ao aquecer um gás, volume e pressão podem mudar. O resultado depende de como o gás está confinado.</p></div>
-      </div>
-
-      <div class="quick-question" data-choice-question data-correct="a">
-        <strong>Aplicação tecnológica</strong>
-        <p>Por que pontes e trilhos podem precisar de espaços ou juntas de dilatação?</p>
-        <div class="choice-row"><button type="button" data-choice="a">Para permitir pequenas variações de dimensão com a temperatura</button><button type="button" data-choice="b">Para impedir a ação da gravidade</button><button type="button" data-choice="c">Para reduzir a massa do material a zero</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="A estrutura precisa acomodar expansão e contração térmica sem gerar esforços indesejados." data-wrong-text="Relacione a mudança de temperatura à mudança de dimensões do material."></div>
-      </div>
+      <h3>4. No fim da tarde você atravessa uma passarela e nota pequenos espaços entre peças metálicas</h3>
+      <p>Esses espaços não estão ali por descuido. Muitos materiais mudam ligeiramente suas dimensões quando a temperatura varia. Em estruturas longas, uma pequena variação em cada trecho pode se tornar importante.</p>
+      <p>Esse fenômeno é a <strong>dilatação térmica</strong>. Ele ocorre em sólidos, líquidos e gases, embora o comportamento de cada material e estado físico tenha particularidades.</p>
+      <div class="formula-box"><span class="formula-name">Quando precisamos prever a variação de comprimento de um sólido</span><div class="big-formula">ΔL = L₀ · α · ΔT</div><p>L₀ é o comprimento inicial, ΔT a variação de temperatura e α um coeficiente característico do material no intervalo considerado.</p></div>
+      <div class="example-box"><strong class="card-title">Por que o comprimento inicial importa?</strong><p>Duas barras do mesmo material sofrem o mesmo ΔT. Se uma tem 10 vezes o comprimento da outra, sua variação de comprimento também tende a ser 10 vezes maior no mesmo modelo.</p></div>
+      <div class="note-box"><strong>E líquidos e gases?</strong><p>Também se expandem com a variação de temperatura. Em líquidos, normalmente analisamos variação de volume; em gases, temperatura, pressão e volume estão fortemente relacionados. Nunca aqueça recipientes fechados improvisados para “testar dilatação”.</p></div>
     </section>
 
     <section>
-      <h3>5. Calor específico: por que areia e água respondem de modos diferentes?</h3>
-      <p>Volte à praia. Mesmo recebendo energia do ambiente, areia e água não apresentam necessariamente a mesma variação de temperatura. Uma propriedade importante para entender isso é o <strong>calor específico</strong>.</p>
-
-      <svg class="lesson-visual" viewBox="0 0 760 260" role="img" aria-label="Comparação conceitual entre areia e água recebendo a mesma energia e apresentando diferentes variações de temperatura">
-        <text x="88" y="32" class="visual-title">Mesma massa de areia</text><text x="470" y="32" class="visual-title">Mesma massa de água</text>
-        <rect x="70" y="65" width="250" height="110" rx="14" fill="#fff1c9" stroke="#d7a83a" stroke-width="2"/>
-        <rect x="440" y="65" width="250" height="110" rx="14" fill="#e7f3ff" stroke="#69a8df" stroke-width="2"/>
-        <text x="145" y="115" class="visual-note">mesma energia Q</text><text x="515" y="115" class="visual-note">mesma energia Q</text>
-        <text x="125" y="148" class="visual-title">ΔT maior</text><text x="500" y="148" class="visual-title">ΔT menor</text>
-        <line x1="195" y1="205" x2="195" y2="178" stroke="#b42318" stroke-width="5"/><polygon points="195,168 185,184 205,184" fill="#b42318"/>
-        <line x1="565" y1="205" x2="565" y2="190" stroke="#1967d2" stroke-width="5"/><polygon points="565,180 555,196 575,196" fill="#1967d2"/>
-        <text x="205" y="225" class="visual-note">menor c</text><text x="575" y="225" class="visual-note">maior c</text>
-      </svg>
-
-      <div class="formula-box"><span class="formula-name">Aquecimento ou resfriamento sem mudança de estado</span><div class="big-formula">Q = m · c · ΔT</div><p><strong>Q</strong> é a energia transferida por calor, <strong>m</strong> a massa, <strong>c</strong> o calor específico e <strong>ΔT</strong> a variação de temperatura.</p></div>
-
-      <div class="note-box"><strong>O que o valor de c nos diz?</strong><p>Quanto maior o calor específico, mais energia é necessária, por unidade de massa, para produzir a mesma variação de temperatura. A água tem calor específico bem maior que muitos materiais comuns, o que ajuda a explicar por que ela varia de temperatura mais lentamente.</p></div>
-
-      <div class="quick-question" data-choice-question data-correct="b">
-        <strong>Compare sem calcular</strong>
-        <p>Duas amostras de mesma massa recebem a mesma quantidade de energia. A amostra B tem calor específico maior. Qual tende a apresentar menor variação de temperatura?</p>
-        <div class="choice-row"><button type="button" data-choice="a">A amostra A</button><button type="button" data-choice="b">A amostra B</button><button type="button" data-choice="c">As duas obrigatoriamente variam igual</button></div>
-        <div class="choice-feedback" data-choice-feedback data-correct-text="Com Q e m iguais, maior c implica menor ΔT." data-wrong-text="Reorganize mentalmente Q = m·c·ΔT e mantenha Q e m constantes."></div>
-      </div>
+      <h3>5. Voltamos à areia e à água: por que uma muda de temperatura tão depressa?</h3>
+      <p>Agora já sabemos que temperatura é uma medida e calor é transferência de energia. Falta descobrir por que a mesma exposição ao ambiente pode produzir variações de temperatura muito diferentes em materiais distintos.</p>
+      <p>A propriedade que nos ajuda é o <strong>calor específico</strong>: ele indica quanta energia é necessária, por unidade de massa, para produzir determinada variação de temperatura.</p>
+      <div class="equation-walk"><div><span>1</span><p>Quanto maior a <strong>massa</strong>, mais material precisa responder.</p></div><div><span>2</span><p>Quanto maior o <strong>calor específico c</strong>, mais energia é necessária para a mesma variação de temperatura por unidade de massa.</p></div><div><span>3</span><p>Queremos relacionar energia transferida e <strong>ΔT</strong>.</p></div></div>
+      <div class="formula-box"><span class="formula-name">A relação aparece para quantificar o que vimos na praia</span><div class="big-formula">Q = m · c · ΔT</div><p>Aqui Q representa a energia transferida por calor no processo modelado. Se não houver mudança de estado e as perdas forem desprezadas, podemos usar essa relação para estimar a variação de temperatura.</p></div>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>Antes da conta</strong><p>Dois materiais de mesma massa recebem a mesma energia. O material com maior calor específico tende a apresentar:</p><div class="choice-row"><button type="button" data-choice="a">maior ΔT</button><button type="button" data-choice="b">menor ΔT</button><button type="button" data-choice="c">sempre a mesma ΔT</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Como ΔT = Q/(m·c), aumentar c reduz a variação de temperatura no mesmo modelo." data-wrong-text="Isole ΔT na relação Q = m·c·ΔT."></div></div>
     </section>
 
     <section>
-      <h3>6. Capacidade térmica: agora importa o corpo inteiro</h3>
-      <p>O <strong>calor específico</strong> é uma propriedade do material. Já a <strong>capacidade térmica</strong> depende do corpo considerado, inclusive de sua massa.</p>
-
-      <div class="two-col">
-        <div class="example-box"><strong class="card-title">Calor específico — c</strong><p>Indica a energia necessária por unidade de massa para variar a temperatura em uma unidade. Unidade típica: J/(kg·°C).</p></div>
-        <div class="example-box"><strong class="card-title">Capacidade térmica — C</strong><p>Indica a energia necessária para variar a temperatura daquele corpo em uma unidade. Unidade típica: J/°C.</p></div>
-      </div>
-
-      <div class="formula-box"><span class="formula-name">Capacidade térmica</span><div class="big-formula">C = Q / ΔT &nbsp;&nbsp; e &nbsp;&nbsp; C = m · c</div><p>Dois objetos feitos do mesmo material podem ter capacidades térmicas diferentes se tiverem massas diferentes.</p></div>
-
-      <div class="example-box"><strong class="card-title">Exemplo guiado</strong><p>Um corpo recebe 6.000 J e sua temperatura aumenta 20 °C.</p><ol class="reason-steps"><li>Use C = Q/ΔT.</li><li>C = 6.000/20.</li><li><strong>C = 300 J/°C.</strong></li></ol></div>
+      <h3>6. “Então um copo de água e uma piscina reagem do mesmo jeito?”</h3>
+      <p>Não. O calor específico é uma propriedade do material, mas o efeito térmico de um corpo inteiro também depende de sua massa. Para representar a quantidade de energia necessária para variar a temperatura de <strong>todo o corpo</strong>, usamos a <strong>capacidade térmica</strong>.</p>
+      <div class="formula-box"><span class="formula-name">Capacidade térmica do corpo</span><div class="big-formula">C = Q / ΔT = m · c</div><p>Um corpo maior, feito do mesmo material, possui maior capacidade térmica porque contém mais massa.</p></div>
+      <div class="example-box"><strong class="card-title">Exemplo guiado</strong><p>Se um corpo recebe 6.000 J e sua temperatura varia 20 °C, então C = 6.000/20 = <strong>300 J/°C</strong>.</p></div>
     </section>
 
     <section>
-      <h3>7. Laboratório interativo: mesma energia, materiais diferentes</h3>
-      <div class="interactive-lab" id="specificHeatLab">
-        <div class="lab-heading"><span class="lesson-kicker">Laboratório interativo</span><h4>Quanto a temperatura varia?</h4></div>
-        <p>O modelo considera aquecimento sem mudança de estado e sem perdas de energia para o ambiente.</p>
-        <div class="lab-controls">
-          <label>Material <strong><span id="materialName">Água</span></strong><select id="materialSelect"><option value="water">Água</option><option value="sand">Areia seca</option><option value="aluminum">Alumínio</option></select></label>
-          <label>Massa <strong><span id="heatMassValue">1,0</span> kg</strong><input id="heatMassRange" type="range" min="0.5" max="5" step="0.5" value="1"></label>
-          <label>Energia recebida <strong><span id="heatEnergyValue">42</span> kJ</strong><input id="heatEnergyRange" type="range" min="10" max="100" step="2" value="42"></label>
-        </div>
-        <div class="lab-result" aria-live="polite"><span>Calor específico aproximado:</span><strong id="specificHeatValue">4.200 J/(kg·°C)</strong><span>Variação de temperatura:</span><strong id="deltaTempValue">10,0 °C</strong></div>
-        <p id="heatLabConclusion">Com a água, uma quantidade considerável de energia produz uma variação de temperatura relativamente pequena.</p>
-      </div>
+      <h3>7. Laboratório: dê a mesma energia para água, areia e alumínio</h3>
+      <div class="interactive-lab" id="heatLab"><div class="lab-heading"><span class="lesson-kicker">Laboratório interativo</span><h4>Compare a variação de temperatura</h4></div><div class="lab-controls"><label>Material <select id="materialSelect"><option value="water">Água</option><option value="sand">Areia seca</option><option value="aluminum">Alumínio</option></select></label><label>Massa <strong><span id="heatMassValue">1,0</span> kg</strong><input id="heatMassRange" type="range" min="0.5" max="5" step="0.5" value="1"></label><label>Energia transferida <strong><span id="heatEnergyValue">20</span> kJ</strong><input id="heatEnergyRange" type="range" min="10" max="100" step="10" value="20"></label></div><div class="lab-result"><strong id="materialName">Água</strong><span>c = <b id="specificHeatValue">4.200 J/(kg·°C)</b></span><span>ΔT ≈ <b id="deltaTempValue">4,8 °C</b></span></div><p id="heatLabConclusion">A água tem calor específico elevado e sua temperatura varia relativamente pouco para a mesma energia por unidade de massa.</p><p>Este é um modelo ideal: desconsidera mudanças de estado e perdas para o ambiente.</p></div>
     </section>
 
     <section>
-      <h3>8. Experimento simples: compare como materiais aquecem</h3>
-      <div class="experiment-box">
-        <strong class="card-title">Água e areia sob as mesmas condições</strong>
-        <ol class="reason-steps">
-          <li>Coloque massas semelhantes de água e areia seca em recipientes semelhantes.</li>
-          <li>Deixe os dois inicialmente no mesmo ambiente até estarem em temperaturas próximas.</li>
-          <li>Exponha-os juntos a uma fonte suave e segura, como luz solar moderada.</li>
-          <li>Meça a temperatura em intervalos regulares com termômetros adequados.</li>
-          <li>Compare as curvas de temperatura ao longo do tempo.</li>
-        </ol>
-        <p class="safety-note"><strong>Segurança:</strong> não use chama, resistência elétrica improvisada nem recipientes que possam superaquecer. A proposta é observar tendências, não atingir temperaturas altas.</p>
-      </div>
-      <p>O experimento real não entrega exatamente a mesma energia a cada amostra, porque há diferenças de absorção e perdas para o ambiente. Por isso, ele serve para <strong>investigar tendências</strong>, enquanto o laboratório matemático acima isola as variáveis do modelo.</p>
+      <h3>8. Experimento simples: reproduza uma versão segura do mistério da praia</h3>
+      <div class="experiment-box"><strong class="card-title">Água e areia sob a mesma condição ambiental</strong><p>Coloque quantidades semelhantes de água e areia em recipientes rasos e seguros, lado a lado, em local com iluminação solar moderada. Meça as temperaturas iniciais e depois em intervalos regulares.</p><ol class="reason-steps"><li>Use recipientes semelhantes.</li><li>Registre tempo e temperatura numa tabela.</li><li>Compare as variações, não apenas os valores finais.</li><li>Depois leve os recipientes à sombra e observe o resfriamento.</li></ol><p class="safety-note"><strong>Segurança:</strong> não use chama, resistência elétrica improvisada ou recipientes fechados.</p></div>
     </section>
 
     <section class="chapter-checkpoint">
-      <span class="lesson-kicker">Checkpoint</span>
-      <h3>9. Você consegue distinguir temperatura, calor e resposta térmica?</h3>
-
-      <div class="quick-question" data-choice-question data-correct="b"><strong>1. Conceito</strong><p>Qual afirmação está correta?</p><div class="choice-row"><button type="button" data-choice="a">Temperatura é a quantidade de calor armazenada</button><button type="button" data-choice="b">Calor é energia transferida devido a diferença de temperatura</button><button type="button" data-choice="c">Corpos frios não possuem energia</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Temperatura e calor são grandezas diferentes; calor descreve transferência de energia." data-wrong-text="Retome a distinção conceitual apresentada no início do capítulo."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="c"><strong>2. Kelvin</strong><p>25 °C correspondem aproximadamente a:</p><div class="choice-row"><button type="button" data-choice="a">25 K</button><button type="button" data-choice="b">248 K</button><button type="button" data-choice="c">298 K</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="K = 25 + 273,15 ≈ 298 K." data-wrong-text="Na conversão Celsius → Kelvin, some aproximadamente 273."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="a"><strong>3. Fahrenheit</strong><p>20 °C correspondem a:</p><div class="choice-row"><button type="button" data-choice="a">68 °F</button><button type="button" data-choice="b">52 °F</button><button type="button" data-choice="c">36 °F</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="°F = 1,8·20 + 32 = 68 °F." data-wrong-text="Use °F = 1,8·°C + 32."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="c"><strong>4. Dilatação</strong><p>Uma barra metálica é aquecida dentro de um intervalo em que α pode ser considerado constante. O que tende a ocorrer?</p><div class="choice-row"><button type="button" data-choice="a">Sua massa desaparece</button><button type="button" data-choice="b">Seu comprimento obrigatoriamente diminui</button><button type="button" data-choice="c">Seu comprimento pode aumentar ligeiramente</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Esse é o comportamento descrito pela dilatação linear usual de muitos sólidos." data-wrong-text="Relacione ΔL = L₀·α·ΔT para ΔT positivo e α positivo."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="a"><strong>5. Calor específico</strong><p>Dois corpos de mesma massa recebem a mesma energia. O corpo de menor calor específico tende a:</p><div class="choice-row"><button type="button" data-choice="a">Variar mais sua temperatura</button><button type="button" data-choice="b">Variar menos sua temperatura</button><button type="button" data-choice="c">Manter necessariamente a mesma temperatura</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Com Q e m fixos, diminuir c aumenta ΔT." data-wrong-text="Observe Q = m·c·ΔT."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="b"><strong>6. Capacidade térmica</strong><p>Um corpo tem C = 500 J/°C. Quanta energia é necessária para aumentar sua temperatura em 4 °C?</p><div class="choice-row"><button type="button" data-choice="a">125 J</button><button type="button" data-choice="b">2.000 J</button><button type="button" data-choice="c">504 J</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Q = C·ΔT = 500·4 = 2.000 J." data-wrong-text="Capacidade térmica informa energia necessária por unidade de variação de temperatura."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="c"><strong>7. Temperatura do ar</strong><p>Um termômetro deixado sobre o asfalto ao Sol marca 48 °C enquanto uma estação próxima informa 33 °C. A melhor interpretação é:</p><div class="choice-row"><button type="button" data-choice="a">Uma das medidas precisa estar quebrada</button><button type="button" data-choice="b">Todo o ar está a 48 °C</button><button type="button" data-choice="c">Os instrumentos estão medindo condições térmicas locais diferentes</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="A superfície aquecida pelo Sol pode ficar muito mais quente que o ar medido em condições meteorológicas apropriadas." data-wrong-text="Diferencie temperatura de superfície e temperatura do ar."></div></div>
-
-      <div class="quick-question" data-choice-question data-correct="a"><strong>8. Cálculo térmico</strong><p>0,5 kg de água, com c ≈ 4.200 J/(kg·°C), recebe 21.000 J sem mudar de estado. Qual é aproximadamente a variação de temperatura?</p><div class="choice-row"><button type="button" data-choice="a">10 °C</button><button type="button" data-choice="b">21 °C</button><button type="button" data-choice="c">100 °C</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="ΔT = Q/(m·c) = 21.000/(0,5·4.200) = 10 °C." data-wrong-text="Isole ΔT em Q = m·c·ΔT."></div></div>
-
-      <div class="challenge-box"><strong>Desafio MbB — explique a praia</strong><p>Durante o dia, a areia costuma variar de temperatura mais rapidamente que a água do mar; à noite, a água tende a manter sua temperatura por mais tempo. Explique esse comportamento usando <strong>calor específico, massa, transferência de energia e variação de temperatura</strong>. Depois diga por que apenas afirmar “a água recebe menos calor” não é uma explicação suficiente.</p><details><summary>Critérios para conferir sua explicação</summary><p>Uma boa resposta distingue temperatura de calor, reconhece que diferentes materiais têm diferentes calores específicos e explica que a mesma quantidade de energia por unidade de massa pode produzir variações de temperatura diferentes. Em situações reais, também existem trocas de energia e condições ambientais que tornam o fenômeno mais complexo que o modelo ideal.</p></details></div>
+      <span class="lesson-kicker">Voltando para casa</span>
+      <h3>9. Você consegue explicar a tarde inteira usando Física?</h3>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>1. Temperatura e calor</strong><p>Qual afirmação é correta?</p><div class="choice-row"><button type="button" data-choice="a">Calor é uma substância dentro do corpo</button><button type="button" data-choice="b">Calor é energia em transferência por diferença de temperatura</button><button type="button" data-choice="c">Temperatura mede massa</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Essa distinção é central." data-wrong-text="Volte à situação de contato térmico."></div></div>
+      <div class="quick-question" data-choice-question data-correct="c"><strong>2. Kelvin</strong><p>25 °C correspondem aproximadamente a:</p><div class="choice-row"><button type="button" data-choice="a">25 K</button><button type="button" data-choice="b">248 K</button><button type="button" data-choice="c">298 K</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="25 + 273,15 ≈ 298,15 K." data-wrong-text="Use K = °C + 273,15."></div></div>
+      <div class="quick-question" data-choice-question data-correct="a"><strong>3. Fahrenheit</strong><p>0 °C equivalem a:</p><div class="choice-row"><button type="button" data-choice="a">32 °F</button><button type="button" data-choice="b">0 °F</button><button type="button" data-choice="c">273 °F</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="°F = 1,8·0 + 32." data-wrong-text="Use a conversão."></div></div>
+      <div class="quick-question" data-choice-question data-correct="b"><strong>4. Ponte</strong><p>Por que estruturas longas podem ter juntas de dilatação?</p><div class="choice-row"><button type="button" data-choice="a">Para aumentar a massa</button><button type="button" data-choice="b">Para acomodar variações dimensionais com a temperatura</button><button type="button" data-choice="c">Para eliminar a gravidade</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Materiais podem expandir e contrair." data-wrong-text="Relacione comprimento e temperatura."></div></div>
+      <div class="quick-question" data-choice-question data-correct="c"><strong>5. Calor específico</strong><p>Mesma massa, mesma energia: maior c tende a produzir:</p><div class="choice-row"><button type="button" data-choice="a">maior ΔT</button><button type="button" data-choice="b">massa menor</button><button type="button" data-choice="c">menor ΔT</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="ΔT = Q/(m·c)." data-wrong-text="Isole ΔT."></div></div>
+      <div class="quick-question" data-choice-question data-correct="a"><strong>6. Capacidade térmica</strong><p>Dois corpos do mesmo material; um tem o dobro da massa. Sua capacidade térmica tende a ser:</p><div class="choice-row"><button type="button" data-choice="a">o dobro</button><button type="button" data-choice="b">a metade</button><button type="button" data-choice="c">zero</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="C = m·c." data-wrong-text="Mantenha o material e varie m."></div></div>
+      <div class="quick-question" data-choice-question data-correct="c"><strong>7. Aplicativo</strong><p>O termômetro no asfalto marca 48 °C e a estação 33 °C. A melhor leitura é:</p><div class="choice-row"><button type="button" data-choice="a">um dos aparelhos está necessariamente quebrado</button><button type="button" data-choice="b">todo o ar está a 48 °C</button><button type="button" data-choice="c">estão sendo medidas condições térmicas locais diferentes</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Superfícies ao Sol podem ter temperatura muito diferente do ar." data-wrong-text="Pergunte o que cada sensor mede."></div></div>
+      <div class="quick-question" data-choice-question data-correct="a"><strong>8. Cálculo</strong><p>0,5 kg de água com c = 4.200 J/(kg·°C) recebe 21.000 J. Qual ΔT ideal?</p><div class="choice-row"><button type="button" data-choice="a">10 °C</button><button type="button" data-choice="b">21 °C</button><button type="button" data-choice="c">100 °C</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="ΔT = 21.000/(0,5·4.200) = 10 °C." data-wrong-text="Use Q = m·c·ΔT."></div></div>
+      <div class="challenge-box"><strong>Desafio MbB — explique a praia inteira</strong><p>Explique por que areia e água podem atingir temperaturas diferentes durante o dia e esfriar de formas diferentes à noite. Sua resposta deve distinguir temperatura de calor e usar calor específico, massa e transferência de energia. Depois explique por que dizer apenas “a água recebe menos calor” é insuficiente.</p></div>
     </section>
 
-    <details class="curriculum-box">
-      <summary>Conexão com o plano de curso</summary>
-      <p>Este capítulo trabalha os objetos previstos para a 1ª série em <strong>termometria</strong> (temperatura e escalas; condições do ar/clima), <strong>dilatação térmica</strong> de sólidos, líquidos e gases, além de <strong>capacidade térmica e calor específico</strong>. A ideia de calor aparece aqui como conceito necessário para compreender essas relações, sem transformar o capítulo em um estudo separado de todos os processos de transferência térmica.</p>
-    </details>`;
+    <details class="curriculum-box"><summary>Conexão com o plano de curso</summary><p>O capítulo trabalha os objetos previstos de <strong>termometria</strong> — temperatura e escalas, condições do ar e clima —, <strong>dilatação térmica</strong> de sólidos, líquidos e gases, além de <strong>capacidade térmica e calor específico</strong>. A ideia de calor aparece como conceito necessário para compreender essas relações.</p></details>
+  `;
 
   function initTemperatureLabs(root) {
-    const format = (value, digits = 1) => Number(value).toLocaleString('pt-BR', { minimumFractionDigits: digits, maximumFractionDigits: digits });
-
-    const celsius = $('#celsiusRange', root);
-    const celsiusValue = $('#celsiusValue', root);
-    const kelvinValue = $('#kelvinValue', root);
-    const fahrenheitValue = $('#fahrenheitValue', root);
-
-    if (celsius && celsiusValue && kelvinValue && fahrenheitValue) {
-      const drawScale = () => {
-        const C = Number(celsius.value);
-        const K = C + 273.15;
-        const F = 1.8 * C + 32;
-        celsiusValue.textContent = format(C, 0);
-        kelvinValue.textContent = `${format(K, 2)} K`;
-        fahrenheitValue.textContent = `${format(F, 1)} °F`;
-      };
-      celsius.addEventListener('input', drawScale);
-      drawScale();
+    const format=(value,digits=1)=>Number(value).toLocaleString('pt-BR',{minimumFractionDigits:digits,maximumFractionDigits:digits});
+    const celsius=$('#celsiusRange',root);
+    if(celsius){
+      const drawScale=()=>{const C=Number(celsius.value),K=C+273.15,F=1.8*C+32; $('#celsiusValue',root).textContent=format(C,0); $('#kelvinValue',root).textContent=`${format(K,2)} K`; $('#fahrenheitValue',root).textContent=`${format(F,1)} °F`;};
+      celsius.addEventListener('input',drawScale); drawScale();
     }
-
-    const materials = {
-      water: { name: 'Água', c: 4200, text: 'A água tem calor específico elevado e, neste modelo, sua temperatura varia relativamente pouco para a mesma energia por unidade de massa.' },
-      sand: { name: 'Areia seca', c: 830, text: 'A areia seca tem calor específico bem menor que o da água, então a mesma energia por unidade de massa produz uma variação de temperatura maior.' },
-      aluminum: { name: 'Alumínio', c: 900, text: 'O alumínio também apresenta calor específico muito menor que o da água e responde com variações de temperatura maiores no mesmo modelo ideal.' }
-    };
-
-    const material = $('#materialSelect', root);
-    const mass = $('#heatMassRange', root);
-    const energy = $('#heatEnergyRange', root);
-    if (!material || !mass || !energy) return;
-
-    const drawHeat = () => {
-      const selected = materials[material.value] || materials.water;
-      const m = Number(mass.value);
-      const qKJ = Number(energy.value);
-      const Q = qKJ * 1000;
-      const deltaT = Q / (m * selected.c);
-
-      $('#materialName', root).textContent = selected.name;
-      $('#heatMassValue', root).textContent = format(m, 1);
-      $('#heatEnergyValue', root).textContent = format(qKJ, 0);
-      $('#specificHeatValue', root).textContent = `${selected.c.toLocaleString('pt-BR')} J/(kg·°C)`;
-      $('#deltaTempValue', root).textContent = `${format(deltaT, 1)} °C`;
-      $('#heatLabConclusion', root).textContent = selected.text;
-    };
-
-    [material, mass, energy].forEach((input) => input.addEventListener('input', drawHeat));
-    material.addEventListener('change', drawHeat);
-    drawHeat();
+    const materials={water:{name:'Água',c:4200,text:'A água tem calor específico elevado e, neste modelo, sua temperatura varia relativamente pouco para a mesma energia por unidade de massa.'},sand:{name:'Areia seca',c:830,text:'A areia seca tem calor específico bem menor que o da água, então a mesma energia por unidade de massa produz uma variação de temperatura maior.'},aluminum:{name:'Alumínio',c:900,text:'O alumínio também apresenta calor específico muito menor que o da água e responde com variações de temperatura maiores no mesmo modelo ideal.'}};
+    const material=$('#materialSelect',root),mass=$('#heatMassRange',root),energy=$('#heatEnergyRange',root);
+    if(!material||!mass||!energy)return;
+    const drawHeat=()=>{const selected=materials[material.value]||materials.water,m=Number(mass.value),qKJ=Number(energy.value),dT=qKJ*1000/(m*selected.c); $('#materialName',root).textContent=selected.name; $('#heatMassValue',root).textContent=format(m,1); $('#heatEnergyValue',root).textContent=format(qKJ,0); $('#specificHeatValue',root).textContent=`${selected.c.toLocaleString('pt-BR')} J/(kg·°C)`; $('#deltaTempValue',root).textContent=`${format(dT,1)} °C`; $('#heatLabConclusion',root).textContent=selected.text;};
+    [material,mass,energy].forEach(input=>input.addEventListener('input',drawHeat)); material.addEventListener('change',drawHeat); drawHeat();
   }
 
   MBB.enableChapter?.('05 Temperatura não é calor', () => {
-    MBB.showLesson({
-      unit: 'Energia e matéria',
-      technical: 'Termometria • escalas • dilatação térmica • capacidade térmica • calor específico',
-      title: 'Temperatura não é calor',
-      objective: '<strong>Propósito:</strong> distinguir temperatura de calor, interpretar escalas termométricas e explicar como materiais respondem ao aquecimento por meio da dilatação, da capacidade térmica e do calor específico.',
-      html: lessonHtml,
-      init: initTemperatureLabs
-    });
+    MBB.showLesson({unit:'Energia e matéria',technical:'Termometria • escalas • dilatação térmica • capacidade térmica • calor específico',title:'Temperatura não é calor',objective:'<strong>Propósito:</strong> investigar uma tarde na praia para distinguir temperatura de calor e compreender escalas, dilatação, capacidade térmica e calor específico.',html:lessonHtml,init:initTemperatureLabs});
   });
 })();
