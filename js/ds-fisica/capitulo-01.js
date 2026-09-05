@@ -8,12 +8,12 @@
     <section class="physics-opening">
       <span class="lesson-kicker">Uma história para investigar</span>
       <div class="hero-box physics-story">
-        <strong class="card-title">Você combinou de encontrar um amigo no clube do bairro para jogar bola. Ao sair de casa de bicicleta, o celular mostra: “2,4 km • 8 min”.</strong>
-        <p>Parece uma informação simples. Mas o aplicativo está fazendo uma previsão sobre algo que ainda nem aconteceu. Ele não sabe se você vai parar num semáforo, diminuir numa curva ou errar uma rua. Mesmo assim, estima quando você chegará.</p>
+        <strong class="card-title">Você combinou de encontrar um amigo no clube do bairro para jogar bola. Como não conhece bem o caminho, abre um aplicativo de mapas no celular, escolhe o clube como destino e inicia uma rota de bicicleta. A tela informa: “faltam 2,4 km • chegada em cerca de 8 min”.</strong>
+        <p>Agora a situação está clara: o destino foi escolhido e a rota começou. Mesmo assim, os 8 minutos são uma previsão. Você ainda pode parar num semáforo, reduzir numa curva ou até errar uma rua. Então surge a pergunta: <strong>como o aplicativo consegue estimar o tempo de chegada antes de o percurso terminar?</strong></p>
         <div class="quick-question" data-choice-question data-correct="b">
           <strong>Antes de continuar, faça uma aposta</strong>
-          <p>Se o celular soubesse apenas que faltam 2,4 km, isso bastaria para prever o tempo de chegada?</p>
-          <div class="choice-row"><button type="button" data-choice="a">Sim, a distância sozinha determina o tempo</button><button type="button" data-choice="b">Não, porque a mesma distância pode ser percorrida em ritmos diferentes</button><button type="button" data-choice="c">Só bastaria se a tela ficasse ligada</button></div>
+          <p>Se o aplicativo de mapas soubesse apenas que faltam 2,4 km, isso bastaria para prever o tempo de chegada?</p>
+          <div class="choice-row"><button type="button" data-choice="a">Sim, toda distância de 2,4 km leva o mesmo tempo</button><button type="button" data-choice="b">Não, porque a mesma distância pode ser percorrida em ritmos diferentes</button><button type="button" data-choice="c">Sim, desde que a rota tenha sido iniciada</button></div>
           <div class="choice-feedback" data-choice-feedback data-correct-text="Exato. A distância é importante, mas precisamos também saber como a posição muda com o tempo." data-wrong-text="Imagine duas pessoas percorrendo a mesma distância, uma caminhando e outra de bicicleta."></div>
         </div>
         <p class="central-question"><strong>Nossa missão:</strong> descobrir, durante esse trajeto, quais ideias da Física permitem descrever o movimento e fazer previsões antes de ele terminar.</p>
@@ -21,8 +21,8 @@
     </section>
 
     <section>
-      <h3>1. O celular começa com uma pergunta muito simples: onde você está?</h3>
-      <p>Você ainda está em frente de casa. Para o aplicativo, dizer apenas “estou na rua” não basta. Ele precisa localizar você em relação a algum sistema de referência.</p>
+      <h3>1. Para acompanhar a rota, o aplicativo precisa saber onde você está</h3>
+      <p>Você ainda está em frente de casa. O celular consegue estimar sua localização, e o aplicativo de mapas usa essa informação para atualizar a rota. Para a Física, porém, dizer apenas “estou na rua” não basta: precisamos descrever a posição em relação a algum sistema de referência.</p>
       <p>Vamos simplificar a rua como uma linha. Escolhemos o portão da sua casa como <strong>posição 0 m</strong>. Se você avançar no sentido do clube, as posições aumentam.</p>
 
       <div class="visual-box">
@@ -72,8 +72,8 @@
     </section>
 
     <section>
-      <h3>3. O mapa não precisa “ver um filme” para reconstruir seu movimento</h3>
-      <p>Você corrige o caminho. De tempos em tempos, o celular registra sua posição. Imagine que, num trecho reto, ele obteve estes dados:</p>
+      <h3>3. A rota pode ser reconstruída a partir de posições registradas ao longo do tempo</h3>
+      <p>Você corrige o caminho. Durante a rota, o aplicativo atualiza sua posição usando a localização estimada pelo celular. Para estudar o movimento, imagine que, num trecho reto, registramos estes dados:</p>
 
       <div class="table-wrap"><table><thead><tr><th>Tempo</th><th>Posição</th><th>O que aconteceu?</th></tr></thead><tbody><tr><td>0 s</td><td>0 m</td><td>início do trecho</td></tr><tr><td>20 s</td><td>100 m</td><td>avançou 100 m</td></tr><tr><td>40 s</td><td>200 m</td><td>avançou mais 100 m</td></tr><tr><td>60 s</td><td>300 m</td><td>mantém o padrão</td></tr></tbody></table></div>
 
@@ -97,7 +97,7 @@
     </section>
 
     <section>
-      <h3>4. “8 minutos”: será que a previsão do celular faz sentido?</h3>
+      <h3>4. “8 minutos”: será que a previsão do aplicativo faz sentido?</h3>
       <p>Voltamos à informação inicial: faltam <strong>2,4 km</strong> e o aplicativo prevê <strong>8 minutos</strong>. Em vez de aceitar o número, vamos reconstruir o raciocínio.</p>
 
       <div class="quick-question" data-choice-question data-correct="b"><strong>Faça uma estimativa antes da conta</strong><p>Se você percorresse aproximadamente 300 m por minuto, 2,4 km levariam perto de:</p><div class="choice-row"><button type="button" data-choice="a">2 min</button><button type="button" data-choice="b">8 min</button><button type="button" data-choice="c">30 min</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Boa estimativa: 2.400 ÷ 300 = 8 minutos." data-wrong-text="Transforme 2,4 km em 2.400 m e compare com 300 m por minuto."></div></div>
@@ -229,7 +229,7 @@
     </section>
 
     <section>
-      <h3>10. Volte à tela do celular: agora os “2,4 km • 8 min” dizem muito mais</h3>
+      <h3>10. Volte à tela do aplicativo de mapas: agora os “2,4 km • 8 min” dizem muito mais</h3>
       <p>No começo, o número parecia quase mágico. Agora conseguimos desmontar parte do problema:</p>
       <div class="three-col"><div class="example-box"><strong class="card-title">Onde estou?</strong><p>Precisamos de referencial e posição.</p></div><div class="example-box"><strong class="card-title">Como cheguei aqui?</strong><p>Distância, tempo, tabela e gráfico ajudam a reconstruir o trajeto.</p></div><div class="example-box"><strong class="card-title">Quando chego?</strong><p>Velocidade, aceleração e modelos de movimento permitem fazer previsões.</p></div></div>
       <p>Na vida real, aplicativos de navegação usam mapas, trânsito, sensores e modelos muito mais ricos. Mas a base física continua reconhecível: <strong>posição muda com o tempo</strong>, e essa mudança pode ser medida, representada e prevista.</p>
