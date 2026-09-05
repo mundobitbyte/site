@@ -10,8 +10,8 @@
     headerBack.type = 'button';
     headerBack.className = 'portal-home-back';
     headerBack.dataset.homeShellBack = '';
-    headerBack.textContent = '← Mundo bit Byte';
-    headerBack.setAttribute('aria-label', 'Voltar ao Mundo bit Byte');
+    headerBack.textContent = '← Áreas';
+    headerBack.setAttribute('aria-label', 'Voltar às áreas');
     headerBack.hidden = true;
     header.insertBefore(headerBack, headerTitle);
   }
