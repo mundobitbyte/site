@@ -63,17 +63,6 @@
 .analysis-steps strong{display:block;color:var(--primary-dark);margin-bottom:4px}
 .analysis-steps p{font-size:13px;color:var(--muted);margin:0}
 
-.lesson-step[hidden]{display:none!important}
-.lesson-pager{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;margin:0 0 14px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface-soft)}
-.lesson-pager.bottom{margin:18px 0 0}
-.lesson-pager-status{text-align:center;min-width:0}
-.lesson-pager-status strong{display:block;color:var(--primary-dark);font-size:12px}
-.lesson-pager-status span{display:block;color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lesson-pager button{border:1px solid #bdd2ef;background:#fff;color:var(--primary-dark);border-radius:8px;padding:8px 11px;font-size:12px;font-weight:900;cursor:pointer}
-.lesson-pager button:hover:not(:disabled){background:var(--primary-soft)}
-.lesson-pager button:disabled{opacity:.35;cursor:default}
-.checkpoint-page{margin-top:0;padding-top:0;border-top:0}
-
 @media(max-width:1050px){.analysis-steps{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:900px){.connection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:720px){
@@ -85,7 +74,4 @@
   .big-formula{font-size:26px}
   .lesson-visual{min-width:0}
   .physics-story{padding:15px}
-  .lesson-pager{grid-template-columns:auto 1fr auto;gap:6px;padding:7px}
-  .lesson-pager button{padding:7px 9px;font-size:11px}
-  .lesson-pager-status strong{font-size:11px}
 }
