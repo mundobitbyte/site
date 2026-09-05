@@ -8,9 +8,9 @@
     <section class="chemistry-opening">
       <span class="lesson-kicker">Uma situação real para investigar</span>
       <div class="hero-box chemistry-story">
-        <strong class="card-title">Na tarde anterior a uma aula prática, o professor pede sua ajuda para preparar seis bandejas iguais para a turma. A ficha da atividade diz que cada bandeja precisa receber quatro amostras: Cu, Al, Fe e NaCl.</strong>
-        <p>No armário do laboratório há um rolo de fio de cobre, tiras metálicas de alumínio, pregos guardados numa caixa identificada como “ferro” e um frasco de cloreto de sódio. Ao lado, porém, há também um pacote de sal de cozinha iodado e alguns pregos galvanizados. À primeira vista, parecem servir do mesmo jeito.</p>
-        <p>O professor interrompe a montagem e explica que, se cada grupo receber materiais de composição diferente, a comparação entre as bancadas pode deixar de ser confiável. Antes de montar as bandejas, você precisa saber <strong>o que exatamente os rótulos Cu, Al, Fe e NaCl estão especificando</strong> e até onde um nome cotidiano, como “prego de ferro” ou “sal”, permite concluir a composição do material.</p>
+        <strong class="card-title">Na tarde anterior a uma aula prática, o professor pede sua ajuda para preparar seis bandejas idênticas. No dia seguinte, cada grupo vai investigar propriedades de algumas amostras e, no final, comparar os registros entre as bancadas. A ficha de preparação determina que cada bandeja receba Cu, Al, Fe e NaCl.</strong>
+        <p>No armário do laboratório há um rolo de fio de cobre, tiras metálicas de alumínio, pregos guardados numa caixa identificada como “ferro” e um frasco de cloreto de sódio. Ao lado, porém, há também um pacote de sal de cozinha iodado e alguns pregos galvanizados. À primeira vista, parecem substitutos aceitáveis.</p>
+        <p>O professor interrompe a montagem: se uma bancada receber uma amostra de composição diferente das demais, os grupos podem comparar resultados que, na verdade, vieram de materiais diferentes. Antes de montar as bandejas, você precisa saber <strong>o que exatamente Cu, Al, Fe e NaCl estão especificando</strong> e até onde um nome cotidiano, como “prego de ferro” ou “sal”, permite concluir a composição do material.</p>
 
         <div class="quick-question" data-choice-question data-correct="b">
           <strong>Antes de continuar, faça uma aposta</strong>
@@ -30,7 +30,7 @@
     <section>
       <h3>1. Antes de falar em átomos, precisamos saber o que está sobre a bancada</h3>
       <p>Você começa pelo item aparentemente mais simples: o “prego de ferro”. Só que muitos pregos comerciais são feitos de aço e alguns recebem uma camada de zinco para reduzir a corrosão. O objeto continua sendo chamado de prego, mas isso não significa que seja formado apenas pela substância ferro.</p>
-      <p>O mesmo cuidado vale para o fio de cobre, que pode ter revestimento, e para o sal de cozinha, que pode conter iodo e agentes antiumectantes. Em laboratório, a composição da <strong>amostra</strong> precisa ser conhecida porque é ela que será relacionada ao resultado observado.</p>
+      <p>O mesmo cuidado vale para o fio de cobre, que pode ter revestimento, e para o sal de cozinha, que pode conter compostos de iodo e agentes antiumectantes. Em laboratório, a composição da <strong>amostra</strong> precisa ser conhecida porque é ela que será relacionada ao resultado observado.</p>
 
       <div class="three-col">
         <div class="example-box">
@@ -198,7 +198,7 @@
           <label>Número de prótons: <strong id="protonIdentityValue">13</strong>
             <input id="protonIdentityRange" type="range" min="11" max="17" value="13" step="1">
           </label>
-          <div class="lab-result"><strong id="protonIdentityElement">Al — alumínio</strong><span>Al possui número atômico Z = 13.</span></div>
+          <div class="lab-result"><strong id="protonIdentityElement">Al — alumínio</strong><span id="protonIdentityDescription">Al possui número atômico Z = 13.</span></div>
         </div>
         <p class="visual-caption">Neste intervalo, mudar um único próton já muda a identidade do elemento.</p>
       </div>
@@ -228,7 +228,7 @@
         </div>
       </div>
 
-      <p>A unidade <strong>u</strong> é a unidade de massa atômica. Ela foi definida a partir do átomo de carbono-12 e evita trabalhar aqui com números em gramas cheios de zeros.</p>
+      <p>A unidade <strong>u</strong> é a unidade de massa atômica: <strong>1 u é definida como 1/12 da massa de um átomo de carbono-12</strong>. Essa escala evita trabalhar aqui com massas atômicas expressas em gramas por números extremamente pequenos.</p>
       <p>Mas por que 63,55 não é inteiro? Porque átomos do mesmo elemento podem existir com diferentes números de nêutrons — são os <strong>isótopos</strong>. Eles continuam sendo cobre se tiverem 29 prótons, mas podem ter massas diferentes. A massa atômica mostrada na Tabela Periódica é, em geral, uma média ponderada relacionada às abundâncias naturais desses isótopos.</p>
 
       <div class="note-box">
@@ -340,7 +340,8 @@
     const range = $('#protonIdentityRange', root);
     const value = $('#protonIdentityValue', root);
     const output = $('#protonIdentityElement', root);
-    if (!range || !value || !output) return;
+    const description = $('#protonIdentityDescription', root);
+    if (!range || !value || !output || !description) return;
 
     const elements = {
       11:['Na','sódio'],
@@ -356,7 +357,8 @@
       const z = Number(range.value);
       const [symbol, name] = elements[z];
       value.textContent = String(z);
-      output.innerHTML = `${symbol} — ${name}<span>${symbol} possui número atômico Z = ${z}.</span>`;
+      output.textContent = `${symbol} — ${name}`;
+      description.textContent = `${symbol} possui número atômico Z = ${z}.`;
     };
 
     range.addEventListener('input', update);
