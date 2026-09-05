@@ -27,16 +27,22 @@
 
       <div class="visual-box">
         <strong class="card-title">A rua virou uma linha de posições</strong>
-        <svg class="lesson-visual" viewBox="0 0 760 250" role="img" aria-label="Rua representada por posições zero, cem, duzentos e trezentos metros com um ciclista na posição duzentos metros.">
+        <svg class="lesson-visual" viewBox="0 0 760 250" role="img" aria-label="Rua representada por posições zero, cem, duzentos e trezentos metros, com um ciclista na posição duzentos metros claramente orientado para a direita, no sentido do clube.">
           <rect x="45" y="112" width="670" height="50" rx="18" class="road"/>
           <line x1="70" y1="137" x2="690" y2="137" class="road-center"/>
           <g class="position-mark"><line x1="80" y1="92" x2="80" y2="182"/><text x="63" y="205">0 m</text></g>
           <g class="position-mark"><line x1="280" y1="92" x2="280" y2="182"/><text x="251" y="205">100 m</text></g>
           <g class="position-mark"><line x1="480" y1="92" x2="480" y2="182"/><text x="451" y="205">200 m</text></g>
           <g class="position-mark"><line x1="680" y1="92" x2="680" y2="182"/><text x="651" y="205">300 m</text></g>
-          <circle cx="480" cy="111" r="17" class="bike-wheel"/><circle cx="520" cy="111" r="17" class="bike-wheel"/>
-          <path d="M480 111 L494 84 L514 111 L496 111 L506 92 M494 84 L514 82" class="bike-frame"/>
-          <circle cx="504" cy="66" r="9" class="rider-head"/><path d="M504 75 L496 91 L516 98" class="rider"/>
+          <g aria-hidden="true">
+            <circle cx="480" cy="111" r="17" class="bike-wheel"/><circle cx="524" cy="111" r="17" class="bike-wheel"/>
+            <path d="M480 111 L495 84 L505 111 Z M495 84 L516 84 L524 111 M505 111 L516 84" class="bike-frame"/>
+            <path d="M488 81 H498 M516 84 L521 72 L529 72" class="bike-frame"/>
+            <circle cx="503" cy="57" r="9" class="rider-head"/>
+            <path d="M502 67 L498 82 L507 96 M501 70 L518 75 M507 96 L495 110 M507 96 L520 108" class="rider"/>
+            <path d="M538 86 H582" class="distance-arrow" marker-end="url(#arrowPosition)"/>
+            <text x="536" y="70" class="visual-note">sentido do clube</text>
+          </g>
           <text x="425" y="40" class="visual-title">agora: posição 200 m</text>
           <path d="M95 66 H468" class="distance-arrow" marker-end="url(#arrowPosition)"/>
           <text x="240" y="55" class="visual-note">200 m desde o ponto escolhido como referência</text>
@@ -127,7 +133,6 @@
     <section>
       <h3>5. O semáforo fecha. Quando abre, você não volta instantaneamente a 18 km/h</h3>
       <p>Você para. O marcador de velocidade chega a zero. O sinal abre e, em três segundos, sua velocidade passa de <strong>0 para 6 m/s</strong>.</p>
-
       <div class="quick-question" data-choice-question data-correct="a"><strong>Qual frase descreve melhor esses três segundos?</strong><p></p><div class="choice-row"><button type="button" data-choice="a">A velocidade mudou com o tempo</button><button type="button" data-choice="b">A posição ficou obrigatoriamente igual</button><button type="button" data-choice="c">Nada mudou porque o destino é o mesmo</button></div><div class="choice-feedback" data-choice-feedback data-correct-text="Isso. É justamente a mudança da velocidade ao longo do tempo que precisamos medir agora." data-wrong-text="Observe o que aconteceu com a velocidade entre o sinal fechado e a retomada."></div></div>
 
       <p>Se a mudança fosse aproximadamente regular, a sequência poderia ser:</p>
