@@ -259,3 +259,24 @@
   if (geografiaCard) geografiaCard.insertAdjacentElement('afterend', filosofiaCard);
   else grid?.appendChild(filosofiaCard);
 })();
+
+(() => {
+  const ensinoMedioView = document.getElementById('ensino-medio');
+  const linguagensGroup = ensinoMedioView?.querySelector('[aria-labelledby="linguagens-title"]');
+  const portuguesPlaceholder = linguagensGroup
+    ? Array.from(linguagensGroup.querySelectorAll('article.module-card.is-disabled')).find((card) => card.querySelector('h3')?.textContent.trim() === 'Língua Portuguesa')
+    : null;
+
+  if (!portuguesPlaceholder) return;
+
+  const portuguesCard = document.createElement('a');
+  portuguesCard.className = 'module-card';
+  portuguesCard.href = 'ds-portugues/index.html';
+  portuguesCard.innerHTML = `
+    <div class="module-head"><h3>Língua Portuguesa</h3></div>
+    <div class="module-body">
+      <p>1ª série com leitura, oralidade, pesquisa, mídia, literatura, variação linguística, produção textual e linguagem digital.</p>
+      <span class="module-label">Diagnóstico disponível</span>
+    </div>`;
+  portuguesPlaceholder.replaceWith(portuguesCard);
+})();
