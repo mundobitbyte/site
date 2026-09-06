@@ -238,3 +238,24 @@
     </div>`;
   geografiaPlaceholder.replaceWith(geografiaCard);
 })();
+
+(() => {
+  const ensinoMedioView = document.getElementById('ensino-medio');
+  const humanasGroup = ensinoMedioView?.querySelector('[aria-labelledby="humanas-title"]');
+  if (!humanasGroup || humanasGroup.querySelector('a.module-card[href="ds-filosofia/index.html"]')) return;
+
+  const filosofiaCard = document.createElement('a');
+  filosofiaCard.className = 'module-card';
+  filosofiaCard.href = 'ds-filosofia/index.html';
+  filosofiaCard.innerHTML = `
+    <div class="module-head"><h3>Filosofia</h3></div>
+    <div class="module-body">
+      <p>1ª série com diagnóstico, atitude filosófica, argumentação, conhecimento, ética, tecnologia, estética, justiça e exercícios progressivos.</p>
+      <span class="module-label">1ª série em construção</span>
+    </div>`;
+
+  const geografiaCard = humanasGroup.querySelector('a.module-card[href="ds-geografia/index.html"]');
+  const grid = humanasGroup.querySelector('.modules-grid');
+  if (geografiaCard) geografiaCard.insertAdjacentElement('afterend', filosofiaCard);
+  else grid?.appendChild(filosofiaCard);
+})();
