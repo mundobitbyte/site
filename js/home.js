@@ -318,7 +318,7 @@
     <div class="module-head"><h3>Arte</h3></div>
     <div class="module-body">
       <p>1ª série com artes visuais, música, dança, teatro, fotografia, audiovisual, patrimônio, cultura digital e processos de criação.</p>
-      <span class="module-label">Diagnóstico disponível</span>
+      <span class="module-label">1ª série disponível</span>
     </div>`;
   artePlaceholder.replaceWith(arteCard);
 })();
