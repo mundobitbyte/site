@@ -217,3 +217,24 @@
   });
   render(initialArea, { focusHeading: false, scrollTop: Boolean(initialArea) });
 })();
+
+(() => {
+  const ensinoMedioView = document.getElementById('ensino-medio');
+  const humanasGroup = ensinoMedioView?.querySelector('[aria-labelledby="humanas-title"]');
+  const geografiaPlaceholder = humanasGroup
+    ? Array.from(humanasGroup.querySelectorAll('article.module-card.is-disabled')).find((card) => card.querySelector('h3')?.textContent.trim() === 'Geografia')
+    : null;
+
+  if (!geografiaPlaceholder) return;
+
+  const geografiaCard = document.createElement('a');
+  geografiaCard.className = 'module-card';
+  geografiaCard.href = 'ds-geografia/index.html';
+  geografiaCard.innerHTML = `
+    <div class="module-head"><h3>Geografia</h3></div>
+    <div class="module-body">
+      <p>1ª série em construção com leitura do espaço, paisagens, cartografia, mapas, imagens, dados, geotecnologias e investigação de problemas reais.</p>
+      <span class="module-label">1ª série em construção</span>
+    </div>`;
+  geografiaPlaceholder.replaceWith(geografiaCard);
+})();
