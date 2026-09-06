@@ -26,7 +26,7 @@
 
         <figure class="geo-figure">
           <a href="https://geoftp.ibge.gov.br/produtos_educacionais/mapas_tematicos/mapas_do_brasil/mapas_nacionais/politico/brasil_politico.jpg" target="_blank" rel="noopener noreferrer">
-            <img src="https://geoftp.ibge.gov.br/produtos_educacionais/mapas_tematicos/mapas_do_brasil/mapas_nacionais/politico/brasil_politico.jpg" alt="Mapa político do Brasil produzido pelo IBGE, com limites estaduais, cidades, hidrografia, legenda, escalas e mapas auxiliares." loading="lazy" decoding="async">
+            <img src="https://geoftp.ibge.gov.br/produtos_educacionais/mapas_tematicos/mapas_do_brasil/mapas_nacionais/politico/brasil_politico.jpg" alt="Mapa político do Brasil produzido pelo IBGE, com limites estaduais, cidades, hidrografia, legenda, escalas e mapas auxiliares." style="height:auto;max-height:720px;object-fit:contain" loading="lazy" decoding="async">
           </a>
           <figcaption>
             <strong>Mapa político do Brasil — IBGE</strong>
@@ -45,7 +45,7 @@
           </div>
         </div>
 
-        ${choice('1','Mapa como representação','Por que dois mapas corretos do mesmo território podem parecer muito diferentes?',[['a','Porque um deles necessariamente está errado'],['b','Porque podem ter finalidades, recortes, escalas, dados e símbolos diferentes'],['c','Porque mapas não precisam de fonte']],'b','Correto. Mapas selecionam e organizam informações conforme uma finalidade; por isso a leitura começa pelas escolhas da representação.','Compare finalidade, fonte, recorte, escala, legenda e data antes de decidir se os mapas realmente se contradizem.')}
+        ${choice('1','Leia o mapa','No mapa político do IBGE acima, os estados aparecem com cores diferentes. É correto concluir, só pela cor, que uma cor representa mais população que outra?',[['a','Sim; toda diferença de cor em mapas representa quantidade'],['b','Não; é preciso consultar legenda e finalidade, pois cores também podem apenas diferenciar categorias ou territórios'],['c','Sim; mapas políticos sempre mostram população']],'b','Correto. Cor não tem significado universal. Neste caso, a leitura deve seguir a legenda e a finalidade do mapa, sem transformar diferenças visuais em quantidades que não foram representadas.','Não atribua significado quantitativo a uma cor sem verificar legenda, tema e método do mapa.')}
 
         <h3>2. Orientação e coordenadas: localizar não é “achar mais ou menos”</h3>
         <p>Os <strong>pontos cardeais</strong> — norte, sul, leste e oeste — ajudam a descrever direções. Em muitos mapas o norte fica no alto, mas isso é uma convenção, não uma lei. Sempre procure a indicação de orientação ou a própria grade de coordenadas.</p>
@@ -91,6 +91,7 @@
             <div class="mini-card"><strong>Classificação B</strong><p>46–48% • 48–50% • 50–52% • 52–54%. As pequenas diferenças ficam muito mais visíveis.</p></div>
           </div>
           <p>Nenhuma classificação deve ser julgada apenas pela aparência. A pergunta é: <strong>qual critério foi usado e ele é adequado ao objetivo?</strong></p>
+          <p><strong>Experimente:</strong> qual das duas classificações faz os quatro setores parecerem mais diferentes entre si? Isso significa que ela é automaticamente a melhor para qualquer pergunta? Explique usando os valores.</p>
         </div>
 
         <h3>5. Projeções: transformar uma Terra curva em um mapa plano tem custo</h3>
@@ -106,7 +107,7 @@
         <h3>6. Do satélite ao SIG: geotecnologias produzem novas camadas de evidência</h3>
         <figure class="geo-figure">
           <a href="https://earthobservatory.nasa.gov/images/146090/salt-oil-and-fruit-from-mossoro" target="_blank" rel="noopener noreferrer">
-            <img src="https://eoimages.gsfc.nasa.gov/images/imagerecords/146000/146090/riograndedonorte_oli_2019176.jpg" alt="Imagem de satélite Landsat 8 da região de Mossoró, Rio Grande do Norte, mostrando área urbana, vegetação, parcelas agrícolas, costa, estuário e salinas." loading="lazy" decoding="async">
+            <img src="https://eoimages.gsfc.nasa.gov/images/imagerecords/146000/146090/riograndedonorte_oli_2019176.jpg" alt="Imagem de satélite Landsat 8 da região de Mossoró, Rio Grande do Norte, mostrando área urbana, vegetação, parcelas agrícolas, costa, estuário e salinas." style="height:auto;max-height:720px;object-fit:contain" loading="lazy" decoding="async">
           </a>
           <figcaption>
             <strong>Mossoró e seu entorno vistos pelo Landsat 8 — 25 de junho de 2019</strong>
