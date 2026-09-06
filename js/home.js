@@ -301,3 +301,24 @@
     </div>`;
   inglesPlaceholder.replaceWith(inglesCard);
 })();
+
+(() => {
+  const ensinoMedioView = document.getElementById('ensino-medio');
+  const linguagensGroup = ensinoMedioView?.querySelector('[aria-labelledby="linguagens-title"]');
+  const artePlaceholder = linguagensGroup
+    ? Array.from(linguagensGroup.querySelectorAll('article.module-card.is-disabled')).find((card) => card.querySelector('h3')?.textContent.trim() === 'Arte')
+    : null;
+
+  if (!artePlaceholder) return;
+
+  const arteCard = document.createElement('a');
+  arteCard.className = 'module-card';
+  arteCard.href = 'ds-arte/index.html';
+  arteCard.innerHTML = `
+    <div class="module-head"><h3>Arte</h3></div>
+    <div class="module-body">
+      <p>1ª série com artes visuais, música, dança, teatro, fotografia, audiovisual, patrimônio, cultura digital e processos de criação.</p>
+      <span class="module-label">Diagnóstico disponível</span>
+    </div>`;
+  artePlaceholder.replaceWith(arteCard);
+})();
