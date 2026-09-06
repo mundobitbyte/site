@@ -29,7 +29,7 @@
 .geo-figure-grid{display:grid;grid-template-columns:1fr 1fr}
 .geo-figure-panel{min-width:0;border-right:1px solid var(--line)}
 .geo-figure-panel:last-child{border-right:0}
-.geo-figure img{width:100%;height:300px;display:block;object-fit:cover;background:#edf1ee}
+.geo-figure img{width:100%;height:auto;max-height:720px;display:block;object-fit:contain;background:#edf1ee}
 .geo-figure figcaption{padding:14px 15px;background:#fbfdfb}
 .geo-figure figcaption strong{display:block;color:var(--primary-dark);margin-bottom:4px}
 .geo-figure figcaption span{display:block;font-size:13px;color:var(--text);margin-bottom:5px}
@@ -50,7 +50,7 @@
   .two-col,.three-col,.four-col,.comparison-grid,.evidence-grid,.observation-grid,.scale-strip,.geo-figure-grid{grid-template-columns:1fr}
   .geo-figure-panel{border-right:0;border-bottom:1px solid var(--line)}
   .geo-figure-panel:last-child{border-bottom:0}
-  .geo-figure img{height:auto;max-height:360px;object-fit:contain}
+  .geo-figure img{height:auto;max-height:none;object-fit:contain}
   .choice-row{display:grid;grid-template-columns:1fr}
   .choice-row button{text-align:left}
 }
