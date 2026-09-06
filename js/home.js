@@ -322,3 +322,24 @@
     </div>`;
   artePlaceholder.replaceWith(arteCard);
 })();
+
+(() => {
+  const ensinoMedioView = document.getElementById('ensino-medio');
+  const linguagensGroup = ensinoMedioView?.querySelector('[aria-labelledby="linguagens-title"]');
+  const educacaoFisicaPlaceholder = linguagensGroup
+    ? Array.from(linguagensGroup.querySelectorAll('article.module-card.is-disabled')).find((card) => card.querySelector('h3')?.textContent.trim() === 'Educação Física')
+    : null;
+
+  if (!educacaoFisicaPlaceholder) return;
+
+  const educacaoFisicaCard = document.createElement('a');
+  educacaoFisicaCard.className = 'module-card';
+  educacaoFisicaCard.href = 'ds-educacao-fisica/index.html';
+  educacaoFisicaCard.innerHTML = `
+    <div class="module-head"><h3>Educação Física</h3></div>
+    <div class="module-body">
+      <p>1ª série com práticas corporais guiadas, jogos, esportes, ginástica, dança, lutas, aventura, saúde e autonomia para a vida.</p>
+      <span class="module-label">Diagnóstico + capítulo 01</span>
+    </div>`;
+  educacaoFisicaPlaceholder.replaceWith(educacaoFisicaCard);
+})();
