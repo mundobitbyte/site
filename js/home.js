@@ -250,8 +250,8 @@
   filosofiaCard.innerHTML = `
     <div class="module-head"><h3>Filosofia</h3></div>
     <div class="module-body">
-      <p>3ª série com diagnóstico, atitude filosófica, argumentação, conhecimento, ética, tecnologia, estética, justiça e exercícios progressivos.</p>
-      <span class="module-label">3ª série em construção</span>
+      <p>Investigação filosófica com diagnóstico, argumentação, conhecimento, ética, tecnologia, estética, justiça e exercícios progressivos.</p>
+      <span class="module-label">Acessar módulo</span>
     </div>`;
 
   const geografiaCard = humanasGroup.querySelector('a.module-card[href="ds-geografia/index.html"]');
