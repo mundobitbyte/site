@@ -67,7 +67,7 @@
         <h3>3. Hipertexto: ler também é escolher caminhos</h3>
         <p>Na página impressa, a leitura costuma seguir uma sequência relativamente estável. No digital, links, menus, abas e resultados de busca permitem percursos diferentes. Isso é uma característica do <strong>hipertexto</strong>.</p>
 
-        <div class="pt-process">
+        <div class="argument-chain">
           <span>texto inicial</span><b>→</b>
           <span>link</span><b>→</b>
           <span>nova fonte</span><b>→</b>
@@ -86,7 +86,7 @@
         <h3>4. A interface participa da mensagem</h3>
         <p>Uma mesma frase produz efeitos diferentes quando aparece em uma conversa privada, em um aviso institucional, em um comentário público ou em uma notificação. A plataforma acrescenta pistas: <strong>quem publicou, para quem, quando, em qual espaço, com quais possibilidades de resposta e circulação</strong>.</p>
 
-        <div class="four-col">
+        <div class="comparison-grid">
           <div class="mini-card"><strong>Perfil</strong><p>Quem assume a autoria ou aparece como emissor?</p></div>
           <div class="mini-card"><strong>Tempo</strong><p>Quando foi publicado? A informação ainda é atual?</p></div>
           <div class="mini-card"><strong>Alcance</strong><p>É privado, público, restrito a um grupo ou replicável?</p></div>
@@ -116,7 +116,7 @@
         <h3>6. Captura de tela, recorte e perda de contexto</h3>
         <p>Capturas de tela são úteis para registrar o que apareceu em determinado momento, mas podem ser <strong>recortadas, reorganizadas, desatualizadas ou separadas do conteúdo original</strong>. Isso não significa que sejam falsas; significa que precisam ser contextualizadas.</p>
 
-        <div class="text-box">
+        <div class="source-box">
           <strong class="card-title">Protocolo simples antes de compartilhar</strong>
           <ol>
             <li>Procure a publicação ou página original.</li>
@@ -168,7 +168,7 @@
         <h3>9. Ética digital: produzir e circular também é responsabilidade</h3>
         <p>Antes de publicar, pergunte: <strong>tenho direito de usar este material? Estou expondo alguém sem necessidade? A fonte está identificada? O recorte preserva o sentido? Há dados pessoais que não deveriam aparecer?</strong></p>
 
-        <div class="four-col">
+        <div class="comparison-grid">
           <div class="mini-card"><strong>Autoria</strong><p>Crédito e licença precisam ser respeitados.</p></div>
           <div class="mini-card"><strong>Privacidade</strong><p>Dados, rostos, conversas e documentos podem exigir cuidado ou autorização.</p></div>
           <div class="mini-card"><strong>Contexto</strong><p>Recortar uma fala pode alterar o que ela significa.</p></div>
@@ -191,7 +191,7 @@
           <p><strong>Critério de sucesso:</strong> outra pessoa deve conseguir compreender o evento e saber o que fazer sem depender de explicações extras.</p>
         </div>
 
-        <div class="summary-box">
+        <div class="ok-box">
           <strong class="card-title">Fechamento MbB</strong>
           <p><strong>Entender:</strong> textos digitais articulam diferentes modos de linguagem.</p>
           <p><strong>Experimentar:</strong> observe como organização, interface, imagem, som e links mudam a leitura.</p>
