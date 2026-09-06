@@ -296,8 +296,8 @@
   inglesCard.innerHTML = `
     <div class="module-head"><h3>Língua Inglesa</h3></div>
     <div class="module-body">
-      <p>1ª série iniciada com diagnóstico, leitura estratégica, interação e inglês aplicado a situações reais da escola, cultura digital e vida cotidiana.</p>
-      <span class="module-label">Diagnóstico + capítulo 01</span>
+      <p>1ª série com leitura estratégica, interação, cultura digital, mídia, publicidade, arte, diversidade linguística, pesquisa e produção.</p>
+      <span class="module-label">1ª série disponível</span>
     </div>`;
   inglesPlaceholder.replaceWith(inglesCard);
 })();
