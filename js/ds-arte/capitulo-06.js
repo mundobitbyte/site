@@ -3,7 +3,6 @@
 
   const MBB = window.MBBArte = window.MBBArte || {};
   const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const choice = MBB.choice;
 
   const sceneOptions = {
@@ -59,6 +58,8 @@
 
     const a = $('#actorA', svg);
     const b = $('#actorB', svg);
+    const aLabel = $('#actorALabel', svg);
+    const bLabel = $('#actorBLabel', svg);
     const prop = $('#stageProp', svg);
     const settings = {
       close:[225,155,315,155,270,155,'Proximidade pode sugerir intimidade, cooperação, disputa ou pressão — o sentido depende da ação.'],
@@ -69,6 +70,8 @@
     const [ax,ay,bx,by,px,py,text] = settings[mode.value] || settings.close;
     a?.setAttribute('cx', ax); a?.setAttribute('cy', ay);
     b?.setAttribute('cx', bx); b?.setAttribute('cy', by);
+    aLabel?.setAttribute('x', ax); aLabel?.setAttribute('y', ay + 6);
+    bLabel?.setAttribute('x', bx); bLabel?.setAttribute('y', by + 6);
     prop?.setAttribute('x', px - 25); prop?.setAttribute('y', py - 18);
     note.innerHTML = `<strong>Leia o espaço:</strong> ${text}`;
   }
@@ -215,8 +218,8 @@
           <svg id="stageMap" viewBox="0 0 540 310" role="img" aria-label="Diagrama visto de cima com dois atores e uma caixa no espaço cênico" style="display:block;width:100%;max-width:680px;margin:14px auto;border:1px solid #d9cbd4;border-radius:12px;background:#faf7f9">
             <rect x="30" y="30" width="480" height="250" rx="16" fill="#fff" stroke="#9f8395" stroke-width="2"/>
             <text x="270" y="55" text-anchor="middle" font-size="14" fill="#6d5364">espaço cênico</text>
-            <circle id="actorA" cx="225" cy="155" r="28" fill="#8c4f7c"/><text x="225" y="161" text-anchor="middle" font-size="16" fill="#fff">A</text>
-            <circle id="actorB" cx="315" cy="155" r="28" fill="#355f7a"/><text x="315" y="161" text-anchor="middle" font-size="16" fill="#fff">B</text>
+            <circle id="actorA" cx="225" cy="155" r="28" fill="#8c4f7c"/><text id="actorALabel" x="225" y="161" text-anchor="middle" font-size="16" fill="#fff">A</text>
+            <circle id="actorB" cx="315" cy="155" r="28" fill="#355f7a"/><text id="actorBLabel" x="315" y="161" text-anchor="middle" font-size="16" fill="#fff">B</text>
             <rect id="stageProp" x="245" y="137" width="50" height="36" rx="5" fill="#d69a55" stroke="#855b2d"/>
           </svg>
           <div id="stageMapNote" class="choice-feedback" aria-live="polite"></div>
