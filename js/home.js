@@ -233,8 +233,8 @@
   geografiaCard.innerHTML = `
     <div class="module-head"><h3>Geografia</h3></div>
     <div class="module-body">
-      <p>1ª série em construção com leitura do espaço, paisagens, cartografia, mapas, imagens, dados, geotecnologias e investigação de problemas reais.</p>
-      <span class="module-label">1ª série em construção</span>
+      <p>1ª série com leitura do espaço, paisagens, cartografia, população, redes, produção, riscos, sustentabilidade e exercícios integradores.</p>
+      <span class="module-label">1ª série disponível</span>
     </div>`;
   geografiaPlaceholder.replaceWith(geografiaCard);
 })();
@@ -251,7 +251,7 @@
     <div class="module-head"><h3>Filosofia</h3></div>
     <div class="module-body">
       <p>Investigação filosófica com diagnóstico, argumentação, conhecimento, ética, tecnologia, estética, justiça e exercícios progressivos.</p>
-      <span class="module-label">Acessar módulo</span>
+      <span class="module-label">1ª série disponível</span>
     </div>`;
 
   const geografiaCard = humanasGroup.querySelector('a.module-card[href="ds-geografia/index.html"]');
@@ -276,7 +276,28 @@
     <div class="module-head"><h3>Língua Portuguesa</h3></div>
     <div class="module-body">
       <p>1ª série com leitura, oralidade, pesquisa, mídia, literatura, variação linguística, produção textual e linguagem digital.</p>
-      <span class="module-label">Diagnóstico disponível</span>
+      <span class="module-label">1ª série disponível</span>
     </div>`;
   portuguesPlaceholder.replaceWith(portuguesCard);
+})();
+
+(() => {
+  const ensinoMedioView = document.getElementById('ensino-medio');
+  const linguagensGroup = ensinoMedioView?.querySelector('[aria-labelledby="linguagens-title"]');
+  const inglesPlaceholder = linguagensGroup
+    ? Array.from(linguagensGroup.querySelectorAll('article.module-card.is-disabled')).find((card) => card.querySelector('h3')?.textContent.trim() === 'Língua Inglesa')
+    : null;
+
+  if (!inglesPlaceholder) return;
+
+  const inglesCard = document.createElement('a');
+  inglesCard.className = 'module-card';
+  inglesCard.href = 'ds-ingles/index.html';
+  inglesCard.innerHTML = `
+    <div class="module-head"><h3>Língua Inglesa</h3></div>
+    <div class="module-body">
+      <p>1ª série iniciada com diagnóstico, leitura estratégica, interação e inglês aplicado a situações reais da escola, cultura digital e vida cotidiana.</p>
+      <span class="module-label">Diagnóstico + capítulo 01</span>
+    </div>`;
+  inglesPlaceholder.replaceWith(inglesCard);
 })();
