@@ -42,6 +42,7 @@
     if (!route || !sound || !svg || !note) return;
 
     const nodes = ['routeA','routeB','routeC','routeD','routeE','routeF'].map(id => $(`#${id}`, svg));
+    const labels = ['routeLabelA','routeLabelB','routeLabelC','routeLabelD','routeLabelE','routeLabelF'].map(id => $(`#${id}`, svg));
     const path = $('#routeLine', svg);
     const settings = {
       linear:{
@@ -64,6 +65,8 @@
     nodes.forEach((node,index) => {
       node?.setAttribute('cx', current.points[index][0]);
       node?.setAttribute('cy', current.points[index][1]);
+      labels[index]?.setAttribute('x', current.points[index][0]);
+      labels[index]?.setAttribute('y', current.points[index][1] + 5);
     });
     path?.setAttribute('d', current.line);
 
@@ -265,7 +268,7 @@
             <rect x="25" y="125" width="42" height="70" fill="#e8ddd0"/><text x="31" y="164" font-size="13" fill="#4e244a">ENTRA</text>
             <path id="routeLine" d="M90 85 L205 85 L320 85 L435 85 L435 220 L205 220" fill="none" stroke="#b45f35" stroke-width="5" stroke-linecap="round" stroke-dasharray="8 8"/>
             <circle id="routeA" cx="90" cy="85" r="28" fill="#7a3e73"/><circle id="routeB" cx="205" cy="85" r="28" fill="#b45f35"/><circle id="routeC" cx="320" cy="85" r="28" fill="#7a3e73"/><circle id="routeD" cx="435" cy="85" r="28" fill="#b45f35"/><circle id="routeE" cx="435" cy="220" r="28" fill="#7a3e73"/><circle id="routeF" cx="205" cy="220" r="28" fill="#b45f35"/>
-            <g fill="#fff" font-size="14" font-weight="700" text-anchor="middle"><text x="90" y="90">A</text><text x="205" y="90">B</text><text x="320" y="90">C</text><text x="435" y="90">D</text><text x="435" y="225">E</text><text x="205" y="225">F</text></g>
+            <g fill="#fff" font-size="14" font-weight="700" text-anchor="middle"><text id="routeLabelA" x="90" y="90">A</text><text id="routeLabelB" x="205" y="90">B</text><text id="routeLabelC" x="320" y="90">C</text><text id="routeLabelD" x="435" y="90">D</text><text id="routeLabelE" x="435" y="225">E</text><text id="routeLabelF" x="205" y="225">F</text></g>
           </svg>
           <div id="routeFeedback" class="choice-feedback" aria-live="polite"></div>
         </div>
