@@ -17,6 +17,15 @@
       credit:'Foto: APK / Wikimedia Commons — CC BY 4.0',
       source:'https://commons.wikimedia.org/wiki/File:Rosetta_Stone,_British_Museum.jpg'
     },
+    'De onde vieram os seres humanos e como seus modos de vida mudaram?': {
+      placement: { type:'after-opening' },
+      image:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Blombo.jpg?width=1200',
+      alt:'Peça de ocre gravada encontrada na Caverna de Blombos, na África do Sul, com padrão de aproximadamente 70 mil anos.',
+      title:'Uma evidência real de um passado sem textos escritos',
+      caption:'Ocre gravado encontrado na Caverna de Blombos, África do Sul, com padrão de aproximadamente 70 mil anos. O objeto não “conta sua história sozinho”: contexto arqueológico, datação e comparação com outros vestígios ajudam a investigar modos de vida e comportamentos simbólicos de populações humanas antigas.',
+      credit:'Chris S. Henshilwood / Wikimedia Commons — CC BY-SA 4.0',
+      source:'https://commons.wikimedia.org/wiki/File:Blombo.jpg'
+    },
     'Por que algumas das primeiras grandes sociedades cresceram junto aos rios?': {
       placement: { type:'after-first-paragraph', heading:'6. A escrita não nasceu para escrever livros escolares' },
       image:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Cuneiform_tablet_showing_grain_transaction_of_two_types_of_grain,_circa_3000_BCE,_Iraq,_British_Museum,_London.jpg?width=1200',
@@ -34,6 +43,33 @@
       caption:'Terraços agrícolas incas em Machu Picchu. A imagem permite observar como técnica, ambiente e trabalho humano se combinavam para transformar encostas andinas em áreas de cultivo — sem reduzir a sociedade inca apenas a “grandes construções”.',
       credit:'Foto: Angeoribeiro / Wikimedia Commons — CC BY-SA 4.0',
       source:'https://commons.wikimedia.org/wiki/File:%C3%81rea_de_cultivo_Inca_em_Machu_Picchu,_Peru.jpg'
+    },
+    'Quem podia ser cidadão no mundo antigo?': {
+      placement: { type:'after-opening' },
+      image:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Bema,_Pnyx.jpg?width=1200',
+      alt:'Bema da Pnyx, plataforma de pedra em Atenas de onde oradores se dirigiam à assembleia dos cidadãos.',
+      title:'Um espaço real de participação política — para quem era cidadão',
+      caption:'Bema da Pnyx, em Atenas, plataforma de onde oradores se dirigiam à assembleia. O espaço ajuda a concretizar a participação política ateniense e, ao mesmo tempo, a perguntar quem era reconhecido como cidadão e quem permanecia excluído desse direito.',
+      credit:'Foto: GeorgeKokkos / Wikimedia Commons — CC BY-SA 4.0',
+      source:'https://commons.wikimedia.org/wiki/File:Bema,_Pnyx.jpg'
+    },
+    'Como reis conseguiram concentrar tanto poder?': {
+      placement: { type:'after-opening' },
+      image:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Hall_of_mirrors_at_Chateau_de_Versailles.jpg?width=1200',
+      alt:'Galeria dos Espelhos do Palácio de Versalhes, grande salão cerimonial associado à monarquia francesa de Luís XIV.',
+      title:'Arquitetura também comunica poder',
+      caption:'Galeria dos Espelhos do Palácio de Versalhes. O espaço ajuda a observar como a monarquia francesa transformava arquitetura, cerimônia e corte em linguagem política. A imagem não prova que o rei governava sem limites; ela mostra como o poder também era representado e encenado.',
+      credit:'Foto: Dan Dickinson / Wikimedia Commons — CC BY 2.0',
+      source:'https://commons.wikimedia.org/wiki/File:Hall_of_mirrors_at_Chateau_de_Versailles.jpg'
+    },
+    'De onde veio a ideia de que o poder do governante deve ter limites?': {
+      placement: { type:'after-opening' },
+      image:'https://commons.wikimedia.org/wiki/Special:Redirect/file/English_Bill_of_Rights_of_1689.jpg?width=900',
+      alt:'Reprodução do documento inglês Bill of Rights de 1689, preservado nos Arquivos Nacionais do Reino Unido.',
+      title:'Um documento real sobre limites ao poder',
+      caption:'Reprodução do Bill of Rights inglês de 1689. O documento registra limites à atuação da Coroa e garantias ligadas ao Parlamento; como toda fonte normativa, mostra o que se pretendia estabelecer e precisa ser lido no contexto dos conflitos políticos do século XVII.',
+      credit:'Parlamento da Inglaterra / The National Archives (UK), via Wikimedia Commons — domínio público',
+      source:'https://commons.wikimedia.org/wiki/File:English_Bill_of_Rights_of_1689.jpg'
     },
     'Se todos eram declarados iguais, quem continuou excluído?': {
       placement: { type:'after-opening' },
