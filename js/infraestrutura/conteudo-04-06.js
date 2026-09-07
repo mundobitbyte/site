@@ -32,6 +32,33 @@ window.infraestruturaLessons.push({
     </div>
     <div class="note-box compact"><strong>TPM e Secure Boot têm papéis diferentes.</strong><p>O TPM oferece funções de segurança baseadas em hardware; o Secure Boot protege a cadeia de inicialização. Ambos integram os requisitos do Windows 11, mas um não substitui o outro.</p></div>
 
+    <section class="visual-lab" aria-labelledby="uefi-visual-title">
+      <div class="visual-lab-header">
+        <span class="visual-kicker">Missão visual · localizar e decidir</span>
+        <h4 id="uefi-visual-title">Qual opção inicia a mídia uma vez sem mudar a ordem permanente?</h4>
+        <p>Abaixo há uma <strong>representação didática</strong>. Cores, nomes e posição variam por fabricante; os estados técnicos são o que você deve reconhecer.</p>
+      </div>
+      <div class="visual-body">
+        <span class="representation-badge">Representação didática — não é captura de uma UEFI real</span>
+        <div class="ui-representation" role="img" aria-label="Representação de firmware UEFI com modo UEFI, Secure Boot habilitado, TPM 2.0 disponível e menu de boot temporário">
+          <div class="ui-topbar"><span>Configuração do firmware</span><span class="window-dots" aria-hidden="true"><span></span><span></span><span></span></span></div>
+          <div class="firmware-layout">
+            <div class="firmware-nav"><span>Informações</span><span>Segurança</span><span>Inicialização</span><span class="active">Menu de boot único</span><span>Sair sem salvar</span></div>
+            <div class="firmware-panel">
+              <h4>Estado observado</h4>
+              <div class="setting-row"><span>Modo de inicialização</span><span>UEFI</span></div>
+              <div class="setting-row"><span>Secure Boot</span><span>Habilitado</span></div>
+              <div class="setting-row"><span>TPM</span><span>2.0 disponível</span></div>
+              <div class="boot-list"><strong>Escolher apenas para esta inicialização</strong><div class="boot-device"><b>1</b>Windows Boot Manager — SSD interno</div><div class="boot-device"><b>2</b>UEFI: USB MBB-W11 — pendrive validado</div></div>
+            </div>
+          </div>
+        </div>
+        <ol class="observation-prompts"><li><strong>Localize</strong>Quais três estados devem entrar no registro antes de qualquer mudança?</li><li><strong>Preveja</strong>O que deve acontecer ao escolher a opção 2 somente desta vez?</li><li><strong>Decida</strong>Há alguma evidência nesta tela que justifique desativar Secure Boot ou TPM?</li></ol>
+        <button class="action-button" type="button" data-reveal-answer="#uefi-evidence" aria-expanded="false">Conferir leitura da evidência</button>
+        <div id="uefi-evidence" class="ok-box compact" hidden><strong>Leitura defensável</strong><p>Registre UEFI, Secure Boot habilitado e TPM 2.0 disponível. A opção 2 deve iniciar a mídia validada uma única vez. A tela não apresenta falha que justifique desativar proteções.</p></div>
+      </div>
+    </section>
+
     <h3>Experimentar: observar sem modificar</h3>
     <div class="task-box">
       <ol>
@@ -68,6 +95,13 @@ window.infraestruturaLessons.push({
         <tr><td>Pedido de chave BitLocker após mudança</td><td>Proteção reagiu à alteração de boot/firmware</td><td>Não improvisar; usar a chave institucional e revisar a mudança autorizada.</td></tr>
       </tbody>
     </table></div>
+
+    <div class="state-comparison" aria-label="Antes, intervenção, depois e interpretação do teste de boot">
+      <div class="state-step"><strong>Antes</strong><span>SSD vazio; firmware em UEFI; mídia validada presente.</span></div>
+      <div class="state-step"><strong>Intervenção</strong><span>Selecionar UEFI: USB no menu temporário.</span></div>
+      <div class="state-step"><strong>Depois</strong><span>O instalador oficial aparece sem mudança permanente na ordem.</span></div>
+      <div class="state-step"><strong>O que prova?</strong><span>A mídia iniciou neste equipamento. Ainda não prova que o SSD-alvo foi identificado.</span></div>
+    </div>
 
     <section class="checkpoint compact-check" data-quiz-group>
       <span class="eyebrow">Decisão no firmware</span><h3>A mídia não apareceu</h3>
@@ -124,19 +158,42 @@ window.infraestruturaLessons.push({
     </ul>
     <p class="check-progress" data-check-progress></p>
 
-    <h3>Experimentar: instalação por estados</h3>
-    <p>A aparência das telas pode mudar entre versões. O procedimento deve ser conduzido pelos estados que você precisa confirmar:</p>
-    <div class="table-wrap"><table>
-      <thead><tr><th>Estado</th><th>Decisão</th><th>Evidência antes de avançar</th></tr></thead>
-      <tbody>
-        <tr><td>Instalador iniciado pela mídia oficial</td><td>Idioma, teclado e edição coerentes com a organização</td><td>Fonte da mídia e edição/licença registradas.</td></tr>
-        <tr><td>Tipo de instalação</td><td>Instalação limpa apenas porque foi planejada</td><td>Backup validado e autorização explícita.</td></tr>
-        <tr><td>Seleção de armazenamento</td><td>Escolher o SSD novo e preservar o disco de contingência</td><td>Modelo/capacidade conferidos; se houver dúvida, parar.</td></tr>
-        <tr><td>Particionamento</td><td>Permitir que o instalador crie partições necessárias no disco-alvo vazio</td><td>Somente o alvo correto será alterado.</td></tr>
-        <tr><td>Primeira inicialização</td><td>Remover/ignorar a mídia quando o equipamento reiniciar</td><td>O sistema inicia pelo SSD instalado, não reinicia o instalador.</td></tr>
-        <tr><td>Configuração inicial</td><td>Aplicar identidade, conta e privacidade conforme política</td><td>Nome do equipamento e responsável documentados.</td></tr>
-      </tbody>
-    </table></div>
+    <h3>Experimentar: ler a tela antes do clique destrutivo</h3>
+    <section class="visual-lab" aria-labelledby="disk-visual-title">
+      <div class="visual-lab-header">
+        <span class="visual-kicker">Missão visual · seleção de armazenamento</span>
+        <h4 id="disk-visual-title">Qual unidade NÃO deve ser alterada?</h4>
+        <p>A aparência muda entre versões. Esta representação simplifica a tela para treinar leitura de unidade, partição e espaço não alocado.</p>
+      </div>
+      <div class="visual-body">
+        <span class="representation-badge">Representação didática — confirme a interface oficial no laboratório</span>
+        <div class="ui-representation disk-screen" role="img" aria-label="Representação da seleção de armazenamento do instalador do Windows com duas unidades de mesma capacidade">
+          <div class="ui-topbar"><span>Instalação do Windows 11 · selecionar local</span><span>Avançar</span></div>
+          <div class="disk-toolbar">Duas unidades de 512 GB foram detectadas. A ficha informa: SSD novo vazio + SSD antigo com cópia de contingência.</div>
+          <div class="disk-list">
+            <div class="disk-row"><div class="disk-label"><strong>Unidade 0</strong><span>476,9 GB</span></div><div class="disk-partitions"><div class="partition system"><strong>Partição 1</strong><span>Sistema · 260 MB</span></div><div class="partition primary do-not-touch"><strong>Partição 2</strong><span>Primária · 476,6 GB</span></div></div></div>
+            <div class="disk-row"><div class="disk-label"><strong>Unidade 1</strong><span>476,9 GB</span></div><div class="disk-partitions"><div class="partition unallocated"><strong>Espaço não alocado</strong><span>476,9 GB</span></div></div></div>
+          </div>
+          <div class="disk-actions"><span class="fake-button">Atualizar</span><span class="fake-button">Carregar driver</span><span class="fake-button danger">Excluir</span><span class="fake-button danger">Formatar</span><span class="fake-button">Avançar</span></div>
+        </div>
+        <ol class="observation-prompts">
+          <li><strong>Observe</strong>Qual unidade já possui partições? Qual está inteiramente não alocada?</li>
+          <li><strong>Localize o risco</strong>Quais botões podem remover acesso aos dados se o alvo estiver errado?</li>
+          <li><strong>Decida</strong>A tela e a ficha bastam? Que evidência adicional deve existir antes de avançar?</li>
+        </ol>
+        <div class="visual-question"><strong>Sua decisão deve conter evidência e limite:</strong> “Preservarei a Unidade ___ porque ___. Usarei a Unidade ___ somente após confirmar ___.”</div>
+        <button class="action-button" type="button" data-reveal-answer="#disk-evidence" aria-expanded="false">Conferir leitura da evidência</button>
+        <div id="disk-evidence" class="ok-box compact" hidden><strong>Leitura possível, ainda não autorização</strong><p>A Unidade 0 já contém partições e coincide com a descrição do disco de contingência; portanto não deve ser alterada. A Unidade 1 parece o SSD novo vazio. Antes de avançar, confirme o mapa registrado fora do instalador — modelo/serial quando disponível, backup testado e autorização. “Disco 0” nunca significa automaticamente “disco correto”.</p></div>
+      </div>
+    </section>
+
+    <h4>Conduza a instalação por estados verificáveis</h4>
+    <div class="state-comparison" aria-label="Sequência de estados verificáveis da instalação">
+      <div class="state-step"><strong>Mídia e intenção</strong><span>Origem oficial; idioma, teclado, edição e instalação limpa planejada.</span><small class="evidence-id">EVIDÊNCIA I-01</small></div>
+      <div class="state-step"><strong>Alvo e partições</strong><span>Unidade identificada; backup validado; apenas o SSD novo será alterado.</span><small class="evidence-id">EVIDÊNCIA I-02</small></div>
+      <div class="state-step"><strong>Primeiro reinício</strong><span>O equipamento inicia pelo SSD; a mídia não reabre o instalador.</span><small class="evidence-id">EVIDÊNCIA I-03</small></div>
+      <div class="state-step"><strong>Configuração inicial</strong><span>Nome, conta, privacidade e responsável seguem a política da organização.</span><small class="evidence-id">EVIDÊNCIA I-04</small></div>
+    </div>
     <div class="mbb-pause-question"><strong>Se o instalador não permite identificar o alvo com segurança, pare.</strong><p>Desconectar fisicamente uma unidade pode reduzir ambiguidade, mas somente se o manual, a autorização e a competência permitirem. Não improvise com dados institucionais.</p></div>
 
     <h3>Analisar: erros não autorizam atalhos</h3>
@@ -155,6 +212,13 @@ window.infraestruturaLessons.push({
       <li>conta inicial e política de privilégio, sem registrar senha;</li>
       <li>itens ainda pendentes: atualização, driver, ativação, testes e backup.</li>
     </ul></div>
+
+    <div class="state-comparison" aria-label="Antes, intervenção, depois e limite da conclusão da instalação">
+      <div class="state-step"><strong>Antes</strong><span>SSD novo vazio; cópia preservada em outra unidade.</span></div>
+      <div class="state-step"><strong>Intervenção</strong><span>Windows 11 instalado somente no alvo confirmado.</span></div>
+      <div class="state-step"><strong>Depois</strong><span>Primeiro boot pelo SSD e baseline inicial registrado.</span></div>
+      <div class="state-step"><strong>O que prova?</strong><span>Instalação e boot funcionaram. Ainda faltam drivers, atualização e testes funcionais.</span></div>
+    </div>
 
     <section class="checkpoint compact-check" data-quiz-group>
       <span class="eyebrow">Momento irreversível</span><h3>Há duas unidades de 512 GB</h3>

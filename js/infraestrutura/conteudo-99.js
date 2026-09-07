@@ -41,6 +41,18 @@ window.infraestruturaLessons.push({
       </tbody>
     </table></div>
 
+    <h3>Pacote de evidências obrigatório</h3>
+    <p>Não basta contar o que ocorreu. Entregue evidências identificadas e relacionadas ao chamado, sem expor dados pessoais, senhas ou chaves.</p>
+    <div class="artifact-grid" aria-label="Artefatos obrigatórios da oficina">
+      <div class="artifact-card"><strong>E-01 · Chamado e estado inicial</strong><span>Linha do tempo, impacto, fotografia/captura autorizada ou registro equivalente.</span></div>
+      <div class="artifact-card"><strong>E-02 · Inventário e riscos</strong><span>Alvo, fonte dos dados, itens críticos, preservação e critério de parada.</span></div>
+      <div class="artifact-card"><strong>E-03 · Hipótese e previsão</strong><span>O que o teste diferencia e qual resultado era esperado antes da ação.</span></div>
+      <div class="artifact-card"><strong>E-04 · Antes e depois</strong><span>Mesma métrica, identidade, carga ou condição; horário e unidade registrados.</span></div>
+      <div class="artifact-card"><strong>E-05 · Mudança e rollback</strong><span>Alvo exato, autorização, procedimento, forma de desfazer e resultado quando testado.</span></div>
+      <div class="artifact-card"><strong>E-06 · Validação e conclusão</strong><span>Repetição, funções essenciais, limites, pendências e próximo responsável.</span></div>
+    </div>
+    <div class="note-box compact"><strong>Evidência sem vínculo vira anexo decorativo.</strong><p>No relatório, cite o identificador: “A hipótese H1 ganhou força porque E-04 mostrou...”. Se uma tela não ajuda a decidir ou provar um estado, ela não precisa ser incluída.</p></div>
+
     <h3>Prática: trabalhe em ciclos curtos</h3>
     <div class="process-flow" aria-label="Ciclo de trabalho da oficina">
       <div><strong>Prever</strong><span>resultado antes do teste</span></div>
@@ -97,18 +109,19 @@ H3 — evidência a favor/contra:
 5. TESTES
 Pergunta e resultado previsto:
 Procedimento / variável controlada:
-Resultado observado / evidência:
+Resultado observado / evidência (ID):
 Interpretação e próxima decisão:
 
 6. INTERVENÇÃO
 Alteração realizada e motivo:
 Autorização / fonte do procedimento:
 Como desfazer:
+Rollback foi necessário/testado? Resultado:
 
 7. VALIDAÇÃO
 Repetição da condição original:
 Funções essenciais verificadas:
-Comparação antes/depois:
+Comparação antes/depois (IDs das evidências):
 
 8. CONCLUSÃO E ENTREGA
 Conclusão limitada às evidências:
@@ -118,13 +131,13 @@ Rotina preventiva / próximo responsável:</textarea>
 
     <h3>Critérios de avaliação</h3>
     <div class="table-wrap"><table>
-      <thead><tr><th>Critério</th><th>O que demonstra domínio</th></tr></thead>
+      <thead><tr><th>Critério</th><th>Peso</th><th>O que demonstra domínio</th></tr></thead>
       <tbody>
-        <tr><td>Raciocínio diagnóstico</td><td>Separa sintoma de causa, prioriza hipóteses e escolhe teste discriminante.</td></tr>
-        <tr><td>Segurança e preservação</td><td>Reconhece risco, protege dados e sabe parar/encaminhar.</td></tr>
-        <tr><td>Execução</td><td>Controla alvo e variável, usa fonte confiável e prevê retorno.</td></tr>
-        <tr><td>Validação</td><td>Repete a condição, compara estados e testa funções relacionadas.</td></tr>
-        <tr><td>Documentação</td><td>Outra pessoa entende o que aconteceu, o limite e o próximo passo.</td></tr>
+        <tr><td>Raciocínio e evidência</td><td>35%</td><td>Separa sintoma de causa, prioriza hipóteses, prevê resultados e relaciona cada decisão a evidência identificada.</td></tr>
+        <tr><td>Segurança e preservação</td><td>25%</td><td>Reconhece risco, protege dados e sabe parar/encaminhar.</td></tr>
+        <tr><td>Execução e rollback</td><td>15%</td><td>Controla alvo e variável, usa fonte confiável e demonstra retorno aplicável.</td></tr>
+        <tr><td>Validação</td><td>15%</td><td>Repete a condição, compara estados e testa funções relacionadas sem exagerar a conclusão.</td></tr>
+        <tr><td>Documentação</td><td>10%</td><td>Outra pessoa entende o que aconteceu, o limite e o próximo passo.</td></tr>
       </tbody>
     </table></div>
     <div class="mbb-pause-question"><strong>Velocidade não é critério principal.</strong><p>Uma equipe que decide parar diante de risco não controlado pode demonstrar mais competência que outra que “faz funcionar” sem saber o que alterou.</p></div>

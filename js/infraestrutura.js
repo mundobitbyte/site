@@ -122,6 +122,28 @@
         }
       });
     });
+
+    root.querySelectorAll('[data-evidence-switcher]').forEach((switcher) => {
+      const buttons = [...switcher.querySelectorAll('[data-evidence-view]')];
+      const panels = [...switcher.querySelectorAll('[data-evidence-panel]')];
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const wanted = button.dataset.evidenceView;
+          buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+          panels.forEach((panel) => { panel.hidden = panel.dataset.evidencePanel !== wanted; });
+        });
+      });
+    });
+
+    root.querySelectorAll('[data-reveal-answer]').forEach((button) => {
+      const target = root.querySelector(button.dataset.revealAnswer);
+      if (!target) return;
+      button.addEventListener('click', () => {
+        target.hidden = !target.hidden;
+        button.setAttribute('aria-expanded', String(!target.hidden));
+        button.textContent = target.hidden ? 'Conferir leitura da evidência' : 'Ocultar leitura comentada';
+      });
+    });
   }
 
   function appendLessonNavigation(id) {

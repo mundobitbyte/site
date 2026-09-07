@@ -47,6 +47,31 @@ window.infraestruturaLessons.push({
       </ol>
     </div>
 
+    <section class="visual-lab" aria-labelledby="permission-visual-title">
+      <div class="visual-lab-header"><span class="visual-kicker">Missão visual · preparar o teste real</span><h4 id="permission-visual-title">Onde olhar antes de trocar de identidade?</h4><p>A representação prepara a leitura da guia Segurança; ela não substitui entrar como cada usuário e executar as ações.</p></div>
+      <div class="visual-body">
+        <span class="representation-badge">Representação didática — nomes e disposição podem variar</span>
+        <div class="ui-representation permission-window" role="img" aria-label="Representação das propriedades de Segurança de uma pasta com identidades e permissões">
+          <div class="ui-topbar"><span>Propriedades: Pasta-Laboratório</span><span class="window-dots" aria-hidden="true"><span></span><span></span><span></span></span></div>
+          <div class="window-tabs"><span>Geral</span><span>Compartilhamento</span><span class="active">Segurança</span><span>Versões anteriores</span></div>
+          <div class="permission-body">
+            <div><strong>Usuários ou grupos</strong><div class="identity-list"><span>Secretaria</span><span class="active">Consulta</span><span>Técnicos-Lab</span><span>Usuários</span></div></div>
+            <div><strong>Permissões para Consulta</strong><div class="permission-list"><strong>Ação</strong><strong>Permitir</strong><strong>Negar</strong><span>Ler e executar</span><span class="mark">✓</span><span>—</span><span>Listar conteúdo</span><span class="mark">✓</span><span>—</span><span>Gravar</span><span>—</span><span>—</span><span>Modificar</span><span>—</span><span>—</span><span class="inherit">Permissões especiais</span><span class="inherit">herdada</span><span>—</span><small class="inherit-note">“Herdada” é uma pista: o acesso efetivo pode vir da pasta-pai ou de outro grupo.</small></div></div>
+          </div>
+        </div>
+        <ol class="observation-prompts"><li><strong>Localize</strong>Qual identidade está selecionada e em qual guia?</li><li><strong>Preveja</strong>Consulta deve abrir? Deve criar, editar, renomear ou excluir?</li><li><strong>Investigue</strong>Se o teste divergir, quais grupos e permissões herdadas precisam ser revisados?</li></ol>
+
+        <div class="evidence-switcher" data-evidence-switcher>
+          <p><strong>Preveja e então compare os testes por identidade:</strong></p>
+          <div class="switcher-buttons" role="group" aria-label="Selecionar identidade de teste"><button type="button" data-evidence-view="secretaria" aria-pressed="true">Secretaria</button><button type="button" data-evidence-view="consulta" aria-pressed="false">Consulta</button><button type="button" data-evidence-view="tecnico" aria-pressed="false">Técnico</button></div>
+          <div class="evidence-panel" data-evidence-panel="secretaria"><h4>Teste como Secretaria</h4><div class="result-matrix"><div class="result-cell allowed"><strong>Abrir ✓</strong>observado</div><div class="result-cell allowed"><strong>Criar ✓</strong>observado</div><div class="result-cell allowed"><strong>Editar ✓</strong>observado</div><div class="result-cell allowed"><strong>Excluir ✓</strong>observado</div></div></div>
+          <div class="evidence-panel" data-evidence-panel="consulta" hidden><h4>Teste como Consulta</h4><div class="result-matrix"><div class="result-cell allowed"><strong>Abrir ✓</strong>observado</div><div class="result-cell blocked"><strong>Criar bloqueado</strong>mensagem registrada</div><div class="result-cell blocked"><strong>Editar bloqueado</strong>mensagem registrada</div><div class="result-cell blocked"><strong>Excluir bloqueado</strong>mensagem registrada</div></div></div>
+          <div class="evidence-panel" data-evidence-panel="tecnico" hidden><h4>Teste como Técnico</h4><div class="result-matrix"><div class="result-cell allowed"><strong>Abrir ✓</strong>observado</div><div class="result-cell allowed"><strong>Criar ✓</strong>observado</div><div class="result-cell allowed"><strong>Administrar ✓</strong>observado</div><div class="result-cell allowed"><strong>Reverter ✓</strong>testado</div></div></div>
+        </div>
+        <div class="visual-question"><strong>Evidência esperada:</strong> conta usada + ação tentada + resultado/mensagem + horário. A tela administrativa indica intenção; o teste com a identidade mostra o acesso observado.</div>
+      </div>
+    </section>
+
     <h3>Analisar: permitir é mais simples que explicar o resultado</h3>
     <div class="evidence-grid">
       <article><strong>Consulta abre, mas não salva</strong><p>O resultado corresponde à leitura sem modificação. A mensagem e a conta usada são evidências.</p></article>
@@ -62,6 +87,13 @@ window.infraestruturaLessons.push({
       <tbody><tr><td>Pasta de laboratório</td><td>Ler/modificar</td><td>Ler</td><td>Administrar/reverter</td><td>Testes de abrir, criar, editar e excluir.</td></tr></tbody>
     </table></div>
     <p>Uma matriz simples torna a intenção verificável. Quando um resultado diverge, investigamos identidade, grupos, herança e permissão efetiva.</p>
+
+    <div class="state-comparison" aria-label="Antes, intervenção, depois e interpretação das permissões">
+      <div class="state-step"><strong>Antes</strong><span>Consulta consegue excluir; estado inicial e herança registrados.</span></div>
+      <div class="state-step"><strong>Intervenção</strong><span>Conceder somente leitura no recurso de laboratório.</span></div>
+      <div class="state-step"><strong>Depois</strong><span>Consulta lê, mas criar/editar/excluir são bloqueados no teste real.</span></div>
+      <div class="state-step"><strong>O que prova?</strong><span>Essa identidade, nesse recurso e nesse momento obteve o acesso previsto.</span></div>
+    </div>
 
     <section class="checkpoint compact-check" data-quiz-group>
       <span class="eyebrow">Menor privilégio</span><h3>Instalar sem trabalhar sempre como administrador</h3>
@@ -110,6 +142,21 @@ window.infraestruturaLessons.push({
       </ol>
     </div>
 
+    <section class="visual-lab" aria-labelledby="taskmanager-visual-title">
+      <div class="visual-lab-header"><span class="visual-kicker">Missão visual · interpretar consumo</span><h4 id="taskmanager-visual-title">Qual processo merece investigação — e qual ainda não merece encerramento?</h4><p>A amostra representa o estado dois minutos após o login, no momento da lentidão.</p></div>
+      <div class="visual-body">
+        <span class="representation-badge">Representação didática do Gerenciador de Tarefas</span>
+        <div class="ui-representation task-window" role="img" aria-label="Representação do Gerenciador de Tarefas com CPU, memória, disco e lista de processos">
+          <div class="ui-topbar"><span>Gerenciador de Tarefas · Processos</span><span>08:02:14</span></div>
+          <div class="metric-strip"><div class="metric"><strong>23%</strong>CPU</div><div class="metric"><strong>61%</strong>Memória</div><div class="metric"><strong>96%</strong>Disco</div><div class="metric"><strong>2%</strong>GPU</div></div>
+          <div class="process-rows"><div class="process-row header"><span>Nome</span><span>CPU</span><span>Memória</span><span>Disco</span></div><div class="process-row"><span class="process-name"><strong>Editor de planilhas</strong><span>documento aberto</span></span><span>12%</span><span>420 MB</span><span>1%</span></div><div class="process-row investigate"><span class="process-name"><strong>Sincronização Empresa</strong><span>editor verificado · iniciou 08:01</span></span><span>3%</span><span>640 MB</span><span>88%</span></div><div class="process-row"><span class="process-name"><strong>Explorador do Windows</strong><span>Microsoft</span></span><span>1%</span><span>185 MB</span><span>0%</span></div><div class="process-row"><span class="process-name"><strong>Antimalware</strong><span>Microsoft</span></span><span>4%</span><span>310 MB</span><span>5%</span></div></div>
+        </div>
+        <ol class="observation-prompts"><li><strong>Observe</strong>Qual recurso está saturado no instante do sintoma?</li><li><strong>Relacione</strong>Qual processo concentra o uso desse recurso e quando iniciou?</li><li><strong>Limite</strong>Isso prova causa? Qual teste controlado preserva o trabalho e a evidência?</li></ol>
+        <button class="action-button" type="button" data-reveal-answer="#task-evidence" aria-expanded="false">Conferir leitura da evidência</button>
+        <div id="task-evidence" class="ok-box compact" hidden><strong>Hipótese, não sentença</strong><p>O disco está em 96% e “Sincronização Empresa” responde pela maior atividade, no intervalo do sintoma. Isso fortalece a hipótese de relação com a lentidão. Registre duração e recorrência; depois teste apenas a inicialização automática aprovada. Não finalize o processo aleatoriamente.</p></div>
+      </div>
+    </section>
+
     <h3>Uma linha vermelha não é automaticamente a causa</h3>
     <div class="table-wrap"><table>
       <thead><tr><th>Campo do evento</th><th>Pergunta diagnóstica</th></tr></thead>
@@ -123,6 +170,19 @@ window.infraestruturaLessons.push({
     </table></div>
     <div class="note-box compact"><strong>Correlação não prova causalidade.</strong><p>Um evento no mesmo horário fortalece uma hipótese; repetir o sintoma e observar o mesmo vínculo produz evidência melhor.</p></div>
 
+    <section class="visual-lab" aria-labelledby="event-visual-title">
+      <div class="visual-lab-header"><span class="visual-kicker">Missão visual · correlacionar eventos</span><h4 id="event-visual-title">Qual evento merece entrar na linha do tempo?</h4><p>Não escolha pela cor: compare horário, origem, ID, mensagem e relação funcional.</p></div>
+      <div class="visual-body">
+        <span class="representation-badge">Representação didática do Visualizador de Eventos</span>
+        <div class="ui-representation event-window" role="img" aria-label="Representação do Visualizador de Eventos com linhas de data, origem, ID e mensagem">
+          <div class="ui-topbar"><span>Visualizador de Eventos · Logs do Windows · Aplicativo</span><span>Chamado: sintoma às 08:02</span></div>
+          <div class="event-layout"><div class="event-tree"><strong>Logs do Windows</strong><span class="active">Aplicativo</span><span>Segurança</span><span>Instalação</span><span>Sistema</span></div><div class="event-content"><div class="event-row header"><span>Data e hora</span><span>Origem</span><span>ID</span><span>Resumo</span></div><div class="event-row"><span>07:44:09</span><span>DistributedCOM</span><span>10016</span><span>Aviso registrado antes do login</span></div><div class="event-row related"><span>08:02:18</span><span>SyncEmpresa</span><span>204</span><span>Varredura completa iniciada; 18.426 itens</span></div><div class="event-row"><span>08:17:51</span><span>Application Error</span><span>1000</span><span>Falha de aplicativo não reproduzida</span></div><div class="event-detail"><strong>Evento selecionado · SyncEmpresa · ID 204</strong>Horário coincide com o pico; componente tem relação funcional com a sincronização observada. A mensagem descreve início de varredura, mas não afirma que ela causou toda a lentidão.</div></div></div>
+        </div>
+        <ol class="observation-prompts"><li><strong>Localize</strong>Qual linha coincide com 08:02 e com o componente observado?</li><li><strong>Questione</strong>O aviso 10016 anterior prova algo sobre este sintoma?</li><li><strong>Próximo teste</strong>Que repetição permitiria comparar o mesmo intervalo com uma variável alterada?</li></ol>
+        <div class="visual-question"><strong>Registro mínimo:</strong> “Às 08:02:18, origem SyncEmpresa, ID 204, registrou varredura de 18.426 itens; no mesmo intervalo, o processo usou 88% do disco. Relação causal ainda em teste.”</div>
+      </div>
+    </section>
+
     <h3>Intervenção segura: uma inicialização por vez</h3>
     <p>No caso, um aplicativo aprovado de sincronização inicia com o usuário e executa uma varredura completa. A política permite alterar apenas sua inicialização automática.</p>
     <ol>
@@ -132,6 +192,12 @@ window.infraestruturaLessons.push({
       <li>repita a medição no mesmo intervalo e com a mesma carga;</li>
       <li>se o sintoma não mudar, reative e revise a hipótese.</li>
     </ol>
+    <div class="state-comparison" aria-label="Antes, intervenção, depois e interpretação do teste de inicialização">
+      <div class="state-step"><strong>Antes</strong><span>Após login: pico de disco 96%; sintoma em 2 min; evento 204 às 08:02.</span><small class="evidence-id">EVIDÊNCIA P-01</small></div>
+      <div class="state-step"><strong>Intervenção</strong><span>Desabilitar somente a inicialização automática aprovada.</span><small class="evidence-id">MUDANÇA M-01</small></div>
+      <div class="state-step"><strong>Depois</strong><span>Mesma carga: pico 24%; sintoma não observado em 10 min.</span><small class="evidence-id">EVIDÊNCIA P-02</small></div>
+      <div class="state-step"><strong>O que prova?</strong><span>A hipótese ficou mais forte nessa condição. Ainda é preciso repetir e manter a sincronização por outro fluxo.</span></div>
+    </div>
     <div class="mbb-pause-question"><strong>Alívio não é solução completa.</strong><p>Se desabilitar a inicialização reduz a lentidão, ainda precisamos decidir quando e como a sincronização necessária ocorrerá. Uma correção não pode criar perda de proteção dos arquivos.</p></div>
 
     <h3>Serviços: laboratório reversível</h3>
@@ -206,6 +272,12 @@ window.infraestruturaLessons.push({
         <li>abra os arquivos restaurados e compare conteúdo, data e tamanho;</li>
         <li>registre tempo de recuperação, falhas e limite do que foi testado.</li>
       </ol>
+    </div>
+    <div class="state-comparison" aria-label="Antes, intervenção, depois e interpretação do teste de restauração">
+      <div class="state-step"><strong>Antes</strong><span>Três arquivos conhecidos; conteúdo, data e tamanho registrados.</span><small class="evidence-id">AMOSTRA B-01</small></div>
+      <div class="state-step"><strong>Intervenção</strong><span>Alterar/excluir na origem e restaurar em pasta separada.</span><small class="evidence-id">TESTE R-01</small></div>
+      <div class="state-step"><strong>Depois</strong><span>Arquivos restaurados abrem e correspondem ao registro da amostra.</span><small class="evidence-id">EVIDÊNCIA R-01</small></div>
+      <div class="state-step"><strong>O que prova?</strong><span>Essa amostra foi recuperada por esse caminho; não prova todo o ambiente.</span></div>
     </div>
     <div class="mbb-pause-question"><strong>“Backup concluído” não basta.</strong><p>O teste com três arquivos prova apenas essa amostra e esse caminho de restauração. Documente a conclusão no tamanho correto: não afirme que todo o ambiente é recuperável sem testar o necessário.</p></div>
 

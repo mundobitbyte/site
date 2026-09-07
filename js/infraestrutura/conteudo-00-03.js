@@ -170,15 +170,42 @@ window.infraestruturaLessons.push({
       <p>Alguém propõe trocar o processador; outra pessoa quer instalar “mais memória de qualquer modelo”. Antes de comprar, precisamos responder: <strong>qual recurso satura durante o sintoma, qual expansão a placa aceita e qual problema a troca resolveria?</strong></p>
     </div>
 
-    <h3>Retomada mínima: o caminho, não a lista de peças</h3>
-    <div class="hardware-map" aria-label="Mapa funcional simplificado dos componentes">
-      <article data-zone="1"><strong>Armazenamento</strong><p>Preserva sistema, programas e arquivos. Capacidade, saúde e latência afetam a operação.</p></article>
-      <article data-zone="2"><strong>RAM</strong><p>Mantém dados e programas em uso. Falta de RAM pode aumentar paginação.</p></article>
-      <article data-zone="3"><strong>CPU</strong><p>Executa instruções. Uso alto precisa ser relacionado ao processo e à tarefa.</p></article>
-      <article data-zone="4"><strong>Placa-mãe</strong><p>Interliga componentes e define soquetes, slots, firmware e parte da compatibilidade.</p></article>
-      <article data-zone="5"><strong>Fonte e energia</strong><p>Fornecem energia adequada. Potência nominal não é consumo constante nem garantia de qualidade.</p></article>
-      <article data-zone="6"><strong>Refrigeração</strong><p>Remove calor. Temperatura e frequência precisam ser observadas antes de concluir.</p></article>
-    </div>
+    <h3>Observar: reconhecer antes de comparar</h3>
+    <section class="visual-lab" aria-labelledby="lab-hardware-title">
+      <div class="visual-lab-header">
+        <span class="visual-kicker">Missão visual · objetos reais</span>
+        <h4 id="lab-hardware-title">Localize forma, encaixe e pistas de interface</h4>
+        <p>Olhe primeiro; não tente concluir compatibilidade só pela aparência.</p>
+      </div>
+      <div class="visual-body">
+        <div class="photo-board">
+          <figure class="object-card">
+            <img src="../img/infraestrutura/placa-mae.webp" alt="Close de uma placa-mãe com slots de expansão, conectores e circuitos visíveis" width="1280" height="848" loading="lazy">
+            <figcaption><strong>Placa-mãe</strong>Observe que ela reúne conectores e slots de formatos diferentes. A foto não revela, sozinha, modelo nem padrões suportados.<small class="source-credit">Lenharth Systems · CC0 · via <a href="https://commons.wikimedia.org/wiki/File:Computer_Motherboard_Closeup.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></small></figcaption>
+          </figure>
+          <figure class="object-card">
+            <img src="../img/infraestrutura/memoria-ddr4.webp" alt="Módulo de memória RAM DDR4 de desktop visto pela frente e pelo verso, com contatos e entalhe visíveis" width="1280" height="798" loading="lazy">
+            <figcaption><strong>RAM de desktop (DIMM DDR4)</strong>Localize contatos, entalhe e etiqueta. O entalhe evita alguns encaixes errados, mas não prova suporte da placa.<small class="source-credit">Rainer Knäpper · Free Art License · via <a href="https://commons.wikimedia.org/wiki/File:DDR4_DIMM_4GB_-2133_IMGP5813_smial_wp.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></small></figcaption>
+          </figure>
+          <figure class="object-card">
+            <img src="../img/infraestrutura/ssd-sata.webp" alt="SSD SATA de 2,5 polegadas com os conectores de dados e energia visíveis" width="1280" height="720" loading="lazy">
+            <figcaption><strong>SSD SATA de 2,5 polegadas</strong>Dois conectores na borda: dados e energia. Ele ainda precisa de baia/cabo/alimentação compatíveis.<small class="source-credit">Raimond Spekking · CC BY-SA 4.0 · conversão para WebP · via <a href="https://commons.wikimedia.org/wiki/File:Innovation_IT_SSD_2.5%22_1_TB_SATA_III_TLC-7140.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></small></figcaption>
+          </figure>
+          <figure class="object-card">
+            <img src="../img/infraestrutura/ssd-m2-nvme.webp" alt="SSD M.2 NVMe 2280 com chips, contatos e chave do conector visíveis" width="1280" height="457" loading="lazy">
+            <figcaption><strong>SSD M.2 NVMe 2280</strong>A placa estreita dispensa cabo SATA, mas M.2 descreve formato: interface, chave, comprimento e suporte ainda precisam ser confirmados.<small class="source-credit">D-Kuru · CC BY-SA 4.0 · conversão para WebP · via <a href="https://commons.wikimedia.org/wiki/File:Samsung_980_PRO_PCIe_4.0_NVMe_SSD_1TB-top_PNr%C2%B00915.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></small></figcaption>
+          </figure>
+        </div>
+        <ol class="observation-prompts">
+          <li><strong>1 · Localize</strong>Em quais objetos os contatos ficam expostos? Onde aparece uma chave ou entalhe?</li>
+          <li><strong>2 · Compare</strong>Qual SSD usa cabos? Qual é fixado diretamente na placa-mãe?</li>
+          <li><strong>3 · Decida</strong>Que informação ainda falta antes de afirmar que cada peça serve nesta estação?</li>
+        </ol>
+        <div class="visual-question"><strong>Registre antes de abrir o manual:</strong> “Acho que a peça é ___ porque vejo ___. Ainda preciso confirmar ___.”</div>
+      </div>
+    </section>
+
+    <h3>Entender: acompanhar o caminho, não decorar uma lista</h3>
     <div class="process-flow" aria-label="Caminho simplificado ao abrir uma planilha">
       <div><strong>SSD lê</strong><span>arquivo e programa</span></div>
       <div><strong>RAM mantém</strong><span>dados em uso</span></div>
@@ -210,6 +237,16 @@ window.infraestruturaLessons.push({
       </tbody>
     </table></div>
     <div class="note-box compact"><strong>Modelo exato vence palpite.</strong><p>“É um Dell” ou “usa M.2” ainda é insuficiente. Use etiqueta, patrimônio, número do modelo, manual e especificação do componente.</p></div>
+
+    <div class="visual-lab">
+      <div class="visual-lab-header"><span class="visual-kicker">Decisão com evidência</span><h4>O M.2 da foto cabe no espaço disponível. Podemos comprar?</h4></div>
+      <div class="visual-body">
+        <p><strong>Previsão:</strong> escolha quais dados do manual precisam confirmar ou negar a compra.</p>
+        <ul><li>tipo de soquete e chave;</li><li>interface aceita: SATA, PCIe/NVMe ou ambas;</li><li>comprimentos suportados, como 2230/2242/2280;</li><li>linhas/slots compartilhados e versão de firmware quando aplicável.</li></ul>
+        <button class="action-button" type="button" data-reveal-answer="#compat-evidence" aria-expanded="false">Conferir leitura da evidência</button>
+        <div id="compat-evidence" class="ok-box compact" hidden><strong>Conclusão limitada</strong><p>A foto permite reconhecer o formato M.2 e a chave visível. Ela <strong>não</strong> prova interface elétrica, comprimento aceito, suporte do firmware nem compartilhamento de portas. A compra só fica defensável quando o manual do modelo e a especificação do SSD concordam.</p></div>
+      </div>
+    </div>
 
     <h3>Analisar: o recurso que satura durante o sintoma</h3>
     <div class="evidence-grid">
