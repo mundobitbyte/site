@@ -6,6 +6,46 @@
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const choice = MBB.choice;
 
+  let pauseTimerId = null;
+  let pauseSeconds = 240;
+
+  function formatPause(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    return `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  }
+
+  function renderPauseTimer(root) {
+    const display = $('#movementPauseTimer', root);
+    if (display) display.textContent = formatPause(pauseSeconds);
+  }
+
+  function stopPauseTimer() {
+    if (pauseTimerId) clearInterval(pauseTimerId);
+    pauseTimerId = null;
+  }
+
+  function startPauseTimer(root) {
+    if (pauseTimerId || pauseSeconds <= 0) return;
+    pauseTimerId = setInterval(() => {
+      pauseSeconds -= 1;
+      renderPauseTimer(root);
+      if (pauseSeconds <= 0) {
+        stopPauseTimer();
+        const note = $('#movementPauseNote', root);
+        if (note) note.innerHTML = '<strong>Quatro minutos concluídos.</strong> Compare suas sensações de antes e depois sem procurar um “resultado certo”.';
+      }
+    }, 1000);
+  }
+
+  function resetPauseTimer(root) {
+    stopPauseTimer();
+    pauseSeconds = 240;
+    renderPauseTimer(root);
+    const note = $('#movementPauseNote', root);
+    if (note) note.textContent = 'Quando estiver pronto, afaste-se da tela e inicie.';
+  }
+
   function updateClaimLab(root) {
     const claim = $('#mediaClaim', root)?.value || 'miracle';
     const source = $('#mediaSource', root)?.value || 'influencer';
@@ -77,6 +117,11 @@
     });
     updateClaimLab(root);
 
+    $('#movementPauseStart', root)?.addEventListener('click', () => startPauseTimer(root));
+    $('#movementPausePause', root)?.addEventListener('click', stopPauseTimer);
+    $('#movementPauseReset', root)?.addEventListener('click', () => resetPauseTimer(root));
+    resetPauseTimer(root);
+
     $('#metricType', root)?.addEventListener('change', () => updateMetricLab(root));
     updateMetricLab(root);
 
@@ -98,7 +143,7 @@
             <p>Um vídeo promete “transformar seu corpo em 14 dias”. Um relógio avisa que você “não bateu a meta”. E um colega compartilha uma foto dizendo que aquele é o “corpo saudável”.</p>
             <p>As três mensagens parecem falar de saúde, mas misturam <strong>atividade física, aparência, marketing, algoritmo e comparação</strong>.</p>
             <p>A missão será construir uma campanha que ajude outros estudantes a se moverem mais <strong>sem humilhação, promessa milagrosa ou escravidão aos números</strong>.</p>
-            <p class="central-question"><strong>Pergunta central:</strong> como usar informação e tecnologia para cuidar do corpo sem deixar que mídia, aparência ou métricas decidam sozinho o que é saúde?</p>
+            <p class="central-question"><strong>Pergunta central:</strong> como usar informação e tecnologia para cuidar do corpo sem deixar que mídia, aparência ou métricas decidam sozinhas o que é saúde?</p>
           </div>
         </section>
 
@@ -152,15 +197,35 @@
         </div>
 
         <div class="practice-box">
-          <strong class="card-title">Experiência — onde o movimento cabe no seu dia?</strong>
+          <strong class="card-title">Primeiro olhe para o seu dia</strong>
           <p>Sem registrar peso, calorias ou aparência, desenhe uma linha simples do seu dia de ontem: deslocamento, aulas, estudo, trabalho, lazer e sono. Marque os períodos em que você ficou muito tempo sentado e os momentos em que já houve movimento.</p>
           <p>Agora procure <strong>uma oportunidade realista</strong> de aumentar movimento — não a mais impressionante.</p>
         </div>
 
-        <h3>4. Tecnologia mede — e também interpreta</h3>
+        <h3>4. Agora saia da tela por quatro minutos</h3>
+        <div class="practice-box">
+          <strong class="card-title">Pausa de movimento — observe antes, experimente, observe depois</strong>
+          <p>Antes de começar, perceba sem dar nota: como estão sua respiração, temperatura corporal, disposição e vontade de continuar sentado?</p>
+          <div class="timer-box">
+            <div id="movementPauseTimer" class="timer-display" aria-live="polite">04:00</div>
+            <div class="timer-controls"><button id="movementPauseStart" type="button">Iniciar</button><button id="movementPausePause" type="button">Pausar</button><button id="movementPauseReset" type="button">Reiniciar</button></div>
+            <p id="movementPauseNote" class="field-note">Quando estiver pronto, afaste-se da tela e inicie.</p>
+          </div>
+          <div class="practice-flow">
+            <div class="practice-step"><span class="step-number">1</span><strong>1º minuto</strong><p>Caminhe ou marche confortavelmente no lugar. Versão sentada: alterne pés e braços em ritmo leve.</p></div>
+            <div class="practice-step"><span class="step-number">2</span><strong>2º minuto</strong><p>Acrescente deslocamentos laterais curtos ou movimentos confortáveis de braços e tronco, sem forçar amplitude.</p></div>
+            <div class="practice-step"><span class="step-number">3</span><strong>3º minuto</strong><p>Alterne movimento leve e um pouco mais ativo, mantendo controle e possibilidade de falar. Não é teste máximo.</p></div>
+            <div class="practice-step"><span class="step-number">4</span><strong>4º minuto</strong><p>Reduza o ritmo gradualmente e observe como o corpo responde.</p></div>
+          </div>
+          <p>Depois compare com o início: algo mudou na respiração, calor, disposição ou vontade de se mover? <strong>Não existe resposta obrigatória.</strong> Registrar “não percebi diferença” também é dado válido.</p>
+        </div>
+
+        <div class="safety-box"><strong>Adapte sem culpa.</strong><p>Use movimentos confortáveis e espaço livre. Dor, tontura, mal-estar ou falta de ar incomum são sinais para interromper e avisar o professor. A experiência pode ser totalmente sentada.</p></div>
+
+        <h3>5. Tecnologia mede — e também interpreta</h3>
         <div class="studio-box">
           <strong class="card-title">Painel de métricas — o que este número consegue dizer?</strong>
-          <p>Imagine um relógio mostrando vários indicadores. Selecione um. Os valores abaixo seriam produzidos por sensores e algoritmos diferentes; o ponto aqui é compreender os limites, não comparar marcas.</p>
+          <p>Imagine um relógio mostrando vários indicadores. Selecione um. Os valores seriam produzidos por sensores e algoritmos diferentes; o ponto aqui é compreender os limites, não comparar marcas.</p>
           <label class="mini-card"><strong>Métrica</strong><select id="metricType" style="width:100%"><option value="steps">Passos</option><option value="active">Minutos ativos</option><option value="heart">Frequência cardíaca</option><option value="calories">Calorias / gasto energético</option><option value="sleep">Sono estimado</option></select></label>
           <div id="metricFeedback" class="field-note" aria-live="polite"></div>
         </div>
@@ -173,7 +238,7 @@
           ['c','Todo dado de relógio é inútil']
         ],'b','Correto. Tecnologia pode fornecer pistas úteis sem ganhar autoridade absoluta sobre decisões de saúde.','Estimativas de gasto energético em wearables têm limitações relevantes. Evite transformar uma aproximação em obrigação corporal.')}
 
-        <h3>5. Comportamento sedentário não é sinônimo de “preguiça”</h3>
+        <h3>6. Comportamento sedentário não é sinônimo de “preguiça”</h3>
         <p>Estudar, programar, desenhar, ler, trabalhar e viajar podem exigir longos períodos sentado. O problema não se resolve culpando a pessoa. É mais útil olhar para <strong>como o dia está organizado</strong> e criar oportunidades possíveis de movimento.</p>
 
         <div class="studio-box">
@@ -190,7 +255,7 @@
           <div id="routineFeedback" class="field-note" aria-live="polite"></div>
         </div>
 
-        <h3>6. “Sem desculpas” costuma apagar o contexto</h3>
+        <h3>7. “Sem desculpas” costuma apagar o contexto</h3>
         <div class="comparison-grid">
           <div class="mini-card"><strong>Tempo</strong><p>Jornada escolar, trabalho e cuidado de familiares podem limitar oportunidades.</p></div>
           <div class="mini-card"><strong>Ambiente</strong><p>Falta de calçada, violência, trânsito ou ausência de espaço seguro influenciam a prática.</p></div>
@@ -200,7 +265,7 @@
 
         <p>Autonomia não significa responsabilizar individualmente o aluno por tudo. Significa reconhecer condições reais e ainda assim procurar <strong>escolhas possíveis, apoio e estratégias sustentáveis</strong>.</p>
 
-        <h3>7. Volte à campanha “Movimento sem Filtro”</h3>
+        <h3>8. Volte à campanha “Movimento sem Filtro”</h3>
         <div class="challenge-box">
           <strong class="card-title">Projeto final — uma mensagem que ajuda em vez de pressionar</strong>
           <p>Em grupo, criem um cartaz, card, pequeno carrossel ou roteiro de vídeo de até 60 segundos. Ele precisa conter:</p>
