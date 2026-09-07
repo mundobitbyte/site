@@ -32,6 +32,36 @@
     });
   };
 
+  MBB.initSpeechButtons = root => {
+    $$('[data-en-say]', root).forEach(button => {
+      if (button.dataset.speechReady === 'true') return;
+      button.dataset.speechReady = 'true';
+
+      const text = button.dataset.enSay || '';
+      const lang = button.dataset.enLang || 'en-US';
+      const parsedRate = Number(button.dataset.enRate || '0.92');
+      const rate = Number.isFinite(parsedRate) ? parsedRate : 0.92;
+      const status = $('[data-en-speech-status]', button.closest('.source-box,.dialogue-box,.language-tool,.challenge-box') || root)
+        || $('[data-en-speech-status]', root);
+
+      if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+        button.disabled = true;
+        button.title = 'Áudio indisponível neste navegador';
+        if (status) status.textContent = 'Áudio indisponível neste navegador. Use o texto visível como apoio.';
+        return;
+      }
+
+      button.addEventListener('click', () => {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = rate;
+        window.speechSynthesis.speak(utterance);
+        if (status) status.textContent = 'Ouça primeiro sem repetir; depois ouça novamente e repita em blocos.';
+      });
+    });
+  };
+
   MBB.setActiveMenu = button => {
     const menu = document.getElementById('lessonMenu');
     if (!menu || !button) return;
@@ -60,6 +90,7 @@
     $('#lessonObjective').innerHTML = objective || '';
     content.innerHTML = html || '';
     MBB.initChoiceQuestions(content);
+    MBB.initSpeechButtons(content);
     if (typeof init === 'function') init(content);
     MBB.closeMobileMenu();
     MBB.scrollLessonTop();
