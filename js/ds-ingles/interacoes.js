@@ -32,7 +32,42 @@
     });
   };
 
+  function addDialogueAudio(root) {
+    $$('.dialogue-box', root).forEach(dialogue => {
+      if (dialogue.dataset.dialogueAudioReady === 'true') return;
+      dialogue.dataset.dialogueAudioReady = 'true';
+
+      const lines = $$('.speech', dialogue).map(speech => {
+        const clone = speech.cloneNode(true);
+        clone.querySelectorAll('small').forEach(label => label.remove());
+        return clone.textContent.replace(/\s+/g, ' ').trim();
+      }).filter(Boolean);
+
+      if (!lines.length) return;
+
+      const actions = document.createElement('div');
+      actions.className = 'quiz-actions';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'action-button';
+      button.textContent = 'Ouvir diálogo';
+      button.dataset.enSay = lines.join(' ');
+      button.dataset.enRate = '0.9';
+      actions.appendChild(button);
+
+      const status = document.createElement('div');
+      status.className = 'mission-feedback';
+      status.dataset.enSpeechStatus = '';
+      status.setAttribute('aria-live','polite');
+
+      dialogue.appendChild(actions);
+      dialogue.appendChild(status);
+    });
+  }
+
   MBB.initSpeechButtons = root => {
+    addDialogueAudio(root);
+
     $$('[data-en-say]', root).forEach(button => {
       if (button.dataset.speechReady === 'true') return;
       button.dataset.speechReady = 'true';
@@ -41,8 +76,8 @@
       const lang = button.dataset.enLang || 'en-US';
       const parsedRate = Number(button.dataset.enRate || '0.92');
       const rate = Number.isFinite(parsedRate) ? parsedRate : 0.92;
-      const status = $('[data-en-speech-status]', button.closest('.source-box,.dialogue-box,.language-tool,.challenge-box') || root)
-        || $('[data-en-speech-status]', root);
+      const container = button.closest('.source-box,.dialogue-box,.language-tool,.challenge-box') || root;
+      const status = $('[data-en-speech-status]', container) || $('[data-en-speech-status]', root);
 
       if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
         button.disabled = true;
