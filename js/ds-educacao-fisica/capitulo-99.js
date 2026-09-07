@@ -60,15 +60,18 @@
     const configs = {
       crowded:{
         points:[['A',165,95],['B',220,105],['C',245,150],['D',195,175],['E',275,185]],
+        route:'M45 120 L165 95 L220 105 L245 150 L195 175 L275 185',
         text:'Quase todas as estações foram concentradas no mesmo setor. Isso aumenta cruzamento de fluxos, disputa por espaço e chance de interferência entre práticas.'
       },
       balanced:{
         points:[['A',85,80],['B',220,75],['C',335,95],['D',115,190],['E',300,190]],
+        route:'M45 120 L85 80 L220 75 L335 95 L300 190 L115 190',
         text:'As estações foram distribuídas em zonas diferentes, deixando corredores mais livres. Ainda é necessário conferir acessibilidade, som, piso e circulação real.'
       },
       accessible:{
-        points:[['A',80,80],['B',205,80],['C',320,90],['D',95,190],['E',285,190]],
-        text:'Além da distribuição, o percurso principal evita o trecho com degrau e mantém uma rota mais ampla. Acessibilidade precisa ser pensada antes da abertura, não improvisada depois.'
+        points:[['A',80,80],['B',205,80],['C',320,90],['D',320,190],['E',80,190]],
+        route:'M45 120 L80 80 L205 80 L320 90 L320 190 L320 225 L120 225 L80 190 L45 120',
+        text:'Além da distribuição, o percurso principal contorna o trecho com degrau e mantém uma rota mais ampla. Acessibilidade precisa ser pensada antes da abertura, não improvisada depois.'
       }
     };
     const c = configs[mode] || configs.balanced;
@@ -80,6 +83,7 @@
       <text x="198" y="194" text-anchor="middle" font-size="10" fill="#6d3f80">degrau</text>
       <path d="M35 120 H365" stroke="#c9d8d2" stroke-width="16" stroke-linecap="round"/>
       <path d="M55 35 V210" stroke="#dce7e3" stroke-width="18" stroke-linecap="round"/>
+      <path d="${c.route}" fill="none" stroke="#d97706" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
       ${nodes}
       <text x="200" y="229" text-anchor="middle" font-size="10" fill="#66736e">mapa fictício do festival</text>`;
     out.innerHTML = `<strong>Leitura do mapa:</strong><p>${c.text}</p><p>Organizar espaço também é decisão corporal: muda deslocamento, segurança, participação e experiência de quem entra.</p>`;
@@ -307,7 +311,7 @@
 
         <div class="challenge-box">
           <strong class="card-title">Desafio C — antes e depois</strong>
-          <p>Faça uma tentativa inicial curta de alguma tarefa segura: passe contra a parede, sequência rítmica, equilíbrio com base confortável, caminhada, circuito leve ou outra prática autorizada. Escolha <strong>uma variável</strong>, altere-a e repita.</p>
+          <p>Faça uma tentativa inicial curta de alguma tarefa segura: passe com <strong>bola macia</strong> contra uma parede autorizada e em espaço livre, sequência rítmica, equilíbrio com base confortável, caminhada, circuito leve ou outra prática autorizada. Escolha <strong>uma variável</strong>, altere-a e repita.</p>
           <p>Registre: <strong>o que mudou? a mudança ajudou? qual evidência sustenta sua resposta?</strong></p>
         </div>
 
