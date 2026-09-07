@@ -9,104 +9,73 @@
   function showChapter() {
     MBB.showLesson({
       unit:'Comunicação',
-      technical:'skimming • scanning • listening for gist/details • pronunciation • contractions • -ed endings • repair strategies • Englishes • artistic text',
+      technical:'skimming • scanning • listening for gist/details • pronunciation • contractions • -ed endings • repair strategies • Englishes • literary reading',
       title:'08 — Ler, ouvir e conversar melhor',
-      objective:'<strong>Objetivo:</strong> integrar a língua aprendida para ler com estratégia, ouvir ideias gerais e detalhes, melhorar a inteligibilidade da fala, interpretar um texto artístico curto e lidar com diferentes formas de inglês.',
+      objective:'<strong>Objetivo:</strong> integrar gramática e vocabulário com estratégias de leitura, escuta e fala; compreender o essencial, localizar detalhes, melhorar inteligibilidade e interpretar textos sem depender de tradução total.',
       html:`
-        <section class="en-opening">
-          <span class="lesson-kicker">Agora a língua começa a funcionar junta</span>
-          <div class="hero-box">
-            <strong class="card-title">Você já constrói frases no presente, passado e futuro.</strong>
-            <p>O próximo passo é usar essa base em textos e falas reais. Ler e ouvir bem não significa reconhecer 100% das palavras; significa combinar <strong>gramática, vocabulário, contexto e objetivo</strong>.</p>
-            <p class="central-question"><strong>Missão do capítulo:</strong> compreender o essencial de mensagens diferentes e responder de forma clara mesmo quando alguma palavra escapar.</p>
-          </div>
-        </section>
+        <section class="en-opening"><span class="lesson-kicker">Entender a necessidade</span><div class="hero-box">
+          <strong class="card-title">Agora você já possui estruturas. O desafio é reconhecê-las quando aparecem em textos e fala contínua.</strong>
+          <p>Na vida real ninguém separa o inglês em “aula de simple past” ou “aula de modal”. Tudo aparece misturado. Estratégia ajuda, mas só funciona porque você já construiu conhecimento linguístico.</p>
+          <p class="central-question"><strong>Missão:</strong> compreender e responder mesmo sem capturar 100% das palavras.</p>
+        </div></section>
 
-        <h3>1. Leitura global: descubra o assunto primeiro</h3>
-        <div class="source-box">
-          <strong class="card-title">School Tech Club — Saturday Workshop</strong>
-          <p>Join our beginner-friendly workshop this Saturday from 9 a.m. to noon. Students will build a simple mobile interface, test it in pairs and share the results. You don’t have to bring a laptop; the school will provide computers. Registration closes on Thursday.</p>
-        </div>
-        <p>Antes de traduzir, observe palavras de alta informação: <strong>workshop, Saturday, 9 a.m., students, mobile interface, computers, registration</strong>.</p>
-        ${choice('1','Skimming','Qual é a ideia geral do texto?',[['a','Uma oficina de tecnologia para estudantes'],['b','Uma notícia sobre um computador quebrado'],['c','Uma propaganda de viagem']],'a','Correto. O conjunto de palavras aponta para uma oficina escolar de tecnologia.','Skimming busca assunto e finalidade antes dos detalhes.')}
+        <h3>1. Ler com objetivo não é adivinhar</h3>
+        <div class="source-box"><strong class="card-title">School Tech Club — Saturday Workshop</strong><p>Join our beginner-friendly workshop this Saturday from 9 a.m. to noon. Students will build a simple mobile interface, test it in pairs and share the results. You don’t have to bring a laptop; the school will provide computers. Registration closes on Thursday.</p></div>
+        <p>Observe quanto do texto você já conhece: futuro com <strong>will</strong>, ausência de obrigação com <strong>don’t have to</strong>, horários e vocabulário transparente.</p>
+        ${choice('1','Skimming','Se sua primeira pergunta é “sobre o que é esse texto?”, o melhor movimento é',[['a','captar título, palavras-chave e ideia geral'],['b','traduzir cada palavra antes de continuar'],['c','procurar apenas a letra mais frequente']],'a','Correto. Skimming constrói visão global.','A estratégia responde à tarefa, não substitui a língua.')}
 
-        <h3>2. Scanning: procure o dado necessário</h3>
-        <p>Se a pergunta é <strong>“Quando termina a inscrição?”</strong>, procure <strong>registration</strong> e o marcador de tempo associado.</p>
-        ${choice('2','Scanning','Quando termina a inscrição?',[['a','Saturday'],['b','Thursday'],['c','Noon']],'b','Isso. Registration closes on Thursday.','Scanning transforma uma pergunta em palavras-alvo e dados específicos.')}
-        <div class="concept-box"><strong class="card-title">Estratégia não substitui conhecimento linguístico</strong><p>Quanto mais vocabulário e gramática você aprende, melhor skimming, scanning e inferência funcionam. O objetivo não é adivinhar; é usar a língua com eficiência.</p></div>
+        <h3>2. Skimming e scanning fazem trabalhos diferentes</h3>
+        <div class="comparison-grid"><div class="mini-card"><strong>Skimming</strong><p>Qual é o assunto? Qual a finalidade? Como o texto está organizado?</p></div><div class="mini-card"><strong>Scanning</strong><p>Onde está a data, o horário, o nome, o requisito ou o número que preciso?</p></div></div>
+        ${choice('2','Scanning','Quando termina a inscrição?',[['a','Saturday'],['b','Thursday'],['c','Noon']],'b','Isso. Registration closes on Thursday.','Você transformou uma pergunta em alvo de busca.')}
+        <div class="concept-box"><strong class="card-title">Estratégia + língua</strong><p>Você localiza Thursday, mas também precisa compreender <strong>registration closes</strong>. Estratégia sem vocabulário e gramática vira adivinhação; gramática sem estratégia torna a leitura lenta.</p></div>
 
-        <h3>3. Escutar primeiro para a ideia geral</h3>
-        <p>Na primeira escuta, não tente escrever tudo. Responda apenas à missão indicada.</p>
+        <h3>3. Listening: primeira escuta para o sentido global</h3>
         <div class="mission-box" data-listening-lab>
-          <div class="mission-head"><div><span class="mission-badge">Listening lab</span><strong class="card-title">Ouça com uma missão</strong></div></div>
-          <div data-audio-task data-lang="en-US" data-text="Hi everyone. Tomorrow's robotics practice starts at three thirty in Lab Two. Please bring your project notes, but you don't have to bring a laptop.">
-            <p><strong>Áudio A — ideia geral:</strong> o recado fala principalmente sobre o quê?</p>
+          <div data-audio-task data-text="Hi everyone. Tomorrow's robotics practice starts at three thirty in Lab Two. Please bring your project notes, but you don't have to bring a laptop.">
+            <p><strong>Áudio A:</strong> ouça primeiro apenas para descobrir a finalidade da mensagem.</p>
             <div class="quiz-actions"><button class="action-button primary" type="button" data-say>Ouvir</button><button class="action-button" type="button" data-say-slow>Mais devagar</button></div>
           </div>
-          ${choice('3','Ideia geral','Qual é o assunto principal do Áudio A?',[['a','Informações para uma prática de robótica'],['b','Uma viagem de férias'],['c','Uma receita']],'a','Correto. Robotics practice, starts e Lab Two definem o assunto.','Na primeira escuta, procure tema e finalidade.')}
-          <div data-audio-task data-lang="en-US" data-text="The meeting is on Friday at ten fifteen. We are going to review the prototype first, and then Maya will present the user test results.">
-            <p><strong>Áudio B — detalhes:</strong> ouça procurando dia, horário e ordem das atividades.</p>
+          ${choice('3','Gist','O áudio fala principalmente sobre',[['a','orientações para uma prática de robótica'],['b','uma viagem'],['c','uma notícia esportiva']],'a','Correto. Robotics practice, starts, Lab Two e bring definem a situação.','Na primeira escuta, não persiga cada palavra.')}
+          <div data-audio-task data-text="The meeting is on Friday at ten fifteen. We are going to review the prototype first, and then Maya will present the user test results.">
+            <p><strong>Áudio B:</strong> agora sua missão é localizar dia, horário e sequência.</p>
             <div class="quiz-actions"><button class="action-button primary" type="button" data-say>Ouvir</button><button class="action-button" type="button" data-say-slow>Mais devagar</button></div>
           </div>
-          ${choice('4','Detalhe','Que horas é a reunião?',[['a','10:50'],['b','10:15'],['c','3:15']],'b','Isso. A informação específica é ten fifteen.','Números e horários exigem atenção focada.')}
-          ${choice('5','Ordem','O que acontece primeiro?',[['a','Maya apresenta os testes'],['b','O grupo revisa o protótipo'],['c','A reunião é cancelada']],'b','Correto. First marca a primeira ação; then introduz a seguinte.','Marcadores de sequência ajudam a reconstruir a fala.')}
+          ${choice('4','Detalhe','Que horas é a reunião?',[['a','10:50'],['b','10:15'],['c','3:15']],'b','Correto. Ten fifteen = 10:15.','Na segunda escuta, procure o detalhe-alvo.')}
           <div class="mission-feedback" data-speech-status aria-live="polite"></div>
         </div>
 
-        <h3>4. Quando uma palavra some, continue ouvindo</h3>
-        <div class="note-box"><strong class="card-title">Evite o efeito dominó</strong><p>Se você perde uma palavra e continua pensando nela, pode perder também as frases seguintes. Pergunte: <strong>essa palavra é essencial para a tarefa?</strong> Se não for, continue.</p></div>
-        <div class="language-tool"><strong class="card-title">Repair toolbox</strong><div class="toolbox-grid">
-          <div class="toolbox-item"><strong>Repetição</strong><code>Could you repeat that, please?</code></div><div class="toolbox-item"><strong>Mais devagar</strong><code>Could you speak more slowly?</code></div>
-          <div class="toolbox-item"><strong>Confirmar</strong><code>Do you mean Friday at 10:15?</code></div><div class="toolbox-item"><strong>Parte perdida</strong><code>Sorry, I didn’t catch the last part.</code></div>
-        </div></div>
-        ${choice('6','Reparo','Você ouviu “thirteen” ou “thirty” e o número muda a tarefa. O que fazer?',[['a','Adivinhar e continuar'],['b','Pedir confirmação do número'],['c','Encerrar a conversa']],'b','Correto. Quando o detalhe muda a ação, confirmar é parte da competência comunicativa.','Compreensão não é fingir que entendeu.')}
+        <h3>4. Quando perder uma palavra, não perca a frase inteira</h3>
+        <p>Um erro comum é parar mentalmente numa palavra desconhecida. Pergunte: <strong>essa palavra é essencial para minha tarefa?</strong> Se não for, continue. Se for — horário, nome, instrução — confirme.</p>
+        <div class="language-tool"><div class="toolbox-grid"><div class="toolbox-item"><strong>Repetir</strong><code>Could you repeat that, please?</code></div><div class="toolbox-item"><strong>Mais devagar</strong><code>Could you speak more slowly?</code></div><div class="toolbox-item"><strong>Confirmar</strong><code>Do you mean Friday at 10:15?</code></div><div class="toolbox-item"><strong>Parte perdida</strong><code>Sorry, I didn’t catch the last part.</code></div></div></div>
+        ${choice('5','Reparo','Você ouviu thirteen ou thirty e isso muda o horário. O que é mais competente?',[['a','confirmar o número'],['b','fingir que entendeu'],['c','encerrar a conversa']],'a','Isso. Reparar a comunicação é habilidade, não fracasso.','Quando o detalhe muda a ação, confirme.')}
 
-        <h3>5. Contrações: reconhecer o inglês falado</h3>
-        <div class="comparison-grid"><div class="mini-card"><strong>Forma completa</strong><p>I am ready.<br>She is working.<br>We are going to study.<br>I will call you.</p></div><div class="mini-card"><strong>Forma frequente</strong><p>I’m ready.<br>She’s working.<br>We’re going to study.<br>I’ll call you.</p></div></div>
-        <p>Se você espera ouvir apenas as formas completas, pode não reconhecer frases que já conhece na escrita.</p>
+        <h3>5. Contrações explicam por que frases conhecidas parecem novas no áudio</h3>
+        <div class="comparison-grid"><div class="mini-card"><strong>Escrita completa</strong><p>I am ready.<br>She is working.<br>I will call you.</p></div><div class="mini-card"><strong>Fala frequente</strong><p>I’m ready.<br>She’s working.<br>I’ll call you.</p></div></div>
+        <p>Treine reconhecer blocos, não apenas palavras isoladas. O áudio dos diálogos dos capítulos anteriores existe justamente para essa reciclagem.</p>
 
-        <h3>6. Pronúncia do -ed: três finais frequentes</h3>
-        <div class="language-tool"><strong class="card-title">Não pronuncie todo -ed como uma sílaba separada</strong><div class="toolbox-grid">
-          <div class="toolbox-item"><strong>/t/</strong><code>worked, watched</code><p>sem nova sílaba</p></div><div class="toolbox-item"><strong>/d/</strong><code>played, cleaned</code><p>sem nova sílaba</p></div>
-          <div class="toolbox-item"><strong>/ɪd/</strong><code>wanted, needed</code><p>uma sílaba extra</p></div><div class="toolbox-item"><strong>Meta</strong><p>ser compreensível, não imitar perfeitamente um sotaque.</p></div>
-        </div></div>
-        ${choice('7','Pronúncia','Qual palavra normalmente tem uma sílaba extra no final -ed?',[['a','worked'],['b','played'],['c','wanted']],'c','Isso. Wanted termina com /ɪd/.','Depois de /t/ e /d/, o -ed costuma formar uma sílaba extra.')}
+        <h3>6. O -ed não tem uma única pronúncia</h3>
+        <div class="language-tool"><div class="toolbox-grid"><div class="toolbox-item"><strong>/t/</strong><code>worked, watched</code></div><div class="toolbox-item"><strong>/d/</strong><code>played, cleaned</code></div><div class="toolbox-item"><strong>/ɪd/</strong><code>wanted, needed</code></div></div></div>
+        <p>A escrita é a mesma, mas o som final depende do som anterior. <strong>Wanted</strong> cria uma sílaba extra; <strong>worked</strong> normalmente não.</p>
+        ${choice('6','Pronúncia','Qual palavra normalmente tem uma sílaba extra no final?',[['a','worked'],['b','played'],['c','wanted']],'c','Correto. Wanted termina em /ɪd/.','Depois de /t/ e /d/, o -ed forma uma sílaba extra.')}
 
-        <h3>7. Números e horários merecem treino específico</h3>
+        <h3>7. Números e horários: inteligibilidade é mais importante que “sotaque perfeito”</h3>
         <div class="two-col"><div class="mini-card"><strong>13 × 30</strong><p>thir<strong>TEEN</strong> × <strong>THIR</strong>ty</p></div><div class="mini-card"><strong>14 × 40</strong><p>four<strong>TEEN</strong> × <strong>FOR</strong>ty</p></div></div>
-        <p>Em informação crítica, confirme também pelos algarismos: <strong>“Do you mean thirteen — one three?”</strong></p>
+        <p>Em informação crítica, você também pode soletrar o número: <em>thirteen — one three</em>.</p>
 
-        <h3>8. Englishes: vocabulário e som podem variar</h3>
-        <p>O inglês circula entre comunidades diferentes. Não existe um único sotaque legítimo nem uma única escolha lexical para todas as situações.</p>
-        <div class="comparison-grid"><div class="mini-card"><strong>lift / elevator</strong><p>Duas formas para “elevador” em variedades diferentes.</p></div><div class="mini-card"><strong>mobile phone / cell phone</strong><p>Outro exemplo de variação lexical.</p></div></div>
-        <div class="source-box">
-          <strong class="card-title">Exposição sintética — não imitação</strong>
-          <p>Os botões pedem ao navegador vozes configuradas para variedades diferentes. A voz disponível depende do aparelho e <strong>não representa toda a diversidade real</strong>.</p>
-          <div class="quiz-actions"><button class="action-button" type="button" data-en-lang="en-GB" data-en-say="Take the lift to the second floor.">Ouvir opção en-GB</button><button class="action-button" type="button" data-en-lang="en-US" data-en-say="Take the elevator to the second floor.">Ouvir opção en-US</button></div>
-          <div class="mission-feedback" data-en-speech-status aria-live="polite"></div>
-        </div>
-        ${choice('8','Englishes','Ao ouvir uma variedade diferente da que você conhece, qual atitude é mais produtiva?',[['a','Concluir que está errada'],['b','Usar contexto, pedir repetição quando necessário e ampliar o repertório'],['c','Evitar qualquer conversa']],'b','Correto. Diversidade linguística exige adaptação e abertura.','Diferença não significa automaticamente erro.')}
+        <h3>8. Englishes: compreender variedade sem abandonar clareza</h3>
+        <p>O inglês circula entre pessoas de muitos países e repertórios. Pronúncia e vocabulário variam: <strong>lift/elevator</strong>, <strong>mobile phone/cell phone</strong>.</p>
+        <div class="concept-box"><strong class="card-title">Meta real</strong><p>Não é eliminar toda marca de origem. É desenvolver <strong>inteligibilidade, repertório e capacidade de adaptação</strong>. Essa visão está alinhada ao inglês como língua franca da BNCC.</p></div>
+        ${choice('7','Variação','Ao ouvir uma variedade diferente, o melhor é',[['a','usar contexto, pedir repetição e ampliar repertório'],['b','considerá-la automaticamente errada'],['c','evitar a interação']],'a','Correto. Variação faz parte do inglês real.','Inteligibilidade e adequação importam mais que imitar um único modelo.')}
 
-        <h3>9. Um texto artístico não é só um exercício de tradução</h3>
-        <div class="source-box">
-          <strong class="card-title">Microtexto original — “On the way home”</strong>
-          <p><em>Rain on the window.<br>A bright screen in my hand.<br>One message says: “Almost home.”<br>The city keeps moving.</em></p>
-          <p><small>Texto original produzido para o Mundo bit Byte.</small></p>
-          <div class="quiz-actions"><button class="action-button" type="button" data-en-say="Rain on the window. A bright screen in my hand. One message says, almost home. The city keeps moving.">Ouvir leitura</button></div>
-        </div>
-        <p>A leitura literal ajuda, mas ritmo, imagem e associação também produzem sentido. <strong>Almost home</strong> pode marcar deslocamento físico e sensação de proximidade.</p>
-        ${choice('9','Interpretação','Qual leitura é sustentada pelo conjunto do texto?',[['a','Uma pessoa está em deslocamento e percebe a aproximação de casa enquanto a cidade continua em movimento'],['b','É um manual para consertar uma janela'],['c','O texto prova em qual cidade o autor mora']],'a','Correto. A interpretação usa pistas do texto sem inventar informação externa.','Em textos artísticos, interprete e mostre quais elementos sustentam a leitura.')}
+        <h3>9. Texto artístico: entender além da informação literal</h3>
+        <div class="source-box"><strong class="card-title">Texto original MbB</strong><p><em>I carried two maps in my pocket:<br>one showed the streets,<br>the other showed the places<br>I was afraid to enter.<br>By the end of the day,<br>only one map was still useful.</em></p></div>
+        <p>A leitura literária exige outra pergunta. Não basta localizar uma data; precisamos observar imagem, contraste e possível sentido figurado.</p>
+        ${choice('8','Interpretação','O “segundo mapa” pode representar',[['a','medos ou limites internos do eu lírico'],['b','um mapa obrigatório de trânsito'],['c','apenas um erro de impressão']],'a','Essa interpretação é sustentada por “places I was afraid to enter”.','Em literatura, interpretação precisa de evidência textual, não de palpite solto.')}
+        <p>Veja como um mesmo aluno precisa alternar estratégias conforme o gênero: <strong>scanning</strong> serve bem para horário; num poema, o objetivo pode ser interpretar relações e imagens.</p>
 
-        <h3>10. Falar em blocos, não palavra por palavra</h3>
-        <div class="source-box"><strong class="card-title">Treino de blocos</strong><p><strong>I’m going to / study tonight.</strong></p><p><strong>Could you / repeat that, please?</strong></p><p><strong>Yesterday / we tested the app / and fixed two bugs.</strong></p></div>
-        <p>Leia respeitando os blocos de sentido. Depois repita sem olhar. O objetivo é reduzir pausas artificiais entre todas as palavras.</p>
-
-        <section class="chapter-checkpoint">
-          <span class="lesson-kicker">Aplicar</span>
-          <h3>11. Circuito de comunicação</h3>
-          <div class="challenge-box"><ol><li>Resuma o texto da oficina em uma frase usando skimming.</li><li>Use scanning para encontrar horário, prazo e equipamento.</li><li>Ouça novamente os dois áudios sem olhar as perguntas.</li><li>Repita três frases usando contrações naturais e blocos de sentido.</li><li>Crie uma frase para pedir repetição e outra para confirmar um horário.</li><li>Explique, em uma frase, sua interpretação do microtexto artístico e indique a pista que a sustenta.</li></ol><details><summary>Autoavaliação</summary><p>Entendi a ideia geral sem traduzir tudo? Localizei detalhes? Continuei mesmo perdendo uma palavra? Minha fala ficou compreensível? Consegui interpretar sem inventar?</p></details></div>
-          <div class="ok-box"><strong>Você avançou se agora consegue:</strong><p>combinar língua, leitura, escuta, pronúncia, interpretação e adaptação a diferentes formas de inglês.</p></div>
-        </section>
+        <section class="chapter-checkpoint"><span class="lesson-kicker">Aplicar</span><h3>10. Circuito de comunicação</h3><div class="challenge-box"><ol>
+          <li>Resuma a oficina em uma frase sem traduzir tudo.</li><li>Localize prazo e horário por scanning.</li><li>Ouça os dois áudios novamente e anote só palavras-chave.</li><li>Leia três frases em blocos de sentido usando contrações.</li><li>Crie uma frase para pedir repetição e outra para confirmar um número.</li><li>Explique em 2 frases uma interpretação possível do poema e cite a evidência que a sustenta.</li>
+        </ol></div><div class="ok-box"><strong>Você aprendeu de verdade se consegue:</strong><p>mudar sua estratégia conforme a tarefa e combinar língua, contexto e objetivo sem depender de tradução integral.</p></div></section>
       `,
       init
     });
@@ -116,7 +85,6 @@
     const status = $('[data-speech-status]', root);
     $$('[data-audio-task]', root).forEach(task => {
       const text = task.dataset.text || '';
-      const lang = task.dataset.lang || 'en-US';
       const speak = rate => {
         if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
           if (status) status.innerHTML = `<strong>Áudio indisponível neste navegador.</strong> Texto de apoio: “${text}”`;
@@ -124,7 +92,7 @@
         }
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = lang;
+        utterance.lang = 'en-US';
         utterance.rate = rate;
         window.speechSynthesis.speak(utterance);
       };
