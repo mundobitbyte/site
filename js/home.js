@@ -80,7 +80,7 @@
     [...availableGroups, ...unavailableGroups].forEach((group) => ensinoMedioView.appendChild(group));
   }
 
-  prioritizeAvailableSubjects();
+  queueMicrotask(prioritizeAvailableSubjects);
 
   if (!areasView || moduleViews.length === 0) {
     return;
