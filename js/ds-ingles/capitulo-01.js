@@ -9,111 +9,90 @@
       unit:'Fundamentos',
       technical:'greetings • subject pronouns • verb to be • contractions • questions • possessive adjectives • personal information',
       title:'01 — Hello! Quem sou eu?',
-      objective:'<strong>Objetivo:</strong> cumprimentar, apresentar-se, dizer informações pessoais simples, perguntar sobre outra pessoa e construir frases afirmativas, negativas e interrogativas com o verbo <em>to be</em>.',
+      objective:'<strong>Objetivo:</strong> compreender por que o verbo <em>to be</em> é necessário para falar de identidade, origem, estado e características; apresentar-se, negar informações e fazer perguntas simples.',
       html:`
         <section class="en-opening">
-          <span class="lesson-kicker">Primeira situação real</span>
+          <span class="lesson-kicker">Entender a necessidade</span>
           <div class="hero-box">
-            <strong class="card-title">Você entra em uma sala online com estudantes de outras escolas.</strong>
-            <p>Uma pessoa abre o microfone e diz: <strong>“Hi! I’m Alex. I’m from Canada. What’s your name?”</strong></p>
-            <p>Para participar, você não precisa começar por uma lista enorme de regras. Precisa aprender a montar <strong>mensagens simples e corretas sobre você</strong>.</p>
-            <p class="central-question"><strong>Missão do capítulo:</strong> ao final, você deverá conseguir se apresentar sem copiar uma frase pronta.</p>
+            <strong class="card-title">Você entra em uma chamada com estudantes de outros países.</strong>
+            <p>Uma pessoa diz: <strong>“Hi! I’m Alex. I’m from Canada. I’m a student. What’s your name?”</strong></p>
+            <p>Você quer responder quem é, de onde vem e como está. Antes de decorar uma regra, perceba a necessidade: em inglês, essas ideias costumam exigir um verbo que liga o sujeito à informação.</p>
+            <p class="central-question"><strong>Missão:</strong> ao final, você deverá conseguir se apresentar e fazer perguntas básicas sem copiar um modelo inteiro.</p>
           </div>
         </section>
 
-        <h3>1. Cumprimentar e iniciar uma conversa</h3>
-        <div class="language-tool">
-          <strong class="card-title">Primeiras expressões</strong>
-          <div class="toolbox-grid">
-            <div class="toolbox-item"><strong>Hello / Hi</strong><code>Hello! / Hi!</code><p>Olá / Oi.</p></div>
-            <div class="toolbox-item"><strong>Good morning</strong><code>Good morning!</code><p>Bom dia.</p></div>
-            <div class="toolbox-item"><strong>How are you?</strong><code>How are you?</code><p>Como você está?</p></div>
-            <div class="toolbox-item"><strong>Nice to meet you</strong><code>Nice to meet you.</code><p>Prazer em conhecer você.</p></div>
-          </div>
-        </div>
-
+        <h3>1. Primeiro, compreenda a conversa</h3>
         <div class="dialogue-box">
-          <div class="speech"><small>Alex</small>Hi! I’m Alex. What’s your name?</div>
-          <div class="speech you"><small>You</small>Hi! I’m Bruno. Nice to meet you.</div>
-          <div class="speech"><small>Alex</small>Nice to meet you too. Are you a student?</div>
+          <div class="speech"><small>Alex</small>Hi! I’m Alex. I’m from Canada. What’s your name?</div>
+          <div class="speech you"><small>You</small>Hi! I’m Bruno. I’m from Brazil.</div>
+          <div class="speech"><small>Alex</small>Are you a student?</div>
           <div class="speech you"><small>You</small>Yes, I am. I’m a high-school student.</div>
         </div>
+        ${choice('1','Descoberta','Nas frases “I’m Alex”, “I’m from Canada” e “I’m a student”, o que se repete?',[['a','A ideia I am / I’m'],['b','O verbo do'],['c','O passado -ed']],'a','Exato. A mesma estrutura liga I a identidade, origem e ocupação.','Procure o bloco que aparece nas três frases antes de pensar na tradução.')}
 
-        ${choice('1','Compreensão','Na pergunta “Are you a student?”, Alex quer saber',[['a','se Bruno é estudante'],['b','onde Bruno mora'],['c','quantos anos Bruno tem']],'a','Correto. Are you...? é uma estrutura usada para perguntar sobre identidade, estado ou característica.','Observe a estrutura completa da pergunta, não apenas palavras isoladas.')}
+        <h3>2. O que o <em>to be</em> realmente faz?</h3>
+        <p><strong>To be</strong> é normalmente traduzido por <strong>ser</strong> ou <strong>estar</strong>, mas o mais importante é entender sua função: ele liga uma pessoa ou coisa a uma identidade, característica, estado ou localização.</p>
+        <div class="comparison-grid">
+          <div class="mini-card"><strong>Identidade</strong><p>I <strong>am</strong> Rafael.</p><p>Eu <strong>sou</strong> Rafael.</p></div>
+          <div class="mini-card"><strong>Característica</strong><p>She <strong>is</strong> friendly.</p><p>Ela <strong>é</strong> amigável.</p></div>
+          <div class="mini-card"><strong>Estado</strong><p>We <strong>are</strong> tired.</p><p>Nós <strong>estamos</strong> cansados.</p></div>
+          <div class="mini-card"><strong>Localização</strong><p>They <strong>are</strong> at school.</p><p>Eles <strong>estão</strong> na escola.</p></div>
+        </div>
+        <div class="concept-box"><strong class="card-title">Evite a pergunta errada</strong><p>Não pergunte apenas “<em>am</em> significa sou ou estou?”. Pergunte: <strong>que relação a frase está construindo?</strong> O contexto decide a tradução natural.</p></div>
 
-        <h3>2. Quem está falando? Os pronomes sujeitos</h3>
-        <p>Antes do verbo, precisamos indicar quem é a pessoa, o grupo ou a coisa sobre a qual estamos falando.</p>
+        <h3>3. Quem vem antes do verbo?</h3>
+        <p>Os pronomes sujeitos mostram de quem estamos falando. Em inglês, eles aparecem com muita frequência porque a forma do verbo depende do sujeito.</p>
         <div class="three-col">
-          <div class="mini-card"><strong>I</strong><p>eu</p><p><strong>I am</strong> Ronaldo.</p></div>
-          <div class="mini-card"><strong>You</strong><p>você / vocês</p><p><strong>You are</strong> here.</p></div>
-          <div class="mini-card"><strong>He / She / It</strong><p>ele / ela / isso</p><p><strong>She is</strong> Ana.</p></div>
-          <div class="mini-card"><strong>We</strong><p>nós</p><p><strong>We are</strong> students.</p></div>
-          <div class="mini-card"><strong>They</strong><p>eles / elas</p><p><strong>They are</strong> friends.</p></div>
-          <div class="mini-card"><strong>It</strong><p>coisa, animal, situação</p><p><strong>It is</strong> a computer.</p></div>
+          <div class="mini-card"><strong>I</strong><p>eu</p><p>I am...</p></div>
+          <div class="mini-card"><strong>you</strong><p>você / vocês</p><p>You are...</p></div>
+          <div class="mini-card"><strong>he</strong><p>ele</p><p>He is...</p></div>
+          <div class="mini-card"><strong>she</strong><p>ela</p><p>She is...</p></div>
+          <div class="mini-card"><strong>it</strong><p>coisa/animal/situação</p><p>It is...</p></div>
+          <div class="mini-card"><strong>we / they</strong><p>nós / eles</p><p>We are... / They are...</p></div>
         </div>
+        ${choice('2','Pronomes','“Marina and I” pode ser substituído por',[['a','we'],['b','they'],['c','she']],'a','Correto. Marina + eu formam “nós”: we.','Inclua quem fala na conta: “X and I” = we.')}
 
-        ${choice('2','Pronomes','Qual pronome pode substituir “Pedro and Maria”?',[['a','He'],['b','They'],['c','It']],'b','Isso. Duas ou mais pessoas formam um grupo: they.','Pergunte: estou falando de uma pessoa, de mim, de nós ou de um grupo?')}
-
-        <h3>3. O verbo <em>to be</em>: am, is, are</h3>
-        <p>O verbo <strong>to be</strong> corresponde principalmente a <strong>ser/estar</strong>. No presente, ele muda conforme o sujeito.</p>
-        <div class="comparison-grid">
-          <div class="mini-card"><strong>I → am</strong><p>I am Brazilian.</p><p>I am tired.</p></div>
-          <div class="mini-card"><strong>He / She / It → is</strong><p>She is a teacher.</p><p>It is new.</p></div>
-          <div class="mini-card"><strong>You / We / They → are</strong><p>You are welcome.</p><p>We are ready.</p></div>
-        </div>
-
-        <div class="concept-box">
-          <strong class="card-title">Não traduza “to be” mecanicamente</strong>
-          <p><strong>I am a teacher.</strong> = Eu <em>sou</em> professor.</p>
-          <p><strong>I am tired.</strong> = Eu <em>estou</em> cansado.</p>
-          <p>A situação indica se a ideia é de identidade, característica ou estado.</p>
-        </div>
-
-        ${choice('3','Forma correta','Complete: “My school ___ in São Paulo.”',[['a','am'],['b','is'],['c','are']],'b','Correto. My school pode ser retomado por it; por isso usamos is.','He, she e it combinam com is.')}
-
-        <h3>4. Contrações: o inglês que você realmente ouve</h3>
-        <p>Na fala e na escrita informal, formas contraídas são muito frequentes.</p>
+        <h3>4. A forma: am, is ou are?</h3>
         <div class="language-tool">
-          <strong class="card-title">Forma completa → forma contraída</strong>
+          <strong class="card-title">Padrão essencial</strong>
           <div class="toolbox-grid">
-            <div class="toolbox-item"><strong>I am</strong><code>I’m</code></div>
-            <div class="toolbox-item"><strong>You are</strong><code>You’re</code></div>
-            <div class="toolbox-item"><strong>He is / She is</strong><code>He’s / She’s</code></div>
-            <div class="toolbox-item"><strong>We are / They are</strong><code>We’re / They’re</code></div>
+            <div class="toolbox-item"><strong>I → am</strong><code>I am ready.</code></div>
+            <div class="toolbox-item"><strong>he / she / it → is</strong><code>She is Brazilian.</code></div>
+            <div class="toolbox-item"><strong>you / we / they → are</strong><code>They are students.</code></div>
           </div>
-          <p><strong>I’m Ana</strong> e <strong>I am Ana</strong> têm a mesma estrutura gramatical. A contração muda a forma, não o sentido básico.</p>
         </div>
+        <p>Não trate isso como três palavras soltas. Memorize os <strong>blocos</strong>: <strong>I am</strong>, <strong>he is</strong>, <strong>she is</strong>, <strong>it is</strong>, <strong>you are</strong>, <strong>we are</strong>, <strong>they are</strong>.</p>
+        ${choice('3','Aplicação guiada','Complete: “My school ___ in São Paulo.”',[['a','am'],['b','is'],['c','are']],'b','Isso. My school pode ser retomado por it; portanto: it is.','Substitua mentalmente o sujeito por um pronome: my school → it.')}
 
-        <div class="note-box">
-          <strong class="card-title">Pronúncia útil</strong>
-          <p>Não tente pronunciar cada palavra como se estivesse separada. Em <strong>I’m a student</strong>, <em>I’m</em> funciona como uma unidade curta. Ouvir e repetir blocos inteiros ajuda mais do que decorar letras isoladas.</p>
-        </div>
-
-        <h3>5. Negar: acrescente <em>not</em></h3>
-        <div class="comparison-grid">
-          <div class="mini-card"><strong>Afirmativa</strong><p>I am tired.</p><p>She is Brazilian.</p><p>They are ready.</p></div>
-          <div class="mini-card"><strong>Negativa</strong><p>I am <strong>not</strong> tired.</p><p>She is <strong>not</strong> Brazilian.</p><p>They are <strong>not</strong> ready.</p></div>
-        </div>
-        <p>Também aparecem <strong>isn’t</strong> (= is not) e <strong>aren’t</strong> (= are not).</p>
-
-        ${choice('4','Negativa','Qual frase significa “Nós não estamos atrasados”?',[['a','We not are late.'],['b','We aren’t late.'],['c','We don’t late.']],'b','Isso. Com to be, a negativa é construída com be + not.','Neste caso, não usamos do/does. O próprio verbo to be forma a negativa.')}
-
-        <h3>6. Perguntar: o verbo vem antes do sujeito</h3>
-        <div class="argument-chain">
-          <span>You are ready.</span><b>→</b><span>Are you ready?</span>
-          <span>She is a student.</span><b>→</b><span>Is she a student?</span>
-        </div>
-        <p>Respostas curtas:</p>
+        <h3>5. Contrações: a forma que você vai ouvir</h3>
+        <p>Na fala e na escrita informal, as formas contraídas aparecem o tempo todo. Reconhecê-las é parte de compreender inglês real.</p>
         <div class="two-col">
-          <div class="mini-card"><strong>Are you Brazilian?</strong><p>Yes, I am.</p><p>No, I’m not.</p></div>
-          <div class="mini-card"><strong>Is he your teacher?</strong><p>Yes, he is.</p><p>No, he isn’t.</p></div>
+          <div class="mini-card"><strong>Forma completa</strong><p>I am<br>You are<br>She is<br>We are<br>They are</p></div>
+          <div class="mini-card"><strong>Forma contraída</strong><p>I’m<br>You’re<br>She’s<br>We’re<br>They’re</p></div>
         </div>
+        <div class="note-box"><strong class="card-title">Ouça o bloco</strong><p>Em <strong>I’m a student</strong>, não tente pronunciar cada palavra isoladamente. Leia como um pequeno bloco de sentido. Use o botão de áudio do diálogo e repita a frase inteira.</p></div>
 
-        ${choice('5','Pergunta','Qual pergunta está correta?',[['a','You are from Brazil?'],['b','Are you from Brazil?'],['c','Do you are from Brazil?']],'b','Correto. Com to be, invertemos verbo e sujeito: Are + you.','O verbo to be não precisa de do/does para formar perguntas.')}
+        <h3>6. Como negar uma informação</h3>
+        <p>Com <em>to be</em>, a negativa é direta: coloque <strong>not</strong> depois do verbo.</p>
+        <div class="comparison-grid">
+          <div class="mini-card"><strong>Afirmativa</strong><p>I am tired.</p><p>He is at home.</p><p>They are ready.</p></div>
+          <div class="mini-card"><strong>Negativa</strong><p>I am <strong>not</strong> tired.</p><p>He is <strong>not</strong> at home.</p><p>They are <strong>not</strong> ready.</p></div>
+        </div>
+        <p>Na fala: <strong>isn’t</strong> = is not; <strong>aren’t</strong> = are not. Com I, usamos normalmente <strong>I’m not</strong>.</p>
+        <div class="note-box"><strong class="card-title">Erro comum de quem pensa em português</strong><p>Não use <s>I don’t am tired</s>. O próprio <em>to be</em> forma a negativa: <strong>I’m not tired.</strong></p></div>
+        ${choice('4','Negativa','Qual frase significa “Nós não estamos atrasados”?',[['a','We don’t late.'],['b','We aren’t late.'],['c','We not are late.']],'b','Correto. Are + not → aren’t.','Com to be, não usamos do/does para negar.')}
 
-        <h3>7. Perguntas com informação</h3>
+        <h3>7. Como transformar afirmação em pergunta</h3>
+        <p>Outra vantagem do <em>to be</em>: ele não precisa de um auxiliar. Basta colocá-lo antes do sujeito.</p>
+        <div class="argument-chain"><span>You are ready.</span><b>→</b><span>Are you ready?</span><span>She is Brazilian.</span><b>→</b><span>Is she Brazilian?</span></div>
+        <div class="two-col">
+          <div class="mini-card"><strong>Are you a student?</strong><p>Yes, I am.<br>No, I’m not.</p></div>
+          <div class="mini-card"><strong>Is he your teacher?</strong><p>Yes, he is.<br>No, he isn’t.</p></div>
+        </div>
+        ${choice('5','Pergunta','Qual pergunta está correta?',[['a','Do you are from Brazil?'],['b','Are you from Brazil?'],['c','You are from Brazil?']],'b','Isso. Are passa para antes de you.','Com to be: verbo + sujeito + complemento?')}
+
+        <h3>8. Perguntas que resolvem necessidades reais</h3>
         <div class="language-tool">
-          <strong class="card-title">Perguntas que você realmente usa ao conhecer alguém</strong>
           <div class="toolbox-grid">
             <div class="toolbox-item"><strong>Nome</strong><code>What’s your name?</code></div>
             <div class="toolbox-item"><strong>Origem</strong><code>Where are you from?</code></div>
@@ -121,35 +100,25 @@
             <div class="toolbox-item"><strong>Ocupação</strong><code>Are you a student?</code></div>
           </div>
         </div>
-        <p>Observe <strong>your</strong> em <em>your name</em>. É um adjetivo possessivo: indica que o nome pertence à pessoa com quem falamos.</p>
-        <div class="mini-card"><strong>Primeiros possessivos</strong><p><strong>my</strong> name = meu nome • <strong>your</strong> name = seu nome • <strong>his</strong> name = nome dele • <strong>her</strong> name = nome dela • <strong>our</strong> school = nossa escola • <strong>their</strong> project = projeto deles.</p></div>
+        <p>Observe também <strong>my, your, his, her, our, their</strong>: essas palavras vêm antes de um substantivo para indicar relação/posse: <em>my name</em>, <em>your school</em>, <em>their project</em>.</p>
 
-        ${choice('6','Pergunta pessoal','Qual resposta combina com “Where are you from?”',[['a','I’m from Brazil.'],['b','I’m 16 years old.'],['c','My name is Lucas.']],'a','Isso. Where pergunta sobre lugar/origem.','Associe a palavra interrogativa ao tipo de informação pedido.')}
-
-        <h3>8. Monte sua apresentação em camadas</h3>
-        <div class="source-box">
-          <strong class="card-title">Modelo</strong>
-          <p><strong>Hello! My name is Laura. I’m 16 years old. I’m from Campinas, Brazil. I’m a high-school student. My favorite subject is Biology. I’m interested in music and technology.</strong></p>
-        </div>
-        <p>Não decore o parágrafo. Desmonte-o:</p>
-        <div class="argument-chain">
-          <span>My name is...</span><b>+</b><span>I’m ... years old.</span><b>+</b><span>I’m from...</span><b>+</b><span>I’m a...</span><b>+</b><span>My favorite ... is...</span>
-        </div>
+        <h3>9. Da regra para sua vida</h3>
+        <div class="source-box"><strong class="card-title">Modelo desmontado</strong><p><strong>Hello! My name is Laura.</strong> → nome<br><strong>I’m 16 years old.</strong> → idade<br><strong>I’m from Campinas.</strong> → origem<br><strong>I’m a student.</strong> → ocupação<br><strong>I’m interested in music.</strong> → interesse</p></div>
+        <p>O objetivo não é decorar Laura. É reutilizar a estrutura com informações verdadeiras sobre você.</p>
 
         <section class="chapter-checkpoint">
           <span class="lesson-kicker">Aplicar</span>
-          <h3>9. Sua primeira produção real</h3>
+          <h3>10. Produção e transferência</h3>
           <div class="challenge-box">
-            <strong class="card-title">Faça sem copiar o modelo inteiro</strong>
             <ol>
-              <li>Escreva de 4 a 6 frases apresentando você.</li>
-              <li>Inclua pelo menos duas formas do verbo <em>to be</em>.</li>
-              <li>Escreva uma pergunta que você faria a outra pessoa.</li>
-              <li>Leia em voz alta duas vezes: primeiro devagar; depois tentando unir as palavras em blocos.</li>
+              <li>Escreva 5 frases sobre você: nome, origem, ocupação/estudo, uma característica e um estado atual.</li>
+              <li>Transforme uma dessas frases em negativa.</li>
+              <li>Escreva duas perguntas para conhecer outra pessoa.</li>
+              <li>Leia sua apresentação em voz alta sem soletrar palavra por palavra.</li>
             </ol>
-            <details><summary>Checklist de revisão</summary><p>Usei <strong>I am/I’m</strong> para falar de mim? Usei <strong>is</strong> com he/she/it e <strong>are</strong> com you/we/they? Em perguntas com <em>to be</em>, coloquei o verbo antes do sujeito?</p></details>
+            <details><summary>Checklist</summary><p>Usei I am/I’m para falar de mim? Escolhi is/are de acordo com o sujeito? Coloquei not depois de to be? Nas perguntas, o verbo veio antes do sujeito?</p></details>
           </div>
-          <div class="ok-box"><strong>Você avançou se agora consegue:</strong><p>cumprimentar, dizer quem é, negar uma informação, perguntar algo simples e responder usando <em>to be</em>.</p></div>
+          <div class="ok-box"><strong>Você aprendeu de verdade se consegue:</strong><p>montar novas frases com <em>to be</em> sem depender do exemplo original e explicar por que escolheu <em>am</em>, <em>is</em> ou <em>are</em>.</p></div>
         </section>
       `
     });
