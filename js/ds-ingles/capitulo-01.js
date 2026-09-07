@@ -6,247 +6,154 @@
 
   function showChapter() {
     MBB.showLesson({
-      unit:'Começar usando',
-      technical:'contexto • pistas • cognatos • palavras-chave • inglês como língua franca • interação • estratégias de compensação',
-      title:'01 — Inglês já está ao seu redor',
-      objective:'<strong>Objetivo:</strong> perceber usos reais do inglês, compreender mensagens simples sem traduzir tudo e usar expressões básicas para agir, pedir ajuda e manter uma interação.',
+      unit:'Fundamentos',
+      technical:'greetings • subject pronouns • verb to be • contractions • questions • possessive adjectives • personal information',
+      title:'01 — Hello! Quem sou eu?',
+      objective:'<strong>Objetivo:</strong> cumprimentar, apresentar-se, dizer informações pessoais simples, perguntar sobre outra pessoa e construir frases afirmativas, negativas e interrogativas com o verbo <em>to be</em>.',
       html:`
         <section class="en-opening">
-          <span class="lesson-kicker">Uma manhã comum — com inglês no caminho</span>
+          <span class="lesson-kicker">Primeira situação real</span>
           <div class="hero-box">
-            <strong class="card-title">Você ainda nem chegou à aula de Inglês.</strong>
-            <p>Às 7h10, o celular avisa: <strong>“Storage almost full. Free up space to continue.”</strong> No caminho para a escola, um aplicativo pede <strong>“Update required”</strong>. No intervalo, chega uma mensagem de um estudante visitante: <strong>“Hi! Is this the robotics lab?”</strong></p>
-            <p>Em menos de duas horas, o inglês apareceu como <strong>aviso, instrução e interação</strong>. Em nenhuma dessas situações você precisa recitar uma regra gramatical. Precisa compreender o suficiente para <strong>tomar uma decisão</strong>.</p>
-            <p class="central-question"><strong>Pergunta central:</strong> é possível entender e usar inglês mesmo sem conhecer todas as palavras?</p>
+            <strong class="card-title">Você entra em uma sala online com estudantes de outras escolas.</strong>
+            <p>Uma pessoa abre o microfone e diz: <strong>“Hi! I’m Alex. I’m from Canada. What’s your name?”</strong></p>
+            <p>Para participar, você não precisa começar por uma lista enorme de regras. Precisa aprender a montar <strong>mensagens simples e corretas sobre você</strong>.</p>
+            <p class="central-question"><strong>Missão do capítulo:</strong> ao final, você deverá conseguir se apresentar sem copiar uma frase pronta.</p>
           </div>
         </section>
 
-        ${choice('1','Primeira decisão','O celular mostra “Storage almost full. Free up space to continue.” Você reconhece “full”, “space” e “continue”, além do ícone de armazenamento. Qual atitude demonstra melhor uma estratégia de leitura?',[['a','Parar até traduzir cada palavra'],['b','Usar palavras conhecidas, contexto da tela e objetivo do aviso para inferir que falta espaço'],['c','Ignorar qualquer mensagem em inglês']],'b','Isso. Você não precisa compreender 100% das palavras para construir uma hipótese suficientemente boa e agir.','Comece pelo objetivo da situação: o que a tela quer que você perceba ou faça?')}
-
-        <h3>1. Antes de traduzir, observe a situação</h3>
-        <p>Quando encontramos inglês no cotidiano, nosso cérebro não recebe apenas palavras. Recebe também <strong>lugar, formato, ícones, imagens, números, botões, conhecimento prévio e expectativa</strong>.</p>
-
-        <div class="argument-chain">
-          <span>Onde estou?</span><b>→</b><span>Que tipo de texto é?</span><b>→</b><span>O que reconheço?</span><b>→</b><span>O que preciso descobrir?</span><b>→</b><span>Qual ação faz sentido?</span>
-        </div>
-
-        <div class="concept-box">
-          <strong class="card-title">Compreender não é o mesmo que traduzir</strong>
-          <p>Traduzir pode ser útil em alguns momentos. Mas ler é construir sentido. Se você entende que <strong>“Update required”</strong> indica que uma atualização é necessária, já realizou a tarefa principal da leitura — mesmo sem transformar cada palavra em português.</p>
-        </div>
-
-        ${choice('2','Pistas do texto','Você vê um botão com a palavra “Download”, uma barra de progresso e “85%”. Qual elemento também participa da compreensão?',[['a','Apenas a palavra “Download”'],['b','Palavra, número, formato da interface e barra de progresso trabalham juntos'],['c','Somente o dicionário']],'b','Correto. Textos digitais são frequentemente multimodais: palavras, números e elementos visuais constroem sentido em conjunto.','Não reduza a leitura ao vocabulário isolado.')}
-
-        <h3>2. Missão rápida: sobreviva a três situações</h3>
-        <p>Agora não leia como se estivesse fazendo uma prova. Leia como alguém que <strong>precisa resolver algo</strong>.</p>
-
-        <div class="mission-box" data-mission-lab>
-          <div class="mission-head">
-            <div><span class="mission-badge">Mission lab</span><strong class="card-title">Escolha a ação mais coerente</strong></div>
-            <span class="mission-progress" data-mission-progress>0 de 3 resolvidas</span>
-          </div>
-
-          <div data-mission-task data-answer="b">
-            <p><strong>Situação A — aplicativo:</strong> “Password must contain at least 8 characters.”</p>
-            <button class="mission-option" type="button" data-mission-choice="a">Digitar exatamente 8 letras, obrigatoriamente.</button>
-            <button class="mission-option" type="button" data-mission-choice="b">Criar uma senha com no mínimo 8 caracteres.</button>
-            <button class="mission-option" type="button" data-mission-choice="c">Apagar a conta.</button>
-            <div class="mission-feedback" data-mission-feedback></div>
-          </div>
-
-          <div data-mission-task data-answer="a">
-            <p><strong>Situação B — escola:</strong> “Project presentations start at 2 p.m. in Room 12.”</p>
-            <button class="mission-option" type="button" data-mission-choice="a">As apresentações começam às 14h, na sala 12.</button>
-            <button class="mission-option" type="button" data-mission-choice="b">O projeto deve ter 12 páginas.</button>
-            <button class="mission-option" type="button" data-mission-choice="c">A atividade termina às 2h.</button>
-            <div class="mission-feedback" data-mission-feedback></div>
-          </div>
-
-          <div data-mission-task data-answer="c">
-            <p><strong>Situação C — mensagem:</strong> “Sorry, I’m late. The bus broke down.”</p>
-            <button class="mission-option" type="button" data-mission-choice="a">A pessoa está pedindo um ônibus novo.</button>
-            <button class="mission-option" type="button" data-mission-choice="b">A pessoa chegou cedo.</button>
-            <button class="mission-option" type="button" data-mission-choice="c">A pessoa se desculpa pelo atraso e explica que o ônibus quebrou.</button>
-            <div class="mission-feedback" data-mission-feedback></div>
-          </div>
-        </div>
-
-        <h3>3. Palavras transparentes ajudam — mas não comandam sozinhas</h3>
-        <p>Algumas palavras se parecem com o português e têm sentido próximo: <strong>international, digital, information, project, music, culture</strong>. Elas são chamadas de cognatos e podem abrir caminho para a leitura.</p>
-
-        <div class="note-box">
-          <strong class="card-title">Cuidado com o piloto automático</strong>
-          <p>Semelhança não garante significado. <strong>Actually</strong>, por exemplo, geralmente significa “na verdade”, e não “atualmente”. Por isso, a regra MbB é: <strong>use a semelhança como hipótese e confirme pelo contexto</strong>.</p>
-        </div>
-
-        ${choice('3','Cognato com contexto','Em “International Student Project Exhibition”, quais palavras já ajudam a prever o tema antes de usar um dicionário?',[['a','International, Student, Project e Exhibition'],['b','Nenhuma; só é possível ler depois da tradução completa'],['c','Apenas “student”']],'a','Isso. Várias pistas transparentes permitem prever que se trata de uma exposição de projetos de estudantes.','Procure primeiro o que já é acessível; depois investigue apenas o que realmente impede a compreensão.')}
-
-        <h3>4. Inglês não pertence a um único país</h3>
-        <p>Uma brasileira pode usar inglês para conversar com um japonês; uma pesquisadora queniana pode apresentar um trabalho para colegas mexicanos; uma equipe de software pode ter pessoas de vários países trabalhando na mesma documentação. Nesses casos, o inglês funciona como <strong>língua franca</strong>: uma língua de contato entre pessoas com repertórios linguísticos diferentes.</p>
-
-        <div class="comparison-grid">
-          <div class="mini-card"><strong>Objetivo irreal</strong><p>“Só posso falar quando meu inglês parecer o de um falante nativo específico.”</p></div>
-          <div class="mini-card"><strong>Objetivo comunicativo</strong><p>“Vou tornar minha mensagem compreensível, ouvir com atenção, pedir esclarecimento e melhorar com a prática.”</p></div>
-        </div>
-
-        <p>Isso não significa que gramática, pronúncia e vocabulário deixem de importar. Significa que eles são <strong>ferramentas para comunicar melhor</strong>, e não barreiras que proíbem o aluno de tentar.</p>
-
-        ${choice('4','Língua franca','Dois estudantes, um brasileiro e uma coreana, usam inglês para organizar um projeto. Qual foco é mais produtivo?',[['a','Descobrir quem imita melhor um único sotaque nativo'],['b','Construir entendimento, ajustar a fala quando necessário e usar recursos linguísticos adequados à situação'],['c','Evitar conversar até ambos dominarem toda a gramática']],'b','Correto. Comunicação envolve cooperação, inteligibilidade e capacidade de reparar mal-entendidos.','A língua é usada para fazer coisas com outras pessoas, não apenas para demonstrar domínio de regras.')}
-
-        <h3>5. Quando faltar uma palavra, não abandone a conversa</h3>
-        <div class="dialogue-box">
-          <div class="speech"><small>Visitor</small>Hi! Is this the robotics lab?</div>
-          <div class="speech you"><small>You</small>Yes. It’s on the second floor, next to the library.</div>
-          <div class="speech"><small>Visitor</small>Sorry, could you say that again?</div>
-          <div class="speech you"><small>You</small>Sure. Second floor. Next to the library.</div>
-        </div>
-
-        <p>O diálogo é simples, mas mostra uma habilidade importante: <strong>reformular</strong>. Quando a outra pessoa não entende, você pode repetir mais devagar, escolher palavras mais simples, apontar, escrever, mostrar uma imagem ou confirmar o que foi entendido.</p>
-
+        <h3>1. Cumprimentar e iniciar uma conversa</h3>
         <div class="language-tool">
-          <strong class="card-title">Toolbox — frases que mantêm a comunicação viva</strong>
+          <strong class="card-title">Primeiras expressões</strong>
           <div class="toolbox-grid">
-            <div class="toolbox-item"><strong>Não entendi</strong><code>I don’t understand.</code></div>
-            <div class="toolbox-item"><strong>Repita, por favor</strong><code>Could you repeat that, please?</code></div>
-            <div class="toolbox-item"><strong>Mais devagar</strong><code>Could you speak more slowly?</code></div>
-            <div class="toolbox-item"><strong>O que significa...?</strong><code>What does ___ mean?</code></div>
-            <div class="toolbox-item"><strong>Preciso de ajuda</strong><code>I need help.</code></div>
-            <div class="toolbox-item"><strong>Você pode me mostrar?</strong><code>Can you show me?</code></div>
+            <div class="toolbox-item"><strong>Hello / Hi</strong><code>Hello! / Hi!</code><p>Olá / Oi.</p></div>
+            <div class="toolbox-item"><strong>Good morning</strong><code>Good morning!</code><p>Bom dia.</p></div>
+            <div class="toolbox-item"><strong>How are you?</strong><code>How are you?</code><p>Como você está?</p></div>
+            <div class="toolbox-item"><strong>Nice to meet you</strong><code>Nice to meet you.</code><p>Prazer em conhecer você.</p></div>
           </div>
-          <p><strong>Observe a gramática em uso:</strong> <code>Can you...?</code> e <code>Could you...?</code> ajudam a fazer pedidos. Neste momento, o mais importante é perceber <strong>para que servem</strong>. A forma será refinada à medida que aparecer em novas situações.</p>
         </div>
 
-        ${choice('5','Reparo na conversa','Você não ouviu uma informação importante. Qual resposta mantém a interação de forma clara e educada?',[['a','Could you repeat that, please?'],['b','Whatever.'],['c','I speak perfect English.']],'a','Isso. Pedir repetição é uma estratégia real de comunicação, não um sinal de fracasso.','Um bom usuário da língua sabe também pedir ajuda e negociar sentido.')}
+        <div class="dialogue-box">
+          <div class="speech"><small>Alex</small>Hi! I’m Alex. What’s your name?</div>
+          <div class="speech you"><small>You</small>Hi! I’m Bruno. Nice to meet you.</div>
+          <div class="speech"><small>Alex</small>Nice to meet you too. Are you a student?</div>
+          <div class="speech you"><small>You</small>Yes, I am. I’m a high-school student.</div>
+        </div>
 
-        <h3>6. Monte uma mensagem que você realmente poderia usar</h3>
-        <p>Escolha a situação e o objetivo. O exemplo muda na hora para mostrar como poucas estruturas podem gerar mensagens úteis.</p>
+        ${choice('1','Compreensão','Na pergunta “Are you a student?”, Alex quer saber',[['a','se Bruno é estudante'],['b','onde Bruno mora'],['c','quantos anos Bruno tem']],'a','Correto. Are you...? é uma estrutura usada para perguntar sobre identidade, estado ou característica.','Observe a estrutura completa da pergunta, não apenas palavras isoladas.')}
 
-        <div class="builder-box" data-message-builder>
-          <strong class="card-title">Message builder</strong>
-          <div class="builder-controls">
-            <label>Situação
-              <select data-builder-context>
-                <option value="school">Escola</option>
-                <option value="online">Jogo / comunidade online</option>
-                <option value="project">Projeto de tecnologia</option>
-              </select>
-            </label>
-            <label>O que você precisa fazer?
-              <select data-builder-purpose>
-                <option value="introduce">Apresentar-se</option>
-                <option value="help">Pedir ajuda</option>
-                <option value="clarify">Pedir esclarecimento</option>
-              </select>
-            </label>
+        <h3>2. Quem está falando? Os pronomes sujeitos</h3>
+        <p>Antes do verbo, precisamos indicar quem é a pessoa, o grupo ou a coisa sobre a qual estamos falando.</p>
+        <div class="three-col">
+          <div class="mini-card"><strong>I</strong><p>eu</p><p><strong>I am</strong> Ronaldo.</p></div>
+          <div class="mini-card"><strong>You</strong><p>você / vocês</p><p><strong>You are</strong> here.</p></div>
+          <div class="mini-card"><strong>He / She / It</strong><p>ele / ela / isso</p><p><strong>She is</strong> Ana.</p></div>
+          <div class="mini-card"><strong>We</strong><p>nós</p><p><strong>We are</strong> students.</p></div>
+          <div class="mini-card"><strong>They</strong><p>eles / elas</p><p><strong>They are</strong> friends.</p></div>
+          <div class="mini-card"><strong>It</strong><p>coisa, animal, situação</p><p><strong>It is</strong> a computer.</p></div>
+        </div>
+
+        ${choice('2','Pronomes','Qual pronome pode substituir “Pedro and Maria”?',[['a','He'],['b','They'],['c','It']],'b','Isso. Duas ou mais pessoas formam um grupo: they.','Pergunte: estou falando de uma pessoa, de mim, de nós ou de um grupo?')}
+
+        <h3>3. O verbo <em>to be</em>: am, is, are</h3>
+        <p>O verbo <strong>to be</strong> corresponde principalmente a <strong>ser/estar</strong>. No presente, ele muda conforme o sujeito.</p>
+        <div class="comparison-grid">
+          <div class="mini-card"><strong>I → am</strong><p>I am Brazilian.</p><p>I am tired.</p></div>
+          <div class="mini-card"><strong>He / She / It → is</strong><p>She is a teacher.</p><p>It is new.</p></div>
+          <div class="mini-card"><strong>You / We / They → are</strong><p>You are welcome.</p><p>We are ready.</p></div>
+        </div>
+
+        <div class="concept-box">
+          <strong class="card-title">Não traduza “to be” mecanicamente</strong>
+          <p><strong>I am a teacher.</strong> = Eu <em>sou</em> professor.</p>
+          <p><strong>I am tired.</strong> = Eu <em>estou</em> cansado.</p>
+          <p>A situação indica se a ideia é de identidade, característica ou estado.</p>
+        </div>
+
+        ${choice('3','Forma correta','Complete: “My school ___ in São Paulo.”',[['a','am'],['b','is'],['c','are']],'b','Correto. My school pode ser retomado por it; por isso usamos is.','He, she e it combinam com is.')}
+
+        <h3>4. Contrações: o inglês que você realmente ouve</h3>
+        <p>Na fala e na escrita informal, formas contraídas são muito frequentes.</p>
+        <div class="language-tool">
+          <strong class="card-title">Forma completa → forma contraída</strong>
+          <div class="toolbox-grid">
+            <div class="toolbox-item"><strong>I am</strong><code>I’m</code></div>
+            <div class="toolbox-item"><strong>You are</strong><code>You’re</code></div>
+            <div class="toolbox-item"><strong>He is / She is</strong><code>He’s / She’s</code></div>
+            <div class="toolbox-item"><strong>We are / They are</strong><code>We’re / They’re</code></div>
           </div>
-          <div class="builder-preview" data-builder-preview></div>
+          <p><strong>I’m Ana</strong> e <strong>I am Ana</strong> têm a mesma estrutura gramatical. A contração muda a forma, não o sentido básico.</p>
         </div>
 
         <div class="note-box">
-          <strong class="card-title">Não decore o exemplo inteiro</strong>
-          <p>Observe as peças reutilizáveis: <strong>I’m...</strong>, <strong>I need...</strong>, <strong>Can you...?</strong>, <strong>What does... mean?</strong>. Aprender uma língua fica mais eficiente quando você percebe padrões e os adapta a novas necessidades.</p>
+          <strong class="card-title">Pronúncia útil</strong>
+          <p>Não tente pronunciar cada palavra como se estivesse separada. Em <strong>I’m a student</strong>, <em>I’m</em> funciona como uma unidade curta. Ouvir e repetir blocos inteiros ajuda mais do que decorar letras isoladas.</p>
         </div>
 
-        <h3>7. O que a gramática fará neste módulo?</h3>
-        <p>Ela aparecerá quando ajudar a resolver uma necessidade concreta. Para se apresentar, precisaremos de formas como <strong>I am / I’m</strong>. Para falar de rotina, surgirão formas do presente. Para relatar acontecimentos, precisaremos do passado. Para pedir, sugerir ou indicar possibilidade, aparecerão verbos modais.</p>
+        <h3>5. Negar: acrescente <em>not</em></h3>
+        <div class="comparison-grid">
+          <div class="mini-card"><strong>Afirmativa</strong><p>I am tired.</p><p>She is Brazilian.</p><p>They are ready.</p></div>
+          <div class="mini-card"><strong>Negativa</strong><p>I am <strong>not</strong> tired.</p><p>She is <strong>not</strong> Brazilian.</p><p>They are <strong>not</strong> ready.</p></div>
+        </div>
+        <p>Também aparecem <strong>isn’t</strong> (= is not) e <strong>aren’t</strong> (= are not).</p>
 
-        <div class="concept-box">
-          <strong class="card-title">Regra de ouro MbB para Inglês</strong>
-          <p><strong>Situação → intenção → linguagem → padrão → nova situação.</strong></p>
-          <p>Primeiro entendemos o que alguém precisa fazer com a língua. Depois observamos as palavras e estruturas que tornam isso possível. Por fim, transferimos o padrão para outro contexto.</p>
+        ${choice('4','Negativa','Qual frase significa “Nós não estamos atrasados”?',[['a','We not are late.'],['b','We aren’t late.'],['c','We don’t late.']],'b','Isso. Com to be, a negativa é construída com be + not.','Neste caso, não usamos do/does. O próprio verbo to be forma a negativa.')}
+
+        <h3>6. Perguntar: o verbo vem antes do sujeito</h3>
+        <div class="argument-chain">
+          <span>You are ready.</span><b>→</b><span>Are you ready?</span>
+          <span>She is a student.</span><b>→</b><span>Is she a student?</span>
+        </div>
+        <p>Respostas curtas:</p>
+        <div class="two-col">
+          <div class="mini-card"><strong>Are you Brazilian?</strong><p>Yes, I am.</p><p>No, I’m not.</p></div>
+          <div class="mini-card"><strong>Is he your teacher?</strong><p>Yes, he is.</p><p>No, he isn’t.</p></div>
+        </div>
+
+        ${choice('5','Pergunta','Qual pergunta está correta?',[['a','You are from Brazil?'],['b','Are you from Brazil?'],['c','Do you are from Brazil?']],'b','Correto. Com to be, invertemos verbo e sujeito: Are + you.','O verbo to be não precisa de do/does para formar perguntas.')}
+
+        <h3>7. Perguntas com informação</h3>
+        <div class="language-tool">
+          <strong class="card-title">Perguntas que você realmente usa ao conhecer alguém</strong>
+          <div class="toolbox-grid">
+            <div class="toolbox-item"><strong>Nome</strong><code>What’s your name?</code></div>
+            <div class="toolbox-item"><strong>Origem</strong><code>Where are you from?</code></div>
+            <div class="toolbox-item"><strong>Idade</strong><code>How old are you?</code></div>
+            <div class="toolbox-item"><strong>Ocupação</strong><code>Are you a student?</code></div>
+          </div>
+        </div>
+        <p>Observe <strong>your</strong> em <em>your name</em>. É um adjetivo possessivo: indica que o nome pertence à pessoa com quem falamos.</p>
+        <div class="mini-card"><strong>Primeiros possessivos</strong><p><strong>my</strong> name = meu nome • <strong>your</strong> name = seu nome • <strong>his</strong> name = nome dele • <strong>her</strong> name = nome dela • <strong>our</strong> school = nossa escola • <strong>their</strong> project = projeto deles.</p></div>
+
+        ${choice('6','Pergunta pessoal','Qual resposta combina com “Where are you from?”',[['a','I’m from Brazil.'],['b','I’m 16 years old.'],['c','My name is Lucas.']],'a','Isso. Where pergunta sobre lugar/origem.','Associe a palavra interrogativa ao tipo de informação pedido.')}
+
+        <h3>8. Monte sua apresentação em camadas</h3>
+        <div class="source-box">
+          <strong class="card-title">Modelo</strong>
+          <p><strong>Hello! My name is Laura. I’m 16 years old. I’m from Campinas, Brazil. I’m a high-school student. My favorite subject is Biology. I’m interested in music and technology.</strong></p>
+        </div>
+        <p>Não decore o parágrafo. Desmonte-o:</p>
+        <div class="argument-chain">
+          <span>My name is...</span><b>+</b><span>I’m ... years old.</span><b>+</b><span>I’m from...</span><b>+</b><span>I’m a...</span><b>+</b><span>My favorite ... is...</span>
         </div>
 
         <section class="chapter-checkpoint">
           <span class="lesson-kicker">Aplicar</span>
-          <h3>8. Crie seu cartão de sobrevivência em inglês</h3>
+          <h3>9. Sua primeira produção real</h3>
           <div class="challenge-box">
-            <strong class="card-title">Desafio de transferência</strong>
-            <p>Monte um pequeno cartão — no caderno ou celular — com <strong>seis frases que você realmente poderia precisar</strong> na escola, em um aplicativo, numa pesquisa, em um jogo ou num projeto.</p>
+            <strong class="card-title">Faça sem copiar o modelo inteiro</strong>
             <ol>
-              <li>uma frase para se apresentar;</li>
-              <li>uma para pedir ajuda;</li>
-              <li>uma para pedir repetição;</li>
-              <li>uma para perguntar o significado de algo;</li>
-              <li>uma para confirmar uma informação;</li>
-              <li>uma escolhida por você.</li>
+              <li>Escreva de 4 a 6 frases apresentando você.</li>
+              <li>Inclua pelo menos duas formas do verbo <em>to be</em>.</li>
+              <li>Escreva uma pergunta que você faria a outra pessoa.</li>
+              <li>Leia em voz alta duas vezes: primeiro devagar; depois tentando unir as palavras em blocos.</li>
             </ol>
-            <details><summary>Como saber se ficou bom?</summary><p>O cartão não precisa ter frases sofisticadas. Ele precisa ser <strong>útil, compreensível e reutilizável</strong>. Se você consegue imaginar uma situação real em que usaria cada frase, cumpriu o objetivo.</p></details>
+            <details><summary>Checklist de revisão</summary><p>Usei <strong>I am/I’m</strong> para falar de mim? Usei <strong>is</strong> com he/she/it e <strong>are</strong> com you/we/they? Em perguntas com <em>to be</em>, coloquei o verbo antes do sujeito?</p></details>
           </div>
+          <div class="ok-box"><strong>Você avançou se agora consegue:</strong><p>cumprimentar, dizer quem é, negar uma informação, perguntar algo simples e responder usando <em>to be</em>.</p></div>
         </section>
-
-        <div class="ok-box">
-          <strong class="card-title">Checkpoint MbB</strong>
-          <p><strong>Entender:</strong> inglês já aparece em situações cotidianas e pode ser compreendido por múltiplas pistas.</p>
-          <p><strong>Experimentar:</strong> você tomou decisões sem depender de tradução total.</p>
-          <p><strong>Analisar:</strong> percebeu contexto, cognatos, palavras-chave, multimodalidade e função comunicativa.</p>
-          <p><strong>Aplicar:</strong> usou e adaptou expressões para manter uma interação real.</p>
-        </div>
-      `,
-      init:initChapter
+      `
     });
   }
 
-  function initChapter(root) {
-    const lab = root.querySelector('[data-mission-lab]');
-    if (lab) {
-      const tasks = [...lab.querySelectorAll('[data-mission-task]')];
-      const progress = lab.querySelector('[data-mission-progress]');
-      const updateProgress = () => {
-        const done = tasks.filter(task => task.dataset.done === 'true').length;
-        if (progress) progress.textContent = `${done} de ${tasks.length} resolvidas`;
-      };
-
-      tasks.forEach(task => {
-        const feedback = task.querySelector('[data-mission-feedback]');
-        task.querySelectorAll('[data-mission-choice]').forEach(button => {
-          button.addEventListener('click', () => {
-            const ok = button.dataset.missionChoice === task.dataset.answer;
-            task.querySelectorAll('[data-mission-choice]').forEach(item => item.classList.remove('is-done'));
-            if (ok) {
-              button.classList.add('is-done');
-              task.dataset.done = 'true';
-              if (feedback) feedback.innerHTML = '<strong>Resolvido.</strong> Você extraiu a informação necessária para agir.';
-            } else {
-              if (feedback) feedback.innerHTML = '<strong>Ainda não.</strong> Volte à mensagem e procure as palavras e pistas que respondem à necessidade da situação.';
-            }
-            updateProgress();
-          });
-        });
-      });
-      updateProgress();
-    }
-
-    const builder = root.querySelector('[data-message-builder]');
-    if (builder) {
-      const context = builder.querySelector('[data-builder-context]');
-      const purpose = builder.querySelector('[data-builder-purpose]');
-      const preview = builder.querySelector('[data-builder-preview]');
-      const examples = {
-        school:{
-          introduce:"Hi! I’m a student here. My name is Alex.",
-          help:"Hi! I need help finding Room 12. Can you show me?",
-          clarify:"Sorry, I don’t understand. Could you repeat that, please?"
-        },
-        online:{
-          introduce:"Hi! I’m Alex. I’m from Brazil. Nice to meet you!",
-          help:"I need help with this level. Can you show me?",
-          clarify:"What does this message mean? Could you explain it?"
-        },
-        project:{
-          introduce:"Hi! I’m Alex. I’m part of the development team.",
-          help:"I need help with this error. Can you take a look?",
-          clarify:"Could you repeat the requirement, please? I want to make sure I understood."
-        }
-      };
-      const render = () => {
-        if (!preview || !context || !purpose) return;
-        preview.textContent = examples[context.value][purpose.value];
-      };
-      context?.addEventListener('change',render);
-      purpose?.addEventListener('change',render);
-      render();
-    }
-  }
-
-  MBB.enableChapter('01 Inglês', showChapter);
+  MBB.enableChapter('01 Hello!', showChapter);
 })();
