@@ -40,10 +40,9 @@ window.fundamentosInformaticaLessons.push({
     <h3>Então onde ficam os computadores físicos?</h3>
     <div class="media-text">
       <figure class="historical-media">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Datacenter_Server_Racks_%2822370909788%29.jpg/960px-Datacenter_Server_Racks_%2822370909788%29.jpg"
-          srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Datacenter_Server_Racks_%2822370909788%29.jpg/330px-Datacenter_Server_Racks_%2822370909788%29.jpg 330w, https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Datacenter_Server_Racks_%2822370909788%29.jpg/960px-Datacenter_Server_Racks_%2822370909788%29.jpg 960w, https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Datacenter_Server_Racks_%2822370909788%29.jpg/1280px-Datacenter_Server_Racks_%2822370909788%29.jpg 1280w"
-          sizes="(max-width:700px) 92vw, 560px" alt="Corredor de datacenter com racks de servidores" width="960" height="640" loading="lazy" decoding="async">
-        <figcaption><strong>Racks de servidores em um datacenter.</strong> A “nuvem” continua dependendo de máquinas, cabos, energia e refrigeração.<span class="credit">Carl Lender · CC BY 2.0 · Wikimedia Commons.</span></figcaption>
+        <img src="../img/fundamentos-informatica/datacenter-racks.svg"
+          alt="Corredor de datacenter com racks de servidores" width="960" height="640" loading="lazy" decoding="async">
+        <figcaption><strong>Racks de servidores em um datacenter.</strong> A “nuvem” continua dependendo de máquinas, cabos, energia e refrigeração.<span class="credit">Ilustração didática · Mundo bit Byte.</span></figcaption>
       </figure>
       <div>
         <div class="definition-box"><span class="term">Datacenter</span><p>É uma instalação preparada para abrigar e operar infraestrutura computacional e de comunicação, incluindo servidores, armazenamento, redes, energia e refrigeração.</p></div>
@@ -102,10 +101,9 @@ window.fundamentosInformaticaLessons.push({
     <div class="essence"><strong>Essência</strong><p>A <strong>virtualização</strong> permite criar ambientes virtuais sobre recursos físicos; máquinas virtuais são administradas por hipervisores. A <strong>nuvem</strong> oferece recursos sob demanda como serviço, apoiada em infraestrutura real de datacenters. IaaS, PaaS e SaaS transferem diferentes responsabilidades ao provedor. Contêineres oferecem outro modelo de isolamento, e disponibilidade, redundância e backup não são sinônimos.</p></div>
     <div class="bridge-box"><strong>Próxima pergunta</strong><p>Até agora pensamos em PCs, servidores e celulares. E quando a computação fica escondida dentro de uma máquina de lavar, um carro, uma estufa ou um sensor?</p></div>
 
-    <details class="sources-box"><summary>Fontes e crédito da imagem</summary><ul>
+    <details class="sources-box"><summary>Fontes</summary><ul>
       <li><a href="https://csrc.nist.gov/pubs/sp/800/145/final" target="_blank" rel="noopener">NIST SP 800-145 — definição de computação em nuvem</a></li>
       <li><a href="https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/" target="_blank" rel="noopener">Docker Docs — contêineres</a></li>
-      <li><a href="https://commons.wikimedia.org/wiki/File:Datacenter_Server_Racks_(22370909788).jpg" target="_blank" rel="noopener">Wikimedia Commons — datacenter (Carl Lender, CC BY 2.0)</a></li>
     </ul></details>
   `
 });
