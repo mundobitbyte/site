@@ -339,7 +339,7 @@
     <div class="module-head"><h3>Educação Física</h3></div>
     <div class="module-body">
       <p>1ª série com práticas corporais guiadas, jogos, esportes, ginástica, dança, lutas, aventura, saúde e autonomia para a vida.</p>
-      <span class="module-label">Diagnóstico + capítulos 01–07</span>
+      <span class="module-label">Diagnóstico + capítulos 01–08</span>
     </div>`;
   educacaoFisicaPlaceholder.replaceWith(educacaoFisicaCard);
 })();
