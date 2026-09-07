@@ -42,7 +42,7 @@
     if (!out) return;
 
     const objectiveText = {
-      ribbon:'tocar ou retirar uma fita presa lateralmente ao cós, sem agarrar roupa ou corpo',
+      ribbon:'tocar a ponta visível de uma fita encaixada lateralmente no cós, sem agarrar roupa ou corpo',
       zone:'proteger uma pequena zona marcada no chão e impedir a entrada apenas por posicionamento, sem empurrar',
       mirror:'manter distância combinada enquanto responde aos deslocamentos lentos do colega, sem contato'
     }[objective];
@@ -163,12 +163,12 @@
         <h3>5. Uma oposição segura pode existir sem atacar o corpo</h3>
         <div class="practice-box">
           <strong class="card-title">Experiência 3 — jogo da fita</strong>
-          <p>Use uma fita larga ou tira de tecido apenas <strong>encaixada lateralmente no cós</strong>, com parte visível. Não prenda com nó, alfinete ou objeto rígido.</p>
+          <p>Use uma fita larga ou tira de tecido apenas <strong>encaixada lateralmente no cós</strong>, com uma ponta visível. Não prenda com nó, alfinete ou objeto rígido.</p>
           <ol>
             <li>Em duplas, dentro de uma área pequena e livre, caminhem apenas.</li>
-            <li>O objetivo é tocar ou retirar a fita do colega com uma mão.</li>
+            <li>O objetivo é apenas <strong>tocar a ponta visível da fita</strong> do colega com uma mão; não retire nem puxe a fita.</li>
             <li>É proibido agarrar corpo, braço ou roupa; bloquear com empurrão; correr; mergulhar no chão ou segurar a mão do outro.</li>
-            <li>A rodada dura poucos segundos ou termina quando a fita é retirada.</li>
+            <li>A rodada dura poucos segundos ou termina quando alguém toca a fita.</li>
             <li>Ao sinal “PAROU”, ambos interrompem imediatamente e se afastam.</li>
           </ol>
           <p>Depois responda: foi mais importante “ser rápido” ou perceber distância, direção e momento de aproximação?</p>
@@ -180,7 +180,7 @@
         <div class="studio-box">
           <strong class="card-title">Construa uma oposição escolar segura</strong>
           <div class="two-col">
-            <label class="mini-card"><strong>Objetivo</strong><select id="fightObjective" style="width:100%"><option value="ribbon">Fita lateral</option><option value="zone">Proteger uma zona</option><option value="mirror">Manter distância</option></select></label>
+            <label class="mini-card"><strong>Objetivo</strong><select id="fightObjective" style="width:100%"><option value="ribbon">Tocar fita lateral</option><option value="zone">Proteger uma zona</option><option value="mirror">Manter distância</option></select></label>
             <label class="mini-card"><strong>Movimento</strong><select id="fightMobility" style="width:100%"><option value="walk">Somente caminhar</option><option value="step">Poucos passos por vez</option><option value="seated">Sentado / deslocamento reduzido</option></select></label>
             <label class="mini-card"><strong>Sinal de parada</strong><select id="fightStop" style="width:100%"><option value="voice">Palavra “PAROU”</option><option value="clap">Duas palmas</option><option value="signal">Sinal visual</option></select></label>
           </div>
