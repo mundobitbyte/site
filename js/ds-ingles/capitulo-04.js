@@ -9,114 +9,62 @@
       unit:'Agora',
       technical:'present continuous • am/is/are + verb-ing • actions now • spelling • simple present x present continuous',
       title:'04 — O que está acontecendo?',
-      objective:'<strong>Objetivo:</strong> descrever ações em andamento usando o presente contínuo e distinguir ações habituais de ações que estão acontecendo agora.',
+      objective:'<strong>Objetivo:</strong> compreender por que o inglês usa o <em>present continuous</em> para destacar ações em andamento e distingui-lo do <em>simple present</em>.',
       html:`
-        <section class="en-opening">
-          <span class="lesson-kicker">Uma cena em movimento</span>
-          <div class="hero-box">
-            <strong class="card-title">Você entra no laboratório durante uma aula prática.</strong>
-            <p>Alguns alunos estão programando, uma dupla está testando um robô, o professor está ajudando um grupo e alguém está gravando um vídeo.</p>
-            <p>Em inglês, para mostrar que uma ação está <strong>acontecendo agora</strong>, usamos normalmente <strong>am/is/are + verbo-ing</strong>.</p>
-            <p class="central-question"><strong>Missão do capítulo:</strong> conseguir olhar para uma cena e dizer o que cada pessoa está fazendo naquele momento.</p>
-          </div>
-        </section>
+        <section class="en-opening"><span class="lesson-kicker">Entender a necessidade</span><div class="hero-box">
+          <strong class="card-title">Você abre uma chamada de vídeo e alguém pergunta: “What are you doing?”</strong>
+          <p>Responder “I study English every day” fala de hábito. Mas a pessoa quer saber <strong>o que está acontecendo neste momento</strong>: “I’m studying English now.”</p>
+          <p class="central-question"><strong>Missão:</strong> aprender a escolher entre rotina e ação em andamento.</p>
+        </div></section>
 
-        <h3>1. A estrutura</h3>
-        <div class="argument-chain">
-          <span>sujeito</span><b>+</b><span>am / is / are</span><b>+</b><span>verbo-ing</span>
-        </div>
-        <div class="three-col">
-          <div class="mini-card"><strong>I</strong><p>I <strong>am studying</strong>.</p></div>
-          <div class="mini-card"><strong>He / She / It</strong><p>She <strong>is coding</strong>.</p></div>
-          <div class="mini-card"><strong>You / We / They</strong><p>They <strong>are testing</strong>.</p></div>
-        </div>
+        <h3>1. Observe duas frases parecidas</h3>
+        <div class="comparison-grid"><div class="mini-card"><strong>I study English every day.</strong><p>Rotina/hábito.</p></div><div class="mini-card"><strong>I am studying English now.</strong><p>Ação em andamento.</p></div></div>
+        ${choice('1','Descoberta','O que muda o sentido da segunda frase?',[['a','am + studying e a ideia de agora'],['b','o pronome I'],['c','a palavra English']],'a','Correto. A estrutura e o contexto apresentam a ação como em andamento.','Compare o tempo da situação, não apenas o verbo.')}
 
-        ${choice('1','Estrutura','Complete: “The students ___ working on a project.”',[['a','is'],['b','are'],['c','do']],'b','Correto. The students = they, então usamos are + working.','No present continuous, o verbo to be concorda com o sujeito.')}
+        <h3>2. A estrutura: <em>be + verbo-ing</em></h3>
+        <p>O presente contínuo combina duas peças que você já conhece parcialmente: o verbo <strong>to be</strong>, que concorda com o sujeito, e o verbo principal com <strong>-ing</strong>.</p>
+        <div class="argument-chain"><span>sujeito</span><b>+</b><span>am / is / are</span><b>+</b><span>verbo-ing</span></div>
+        <div class="three-col"><div class="mini-card"><strong>I</strong><p>I am studying.</p></div><div class="mini-card"><strong>he/she/it</strong><p>She is coding.</p></div><div class="mini-card"><strong>you/we/they</strong><p>They are testing.</p></div></div>
+        ${choice('2','Estrutura','Complete: “The students ___ working on a project.”',[['a','is'],['b','are'],['c','do']],'b','Isso. The students = they → are working.','A primeira decisão é a forma do to be.')}
 
-        <h3>2. Como formar o -ing</h3>
-        <div class="language-tool">
-          <strong class="card-title">Padrões frequentes</strong>
-          <div class="toolbox-grid">
-            <div class="toolbox-item"><strong>regra geral</strong><code>work → working</code></div>
-            <div class="toolbox-item"><strong>verbo terminado em -e</strong><code>write → writing</code></div>
-            <div class="toolbox-item"><strong>alguns verbos curtos</strong><code>run → running</code></div>
-            <div class="toolbox-item"><strong>-ie</strong><code>lie → lying</code></div>
-          </div>
-        </div>
-        <p>Não é necessário decorar todas as exceções de uma vez. Aprenda os padrões e confirme formas novas quando surgirem.</p>
+        <h3>3. Por que não basta colocar -ing?</h3>
+        <div class="note-box"><strong class="card-title">Erro comum</strong><p><s>She studying now.</s> está incompleto. O inglês precisa do verbo <strong>be</strong>: <strong>She is studying now.</strong></p></div>
+        <p>Pense no bloco inteiro: <strong>is studying</strong>, <strong>are working</strong>, <strong>am waiting</strong>.</p>
 
-        ${choice('2','Forma -ing','Qual forma está correta?',[['a','writeing'],['b','writing'],['c','writting']],'b','Isso. Em write, retiramos o -e final antes de acrescentar -ing.','write → writing.')}
+        <h3>4. Como formar o -ing</h3>
+        <div class="language-tool"><div class="toolbox-grid">
+          <div class="toolbox-item"><strong>regra geral</strong><code>work → working</code></div>
+          <div class="toolbox-item"><strong>-e final</strong><code>write → writing</code></div>
+          <div class="toolbox-item"><strong>verbo curto</strong><code>run → running</code></div>
+          <div class="toolbox-item"><strong>-ie</strong><code>lie → lying</code></div>
+        </div></div>
+        <p>Essas regras ajudam na escrita, mas não são o objetivo central. O mais importante é reconhecer e produzir a estrutura completa.</p>
 
-        <h3>3. Observe a cena</h3>
-        <div class="source-box">
-          <strong class="card-title">Live from the lab</strong>
-          <p>Lucas is <strong>connecting</strong> the Arduino. Maya and Pedro are <strong>checking</strong> the code. The teacher is <strong>talking</strong> to another group. Two students are <strong>taking</strong> notes. I am <strong>recording</strong> the test.</p>
-        </div>
+        <h3>5. Leia uma cena em movimento</h3>
+        <div class="source-box"><strong class="card-title">Live from the lab</strong><p>Lucas is connecting the Arduino. Maya and Pedro are checking the code. The teacher is talking to another group. Two students are taking notes. I am recording the test.</p></div>
+        ${choice('3','Compreensão','Quem está verificando o código?',[['a','Lucas'],['b','Maya and Pedro'],['c','The teacher']],'b','Correto. Maya and Pedro are checking the code.','Associe cada sujeito ao bloco verbal correspondente.')}
 
-        ${choice('3','Compreensão','Quem está verificando o código?',[['a','Lucas'],['b','Maya and Pedro'],['c','The teacher']],'b','Correto. Maya and Pedro are checking the code.','Procure o sujeito ligado à ação checking.')}
+        <h3>6. Negativas e perguntas: retome o <em>to be</em></h3>
+        <p>Como a estrutura contém <em>to be</em>, ele continua fazendo o trabalho de negar e perguntar.</p>
+        <div class="comparison-grid"><div class="mini-card"><strong>Negativa</strong><p>She <strong>isn’t studying</strong>.<br>They <strong>aren’t working</strong>.<br>I’m <strong>not waiting</strong>.</p></div><div class="mini-card"><strong>Pergunta</strong><p><strong>Is she studying?</strong><br><strong>Are they working?</strong><br><strong>What are you doing?</strong></p></div></div>
+        <div class="note-box"><strong class="card-title">Não misture os sistemas</strong><p><s>She doesn’t studying.</s> mistura simple present e continuous. Para ação em andamento: <strong>She isn’t studying.</strong></p></div>
+        ${choice('4','Pergunta','Qual pergunta busca a ação atual?',[['a','What do you do every day?'],['b','What are you doing now?'],['c','What did you do yesterday?']],'b','Isso. Are + doing e now apontam para o momento atual.','A pergunta deve combinar com a ideia de tempo.')}
 
-        <h3>4. Negativas</h3>
-        <div class="comparison-grid">
-          <div class="mini-card"><strong>Afirmativa</strong><p>He is working.</p><p>They are listening.</p></div>
-          <div class="mini-card"><strong>Negativa</strong><p>He <strong>isn’t working</strong>.</p><p>They <strong>aren’t listening</strong>.</p></div>
-        </div>
-        <p>Com <strong>I</strong>: <em>I’m not working.</em></p>
+        <h3>7. Simple present × present continuous: a escolha é de perspectiva</h3>
+        <div class="comparison-grid"><div class="mini-card"><strong>Hábito</strong><p>My father <strong>works</strong> at home.</p><p>usually, every day, on Mondays</p></div><div class="mini-card"><strong>Situação atual/temporária</strong><p>Today he <strong>is working</strong> at the office.</p><p>now, today, at the moment</p></div></div>
+        ${choice('5','Contraste','Complete: “I usually ___ by bus, but today I ___ with my father.”',[['a','go / am going'],['b','am going / go'],['c','went / going']],'a','Correto. Usually = hábito; today, nesse contraste, = situação atual/temporária.','Escolha o tempo pela mensagem que quer construir.')}
 
-        ${choice('4','Negativa','Qual frase está correta?',[['a','She doesn’t studying.'],['b','She isn’t studying.'],['c','She not is studying.']],'b','Correto. No present continuous, a negativa é formada no próprio verbo to be: isn’t/aren’t.','Retome a estrutura: be + verb-ing.')}
+        <h3>8. Nem todo verbo combina naturalmente com “agora em progresso”</h3>
+        <p>Verbos como <strong>know, understand, need, want, believe</strong>, em seus sentidos mais comuns, costumam descrever estado mental ou necessidade e aparecem frequentemente no simple present: <em>I understand the problem.</em></p>
+        <div class="concept-box"><strong class="card-title">Aprenda o uso frequente, não uma proibição absoluta</strong><p>Há contextos específicos em que alguns desses verbos aparecem no contínuo. Para esta base, o objetivo é reconhecer a escolha mais comum.</p></div>
 
-        <h3>5. Perguntas</h3>
-        <div class="argument-chain">
-          <span>She is studying.</span><b>→</b><span>Is she studying?</span>
-          <span>They are waiting.</span><b>→</b><span>Are they waiting?</span>
-        </div>
-        <div class="dialogue-box">
-          <div class="speech"><small>A</small>What are you doing?</div>
-          <div class="speech you"><small>B</small>I’m fixing a bug.</div>
-          <div class="speech"><small>A</small>Is the app working now?</div>
-          <div class="speech you"><small>B</small>No, it isn’t. I’m checking the login screen.</div>
-        </div>
+        <h3>9. Fale do que você realmente vê</h3>
+        <div class="dialogue-box"><div class="speech"><small>A</small>What are you doing?</div><div class="speech you"><small>B</small>I’m fixing a bug.</div><div class="speech"><small>A</small>Is the app working?</div><div class="speech you"><small>B</small>No, it isn’t. I’m checking the login screen.</div></div>
+        <p>Ouça o diálogo e perceba que as contrações estudadas no capítulo 01 reaparecem em uma função nova: <strong>I’m fixing</strong>, <strong>it isn’t</strong>.</p>
 
-        ${choice('5','Pergunta','Você vê sua colega com um livro aberto. Qual pergunta pode descobrir a ação atual?',[['a','What do you do every day?'],['b','What are you reading?'],['c','Where did you read?']],'b','Isso. What are you reading? pergunta o que está acontecendo neste momento.','A presença de are + reading marca ação em andamento.')}
-
-        <h3>6. Simple present × present continuous</h3>
-        <p>Agora precisamos distinguir dois presentes que fazem trabalhos diferentes.</p>
-        <div class="comparison-grid">
-          <div class="mini-card"><strong>Simple present — hábito</strong><p>I <strong>study</strong> English every day.</p><p>She <strong>works</strong> in the afternoon.</p><p>Marcadores: every day, usually, often, on Mondays.</p></div>
-          <div class="mini-card"><strong>Present continuous — agora</strong><p>I <strong>am studying</strong> English now.</p><p>She <strong>is working</strong> right now.</p><p>Marcadores: now, right now, at the moment.</p></div>
-        </div>
-
-        ${choice('6','Escolha do tempo','Complete: “My father usually ___ at home, but today he ___ at the office.”',[['a','works / is working'],['b','is working / works'],['c','work / working']],'a','Correto. Usually indica rotina; today, nesta comparação, descreve a situação atual.','Escolha o tempo pela ideia que precisa expressar, não pelo verbo isolado.')}
-
-        <h3>7. Alguns verbos não costumam aparecer no contínuo em certos sentidos</h3>
-        <p>Verbos como <strong>know, understand, believe, need, want</strong> frequentemente descrevem estado, pensamento ou necessidade, e em seus sentidos mais comuns costumam aparecer no presente simples:</p>
-        <div class="mini-card"><p>I <strong>know</strong> the answer.</p><p>I <strong>understand</strong> the problem.</p><p>We <strong>need</strong> more time.</p></div>
-        <div class="note-box"><strong class="card-title">Não transforme isso em regra absoluta</strong><p>Alguns desses verbos podem aparecer no contínuo em usos específicos. Para a base da 1ª série, aprenda primeiro os usos mais frequentes.</p></div>
-
-        <h3>8. Descreva uma imagem mental</h3>
-        <div class="challenge-box">
-          <strong class="card-title">Cena: intervalo na escola</strong>
-          <p>Imagine: dois alunos conversam perto da cantina; uma menina lê; três pessoas jogam vôlei; um professor caminha pelo pátio; você espera um amigo.</p>
-          <ol>
-            <li>Escreva cinco frases no present continuous.</li>
-            <li>Use pelo menos três sujeitos diferentes.</li>
-            <li>Depois escreva duas frases de rotina para comparar.</li>
-          </ol>
-          <details><summary>Modelo parcial</summary><p><strong>Two students are talking near the cafeteria. A girl is reading. Three students are playing volleyball. I am waiting for a friend. I usually have lunch at school, but today I am waiting outside.</strong></p></details>
-        </div>
-
-        <section class="chapter-checkpoint">
-          <span class="lesson-kicker">Aplicar</span>
-          <h3>9. Relato ao vivo</h3>
-          <div class="challenge-box">
-            <ol>
-              <li>Olhe ao seu redor por 30 segundos.</li>
-              <li>Diga em voz alta <strong>três coisas que estão acontecendo agora</strong>.</li>
-              <li>Depois diga <strong>duas coisas que você faz habitualmente</strong>.</li>
-              <li>Compare: qual tempo verbal você usou em cada grupo e por quê?</li>
-            </ol>
-          </div>
-          <div class="ok-box"><strong>Você avançou se agora consegue:</strong><p>descrever ações em andamento, negar e perguntar no present continuous e diferenciá-lo do simple present.</p></div>
-        </section>
+        <section class="chapter-checkpoint"><span class="lesson-kicker">Aplicar</span><h3>10. Relato ao vivo</h3><div class="challenge-box"><ol>
+          <li>Observe um ambiente real por 30 segundos.</li><li>Escreva ou diga 4 ações em andamento.</li><li>Depois escreva 2 hábitos das mesmas pessoas ou do mesmo lugar.</li><li>Explique por que escolheu continuous em umas frases e simple present em outras.</li>
+        </ol></div><div class="ok-box"><strong>Você aprendeu de verdade se consegue:</strong><p>olhar para a intenção temporal da frase e escolher a estrutura sem depender apenas de palavras como <em>now</em>.</p></div></section>
       `
     });
   }
