@@ -12,15 +12,15 @@
 
   const chapters = [
     { group:'Antes de começar', menu:'00 Diagnóstico', id:'diagnostico', enabled:true },
-    { group:'Começar usando', menu:'01 Inglês já está ao seu redor', id:'ingles-ao-redor' },
-    { group:'Leitura estratégica', menu:'02 Ler sem traduzir tudo', id:'ler-sem-traduzir' },
-    { group:'Interação', menu:'03 Interagir e compreender', id:'interagir-compreender' },
-    { group:'Cultura digital', menu:'04 Vida digital e tecnologia', id:'vida-digital' },
-    { group:'Informação e mídia', menu:'05 Notícias e checagem', id:'noticias-checagem' },
-    { group:'Persuasão', menu:'06 Publicidade e persuasão', id:'publicidade-persuasao' },
-    { group:'Arte e cultura', menu:'07 Histórias, música e cultura', id:'historias-cultura' },
-    { group:'Língua e identidade', menu:'08 Englishes, identidades e mundo', id:'englishes-identidades' },
-    { group:'Estudo e autoria', menu:'09 Estudar, pesquisar e produzir', id:'estudar-produzir' },
+    { group:'Fundamentos', menu:'01 Hello! Quem sou eu?', id:'hello-quem-sou' },
+    { group:'Presente', menu:'02 Minha rotina e preferências', id:'rotina-preferencias' },
+    { group:'Descrever', menu:'03 Pessoas, lugares e coisas', id:'pessoas-lugares-coisas' },
+    { group:'Agora', menu:'04 O que está acontecendo?', id:'acontecendo-agora' },
+    { group:'Passado', menu:'05 O que aconteceu?', id:'aconteceu' },
+    { group:'Futuro', menu:'06 Planos e futuro', id:'planos-futuro' },
+    { group:'Ações e escolhas', menu:'07 Poder, pedir, aconselhar e precisar', id:'modais-em-uso' },
+    { group:'Comunicação', menu:'08 Ler, ouvir e conversar melhor', id:'comunicacao-integrada' },
+    { group:'Aplicação', menu:'09 Inglês para estudar e trabalhar', id:'estudo-trabalho' },
     { group:'Prática', menu:'99 Exercícios e desafios', id:'exercicios' }
   ];
 
