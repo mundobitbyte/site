@@ -172,7 +172,7 @@
         ],'b','Correto. Resultado numérico só faz sentido quando sabemos qual aspecto estava sendo treinado e observado.','Se o foco era controle e organização, não use apenas velocidade como critério.')}
 
         <h3>4. Estação 2 — saltar: preparar, impulsionar e aterrissar</h3>
-        <p>No salto em distância oficial, atletas usam uma corrida de aproximação e saltam a partir de uma tábua para uma caixa de areia. A World Athletics descreve fases como aproximação, últimos passos, impulsão, ação no ar e aterrissagem. Na escola, porém, <strong>a prática precisa ser adaptada ao espaço e à segurança disponíveis</strong>. citeturn369614search0</p>
+        <p>No salto em distância oficial, atletas usam uma corrida de aproximação e saltam a partir de uma tábua para uma caixa de areia. A World Athletics descreve fases como aproximação, últimos passos, impulsão, ação no ar e aterrissagem. Na escola, porém, <strong>a prática precisa ser adaptada ao espaço e à segurança disponíveis</strong>.</p>
 
         <div class="practice-box">
           <strong class="card-title">Experiência escolar: salto horizontal controlado</strong>
