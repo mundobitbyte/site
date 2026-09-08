@@ -10,9 +10,9 @@ window.infraestruturaLessons.push({
   objective: 'Aplicar menor privilégio em contas e arquivos de laboratório, testar acesso com identidades diferentes e documentar a reversão sem antecipar compartilhamento em rede.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Chamado 014 · Estação compartilhada</span>
-      <h2>Três pessoas usam o computador. Todas receberam conta administrativa “para não dar trabalho”.</h2>
-      <p>Uma delas instalou uma extensão não autorizada; outra apagou um atalho pensando que era seu. A solução não é uma senha coletiva. <strong>Cada pessoa precisa de identidade própria e apenas do acesso necessário ao seu trabalho.</strong></p>
+      <span class="eyebrow">Entrega da SEC-02 · Responsabilidades de acesso</span>
+      <h2>Duas atendentes e a coordenadora usarão a estação; o suporte só deve administrá-la quando necessário.</h2>
+      <p>Na configuração antiga, todos usavam a mesma conta administrativa: uma extensão não autorizada foi instalada e um atalho comum foi apagado sem autoria identificável. A OS 006 só pode ser encerrada quando a rotina real estiver representada por identidades e acessos verificáveis. <strong>Cada pessoa precisa de identidade própria e apenas do privilégio necessário.</strong></p>
     </div>
 
     <h3>Entender: identidade, privilégio e recurso</h3>
@@ -86,7 +86,7 @@ window.infraestruturaLessons.push({
       <thead><tr><th>Recurso</th><th>Secretaria</th><th>Consulta</th><th>Técnico</th><th>Evidência</th></tr></thead>
       <tbody><tr><td>Pasta de laboratório</td><td>Ler/modificar</td><td>Ler</td><td>Administrar/reverter</td><td>Testes de abrir, criar, editar e excluir.</td></tr></tbody>
     </table></div>
-    <p>Uma matriz simples torna a intenção verificável. Quando um resultado diverge, investigamos identidade, grupos, herança e permissão efetiva.</p>
+    <p>A matriz passa a integrar o termo de entrega da SEC-02: ela registra o estado esperado para as atendentes, para a coordenadora e para o suporte. Se um resultado futuro divergir, a equipe poderá comparar identidade, grupos, herança e permissão efetiva com esse estado.</p>
 
     <div class="state-comparison" aria-label="Antes, intervenção, depois e interpretação das permissões">
       <div class="state-step"><strong>Antes</strong><span>Consulta consegue excluir; estado inicial e herança registrados.</span></div>
@@ -103,7 +103,7 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Permissão profissional liga <strong>identidade, necessidade, recurso, ação e teste</strong>. Menor privilégio reduz impacto; conta individual e registro permitem continuidade e responsabilização.</p></div>
-    <div class="bridge-box"><strong>O caso continua</strong><p>As contas estão separadas, mas a estação volta a ficar lenta após a entrada de um usuário. Agora precisamos observar processos, inicialização, serviços e logs sem encerrar o que não compreendemos.</p></div>
+    <div class="bridge-box"><strong>Entrega concluída; novo chamado</strong><p>A OS 006 é encerrada com baseline e matriz de acesso. Na primeira manhã de uso, uma atendente relata lentidão dois minutos após entrar em sua conta; o suporte não observou o sintoma na conta técnica. Essa diferença de identidade e horário abre o Chamado 021.</p></div>
   `
 });
 
@@ -117,9 +117,9 @@ window.infraestruturaLessons.push({
   objective: 'Observar consumo, inicialização, serviços e eventos no Windows, realizar uma mudança controlada em laboratório e correlacionar horário, componente e sintoma.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Chamado 014 · Lentidão reaparece</span>
-      <h2>Dois minutos depois do login, o disco fica muito ocupado e a estação demora a responder.</h2>
-      <p>Encerrar tudo no Gerenciador de Tarefas poderia aliviar o sintoma, mas destruiria pistas e talvez interrompesse o trabalho. <strong>Primeiro precisamos observar qual processo inicia, o que ele usa e se há eventos no mesmo horário.</strong></p>
+      <span class="eyebrow">Chamado 021 · Secretaria · SEC-02</span>
+      <h2>Às 8h, a atendente entra em sua conta; às 8h02, a planilha de atendimento quase não responde.</h2>
+      <p>Na validação da OS 006 e na conta técnica, o baseline não mostrou essa saturação. A diferença aponta para algo iniciado com a identidade da atendente, mas ainda não prova a causa. Encerrar tudo poderia destruir pistas e interromper trabalho. <strong>Primeiro precisamos correlacionar processo, recurso, evento, horário e conta.</strong></p>
     </div>
 
     <h3>Entender: programa, processo e serviço</h3>
@@ -133,7 +133,7 @@ window.infraestruturaLessons.push({
     <h3>Experimentar: construir uma linha do tempo</h3>
     <div class="task-box">
       <ol>
-        <li>registre o horário do login e o momento em que a lentidão começa;</li>
+        <li>registre a identidade, o horário do login e o momento em que a lentidão começa; compare com o baseline da OS 006;</li>
         <li>abra o <strong>Gerenciador de Tarefas</strong> e ordene por CPU, memória e disco, uma métrica por vez;</li>
         <li>anote nome, editor quando disponível, caminho/contexto e duração do pico;</li>
         <li>observe a área de <strong>Aplicativos de inicialização</strong>, sem desabilitar ainda;</li>
@@ -149,11 +149,11 @@ window.infraestruturaLessons.push({
         <div class="ui-representation task-window" role="img" aria-label="Representação do Gerenciador de Tarefas com CPU, memória, disco e lista de processos">
           <div class="ui-topbar"><span>Gerenciador de Tarefas · Processos</span><span>08:02:14</span></div>
           <div class="metric-strip"><div class="metric"><strong>23%</strong>CPU</div><div class="metric"><strong>61%</strong>Memória</div><div class="metric"><strong>96%</strong>Disco</div><div class="metric"><strong>2%</strong>GPU</div></div>
-          <div class="process-rows"><div class="process-row header"><span>Nome</span><span>CPU</span><span>Memória</span><span>Disco</span></div><div class="process-row"><span class="process-name"><strong>Editor de planilhas</strong><span>documento aberto</span></span><span>12%</span><span>420 MB</span><span>1%</span></div><div class="process-row investigate"><span class="process-name"><strong>Sincronização Empresa</strong><span>editor verificado · iniciou 08:01</span></span><span>3%</span><span>640 MB</span><span>88%</span></div><div class="process-row"><span class="process-name"><strong>Explorador do Windows</strong><span>Microsoft</span></span><span>1%</span><span>185 MB</span><span>0%</span></div><div class="process-row"><span class="process-name"><strong>Antimalware</strong><span>Microsoft</span></span><span>4%</span><span>310 MB</span><span>5%</span></div></div>
+          <div class="process-rows"><div class="process-row header"><span>Nome</span><span>CPU</span><span>Memória</span><span>Disco</span></div><div class="process-row"><span class="process-name"><strong>Editor de planilhas</strong><span>documento aberto</span></span><span>12%</span><span>420 MB</span><span>1%</span></div><div class="process-row investigate"><span class="process-name"><strong>Sincronização Escola</strong><span>editor verificado · iniciou 08:01</span></span><span>3%</span><span>640 MB</span><span>88%</span></div><div class="process-row"><span class="process-name"><strong>Explorador do Windows</strong><span>Microsoft</span></span><span>1%</span><span>185 MB</span><span>0%</span></div><div class="process-row"><span class="process-name"><strong>Antimalware</strong><span>Microsoft</span></span><span>4%</span><span>310 MB</span><span>5%</span></div></div>
         </div>
         <ol class="observation-prompts"><li><strong>Observe</strong>Qual recurso está saturado no instante do sintoma?</li><li><strong>Relacione</strong>Qual processo concentra o uso desse recurso e quando iniciou?</li><li><strong>Limite</strong>Isso prova causa? Qual teste controlado preserva o trabalho e a evidência?</li></ol>
         <button class="action-button" type="button" data-reveal-answer="#task-evidence" aria-expanded="false">Conferir leitura da evidência</button>
-        <div id="task-evidence" class="ok-box compact" hidden><strong>Hipótese, não sentença</strong><p>O disco está em 96% e “Sincronização Empresa” responde pela maior atividade, no intervalo do sintoma. Isso fortalece a hipótese de relação com a lentidão. Registre duração e recorrência; depois teste apenas a inicialização automática aprovada. Não finalize o processo aleatoriamente.</p></div>
+        <div id="task-evidence" class="ok-box compact" hidden><strong>Hipótese, não sentença</strong><p>O disco está em 96% e “Sincronização Escola” responde pela maior atividade, no intervalo do sintoma. Isso fortalece a hipótese de relação com a lentidão. Registre duração e recorrência; depois teste apenas a inicialização automática aprovada. Não finalize o processo aleatoriamente.</p></div>
       </div>
     </section>
 
@@ -176,15 +176,15 @@ window.infraestruturaLessons.push({
         <span class="representation-badge">Representação didática do Visualizador de Eventos</span>
         <div class="ui-representation event-window" role="img" aria-label="Representação do Visualizador de Eventos com linhas de data, origem, ID e mensagem">
           <div class="ui-topbar"><span>Visualizador de Eventos · Logs do Windows · Aplicativo</span><span>Chamado: sintoma às 08:02</span></div>
-          <div class="event-layout"><div class="event-tree"><strong>Logs do Windows</strong><span class="active">Aplicativo</span><span>Segurança</span><span>Instalação</span><span>Sistema</span></div><div class="event-content"><div class="event-row header"><span>Data e hora</span><span>Origem</span><span>ID</span><span>Resumo</span></div><div class="event-row"><span>07:44:09</span><span>DistributedCOM</span><span>10016</span><span>Aviso registrado antes do login</span></div><div class="event-row related"><span>08:02:18</span><span>SyncEmpresa</span><span>204</span><span>Varredura completa iniciada; 18.426 itens</span></div><div class="event-row"><span>08:17:51</span><span>Application Error</span><span>1000</span><span>Falha de aplicativo não reproduzida</span></div><div class="event-detail"><strong>Evento selecionado · SyncEmpresa · ID 204</strong>Horário coincide com o pico; componente tem relação funcional com a sincronização observada. A mensagem descreve início de varredura, mas não afirma que ela causou toda a lentidão.</div></div></div>
+          <div class="event-layout"><div class="event-tree"><strong>Logs do Windows</strong><span class="active">Aplicativo</span><span>Segurança</span><span>Instalação</span><span>Sistema</span></div><div class="event-content"><div class="event-row header"><span>Data e hora</span><span>Origem</span><span>ID</span><span>Resumo</span></div><div class="event-row"><span>07:44:09</span><span>DistributedCOM</span><span>10016</span><span>Aviso registrado antes do login</span></div><div class="event-row related"><span>08:02:18</span><span>SyncEscola</span><span>204</span><span>Varredura completa iniciada; 18.426 itens</span></div><div class="event-row"><span>08:17:51</span><span>Application Error</span><span>1000</span><span>Falha de aplicativo não reproduzida</span></div><div class="event-detail"><strong>Evento selecionado · SyncEscola · ID 204</strong>Horário coincide com o pico; componente tem relação funcional com a sincronização observada. A mensagem descreve início de varredura, mas não afirma que ela causou toda a lentidão.</div></div></div>
         </div>
         <ol class="observation-prompts"><li><strong>Localize</strong>Qual linha coincide com 08:02 e com o componente observado?</li><li><strong>Questione</strong>O aviso 10016 anterior prova algo sobre este sintoma?</li><li><strong>Próximo teste</strong>Que repetição permitiria comparar o mesmo intervalo com uma variável alterada?</li></ol>
-        <div class="visual-question"><strong>Registro mínimo:</strong> “Às 08:02:18, origem SyncEmpresa, ID 204, registrou varredura de 18.426 itens; no mesmo intervalo, o processo usou 88% do disco. Relação causal ainda em teste.”</div>
+        <div class="visual-question"><strong>Registro mínimo:</strong> “Na conta da atendente, às 08:02:18, origem SyncEscola, ID 204, registrou varredura de 18.426 itens; no mesmo intervalo, o processo usou 88% do disco. Relação causal ainda em teste.”</div>
       </div>
     </section>
 
     <h3>Intervenção segura: uma inicialização por vez</h3>
-    <p>No caso, um aplicativo aprovado de sincronização inicia com o usuário e executa uma varredura completa. A política permite alterar apenas sua inicialização automática.</p>
+    <p>No Chamado 021, o aplicativo aprovado que sincroniza documentos da secretaria inicia com a atendente e executa uma varredura completa. A política permite alterar apenas sua inicialização automática; a sincronização ainda precisa ocorrer em horário definido.</p>
     <ol>
       <li>registre o estado “Habilitado”, o impacto indicado e a forma de reativar;</li>
       <li>desabilite somente esse item no ambiente de laboratório;</li>
@@ -212,7 +212,7 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Gerenciador de Tarefas mostra estado; serviços sustentam funções; logs registram eventos. O diagnóstico nasce da <strong>correlação entre horário, sintoma, componente, mudança e repetição</strong>.</p></div>
-    <div class="bridge-box"><strong>O caso continua</strong><p>A inicialização foi ajustada sem perder a sincronização planejada. Para que a estação continue saudável, a equipe precisa de rotina de manutenção e de recuperação que tenha sido realmente testada.</p></div>
+    <div class="bridge-box"><strong>Consequência do Chamado 021</strong><p>A equipe programou a sincronização fora do início do atendimento e anexou P-01, M-01 e P-02 ao chamado. Ao explicar a mudança, percebeu que sincronização era tratada como backup, mas ninguém havia testado uma restauração. A coordenação solicita um plano preventivo para a escola.</p></div>
 
     <details class="sources-box"><summary>Referência oficial</summary><ul><li><a href="https://learn.microsoft.com/en-us/shows/inside/event-viewer" target="_blank" rel="noopener">Microsoft Learn — Event Viewer</a></li></ul></details>
   `
@@ -228,9 +228,9 @@ window.infraestruturaLessons.push({
   objective: 'Montar uma rotina preventiva de baixo risco, diferenciar backup de sincronização e validar restauração de arquivos antes de depender dela.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Chamado 014 · Depois do reparo</span>
-      <h2>A estação voltou ao trabalho. Sem rotina, o mesmo problema pode reaparecer silenciosamente.</h2>
-      <p>O SSD enche, atualizações ficam pendentes, entradas de ar acumulam poeira e a equipe chama sincronização de “backup”. <strong>Manutenção preventiva transforma surpresas em estados observáveis e recuperáveis.</strong></p>
+      <span class="eyebrow">Plano preventivo 003 · Pequena escola</span>
+      <h2>O Chamado 021 terminou, mas revelou um risco que pertence à organização inteira.</h2>
+      <p>Os registros da SEC-02 mostram espaço crescendo, atualização pendente e sincronização sem restauração testada; a inspeção das outras estações revela entradas de ar bloqueadas e nenhum calendário comum. A coordenadora quer saber quem verifica cada item e qual evidência recebe. <strong>Manutenção preventiva transforma surpresas em estados observáveis e recuperáveis.</strong></p>
     </div>
 
     <h3>Entender: manutenção não é “limpeza milagrosa”</h3>
@@ -265,7 +265,7 @@ window.infraestruturaLessons.push({
     <h3>Prática guiada: recuperar sem sobrescrever</h3>
     <div class="task-box">
       <ol>
-        <li>crie três arquivos de teste com conteúdo conhecido e registre data/tamanho;</li>
+        <li>crie três arquivos fictícios de secretaria, sem dados pessoais, e registre conteúdo, data e tamanho;</li>
         <li>execute o método de backup fornecido pelo laboratório;</li>
         <li>altere um arquivo e exclua outro na origem;</li>
         <li>restaure versões para uma <strong>pasta separada</strong>, preservando o estado atual;</li>
@@ -297,7 +297,7 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Manutenção preventiva observa tendências e reduz risco. Backup só cumpre sua função quando existe <strong>cópia adequada, retenção, proteção e restauração testada</strong>.</p></div>
-    <div class="bridge-box"><strong>O caso continua</strong><p>A estação agora tem baseline, rotina e recuperação testada. Falta consolidar o método quando uma nova falha aparece e a equipe precisa escolher entre testar, substituir, reverter ou encaminhar.</p></div>
+    <div class="bridge-box"><strong>O ambiente mudou</strong><p>O Plano 003 atribui responsáveis, reúne baselines e registra uma restauração de amostra. Com referências confiáveis para mais de uma estação, a equipe pode atender novas falhas sem reiniciar o raciocínio do zero.</p></div>
 
     <details class="sources-box"><summary>Documentação oficial atual</summary><ul>
       <li><a href="https://support.microsoft.com/pt-br/windows/experience/backup-recovery/backup-restore-and-recovery-in-windows" target="_blank" rel="noopener">Microsoft — backup, restauração e recuperação no Windows</a></li>
@@ -316,9 +316,9 @@ window.infraestruturaLessons.push({
   objective: 'Aplicar o ciclo completo de diagnóstico em casos de hardware, armazenamento e periféricos, usando comparação conhecida e substituição controlada somente quando segura.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Novo chamado · Mesma disciplina</span>
-      <h2>Um monitor apaga, um pendrive não aparece e outra estação fica lenta. Três sintomas; nenhuma causa provada.</h2>
-      <p>A organização já possui inventário, baseline e registros. Agora é possível comparar o estado atual com algo confiável. <strong>Diagnosticar é reduzir possibilidades com testes que discriminem hipóteses.</strong></p>
+      <span class="eyebrow">Fila de segunda-feira · Três novos chamados</span>
+      <h2>O monitor da LAB-06 apaga durante a aula; a SALA-04 não reconhece a mídia da professora; a ADM-01 fica lenta após dez minutos.</h2>
+      <p>Os impactos são diferentes, mas nenhum relato prova a causa. O Plano 003 fornece inventários, baselines, cabos e uma mídia de teste conhecidos; cada responsável informa horário e condição do sintoma. <strong>Diagnosticar é escolher a comparação que reduz possibilidades sem criar outro problema.</strong></p>
     </div>
 
     <h3>O ciclo que atravessa todos os casos</h3>
@@ -338,7 +338,7 @@ window.infraestruturaLessons.push({
     </div>
     <div class="note-box compact"><strong>Troca cruzada também altera encaixe e contato.</strong><p>Se o problema some, registre tudo o que mudou. Reencaixar um cabo pode ter sido a variável real; a peça removida não está automaticamente condenada.</p></div>
 
-    <h3>Caso A: “o monitor apaga por alguns segundos”</h3>
+    <h3>Caso A · LAB-06: “o monitor apaga por alguns segundos”</h3>
     <div class="table-wrap"><table>
       <thead><tr><th>Hipótese</th><th>Teste discriminante</th><th>Interpretação limitada</th></tr></thead>
       <tbody>
@@ -348,7 +348,7 @@ window.infraestruturaLessons.push({
       </tbody>
     </table></div>
 
-    <h3>Caso B: “o pendrive não aparece”</h3>
+    <h3>Caso B · SALA-04: “a mídia da professora não aparece”</h3>
     <ol>
       <li>registre porta, dispositivo, horário e sinais físicos;</li>
       <li>observe Gerenciador de Dispositivos e Gerenciamento de Disco sem formatar;</li>
@@ -359,7 +359,7 @@ window.infraestruturaLessons.push({
     </ol>
     <div class="danger-box compact"><strong>“Formatar para reconhecer” pode destruir dados.</strong><p>Uma partição sem letra, um sistema de arquivos não suportado e uma mídia fisicamente falhando exigem decisões diferentes. Preserve antes de alterar.</p></div>
 
-    <h3>Caso C: “a estação fica lenta depois de dez minutos”</h3>
+    <h3>Caso C · ADM-01: “a estação fica lenta depois de dez minutos”</h3>
     <div class="evidence-grid">
       <article><strong>Recurso</strong><p>Compare CPU, RAM e disco no mesmo intervalo e carga do baseline.</p></article>
       <article><strong>Temperatura</strong><p>Observe ventilação, ruído, ambiente e comportamento sob carga; não conclua sem medida confiável.</p></article>
@@ -369,7 +369,7 @@ window.infraestruturaLessons.push({
 
     <h3>Decidir substituir</h3>
     <p>Substituição é justificável quando compatibilidade foi confirmada, o teste isolou o componente com evidência suficiente, o custo/risco é aceitável e existe plano de validação. “É velho” ou “o novo é mais rápido” não constitui diagnóstico.</p>
-    <div class="record-box"><strong>Conclusão técnica curta</strong><p>“O sintoma acompanhou o cabo em três repetições; com cabo conhecido, os dois monitores permaneceram estáveis sob a mesma carga. Substituição do cabo aprovada. Limite: a falha não reapareceu durante 30 minutos de teste.”</p></div>
+    <div class="record-box"><strong>Conclusão técnica curta · LAB-06</strong><p>“O sintoma acompanhou o cabo em três repetições; com cabo conhecido, os dois monitores permaneceram estáveis sob a mesma carga. Substituição do cabo aprovada. Limite: a falha não reapareceu durante 30 minutos de teste.”</p></div>
 
     <section class="checkpoint compact-check" data-quiz-group>
       <span class="eyebrow">Isolamento</span><h3>O problema mudou depois da troca</h3>
@@ -379,6 +379,6 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Diagnóstico controlado descreve, prevê, testa e limita a conclusão. <strong>Known-good e troca cruzada só valem quando compatibilidade, segurança e variáveis estão sob controle.</strong></p></div>
-    <div class="bridge-box"><strong>Fechamento do módulo</strong><p>Na oficina 99, você receberá um caso incompleto e precisará conduzir o atendimento inteiro: triagem, plano, intervenção, validação e relatório.</p></div>
+    <div class="bridge-box"><strong>Fechamento do módulo</strong><p>Os três chamados deixam registros com informações ainda ausentes, testes possíveis e limites. Na oficina 99, sua equipe herdará um desses atendimentos e precisará conduzir triagem, plano, intervenção, validação e relatório sem inventar o que não foi observado.</p></div>
   `
 });

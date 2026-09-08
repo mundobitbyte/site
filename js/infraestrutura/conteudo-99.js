@@ -10,21 +10,21 @@ window.infraestruturaLessons.push({
   objective: 'Conduzir um atendimento técnico completo em caso real ou simulado, justificando decisões por evidências, preservando segurança e dados e entregando documentação reproduzível.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Oficina final · Sua equipe assume</span>
-      <h2>A pequena organização cresceu. Uma estação crítica precisa voltar ao trabalho sem perder dados nem repetir improvisos.</h2>
-      <p>Você não receberá uma receita. Receberá sintomas, contexto parcial, restrições e um equipamento/VM de laboratório. <strong>O resultado vale quando a equipe consegue explicar o problema, a evidência, a intervenção, o limite da conclusão e o estado entregue.</strong></p>
+      <span class="eyebrow">Plantão final · Mesma escola, nova equipe</span>
+      <h2>O turno anterior deixou um atendimento aberto; sua equipe precisa assumir sem perder o histórico.</h2>
+      <p>Você receberá um chamado da escola, registros parciais e um equipamento/VM de laboratório — não uma receita. A função afetada e o impacto são conhecidos, mas algumas informações ainda precisam ser solicitadas ou observadas. <strong>O resultado vale quando outra equipe consegue compreender a evidência, a intervenção, o limite da conclusão e o estado entregue.</strong></p>
     </div>
 
     <div class="danger-box"><strong>Contrato de segurança</strong><p>Trabalhe somente no alvo fornecido. Nenhuma ação destrutiva sem autorização e backup validado. Não abra fonte, não intervenha em circuito energizado, não exponha credenciais e pare quando o risco ultrapassar o laboratório ou a competência da equipe.</p></div>
 
     <h3>Escolha ou receba um caso</h3>
     <div class="comparison-grid">
-      <article><strong>Caso A · Lentidão após login</strong><p>O disco fica ocupado, há pouco espaço e um aplicativo inicia automaticamente. Existem arquivos locais sem política clara de backup.</p></article>
-      <article><strong>Caso B · Pós-instalação incompleta</strong><p>Windows inicia, mas áudio/periférico falha e há atualização pendente. A origem dos drivers anteriores é desconhecida.</p></article>
-      <article><strong>Caso C · Falha intermitente de vídeo</strong><p>O monitor apaga sob determinada condição. Há cabos compatíveis known-good e outra estação para troca cruzada controlada.</p></article>
-      <article><strong>Caso D · Acesso inadequado</strong><p>Usuário de consulta consegue modificar a pasta de laboratório; todos trabalham com contas administrativas.</p></article>
+      <article><strong>Caso A · SEC-03 · fila de atendimento</strong><p>Após o login da atendente, o disco fica ocupado e a abertura de cadastros atrasa. Há pouco espaço, um aplicativo inicia automaticamente e arquivos locais sem política clara de backup.</p></article>
+      <article><strong>Caso B · COORD-01 · reunião em 30 min</strong><p>O Windows inicia após uma instalação recente, mas áudio e um periférico falham. Há atualização pendente e a origem dos drivers anteriores é desconhecida.</p></article>
+      <article><strong>Caso C · LAB-06 · aula interrompida</strong><p>O monitor apaga sob uma condição ainda incompleta no chamado. Há cabos compatíveis known-good, inventário e outra estação para troca cruzada controlada.</p></article>
+      <article><strong>Caso D · pasta do laboratório · integridade</strong><p>A identidade de consulta consegue modificar arquivos de atividade. A matriz de acesso prevê somente leitura, mas todos ainda trabalham com contas administrativas.</p></article>
     </div>
-    <div class="note-box compact"><strong>O professor pode ocultar uma informação ou introduzir uma falha controlada.</strong><p>A equipe deve pedir o que falta e registrar o limite. Não invente dados para completar o chamado.</p></div>
+    <div class="note-box compact"><strong>Continue o trabalho; não comece do zero.</strong><p>Reutilize o modelo de chamado do capítulo 01, o inventário do 02, o baseline do 06, a matriz de acesso do 07, a linha do tempo de evidências do 08 e o registro de manutenção/restauração do 09. O professor pode ocultar uma informação ou introduzir uma falha controlada; peça o que falta e registre o limite.</p></div>
 
     <h3>Fluxo obrigatório da entrega</h3>
     <div class="table-wrap"><table>

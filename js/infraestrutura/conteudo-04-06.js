@@ -10,9 +10,9 @@ window.infraestruturaLessons.push({
   objective: 'Observar firmware e boot, preparar mídia oficial de instalação e escolher o dispositivo de inicialização sem alterar proteções ou apagar mídias por engano.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Padronização da nova estação</span>
-      <h2>O SSD novo está vazio. Ao ligar, a máquina precisa encontrar um ambiente confiável para instalar o sistema.</h2>
-      <p>A equipe recebeu um pendrive sem etiqueta e uma dica da Internet: “desative o Secure Boot que funciona”. Isso cria duas perguntas: <strong>podemos confiar na mídia e sabemos o efeito de alterar o firmware?</strong></p>
+      <span class="eyebrow">Ordem de Serviço 006 · Padronização da SEC-02</span>
+      <h2>O SSD novo está vazio; o disco antigo permanece preservado como contingência.</h2>
+      <p>A escola autorizou uma instalação padronizada como trabalho planejado, não como tentativa de corrigir o Chamado 014. Ao preparar a SEC-02, um integrante encontra um pendrive sem etiqueta e a dica “desative o Secure Boot que funciona”. Isso cria duas perguntas: <strong>podemos confiar na mídia e sabemos o efeito de alterar o firmware?</strong></p>
     </div>
 
     <h3>Entender: a sequência antes da área de trabalho</h3>
@@ -63,7 +63,7 @@ window.infraestruturaLessons.push({
     <div class="task-box">
       <ol>
         <li>no Windows, abra <strong>Informações do Sistema</strong> e registre “Modo da BIOS” e “Estado da Inicialização Segura”;</li>
-        <li>registre fabricante, modelo e versão/data do firmware;</li>
+        <li>compare fabricante, modelo e versão/data do firmware com o inventário anexado à OS 006;</li>
         <li>consulte o manual oficial do modelo para identificar a tecla do <strong>menu de boot temporário</strong> e a tecla de configuração;</li>
         <li>não salve mudanças: compare o que aparece com o registro do sistema e saia sem alterar.</li>
       </ol>
@@ -111,7 +111,7 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Firmware prepara a máquina; boot escolhe de onde iniciar; GPT organiza partições; Secure Boot protege a cadeia de inicialização. <strong>Mídia oficial, estado registrado e mudança mínima</strong> reduzem risco.</p></div>
-    <div class="bridge-box"><strong>O caso continua</strong><p>A mídia oficial foi criada e validada. Agora a equipe precisa instalar no SSD correto sem apagar o disco antigo que contém a cópia de contingência.</p></div>
+    <div class="bridge-box"><strong>A OS 006 continua</strong><p>A equipe etiquetou a mídia oficial e anexou o estado de UEFI, Secure Boot e TPM à ordem de serviço. Agora precisa usar o mapa de armazenamento da SEC-02 para instalar no SSD novo sem alterar o disco antigo de contingência.</p></div>
 
     <details class="sources-box"><summary>Documentação oficial atual</summary><ul>
       <li><a href="https://support.microsoft.com/pt-br/windows/deployment/install-upgrade/create-installation-media-for-windows" target="_blank" rel="noopener">Microsoft — criar mídia de instalação do Windows</a></li>
@@ -131,9 +131,9 @@ window.infraestruturaLessons.push({
   objective: 'Planejar e executar uma instalação limpa de Windows 11 em laboratório, distinguindo unidade, partição e sistema de arquivos e validando estados antes e depois.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Chamado 014 · Estação padronizada</span>
+      <span class="eyebrow">Ordem de Serviço 006 · Instalação da SEC-02</span>
       <h2>O instalador mostra duas unidades. Uma é o SSD novo; a outra guarda a cópia de contingência.</h2>
-      <p>Os botões “Excluir” e “Formatar” não sabem qual disco você pretendia usar. <strong>A diferença entre um procedimento profissional e uma perda de dados é a conferência do alvo antes da ação.</strong></p>
+      <p>A ficha da OS 006 traz capacidade, modelo e finalidade de cada disco, além da confirmação da cópia feita pela coordenadora. Mesmo assim, os botões “Excluir” e “Formatar” não sabem qual disco você pretendia usar. <strong>A diferença entre um procedimento profissional e uma perda de dados é conferir o alvo com o registro antes da ação.</strong></p>
     </div>
 
     <div class="danger-box"><strong>Laboratório autorizado somente</strong><p>Use máquina ou VM preparada pelo professor. Não pratique instalação limpa no computador pessoal, de trabalho ou em equipamento que contenha dados não verificados. Excluir partição e formatar são ações destrutivas.</p></div>
@@ -205,7 +205,7 @@ window.infraestruturaLessons.push({
     </div>
 
     <h3>Aplicar: primeiro baseline</h3>
-    <div class="record-box"><p>Antes de instalar aplicações, registre:</p><ul>
+    <div class="record-box"><p><strong>Complete o primeiro baseline da OS 006</strong> antes de instalar aplicações:</p><ul>
       <li>edição, versão e compilação do Windows;</li>
       <li>data da instalação e nome do equipamento;</li>
       <li>capacidade/partições do disco-alvo;</li>
@@ -228,7 +228,7 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Instalação limpa começa antes do instalador: <strong>requisitos, licença, backup testado, alvo identificado e recuperação planejada</strong>. Dentro do instalador, cada clique deve confirmar um estado conhecido.</p></div>
-    <div class="bridge-box"><strong>O caso continua</strong><p>O Windows iniciou no SSD correto. “Chegou à área de trabalho” ainda não significa estação pronta: faltam atualizações, drivers, testes e uma linha de base.</p></div>
+    <div class="bridge-box"><strong>A OS 006 continua</strong><p>O Windows iniciou no SSD correto e as evidências I-01 a I-04 foram anexadas. A entrega à secretaria ainda está bloqueada: áudio, atualizações, dispositivos e funções essenciais não foram validados contra o baseline.</p></div>
 
     <details class="sources-box"><summary>Documentação oficial atual</summary><ul>
       <li><a href="https://support.microsoft.com/pt-br/windows/deployment/install-upgrade/ways-to-install-windows-11" target="_blank" rel="noopener">Microsoft — maneiras de instalar o Windows 11</a></li>
@@ -247,9 +247,9 @@ window.infraestruturaLessons.push({
   objective: 'Atualizar Windows e drivers por fontes confiáveis, verificar dispositivos essenciais e produzir um baseline pós-instalação que permita comparação futura.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Chamado 014 · Primeira inicialização</span>
+      <span class="eyebrow">Ordem de Serviço 006 · Validação da SEC-02</span>
       <h2>A tela funciona, mas o áudio não aparece e há um dispositivo desconhecido.</h2>
-      <p>Um site promete “detectar e instalar todos os drivers”. Usá-lo seria rápido, mas retiraria controle sobre origem, versão e reversão. <strong>Uma estação pronta não é a que apenas inicia; é a que passou por testes definidos.</strong></p>
+      <p>A coordenadora precisa de áudio para atendimentos e de USB para o leitor autorizado; por isso, “chegou à área de trabalho” não atende ao termo de entrega. Um site promete detectar todos os drivers, mas retiraria controle sobre origem, versão e reversão. <strong>Uma estação pronta é a que passou pelos testes definidos para o trabalho real.</strong></p>
     </div>
 
     <h3>Entender: driver liga o sistema ao dispositivo</h3>
@@ -259,7 +259,7 @@ window.infraestruturaLessons.push({
 
     <h3>Experimentar: sequência controlada</h3>
     <ol>
-      <li>registre versão do Windows e estado inicial do Gerenciador de Dispositivos;</li>
+      <li>retome o baseline da instalação e registre versão do Windows e estado inicial do Gerenciador de Dispositivos;</li>
       <li>execute o Windows Update e reinicie quando solicitado;</li>
       <li>repita a verificação até não haver atualização pendente relevante;</li>
       <li>revise atualizações opcionais de driver conscientemente — “opcional” não significa “instalar tudo”;</li>
@@ -291,7 +291,7 @@ window.infraestruturaLessons.push({
     </div>
 
     <h3>Aplicar: baseline pós-instalação</h3>
-    <div class="record-box"><p>O registro final deve permitir comparar o estado futuro:</p><ul>
+    <div class="record-box"><p><strong>Feche o baseline da OS 006.</strong> O registro deve permitir comparar o estado futuro:</p><ul>
       <li>edição, versão e compilação do sistema;</li>
       <li>data/hora da última busca de atualização;</li>
       <li>drivers críticos: origem e versão quando houve intervenção manual;</li>
@@ -308,7 +308,7 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Pós-instalação profissional segue uma cadeia: <strong>fonte confiável → uma mudança → teste da função → evidência → baseline</strong>. Iniciar não é o mesmo que estar pronto.</p></div>
-    <div class="bridge-box"><strong>O caso continua</strong><p>A estação está atualizada e validada. Agora precisamos impedir que qualquer usuário altere o sistema inteiro só porque precisa editar uma planilha.</p></div>
+    <div class="bridge-box"><strong>A entrega continua</strong><p>A SEC-02 está atualizada e suas funções foram validadas. Antes de devolvê-la, a equipe precisa traduzir as funções de duas atendentes, da coordenadora e do suporte técnico em contas e permissões — sem conceder administração a todos.</p></div>
 
     <details class="sources-box"><summary>Documentação oficial atual</summary><ul>
       <li><a href="https://support.microsoft.com/pt-br/windows/hardware/drivers/automatically-get-recommended-and-updated-hardware-drivers" target="_blank" rel="noopener">Microsoft — drivers recomendados e atualizados</a></li>

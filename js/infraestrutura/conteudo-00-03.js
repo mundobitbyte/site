@@ -10,9 +10,9 @@ window.infraestruturaLessons.push({
   objective: 'Identificar o ponto de partida do aluno em decisões práticas de hardware, sistema, dados, permissões e diagnóstico, sem transformar o diagnóstico em revisão teórica.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Primeiro dia de suporte</span>
-      <h2>A secretaria precisa usar um computador que começou a falhar. Três pessoas já tentaram “arrumar”.</h2>
-      <p>Uma atualizou programas, outra trocou cabos e alguém sugeriu formatar. Não há registro do que mudou. Há documentos importantes na máquina e o atendimento começa em 40 minutos. <strong>Sua primeira competência não é saber um comando: é saber o que ainda precisa ser descoberto.</strong></p>
+      <span class="eyebrow">Primeiro dia de suporte · pequena escola</span>
+      <h2>A secretaria precisa atender famílias em 40 minutos, mas seu computador começou a falhar.</h2>
+      <p>A atendente atualizou programas, um colega trocou cabos e alguém sugeriu formatar. A coordenadora sabe que há planilhas de matrícula apenas na máquina, mas ninguém registrou o que mudou. <strong>Sua primeira competência não é saber um comando: é saber o que ainda precisa ser descoberto.</strong></p>
     </div>
 
     <div class="note-box"><strong>Como usar este diagnóstico</strong><p>Responda pelo que você faria de verdade. O resultado não é nota. Ele indica quais decisões precisam de mais atenção durante o módulo.</p></div>
@@ -62,7 +62,7 @@ window.infraestruturaLessons.push({
 
     <div class="record-box"><strong>Registro de partida</strong><p>Anote as questões em que sua justificativa foi diferente. Ao final do módulo, refaça o diagnóstico e compare <em>como</em> você decidiu, não apenas quantos itens acertou.</p></div>
     <div class="essence"><strong>Essência</strong><p>Infraestrutura começa com uma disciplina: <strong>não destruir o estado que ainda precisa ser compreendido</strong>. Observe, limite o risco, produza evidência e só então intervenha.</p></div>
-    <div class="bridge-box"><strong>O caso continua</strong><p>Antes de abrir o computador da secretaria, precisamos transformar “está ruim” em um chamado que outra pessoa consiga compreender.</p></div>
+    <div class="bridge-box"><strong>O caso continua</strong><p>A equipe abre o Chamado 014 e identifica o equipamento como <strong>SEC-02</strong>. Antes de abrir ou alterar a estação, precisamos transformar “está ruim” em um registro que outra pessoa consiga continuar.</p></div>
   `
 });
 
@@ -76,9 +76,9 @@ window.infraestruturaLessons.push({
   objective: 'Transformar uma queixa vaga em um registro técnico, identificar risco aos dados e decidir o primeiro teste seguro ou quando não intervir.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Chamado 014 · Secretaria</span>
+      <span class="eyebrow">Chamado 014 · Secretaria · SEC-02</span>
       <h2>“O computador trava e às vezes reinicia. Preciso dele hoje.”</h2>
-      <p>A frase expressa urgência, mas ainda não descreve um problema testável. A equipe informa que isso começou ontem, depois de uma queda de energia. Há planilhas locais sem cópia recente e uma pessoa já “limpou alguns arquivos”. <strong>Cada nova informação muda a prioridade.</strong></p>
+      <p>A atendente da manhã relata que a falha começou após a queda de energia de ontem e aparece ao abrir duas planilhas de matrícula. A coordenadora confirma que esses arquivos não têm cópia recente; um colega já “limpou alguns arquivos”. O atendimento ao público depende da SEC-02, mas pode usar temporariamente outra estação. <strong>Cada nova informação muda a prioridade.</strong></p>
     </div>
 
     <h3>Queixa, sintoma e causa não são sinônimos</h3>
@@ -114,7 +114,7 @@ window.infraestruturaLessons.push({
     </table></div>
 
     <h3>Experimentar: primeiro teste do caso</h3>
-    <p>Como os dados são únicos, o primeiro objetivo não é “fazer parar de travar”. É verificar se os arquivos críticos ainda podem ser lidos e copiados sem submeter a unidade a uma bateria de testes.</p>
+    <p>Como os dados da SEC-02 são únicos, o primeiro objetivo não é “fazer parar de travar”. É verificar com a coordenadora se os arquivos críticos ainda podem ser lidos e copiados sem submeter a unidade a uma bateria de testes.</p>
     <ol>
       <li>registre data, horário, usuário, sintomas e alterações já relatadas;</li>
       <li>fotografe a mensagem de erro, se houver, sem expor dados pessoais;</li>
@@ -151,7 +151,7 @@ Critério para interromper/encaminhar:</textarea>
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Bom atendimento técnico transforma urgência em <strong>prioridades controladas</strong>: pessoas, dados, segurança, continuidade e diagnóstico. Saber não intervir também é competência.</p></div>
-    <div class="bridge-box"><strong>Próximo passo do caso</strong><p>Os arquivos críticos foram preservados. Agora precisamos identificar a configuração real da estação e descobrir se a lentidão vem de falta de recurso, incompatibilidade ou outro fator.</p></div>
+    <div class="bridge-box"><strong>Próximo passo do caso</strong><p>A coordenadora abriu uma amostra na estação de contingência e confirmou a cópia. O Chamado 014 agora registra a SEC-02, a linha do tempo, o risco e o que já foi tentado. Com os dados preservados, podemos identificar a configuração real e investigar a lentidão.</p></div>
   `
 });
 
@@ -165,9 +165,9 @@ window.infraestruturaLessons.push({
   objective: 'Construir um inventário verificável, acompanhar o caminho dos dados e avaliar compatibilidade e gargalos sem culpar automaticamente a peça mais antiga.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Chamado 014 · Nova evidência</span>
+      <span class="eyebrow">Chamado 014 · Inventário da SEC-02</span>
       <h2>A estação tem 8 GB de RAM, SSD de 256 GB quase cheio e processador de quatro núcleos.</h2>
-      <p>Alguém propõe trocar o processador; outra pessoa quer instalar “mais memória de qualquer modelo”. Antes de comprar, precisamos responder: <strong>qual recurso satura durante o sintoma, qual expansão a placa aceita e qual problema a troca resolveria?</strong></p>
+      <p>Esses dados vieram do inventário iniciado no capítulo anterior; durante a condição registrada no chamado, a memória chega a 92%. Um fornecedor propõe trocar o processador e um colega quer instalar “mais memória de qualquer modelo”. Antes de a coordenação autorizar a compra, precisamos responder: <strong>qual recurso satura, qual expansão a placa aceita e qual problema a troca resolveria?</strong></p>
     </div>
 
     <h3>Observar: reconhecer antes de comparar</h3>
@@ -256,7 +256,7 @@ window.infraestruturaLessons.push({
     <div class="mbb-pause-question"><strong>Uma peça antiga pode funcionar perfeitamente.</strong><p>Gargalo é a limitação que domina uma carga específica. Não é sinônimo de componente mais velho, menor número ou aparência desgastada.</p></div>
 
     <h3>Aplicar: inventário mínimo da estação</h3>
-    <div class="record-box"><ul>
+    <div class="record-box"><p><strong>Anexe ao Chamado 014:</strong></p><ul>
       <li>fabricante, modelo e patrimônio;</li>
       <li>CPU, RAM instalada e configuração de slots quando verificável;</li>
       <li>unidades de armazenamento, capacidade e espaço livre;</li>
@@ -272,7 +272,7 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Inventário identifica o que existe; medição mostra o que acontece; especificação limita o que pode ser instalado. <strong>Compra técnica conecta problema, evidência, compatibilidade e resultado esperado.</strong></p></div>
-    <div class="bridge-box"><strong>Próximo passo do caso</strong><p>Uma expansão de RAM compatível foi autorizada. Agora a qualidade do diagnóstico depende de uma intervenção física que não crie uma nova falha.</p></div>
+    <div class="bridge-box"><strong>Próximo passo do caso</strong><p>Inventário, medição e manual sustentaram a autorização de uma RAM compatível; a decisão de compra ficou anexada ao Chamado 014. Agora a intervenção física precisa preservar o estado registrado e não criar uma nova falha.</p></div>
   `
 });
 
@@ -286,9 +286,9 @@ window.infraestruturaLessons.push({
   objective: 'Planejar e executar, em equipamento autorizado e supervisionado, uma intervenção simples com controle de energia, eletricidade estática, compatibilidade e validação antes/depois.',
   content: `
     <div class="hero-box story-opening">
-      <span class="eyebrow">Chamado 014 · Intervenção autorizada</span>
+      <span class="eyebrow">Chamado 014 · Intervenção na SEC-02</span>
       <h2>A memória compatível chegou. O computador não pode voltar com um problema novo.</h2>
-      <p>A equipe tem o manual do modelo, bancada adequada, pulseira antiestática e autorização. O estado inicial foi registrado. <strong>A meta não é apenas encaixar a RAM: é controlar risco, alterar uma variável e provar que a estação continua íntegra.</strong></p>
+      <p>O ticket acompanha a peça com o modelo aprovado, o inventário da SEC-02 e a fotografia do estado inicial. A equipe tem manual, bancada adequada, controle antiestático e autorização. <strong>A meta não é apenas encaixar a RAM: é controlar risco, alterar uma variável e provar que a estação continua íntegra.</strong></p>
     </div>
 
     <div class="danger-box"><strong>Limite absoluto deste módulo</strong><p><strong>Nunca abra uma fonte de alimentação.</strong> Capacitores internos podem manter cargas perigosas mesmo desconectados. Não realize reparo elétrico, soldagem ou intervenção fora da sua formação, equipamento e supervisão.</p></div>
@@ -346,7 +346,7 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Intervenção segura combina <strong>manual do modelo, desenergização, controle ESD, manuseio correto, uma variável por vez e validação</strong>. Velocidade nunca compensa perda de dados, dano ou risco pessoal.</p></div>
-    <div class="bridge-box"><strong>Próximo passo do caso</strong><p>A máquina reconheceu a nova RAM. Para preparar uma estação padronizada, a equipe precisa compreender firmware, ordem de boot e mídia de instalação sem desativar proteções por hábito.</p></div>
+    <div class="bridge-box"><strong>Encerramento e nova necessidade</strong><p>A SEC-02 reconheceu a RAM e repetiu a carga do chamado sem falha no período testado; o resultado e seu limite encerram o Chamado 014. Separadamente, a escola abre a <strong>Ordem de Serviço 006</strong>: padronizar a estação em um SSD novo, mantendo o disco antigo como contingência. Isso exige compreender firmware, boot e mídia sem tratar formatação como diagnóstico.</p></div>
 
     <details class="sources-box"><summary>Referência de segurança</summary><ul><li><a href="https://www.dell.com/support/kbdoc/en-us/000175301/safety-precautions-while-replacing-components-in-dell-device" target="_blank" rel="noopener">Dell — precauções ao substituir componentes</a></li></ul></details>
   `
