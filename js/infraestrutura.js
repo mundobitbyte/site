@@ -3,9 +3,11 @@
 
   const systemLessons = Array.isArray(window.infraestruturaLessons) ? window.infraestruturaLessons : [];
   const networkLessons = Array.isArray(window.infraestruturaNetworkLessons) ? window.infraestruturaNetworkLessons : [];
+  const linuxLessons = Array.isArray(window.infraestruturaLinuxLessons) ? window.infraestruturaLinuxLessons : [];
   const modules = [
     { id: 'systems', label: 'Módulo 1 · Sistemas', title: 'Administração, Instalação e Manutenção', lessons: systemLessons },
-    { id: 'networks', label: 'Módulo 2 · Redes', title: 'Redes na Prática', lessons: networkLessons }
+    { id: 'networks', label: 'Módulo 2 · Redes', title: 'Redes na Prática', lessons: networkLessons },
+    { id: 'linux', label: 'Módulo 3 · Linux', title: 'Servidores Linux e Serviços', lessons: linuxLessons }
   ];
   const portalView = document.getElementById('portalView');
   const courseView = document.getElementById('courseView');
