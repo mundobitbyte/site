@@ -16,6 +16,8 @@ Estado inicial verificado em 8 de setembro de 2026: a `main` estava em `d29bacd6
 
 Estado após a primeira implementação: fundação da área e **Módulo 1 — Organização e Trabalho Digital** implementados. Os módulos 2 a 5 e o Projeto Integrador permanecem planejados, sem conteúdo superficial de preenchimento.
 
+Estado após a conclusão da área: os **Módulos 1 a 5** e o **Projeto Integrador 99** estão implementados e disponíveis no portal. O Módulo 1 permaneceu preservado; a ampliação ocorreu em fontes canônicas próprias para cada novo módulo, com controlador e estilo compartilhados.
+
 ---
 
 # 1. Objetivo da área
@@ -173,29 +175,29 @@ Objetivo: transformar uma caixa de arquivos dispersos em um espaço de trabalho 
 
 Objetivo: produzir documentos legíveis, estruturados, revisáveis, acessíveis e adequados ao destino.
 
-Progressão prevista: diagnóstico do documento → finalidade e público → estrutura → estilos → página → tabelas e imagens → referências → revisão → acessibilidade → PDF e impressão → entrega controlada → desafio integrador.
+Ferramenta principal: **LibreOffice Writer**. Progressão implementada: diagnóstico → finalidade/público/critérios → estrutura → estilos → página → tabelas → imagens/legendas → referências → revisão/comentários → acessibilidade → PDF/impressão/entrega → desafio do Guia do Expositor. O registro cumulativo é P-10.
 
 ## Módulo 3 — Planilhas e Análise
 
 Objetivo: organizar dados, calcular, validar, analisar e comunicar resultados sem esconder erros ou transformar planilha em banco de dados improvisado.
 
-Progressão prevista: problema e dados → estrutura tabular → tipos → fórmulas → referências relativas/absolutas → funções essenciais → validação → classificação/filtro → resumo → gráficos → impressão/exportação → auditoria de erros → desafio integrador.
+Ferramenta principal: **LibreOffice Calc**. Progressão implementada: diagnóstico → estrutura tabular → tipos → fórmulas → referências relativas/absolutas → funções essenciais → validação → classificação/filtro → resumo → gráficos → impressão/exportação → auditoria de erros → desafio do Controle da Feira. O registro cumulativo é P-20.
 
 ## Módulo 4 — Apresentações e Comunicação Visual
 
 Objetivo: transformar uma mensagem e suas evidências em apresentação clara, verificável, acessível e adequada ao público e ao tempo.
 
-Progressão prevista: objetivo/público → seleção de conteúdo → roteiro → hierarquia → texto e imagem → dados e fontes → acessibilidade → notas → ensaio → exportação e plano de contingência → apresentação final.
+Ferramenta principal: **LibreOffice Impress**. Progressão implementada: diagnóstico → objetivo/público → seleção → roteiro → hierarquia → texto → imagens → dados/fontes → acessibilidade → notas/ensaio → exportação/contingência → apresentação final. O registro cumulativo é P-30.
 
 ## Módulo 5 — Colaboração e Comunicação Profissional
 
 Objetivo: escolher canal, registrar decisões, compartilhar com controle, agendar, acompanhar e encerrar tarefas sem dispersão de informação.
 
-Progressão prevista: mapa de canais → mensagem/e-mail profissional → assunto e destinatários → anexos e links → agenda → tarefas → reuniões e atas → coautoria → conflitos e histórico → privacidade → encerramento e arquivo.
+Ferramenta principal: **simulador local MbB**, articulado à pasta colaborativa institucional autorizada quando disponível. Progressão implementada: diagnóstico → canal → mensagem/e-mail → destinatários/CC/Cco → anexos/links/permissões → agenda → tarefas → reunião/ata → coautoria → conflitos/histórico → privacidade/encerramento → desafio de mudança. O registro cumulativo é P-40.
 
 ## 99 — Projeto Integrador
 
-Planejar e executar uma entrega realista da Feira de Projetos usando os registros acumulados. A equipe deverá organizar fontes, produzir documento, planilha e apresentação, comunicar responsáveis, validar permissões, conferir formatos, testar recuperação e entregar um pacote que outra pessoa consiga continuar.
+Implementado como entrega completa da Feira de Projetos em 17 etapas: receber pedido, organizar fontes, validar versões, produzir documento/planilha/apresentação, registrar fontes, compartilhar, comunicar, agendar, acompanhar, revisar, exportar, testar permissões, testar recuperação, corrigir uma falha preparada, montar o pacote e transferir o trabalho. Reutiliza P-00 a P-05, P-10, P-20, P-30 e P-40.
 
 ---
 
@@ -259,8 +261,18 @@ Sincronização, histórico de versões, lixeira e backup são mecanismos difere
 - `pages/informatica-produtividade.html`: estrutura do portal e carregamento;
 - `css/informatica-produtividade.css`: apresentação e responsividade;
 - `js/informatica-produtividade/modulo-01.js`: conteúdo canônico do Módulo 1;
+- `js/informatica-produtividade/modulo-02.js`: conteúdo canônico de Documentos Profissionais;
+- `js/informatica-produtividade/modulo-03.js`: conteúdo canônico de Planilhas e Análise;
+- `js/informatica-produtividade/modulo-04.js`: conteúdo canônico de Apresentações e Comunicação Visual;
+- `js/informatica-produtividade/modulo-05.js`: conteúdo canônico de Colaboração e Comunicação Profissional;
+- `js/informatica-produtividade/projeto-integrador.js`: missão final da área;
 - `js/informatica-produtividade.js`: navegação e interações compartilhadas;
 - `downloads/informatica-produtividade/caixa-entrada-feira.zip`: pacote fictício da prática;
+- `downloads/informatica-produtividade/modulo-02/`: minuta ODT, mapa didático e fontes do Guia do Expositor;
+- `downloads/informatica-produtividade/modulo-03/`: planilha ODS com dados e falhas didáticas da Feira;
+- `downloads/informatica-produtividade/modulo-04/`: apresentação ODP para diagnóstico;
+- `downloads/informatica-produtividade/modulo-05/`: comunicações fictícias para investigação;
+- `downloads/informatica-produtividade/projeto-integrador/`: pacote final com fontes e falhas preparadas;
 - `index.html`: único ponto de entrada da área na home;
 - `sitemap.xml`: URL pública da área.
 

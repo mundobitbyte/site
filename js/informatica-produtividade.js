@@ -7,6 +7,7 @@
   const lessonMenu = document.getElementById('lessonMenu');
   const menuBackdrop = document.getElementById('menuBackdrop');
   const openMenu = document.getElementById('openMenu');
+  const modulePill = document.getElementById('modulePill');
   const unitName = document.getElementById('unitName');
   const technicalTitle = document.getElementById('technicalTitle');
   const lessonTitle = document.getElementById('lessonTitle');
@@ -32,7 +33,7 @@
     openMenu.setAttribute('aria-expanded', 'true');
     document.body.classList.add('drawer-open');
     if (menuBackdrop) menuBackdrop.hidden = false;
-    lessonMenu.querySelector('.menu-item.active, .menu-item')?.focus();
+    (lessonMenu.querySelector('.menu-item.active') || lessonMenu.querySelector('.menu-item'))?.focus();
   }
 
   function showPortal(updateHash = true) {
@@ -46,8 +47,17 @@
 
   function renderMenu() {
     if (!lessonMenu) return;
-    lessonMenu.innerHTML = '<div class="drawer-heading"><strong>Organização e Trabalho Digital</strong><span>Escolha uma aula</span></div>';
+    lessonMenu.innerHTML = '<div class="drawer-heading"><div><strong>Informática e Produtividade</strong><span>Escolha um módulo e uma aula</span></div><button type="button" class="drawer-close" aria-label="Fechar conteúdos">×</button></div>';
+    lessonMenu.querySelector('.drawer-close')?.addEventListener('click', () => closeMenu(true));
+    let currentUnit = '';
     lessons.forEach((lesson) => {
+      if (lesson.unit !== currentUnit) {
+        currentUnit = lesson.unit;
+        const heading = document.createElement('div');
+        heading.className = 'menu-section';
+        heading.textContent = currentUnit;
+        lessonMenu.appendChild(heading);
+      }
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'menu-item';
@@ -146,6 +156,27 @@
       list.addEventListener('change', update);
       update();
     });
+
+    root.querySelectorAll('[data-permission-sim]').forEach((simulator) => {
+      const button = simulator.querySelector('[data-check-permission]');
+      const result = simulator.querySelector('[data-permission-result]');
+      button?.addEventListener('click', () => {
+        const file = simulator.querySelector('[data-file]')?.value;
+        const person = simulator.querySelector('[data-person]')?.value;
+        const permission = simulator.querySelector('[data-permission]')?.value;
+        if (!file || !person || !permission) {
+          result.className = 'feedback warn';
+          result.textContent = 'Escolha arquivo, pessoa e permissão antes de testar.';
+          return;
+        }
+        const approved = (file === 'pdf' && person === 'lia' && permission === 'view')
+          || (file === 'odt' && person === 'paulo' && permission === 'comment');
+        result.className = `feedback ${approved ? 'ok' : 'warn'}`;
+        result.textContent = approved
+          ? 'Combinação coerente com a tarefa e com acesso mínimo. Ainda é necessário testar com outro perfil.'
+          : 'Revise necessidade, versão e acesso mínimo. Link público com edição e permissões além da tarefa não devem ser liberados.';
+      });
+    });
   }
 
   function appendNavigation(lesson) {
@@ -183,6 +214,7 @@
     technicalTitle.textContent = lesson.technicalTitle;
     lessonTitle.textContent = `${lesson.number}. ${lesson.title}`;
     lessonObjective.textContent = lesson.objective;
+    if (modulePill) modulePill.textContent = lesson.unit;
     lessonContent.innerHTML = lesson.content;
     lessonMenu?.querySelectorAll('.menu-item').forEach((button) => {
       const active = button.dataset.lessonId === lesson.id;
