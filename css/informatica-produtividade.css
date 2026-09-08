@@ -29,7 +29,7 @@ a:hover { color: var(--primary-dark); }
 
 .site-header { min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 11px 20px; background: #125c68; color: #fff; box-shadow: 0 2px 12px rgba(8, 31, 37, .24); }
 .site-header strong { font-size: .84rem; white-space: nowrap; }
-.module-back, .pill-button { display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; padding: 7px 11px; color: #fff; background: rgba(255,255,255,.12); text-decoration: none; font-size: .82rem; font-weight: 800; line-height: 1.2; }
+.module-back, .pill-button { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; padding: 7px 11px; color: #fff; background: rgba(255,255,255,.12); text-decoration: none; font-size: .82rem; font-weight: 800; line-height: 1.2; }
 .module-back:hover, .pill-button:hover { background: rgba(255,255,255,.22); color: #fff; }
 
 .portal-main { width: min(1160px, calc(100% - 32px)); margin: 0 auto; padding: 36px 0 48px; }
