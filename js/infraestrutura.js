@@ -4,10 +4,14 @@
   const systemLessons = Array.isArray(window.infraestruturaLessons) ? window.infraestruturaLessons : [];
   const networkLessons = Array.isArray(window.infraestruturaNetworkLessons) ? window.infraestruturaNetworkLessons : [];
   const linuxLessons = Array.isArray(window.infraestruturaLinuxLessons) ? window.infraestruturaLinuxLessons : [];
+  const modernLessons = Array.isArray(window.infraestruturaModernLessons) ? window.infraestruturaModernLessons : [];
+  const integratorLessons = Array.isArray(window.infraestruturaIntegratorLessons) ? window.infraestruturaIntegratorLessons : [];
   const modules = [
     { id: 'systems', label: 'Módulo 1 · Sistemas', title: 'Administração, Instalação e Manutenção', lessons: systemLessons },
     { id: 'networks', label: 'Módulo 2 · Redes', title: 'Redes na Prática', lessons: networkLessons },
-    { id: 'linux', label: 'Módulo 3 · Linux', title: 'Servidores Linux e Serviços', lessons: linuxLessons }
+    { id: 'linux', label: 'Módulo 3 · Linux', title: 'Servidores Linux e Serviços', lessons: linuxLessons },
+    { id: 'modern', label: 'Módulo 4 · Moderna', title: 'Infraestrutura Moderna', lessons: modernLessons },
+    { id: 'integrator', label: 'Integração final', title: 'Laboratório Integrador de Infraestrutura', lessons: integratorLessons }
   ];
   const portalView = document.getElementById('portalView');
   const courseView = document.getElementById('courseView');
