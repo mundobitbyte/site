@@ -1,18 +1,25 @@
 (() => {
   'use strict';
 
-  const lessons = Array.isArray(window.infraestruturaLessons) ? window.infraestruturaLessons : [];
+  const systemLessons = Array.isArray(window.infraestruturaLessons) ? window.infraestruturaLessons : [];
+  const networkLessons = Array.isArray(window.infraestruturaNetworkLessons) ? window.infraestruturaNetworkLessons : [];
+  const modules = [
+    { id: 'systems', label: 'Módulo 1 · Sistemas', title: 'Administração, Instalação e Manutenção', lessons: systemLessons },
+    { id: 'networks', label: 'Módulo 2 · Redes', title: 'Redes na Prática', lessons: networkLessons }
+  ];
   const portalView = document.getElementById('portalView');
   const courseView = document.getElementById('courseView');
   const lessonMenu = document.getElementById('lessonMenu');
   const menuBackdrop = document.getElementById('menuBackdrop');
   const openMenu = document.getElementById('openMenu');
+  const modulePill = document.getElementById('modulePill');
   const unitName = document.getElementById('unitName');
   const technicalTitle = document.getElementById('technicalTitle');
   const lessonTitle = document.getElementById('lessonTitle');
   const lessonObjective = document.getElementById('lessonObjective');
   const lessonContent = document.getElementById('lessonContent');
   let currentLessonId = null;
+  let currentModule = modules[0];
 
   function closeMenu() {
     lessonMenu?.classList.remove('open');
@@ -43,7 +50,9 @@
 
   function renderMenu() {
     if (!lessonMenu) return;
-    lessonMenu.innerHTML = '<div class="drawer-heading"><strong>Administração, Instalação e Manutenção</strong><span>Escolha uma aula</span></div>';
+    const lessons = currentModule.lessons;
+    lessonMenu.setAttribute('aria-label', `Conteúdos de ${currentModule.title}`);
+    lessonMenu.innerHTML = `<div class="drawer-heading"><strong>${currentModule.title}</strong><span>Escolha uma aula</span></div>`;
     let lastUnit = '';
     lessons.forEach((lesson) => {
       if (lesson.unit !== lastUnit) {
@@ -147,6 +156,7 @@
   }
 
   function appendLessonNavigation(id) {
+    const lessons = currentModule.lessons;
     const index = lessons.findIndex((lesson) => lesson.id === id);
     if (index < 0) return;
     const nav = document.createElement('nav');
@@ -172,9 +182,16 @@
   }
 
   function showLesson(id) {
+    const selectedModule = modules.find((module) => module.lessons.some((item) => item.id === id));
+    if (selectedModule && selectedModule !== currentModule) {
+      currentModule = selectedModule;
+      renderMenu();
+    }
+    const lessons = currentModule.lessons;
     const lesson = lessons.find((item) => item.id === id) || lessons[0];
     if (!lesson || !lessonContent) return;
     currentLessonId = lesson.id;
+    if (modulePill) modulePill.textContent = currentModule.label;
     if (portalView) portalView.hidden = true;
     if (courseView) courseView.hidden = false;
     unitName.textContent = lesson.unit;
@@ -202,11 +219,17 @@
   window.addEventListener('hashchange', () => {
     const id = window.location.hash.replace('#', '');
     if (!id || id === 'area') { showPortal(false); return; }
-    if (id !== currentLessonId && lessons.some((lesson) => lesson.id === id)) showLesson(id);
+    if (id !== currentLessonId && modules.some((module) => module.lessons.some((lesson) => lesson.id === id))) showLesson(id);
   });
 
-  renderMenu();
   const initialId = window.location.hash.replace('#', '');
-  if (lessons.some((lesson) => lesson.id === initialId)) showLesson(initialId);
-  else showPortal(false);
+  const initialModule = modules.find((module) => module.lessons.some((lesson) => lesson.id === initialId));
+  if (initialModule) {
+    currentModule = initialModule;
+    renderMenu();
+    showLesson(initialId);
+  } else {
+    renderMenu();
+    showPortal(false);
+  }
 })();
