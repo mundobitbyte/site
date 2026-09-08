@@ -65,7 +65,7 @@ Decido como corrigir</div>
       )
       .replace(
         '<div class="ok-box"><strong>Git local concluído.</strong> Você já sabe criar versões, conferir mudanças, ignorar arquivos indevidos e desfazer dois erros locais muito comuns.</div>',
-        '<div class="ok-box"><strong>Git local concluído.</strong> Você já sabe registrar versões, investigar o histórico, recuperar conteúdo anterior e corrigir erros sem precisar apagar a história do projeto.</div>'
+        ''
       );
 
     step13.content += `
@@ -82,6 +82,7 @@ git log --oneline</pre>
       <p>Se você identificou um commit específico:</p>
       <pre class="command">git revert --no-edit HASH</pre>
       <p>O <span class="inline-code">git revert</span> cria <strong>um novo commit</strong> que desfaz as alterações introduzidas pelo commit escolhido.</p>
+      <div class="note-box">Neste primeiro contato, pratique com um commit simples e recente. Ao reverter um commit antigo, mudanças posteriores podem depender dele e o Git pode pedir que você resolva um conflito.</div>
       <div class="flow">versão correta
       ↓
 commit com erro
@@ -127,7 +128,8 @@ git commit -m "Restaura projeto para versao aprovada"</pre>
         <div class="mini-card"><strong>Commit errado</strong><br><span class="inline-code">git revert --no-edit HASH</span></div>
         <div class="mini-card"><strong>Conteúdo de uma versão</strong><br><span class="inline-code">git restore --source=HASH -- arquivo</span></div>
       </div>
-      <div class="danger-box"><strong>Não use <span class="inline-code">git reset --hard</span> apenas para “voltar versões”.</strong> Neste nível, conseguimos investigar e recuperar o projeto preservando o histórico e reduzindo o risco de perder trabalho.</div>`;
+      <div class="danger-box"><strong>Não use <span class="inline-code">git reset --hard</span> apenas para “voltar versões”.</strong> Neste nível, conseguimos investigar e recuperar o projeto preservando o histórico e reduzindo o risco de perder trabalho.</div>
+      <div class="ok-box"><strong>Git local concluído.</strong> Você já sabe registrar versões, investigar o histórico, recuperar conteúdo anterior e corrigir erros sem precisar apagar a história do projeto.</div>`;
   }
 
   const gh14 = githubStep(14);
@@ -170,8 +172,10 @@ git push</pre>
     e7.title = 'Exercício 7 — Desfazendo e recuperando versões';
     e7.objective = 'Praticar recuperação antes e depois do commit e reutilizar uma versão específica.';
     e7.content += `
-      <div class="task-box"><h4>Parte C — O erro já foi commitado</h4><p>Simule uma situação real: acrescente <strong>Informacao temporaria</strong> a <span class="inline-code">anotacoes.txt</span>, faça o commit e só depois considere que essa informação estava errada. Desfaça o último commit sem apagá-lo do histórico.</p></div>
-      <details class="answer-box"><summary>Resposta da Parte C</summary><div class="answer-content"><pre class="command">echo Informacao temporaria &gt;&gt; anotacoes.txt
+      <div class="task-box"><h4>Parte C — O erro já foi commitado</h4><p>Primeiro registre a linha que você decidiu manter na Parte B, deixando a área de trabalho limpa. Depois simule uma situação real: acrescente <strong>Informacao temporaria</strong> a <span class="inline-code">anotacoes.txt</span>, faça o commit e só então descubra que essa informação estava errada. Desfaça o último commit sem apagá-lo do histórico.</p></div>
+      <details class="answer-box"><summary>Resposta da Parte C</summary><div class="answer-content"><pre class="command">git add anotacoes.txt
+git commit -m "Mantem nova anotacao"
+echo Informacao temporaria &gt;&gt; anotacoes.txt
 git add anotacoes.txt
 git commit -m "Inclui informacao temporaria"
 git log --oneline
