@@ -8,11 +8,11 @@
       content: `
         <div class="hero-box">
           <span class="part-badge">Parte 1 — Git no computador</span>
-          <h3>O arquivo “final-agora-vai” não resolveu</h3>
-          <p>A equipe de informática de uma escola mantém um pequeno projeto. Em poucos dias aparecem cópias como <strong>projeto-final</strong>, <strong>projeto-final2</strong> e <strong>projeto-final-certo</strong>. Quando uma informação errada entra, ninguém sabe com segurança qual arquivo estava correto.</p>
+          <h3>Qual versão estava certa?</h3>
+          <p>A equipe de informática da escola mantém uma página de avisos usada pelos alunos. Na segunda-feira, João corrigiu o horário de atendimento. Na terça, Maria atualizou outro aviso. Na quarta, a coordenação percebeu que o horário publicado estava errado e alguns alunos já tinham consultado a informação. Era preciso descobrir <strong>quando o erro entrou</strong> e <strong>qual estado anterior estava correto</strong>.</p>
         </div>
-        <div class="flow">projeto-final\n      ↓\nprojeto-final2\n      ↓\nprojeto-final-certo\n      ↓\nQual era a versão boa?</div>
-        <p>O <strong>Git</strong> resolve esse problema registrando momentos do projeto. Cada registro importante é um <strong>commit</strong>.</p>
+        <div class="flow">segunda: horário atualizado\n      ↓\nterça: novo aviso\n      ↓\nquarta: erro percebido\n      ↓\nqual alteração causou?\nqual versão recuperar?</div>
+        <p>Sem um histórico confiável, a equipe dependeria da memória ou de cópias soltas. O <strong>Git</strong> resolve justamente esse problema: ele registra momentos do projeto para que possamos acompanhar o que mudou, localizar uma versão e recuperar um estado anterior quando necessário.</p>
         <div class="mini-grid">
           <div class="mini-card"><strong>Git</strong><br>Controla versões no computador.</div>
           <div class="mini-card"><strong>GitHub</strong><br>Hospeda e compartilha repositórios na Internet.</div>
