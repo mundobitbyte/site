@@ -1,169 +1,389 @@
 (() => {
-  const gitStep = id => gitSteps.find(step => String(step.id) === String(id));
-  const githubStep = id => githubSteps.find(step => String(step.id) === String(id));
+  const gitNovo = [
+    {
+      id: 1,
+      menu: '1 Por que Git?',
+      title: '1 — Por que usar Git?',
+      objective: 'Entender o problema que o controle de versões resolve e diferenciar Git de GitHub.',
+      content: `
+        <div class="hero-box">
+          <span class="part-badge">Parte 1 — Git no computador</span>
+          <h3>O arquivo “final-agora-vai” não resolveu</h3>
+          <p>A equipe de informática de uma escola mantém um pequeno projeto. Em poucos dias aparecem cópias como <strong>projeto-final</strong>, <strong>projeto-final2</strong> e <strong>projeto-final-certo</strong>. Quando uma informação errada entra, ninguém sabe com segurança qual arquivo estava correto.</p>
+        </div>
+        <div class="flow">projeto-final\n      ↓\nprojeto-final2\n      ↓\nprojeto-final-certo\n      ↓\nQual era a versão boa?</div>
+        <p>O <strong>Git</strong> resolve esse problema registrando momentos do projeto. Cada registro importante é um <strong>commit</strong>.</p>
+        <div class="mini-grid">
+          <div class="mini-card"><strong>Git</strong><br>Controla versões no computador.</div>
+          <div class="mini-card"><strong>GitHub</strong><br>Hospeda e compartilha repositórios na Internet.</div>
+        </div>
+        <div class="concept-box"><strong>Git guarda a história. GitHub ajuda a publicar e compartilhar essa história.</strong></div>
+        <h3>Nosso caminho</h3>
+        <div class="flow">preparar → criar repositório → alterar → registrar → consultar → recuperar → publicar</div>
+        <p>Não vamos decorar dezenas de comandos. Cada comando aparecerá quando surgir um problema que ele resolve.</p>`
+    },
+    {
+      id: 2,
+      menu: '2 Preparar',
+      title: '2 — Preparando o Git',
+      objective: 'Instalar, testar e identificar o autor dos commits.',
+      content: `
+        <div class="hero-box">
+          <h3>Antes do primeiro registro</h3>
+          <p>Para a equipe saber quem registrou cada alteração, o Git precisa estar instalado e conhecer o nome e o e-mail do autor.</p>
+        </div>
+        <h3>1. Instale</h3>
+        <p>Baixe o Git no site oficial <strong>git-scm.com</strong>. No Windows, neste primeiro contato, mantenha as opções padrão quando não houver orientação específica.</p>
+        <figure class="image-card">
+          <img src="../img/git/git-instalacao-windows.webp" alt="Página oficial do Git com opções de instalação" loading="lazy">
+          <figcaption>A aparência e a versão podem mudar. O objetivo é instalar o Git para Windows.</figcaption>
+        </figure>
+        <h3>2. Confirme</h3>
+        <pre class="command">git --version</pre>
+        <p>Se aparecer <span class="inline-code">git version 2.x.x</span> ou outra versão válida, o comando foi reconhecido.</p>
+        <h3>3. Identifique o autor</h3>
+        <pre class="command">git config --global user.name "Seu Nome"\ngit config --global user.email "seuemail@exemplo.com"</pre>
+        <p>Confira:</p>
+        <pre class="command">git config --global user.name\ngit config --global user.email</pre>
+        <div class="note-box"><strong>Computador compartilhado:</strong> confira esses dados antes de fazer commits. A configuração global pertence ao usuário do sistema que está sendo usado.</div>`
+    },
+    {
+      id: 3,
+      menu: '3 Localizar',
+      title: '3 — Onde estou trabalhando?',
+      objective: 'Usar apenas o CMD necessário para localizar e organizar o projeto.',
+      content: `
+        <div class="hero-box">
+          <h3>O Git trabalha na pasta em que você está</h3>
+          <p>Um comando correto executado na pasta errada continua sendo um problema. Antes de versionar, precisamos saber chegar ao projeto.</p>
+        </div>
+        <h3>Comandos de CMD que vamos usar</h3>
+        <div class="mini-grid">
+          <div class="mini-card"><strong>dir</strong><br>mostra arquivos e pastas.</div>
+          <div class="mini-card"><strong>cd</strong><br>entra ou muda de pasta.</div>
+          <div class="mini-card"><strong>mkdir</strong><br>cria uma pasta.</div>
+          <div class="mini-card"><strong>cd ..</strong><br>volta uma pasta.</div>
+        </div>
+        <h3>Crie a pasta de trabalho</h3>
+        <pre class="command">cd /d "%USERPROFILE%"\nmkdir meus-repositorios\ncd meus-repositorios\nmkdir primeiro-projeto\ncd primeiro-projeto</pre>
+        <p>O caminho ficará semelhante a:</p>
+        <pre class="command">C:\\Users\\Usuario\\meus-repositorios\\primeiro-projeto&gt;</pre>
+        <div class="concept-box"><strong>Antes de um comando Git, olhe o caminho do CMD. Ele diz em qual pasta o comando será executado.</strong></div>`
+    },
+    {
+      id: 4,
+      menu: '4 Repositório',
+      title: '4 — Primeiro repositório e primeiro arquivo',
+      objective: 'Transformar uma pasta em repositório, criar um arquivo e interpretar o primeiro status.',
+      content: `
+        <div class="hero-box">
+          <h3>A pasta existe, mas o Git ainda não cuida dela</h3>
+          <p>Agora a equipe quer começar a registrar as mudanças de <span class="inline-code">primeiro-projeto</span>.</p>
+        </div>
+        <h3>1. Inicie o repositório</h3>
+        <pre class="command">git init</pre>
+        <p>O Git cria internamente a pasta <span class="inline-code">.git</span>, onde guarda as informações do repositório. Não a edite manualmente.</p>
+        <h3>2. Crie um arquivo</h3>
+        <pre class="command">echo Avisos da escola &gt; projeto.txt</pre>
+        <h3>3. Pergunte ao Git o que aconteceu</h3>
+        <pre class="command">git status</pre>
+        <p>O arquivo aparecerá como <strong>não rastreado</strong>: ele existe, mas ainda não entrou em nenhum commit.</p>
+        <div class="concept-box"><strong>git status responde: “como está meu repositório agora?”</strong></div>
+        <h3>Arquivos que não devem entrar</h3>
+        <p>Antes de começar a adicionar arquivos, crie regras para temporários ou dados que não devem ser publicados:</p>
+        <pre class="command">echo .env &gt; .gitignore\necho *.tmp &gt;&gt; .gitignore</pre>
+        <div class="danger-box"><strong>Nunca publique senhas, tokens ou chaves de API.</strong> O <span class="inline-code">.gitignore</span> ajuda, mas não substitui a conferência do que será versionado.</div>`
+    },
+    {
+      id: 5,
+      menu: '5 Criar versões',
+      title: '5 — Criando versões',
+      objective: 'Entender o ciclo status → diff → add → commit e registrar mudanças com sentido.',
+      content: `
+        <div class="hero-box">
+          <h3>O primeiro aviso foi aprovado</h3>
+          <p>Agora queremos registrar esse estado para poder reconhecê-lo no futuro.</p>
+        </div>
+        <h3>1. Confira</h3>
+        <pre class="command">git status</pre>
+        <h3>2. Prepare</h3>
+        <pre class="command">git add projeto.txt\ngit add .gitignore</pre>
+        <p><span class="inline-code">git add</span> prepara. Ainda não cria uma versão.</p>
+        <h3>3. Registre</h3>
+        <pre class="command">git commit -m "Cria aviso inicial"</pre>
+        <p>Agora existe um <strong>commit</strong>: um ponto registrado no histórico.</p>
+        <h3>Surge uma nova alteração</h3>
+        <pre class="command">echo Reuniao sexta-feira &gt;&gt; projeto.txt\ngit status\ngit diff</pre>
+        <p><span class="inline-code">status</span> mostra <strong>quais arquivos</strong> mudaram; <span class="inline-code">diff</span> mostra <strong>o que mudou nas linhas</strong>.</p>
+        <pre class="command">git add projeto.txt\ngit commit -m "Adiciona aviso da reuniao"</pre>
+        <div class="flow">alterar → status/diff → add → commit</div>
+        <div class="mini-grid">
+          <div class="mini-card"><strong>commit</strong><br>registro de um momento.</div>
+          <div class="mini-card"><strong>hash</strong><br>identificador do commit.</div>
+          <div class="mini-card"><strong>HEAD</strong><br>referência para o commit atual.</div>
+        </div>
+        <div class="note-box"><strong>Mensagem boa explica a mudança.</strong> Prefira “Corrige cálculo da média” a “teste”, “aaa” ou “alteração”.</div>`
+    },
+    {
+      id: 6,
+      menu: '6 Histórico',
+      title: '6 — Entendendo o histórico',
+      objective: 'Localizar, investigar e comparar versões antes de decidir o que corrigir.',
+      content: `
+        <div class="hero-box">
+          <h3>Uma informação está errada. Em qual versão entrou?</h3>
+          <p>A coordenação percebeu um problema no projeto. Em vez de editar por tentativa, a equipe vai usar o histórico como evidência.</p>
+        </div>
+        <h3>1. Localize os commits</h3>
+        <pre class="command">git log --oneline</pre>
+        <p>Exemplo:</p>
+        <pre class="command">7f32abc Adiciona aviso da reuniao\n8cb271a Cria aviso inicial</pre>
+        <p>O código à esquerda é o <strong>hash</strong> resumido.</p>
+        <h3>2. Investigue um commit</h3>
+        <pre class="command">git show HASH</pre>
+        <p>O Git mostra informações do commit e as alterações introduzidas por ele.</p>
+        <h3>3. Compare dois momentos</h3>
+        <pre class="command">git diff HASH_ANTIGO HASH_NOVO</pre>
+        <p>A ordem importa: você verá o que mudou do primeiro commit para o segundo.</p>
+        <div class="flow">problema percebido\n      ↓\ngit log --oneline\n      ↓\ngit show HASH\n      ↓\ngit diff HASH1 HASH2\n      ↓\nentendo antes de corrigir</div>
+        <div class="concept-box"><strong>O histórico não serve apenas para lembrar o passado; ele ajuda a decidir o próximo passo.</strong></div>`
+    },
+    {
+      id: 7,
+      menu: '7 Recuperar',
+      title: '7 — Quando algo dá errado',
+      objective: 'Escolher uma recuperação segura conforme o momento em que o erro foi percebido.',
+      content: `
+        <div class="hero-box">
+          <h3>Nem todo erro acontece no mesmo momento</h3>
+          <p>Às vezes percebemos o problema antes do commit. Outras vezes ele já foi registrado. O comando certo depende disso.</p>
+        </div>
+        <h3>Ainda não fiz git add</h3>
+        <pre class="command">git diff\ngit restore projeto.txt</pre>
+        <p>Volta o arquivo ao conteúdo do último commit e descarta aquela alteração local.</p>
+        <h3>Já fiz git add, mas ainda não fiz commit</h3>
+        <pre class="command">git restore --staged projeto.txt</pre>
+        <p>O arquivo sai da preparação, mas a alteração permanece.</p>
+        <h3>O erro já virou commit</h3>
+        <p>Confira primeiro:</p>
+        <pre class="command">git status\ngit log --oneline</pre>
+        <p>Para desfazer o último commit preservando o histórico:</p>
+        <pre class="command">git revert --no-edit HEAD</pre>
+        <p>Para desfazer um commit específico:</p>
+        <pre class="command">git revert --no-edit HASH</pre>
+        <div class="concept-box"><strong>revert cria um novo commit de correção. Ele não apaga o commit antigo.</strong></div>
+        <h3>Quero um arquivo como estava em uma versão específica</h3>
+        <pre class="command">git restore --source=HASH -- projeto.txt\ntype projeto.txt\ngit status</pre>
+        <p>Se o conteúdo recuperado é o que você precisa:</p>
+        <pre class="command">git add projeto.txt\ngit commit -m "Restaura versao anterior de projeto.txt"</pre>
+        <h3>Quero retomar os arquivos rastreados de uma versão aprovada</h3>
+        <div class="danger-box"><strong>Faça somente com a área de trabalho limpa.</strong> Confira antes com <span class="inline-code">git status</span>.</div>
+        <pre class="command">git status\ngit log --oneline\ngit restore --source=HASH -- .\ngit status\ngit add -A\ngit commit -m "Restaura projeto para versao aprovada"</pre>
+        <div class="note-box">Arquivos não rastreados não são removidos automaticamente. Neste módulo não usamos <span class="inline-code">reset --hard</span> para “voltar versões”.</div>`
+    },
+    {
+      id: 8,
+      menu: '8 Fluxo Git',
+      title: '8 — O fluxo Git que precisa ficar na cabeça',
+      objective: 'Consolidar o trabalho local e saber qual pergunta cada comando responde.',
+      content: `
+        <div class="hero-box">
+          <span class="part-badge">Fechamento do Git local</span>
+          <h3>Agora faça o trabalho como uma sequência</h3>
+          <p>A equipe recebe uma nova solicitação, altera o projeto, confere, registra e depois consegue explicar o que aconteceu.</p>
+        </div>
+        <pre class="command">git status\n\nREM trabalhe no arquivo\n\ngit status\ngit diff\ngit add .\ngit commit -m "Descricao da alteracao"\ngit log --oneline</pre>
+        <div class="flow">entender → alterar → conferir → preparar → registrar → consultar</div>
+        <h3>Qual pergunta estou fazendo?</h3>
+        <div class="flow">git status                    → como está o repositório?\ngit diff                      → o que mudou agora?\ngit add .                     → o que vai para o próximo commit?\ngit commit -m "Mensagem"      → quero registrar esta versão\ngit log --oneline             → quais versões existem?\ngit show HASH                 → o que aconteceu naquele commit?\ngit revert --no-edit HASH     → quero desfazer um commit sem apagar a história\ngit restore --source=HASH -- arquivo → quero recuperar conteúdo de uma versão</div>
+        <div class="ok-box"><strong>Git local concluído.</strong> Você já consegue criar, investigar e recuperar versões. Agora vamos levar esse mesmo histórico ao GitHub.</div>`
+    }
+  ];
+
+  const githubNovo = [
+    {
+      id: 1,
+      menu: '1 GitHub essencial',
+      title: 'GitHub 1 — O essencial para começar',
+      objective: 'Criar a conta, reconhecer o necessário da interface e entender local x remoto.',
+      content: `
+        <div class="hero-box">
+          <span class="part-badge">Parte 2 — GitHub</span>
+          <h3>O projeto agora precisa sair do computador</h3>
+          <p>Até aqui o histórico existe localmente. A equipe quer ter uma cópia online, poder trabalhar em outro computador e compartilhar o projeto.</p>
+        </div>
+        <h3>1. Conta</h3>
+        <p>Acesse <strong>github.com</strong>, crie sua conta e confirme o e-mail. O nome de usuário fará parte da sua identidade na plataforma.</p>
+        <h3>2. Localize somente o necessário</h3>
+        <ul>
+          <li><strong>Repositories</strong> — seus repositórios;</li>
+          <li><strong>New repository</strong> — criar um repositório;</li>
+          <li><strong>Code</strong> — obter o endereço para clonar.</li>
+        </ul>
+        <div class="mini-grid">
+          <div class="mini-card"><strong>Local</strong><br>repositório no computador.</div>
+          <div class="mini-card"><strong>Remoto</strong><br>repositório hospedado no GitHub.</div>
+        </div>
+        <div class="concept-box"><strong>Local e remoto não se atualizam sozinhos. Nós decidimos quando receber e quando enviar.</strong></div>
+        <div class="note-box"><strong>Conheça também:</strong> perfil, stars, seguidores e feed existem no GitHub, mas não são necessários para aprender o fluxo de versionamento.</div>`
+    },
+    {
+      id: 2,
+      menu: '2 GitHub → PC',
+      title: 'GitHub 2 — Um projeto nasce no GitHub e vem para o computador',
+      objective: 'Criar um repositório remoto, cloná-lo e reconhecer a ligação origin.',
+      content: `
+        <div class="hero-box">
+          <h3>Primeiro cenário: o projeto nasce online</h3>
+          <p>Vamos criar <span class="inline-code">primeiro-repositorio</span> no GitHub e depois trazer uma cópia completa para o computador.</p>
+        </div>
+        <h3>1. Crie no GitHub</h3>
+        <p>Use <strong>New repository</strong>, nomeie como <span class="inline-code">primeiro-repositorio</span>, deixe público para esta prática e adicione um README.</p>
+        <p>O GitHub criará um primeiro commit para o README.</p>
+        <h3>2. Copie a URL HTTPS</h3>
+        <pre class="command">https://github.com/USUARIO/primeiro-repositorio.git</pre>
+        <h3>3. Clone</h3>
+        <pre class="command">cd /d "%USERPROFILE%\\meus-repositorios"\ngit clone https://github.com/USUARIO/primeiro-repositorio.git\ncd primeiro-repositorio</pre>
+        <h3>4. Confira</h3>
+        <pre class="command">git status\ngit log --oneline\ngit remote -v</pre>
+        <p>O nome <strong>origin</strong> normalmente aponta para o endereço do repositório remoto.</p>
+        <div class="concept-box"><strong>Depois de git clone, não execute git init. O repositório e o histórico já vieram prontos.</strong></div>`
+    },
+    {
+      id: 3,
+      menu: '3 PC → GitHub',
+      title: 'GitHub 3 — Enviando trabalho para o GitHub',
+      objective: 'Criar um commit local e enviá-lo com push.',
+      content: `
+        <div class="hero-box">
+          <h3>A equipe trabalhou no computador. O GitHub ainda não sabe disso.</h3>
+          <p>Primeiro registramos localmente. Depois enviamos o commit.</p>
+        </div>
+        <pre class="command">echo Alteracao feita no computador &gt;&gt; README.md\ngit status\ngit diff\ngit add README.md\ngit commit -m "Atualiza README"\ngit push</pre>
+        <div class="flow">alterar → conferir → commit → push → GitHub</div>
+        <div class="concept-box"><strong>commit registra localmente. push envia commits ao remoto.</strong></div>
+        <h3>Na primeira autenticação</h3>
+        <p>No Git for Windows atual, é comum o Git Credential Manager abrir o navegador para autenticar sua conta. Conclua o login solicitado.</p>
+        <div class="danger-box"><strong>Não trate a senha da conta como uma “senha Git” para digitar no terminal.</strong> Siga o fluxo moderno de autenticação apresentado pelo Git Credential Manager/GitHub.</div>
+        <p>Depois do push, atualize a página do repositório e confirme se o commit apareceu.</p>`
+    },
+    {
+      id: 4,
+      menu: '4 GitHub → PC',
+      title: 'GitHub 4 — Recebendo novidades com pull',
+      objective: 'Entender quando o remoto está mais novo e trazer os commits ao computador.',
+      content: `
+        <div class="hero-box">
+          <h3>Agora a alteração aconteceu do outro lado</h3>
+          <p>Alguém fez uma pequena correção no README pelo navegador. O GitHub está atualizado, mas seu computador ainda não.</p>
+        </div>
+        <h3>1. Faça uma pequena edição no GitHub</h3>
+        <p>Edite o README pelo navegador e salve criando o commit oferecido pela interface.</p>
+        <h3>2. Veja que o PC ainda está antigo</h3>
+        <pre class="command">type README.md</pre>
+        <h3>3. Receba</h3>
+        <pre class="command">git pull\ntype README.md\ngit log --oneline</pre>
+        <div class="mini-grid">
+          <div class="mini-card"><strong>push</strong><br>envia commits.</div>
+          <div class="mini-card"><strong>pull</strong><br>recebe commits.</div>
+        </div>
+        <div class="note-box"><strong>Edição online:</strong> é útil para ajustes pequenos. Para mudanças maiores, prefira trabalhar nos arquivos locais e depois fazer commit + push.</div>`
+    },
+    {
+      id: 5,
+      menu: '5 Projeto já existe',
+      title: 'GitHub 5 — Meu projeto já existe no computador',
+      objective: 'Conectar um repositório local existente a um repositório remoto vazio.',
+      content: `
+        <div class="hero-box">
+          <h3>Segundo cenário: o projeto nasceu no PC</h3>
+          <p>Agora não vamos clonar. O projeto local já possui arquivos e commits e precisa ser publicado.</p>
+        </div>
+        <h3>1. Confira o local</h3>
+        <pre class="command">git status\ngit log --oneline</pre>
+        <h3>2. Crie no GitHub um repositório novo e vazio</h3>
+        <p>Neste cenário, não adicione README, licença nem <span class="inline-code">.gitignore</span> no remoto.</p>
+        <h3>3. Conecte</h3>
+        <pre class="command">git remote add origin URL-DO-REPOSITORIO\ngit remote -v</pre>
+        <h3>4. Descubra a branch atual</h3>
+        <pre class="command">git branch --show-current</pre>
+        <p>Pode aparecer <span class="inline-code">main</span>, <span class="inline-code">master</span> ou outro nome.</p>
+        <h3>5. Faça o primeiro envio</h3>
+        <p>Se a branch mostrada foi <span class="inline-code">main</span>:</p>
+        <pre class="command">git push -u origin main</pre>
+        <p>Se foi <span class="inline-code">master</span>:</p>
+        <pre class="command">git push -u origin master</pre>
+        <div class="concept-box"><strong>Não adivinhe o nome da branch. Confira e use o nome que realmente existe.</strong></div>`
+    },
+    {
+      id: 6,
+      menu: '6 Dia a dia',
+      title: 'GitHub 6 — O fluxo do dia a dia',
+      objective: 'Transformar Git + GitHub em uma rotina curta e previsível.',
+      content: `
+        <div class="hero-box">
+          <h3>Uma rotina que cabe na cabeça</h3>
+          <p>Antes de trabalhar, receba novidades. Depois altere, confira, registre e envie.</p>
+        </div>
+        <pre class="command">git pull\n\nREM trabalhe nos arquivos\n\ngit status\ngit diff\ngit add .\ngit commit -m "Descricao da alteracao"\ngit push</pre>
+        <div class="flow">PULL → TRABALHAR → STATUS/DIFF → ADD → COMMIT → PUSH</div>
+        <h3>Antes de fechar</h3>
+        <pre class="command">git status</pre>
+        <p>Se a área de trabalho estiver limpa, você sabe que não deixou alterações locais sem registrar.</p>
+        <h3>Quando precisar se localizar</h3>
+        <pre class="command">git log --oneline\ngit remote -v\ngit branch --show-current</pre>
+        <div class="concept-box"><strong>Primeiro entenda o estado. Depois escolha o comando.</strong></div>`
+    },
+    {
+      id: 7,
+      menu: '7 Problemas',
+      title: 'GitHub 7 — Problemas comuns sem pânico',
+      objective: 'Diagnosticar erros frequentes e recuperar o projeto sem recorrer a comandos destrutivos.',
+      content: `
+        <div class="hero-box">
+          <h3>Quando algo dá errado, pare de adivinhar</h3>
+          <p>A equipe deve descobrir <strong>onde está, a qual remoto está ligada e qual branch está usando</strong> antes de tentar corrigir.</p>
+        </div>
+        <h3>Diagnóstico inicial</h3>
+        <pre class="command">git status\ngit remote -v\ngit branch --show-current\ngit log --oneline</pre>
+        <h3>“Não é um repositório Git”</h3>
+        <p>Provavelmente você está na pasta errada. Volte ao projeto e execute <span class="inline-code">git status</span> novamente.</p>
+        <h3>“origin does not appear to be a git repository”</h3>
+        <p>Confira:</p>
+        <pre class="command">git remote -v</pre>
+        <p>Se não existir remoto e este projeto realmente deve ser ligado ao GitHub:</p>
+        <pre class="command">git remote add origin URL-DO-REPOSITORIO\ngit remote -v</pre>
+        <h3>“src refspec main does not match any”</h3>
+        <p>Não force <span class="inline-code">main</span>. Descubra o nome real:</p>
+        <pre class="command">git branch --show-current</pre>
+        <p>Se aparecer <span class="inline-code">master</span>, por exemplo:</p>
+        <pre class="command">git push -u origin master</pre>
+        <h3>O push foi rejeitado porque o remoto tem novidades</h3>
+        <pre class="command">git pull</pre>
+        <p>Se terminar normalmente:</p>
+        <pre class="command">git push</pre>
+        <h3>Conflito</h3>
+        <p>Abra o arquivo, resolva o conteúdo marcado pelo Git e finalize:</p>
+        <pre class="command">git status\ngit add NOME-DO-ARQUIVO\ngit commit -m "Resolve conflito"\ngit push</pre>
+        <h3>Enviei um commit errado ao GitHub</h3>
+        <pre class="command">git status\ngit log --oneline\ngit revert --no-edit HASH\ngit push</pre>
+        <p>Se foi o último commit:</p>
+        <pre class="command">git revert --no-edit HEAD\ngit push</pre>
+        <div class="danger-box"><strong>Neste nível, não use reset --hard, rebase ou force push como tentativa de socorro.</strong> Primeiro preserve a história e torne a correção explicável.</div>
+        <div class="ok-box"><strong>Git + GitHub concluídos.</strong> Você já consegue criar versões, publicar, receber mudanças, diagnosticar problemas e recuperar erros básicos com segurança.</div>`
+    }
+  ];
+
+  gitSteps.splice(0, gitSteps.length, ...gitNovo);
+  githubSteps.splice(0, githubSteps.length, ...githubNovo);
+
   const exerciseStep = id => exerciseSteps.find(step => String(step.id) === String(id));
 
-  const step10 = gitStep(10);
-  if (step10 && !step10.content.includes('Versão, hash e HEAD')) {
-    step10.content += `
-      <h3>Versão, hash e HEAD</h3>
-      <p>Imagine que <span class="inline-code">primeiro-projeto</span> seja um pequeno projeto mantido pela equipe de informática da escola. A cada mudança importante — por exemplo, corrigir um aviso, alterar um horário ou acrescentar uma informação — fazemos um commit. Assim, cada decisão importante fica registrada e pode ser localizada depois.</p>
-      <div class="mini-grid">
-        <div class="mini-card"><strong>commit</strong><br>Registro de um momento do projeto.</div>
-        <div class="mini-card"><strong>hash</strong><br>Código que identifica aquele commit.</div>
-        <div class="mini-card"><strong>HEAD</strong><br>Referência para o commit em que estamos agora.</div>
-      </div>
-      <div class="concept-box"><strong>Registrar versões só é realmente útil se depois conseguirmos identificar, investigar e recuperar esses registros.</strong></div>`;
-  }
-
-  const step11 = gitStep(11);
-  if (step11 && !step11.content.includes('Quando o histórico deixa de ser apenas uma lista')) {
-    step11.objective = 'Localizar, investigar e comparar commits para entender como o projeto evoluiu.';
-    step11.content += `
-      <h3>Quando o histórico deixa de ser apenas uma lista</h3>
-      <div class="hero-box">
-        <h3>Uma informação errada apareceu no projeto</h3>
-        <p>Na pequena equipe da escola, alguém percebe que uma informação publicada no projeto está errada. Antes de sair alterando arquivos, precisamos responder: <strong>em qual versão isso entrou e o que exatamente mudou?</strong></p>
-      </div>
-
-      <h3>3. Investigue um commit específico</h3>
-      <p>Primeiro localize o identificador com:</p>
-      <pre class="command">git log --oneline</pre>
-      <p>Depois examine o commit escolhido:</p>
-      <pre class="command">git show HASH</pre>
-      <p>Substitua <span class="inline-code">HASH</span> pelo código mostrado no histórico. O Git exibirá informações daquele commit e as alterações introduzidas por ele.</p>
-      <div class="note-box">Se a visualização abrir em uma tela de navegação, pressione <span class="inline-code">q</span> para sair.</div>
-
-      <h3>4. Compare duas versões</h3>
-      <p>Se a equipe sabe que uma versão estava correta e outra já contém o problema, compare as duas:</p>
-      <pre class="command">git diff HASH_ANTIGO HASH_NOVO</pre>
-      <p>Assim você vê as diferenças entre aqueles dois momentos do projeto. A ordem importa: o Git mostra o que mudou do primeiro commit para o segundo.</p>
-
-      <h3>Fluxo de investigação</h3>
-      <div class="flow">Problema percebido
-        ↓
- git log --oneline
-        ↓
-   git show HASH
-        ↓
-git diff HASH1 HASH2
-        ↓
-Entendo o que aconteceu
-        ↓
-Decido como corrigir</div>
-      <div class="concept-box"><strong>Antes de recuperar uma versão, descubra qual versão você realmente precisa.</strong></div>`;
-  }
-
-  const step13 = gitStep(13);
-  if (step13 && !step13.content.includes('O erro já virou commit')) {
-    step13.title = '13 — Sobrevivência: desfazer e recuperar versões';
-    step13.objective = 'Corrigir erros antes e depois do commit, recuperar conteúdo anterior e preservar o histórico.';
-    step13.content = step13.content
-      .replace(
-        '<h3>Três coisas que salvam muito tempo</h3>\n        <p>Antes de irmos para o GitHub, vamos aprender somente três recursos de proteção: <strong>.gitignore</strong>, <strong>git restore</strong> e <strong>git restore --staged</strong>.</p>',
-        '<h3>O erro pode acontecer em momentos diferentes</h3>\n        <p>Às vezes percebemos o problema antes do commit; outras vezes somente depois que a versão já foi registrada. Vamos escolher a recuperação de acordo com o momento do erro, sempre conferindo o estado antes de agir.</p>'
-      )
-      .replace(
-        '<div class="ok-box"><strong>Git local concluído.</strong> Você já sabe criar versões, conferir mudanças, ignorar arquivos indevidos e desfazer dois erros locais muito comuns.</div>',
-        ''
-      );
-
-    step13.content += `
-      <h3>4. O erro já virou commit</h3>
-      <div class="hero-box">
-        <h3>O aviso errado foi registrado</h3>
-        <p>A equipe alterou uma informação, executou <span class="inline-code">git add</span> e fez o commit. Só depois a coordenação percebeu que aquela mudança não deveria ter sido feita. Agora <strong>git restore</strong> sozinho não resolve o mesmo problema, porque a alteração já faz parte do histórico.</p>
-      </div>
-      <p>Primeiro confirme que não há trabalho local pendente e localize o commit:</p>
-      <pre class="command">git status
-git log --oneline</pre>
-      <p>Se o erro está justamente no último commit:</p>
-      <pre class="command">git revert --no-edit HEAD</pre>
-      <p>Se você identificou um commit específico:</p>
-      <pre class="command">git revert --no-edit HASH</pre>
-      <p>O <span class="inline-code">git revert</span> cria <strong>um novo commit</strong> que desfaz as alterações introduzidas pelo commit escolhido.</p>
-      <div class="note-box">Neste primeiro contato, pratique com um commit simples e recente. Ao reverter um commit antigo, mudanças posteriores podem depender dele e o Git pode pedir que você resolva um conflito.</div>
-      <div class="flow">versão correta
-      ↓
-commit com erro
-      ↓
-git revert
-      ↓
-novo commit de correção</div>
-      <div class="concept-box"><strong>Revert não apaga o erro do histórico. Ele registra também a correção.</strong></div>
-      <div class="note-box"><strong>Por que usar <span class="inline-code">--no-edit</span>?</strong> Neste módulo ele mantém automaticamente a mensagem de reversão e evita abrir um editor de texto só para confirmar o commit.</div>
-
-      <h3>5. Quero recuperar um arquivo como ele estava em uma versão específica</h3>
-      <p>Em outro momento, o problema pode ser diferente: a equipe não quer desfazer um commit inteiro. Precisa apenas recuperar <strong>um arquivo</strong> exatamente como estava em determinado ponto do histórico.</p>
-      <pre class="command">git log --oneline
-git show HASH
-git restore --source=HASH -- projeto.txt
-type projeto.txt
-git status</pre>
-      <p>Nesse momento, o arquivo foi recuperado para a área de trabalho, mas essa recuperação ainda não é um novo commit. Se o conteúdo estiver correto:</p>
-      <pre class="command">git add projeto.txt
-git commit -m "Restaura versao anterior de projeto.txt"</pre>
-      <div class="concept-box"><strong>O passado serve como fonte; a recuperação vira uma nova decisão registrada no presente.</strong></div>
-
-      <h3>6. Quero os arquivos rastreados do projeto como estavam em uma versão específica</h3>
-      <div class="hero-box">
-        <h3>Uma versão antiga foi aprovada e precisamos retomá-la</h3>
-        <p>Imagine que várias alterações foram feitas depois de uma versão aprovada pela escola. Em vez de apagar commits, podemos usar aquela versão antiga como fonte, conferir o resultado e registrar uma nova versão de recuperação.</p>
-      </div>
-      <div class="danger-box"><strong>Antes de começar:</strong> execute <span class="inline-code">git status</span>. Faça esta recuperação somente com a área de trabalho limpa, para não sobrescrever alterações locais que ainda não foram registradas.</div>
-      <pre class="command">git status
-git log --oneline
-git show HASH
-git restore --source=HASH -- .
-git status</pre>
-      <p>Confira os arquivos. Se aquele estado é realmente o desejado:</p>
-      <pre class="command">git add -A
-git commit -m "Restaura projeto para versao aprovada"</pre>
-      <p>Esse procedimento recupera os <strong>arquivos rastreados</strong> a partir do commit escolhido e registra o resultado como uma nova versão. Arquivos não rastreados não são automaticamente removidos.</p>
-
-      <h3>Não confunda as recuperações</h3>
-      <div class="mini-grid">
-        <div class="mini-card"><strong>Antes do add</strong><br><span class="inline-code">git restore arquivo</span></div>
-        <div class="mini-card"><strong>Depois do add</strong><br><span class="inline-code">git restore --staged arquivo</span></div>
-        <div class="mini-card"><strong>Commit errado</strong><br><span class="inline-code">git revert --no-edit HASH</span></div>
-        <div class="mini-card"><strong>Conteúdo de uma versão</strong><br><span class="inline-code">git restore --source=HASH -- arquivo</span></div>
-      </div>
-      <div class="danger-box"><strong>Não use <span class="inline-code">git reset --hard</span> apenas para “voltar versões”.</strong> Neste nível, conseguimos investigar e recuperar o projeto preservando o histórico e reduzindo o risco de perder trabalho.</div>
-      <div class="ok-box"><strong>Git local concluído.</strong> Você já sabe registrar versões, investigar o histórico, recuperar conteúdo anterior e corrigir erros sem precisar apagar a história do projeto.</div>`;
-  }
-
-  const gh14 = githubStep(14);
-  if (gh14 && !gh14.content.includes('Problema 7 — Enviei ao GitHub um commit errado')) {
-    gh14.content = gh14.content.replace(
-      '<div class="danger-box"><strong>Evite comandos aleatórios encontrados na Internet.</strong> Neste nível, não precisamos de <span class="inline-code">reset --hard</span>, rebase ou outras operações destrutivas para resolver os problemas básicos apresentados aqui.</div>',
-      `<h3>Problema 7 — Enviei ao GitHub um commit errado</h3>
-      <p>O erro já está no histórico local e também foi publicado. Neste nível, não vamos reescrever a história compartilhada. Vamos registrar a correção.</p>
-      <pre class="command">git status
-git log --oneline
-git revert --no-edit HASH
-git push</pre>
-      <p>Se o problema está no último commit, você pode usar:</p>
-      <pre class="command">git revert --no-edit HEAD
-git push</pre>
-      <div class="concept-box"><strong>Depois que um commit foi compartilhado, corrigir com um novo commit deixa o que aconteceu explicável para toda a equipe.</strong></div>
-
-      <div class="danger-box"><strong>Evite comandos aleatórios encontrados na Internet.</strong> Neste nível, não precisamos de <span class="inline-code">reset --hard</span>, rebase, force push ou outras operações que reescrevem ou descartam histórico para resolver os problemas básicos apresentados aqui.</div>`
-    );
-  }
-
-  const gh15 = githubStep(15);
-  if (gh15 && !gh15.content.includes('git show HASH')) {
-    gh15.content = gh15.content.replace(
-      'git log --oneline             → quais commits existem?\ngit clone URL',
-      'git log --oneline             → quais commits existem?\ngit show HASH                   → o que aconteceu naquele commit?\ngit diff HASH1 HASH2            → o que mudou entre duas versões?\ngit revert --no-edit HASH       → desfazer um commit preservando o histórico\ngit restore --source=HASH -- arquivo → recuperar um arquivo de uma versão\ngit clone URL'
-    );
-  }
-
-  const exerciseIntro = exerciseStep('inicio');
-  if (exerciseIntro && !exerciseIntro.content.includes('show, comparação')) {
-    exerciseIntro.content = exerciseIntro.content.replace(
+  const intro = exerciseStep('inicio');
+  if (intro) {
+    intro.content = intro.content.replace(
       '<li>.gitignore e restore.</li>',
-      '<li>.gitignore, restore, show, comparação de versões e revert.</li>'
+      '<li>.gitignore, restore, histórico, comparação de versões e revert.</li>'
     );
   }
 
@@ -172,26 +392,10 @@ git push</pre>
     e7.title = 'Exercício 7 — Desfazendo e recuperando versões';
     e7.objective = 'Praticar recuperação antes e depois do commit e reutilizar uma versão específica.';
     e7.content += `
-      <div class="task-box"><h4>Parte C — O erro já foi commitado</h4><p>Primeiro registre a linha que você decidiu manter na Parte B, deixando a área de trabalho limpa. Depois simule uma situação real: acrescente <strong>Informacao temporaria</strong> a <span class="inline-code">anotacoes.txt</span>, faça o commit e só então descubra que essa informação estava errada. Desfaça o último commit sem apagá-lo do histórico.</p></div>
-      <details class="answer-box"><summary>Resposta da Parte C</summary><div class="answer-content"><pre class="command">git add anotacoes.txt
-git commit -m "Mantem nova anotacao"
-echo Informacao temporaria &gt;&gt; anotacoes.txt
-git add anotacoes.txt
-git commit -m "Inclui informacao temporaria"
-git log --oneline
-git revert --no-edit HEAD
-git log --oneline
-type anotacoes.txt</pre><p>O histórico mostrará tanto o commit com a alteração quanto o novo commit que o desfez.</p></div></details>
-
-      <div class="task-box"><h4>Parte D — Recuperando uma versão específica</h4><p>A coordenação pediu o conteúdo de <span class="inline-code">anotacoes.txt</span> como ele estava em um commit anterior. Localize um hash, investigue esse commit, recupere o arquivo e registre a recuperação como uma nova versão.</p></div>
-      <details class="answer-box"><summary>Uma possível sequência</summary><div class="answer-content"><pre class="command">git log --oneline
-git show HASH
-git restore --source=HASH -- anotacoes.txt
-type anotacoes.txt
-git status
-git add anotacoes.txt
-git commit -m "Restaura anotacoes de uma versao anterior"
-git log --oneline</pre><p>Substitua <span class="inline-code">HASH</span> pelo identificador da versão que você realmente escolheu.</p></div></details>`;
+      <div class="task-box"><h4>Parte C — O erro já foi commitado</h4><p>Primeiro registre a linha que você decidiu manter na Parte B. Depois acrescente <strong>Informacao temporaria</strong>, faça o commit e só então descubra que ela estava errada. Desfaça o último commit sem apagá-lo do histórico.</p></div>
+      <details class="answer-box"><summary>Resposta da Parte C</summary><div class="answer-content"><pre class="command">git add anotacoes.txt\ngit commit -m "Mantem nova anotacao"\necho Informacao temporaria &gt;&gt; anotacoes.txt\ngit add anotacoes.txt\ngit commit -m "Inclui informacao temporaria"\ngit log --oneline\ngit revert --no-edit HEAD\ngit log --oneline\ntype anotacoes.txt</pre><p>O histórico mostrará o commit com o erro e o novo commit que o desfez.</p></div></details>
+      <div class="task-box"><h4>Parte D — Recuperando uma versão específica</h4><p>Localize um commit anterior, investigue-o, recupere <span class="inline-code">anotacoes.txt</span> como estava naquele momento e registre a recuperação como uma nova versão.</p></div>
+      <details class="answer-box"><summary>Uma possível sequência</summary><div class="answer-content"><pre class="command">git log --oneline\ngit show HASH\ngit restore --source=HASH -- anotacoes.txt\ntype anotacoes.txt\ngit status\ngit add anotacoes.txt\ngit commit -m "Restaura anotacoes de uma versao anterior"\ngit log --oneline</pre><p>Substitua <span class="inline-code">HASH</span> pelo identificador da versão escolhida.</p></div></details>`;
   }
 
   const e14 = exerciseStep('e14');
@@ -215,7 +419,10 @@ git log --oneline</pre><p>Substitua <span class="inline-code">HASH</span> pelo i
     );
   }
 
-  const activeButton = document.querySelector('.nav-btn.active');
-  const currentId = activeButton ? activeButton.id.replace(`btn-${activeModule}-`, '') : null;
-  setModule(activeModule, currentId, false);
+  const hash = location.hash.match(/^#(git|github|exercicios)-(.+)$/);
+  if (hash) {
+    setModule(hash[1], decodeURIComponent(hash[2]), false);
+  } else {
+    setModule('git', 1, false);
+  }
 })();
