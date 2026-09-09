@@ -968,7 +968,9 @@ for venda in vendas:
 
       <p>Arquivos e bancos de dados são mecanismos comuns de persistência. Eles passam a ser necessários quando as informações precisam sobreviver ao encerramento do programa ou ser compartilhadas entre execuções e usuários.</p>
 
-      <div class="deep-box"><strong>Voltando ao bit e ao Byte.</strong> Textos, números e arquivos acabam armazenados como bytes. No caso de texto, uma codificação define como caracteres são representados em bytes; por isso “um caractere” não significa necessariamente “um byte”.</div>`
+      <div class="deep-box"><strong>Voltando ao bit e ao Byte.</strong> Textos, números e arquivos acabam armazenados como bytes. No caso de texto, uma codificação define como caracteres são representados em bytes; por isso “um caractere” não significa necessariamente “um byte”.</div>
+
+      <div class="note-box"><strong>Próximo caminho:</strong> a área <a href="python.html">Python — aprender, construir e consultar</a> parte do ambiente real, aprofunda a linguagem e conduz a arquivos, objetos, testes, aplicações e projetos completos.</div>`
   }
 ];
 
