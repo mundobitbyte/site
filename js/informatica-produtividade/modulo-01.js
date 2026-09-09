@@ -27,6 +27,8 @@ window.produtividadeLessons = [
         </div>
       </section>
 
+      <div class="note-box"><strong>Registro que começa agora</strong><p>Como Lia ainda fará várias conferências, o primeiro registro cumulativo será <strong>P-01</strong>, o inventário de arquivos e lacunas. Depois de extrair o pacote no roteiro abaixo, abra um editor de texto simples e crie <code>P-01_inventario.txt</code> ao lado da pasta extraída — nunca dentro do ZIP nem entre as fontes recebidas. Comece apenas com origem, data/hora, quantidade, divergências observadas e decisão segura; no capítulo 03 ele será levado para a árvore de trabalho.</p></div>
+
       <h3>Laboratório seguro · preparar a cópia de trabalho</h3>
       <div class="task-box">
         <strong>Ponto de partida</strong>
@@ -35,7 +37,7 @@ window.produtividadeLessons = [
           <li>Baixe o <a href="../downloads/informatica-produtividade/caixa-entrada-feira.zip" download>pacote da Feira de Projetos</a>. Ele contém somente dados didáticos fictícios.</li>
           <li>No Windows, abra <strong>Downloads</strong>, selecione o ZIP, clique com o botão direito e escolha <strong>Extrair Tudo</strong>. Em outro sistema, use a opção equivalente de extrair.</li>
           <li>Mantenha o ZIP original sem alteração. Trabalhe somente na pasta extraída.</li>
-          <li>Abra primeiro <code>LEIA-ME.txt</code>. Depois conte os itens e registre os nomes exatamente como chegaram.</li>
+          <li>Abra primeiro <code>LEIA-ME.txt</code>. Crie <code>P-01_inventario.txt</code> no local indicado acima; depois conte os itens e registre os nomes exatamente como chegaram.</li>
         </ol>
       </div>
       <div class="evidence-box">
@@ -73,6 +75,8 @@ window.produtividadeLessons = [
         <p>Paulo confirma três entregas para esta etapa: uma lista pública de projetos, um cronograma para revisão e um pacote interno com as fontes. Marina responde pelas inscrições; Paulo aprova o horário; Lia organiza os arquivos. A lista pública não pode conter observações internas nem dados pessoais.</p>
       </div>
 
+      <div class="note-box"><strong>Novo registro do pedido</strong><p>Como “organizar tudo” não define conclusão, crie em um editor de texto simples o arquivo <code>P-00_pedido-e-criterios.txt</code>, ao lado de P-01. P-00 será o registro cumulativo de entregas, responsáveis, prazo, público, critérios e pendências; o modelo desta aula fornece os campos iniciais.</p></div>
+
       <h3>Entender · o que ainda falta perguntar?</h3>
       <div class="table-wrap"><table>
         <thead><tr><th>Relato</th><th>Pergunta necessária</th><th>Evidência de conclusão</th></tr></thead>
@@ -103,7 +107,7 @@ Entregas desta etapa:
 2. Cronograma — para revisão; horário de abertura ainda pendente.
 3. Pacote interno — fontes preservadas e inventário.
 Responsáveis: Marina (inscrições), Paulo (aprovação), Lia (organização).
-Prazo: registrar a data definida pelo professor.
+Prazo: 18/09/2026 às 8h para a prática individual, ou o prazo institucional informado.
 Destinatários: público, coordenação e equipe interna — não são o mesmo grupo.
 Critérios de aceite: fonte identificada, conteúdo conferido, formato adequado, permissão mínima e possibilidade de recuperação.
 Pendências: horário de abertura; aprovação da Gráfica Bairro.
@@ -205,19 +209,20 @@ Próxima verificação: responsável + evidência + data.</textarea>
 
       <h3>Aplicar · criar a árvore com retorno previsto</h3>
       <div class="task-box">
-        <strong>Alvo</strong><p>Uma nova pasta chamada <code>Feira_Projetos_2026</code>, criada em local autorizado pelo professor.</p>
+        <strong>Alvo</strong><p>Uma nova pasta chamada <code>Feira_Projetos_2026</code>, criada em <code>Documentos/MbB</code> para a prática individual ou no local autorizado pela instituição.</p>
         <ol>
           <li>Antes de criar, confirme que você não está dentro de uma pasta real da secretaria nem em uma conta pessoal sincronizada.</li>
           <li>Crie <code>Feira_Projetos_2026</code> e, dentro dela, as cinco pastas do diagrama.</li>
           <li>Copie o ZIP original para <code>00_Entrada</code>. Não o mova: Downloads continua sendo o ponto de retorno desta prática.</li>
           <li>Copie a pasta extraída para <code>10_Em_trabalho</code>. Não reorganize o conteúdo ainda.</li>
+          <li>Mova <code>P-00_pedido-e-criterios.txt</code> e <code>P-01_inventario.txt</code> para a raiz de <code>10_Em_trabalho</code>; esses registros pertencem ao trabalho, não às fontes recebidas.</li>
           <li>Confira que o ZIP abre em <code>00_Entrada</code> e que a cópia contém oito itens.</li>
         </ol>
       </div>
       <div class="evidence-box"><strong>Validação</strong><p>A árvore existe, a fonte recebida continua íntegra e a área de trabalho contém uma cópia. Um print pode mostrar a estrutura, mas a evidência principal é conseguir localizar e abrir os itens esperados.</p><p><strong>Se divergir:</strong> pare antes de recortar ou excluir. Compare o caminho exibido, volte uma pasta e renomeie somente a árvore criada para a atividade. Para desfazer, remova apenas a cópia didática depois de confirmar que o ZIP original continua em Downloads.</p></div>
 
       <div class="note-box"><strong>Por que números?</strong><p>Eles mantêm a ordem do fluxo em gerenciadores que classificam alfabeticamente. Não existe uma árvore universal: se os requisitos mudarem — por exemplo, materiais jurídicos precisarem de acesso restrito — a estrutura também deve mudar.</p></div>
-      <div class="bridge-box"><strong>Nova necessidade</strong><p>A árvore mostra onde cada estado vive, mas arquivos como “final_agora” continuam sem responder assunto, estado e versão de maneira consistente. P-02 precisa definir um padrão de nomes.</p></div>
+      <div class="bridge-box"><strong>Nova necessidade</strong><p>A árvore mostra onde cada estado vive, mas arquivos como “final_agora” continuam sem responder assunto, estado e versão de maneira consistente. O próximo registro cumulativo, P-02, reunirá a estrutura criada e o padrão de nomes que ainda precisa ser definido.</p></div>
     `
   },
   {
@@ -253,11 +258,13 @@ Próxima verificação: responsável + evidência + data.</textarea>
         </div>
       </section>
 
+      <div class="note-box"><strong>P-02 começa nesta decisão</strong><p>P-02 será o registro cumulativo da estrutura de pastas e do padrão de nomes. Em um editor de texto, crie <code>P-02_estrutura-e-nomes.txt</code> na raiz de <code>10_Em_trabalho</code>; registre primeiro as cinco pastas já criadas e, nesta aula, acrescente o padrão de nome adotado e suas exceções.</p></div>
+
       <h3>Aplicar em cópias, não nas fontes</h3>
       <div class="task-box"><ol>
         <li>Em <code>10_Em_trabalho</code>, crie uma subpasta <code>fontes_recebidas</code> e mova para ela os oito itens sem renomear.</li>
         <li>Copie somente os arquivos que serão trabalhados para a raiz de <code>10_Em_trabalho</code>.</li>
-        <li>Use P-01 para propor nomes com data, tipo, assunto, estado e versão. Não use “aprovado” sem a evidência prevista em P-00.</li>
+        <li>Continue P-01 para propor nomes com data, tipo, assunto, estado e versão. Registre o padrão escolhido em P-02. Não use “aprovado” sem a evidência prevista em P-00.</li>
         <li>Mantenha a extensão original. Em Windows, pressione <strong>F2</strong> ou use <strong>Renomear</strong>; altere apenas o nome antes do último ponto.</li>
         <li>Abra cada cópia renomeada. Um nome válido não prova que o conteúdo permaneceu legível; o teste de abertura é necessário.</li>
       </ol></div>
@@ -282,6 +289,8 @@ Próxima verificação: responsável + evidência + data.</textarea>
         <h2>Marina confirma a Equipe Sol no turno da tarde, mas ainda não autoriza apagar a lista anterior.</h2>
         <p>A mudança resolve uma divergência de P-01. Lia precisa incorporar a confirmação e manter o estado que permitiu explicar de onde a nova lista veio.</p>
       </div>
+
+      <div class="note-box"><strong>P-03 acompanhará cada mudança</strong><p>Como nome e data não provam aprovação, crie <code>P-03_versoes-e-aprovacoes.txt</code> na raiz de <code>10_Em_trabalho</code>. P-03 é o controle cumulativo que liga cada versão à fonte anterior, mudança, autoria, evidência de autorização, validação, estado e pendência. O modelo abaixo será completado após o teste.</p></div>
 
       <div class="table-wrap"><table>
         <thead><tr><th>Operação</th><th>Efeito desejado</th><th>Risco principal</th><th>Validação</th></tr></thead>
@@ -375,6 +384,8 @@ Pendência ou limite:</textarea>
         <p>Se a pasta inteira for aberta como editável, um visitante poderá alterar ou remover material. Se todos receberem apenas visualização, o fluxo de revisão para. A permissão nasce da função e do conteúdo.</p>
       </div>
 
+      <div class="note-box"><strong>P-04 transforma necessidade em acesso</strong><p>Crie <code>P-04_permissoes.txt</code> na raiz de <code>10_Em_trabalho</code>. Esse registro cumulativo é uma matriz: para cada pessoa ou grupo, anote necessidade, conteúdo, menor permissão suficiente, data do teste, resultado e limite. A tabela a seguir fornece as primeiras linhas.</p></div>
+
       <h3>P-04 · matriz antes do clique</h3>
       <div class="table-wrap"><table>
         <thead><tr><th>Pessoa/grupo</th><th>Necessidade</th><th>Conteúdo</th><th>Permissão mínima</th></tr></thead>
@@ -390,9 +401,9 @@ Pendência ou limite:</textarea>
 
       <h3>Laboratório controlado</h3>
       <div class="task-box"><ol>
-        <li>Use somente uma conta autorizada pela escola e os arquivos fictícios da atividade. Se não houver serviço autorizado, preencha P-04 e execute a simulação em papel; não improvise com conta pessoal.</li>
+        <li>Use somente uma conta autorizada pela escola e os arquivos fictícios da atividade. Se não houver serviço autorizado, execute a simulação no próprio P-04 com os perfis fictícios <code>Teste-Visualizador</code> e <code>Teste-Editor</code>; não improvise com conta pessoal.</li>
         <li>Crie ou envie apenas uma pasta de teste chamada <code>MBB_Feira_Compartilhamento_Teste</code>.</li>
-        <li>Mantenha o acesso geral como <strong>restrito</strong>. Adicione somente a conta de teste indicada pelo professor.</li>
+        <li>Mantenha o acesso geral como <strong>restrito</strong>. Adicione somente a conta de teste indicada pelo professor; na simulação local, registre qual perfil receberia o acesso.</li>
         <li>Conceda <strong>visualização</strong> e peça ao destinatário para abrir e tentar identificar se consegue editar. Não use arquivo real como teste.</li>
         <li>Se o processo exigir edição da pasta, altere conscientemente o papel e repita o teste. Para comentário, use um arquivo compatível: alguns serviços não oferecem papel de comentarista para pastas.</li>
         <li>Remova o acesso de teste e confirme com o destinatário que o arquivo não abre mais. Registre horário, conta, papel, resultado e limite.</li>
@@ -437,6 +448,18 @@ Pendência ou limite:</textarea>
         <div><strong>Cópia independente</strong><p>Em outro destino autorizado, reduz dependência do mesmo fluxo, mas precisa de escopo, proteção e teste.</p></div>
       </div>
 
+      <div class="template-box"><label for="modelo-p05"><strong>P-05 · teste de recuperação</strong></label><p>P-05 é o registro cumulativo que limita qualquer promessa de recuperação ao que foi realmente testado. Crie <code>P-05_recuperacao.txt</code> em <code>10_Em_trabalho</code>, copie o modelo e preencha cada campo durante os experimentos.</p><textarea id="modelo-p05" class="record-template" rows="11" readonly>Cenário testado:
+Arquivo fictício e estado esperado:
+Fonte da recuperação:
+Estado anterior preservado?:
+Passos executados:
+Resultado observado:
+Validação do conteúdo/função:
+Tempo aproximado:
+O que o teste prova:
+O que o teste não prova:
+Próxima melhoria:</textarea><div><button class="action-button" type="button" data-copy="#modelo-p05">Copiar modelo</button><span class="copy-status" aria-live="polite"></span></div></div>
+
       <h3>Experimento A · retorno local sem sobrescrever</h3>
       <div class="task-box"><ol>
         <li>Selecione um arquivo fictício de <code>10_Em_trabalho</code> e copie-o para <code>90_Arquivo/teste-recuperacao</code>.</li>
@@ -457,18 +480,6 @@ Pendência ou limite:</textarea>
       </ol></div>
       <div class="danger-box"><strong>Interrompa se o item não for fictício</strong><p>Restaurar uma versão pode alterar o arquivo atual para colaboradores. Não experimente em material de produção. Se o histórico não aparecer, não conclua que ele nunca existiu: conta, tipo de arquivo, política ou interface podem explicar a ausência.</p></div>
 
-      <div class="template-box"><label for="modelo-p05"><strong>P-05 · teste de recuperação</strong></label><textarea id="modelo-p05" class="record-template" rows="11" readonly>Cenário testado:
-Arquivo fictício e estado esperado:
-Fonte da recuperação:
-Estado anterior preservado?:
-Passos executados:
-Resultado observado:
-Validação do conteúdo/função:
-Tempo aproximado:
-O que o teste prova:
-O que o teste não prova:
-Próxima melhoria:</textarea><div><button class="action-button" type="button" data-copy="#modelo-p05">Copiar modelo</button><span class="copy-status" aria-live="polite"></span></div></div>
-
       <details class="sources-box"><summary>Fontes oficiais consultadas</summary><ul><li><a href="https://support.microsoft.com/en-us/onedrive/restore-a-previous-version-of-a-file-stored-in-onedrive" target="_blank" rel="noopener">Microsoft Support — restaurar versão anterior no OneDrive</a></li><li><a href="https://support.google.com/drive/answer/2409045?hl=pt-BR" target="_blank" rel="noopener">Ajuda do Google Drive — atividades e versões de arquivos</a></li></ul></details>
       <div class="bridge-box"><strong>Fechamento do percurso</strong><p>P-00 a P-05 agora ligam pedido, fontes, estrutura, nomes, versões, acesso e recuperação. Falta provar que outra pessoa consegue receber o conjunto e tomar decisões sem depender da memória de Lia.</p></div>
     `
@@ -487,6 +498,8 @@ Próxima melhoria:</textarea><div><button class="action-button" type="button" da
         <h2>Lia ficará no auditório. Outra pessoa precisa concluir a revisão sem perguntar “onde está o arquivo certo?”.</h2>
         <p>Você recebe o pacote inicial e P-00 a P-05. Marina confirmou a mudança da Equipe Sol, mas <strong>o horário de abertura e a aprovação da gráfica continuam sem evidência</strong>. Uma boa entrega não inventa essas respostas: preserva as pendências e mostra o próximo responsável.</p>
       </div>
+
+      <div class="note-box"><strong>Ponto de partida do desafio</strong><p>Continue os arquivos <code>P-00</code> a <code>P-05</code> criados nas aulas anteriores e guardados em <code>10_Em_trabalho</code>; use a última versão validada de cada um. Se estiver estudando sem outra pessoa, feche o material ao terminar e faça a validação cruzada em uma segunda rodada, assumindo o papel de quem recebe e usando somente o índice e os registros.</p></div>
 
       <h3>Missão</h3>
       <div class="task-box"><ol>
