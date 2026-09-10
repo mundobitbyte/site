@@ -12,6 +12,20 @@
   document.head.appendChild(style);
 })();
 
+document.addEventListener('DOMContentLoaded', function(){
+  const menu = document.getElementById('arduinoModuleMenu');
+  if(!menu || menu.querySelector('a[href="arduino-conectividade.html"]')) return;
+
+  const link = document.createElement('a');
+  link.className = 'module-btn';
+  link.href = 'arduino-conectividade.html';
+  link.textContent = '6. Conectividade';
+
+  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
+  if(exercicios) menu.insertBefore(link, exercicios);
+  else menu.appendChild(link);
+});
+
 function copyCode(id, button){
   const code = document.getElementById(id);
   if(!code) return;
