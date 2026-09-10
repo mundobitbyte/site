@@ -1,19 +1,4 @@
 document.addEventListener('DOMContentLoaded', function(){
-  const menu = document.getElementById('arduinoModuleMenu');
-  if(!menu || menu.querySelector('a[href="arduino-projeto-iot.html"]')) return;
-
-  const link10 = document.createElement('a');
-  link10.className = 'module-btn';
-  link10.href = 'arduino-projeto-iot.html';
-  link10.textContent = '10. Projeto IoT';
-  link10.style.textDecoration = 'none';
-
-  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
-  if(exercicios) menu.insertBefore(link10, exercicios);
-  else menu.appendChild(link10);
-});
-
-document.addEventListener('DOMContentLoaded', function(){
   const layout = document.getElementById('arduinoLayout');
   const links = Array.from(document.querySelectorAll('#stageMenu .stage-link[href^="#"]'));
   const panels = Array.from(document.querySelectorAll('.mbb9-panel'));
@@ -71,20 +56,8 @@ document.addEventListener('DOMContentLoaded', function(){
   showPanel(initialHash, false);
 });
 
-function manterModuloAtivoVisivel(){
-  const menu = document.getElementById('arduinoModuleMenu');
-  const ativo = menu && menu.querySelector('.module-btn.active');
-  if(!menu || !ativo) return;
-
-  requestAnimationFrame(() => {
-    const menuRect = menu.getBoundingClientRect();
-    const itemRect = ativo.getBoundingClientRect();
-    const alvo = menu.scrollLeft + (itemRect.left - menuRect.left) - ((menu.clientWidth - itemRect.width) / 2);
-    const maximo = Math.max(0, menu.scrollWidth - menu.clientWidth);
-    menu.scrollLeft = Math.min(maximo, Math.max(0, alvo));
-  });
-}
-
-document.addEventListener('DOMContentLoaded', manterModuloAtivoVisivel);
-window.addEventListener('pageshow', manterModuloAtivoVisivel);
-window.addEventListener('resize', manterModuloAtivoVisivel);
+(() => {
+  const script = document.createElement('script');
+  script.src = '../js/arduino-menu.js';
+  document.head.appendChild(script);
+})();
