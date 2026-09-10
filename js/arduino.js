@@ -90,7 +90,7 @@ document.addEventListener('click', function(event){
 
 document.addEventListener('DOMContentLoaded', function(){
   const layout = document.getElementById('arduinoLayout');
-  const moduleButtons = Array.from(document.querySelectorAll('#arduinoModuleMenu .module-btn[data-module]'));
+  const moduleButtons = Array.from(document.querySelectorAll('#arduinoModuleMenu .module-btn'));
   const stageLinks = Array.from(document.querySelectorAll('#stageMenu .stage-link'));
   const stageToggle = document.getElementById('stageToggle');
   const stageClose = document.getElementById('stageClose');
@@ -112,6 +112,8 @@ document.addEventListener('DOMContentLoaded', function(){
     '#p8': 'atuadores', '#lab3': 'atuadores', '#p9': 'atuadores', '#lab4': 'atuadores'
   };
 
+  let currentModule = 'fundamentos';
+
   function closeDrawer(){
     layout.classList.remove('drawer-open');
     if(stageBackdrop) stageBackdrop.hidden = true;
@@ -127,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   function setModule(moduleName){
     if(!modules[moduleName]) return;
+    currentModule = moduleName;
     const hasSidebar = modules[moduleName].sidebar;
 
     moduleButtons.forEach(btn => {
@@ -189,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function(){
   moduleButtons.forEach(btn => {
     btn.addEventListener('click', function(){
       const moduleName = this.dataset.module;
-      if(!modules[moduleName]) return;
       const target = this.dataset.target || modules[moduleName].first;
       activateModule(moduleName, target, true);
     });
@@ -229,8 +231,70 @@ document.addEventListener('DOMContentLoaded', function(){
   activateModule(initialModule || 'fundamentos', initialHash, false);
 });
 
-(() => {
-  const script = document.createElement('script');
-  script.src = '../js/arduino-menu-estavel.js?v=20260910-1';
-  document.head.appendChild(script);
-})();
+/* Blocos 5 a 10: acrescentam apenas acessos às novas páginas, preservando os módulos 1–4. */
+document.addEventListener('DOMContentLoaded', function(){
+  const menu = document.getElementById('arduinoModuleMenu');
+  if(!menu) return;
+
+  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
+
+  if(!menu.querySelector('a[href="arduino-programacao-aplicada.html"]')){
+    const link5 = document.createElement('a');
+    link5.className = 'module-btn';
+    link5.href = 'arduino-programacao-aplicada.html';
+    link5.textContent = '5. Programação Aplicada';
+    link5.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link5, exercicios);
+    else menu.appendChild(link5);
+  }
+
+  if(!menu.querySelector('a[href="arduino-conectividade.html"]')){
+    const link6 = document.createElement('a');
+    link6.className = 'module-btn';
+    link6.href = 'arduino-conectividade.html';
+    link6.textContent = '6. Conectividade';
+    link6.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link6, exercicios);
+    else menu.appendChild(link6);
+  }
+
+  if(!menu.querySelector('a[href="arduino-iot.html"]')){
+    const link7 = document.createElement('a');
+    link7.className = 'module-btn';
+    link7.href = 'arduino-iot.html';
+    link7.textContent = '7. Internet das Coisas';
+    link7.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link7, exercicios);
+    else menu.appendChild(link7);
+  }
+
+  if(!menu.querySelector('a[href="arduino-protocolos.html"]')){
+    const link8 = document.createElement('a');
+    link8.className = 'module-btn';
+    link8.href = 'arduino-protocolos.html';
+    link8.textContent = '8. RTOS e Protocolos';
+    link8.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link8, exercicios);
+    else menu.appendChild(link8);
+  }
+
+  if(!menu.querySelector('a[href="arduino-seguranca.html"]')){
+    const link9 = document.createElement('a');
+    link9.className = 'module-btn';
+    link9.href = 'arduino-seguranca.html';
+    link9.textContent = '9. Proteção e Segurança';
+    link9.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link9, exercicios);
+    else menu.appendChild(link9);
+  }
+
+  if(!menu.querySelector('a[href="arduino-projeto-iot.html"]')){
+    const link10 = document.createElement('a');
+    link10.className = 'module-btn';
+    link10.href = 'arduino-projeto-iot.html';
+    link10.textContent = '10. Projeto IoT';
+    link10.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link10, exercicios);
+    else menu.appendChild(link10);
+  }
+});
