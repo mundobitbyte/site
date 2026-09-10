@@ -1,3 +1,18 @@
+document.addEventListener('DOMContentLoaded', function(){
+  const menu = document.getElementById('arduinoModuleMenu');
+  if(!menu || menu.querySelector('a[href="arduino-iot.html"]')) return;
+
+  const link7 = document.createElement('a');
+  link7.className = 'module-btn';
+  link7.href = 'arduino-iot.html';
+  link7.textContent = '7. Internet das Coisas';
+  link7.style.textDecoration = 'none';
+
+  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
+  if(exercicios) menu.insertBefore(link7, exercicios);
+  else menu.appendChild(link7);
+});
+
 function copyCode(id, button){
   const code = document.getElementById(id);
   if(!code) return;
