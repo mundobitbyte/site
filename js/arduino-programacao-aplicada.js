@@ -53,6 +53,15 @@ document.addEventListener('DOMContentLoaded', function(){
     if(exercicios) menu.insertBefore(link9, exercicios);
     else menu.appendChild(link9);
   }
+
+  if(!menu.querySelector('a[href="arduino-projeto-iot.html"]')){
+    const link10 = document.createElement('a');
+    link10.className = 'module-btn';
+    link10.href = 'arduino-projeto-iot.html';
+    link10.textContent = '10. Projeto IoT';
+    if(exercicios) menu.insertBefore(link10, exercicios);
+    else menu.appendChild(link10);
+  }
 });
 
 function copyCode(id, button){
