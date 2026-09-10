@@ -71,6 +71,7 @@
 <a class="module-btn" href="arduino-iot.html">7. Internet das Coisas</a>
 <a class="module-btn" href="arduino-protocolos.html">8. RTOS e Protocolos</a>
 <a class="module-btn" href="arduino-seguranca.html">9. Proteção e Segurança</a>
+<a class="module-btn" href="arduino-projeto-iot.html">10. Projeto IoT</a>
 <a class="module-btn active" href="arduino-exercicios.html">99. Exercícios</a>
 </div>
 
@@ -166,6 +167,7 @@
   backdrop.addEventListener('click',closeDrawer);
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
 })();
+(function(){function manter(){const menu=document.getElementById('arduinoModuleMenu'),ativo=menu&&menu.querySelector('.module-btn.active');if(!menu||!ativo)return;requestAnimationFrame(()=>{const mr=menu.getBoundingClientRect(),ir=ativo.getBoundingClientRect(),alvo=menu.scrollLeft+(ir.left-mr.left)-((menu.clientWidth-ir.width)/2),max=Math.max(0,menu.scrollWidth-menu.clientWidth);menu.scrollLeft=Math.min(max,Math.max(0,alvo));});}document.addEventListener('DOMContentLoaded',manter);window.addEventListener('pageshow',manter);window.addEventListener('resize',manter);})();
 </script>
 </body>
 </html>
