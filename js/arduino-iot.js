@@ -58,6 +58,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 (() => {
   const script = document.createElement('script');
-  script.src = '../js/arduino-menu.js';
+  script.src = '../js/arduino-menu-estavel.js?v=20260910-1';
   document.head.appendChild(script);
 })();
