@@ -227,3 +227,22 @@ document.addEventListener('DOMContentLoaded', function(){
 
   activateModule(initialModule || 'fundamentos', initialHash, false);
 });
+
+/* Bloco 5: adiciona apenas o acesso à nova página, sem alterar os módulos 1–4. */
+document.addEventListener('DOMContentLoaded', function(){
+  const menu = document.getElementById('arduinoModuleMenu');
+  if(!menu || menu.querySelector('a[href="arduino-programacao-aplicada.html"]')) return;
+
+  const link = document.createElement('a');
+  link.className = 'module-btn';
+  link.href = 'arduino-programacao-aplicada.html';
+  link.textContent = '5. Programação Aplicada';
+  link.style.textDecoration = 'none';
+
+  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
+  if(exercicios){
+    menu.insertBefore(link, exercicios);
+  }else{
+    menu.appendChild(link);
+  }
+});
