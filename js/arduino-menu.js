@@ -20,7 +20,8 @@
   function encontrarExercicios(menu){
     return Array.from(menu.querySelectorAll('.module-btn')).find(item => {
       const href = item.getAttribute('href') || '';
-      return href === 'arduino-exercicios.html' || href === '#topo' || /^99\./.test((item.textContent || '').trim());
+      const texto = (item.textContent || '').trim();
+      return href === 'arduino-exercicios.html' || /^99\./.test(texto);
     }) || null;
   }
 
@@ -46,11 +47,7 @@
     });
   }
 
-  function sincronizarModulos(){
-    const menu = document.getElementById('arduinoModuleMenu');
-    if(!menu) return;
-
-    removerDuplicados(menu);
+  function garantirModulos(menu){
     const exercicios = encontrarExercicios(menu);
 
     modulos.forEach(modulo => {
@@ -66,8 +63,28 @@
       if(exercicios) menu.insertBefore(link, exercicios);
       else menu.appendChild(link);
     });
+  }
+
+  function normalizarOrdem(menu){
+    const exercicios = encontrarExercicios(menu);
+
+    modulos.forEach(modulo => {
+      const item = Array.from(menu.querySelectorAll('.module-btn')).find(elemento => numeroDoItem(elemento) === modulo.numero);
+      if(!item) return;
+
+      if(exercicios) menu.insertBefore(item, exercicios);
+      else menu.appendChild(item);
+    });
+  }
+
+  function sincronizarModulos(){
+    const menu = document.getElementById('arduinoModuleMenu');
+    if(!menu) return;
 
     removerDuplicados(menu);
+    garantirModulos(menu);
+    removerDuplicados(menu);
+    normalizarOrdem(menu);
   }
 
   function manterModuloAtivoVisivel(){
@@ -76,11 +93,21 @@
     if(!menu || !ativo) return;
 
     requestAnimationFrame(() => {
+      const margem = 12;
       const menuRect = menu.getBoundingClientRect();
       const itemRect = ativo.getBoundingClientRect();
-      const alvo = menu.scrollLeft + (itemRect.left - menuRect.left) - ((menu.clientWidth - itemRect.width) / 2);
       const maximo = Math.max(0, menu.scrollWidth - menu.clientWidth);
-      menu.scrollLeft = Math.min(maximo, Math.max(0, alvo));
+      let destino = menu.scrollLeft;
+
+      if(itemRect.left < menuRect.left + margem){
+        destino -= (menuRect.left + margem) - itemRect.left;
+      }else if(itemRect.right > menuRect.right - margem){
+        destino += itemRect.right - (menuRect.right - margem);
+      }else{
+        return;
+      }
+
+      menu.scrollLeft = Math.min(maximo, Math.max(0, destino));
     });
   }
 
