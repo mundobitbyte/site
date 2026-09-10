@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function(){
   activateModule(initialModule || 'fundamentos', initialHash, false);
 });
 
-/* Blocos 5 e 6: acrescentam apenas acessos às novas páginas, preservando os módulos 1–4. */
+/* Blocos 5, 6 e 7: acrescentam apenas acessos às novas páginas, preservando os módulos 1–4. */
 document.addEventListener('DOMContentLoaded', function(){
   const menu = document.getElementById('arduinoModuleMenu');
   if(!menu) return;
@@ -256,5 +256,15 @@ document.addEventListener('DOMContentLoaded', function(){
     link6.style.textDecoration = 'none';
     if(exercicios) menu.insertBefore(link6, exercicios);
     else menu.appendChild(link6);
+  }
+
+  if(!menu.querySelector('a[href="arduino-iot.html"]')){
+    const link7 = document.createElement('a');
+    link7.className = 'module-btn';
+    link7.href = 'arduino-iot.html';
+    link7.textContent = '7. Internet das Coisas';
+    link7.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link7, exercicios);
+    else menu.appendChild(link7);
   }
 });
