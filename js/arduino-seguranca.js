@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', function(){
+  const menu = document.getElementById('arduinoModuleMenu');
+  if(!menu || menu.querySelector('a[href="arduino-projeto-iot.html"]')) return;
+
+  const link10 = document.createElement('a');
+  link10.className = 'module-btn';
+  link10.href = 'arduino-projeto-iot.html';
+  link10.textContent = '10. Projeto IoT';
+  link10.style.textDecoration = 'none';
+
+  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
+  if(exercicios) menu.insertBefore(link10, exercicios);
+  else menu.appendChild(link10);
+});
+
+document.addEventListener('DOMContentLoaded', function(){
   const layout = document.getElementById('arduinoLayout');
   const links = Array.from(document.querySelectorAll('#stageMenu .stage-link[href^="#"]'));
   const panels = Array.from(document.querySelectorAll('.mbb9-panel'));
