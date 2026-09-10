@@ -1,4 +1,7 @@
 (() => {
+  if(window.__mbbArduinoMenuCarregado) return;
+  window.__mbbArduinoMenuCarregado = true;
+
   const modulos = [
     ['arduino-programacao-aplicada.html', '5. Programação Aplicada'],
     ['arduino-conectividade.html', '6. Conectividade'],
