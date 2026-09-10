@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function(){
   activateModule(initialModule || 'fundamentos', initialHash, false);
 });
 
-/* Blocos 5, 6, 7 e 8: acrescentam apenas acessos às novas páginas, preservando os módulos 1–4. */
+/* Blocos 5, 6, 7, 8 e 9: acrescentam apenas acessos às novas páginas, preservando os módulos 1–4. */
 document.addEventListener('DOMContentLoaded', function(){
   const menu = document.getElementById('arduinoModuleMenu');
   if(!menu) return;
@@ -276,5 +276,15 @@ document.addEventListener('DOMContentLoaded', function(){
     link8.style.textDecoration = 'none';
     if(exercicios) menu.insertBefore(link8, exercicios);
     else menu.appendChild(link8);
+  }
+
+  if(!menu.querySelector('a[href="arduino-seguranca.html"]')){
+    const link9 = document.createElement('a');
+    link9.className = 'module-btn';
+    link9.href = 'arduino-seguranca.html';
+    link9.textContent = '9. Proteção e Segurança';
+    link9.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link9, exercicios);
+    else menu.appendChild(link9);
   }
 });
