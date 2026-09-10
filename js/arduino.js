@@ -231,21 +231,30 @@ document.addEventListener('DOMContentLoaded', function(){
   activateModule(initialModule || 'fundamentos', initialHash, false);
 });
 
-/* Bloco 5: adiciona apenas o acesso à nova página, sem alterar os módulos 1–4. */
+/* Blocos 5 e 6: acrescentam apenas acessos às novas páginas, preservando os módulos 1–4. */
 document.addEventListener('DOMContentLoaded', function(){
   const menu = document.getElementById('arduinoModuleMenu');
-  if(!menu || menu.querySelector('a[href="arduino-programacao-aplicada.html"]')) return;
-
-  const link = document.createElement('a');
-  link.className = 'module-btn';
-  link.href = 'arduino-programacao-aplicada.html';
-  link.textContent = '5. Programação Aplicada';
-  link.style.textDecoration = 'none';
+  if(!menu) return;
 
   const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
-  if(exercicios){
-    menu.insertBefore(link, exercicios);
-  }else{
-    menu.appendChild(link);
+
+  if(!menu.querySelector('a[href="arduino-programacao-aplicada.html"]')){
+    const link5 = document.createElement('a');
+    link5.className = 'module-btn';
+    link5.href = 'arduino-programacao-aplicada.html';
+    link5.textContent = '5. Programação Aplicada';
+    link5.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link5, exercicios);
+    else menu.appendChild(link5);
+  }
+
+  if(!menu.querySelector('a[href="arduino-conectividade.html"]')){
+    const link6 = document.createElement('a');
+    link6.className = 'module-btn';
+    link6.href = 'arduino-conectividade.html';
+    link6.textContent = '6. Conectividade';
+    link6.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link6, exercicios);
+    else menu.appendChild(link6);
   }
 });
