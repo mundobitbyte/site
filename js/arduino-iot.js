@@ -55,3 +55,21 @@ document.addEventListener('DOMContentLoaded', function(){
 
   showPanel(initialHash, false);
 });
+
+function manterModuloAtivoVisivel(){
+  const menu = document.getElementById('arduinoModuleMenu');
+  const ativo = menu && menu.querySelector('.module-btn.active');
+  if(!menu || !ativo) return;
+
+  requestAnimationFrame(() => {
+    const menuRect = menu.getBoundingClientRect();
+    const itemRect = ativo.getBoundingClientRect();
+    const alvo = menu.scrollLeft + (itemRect.left - menuRect.left) - ((menu.clientWidth - itemRect.width) / 2);
+    const maximo = Math.max(0, menu.scrollWidth - menu.clientWidth);
+    menu.scrollLeft = Math.min(maximo, Math.max(0, alvo));
+  });
+}
+
+document.addEventListener('DOMContentLoaded', manterModuloAtivoVisivel);
+window.addEventListener('pageshow', manterModuloAtivoVisivel);
+window.addEventListener('resize', manterModuloAtivoVisivel);
