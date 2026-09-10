@@ -1,16 +1,28 @@
 document.addEventListener('DOMContentLoaded', function(){
   const menu = document.getElementById('arduinoModuleMenu');
-  if(!menu || menu.querySelector('a[href="arduino-seguranca.html"]')) return;
-
-  const link9 = document.createElement('a');
-  link9.className = 'module-btn';
-  link9.href = 'arduino-seguranca.html';
-  link9.textContent = '9. Proteção e Segurança';
-  link9.style.textDecoration = 'none';
+  if(!menu) return;
 
   const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
-  if(exercicios) menu.insertBefore(link9, exercicios);
-  else menu.appendChild(link9);
+
+  if(!menu.querySelector('a[href="arduino-seguranca.html"]')){
+    const link9 = document.createElement('a');
+    link9.className = 'module-btn';
+    link9.href = 'arduino-seguranca.html';
+    link9.textContent = '9. Proteção e Segurança';
+    link9.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link9, exercicios);
+    else menu.appendChild(link9);
+  }
+
+  if(!menu.querySelector('a[href="arduino-projeto-iot.html"]')){
+    const link10 = document.createElement('a');
+    link10.className = 'module-btn';
+    link10.href = 'arduino-projeto-iot.html';
+    link10.textContent = '10. Projeto IoT';
+    link10.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link10, exercicios);
+    else menu.appendChild(link10);
+  }
 });
 
 function copyCode(id, button){
