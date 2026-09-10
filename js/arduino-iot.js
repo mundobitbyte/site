@@ -1,16 +1,28 @@
 document.addEventListener('DOMContentLoaded', function(){
   const menu = document.getElementById('arduinoModuleMenu');
-  if(!menu || menu.querySelector('a[href="arduino-protocolos.html"]')) return;
-
-  const link8 = document.createElement('a');
-  link8.className = 'module-btn';
-  link8.href = 'arduino-protocolos.html';
-  link8.textContent = '8. RTOS e Protocolos';
-  link8.style.textDecoration = 'none';
+  if(!menu) return;
 
   const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
-  if(exercicios) menu.insertBefore(link8, exercicios);
-  else menu.appendChild(link8);
+
+  if(!menu.querySelector('a[href="arduino-protocolos.html"]')){
+    const link8 = document.createElement('a');
+    link8.className = 'module-btn';
+    link8.href = 'arduino-protocolos.html';
+    link8.textContent = '8. RTOS e Protocolos';
+    link8.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link8, exercicios);
+    else menu.appendChild(link8);
+  }
+
+  if(!menu.querySelector('a[href="arduino-seguranca.html"]')){
+    const link9 = document.createElement('a');
+    link9.className = 'module-btn';
+    link9.href = 'arduino-seguranca.html';
+    link9.textContent = '9. Proteção e Segurança';
+    link9.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link9, exercicios);
+    else menu.appendChild(link9);
+  }
 });
 
 document.addEventListener('DOMContentLoaded', function(){
