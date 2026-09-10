@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', function(){
+  const menu = document.getElementById('arduinoModuleMenu');
+  if(!menu || menu.querySelector('a[href="arduino-protocolos.html"]')) return;
+
+  const link8 = document.createElement('a');
+  link8.className = 'module-btn';
+  link8.href = 'arduino-protocolos.html';
+  link8.textContent = '8. RTOS e Protocolos';
+  link8.style.textDecoration = 'none';
+
+  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
+  if(exercicios) menu.insertBefore(link8, exercicios);
+  else menu.appendChild(link8);
+});
+
+document.addEventListener('DOMContentLoaded', function(){
   const layout = document.getElementById('arduinoLayout');
   const links = Array.from(document.querySelectorAll('#stageMenu .stage-link[href^="#"]'));
   const panels = Array.from(document.querySelectorAll('.mbb7-panel'));

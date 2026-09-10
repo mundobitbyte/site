@@ -35,6 +35,15 @@ document.addEventListener('DOMContentLoaded', function(){
     if(exercicios) menu.insertBefore(link7, exercicios);
     else menu.appendChild(link7);
   }
+
+  if(!menu.querySelector('a[href="arduino-protocolos.html"]')){
+    const link8 = document.createElement('a');
+    link8.className = 'module-btn';
+    link8.href = 'arduino-protocolos.html';
+    link8.textContent = '8. RTOS e Protocolos';
+    if(exercicios) menu.insertBefore(link8, exercicios);
+    else menu.appendChild(link8);
+  }
 });
 
 function copyCode(id, button){

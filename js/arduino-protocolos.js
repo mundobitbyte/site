@@ -1,30 +1,3 @@
-document.addEventListener('DOMContentLoaded', function(){
-  const menu = document.getElementById('arduinoModuleMenu');
-  if(!menu) return;
-
-  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
-
-  if(!menu.querySelector('a[href="arduino-iot.html"]')){
-    const link7 = document.createElement('a');
-    link7.className = 'module-btn';
-    link7.href = 'arduino-iot.html';
-    link7.textContent = '7. Internet das Coisas';
-    link7.style.textDecoration = 'none';
-    if(exercicios) menu.insertBefore(link7, exercicios);
-    else menu.appendChild(link7);
-  }
-
-  if(!menu.querySelector('a[href="arduino-protocolos.html"]')){
-    const link8 = document.createElement('a');
-    link8.className = 'module-btn';
-    link8.href = 'arduino-protocolos.html';
-    link8.textContent = '8. RTOS e Protocolos';
-    link8.style.textDecoration = 'none';
-    if(exercicios) menu.insertBefore(link8, exercicios);
-    else menu.appendChild(link8);
-  }
-});
-
 function copyCode(id, button){
   const code = document.getElementById(id);
   if(!code) return;
@@ -65,7 +38,7 @@ function showCopied(button){
 document.addEventListener('DOMContentLoaded', function(){
   const layout = document.getElementById('arduinoLayout');
   const links = Array.from(document.querySelectorAll('#stageMenu .stage-link[href^="#"]'));
-  const panels = Array.from(document.querySelectorAll('.mbb6-panel'));
+  const panels = Array.from(document.querySelectorAll('.mbb8-panel'));
   const toggle = document.getElementById('stageToggle');
   const close = document.getElementById('stageClose');
   const backdrop = document.getElementById('stageBackdrop');
@@ -86,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   function showPanel(hash, updateUrl){
     const panel = document.querySelector(hash);
-    if(!panel || !panel.classList.contains('mbb6-panel')) return;
+    if(!panel || !panel.classList.contains('mbb8-panel')) return;
 
     panels.forEach(item => item.classList.toggle('active-panel', item === panel));
     links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === hash));
@@ -115,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   const initialHash = location.hash && document.querySelector(location.hash)
     ? location.hash
-    : '#b6-prep';
+    : '#b8-prep';
 
   showPanel(initialHash, false);
 });

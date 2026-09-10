@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function(){
   activateModule(initialModule || 'fundamentos', initialHash, false);
 });
 
-/* Blocos 5, 6 e 7: acrescentam apenas acessos às novas páginas, preservando os módulos 1–4. */
+/* Blocos 5, 6, 7 e 8: acrescentam apenas acessos às novas páginas, preservando os módulos 1–4. */
 document.addEventListener('DOMContentLoaded', function(){
   const menu = document.getElementById('arduinoModuleMenu');
   if(!menu) return;
@@ -266,5 +266,15 @@ document.addEventListener('DOMContentLoaded', function(){
     link7.style.textDecoration = 'none';
     if(exercicios) menu.insertBefore(link7, exercicios);
     else menu.appendChild(link7);
+  }
+
+  if(!menu.querySelector('a[href="arduino-protocolos.html"]')){
+    const link8 = document.createElement('a');
+    link8.className = 'module-btn';
+    link8.href = 'arduino-protocolos.html';
+    link8.textContent = '8. RTOS e Protocolos';
+    link8.style.textDecoration = 'none';
+    if(exercicios) menu.insertBefore(link8, exercicios);
+    else menu.appendChild(link8);
   }
 });
