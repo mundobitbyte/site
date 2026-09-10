@@ -44,6 +44,15 @@ document.addEventListener('DOMContentLoaded', function(){
     if(exercicios) menu.insertBefore(link8, exercicios);
     else menu.appendChild(link8);
   }
+
+  if(!menu.querySelector('a[href="arduino-seguranca.html"]')){
+    const link9 = document.createElement('a');
+    link9.className = 'module-btn';
+    link9.href = 'arduino-seguranca.html';
+    link9.textContent = '9. Proteção e Segurança';
+    if(exercicios) menu.insertBefore(link9, exercicios);
+    else menu.appendChild(link9);
+  }
 });
 
 function copyCode(id, button){
