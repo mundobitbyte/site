@@ -110,3 +110,9 @@ function manterModuloAtivoVisivel(){
 document.addEventListener('DOMContentLoaded', manterModuloAtivoVisivel);
 window.addEventListener('pageshow', manterModuloAtivoVisivel);
 window.addEventListener('resize', manterModuloAtivoVisivel);
+
+(() => {
+  const script = document.createElement('script');
+  script.src = '../js/arduino-circuitos-visuais.js?v=20260910-1';
+  document.head.appendChild(script);
+})();
