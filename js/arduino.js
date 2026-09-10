@@ -31,6 +31,9 @@
       margin-left:auto !important;
       text-align:right !important;
     }
+    #arduinoModuleMenu .module-btn{
+      font-family:inherit !important;
+    }
     @media(max-width:760px){
       body > header{
         padding:0 10px !important;
