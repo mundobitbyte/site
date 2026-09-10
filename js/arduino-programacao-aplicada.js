@@ -1,3 +1,17 @@
+(() => {
+  const style = document.createElement('style');
+  style.textContent = `
+    #arduinoModuleMenu a.module-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      font-family:inherit !important;
+    }
+  `;
+  document.head.appendChild(style);
+})();
+
 function copyCode(id, button){
   const code = document.getElementById(id);
   if(!code) return;
