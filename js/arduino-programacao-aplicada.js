@@ -14,16 +14,27 @@
 
 document.addEventListener('DOMContentLoaded', function(){
   const menu = document.getElementById('arduinoModuleMenu');
-  if(!menu || menu.querySelector('a[href="arduino-conectividade.html"]')) return;
-
-  const link = document.createElement('a');
-  link.className = 'module-btn';
-  link.href = 'arduino-conectividade.html';
-  link.textContent = '6. Conectividade';
+  if(!menu) return;
 
   const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
-  if(exercicios) menu.insertBefore(link, exercicios);
-  else menu.appendChild(link);
+
+  if(!menu.querySelector('a[href="arduino-conectividade.html"]')){
+    const link6 = document.createElement('a');
+    link6.className = 'module-btn';
+    link6.href = 'arduino-conectividade.html';
+    link6.textContent = '6. Conectividade';
+    if(exercicios) menu.insertBefore(link6, exercicios);
+    else menu.appendChild(link6);
+  }
+
+  if(!menu.querySelector('a[href="arduino-iot.html"]')){
+    const link7 = document.createElement('a');
+    link7.className = 'module-btn';
+    link7.href = 'arduino-iot.html';
+    link7.textContent = '7. Internet das Coisas';
+    if(exercicios) menu.insertBefore(link7, exercicios);
+    else menu.appendChild(link7);
+  }
 });
 
 function copyCode(id, button){
