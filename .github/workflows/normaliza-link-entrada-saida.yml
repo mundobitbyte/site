@@ -1,0 +1,38 @@
+name: Normaliza link Entrada Saída
+on:
+  push:
+    branches:
+      - arduino-contextualizacao-humana-20260911
+permissions:
+  contents: write
+jobs:
+  ajustar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Corrigir links estáticos do módulo 2
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          alterados=[]
+          for p in Path('pages').glob('arduino*.html'):
+              s=p.read_text(encoding='utf-8')
+              n=s.replace('href="arduino.html#p1"', 'href="arduino.html#p2"')
+              if n != s:
+                  p.write_text(n, encoding='utf-8')
+                  alterados.append(str(p))
+          print('Alterados:', *alterados, sep='\n')
+          PY
+      - name: Commit se necessário
+        run: |
+          if git diff --quiet; then
+            echo "Nenhum ajuste pendente."
+            exit 0
+          fi
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add pages/arduino*.html
+          git commit -m "Normaliza links de Entrada/Saída para o Blink"
+          git push origin HEAD:arduino-contextualizacao-humana-20260911
