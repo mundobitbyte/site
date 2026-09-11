@@ -1,0 +1,99 @@
+name: Validacao final Arduino bases 1-6
+
+on:
+  push:
+    branches:
+      - arduino-bases-1-6-mbb-validacao-ci-final
+    paths:
+      - .github/workflows/validacao-final-arduino-bases-1-6.yml
+      - pages/arduino.html
+      - img/arduino/fundamentos/**
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validar escopo, estrutura e cobertura
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, subprocess, sys
+
+          page = Path('pages/arduino.html').read_text(encoding='utf-8')
+          base = subprocess.check_output(['git','show','origin/main:pages/arduino.html'], text=True)
+
+          # 1) Nenhuma remoção na página-base.
+          numstat = subprocess.check_output(['git','diff','--numstat','origin/main...HEAD','--','pages/arduino.html'], text=True).strip()
+          if numstat:
+              add, delete, _ = numstat.split('\t', 2)
+              assert int(delete) == 0, f'Foram removidas {delete} linhas do HTML-base.'
+
+          # 2) Menu superior permanece byte a byte igual ao da main.
+          menu_re = re.compile(r'<div class="module-menu" id="arduinoModuleMenu".*?</div>', re.S)
+          m_base = menu_re.search(base)
+          m_page = menu_re.search(page)
+          assert m_base and m_page, 'Menu Arduino não localizado.'
+          assert m_base.group(0) == m_page.group(0), 'Menu superior foi alterado.'
+
+          # 3) JS e CSS não podem estar no diff desta complementação.
+          changed = subprocess.check_output(['git','diff','--name-only','origin/main...HEAD'], text=True).splitlines()
+          forbidden = [p for p in changed if p.startswith('js/') or p.startswith('css/')]
+          assert not forbidden, f'JS/CSS alterados indevidamente: {forbidden}'
+
+          # 4) IDs únicos e percurso antigo preservado.
+          ids = re.findall(r'\bid="([^"]+)"', page)
+          dup = sorted({x for x in ids if ids.count(x) > 1})
+          assert not dup, f'IDs duplicados: {dup}'
+          old_ids = ['intro','p1','p2','p3','p4','p5','lab1','p6','p7','lab2','p8','lab3','p9','lab4','exercicios']
+          new_ids = ['fund-plataforma-aberta','p2-fluxo-programacao','p3-operadores','p5-referencia-analogica','p7-tempo-memoria-modular']
+          for x in old_ids + new_ids:
+              assert ids.count(x) == 1, f'ID ausente ou repetido: {x}'
+
+          # 5) Alvos dos botões/etapas continuam existentes.
+          for target in re.findall(r'(?:data-target|href)="#([^"]+)"', page):
+              assert target in ids, f'Alvo interno inexistente: #{target}'
+
+          # 6) Estrutura principal balanceada.
+          for tag in ['section','div','article','main','aside','header','figure','table','pre']:
+              opens = len(re.findall(fr'<{tag}\b', page, re.I))
+              closes = len(re.findall(fr'</{tag}>', page, re.I))
+              assert opens == closes, f'Tag {tag}: {opens} aberturas e {closes} fechamentos.'
+
+          # 7) Todas as imagens locais referenciadas existem.
+          for src in re.findall(r'<img[^>]+src="([^"]+)"', page):
+              if src.startswith('../'):
+                  path = (Path('pages') / src).resolve()
+                  assert path.exists(), f'Imagem referenciada não existe: {src}'
+
+          # 8) Cobertura explícita das lacunas curriculares auditadas.
+          required = [
+              'Movimento maker','Tinkering','open source','Microcontrolador','Arduino IDE',
+              'Capacitor','Indutor','Circuito integrado','Shield','Arduino/C++','compilar','gravar',
+              'analogReference(','millis()','micros()','timer','contador','Flash','RAM','EEPROM',
+              'Programação modular','Parâmetros','Procedimento','Escopo'
+          ]
+          low = page.lower()
+          missing = [term for term in required if term.lower() not in low]
+          assert not missing, f'Termos curriculares não encontrados: {missing}'
+
+          # 9) Visuais novos obrigatórios.
+          images = [
+              'placa-microcontrolador.svg','ciclo-maker-tinkering.svg','componentes-prototipacao.svg',
+              'fluxo-codigo-microcontrolador.svg','tempo-delay-millis.svg','memoria-arduino.svg','escopo-variaveis.svg'
+          ]
+          for name in images:
+              p = Path('img/arduino/fundamentos') / name
+              assert p.exists() and p.stat().st_size > 200, f'Visual ausente/vazio: {name}'
+              s = p.read_text(encoding='utf-8')
+              assert '<svg' in s and '</svg>' in s, f'SVG inválido: {name}'
+
+          # 10) Diff limpo.
+          subprocess.check_call(['git','diff','--check','origin/main...HEAD'])
+          print('VALIDACAO_FINAL_OK')
+          print('Arquivos alterados:', changed)
+          PY
