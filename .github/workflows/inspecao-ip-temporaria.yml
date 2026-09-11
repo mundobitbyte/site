@@ -1,0 +1,34 @@
+name: Inspecao IP temporaria
+on:
+  push:
+    branches: [piloto-pedagogico-informatica-produtividade]
+    paths: ['.github/workflows/inspecao-ip-temporaria.yml']
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar JavaScript da area
+        run: |
+          node --check js/informatica-produtividade.js
+          node --check js/informatica-produtividade/modulo-01.js
+          node --check js/informatica-produtividade/modulo-02.js
+          node --check js/informatica-produtividade/modulo-03.js
+          node --check js/informatica-produtividade/modulo-04.js
+          node --check js/informatica-produtividade/modulo-05.js
+          node --check js/informatica-produtividade/projeto-integrador.js
+      - name: Montar pacote de inspeção
+        run: |
+          mkdir -p /tmp/site/pages /tmp/site/css /tmp/site/js/informatica-produtividade /tmp/site/downloads/informatica-produtividade
+          cp pages/informatica-produtividade.html /tmp/site/pages/
+          cp css/informatica-produtividade.css /tmp/site/css/
+          cp js/informatica-produtividade.js /tmp/site/js/
+          cp js/informatica-produtividade/*.js /tmp/site/js/informatica-produtividade/
+          cp -R downloads/informatica-produtividade/* /tmp/site/downloads/informatica-produtividade/
+          cp index.html /tmp/site/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: inspecao-ip
+          path: /tmp/site
+          retention-days: 1
