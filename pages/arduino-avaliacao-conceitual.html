@@ -96,7 +96,7 @@
       <div>
         <span class="badge">99</span>
         <h2>Avaliação Conceitual — Arduino e IoT</h2>
-        <p>Atividade individual com 20 questões que percorrem os principais conceitos estudados, dos fundamentos ao projeto IoT integrado.</p>
+        <p>Atividade individual com 20 questões que percorrem o percurso completo, dos fundamentos de sistemas embarcados ao projeto IoT integrado.</p>
       </div>
       <button class="pdf-btn" type="button" onclick="window.print()">Salvar / Imprimir PDF</button>
     </div>
@@ -106,84 +106,84 @@
 
   <div class="assessment-body">
     <article class="concept-question">
-<h3>1. Monitor Serial</h3>
-<p>Para que serve o Monitor Serial no Arduino?</p>
+<h3>1. Sistema embarcado, placa e microcontrolador</h3>
+<p>Explique o que caracteriza um sistema embarcado e diferencie, no Arduino Uno, a placa de desenvolvimento do microcontrolador que executa o programa.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>2. Monitor Serial</h3>
-<p>Dê um exemplo de informação que pode ser mostrada no Monitor Serial durante um projeto com sensor.</p>
+<h3>2. Maker, tinkering e open source</h3>
+<p>Como o ciclo “montar → testar → observar → modificar” representa tinkering? Cite também uma vantagem de hardware ou software aberto em projetos de prototipagem.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>3. Sensor de distância HC-SR04</h3>
-<p>Para que serve o sensor ultrassônico HC-SR04?</p>
+<h3>3. Eletrônica e manuseio</h3>
+<p>Um aluno recebe um LED, um resistor, um capacitor eletrolítico e um circuito integrado. Cite dois cuidados que devem ser verificados antes de energizar a montagem e explique por que o resistor aparece em série com o LED.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>4. Sensor de distância HC-SR04</h3>
-<p>Qual é a função dos pinos TRIG e ECHO do HC-SR04?</p>
+<h3>4. Programa no microcontrolador</h3>
+<p>Qual é o papel de <code>setup()</code> e <code>loop()</code>? Depois de escrever um sketch na Arduino IDE, o que significam verificar/compilar e enviar/gravar o programa na placa?</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>5. LED RGB</h3>
-<p>O que é um LED RGB e por que ele consegue mostrar várias cores?</p>
+<h3>5. Entrada analógica e PWM</h3>
+<p>No Arduino Uno, explique a diferença entre <code>analogRead()</code> e <code>analogWrite()</code>. Por que <code>analogWrite()</code> não representa, nesse caso, um DAC real? Onde <code>analogReference()</code> entra nessa comparação?</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>6. Funções predefinidas</h3>
-<p>O que são funções predefinidas? Dê um exemplo de função pronta que pode ser usada em um programa.</p>
+<h3>6. Controle de tempo</h3>
+<p>Qual é a diferença prática entre usar <code>delay()</code> e controlar intervalos com <code>millis()</code>? Em que situação evitar bloquear o <code>loop()</code> é útil?</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>7. Bibliotecas</h3>
-<p>Para que serve uma biblioteca no Arduino?</p>
+<h3>7. Memória e programação modular</h3>
+<p>Diferencie, em alto nível, Flash, RAM e memória persistente. Depois explique por que dividir o programa em funções e limitar o escopo de variáveis pode facilitar manutenção e reutilização.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>8. Conectividade</h3>
-<p>Qual é a diferença básica entre Bluetooth e Wi-Fi?</p>
+<h3>8. Funções predefinidas e bibliotecas</h3>
+<p>Dê um exemplo de função matemática, trigonométrica, de texto ou aleatória usada no percurso e explique para que serve uma biblioteca como <code>Servo.h</code>.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>9. Internet das Coisas</h3>
-<p>O que significa Internet das Coisas (IoT)?</p>
+<h3>9. Bluetooth, Wi-Fi e HTTP</h3>
+<p>Um celular precisa controlar um LED próximo sem rede Wi-Fi; depois o ESP32 deve oferecer uma página para outros dispositivos da rede. Qual tecnologia atende melhor cada necessidade e quem é cliente e servidor no acesso HTTP?</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>10. Aplicação prática de IoT</h3>
-<p>Dê um exemplo simples de uso de IoT no dia a dia e explique, em poucas palavras, o que o sistema faria.</p>
+<h3>10. mDNS e tunelamento</h3>
+<p>Que problema o mDNS resolve dentro da rede local? E o que muda quando um computador cria um túnel temporário para tornar o servidor local acessível de fora da rede?</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>11. RTOS e tempo real</h3>
-<p>Em um sistema embarcado, dizer que uma tarefa é de tempo real significa apenas que ela precisa ser muito rápida? Explique.</p>
+<h3>11. Internet das Coisas</h3>
+<p>Por que uma automação local não é automaticamente IoT? Escolha uma aplicação — residencial, industrial, urbana, monitoramento, saúde, automação ou rastreamento — e indique dado, comunicação e finalidade.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>12. I2C</h3>
-<p>Em uma ligação I2C, para que servem os sinais SDA e SCL e por que os dispositivos possuem endereços?</p>
+<h3>12. RTOS e tempo real</h3>
+<p>Em um sistema embarcado, dizer que uma tarefa é de tempo real significa apenas que ela precisa ser muito rápida? Explique por que tarefas e escalonamento podem ser úteis.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>13. UART e RS-232</h3>
-<p>O uso de TX e RX de um microcontrolador significa automaticamente que a ligação é RS-232? Explique a diferença básica entre UART em nível lógico e RS-232.</p>
+<h3>13. I2C</h3>
+<p>Para que servem SDA, SCL e o endereço I2C? Por que é melhor executar um scanner do que copiar automaticamente um endereço como 0x27?</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>14. CAN</h3>
-<p>Por que uma rede CAN é adequada para sistemas com vários módulos, como em veículos e máquinas? Cite uma característica importante desse tipo de comunicação.</p>
+<h3>14. UART e RS-232</h3>
+<p>O uso de TX e RX de um microcontrolador significa automaticamente que a ligação é RS-232? Explique a diferença entre UART em nível lógico e RS-232 e indique o papel de um transceptor como MAX3232.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>15. TCP/IP e HTTP</h3>
-<p>Quando o ESP32 fornece uma página HTTP pela rede, qual é a relação entre HTTP, TCP, IP e Wi-Fi nessa comunicação?</p>
+<h3>15. CAN</h3>
+<p>Por que uma rede CAN é adequada para vários controladores em máquinas ou veículos? Por que CAN_H e CAN_L não devem ser ligados diretamente aos GPIOs do ESP32?</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>16. Família IEEE 802.11</h3>
-<p>As letras a, b, g, n e ac representam versões da família IEEE 802.11. Por que conhecer essa família ajuda a entender compatibilidade de redes Wi-Fi e dispositivos?</p>
+<h3>16. TCP/IP, IEEE 802.11 e Bluetooth</h3>
+<p>No acesso à página do ESP32, relacione HTTP, TCP, IP e Wi-Fi. Depois explique por que um ESP32-WROOM-32 b/g/n de 2,4 GHz pode não enxergar uma rede somente de 5 GHz e diferencie Bluetooth Classic de BLE em uma frase.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>17. Bluetooth Classic e BLE</h3>
-<p>Qual é a diferença conceitual entre Bluetooth Classic e Bluetooth Low Energy (BLE)? Em que tipo de situação cada um pode ser adequado?</p>
+<h3>17. Proteção de dados pessoais</h3>
+<p>Um sistema IoT registra horário de entrada associado ao nome de cada pessoa. Que perguntas sobre finalidade, necessidade, acesso e retenção devem ser feitas antes de coletar e armazenar esses dados?</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>18. Proteção de dados pessoais</h3>
-<p>Um dispositivo IoT registra horários de entrada de pessoas em um ambiente e envia esses dados para uma aplicação. Que cuidado deve existir antes de coletar, armazenar ou compartilhar essas informações?</p>
+<h3>18. Segurança de sistemas e informações</h3>
+<p>Um dispositivo aceita comandos de qualquer pessoa que conheça seu endereço. Diferencie autenticação de autorização e cite mais um cuidado de segurança relacionado a credenciais, exposição ou atualização.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>19. Segurança do sistema</h3>
-<p>Um ESP32 controla remotamente uma lâmpada, mas qualquer pessoa conectada à rede consegue acessar o comando. Qual é o problema de segurança e que tipo de proteção deveria ser considerada?</p>
+<h3>19. Projeto IoT e falha de rede</h3>
+<p>No Ambiente Inteligente MbB, o Wi-Fi fica indisponível enquanto o modo automático está ativo. O que deve continuar funcionando localmente e por quê? Qual parte do sistema deixa de estar disponível?</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article><article class="concept-question">
-<h3>20. Projeto IoT integrado</h3>
-<p>Um sensor está funcionando e o atuador responde no teste local, mas a página do sistema não abre no celular. Qual parte do projeto você investigaria primeiro e quais evidências usaria para confirmar a causa antes de alterar o circuito?</p>
+<h3>20. Desafio de integração</h3>
+<p>Proponha um sistema diferente do projeto final. Defina: problema, sensor ou entrada, processamento, atuador ou saída, forma de comunicação, aplicação e um teste de falha ou cuidado de segurança/dados.</p>
 <div class="answer-space" aria-hidden="true"><span></span><span></span><span></span></div>
 </article>
   </div>
