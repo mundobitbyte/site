@@ -1,0 +1,127 @@
+name: Auditoria IP temporaria
+on:
+  push:
+    branches: [piloto-pedagogico-informatica-produtividade]
+    paths: ['.github/workflows/auditoria-ip-temporaria.yml']
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspecionar materiais reais
+        shell: python
+        run: |
+          import zipfile, io, re, json, xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          NS = {
+            'office':'urn:oasis:names:tc:opendocument:xmlns:office:1.0',
+            'text':'urn:oasis:names:tc:opendocument:xmlns:text:1.0',
+            'table':'urn:oasis:names:tc:opendocument:xmlns:table:1.0',
+            'draw':'urn:oasis:names:tc:opendocument:xmlns:drawing:1.0',
+            'presentation':'urn:oasis:names:tc:opendocument:xmlns:presentation:1.0',
+          }
+
+          def texts(el):
+              return ' '.join(''.join(el.itertext()).split())
+
+          def zip_text(path):
+              with zipfile.ZipFile(path) as z:
+                  root=ET.fromstring(z.read('content.xml'))
+                  return root,z
+
+          print('=== MODULO 2 / ODT ===')
+          p='downloads/informatica-produtividade/modulo-02/minuta-programacao-feira.odt'
+          root,z=zip_text(p)
+          print('ZIP_ENTRIES', z.namelist())
+          paras=[]
+          for el in root.iter():
+              if el.tag in {f"{{{NS['text']}}}p", f"{{{NS['text']}}}h"}:
+                  t=texts(el)
+                  if t: paras.append(t)
+          print('PARAGRAPHS', json.dumps(paras, ensure_ascii=False))
+          tables=root.findall('.//table:table',NS)
+          print('TABLE_COUNT',len(tables),'ROWS',[len(t.findall('./table:table-row',NS)) for t in tables])
+          print('IMAGES',len(root.findall('.//draw:image',NS)))
+
+          print('=== MODULO 2 / SVG ===')
+          print(Path('downloads/informatica-produtividade/modulo-02/mapa-entrada-feira.svg').read_text(encoding='utf-8'))
+
+          print('=== MODULO 2 / GUIA ZIP ===')
+          p='downloads/informatica-produtividade/modulo-02/fontes-guia-expositor.zip'
+          with zipfile.ZipFile(p) as z:
+              print('FILES',z.namelist())
+              for n in z.namelist():
+                  print('FILE',n,'=>',z.read(n).decode('utf-8',errors='replace').replace('\n',' | '))
+
+          print('=== MODULO 3 / ODS ===')
+          p='downloads/informatica-produtividade/modulo-03/dados-feira.ods'
+          root,z=zip_text(p)
+          sheets=root.findall('.//table:table',NS)
+          for sh in sheets:
+              sname=sh.attrib.get(f"{{{NS['table']}}}name")
+              print('SHEET',sname)
+              rows=[]
+              rnum=0
+              for row in sh.findall('./table:table-row',NS):
+                  rep=int(row.attrib.get(f"{{{NS['table']}}}number-rows-repeated",'1'))
+                  for _ in range(min(rep,30)):
+                      rnum+=1; vals=[]; cnum=0
+                      for cell in row:
+                          if not cell.tag.endswith('table-cell') and not cell.tag.endswith('covered-table-cell'): continue
+                          crep=int(cell.attrib.get(f"{{{NS['table']}}}number-columns-repeated",'1'))
+                          val=texts(cell)
+                          formula=cell.attrib.get(f"{{{NS['table']}}}formula")
+                          vtype=cell.attrib.get(f"{{{NS['office']}}}value-type")
+                          oval=cell.attrib.get(f"{{{NS['office']}}}value") or cell.attrib.get(f"{{{NS['office']}}}date-value")
+                          for _c in range(min(crep,20)):
+                              cnum+=1
+                              if val or formula or oval:
+                                  vals.append({'c':cnum,'text':val,'formula':formula,'type':vtype,'value':oval})
+                      if vals: print('ROW',rnum,json.dumps(vals,ensure_ascii=False))
+                      if rnum>=30: break
+                  if rnum>=30: break
+
+          print('=== MODULO 4 / ODP ===')
+          p='downloads/informatica-produtividade/modulo-04/apresentacao-feira-diagnostico.odp'
+          root,z=zip_text(p)
+          pages=root.findall('.//draw:page',NS)
+          print('SLIDE_COUNT',len(pages))
+          for i,page in enumerate(pages,1):
+              print('SLIDE',i,'NAME',page.attrib.get(f"{{{NS['draw']}}}name"),'TEXT',texts(page))
+
+          print('=== MODULO 5 / ZIP ===')
+          p='downloads/informatica-produtividade/modulo-05/caixa-comunicacao-feira.zip'
+          with zipfile.ZipFile(p) as z:
+              print('FILES',z.namelist())
+              for n in z.namelist():
+                  print('FILE',n,'=>',z.read(n).decode('utf-8',errors='replace').replace('\n',' | '))
+
+          print('=== PROJETO INTEGRADOR / ZIP ===')
+          p='downloads/informatica-produtividade/projeto-integrador/pacote-final-feira.zip'
+          with zipfile.ZipFile(p) as z:
+              print('FILES',z.namelist())
+              for n in z.namelist():
+                  if n.endswith('/'):
+                      continue
+                  data=z.read(n)
+                  print('FILE_META',n,'SIZE',len(data))
+                  if n.lower().endswith(('.txt','.csv','.md')):
+                      print('TEXT',n,'=>',data.decode('utf-8',errors='replace').replace('\n',' | '))
+                  elif n.lower().endswith(('.odt','.ods','.odp')):
+                      try:
+                          with zipfile.ZipFile(io.BytesIO(data)) as oz:
+                              oroot=ET.fromstring(oz.read('content.xml'))
+                              print('ODF_ENTRIES',n,oz.namelist())
+                              if n.lower().endswith('.ods'):
+                                  for sh in oroot.findall('.//table:table',NS):
+                                      print('NESTED_SHEET',n,sh.attrib.get(f"{{{NS['table']}}}name"),texts(sh)[:3000])
+                              elif n.lower().endswith('.odp'):
+                                  pg=oroot.findall('.//draw:page',NS)
+                                  print('NESTED_SLIDES',n,len(pg))
+                                  for i,pag in enumerate(pg,1): print('NESTED_SLIDE',i,texts(pag))
+                              else:
+                                  print('NESTED_TEXT',n,texts(oroot)[:6000])
+                      except Exception as e:
+                          print('ODF_ERROR',n,repr(e))
