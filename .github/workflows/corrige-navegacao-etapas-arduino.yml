@@ -1,0 +1,128 @@
+name: Corrige navegacao das etapas Arduino
+on:
+  push:
+    branches:
+      - arduino-etapas-navegacao-20260911
+    paths:
+      - .github/workflows/corrige-navegacao-etapas-arduino.yml
+permissions:
+  contents: write
+jobs:
+  corrigir-e-validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Corrigir destino visual das etapas 5 a 10
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          arquivos = [
+              'js/arduino-programacao-aplicada.js',
+              'js/arduino-conectividade.js',
+              'js/arduino-iot.js',
+              'js/arduino-protocolos.js',
+              'js/arduino-seguranca.js',
+              'js/arduino-projeto-iot.js',
+          ]
+
+          antigo = """    closeDrawer();
+              window.scrollTo(0, 0);
+          """
+          novo = """    const irDiretoAoTopico = updateUrl || location.hash === hash;
+              closeDrawer();
+
+              if(irDiretoAoTopico){
+                requestAnimationFrame(() => panel.scrollIntoView({ block: 'start' }));
+              }else{
+                window.scrollTo(0, 0);
+              }
+          """
+
+          for nome in arquivos:
+              p = Path(nome)
+              texto = p.read_text(encoding='utf-8')
+              qtd = texto.count(antigo)
+              assert qtd == 1, f'{nome}: esperado 1 ponto de navegacao, encontrado {qtd}'
+              p.write_text(texto.replace(antigo, novo, 1), encoding='utf-8')
+              print('Corrigido:', nome)
+          PY
+
+      - name: Validar sintaxe JavaScript
+        run: |
+          node --check js/arduino.js
+          node --check js/arduino-programacao-aplicada.js
+          node --check js/arduino-conectividade.js
+          node --check js/arduino-iot.js
+          node --check js/arduino-protocolos.js
+          node --check js/arduino-seguranca.js
+          node --check js/arduino-projeto-iot.js
+
+      - name: Auditar todos os links de Etapas
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          paginas = [
+              'pages/arduino-programacao-aplicada.html',
+              'pages/arduino-conectividade.html',
+              'pages/arduino-iot.html',
+              'pages/arduino-protocolos.html',
+              'pages/arduino-seguranca.html',
+              'pages/arduino-projeto-iot.html',
+          ]
+
+          total = 0
+          for nome in paginas:
+              html = Path(nome).read_text(encoding='utf-8')
+              m = re.search(r'<div class="stage-menu" id="stageMenu">(.*?)</div>', html, re.S)
+              assert m, f'{nome}: stageMenu nao encontrado'
+              hrefs = re.findall(r'href="#([^"]+)"', m.group(1))
+              ids = set(re.findall(r'\bid="([^"]+)"', html))
+              assert hrefs, f'{nome}: nenhuma etapa encontrada'
+              faltando = [h for h in hrefs if h not in ids]
+              assert not faltando, f'{nome}: alvos inexistentes {faltando}'
+              total += len(hrefs)
+              print(f'{nome}: {len(hrefs)} etapas OK')
+
+          # Blocos 1 a 4: o menu de etapas e parte dos fundamentos sao montados via JS.
+          nav = Path('js/arduino.js').read_text(encoding='utf-8')
+          html = Path('pages/arduino.html').read_text(encoding='utf-8')
+          fundamentos = Path('js/arduino-fundamentos-mbb.js').read_text(encoding='utf-8')
+          menu = re.search(r'stageMenu\.innerHTML = `(.+?)`;', nav, re.S)
+          assert menu, 'arduino.js: menu de etapas nao encontrado'
+          hrefs = re.findall(r'href="#([^"]+)"', menu.group(1))
+          ids = set(re.findall(r'\bid="([^"]+)"', html + '\n' + fundamentos))
+          faltando = [h for h in hrefs if h not in ids]
+          assert not faltando, f'Blocos 1 a 4: alvos inexistentes {faltando}'
+          total += len(hrefs)
+          print(f'Blocos 1 a 4: {len(hrefs)} etapas OK')
+
+          # A causa encontrada nos blocos 5 a 10 era voltar sempre ao topo da pagina.
+          # Agora um clique/deep-link deve levar ao painel selecionado; a entrada normal no modulo preserva o hero.
+          scripts = [
+              'js/arduino-programacao-aplicada.js','js/arduino-conectividade.js','js/arduino-iot.js',
+              'js/arduino-protocolos.js','js/arduino-seguranca.js','js/arduino-projeto-iot.js'
+          ]
+          for nome in scripts:
+              s = Path(nome).read_text(encoding='utf-8')
+              assert 'const irDiretoAoTopico = updateUrl || location.hash === hash;' in s
+              assert "panel.scrollIntoView({ block: 'start' })" in s
+          print('TOTAL_ETAPAS_AUDITADAS=', total)
+          print('VALIDACAO_NAVEGACAO_ETAPAS_OK')
+          PY
+
+      - name: Verificar integridade do diff
+        run: git diff --check
+
+      - name: Commitar correção
+        run: |
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add js/arduino-programacao-aplicada.js js/arduino-conectividade.js js/arduino-iot.js js/arduino-protocolos.js js/arduino-seguranca.js js/arduino-projeto-iot.js
+          git commit -m "Corrige navegação direta das etapas 5 a 10 do Arduino"
+          git push origin HEAD:arduino-etapas-navegacao-20260911
