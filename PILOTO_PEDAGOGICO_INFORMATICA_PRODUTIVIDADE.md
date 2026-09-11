@@ -28,13 +28,13 @@ Faltam dez dias para a Feira de Projetos.
 
 Marina, da secretaria, recebeu inscrições dos alunos no computador **SEC-03**. Paulo, da coordenação, enviou correções pelo mensageiro. Lia reuniu cartaz, cronograma, orçamento e outros materiais no computador do laboratório, **LAB-04**.
 
-Os arquivos vieram de lugares diferentes e em momentos diferentes. Agora estão juntos em uma pasta, com nomes como `novo`, `final` e `final_agora`.
+Os arquivos vieram de lugares diferentes e em momentos diferentes. Agora estão juntos em uma pasta. Entre eles aparecem arquivos chamados `inscricoes nova.csv`, `cronograma NOVO.txt` e `orcamento_final_agora.csv`.
 
 O problema é que ninguém consegue responder com segurança a uma pergunta simples:
 
 **quais arquivos estão realmente prontos?**
 
-Um nome convincente não é o mesmo que uma aprovação.
+Palavras como `nova`, `NOVO` e `final_agora` podem sugerir que um arquivo é mais recente ou definitivo, mas o nome, sozinho, não prova que ele foi conferido ou aprovado.
 
 ## O problema de hoje
 
@@ -44,7 +44,7 @@ Lia recebe a seguinte orientação:
 
 Você vai ajudá-la.
 
-A primeira vontade pode ser apagar arquivos repetidos, escolher o mais recente ou confiar naquele que tem `final` no nome.
+A primeira vontade pode ser apagar arquivos repetidos, escolher o mais recente ou confiar em `orcamento_final_agora.csv` apenas porque o nome parece indicar uma versão definitiva.
 
 Ainda não faça isso.
 
@@ -70,7 +70,7 @@ Não precisamos descobrir hoje qual arquivo é o correto. O objetivo desta prime
 A pasta está confusa. Qual destas ações é mais segura?
 
 - apagar os arquivos que parecem repetidos;
-- escolher o arquivo que possui `final` no nome;
+- escolher `orcamento_final_agora.csv` porque o nome parece indicar que ele já está pronto;
 - guardar o material recebido e investigar usando uma cópia.
 
 A terceira opção é a mais segura.
@@ -110,17 +110,18 @@ Depois, observe os nomes dos demais arquivos sem renomear, mover ou excluir nada
 
 Conte quantos itens existem.
 
-Você deve encontrar **oito itens**. Entre eles há:
+Você deve encontrar **exatamente estes oito itens**:
 
-- dois arquivos de inscrições;
-- um cronograma;
-- um orçamento;
-- um modelo de autorização;
-- um cartaz;
-- um recado;
-- o próprio `LEIA-ME.txt`.
+- `LEIA-ME.txt`;
+- `autorizacao-v2.txt`;
+- `cartaz-sem-titulo.svg`;
+- `cronograma NOVO.txt`;
+- `inscricoes (1).csv`;
+- `inscricoes nova.csv`;
+- `orcamento_final_agora.csv`;
+- `recado coordenação.txt`.
 
-Nesse primeiro contato, duas coisas já chamam a atenção: existem **duas versões das inscrições** e alguns nomes tentam passar uma ideia de conclusão, como `novo` e `final`.
+Nesse primeiro contato, duas coisas já chamam a atenção: existem **dois arquivos de inscrições** e alguns nomes parecem sugerir atualização ou conclusão, como `cronograma NOVO.txt` e `orcamento_final_agora.csv`.
 
 Isso é suficiente para sabermos que a pasta precisa de investigação. Ainda não é suficiente para escolher qual arquivo usar.
 
@@ -168,8 +169,8 @@ Data e hora da observação: [preencha]
 Quantidade de itens: 8
 
 Diferenças ou dúvidas percebidas:
-- existem dois arquivos de inscrições
-- há nomes como “novo” e “final” que ainda não provam aprovação
+- existem dois arquivos de inscrições: inscricoes (1).csv e inscricoes nova.csv
+- cronograma NOVO.txt e orcamento_final_agora.csv têm nomes que sugerem atualização ou conclusão, mas isso ainda não prova aprovação
 
 Decisão tomada:
 - preservar o ZIP original
@@ -188,7 +189,7 @@ Antes de encerrar, veja se você consegue responder “sim” às quatro pergunt
 
 1. O ZIP original continua intacto?
 2. Você está trabalhando em uma pasta extraída?
-3. Encontrou oito itens?
+3. Encontrou os oito arquivos listados nesta aula?
 4. Criou o `P-01_inventario.txt` sem alterar os arquivos recebidos?
 
 Se alguma resposta for “não”, volte apenas à etapa correspondente. Não é necessário recomeçar tudo.
@@ -301,13 +302,13 @@ Ainda precisamos perguntar:
 
 No nosso caso, a resposta começa a ficar clara: será pública e deve conter somente equipe e projeto confirmados, sem dados pessoais ou notas internas.
 
-### “Use o cronograma novo.”
+### “Use o arquivo `cronograma NOVO.txt`.”
 
 Ainda precisamos perguntar:
 
 **quem confirmou que esse horário é realmente o aprovado?**
 
-Um nome como `NOVO` não responde a essa pergunta.
+A palavra `NOVO` no nome do arquivo não responde a essa pergunta.
 
 ### “Depois compartilhe com todos.”
 
@@ -343,7 +344,7 @@ Entre os materiais da pasta existe também o orçamento `orcamento_final_agora.c
 
 Nele aparece o fornecedor **Gráfica Bairro**, mas a aprovação ainda não está informada.
 
-O nome `final_agora` pode parecer convincente, mas não resolve a dúvida.
+O trecho `final_agora` faz parte do nome real do arquivo e pode parecer convincente, mas não resolve a dúvida sobre a aprovação.
 
 Portanto, essa aprovação também precisa permanecer como pendência até ser confirmada.
 
