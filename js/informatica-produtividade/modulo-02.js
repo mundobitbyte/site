@@ -5,13 +5,23 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'O documento existe, mas ninguém consegue usá-lo',
     objective: 'Diagnosticar problemas de um documento sem começar pela aparência nem apagar a fonte recebida.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Terça-feira · 8h10 · SEC-03</span><h2>A programação da Feira chegou como um bloco de texto com destaques feitos à mão.</h2><p>Marina precisa enviá-la às famílias e permitir que Paulo revise horários em <strong>COORD-02</strong>. Há títulos em maiúsculas, espaços usados para alinhar, uma tabela digitada com tabulações e uma imagem sem origem. O conteúdo pode estar correto, mas ainda não é uma entrega confiável.</p></div>
-      <section class="decision-box"><h3>Investigue antes de “embelezar”</h3><p>Qual verificação deve vir primeiro?</p><div class="choice-list" data-choice data-answer="b" data-explanation="Finalidade, público e fonte de conteúdo determinam o que precisa ser corrigido; família tipográfica, cor e borda vêm depois."><label><input type="radio" name="d200" value="a"> escolher uma paleta e uma família tipográfica;</label><label><input type="radio" name="d200" value="b"> comparar o texto com P-00, identificar público, fonte do conteúdo e pendências;</label><label><input type="radio" name="d200" value="c"> exportar imediatamente para PDF.</label><button class="action-button" type="button" data-check-choice>Conferir decisão</button><div class="choice-result" aria-live="polite"></div></div></section>
-      <div class="note-box"><strong>P-10 começa no diagnóstico</strong><p>Como Marina corrigirá o documento em várias aulas, ela precisa de um lugar único para registrar critérios e conferências. P-10 é esse registro cumulativo do Módulo 2: crie <code>P-10_documento.txt</code> em <code>10_Em_trabalho</code> com um editor de texto simples. Por enquanto, registre somente finalidade presumida, público, problema observado, risco, fonte do conteúdo consultada e item a confirmar; os demais campos serão acrescentados quando surgirem.</p></div>
-      <h3>Laboratório · abrir sem perder a origem</h3><div class="task-box"><strong>Ferramenta principal: LibreOffice Writer</strong><p>Retome a árvore criada no Módulo 1: <code>00_Entrada</code> preserva o recebido; <code>10_Em_trabalho</code> contém cópias e os registros P-00/P-02.</p><ol><li>Baixe a <a href="../downloads/informatica-produtividade/modulo-02/minuta-programacao-feira.odt" download>minuta problemática da programação</a> e salve-a em <code>00_Entrada</code>.</li><li>Copie o arquivo para <code>10_Em_trabalho</code> e renomeie a cópia como <code>2026-09-08_programacao-feira_em-edicao_v01.odt</code>, seguindo o padrão de nomes registrado em P-02.</li><li>Abra a cópia no Writer. Se aparecer uma faixa de formato ou modo somente leitura, não a ignore: confirme que abriu a cópia <code>.odt</code> correta.</li><li>Use <strong>Arquivo → Propriedades</strong> e anote em P-10 título, autor e estatísticas disponíveis; depois percorra o documento sem editar.</li><li>Compare datas, locais e responsáveis com o pedido registrado em P-00 e marque em P-10 apenas sintomas observáveis.</li></ol></div>
-      <div class="evidence-box"><strong>Resultado esperado</strong><p>Você encontra hierarquia visual inconsistente, alinhamento por espaços, tabela não estrutural, imagem sem legenda e sem origem identificada, uma pendência de horário e ausência de identificação da versão.</p><p><strong>Se divergir:</strong> feche sem salvar, confirme nome e pasta, baixe novamente e trabalhe na cópia. Não conclua que um dado está errado somente porque a formatação está ruim.</p></div>
-      <div class="artifact-card"><strong>P-10 iniciado · diagnóstico</strong><span>Arquivo de texto cumulativo com os seis campos iniciais; ele será ampliado nas próximas aulas e reutilizado no Projeto Integrador.</span></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>Antes de corrigir o arquivo, a equipe precisa definir o que o documento deve permitir que o leitor encontre, compreenda e faça.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Terça-feira · 8h10 · SEC-03</span><h2>A programação da Feira chegou, mas o leitor precisa caçar as informações.</h2><p>Marina precisa enviar o material às famílias e Paulo precisa revisar horários em <strong>COORD-02</strong>. Há títulos em maiúsculas, espaços usados para alinhar, uma tabela digitada com tabulações e uma imagem sem origem identificada. Antes de melhorar a aparência, você precisa descobrir o que impede o documento de cumprir sua função.</p></div>
+
+      <section class="decision-box"><h3>Primeira decisão</h3><p>Qual verificação deve vir antes?</p><div class="choice-list" data-choice data-answer="b" data-explanation="Finalidade, público e fonte da informação determinam o que precisa ser corrigido. Aparência vem depois."><label><input type="radio" name="d200" value="a"> escolher cores e fontes;</label><label><input type="radio" name="d200" value="b"> identificar público, conteúdo, fonte e pendências;</label><label><input type="radio" name="d200" value="c"> exportar imediatamente para PDF.</label><button class="action-button" type="button" data-check-choice>Conferir decisão</button><div class="choice-result" aria-live="polite"></div></div></section>
+
+      <h3>Faça comigo · preserve e abra a cópia</h3>
+      <div class="task-box"><strong>Ferramenta principal: LibreOffice Writer</strong><ol>
+        <li>Baixe a <a href="../downloads/informatica-produtividade/modulo-02/minuta-programacao-feira.odt" download>minuta problemática da programação</a> e salve-a em <code>00_Entrada</code>.</li>
+        <li>Copie para <code>10_Em_trabalho</code> e renomeie a cópia como <code>2026-09-08_programacao-feira_em-edicao_v01.odt</code>.</li>
+        <li>Abra a cópia no Writer. Percorra o documento inteiro sem editar.</li>
+        <li>Use <strong>Arquivo → Propriedades</strong> e observe título, autor e estatísticas disponíveis.</li>
+        <li>Localize no documento: hierarquia visual inconsistente, alinhamento por espaços, tabela não estrutural, imagem sem legenda/origem e a pendência de horário.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>você consegue apontar os problemas sem afirmar que o conteúdo está errado apenas porque a formatação está ruim.</p></div>
+
+      <h3>Registre o ponto de partida</h3>
+      <p>No <code>CONTROLE_DA_FEIRA.txt</code>, crie a seção <strong>[P-10] Documento</strong> e anote somente: arquivo analisado, público presumido, problemas observados e informação ainda pendente.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Antes de editar o documento, precisamos definir o que uma família deve conseguir encontrar e fazer depois de lê-lo.</p></div>`
   },
   {
     id: 'documentos-finalidade', number: '01', menuTitle: 'Finalidade, público e critérios',
@@ -19,23 +29,28 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Um documento serve a alguém e termina em uma ação',
     objective: 'Converter o pedido da Feira em critérios verificáveis de conteúdo, leitura e entrega.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Terça-feira · 8h40 · alinhamento com Paulo</span><h2>A mesma programação não atende do mesmo modo famílias e equipe interna.</h2><p>As famílias precisam de data, horário, local e orientação de entrada. A equipe interna precisa também de responsáveis, montagem e pendências. Paulo decide que haverá um documento público e uma fonte editável interna — não um único arquivo com informação escondida por cor.</p></div>
-      <div class="table-wrap"><table><thead><tr><th>Pergunta</th><th>Decisão pública</th><th>Evidência de aceite</th></tr></thead><tbody><tr><td>Quem lê?</td><td>famílias e visitantes</td><td>linguagem direta, sem siglas internas</td></tr><tr><td>O que fará?</td><td>planejar chegada e localizar atividades</td><td>data, horários e locais visíveis</td></tr><tr><td>O que não pode sair?</td><td>telefones, notas e aprovações internas</td><td>comparação com a fonte interna</td></tr><tr><td>Como recebe?</td><td>PDF acessível e versão impressa</td><td>arquivo aberto e impressão conferida</td></tr></tbody></table></div>
-      <h3>Aplicar · continuar P-10</h3><div class="template-box"><label for="modelo-p10a"><strong>Modelo copiável</strong></label><textarea id="modelo-p10a" class="record-template" rows="13" readonly>P-10 — MODELO E CHECKLIST DE DOCUMENTO
-Documento: Programação pública da Feira
-Fonte de conteúdo: P-00 + confirmações registradas de Paulo
-Público: famílias e visitantes
-Ação esperada: saber quando chegar, onde entrar e quais atividades ocorrerão
-Conteúdo obrigatório: título, data, horário, locais, programação e contato institucional
-Conteúdo proibido: dados pessoais, notas internas e pendências
-Formato de trabalho: ODT
-Formato de entrega: PDF + impressão A4
-Critérios: estrutura por estilos, leitura lógica, fontes da informação identificadas, acessibilidade conferida e versão aprovada
-Responsável por produzir: Marina
-Responsável por aprovar: Paulo</textarea><div><button class="action-button" type="button" data-copy="#modelo-p10a">Copiar P-10</button><span class="copy-status" aria-live="polite"></span></div></div>
-      <div class="task-box"><strong>Roteiro de decisão</strong><ol><li>Abra <code>P-10_documento.txt</code>, cole o modelo depois do diagnóstico inicial e preserve as observações já feitas; não edite a versão exibida na página.</li><li>Compare cada campo com P-00 e a minuta recebida. Preencha somente o que possui fonte da informação identificada.</li><li>Marque divergências como pendência, indicando quem pode decidir e qual evidência será aceita.</li><li>Peça a um colega que diga o que será entregue, para quem e como será aceito usando apenas P-10. No estudo individual, feche os arquivos-fonte e responda às mesmas três perguntas usando somente P-10.</li><li>Se a resposta depender de explicação oral, complete o registro e salve-o junto da versão de trabalho.</li></ol></div>
-      <div class="note-box"><strong>Equivalentes essenciais</strong><p>No Word ou Google Documentos, procure estilos de título, comentários e exportação/baixar em PDF. Os nomes podem variar; o critério de saída não muda. Registre em P-10 qual ferramenta e versão foram usadas.</p></div>
-      <div class="bridge-box"><strong>Próximo problema</strong><p>Os critérios estão claros, mas o texto ainda não possui uma ordem que ajude o leitor a localizar respostas. É preciso estruturar antes de formatar.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Terça-feira · 8h40 · alinhamento com Paulo</span><h2>A família não precisa receber as mesmas informações da equipe interna.</h2><p>Paulo define que o documento público deve permitir planejar a chegada e localizar as atividades. Telefones, notas e aprovações internas permanecem fora da versão pública.</p></div>
+
+      <h3>Classifique o conteúdo antes de editar</h3>
+      <div class="table-wrap"><table><thead><tr><th>Informação</th><th>Vai para o público?</th><th>Por quê?</th></tr></thead><tbody>
+        <tr><td>data, horário e local</td><td>sim</td><td>permitem planejar a visita</td></tr>
+        <tr><td>programação</td><td>sim</td><td>orienta o percurso</td></tr>
+        <tr><td>telefone pessoal / nota interna</td><td>não</td><td>não é necessário ao público</td></tr>
+        <tr><td>pendência ainda não aprovada</td><td>não como informação oficial</td><td>precisa de confirmação</td></tr>
+      </tbody></table></div>
+
+      <div class="task-box"><ol>
+        <li>Abra a minuta e marque, sem apagar, os blocos que pertencem à versão pública.</li>
+        <li>Identifique data, horário, local, programação, orientação de entrada e contato institucional.</li>
+        <li>Separe aquilo que é interno ou ainda está pendente.</li>
+        <li>Confirme que a entrega final será <strong>PDF + impressão A4</strong> e que o ODT permanecerá como fonte editável.</li>
+      </ol></div>
+
+      <h3>Atualize o controle</h3>
+      <p>Em <strong>[P-10] Documento</strong>, acrescente apenas: público, ação esperada, conteúdo obrigatório, conteúdo que não deve sair, formato de trabalho, formato de entrega e quem aprova.</p>
+      <div class="note-box"><strong>Termo profissional</strong><p>As condições que precisam ser verdadeiras para a entrega ser considerada pronta são os <strong>critérios de aceite</strong>.</p></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>você consegue explicar o que entra e o que fica fora sem depender de “ficou bonito” como critério.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>O conteúdo certo ainda está em uma ordem ruim. Vamos reorganizar antes de formatar.</p></div>`
   },
   {
     id: 'documentos-estrutura', number: '02', menuTitle: 'Estrutura e hierarquia',
@@ -43,11 +58,19 @@ Responsável por aprovar: Paulo</textarea><div><button class="action-button" typ
     title: 'A ordem do conteúdo reduz perguntas e erros',
     objective: 'Organizar informações em uma hierarquia que expresse relações, não apenas diferenças de tamanho.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Terça-feira · 9h20 · primeira reorganização</span><h2>Marina encontra todas as informações, mas o leitor precisa caçá-las.</h2><p>P-10 exige que data e entrada sejam percebidas antes da lista de atividades. O parágrafo sobre credenciamento está depois dos agradecimentos. Mover blocos agora é mais seguro do que decorar páginas que ainda mudarão.</p></div>
-      <section class="decision-box"><h3>Escolha a sequência</h3><div class="choice-list" data-choice data-answer="c" data-explanation="A sequência acompanha as perguntas reais do público: o que é, quando/onde, o que acontece e como participar."><label><input type="radio" name="d202" value="a"> agradecimentos → programação → título → entrada;</label><label><input type="radio" name="d202" value="b"> atividades em ordem alfabética, sem contexto;</label><label><input type="radio" name="d202" value="c"> título e resumo → informações essenciais → programação → orientações → contato/referências.</label><button class="action-button" type="button" data-check-choice>Conferir sequência</button><div class="choice-result" aria-live="polite"></div></div></section>
-      <h3>Executar no Writer</h3><div class="task-box"><ol><li>Na cópia <code>v01.odt</code>, ative <strong>Exibir → Navegador</strong> (ou pressione <kbd>F5</kbd>) para observar se existem títulos reconhecidos.</li><li>Selecione e recorte somente um bloco completo por vez; cole na sequência definida. Use <strong>Ctrl+Z</strong> se perder conteúdo.</li><li>Crie os rótulos textuais: “Programação”, “Orientações de entrada” e “Contato”. Ainda não altere família tipográfica, cor ou tamanho.</li><li>Leia apenas os rótulos em ordem. Eles devem resumir o documento sem depender do corpo.</li><li>Salve como nova versão <code>..._v02.odt</code>; mantenha <code>v01</code> para comparação.</li></ol></div>
-      <div class="evidence-box"><strong>Validação</strong><p>Um colega deve responder “quando?”, “onde?” e “o que ocorrerá?” em até um minuto, apontando a seção usada. No estudo individual, feche o documento por um minuto, reabra e faça o mesmo teste sem usar busca. Se a resposta depender de cor ou de explicação oral, a estrutura ainda não está pronta.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>A ordem está compreensível, mas os rótulos continuam sendo texto comum aumentado manualmente. Uma mudança global exigiria edição repetida. Essa necessidade justifica estilos.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Terça-feira · 9h20 · primeira reorganização</span><h2>As informações existem, mas o credenciamento aparece depois dos agradecimentos.</h2><p>Uma família deve descobrir primeiro o que é a Feira, quando e onde acontece; depois, o que ocorrerá e como participar.</p></div>
+      <section class="decision-box"><h3>Escolha a sequência</h3><div class="choice-list" data-choice data-answer="c" data-explanation="A sequência acompanha as perguntas reais do leitor."><label><input type="radio" name="d202" value="a"> agradecimentos → programação → título → entrada;</label><label><input type="radio" name="d202" value="b"> atividades em ordem alfabética, sem contexto;</label><label><input type="radio" name="d202" value="c"> título/resumo → informações essenciais → programação → orientações → contato/fontes.</label><button class="action-button" type="button" data-check-choice>Conferir sequência</button><div class="choice-result" aria-live="polite"></div></div></section>
+
+      <h3>Faça no Writer</h3>
+      <div class="task-box"><ol>
+        <li>Salve a cópia como <code>..._v02.odt</code>.</li>
+        <li>Ative <strong>Exibir → Navegador</strong> (<kbd>F5</kbd>) e observe se existem títulos reconhecidos.</li>
+        <li>Mova um bloco completo por vez para a sequência escolhida. Use <strong>Ctrl+Z</strong> se perder conteúdo.</li>
+        <li>Crie os rótulos “Programação”, “Orientações de entrada” e “Contato”. Ainda não mude cor, fonte ou tamanho.</li>
+        <li>Leia somente os rótulos em ordem. Eles devem contar a estrutura do documento.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Teste rápido</strong><p>localize “quando?”, “onde?” e “o que ocorrerá?” sem usar busca. Se a resposta depender de cor ou memória, a estrutura ainda precisa melhorar.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Os rótulos estão no lugar certo, mas continuam sendo texto comum. Vamos transformá-los em estrutura de verdade com estilos.</p></div>`
   },
   {
     id: 'documentos-estilos', number: '03', menuTitle: 'Estilos que mantêm consistência',
@@ -55,12 +78,17 @@ Responsável por aprovar: Paulo</textarea><div><button class="action-button" typ
     title: 'Formatação consistente nasce de estilos',
     objective: 'Aplicar e ajustar estilos para que estrutura, navegação e manutenção permaneçam coerentes.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Terça-feira · 10h00 · revisão em COORD-02</span><h2>Paulo pede que todos os subtítulos fiquem mais legíveis.</h2><p>Na minuta, cada subtítulo foi formatado separadamente. Marina poderia procurar um por um, mas isso criaria diferenças e retrabalho. Como as seções já têm função definida, elas podem compartilhar um estilo.</p></div>
-      <div class="visual-lab"><div class="visual-header"><span>Representação didática de interface</span><h3>Localize função, não posição fixa</h3></div><div class="interface-strip"><span><b>Estilo atual</b> Corpo de texto</span><span><b>Escolher</b> Título 1 / Título 2</span><span><b>Gerenciar</b> F11</span><span><b>Conferir</b> Navegador</span></div><p class="visual-question"><strong>Ação:</strong> compare “aumentar o tamanho da letra” com “aplicar Título 2”. Qual delas também comunica estrutura ao programa?</p></div>
-      <h3>Aplicar estilos</h3><div class="task-box"><ol><li>Abra <code>v02.odt</code> e salve como <code>v03.odt</code>.</li><li>Clique no título principal e, na lista de estilos da barra ou em <strong>Estilos → Título 1</strong>, aplique <strong>Título 1</strong>.</li><li>Aplique <strong>Título 2</strong> aos rótulos de seção. Use <strong>Corpo de texto</strong> nos parágrafos comuns.</li><li>Pressione <kbd>F11</kbd>, clique com o botão direito em <strong>Título 2</strong> e escolha <strong>Editar estilo</strong>. Ajuste uma propriedade visível, como espaçamento abaixo, e confirme.</li><li>Verifique se todos os subtítulos mudaram juntos. Abra o Navegador e confirme a hierarquia.</li><li>Se um trecho mudou indevidamente, use <strong>Ctrl+Z</strong> e confira se selecionou o estilo correto, não “Título” ou “Subtítulo”.</li></ol></div>
-      <div class="evidence-box"><strong>Evidência</strong><p>O Navegador lista as seções e uma alteração no estilo se propaga para todas as ocorrências. Aparência semelhante sem navegação estruturada não satisfaz o critério.</p></div>
-      <details class="sources-box"><summary>Fonte oficial consultada</summary><p><a href="https://help.libreoffice.org/latest/pt-BR/text/swriter/01/05130000.html" target="_blank" rel="noopener">Ajuda do LibreOffice — Estilos no Writer</a>.</p></details>
-      <div class="bridge-box"><strong>Consequência</strong><p>Com a hierarquia controlada, a equipe pode definir o espaço físico da entrega A4 sem empurrar conteúdo com linhas vazias.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Terça-feira · 10h00 · revisão em COORD-02</span><h2>Paulo pede que todos os subtítulos ganhem mais espaço e legibilidade.</h2><p>Se cada subtítulo for alterado separadamente, diferenças aparecem. Como as seções têm a mesma função, elas podem compartilhar um estilo.</p></div>
+      <div class="visual-lab"><div class="visual-header"><span>Representação didática de interface</span><h3>Aparência e estrutura não são a mesma coisa</h3></div><div class="interface-strip"><span><b>Corpo de texto</b></span><span><b>Título 1</b></span><span><b>Título 2</b></span><span><b>F11 · Estilos</b></span></div><p class="visual-question"><strong>Pense:</strong> qual ação também informa ao Writer que aquele texto é um título?</p></div>
+      <div class="task-box"><ol>
+        <li>Salve como <code>v03.odt</code>.</li>
+        <li>Aplique <strong>Título 1</strong> ao título principal e <strong>Título 2</strong> às seções. Use <strong>Corpo de texto</strong> nos parágrafos.</li>
+        <li>Pressione <kbd>F11</kbd>, edite o estilo <strong>Título 2</strong> e altere uma propriedade visível, como espaçamento abaixo.</li>
+        <li>Confirme que todos os subtítulos mudaram juntos.</li>
+        <li>Abra o Navegador e verifique a hierarquia.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>o Navegador reconhece as seções e uma única alteração no estilo se propaga para todas elas.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>A estrutura está controlada. Agora precisamos fazer o documento caber em A4 sem usar linhas vazias como ferramenta de diagramação.</p></div>`
   },
   {
     id: 'documentos-pagina', number: '04', menuTitle: 'Página, margens e cabeçalho',
@@ -68,10 +96,17 @@ Responsável por aprovar: Paulo</textarea><div><button class="action-button" typ
     title: 'A página é uma regra de saída, não um conjunto de espaços',
     objective: 'Configurar página e elementos repetidos sem alinhar conteúdo com Enter ou espaços.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Terça-feira · 11h10 · teste de impressão</span><h2>Na impressora da secretaria, o rodapé desaparece e uma atividade fica sozinha na página seguinte.</h2><p>O conteúdo deve sair em A4, mas a minuta usava linhas vazias para “caber”. SEC-03 e COORD-02 exibem famílias tipográficas de maneira semelhante; a impressora revela que aparência em uma tela não é prova de saída.</p></div>
-      <h3>Configurar e prever</h3><div class="task-box"><ol><li>Salve <code>v03</code> como <code>v04</code>. Abra <strong>Formatar → Estilo de página</strong>.</li><li>Na guia de página, escolha <strong>A4</strong>, orientação <strong>Retrato</strong> e margens de <strong>2 cm</strong>. Esses valores são do projeto; não são regra universal.</li><li>Ative cabeçalho e insira “Escola Horizonte · Feira de Projetos”. Ative rodapé e use <strong>Inserir → Número da página</strong>; não digite “1”.</li><li>Remova sequências de linhas vazias usadas para mudar de página. Antes de uma seção que precisa iniciar em nova página, use <strong>Inserir → Quebra de página</strong>.</li><li>Abra <strong>Arquivo → Visualizar impressão</strong>. Conte páginas, confira cortes e volte para ajustar o conteúdo — não reduza tudo automaticamente.</li><li>Salve e anote em P-10: A4, retrato, margens 2 cm, cabeçalho e numeração automática.</li></ol></div>
-      <div class="danger-box"><strong>Se houver diferença</strong><p>Confirme o tamanho do papel no documento e na caixa de impressão. Não escolha “ajustar à página” sem observar o efeito: ele pode esconder a causa reduzindo texto e tabelas.</p></div>
-      <div class="bridge-box"><strong>Próximo problema</strong><p>A página está controlada, porém horários e locais continuam alinhados por tabulações. Quando um texto cresce, as colunas quebram. A necessidade agora é uma tabela real.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Terça-feira · 11h10 · teste de impressão</span><h2>Na prévia, o rodapé some e uma atividade fica sozinha na página seguinte.</h2><p>A minuta usava linhas vazias para empurrar conteúdo. A impressão mostra que esse “ajuste” não é estável.</p></div>
+      <div class="task-box"><ol>
+        <li>Salve como <code>v04.odt</code> e abra <strong>Formatar → Estilo de página</strong>.</li>
+        <li>Defina <strong>A4</strong>, orientação <strong>Retrato</strong> e margens de <strong>2 cm</strong> para este projeto.</li>
+        <li>Ative cabeçalho e escreva “Escola Horizonte · Feira de Projetos”. No rodapé, insira número automático da página.</li>
+        <li>Remova sequências de linhas vazias usadas para mudar de página. Quando necessário, use <strong>Inserir → Quebra de página</strong>.</li>
+        <li>Abra <strong>Arquivo → Visualizar impressão</strong> e confira cortes e páginas.</li>
+      </ol></div>
+      <div class="danger-box"><strong>Se algo não couber</strong><p>não reduza tudo automaticamente. Primeiro verifique papel, margens, quebras e conteúdo.</p></div>
+      <p>Em <strong>[P-10] Documento</strong>, registre somente a configuração final de página que será reutilizada.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Horários e locais ainda estão alinhados por tabulações. Uma atividade longa quebra as colunas. É hora de usar uma tabela real.</p></div>`
   },
   {
     id: 'documentos-tabelas', number: '05', menuTitle: 'Tabelas que organizam relações',
@@ -79,11 +114,16 @@ Responsável por aprovar: Paulo</textarea><div><button class="action-button" typ
     title: 'Tabela é para relacionar dados, não para desenhar a página',
     objective: 'Converter informações relacionadas em tabela simples, legível e verificável.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Terça-feira · 13h30 · programação revisada</span><h2>Uma atividade longa desloca todos os horários porque as colunas eram espaços.</h2><p>Para as famílias, cada linha precisa relacionar horário, atividade e local. Essa relação justifica uma tabela; o restante do documento continua em parágrafos.</p></div>
-      <h3>Construir no Writer</h3><div class="task-box"><ol><li>Salve como <code>v05.odt</code>. Selecione apenas as linhas da programação e guarde uma cópia temporária abaixo, para retorno.</li><li>Use <strong>Tabela → Inserir tabela</strong>; crie <strong>3 colunas</strong> e linhas suficientes, com uma linha de cabeçalho.</li><li>Digite os cabeçalhos <strong>Horário</strong>, <strong>Atividade</strong> e <strong>Local</strong>. Transfira um registro por linha.</li><li>Não mescle células que contenham dados. Ajuste larguras arrastando divisórias e permita que textos longos quebrem dentro da célula.</li><li>Selecione a primeira linha e marque-a como cabeçalho repetido, se a tabela ocupar mais de uma página.</li><li>Compare linha a linha com a fonte. Só depois remova o bloco temporário.</li></ol></div>
-      <div class="evidence-box"><strong>Conferência</strong><p>Cada atividade permanece associada a um único horário e local quando a largura da janela muda ou quando a página é impressa. Se uma linha se separar de seu significado, volte à cópia temporária e confira a transferência.</p></div>
-      <div class="note-box"><strong>Limite</strong><p>Uma tabela pequena comunica relações. Uma coleção extensa que precisa de buscas, múltiplos relacionamentos e atualizações concorrentes pode exigir planilha ou banco de dados; não transforme o documento em cadastro.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>A programação ficou estável. Falta justificar e descrever a imagem do mapa de entrada, para que ela informe em vez de apenas ocupar espaço.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Terça-feira · 13h30 · programação revisada</span><h2>Uma atividade longa desloca todos os horários porque as “colunas” eram espaços.</h2><p>Cada linha precisa manter horário, atividade e local juntos, mesmo quando o texto cresce.</p></div>
+      <div class="task-box"><ol>
+        <li>Salve como <code>v05.odt</code>. Preserve temporariamente uma cópia do bloco original abaixo da área de trabalho.</li>
+        <li>Use <strong>Tabela → Inserir tabela</strong> e crie 3 colunas: <strong>Horário</strong>, <strong>Atividade</strong> e <strong>Local</strong>.</li>
+        <li>Transfira um registro por linha. Não use células mescladas para esconder relações.</li>
+        <li>Ajuste larguras e permita que textos longos quebrem dentro da célula.</li>
+        <li>Compare linha por linha com a fonte e só depois remova o bloco temporário.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>cada atividade continua associada ao horário e local corretos quando a janela muda de largura e na visualização de impressão.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>A programação está estável. O mapa da entrada só deve entrar se realmente ajudar o visitante.</p></div>`
   },
   {
     id: 'documentos-imagens', number: '06', menuTitle: 'Imagens, legenda e função',
@@ -91,12 +131,20 @@ Responsável por aprovar: Paulo</textarea><div><button class="action-button" typ
     title: 'A imagem precisa responder a uma pergunta',
     objective: 'Inserir imagem com função comunicacional, origem identificada, legenda e alternativa textual.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Terça-feira · 14h20 · rota de entrada</span><h2>Lia sugere incluir o mapa simplificado da escola para reduzir filas no portão errado.</h2><p>A imagem agora tem função: mostrar entrada e espaços da Feira. Uma foto decorativa do prédio não resolveria essa necessidade e aumentaria o arquivo.</p></div>
-      <section class="decision-box"><h3>Escolha o visual</h3><div class="choice-list" data-choice data-answer="a" data-explanation="Um mapa simples localiza os espaços e apoia a ação do visitante; a decoração não acrescenta evidência."><label><input type="radio" name="d206" value="a"> mapa autorizado com portão, recepção e blocos;</label><label><input type="radio" name="d206" value="b"> banco de imagens com estudantes genéricos;</label><label><input type="radio" name="d206" value="c"> textura colorida atrás da programação.</label><button class="action-button" type="button" data-check-choice>Conferir escolha</button><div class="choice-result" aria-live="polite"></div></div></section>
-      <h3>Inserir e validar</h3><div class="task-box"><ol><li>Baixe o <a href="../downloads/informatica-produtividade/modulo-02/mapa-entrada-feira.svg" download>mapa didático autorizado</a> e registre sua origem em P-10.</li><li>Salve como <code>v06.odt</code>. Coloque o cursor após “Orientações de entrada” e use <strong>Inserir → Imagem</strong>.</li><li>Selecione a imagem, abra as propriedades e escolha ancoragem <strong>Como caractere</strong> para mantê-la no fluxo do texto.</li><li>Use <strong>Inserir → Legenda</strong> e escreva “Figura 1 — Entrada e espaços principais da Feira”.</li><li>Nas propriedades da imagem, preencha o texto alternativo: “Mapa com entrada pela Rua das Flores, recepção no pátio e acesso aos blocos A e B”.</li><li>Redimensione pelas alças de canto, preservando proporção. Visualize a impressão e confira se legenda e imagem permanecem juntas.</li></ol></div>
-      <div class="evidence-box"><strong>Validação por tarefa</strong><p>Peça a um colega que localize o portão e o bloco B usando a imagem; depois leia o texto alternativo sem mostrar a imagem. No estudo individual, anote a rota observando o mapa, feche-o e compare a anotação com o texto alternativo. Ambos devem sustentar a orientação, sem inventar detalhes.</p></div>
-      <details class="sources-box"><summary>Fonte oficial consultada</summary><p><a href="https://help.libreoffice.org/latest/pt-BR/text/swriter/guide/captions.html" target="_blank" rel="noopener">Ajuda do LibreOffice — Utilizar legendas</a>.</p></details>
-      <div class="bridge-box"><strong>Próximo problema</strong><p>O mapa está explicado, mas data, endereço e orientações vieram de fontes diferentes. Sem registro, a próxima atualização pode usar informação antiga.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Terça-feira · 14h20 · rota de entrada</span><h2>Algumas famílias chegaram pelo portão errado no último evento.</h2><p>Lia propõe um mapa simples com entrada, recepção e blocos. Agora a imagem resolve uma pergunta real: “por onde eu entro e para onde vou?”.</p></div>
+      <section class="decision-box"><h3>Qual visual ajuda de verdade?</h3><div class="choice-list" data-choice data-answer="a" data-explanation="O mapa apoia uma ação do visitante. Uma imagem decorativa não resolve a necessidade."><label><input type="radio" name="d206" value="a"> mapa autorizado com portão, recepção e blocos;</label><label><input type="radio" name="d206" value="b"> foto genérica de estudantes;</label><label><input type="radio" name="d206" value="c"> textura colorida atrás da programação.</label><button class="action-button" type="button" data-check-choice>Conferir escolha</button><div class="choice-result" aria-live="polite"></div></div></section>
+
+      <div class="task-box"><ol>
+        <li>Baixe o <a href="../downloads/informatica-produtividade/modulo-02/mapa-entrada-feira.svg" download>mapa didático autorizado</a>.</li>
+        <li>Salve como <code>v06.odt</code> e insira a imagem após “Orientações de entrada”.</li>
+        <li>Defina a ancoragem <strong>Como caractere</strong>.</li>
+        <li>Adicione a legenda “Figura 1 — Entrada e espaços principais da Feira”.</li>
+        <li>Preencha o texto alternativo: “Mapa com entrada pela Rua das Flores, recepção no pátio e acesso aos blocos A e B”.</li>
+        <li>Redimensione pelas alças de canto e confira a impressão.</li>
+      </ol></div>
+      <p>Em <strong>[P-10] Documento</strong>, anote apenas a origem do mapa e sua função.</p>
+      <div class="evidence-box"><strong>Teste</strong><p>localize o portão e o bloco B pelo mapa; depois leia o texto alternativo sem olhar a imagem. Os dois devem orientar sem inventar detalhes.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>O mapa tem função e origem. Agora precisamos garantir que horário, endereço e outras afirmações possam ser conferidos na fonte certa.</p></div>`
   },
   {
     id: 'documentos-fontes', number: '07', menuTitle: 'Referências e fontes',
@@ -104,11 +152,21 @@ Responsável por aprovar: Paulo</textarea><div><button class="action-button" typ
     title: 'Toda afirmação importante precisa voltar à sua origem',
     objective: 'Registrar fontes da informação suficientes para conferência e atualização do documento.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Terça-feira · 15h05 · confirmação de conteúdo</span><h2>Renato informa um patrocinador; Paulo confirma o horário; Lia fornece o mapa.</h2><p>Essas informações não têm a mesma origem nem a mesma autoridade. “Foi alguém que mandou” não permite corrigir o documento quando surgir divergência.</p></div>
-      <div class="table-wrap"><table><thead><tr><th>Informação</th><th>Fonte da informação adequada</th><th>Registro mínimo</th></tr></thead><tbody><tr><td>horário de abertura</td><td>decisão registrada de Paulo</td><td>responsável, data e mensagem/ata</td></tr><tr><td>valor ou patrocínio</td><td>planilha conferida por Renato</td><td>arquivo, versão e aba/célula ou linha</td></tr><tr><td>mapa</td><td>arquivo autorizado por Lia</td><td>autor/origem, licença interna e data</td></tr></tbody></table></div>
-      <h3>Aplicar</h3><div class="task-box"><ol><li>Salve como <code>v07.odt</code>.</li><li>No fim do documento, crie a seção “Fontes e validação” com estilo <strong>Título 2</strong>.</li><li>Para cada informação crítica, registre autor ou setor, título/descrição, data, caminho ou link autorizado e data de acesso quando pertinente.</li><li>Não transforme um link em prova suficiente: abra-o, confirme o conteúdo e registre a versão usada.</li><li>Para o documento público, mantenha somente referências apropriadas ao público. Guarde detalhes internos completos das fontes da informação em P-10.</li><li>Teste um item: parta da afirmação no documento e localize a fonte exata.</li></ol></div>
-      <div class="danger-box"><strong>Privacidade</strong><p>Não publique endereço pessoal, telefone privado, conversa inteira ou link interno apenas para “provar” a fonte. Rastreabilidade e exposição são coisas diferentes.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>O conteúdo já pode ser conferido. Paulo fará sugestões, mas Marina precisa distinguir comentário, alteração proposta e decisão aceita.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Terça-feira · 15h05 · confirmação de conteúdo</span><h2>Horário, mapa e informação financeira vieram de pessoas e arquivos diferentes.</h2><p>Quando surgir uma divergência, “alguém mandou” não é suficiente. A equipe precisa conseguir voltar à origem correta.</p></div>
+      <div class="table-wrap"><table><thead><tr><th>Informação</th><th>Fonte adequada</th><th>O que guardar</th></tr></thead><tbody>
+        <tr><td>horário de abertura</td><td>decisão registrada de Paulo</td><td>responsável, data e registro</td></tr>
+        <tr><td>valor/patrocínio</td><td>planilha conferida por Renato</td><td>arquivo, versão e linha/célula</td></tr>
+        <tr><td>mapa</td><td>arquivo autorizado por Lia</td><td>origem e data</td></tr>
+      </tbody></table></div>
+      <div class="task-box"><ol>
+        <li>Salve como <code>v07.odt</code>.</li>
+        <li>Crie ao fim do documento a seção “Fontes e validação” com estilo <strong>Título 2</strong>.</li>
+        <li>Registre somente as referências apropriadas ao público.</li>
+        <li>Em <strong>[P-10] Documento</strong>, guarde os detalhes internos necessários para voltar à origem.</li>
+        <li>Escolha uma afirmação do documento e percorra o caminho até a fonte exata.</li>
+      </ol></div>
+      <div class="danger-box"><strong>Rastreabilidade não é exposição</strong><p>não publique telefone privado, conversa inteira ou link interno apenas para “provar” uma fonte.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>O conteúdo já pode ser conferido. Agora Paulo precisa sugerir mudanças sem sobrescrever silenciosamente o trabalho de Marina.</p></div>`
   },
   {
     id: 'documentos-revisao', number: '08', menuTitle: 'Revisão, comentários e alterações',
@@ -116,11 +174,16 @@ Responsável por aprovar: Paulo</textarea><div><button class="action-button" typ
     title: 'Revisar não é sobrescrever silenciosamente',
     objective: 'Usar comentários e controle de alterações para discutir e decidir mudanças com rastreabilidade.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quarta-feira · 8h15 · revisão em COORD-02</span><h2>Paulo quer trocar “abertura” por “acolhida”, mas não quer aprovar a programação inteira ainda.</h2><p>Se editar e salvar sobre a única cópia, a equipe perde a diferença entre sugestão e aceite. P-03 determina nova versão e responsável pela aprovação.</p></div>
-      <h3>Roteiro de revisão</h3><div class="task-box"><ol><li>Marina salva <code>v07</code> como <code>..._para-revisao_v08.odt</code> em <code>20_Para_revisao</code>.</li><li>Paulo abre essa cópia e usa <strong>Editar → Registrar alterações → Registrar</strong>.</li><li>Ele substitui uma palavra e seleciona um horário ainda incerto; em seguida usa <strong>Inserir → Anotação</strong> para perguntar pela evidência.</li><li>Marina abre o arquivo e usa <strong>Editar → Registrar alterações → Gerenciar</strong>. Aceita somente a troca autorizada; mantém o horário pendente.</li><li>Responde ao comentário com a fonte ou registra que continua pendente. Não apaga o comentário antes do encaminhamento.</li><li>Salva uma nova versão e atualiza P-03: quem sugeriu, o que foi aceito/rejeitado, evidência e data.</li></ol></div>
-      <div class="evidence-box"><strong>Resultado esperado</strong><p>A versão final não contém alterações “fantasmas”; P-03 permite explicar cada decisão relevante. Se todos os textos mudarem sem marcação, pare, feche sem salvar e repita em uma cópia com o registro ativado.</p></div>
-      <details class="sources-box"><summary>Fontes oficiais consultadas</summary><p><a href="https://help.libreoffice.org/latest/pt-BR/text/shared/guide/redlining_enter.html" target="_blank" rel="noopener">Registrar alterações</a> e <a href="https://help.libreoffice.org/latest/pt-BR/text/shared/guide/redlining_accept.html" target="_blank" rel="noopener">aceitar ou rejeitar alterações</a>.</p></details>
-      <div class="bridge-box"><strong>Próximo problema</strong><p>O texto foi aprovado, mas uma pessoa que usa leitor de tela ainda pode receber um documento sem ordem, descrição ou contraste suficiente. A aprovação de conteúdo não encerra a acessibilidade.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quarta-feira · 8h15 · revisão em COORD-02</span><h2>Paulo quer trocar uma palavra, mas ainda não aprova um horário incerto.</h2><p>A equipe precisa distinguir sugestão, pergunta e alteração aceita.</p></div>
+      <div class="task-box"><ol>
+        <li>Salve <code>v07</code> como <code>..._para-revisao_v08.odt</code> em <code>20_Para_revisao</code>.</li>
+        <li>Ative <strong>Editar → Registrar alterações → Registrar</strong>.</li>
+        <li>Substitua uma palavra como teste e adicione uma anotação a um horário que ainda depende de evidência.</li>
+        <li>Abra <strong>Gerenciar alterações</strong>: aceite apenas a mudança autorizada e mantenha a pendência sem inventar resposta.</li>
+        <li>Salve nova versão e, em <strong>[P-10] Documento</strong>, registre apenas a decisão relevante e sua evidência.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>é possível explicar o que mudou, quem propôs e o que continuou pendente.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>O conteúdo pode estar correto e ainda apresentar barreiras para quem usa ampliação, teclado ou leitor de tela.</p></div>`
   },
   {
     id: 'documentos-acessibilidade', number: '09', menuTitle: 'Acessibilidade verificável',
@@ -128,11 +191,18 @@ Responsável por aprovar: Paulo</textarea><div><button class="action-button" typ
     title: 'Acessibilidade precisa ser conferida, não presumida',
     objective: 'Verificar estrutura e barreiras antes da exportação, corrigindo sem depender apenas do verificador automático.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quarta-feira · 10h00 · requisito de publicação</span><h2>Uma família solicita o arquivo digital para leitura ampliada.</h2><p>Aumentar o tamanho da letra na impressão não resolve ordem de leitura, títulos, texto alternativo ou idioma. Como o público é diverso, P-10 passa a exigir inspeção humana e verificação automática.</p></div>
-      <h3>Conferir no Writer</h3><div class="task-box"><ol><li>Salve uma cópia <code>..._acessibilidade_v09.odt</code>.</li><li>Pressione <kbd>Ctrl+A</kbd> e confira em <strong>Ferramentas → Idioma</strong> se o texto está em Português (Brasil); corrija somente o idioma do conteúdo.</li><li>No Navegador, confirme um único Título 1 e seções em ordem. Não pule de Título 1 para Título 3.</li><li>Abra as propriedades da imagem e confira o texto alternativo. Leia-o sem olhar a figura.</li><li>Garanta que links possuam texto significativo e que nenhuma informação dependa apenas de cor.</li><li>Use <strong>Ferramentas → Verificação de acessibilidade</strong>. Corrija cada alerta compreendido; se um aviso não se aplicar, registre a justificativa em P-10.</li><li>Navegue pelo documento apenas com teclado e faça leitura em zoom de 200%, observando sobreposição e cortes.</li></ol></div>
-      <div class="note-box"><strong>Limite do verificador</strong><p>Ele encontra padrões técnicos, mas não decide se um título explica a seção, se o texto alternativo é útil ou se a linguagem está clara. A validação humana continua obrigatória.</p></div>
-      <details class="sources-box"><summary>Fonte oficial consultada</summary><p><a href="https://help.libreoffice.org/latest/en-US/text/swriter/01/accessibility_check.html" target="_blank" rel="noopener">Ajuda do LibreOffice — Accessibility Check</a>.</p></details>
-      <div class="bridge-box"><strong>Consequência</strong><p>O documento editável atende aos critérios. Agora é preciso produzir PDF e impressão sem confundir exportar com validar.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quarta-feira · 10h00 · requisito de publicação</span><h2>Uma família solicita o arquivo digital para leitura ampliada.</h2><p>Letra maior não resolve sozinha ordem de leitura, títulos, texto alternativo, idioma ou contraste.</p></div>
+      <div class="task-box"><ol>
+        <li>Salve uma cópia <code>..._acessibilidade_v09.odt</code>.</li>
+        <li>Confirme o idioma do texto em <strong>Português (Brasil)</strong>.</li>
+        <li>No Navegador, verifique um único Título 1 e títulos de seção em ordem.</li>
+        <li>Confira o texto alternativo da imagem e links com nomes significativos.</li>
+        <li>Garanta que nenhuma informação dependa somente de cor.</li>
+        <li>Use <strong>Ferramentas → Verificação de acessibilidade</strong>. Corrija alertas compreendidos.</li>
+        <li>Navegue apenas com teclado e teste em zoom de 200%.</li>
+      </ol></div>
+      <div class="note-box"><strong>O verificador ajuda, mas não decide tudo</strong><p>ele não sabe se um título é claro nem se o texto alternativo realmente ajuda. A leitura humana continua necessária.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>O ODT está pronto para sair. Agora precisamos provar que o PDF gerado também está correto.</p></div>`
   },
   {
     id: 'documentos-pdf', number: '10', menuTitle: 'PDF, impressão e entrega',
@@ -140,23 +210,43 @@ Responsável por aprovar: Paulo</textarea><div><button class="action-button" typ
     title: 'Exportar cria outro arquivo; não prova que ele está correto',
     objective: 'Gerar, abrir, conferir e entregar PDF e impressão preservando o arquivo-fonte editável.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quarta-feira · 13h20 · prazo de publicação</span><h2>Paulo aprovou a versão editável, mas o PDF será o arquivo recebido pelas famílias.</h2><p>Links, quebras, imagem e famílias tipográficas podem se comportar de modo diferente após exportar. A equipe só chamará de “publicado” o arquivo que foi aberto e conferido.</p></div>
-      <div class="visual-lab"><div class="visual-header"><span>Representação didática de interface</span><h3>Fonte editável ≠ saída de entrega</h3></div><div class="comparison-grid"><div><strong>ODT aprovado</strong><p>mantém estrutura e edição; fica no pacote interno</p></div><div><strong>PDF validado</strong><p>é aberto separadamente e destinado ao público</p></div></div><p class="visual-question"><strong>Ação:</strong> identifique qual arquivo volta para correção se o PDF cortar a tabela.</p></div>
-      <h3>Exportar e provar</h3><div class="task-box"><ol><li>Confirme em P-03 qual ODT foi aprovado. Feche outras versões para evitar exportar a janela errada.</li><li>No Writer, use <strong>Arquivo → Exportar como → Exportar como PDF</strong>.</li><li>Na caixa de PDF, mantenha marcadores/tópicos e marque <strong>PDF/UA</strong> quando o verificador estiver sem problemas críticos. Escolha somente as páginas previstas.</li><li>Salve em <code>30_Publicado</code> como <code>2026-09-08_programacao-feira_publicado_v01.pdf</code>.</li><li>Feche o Writer e abra o PDF em um leitor. Confira página por página: título, tabela, mapa, legenda, links, rodapé e seleção de texto.</li><li>Use a visualização de impressão com papel A4. Se possível, faça uma prova de uma página antes do lote.</li><li>Se divergir, não edite o PDF como arquivo-fonte: corrija o ODT, gere nova versão e repita toda a conferência.</li></ol></div>
-      <div class="evidence-box"><strong>Registro de entrega em P-10</strong><p>Nomes do ODT e PDF, quantidade de páginas, data da conferência, leitor usado, resultado da impressão, responsável e pendências. Mova versões encerradas conforme P-02/P-03; não apague o arquivo-fonte aprovado.</p></div>
-      <details class="sources-box"><summary>Fonte oficial consultada</summary><p><a href="https://help.libreoffice.org/latest/pt-BR/text/shared/01/ref_pdf_export.html" target="_blank" rel="noopener">Ajuda do LibreOffice — Exportar como PDF</a>.</p></details>
-      <div class="bridge-box"><strong>Consequência</strong><p>A programação está pronta. O último passo do módulo é aplicar o mesmo método a um documento diferente sem copiar decisões que pertenciam apenas a esta entrega.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quarta-feira · 13h20 · prazo de publicação</span><h2>O ODT foi aprovado, mas as famílias receberão o PDF.</h2><p>Quebras, imagem, tabela e links podem se comportar de forma diferente depois da exportação. O arquivo público só está pronto depois de ser aberto e conferido.</p></div>
+      <div class="task-box"><ol>
+        <li>Confirme qual ODT é a versão aprovada e feche versões antigas.</li>
+        <li>Use <strong>Arquivo → Exportar como → Exportar como PDF</strong>.</li>
+        <li>Quando aplicável, mantenha marcadores/tópicos e use <strong>PDF/UA</strong> após resolver problemas críticos de acessibilidade.</li>
+        <li>Salve em <code>30_Publicado</code> como <code>2026-09-08_programacao-feira_publicado_v01.pdf</code>.</li>
+        <li>Feche o Writer e abra o PDF em um leitor separado.</li>
+        <li>Confira página por página: título, tabela, mapa, legenda, links, rodapé, seleção de texto e visualização de impressão A4.</li>
+        <li>Se houver erro, volte ao ODT, gere nova versão e repita o teste.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Registre somente a prova de saída</strong><p>em <strong>[P-10] Documento</strong>, anote ODT aprovado, PDF gerado, páginas, data, resultado da conferência e pendências. Em <strong>[P-03] Versões</strong>, identifique o ODT aprovado e o PDF derivado que passou pela conferência.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Agora você vai repetir o método em outro documento sem copiar decisões que pertenciam apenas à programação pública.</p></div>`
   },
   {
     id: 'documentos-desafio', number: '11', menuTitle: 'Desafio: guia do expositor',
     unit: 'Módulo 2 · Documentos Profissionais', technicalTitle: 'Integração · planejamento, produção, revisão e prova',
     title: 'Desafio: entregar o Guia do Expositor',
-    objective: 'Produzir um novo documento profissional usando P-00 a P-03 e consolidar P-10.',
+    objective: 'Produzir um novo documento profissional usando as decisões acumuladas no projeto.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quinta-feira · nova solicitação da Feira</span><h2>As equipes expositoras precisam saber montagem, materiais permitidos e horário de retirada.</h2><p>Lia recebeu orientações de laboratório; Renato acrescentou regras para compras; Paulo aprova o texto. O público mudou, portanto copiar a programação e trocar o título não basta.</p></div>
-      <h3>Missão</h3><div class="task-box"><ol><li>Continue P-00 e registre o novo entregável, público, ação esperada, responsáveis, prazo e critérios.</li><li>Baixe as <a href="../downloads/informatica-produtividade/modulo-02/fontes-guia-expositor.zip" download>fontes do Guia do Expositor</a> em <code>00_Entrada</code>; extraia uma cópia em <code>10_Em_trabalho</code> e inventarie os quatro itens em P-01.</li><li>Crie o arquivo-fonte editável em ODT dentro de <code>10_Em_trabalho</code>, seguindo nomes e versões registrados em P-02/P-03.</li><li>Defina estrutura antes de aparência; aplique estilos, página A4, uma tabela somente onde houver relação tabular e imagem apenas se ela resolver uma necessidade.</li><li>Registre fontes da informação, comentários e decisões. Faça verificação de idioma, hierarquia, texto alternativo, contraste e teclado.</li><li>Peça revisão de um colega: ele deve localizar três regras sem sua ajuda e apontar a fonte de informação de uma delas. No estudo individual, feche as fontes, sorteie três regras do documento e faça a mesma rastreabilidade apenas com P-10.</li><li>Exporte PDF, abra separadamente, confira impressão e coloque em <code>30_Publicado</code> somente as versões marcadas como aprovadas em P-03.</li><li>Complete P-10 e relacione-o a P-03.</li></ol></div>
-      <div class="check-card"><strong>Checklist de aceite</strong><ul data-checklist><li><label><input type="checkbox"> finalidade, público e critérios registrados;</label></li><li><label><input type="checkbox"> arquivo-fonte preservado e versões rastreáveis;</label></li><li><label><input type="checkbox"> estrutura por estilos e página controlada;</label></li><li><label><input type="checkbox"> tabelas/imagens têm função e origem identificada;</label></li><li><label><input type="checkbox"> revisão e acessibilidade verificadas;</label></li><li><label><input type="checkbox"> ODT e PDF abertos, comparados e registrados.</label></li></ul><p class="check-progress" data-check-progress></p></div>
-      <div class="artifact-card"><strong>P-10 consolidado</strong><span>modelo reutilizável, critérios do documento, fontes da informação, histórico de revisão, verificação de acessibilidade e prova de exportação.</span></div>
-      <div class="bridge-box"><strong>Continuidade</strong><p>O documento explica a Feira, mas Renato ainda precisa responder quanto será gasto e onde estão os desvios. Essa pergunta não cabe em parágrafos: o próximo módulo começa com os dados.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quinta-feira · nova solicitação da Feira</span><h2>As equipes expositoras precisam saber montagem, materiais permitidos e horário de retirada.</h2><p>O público mudou. Lia fornece orientações do laboratório, Renato acrescenta regras de compras e Paulo aprova o texto. Trocar apenas o título da programação não resolveria.</p></div>
+      <h3>Missão</h3>
+      <div class="task-box"><ol>
+        <li>Baixe as <a href="../downloads/informatica-produtividade/modulo-02/fontes-guia-expositor.zip" download>fontes do Guia do Expositor</a>, preserve o ZIP em <code>00_Entrada</code> e extraia uma cópia em <code>10_Em_trabalho</code>.</li>
+        <li>Confira os quatro itens recebidos antes de editar.</li>
+        <li>No <code>CONTROLE_DA_FEIRA.txt</code>, atualize [P-00] com o novo entregável e abra um novo bloco em <strong>[P-10] Documento — Guia do Expositor</strong>.</li>
+        <li>Crie o ODT de trabalho, defina estrutura antes de aparência e aplique estilos, página A4, tabela somente quando houver relação tabular e imagem apenas quando resolver uma necessidade.</li>
+        <li>Registre fontes importantes, revise com alterações/comentários e faça a verificação de acessibilidade.</li>
+        <li>Exporte PDF, abra separadamente e confira impressão.</li>
+        <li>Coloque em <code>30_Publicado</code> somente a versão aprovada e identifique essa aprovação em <strong>[P-03] Versões</strong>.</li>
+      </ol></div>
+      <div class="check-card"><strong>Checklist de aceite</strong><ul data-checklist>
+        <li><label><input type="checkbox"> público e finalidade estão claros;</label></li>
+        <li><label><input type="checkbox"> estrutura e estilos funcionam no Navegador;</label></li>
+        <li><label><input type="checkbox"> tabela/imagem têm função e fonte;</label></li>
+        <li><label><input type="checkbox"> revisão e acessibilidade foram testadas;</label></li>
+        <li><label><input type="checkbox"> ODT e PDF foram abertos e comparados.</label></li>
+      </ul><p class="check-progress" data-check-progress></p></div>
+      <div class="bridge-box"><strong>Continuidade</strong><p>O documento orienta pessoas. Agora Renato precisa responder perguntas que dependem de dados, cálculos e comparações. Isso leva à planilha.</p></div>`
   }
 ]);
