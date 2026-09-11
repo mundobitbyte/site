@@ -115,8 +115,14 @@ document.addEventListener('DOMContentLoaded', function(){
       history.replaceState(null, '', hash);
     }
 
+    const irDiretoAoTopico = updateUrl || location.hash === hash;
     closeDrawer();
-    window.scrollTo(0, 0);
+
+    if(irDiretoAoTopico){
+      requestAnimationFrame(() => panel.scrollIntoView({ block: 'start' }));
+    }else{
+      window.scrollTo(0, 0);
+    }
   }
 
   links.forEach(link => {
