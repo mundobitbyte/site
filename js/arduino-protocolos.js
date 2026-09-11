@@ -138,8 +138,38 @@ document.addEventListener('DOMContentLoaded', manterModuloAtivoVisivel);
 window.addEventListener('pageshow', manterModuloAtivoVisivel);
 window.addEventListener('resize', manterModuloAtivoVisivel);
 
-(() => {
-  const script = document.createElement('script');
-  script.src = '../js/arduino-circuitos-visuais.js?v=20260910-1';
-  document.head.appendChild(script);
-})();
+function inserirCircuitoDoBloco8(alvo, titulo, src, alt, legenda){
+  const secao = document.getElementById(alvo);
+  if(!secao || secao.querySelector(`[data-mbb-circuito="${alvo}"]`)) return;
+
+  const cabecalho = secao.querySelector('.projectHead');
+  if(!cabecalho) return;
+
+  cabecalho.insertAdjacentHTML('afterend', `
+    <div class="circuitPanel" data-mbb-circuito="${alvo}">
+      <h3>${titulo}</h3>
+      <figure class="circuitFigure">
+        <img class="circuitPhoto" src="${src}" alt="${alt}" loading="lazy" decoding="async"/>
+        <figcaption>${legenda}</figcaption>
+      </figure>
+    </div>
+  `);
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  inserirCircuitoDoBloco8(
+    'b8-1',
+    'Circuito do experimento RTOS',
+    '../img/arduino/esp32-led-gpio23.svg',
+    'Diagrama técnico do ESP32 com GPIO 23 ligado a resistor de 220 ohms, LED e GND para o experimento com tarefas FreeRTOS.',
+    'Reutilize o mesmo circuito-base do Bloco 6. Nesta etapa, a novidade está na organização das tarefas pelo RTOS, não na eletrônica.'
+  );
+
+  inserirCircuitoDoBloco8(
+    'b8-2',
+    'Referência de ligação I2C',
+    '../img/arduino/esp32-lcd-i2c-sinais.svg',
+    'Diagrama técnico dos sinais I2C entre ESP32 e LCD 16x2 com backpack: SDA no GPIO 21, SCL no GPIO 22 e GND comum; VCC depende da verificação do módulo.',
+    'SDA → GPIO 21, SCL → GPIO 22 e GND comum. Confirme a alimentação e os pull-ups do backpack antes da ligação. Se SDA/SCL forem puxados a 5 V, use adaptação de nível.'
+  );
+});
