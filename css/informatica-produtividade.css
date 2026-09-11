@@ -34,7 +34,7 @@ a:hover { color: var(--primary-dark); }
 
 .portal-main { width: min(1160px, calc(100% - 32px)); margin: 0 auto; padding: 36px 0 48px; }
 .portal-heading { position: relative; overflow: hidden; padding: 28px 30px; border: 1px solid #bfd1d6; border-radius: 20px; background: linear-gradient(135deg, #fff 0%, #f3fbfb 64%, #fff6df 100%); box-shadow: var(--shadow); }
-.portal-heading::after { content: "P-00  P-01  P-02"; position: absolute; right: 22px; bottom: 15px; color: rgba(21,107,118,.10); font-size: clamp(28px, 5vw, 62px); font-weight: 900; letter-spacing: -.08em; pointer-events: none; }
+.portal-heading::after { content: "MbB"; position: absolute; right: 22px; bottom: 15px; color: rgba(21,107,118,.10); font-size: clamp(28px, 5vw, 62px); font-weight: 900; letter-spacing: -.08em; pointer-events: none; }
 .eyebrow, .unit-name { display: inline-block; color: var(--primary-dark); font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
 .portal-heading h1 { position: relative; z-index: 1; max-width: 850px; margin: 7px 0 10px; color: var(--primary-dark); font-size: clamp(1.75rem, 3.6vw, 3rem); line-height: 1.08; letter-spacing: -.035em; }
 .portal-heading p { position: relative; z-index: 1; max-width: 780px; margin: 0; color: #314b55; }
