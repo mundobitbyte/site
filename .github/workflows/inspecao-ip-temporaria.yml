@@ -4,12 +4,49 @@ on:
     branches: [piloto-pedagogico-informatica-produtividade]
     paths: ['.github/workflows/inspecao-ip-temporaria.yml']
 
+permissions:
+  contents: write
+
 jobs:
-  inspect:
+  finalize:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validar JavaScript da area
+      - name: Aplicar ajustes finais auditados
+        shell: python
+        run: |
+          from pathlib import Path
+
+          def replace_once(path, old, new):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: esperado 1, encontrado {count}: {old[:80]}')
+              p.write_text(text.replace(old, new), encoding='utf-8')
+
+          m3 = 'js/informatica-produtividade/modulo-03.js'
+          replace_once(m3, 'Na planilha aparecem estados como “OK”, “Aprov.” e “Aprovado”.', 'Na aba <strong>Orcamento</strong> aparecem estados como “Aprov.”, “Aprovado” e “Pendente”.')
+          replace_once(m3, 'Enquanto o campo aceitar qualquer texto, filtros e contagens continuarão tratando estados equivalentes como valores diferentes.', 'Enquanto essa coluna aceitar qualquer texto, filtros e contagens continuarão tratando estados equivalentes como valores diferentes.')
+          replace_once(m3, '<li>Selecione as células de entrada da coluna Status.</li>', '<li>Na aba <strong>Orcamento</strong>, selecione as células de entrada da coluna <strong>Status</strong> (H2:H9).</li>')
+          replace_once(m3, '<li>Tente digitar “OK” e observe o bloqueio.</li>', '<li>Tente digitar “Aprov.” e observe o bloqueio.</li>')
+
+          m4 = 'js/informatica-produtividade/modulo-04.js'
+          replace_once(m4, '“32 projetos: 12 no Bloco A, 10 no Bloco B, 6 no pátio e 4 em outros espaços”', '“18 de setembro: visite os projetos da Escola Horizonte”')
+          replace_once(m4, 'Use o mapa para “onde visitar?” e um gráfico auditado para “como os projetos se distribuem?”.', 'Use o mapa para “onde visitar?” e só use gráfico quando houver uma comparação pública, útil e rastreável.')
+          replace_once(m4, '<h2>O gráfico do arquivo distribui 32 projetos, mas não informa a fonte nem a data dos dados.</h2><p>Um total aparentemente correto não prova que a versão seja a aprovada.</p>', '<h2>O gráfico embutido mostra 12 projetos no Bloco A, 10 no Bloco B, 6 no pátio e 4 em outros espaços.</h2><p>Os números existem dentro do ODP, mas o material do curso não traz uma fonte externa que comprove essa distribuição. Sem rastreabilidade, o gráfico não pode ser tratado como evidência aprovada.</p>')
+          replace_once(m4, '<li>Use [P-20] para localizar a planilha aprovada.</li><li>Confira filtros, intervalo, total e data.</li><li>Leve apenas o gráfico que sustenta a mensagem do slide.</li><li>Remova ruído visual sem alterar escala ou dados.</li><li>Escreva título-mensagem somente se os dados sustentarem a conclusão.</li><li>No rodapé, registre fonte e versão/data.</li><li>Compare duas categorias do slide com a planilha.</li>', '<li>Abra o gráfico embutido e confirme os valores 12, 10, 6 e 4.</li><li>Procure no [P-20] e nas fontes disponíveis uma origem que comprove essa distribuição. Como ela não existe, marque o gráfico como <strong>não validado</strong>.</li><li>Remova o gráfico não rastreável da cópia de trabalho; não invente fonte nem data.</li><li>Abra a aba <strong>Participantes</strong> da planilha auditada do Módulo 3 e confira: 96 expositores, 8 monitores e 180 visitantes estimados, com a origem registrada na coluna Fonte.</li><li>Se essa comparação ajudar a mensagem pública, crie um novo gráfico simples com esses três valores; se não ajudar, deixe o slide sem gráfico.</li><li>Use um título que respeite a natureza dos dados e registre no rodapé a planilha, a aba e a versão/data usadas.</li><li>Compare pelo menos dois valores do slide com a planilha antes de concluir.</li>')
+          replace_once(m4, '<strong>Teste</strong><p>uma pessoa deve conseguir dizer o que está sendo comparado, em qual unidade e de quando são os dados.</p>', '<strong>Teste</strong><p>o gráfico sem fonte foi retirado, e qualquer novo gráfico usado pode ser conferido na planilha. Decidir não usar gráfico também é correto quando ele não melhora a mensagem.</p>')
+
+          css = 'css/informatica-produtividade.css'
+          replace_once(css, 'content: "P-00  P-01  P-02";', 'content: "MbB";')
+
+          page = 'pages/informatica-produtividade.html'
+          replace_once(page, '../css/informatica-produtividade.css?v=3', '../css/informatica-produtividade.css?v=4')
+          for filename in ['modulo-01.js','modulo-02.js','modulo-03.js','modulo-04.js','modulo-05.js','projeto-integrador.js']:
+              replace_once(page, filename + '?v=1', filename + '?v=2')
+
+      - name: Validar JavaScript
         run: |
           node --check js/informatica-produtividade.js
           node --check js/informatica-produtividade/modulo-01.js
@@ -18,17 +55,32 @@ jobs:
           node --check js/informatica-produtividade/modulo-04.js
           node --check js/informatica-produtividade/modulo-05.js
           node --check js/informatica-produtividade/projeto-integrador.js
-      - name: Montar pacote de inspeção
-        run: |
-          mkdir -p /tmp/site/pages /tmp/site/css /tmp/site/js/informatica-produtividade /tmp/site/downloads/informatica-produtividade
-          cp pages/informatica-produtividade.html /tmp/site/pages/
-          cp css/informatica-produtividade.css /tmp/site/css/
-          cp js/informatica-produtividade.js /tmp/site/js/
-          cp js/informatica-produtividade/*.js /tmp/site/js/informatica-produtividade/
-          cp -R downloads/informatica-produtividade/* /tmp/site/downloads/informatica-produtividade/
-          cp index.html /tmp/site/
-      - uses: actions/upload-artifact@v4
+
+      - name: Gravar arquivos validados na branch
+        uses: actions/github-script@v7
         with:
-          name: inspecao-ip
-          path: /tmp/site
-          retention-days: 1
+          script: |
+            const fs = require('fs');
+            const files = [
+              'js/informatica-produtividade/modulo-03.js',
+              'js/informatica-produtividade/modulo-04.js',
+              'css/informatica-produtividade.css',
+              'pages/informatica-produtividade.html'
+            ];
+            for (const path of files) {
+              const current = await github.rest.repos.getContent({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path,
+                ref: 'piloto-pedagogico-informatica-produtividade'
+              });
+              await github.rest.repos.createOrUpdateFileContents({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path,
+                branch: 'piloto-pedagogico-informatica-produtividade',
+                message: 'Ajusta inspeção final MbB: ' + path,
+                sha: current.data.sha,
+                content: fs.readFileSync(path).toString('base64')
+              });
+            }
