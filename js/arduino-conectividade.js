@@ -176,3 +176,13 @@ document.addEventListener('DOMContentLoaded', function(){
     </div>
   `);
 });
+
+function carregarContextualizacaoMbb(){
+  if(document.querySelector('script[data-mbb-contextualizacao-loader]')) return;
+  const script = document.createElement('script');
+  script.src = '../js/arduino-contextualizacao-mbb.js?v=20260911-1';
+  script.dataset.mbbContextualizacaoLoader = '1';
+  document.head.appendChild(script);
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', carregarContextualizacaoMbb);
+else carregarContextualizacaoMbb();
