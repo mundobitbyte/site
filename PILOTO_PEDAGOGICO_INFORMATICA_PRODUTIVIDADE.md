@@ -10,7 +10,13 @@ A aula passa a seguir, de forma visível para o iniciante:
 
 **Situação → o que aconteceu → o que vamos aprender → faça comigo → confira o resultado → entenda por quê → registre → próximo problema.**
 
-O aluno não recebe todos os conceitos profissionais de uma vez. O termo técnico aparece **depois** que sua necessidade já ficou clara.
+O conteúdo profissional continua existindo. A diferença é que o aluno não precisa entender todos os termos antes de começar. Primeiro ele percebe a necessidade; depois aprende o conceito que resolve aquela necessidade.
+
+## Como o aluno entra na história
+
+Ao longo destas atividades, considere que **você está ajudando Lia**, monitora do laboratório da Escola Horizonte, a organizar os materiais da Feira de Projetos.
+
+Você não está apenas observando o que os personagens fazem. **As decisões e os registros serão feitos por você**, com a orientação do curso.
 
 ---
 
@@ -20,25 +26,31 @@ O aluno não recebe todos os conceitos profissionais de uma vez. O termo técnic
 
 Faltam dez dias para a Feira de Projetos.
 
-Marina recebeu inscrições dos alunos. Paulo enviou algumas correções. Lia juntou cartaz, cronograma, orçamento e outros arquivos em uma pasta.
+Marina, da secretaria, recebeu inscrições dos alunos no computador **SEC-03**. Paulo, da coordenação, enviou correções pelo mensageiro. Lia reuniu cartaz, cronograma, orçamento e outros materiais no computador do laboratório, **LAB-04**.
 
-O problema é que agora ninguém consegue responder com segurança a uma pergunta simples:
+Os arquivos vieram de lugares diferentes e em momentos diferentes. Agora estão juntos em uma pasta, com nomes como `novo`, `final` e `final_agora`.
+
+O problema é que ninguém consegue responder com segurança a uma pergunta simples:
 
 **quais arquivos estão realmente prontos?**
 
-Existem nomes como `novo`, `final` e `final_agora`, mas isso não garante que o conteúdo esteja correto ou aprovado.
+Um nome convincente não é o mesmo que uma aprovação.
 
 ## O problema de hoje
 
-Imagine que essa pasta chegou até você e alguém disse:
+Lia recebe a seguinte orientação:
 
-**“Organize isso para a Feira.”**
+**“Organize essa pasta para a Feira.”**
 
-A primeira vontade pode ser apagar arquivos repetidos, escolher o mais novo ou confiar naquele que tem `final` no nome.
+Você vai ajudá-la.
+
+A primeira vontade pode ser apagar arquivos repetidos, escolher o mais recente ou confiar naquele que tem `final` no nome.
 
 Ainda não faça isso.
 
-Antes de organizar, precisamos descobrir **o que realmente existe dentro da pasta**.
+Se apagarmos ou substituirmos alguma coisa agora, podemos perder justamente a informação de que precisaremos depois para entender o que aconteceu.
+
+Antes de organizar, precisamos descobrir **o que realmente chegou**.
 
 ## O que você vai aprender
 
@@ -48,12 +60,14 @@ Ao final, você deverá conseguir:
 
 - preservar o material original;
 - trabalhar em uma cópia;
-- identificar os arquivos recebidos;
-- perceber divergências sem tentar corrigi-las antes da hora.
+- identificar o que foi recebido;
+- anotar diferenças e dúvidas sem tentar resolvê-las antes da hora.
+
+Não precisamos descobrir hoje qual arquivo é o correto. O objetivo desta primeira aula é mais simples: **observar sem estragar as pistas**.
 
 ## Primeiro, pense
 
-Você recebeu uma pasta confusa. Qual destas ações é mais segura?
+A pasta está confusa. Qual destas ações é mais segura?
 
 - apagar os arquivos que parecem repetidos;
 - escolher o arquivo que possui `final` no nome;
@@ -63,44 +77,52 @@ A terceira opção é a mais segura.
 
 **Por quê?**
 
-Porque, neste momento, os nomes são apenas pistas. Ainda não sabemos qual arquivo foi aprovado.
+Porque, neste momento, os nomes são apenas pistas. Ainda não sabemos quem criou cada versão, o que mudou ou qual delas foi aprovada.
 
 ## Faça comigo — parte 1: preserve o original
 
+O pacote da atividade vem em um arquivo ZIP. Pense nele como a **embalagem em que o material chegou**. Queremos manter essa embalagem intacta e trabalhar em uma cópia aberta dela.
+
 1. Baixe o pacote didático da Feira de Projetos.
 2. Localize o arquivo ZIP na pasta **Downloads**.
-3. Não altere o ZIP.
+3. Não renomeie, apague nem altere o conteúdo do ZIP.
 4. No Windows, clique com o botão direito sobre ele e escolha **Extrair Tudo**. Em outro sistema, use a opção equivalente.
-5. A partir daqui, trabalhe somente na pasta extraída.
+5. A extração criará uma pasta com os arquivos do pacote. É nessa pasta que faremos a investigação.
 
 ### Antes de continuar, confira
 
-Você deve ter agora:
+Você deve ter agora duas coisas:
 
 - o ZIP original, intacto;
-- uma pasta extraída, que será usada para a investigação.
+- uma pasta extraída, que será usada para o trabalho.
 
-Se você possui apenas a pasta extraída e apagou o ZIP, pare e baixe novamente o pacote.
+Se você possui apenas a pasta extraída e apagou o ZIP, baixe novamente o pacote antes de continuar.
 
-**A ideia é simples:** sempre precisamos ter uma forma de voltar ao material exatamente como ele chegou.
+**A ideia é simples:** se alguma coisa der errado durante a atividade, precisamos conseguir voltar ao material exatamente como ele chegou.
 
 ## Faça comigo — parte 2: descubra o que chegou
 
 Abra primeiro o arquivo `LEIA-ME.txt`.
 
-Depois observe os demais arquivos sem alterar nada.
+Ele serve como ponto de partida para entender o pacote.
 
-Conte quantos itens existem e leia seus nomes.
+Depois, observe os nomes dos demais arquivos sem renomear, mover ou excluir nada.
+
+Conte quantos itens existem.
 
 Você deve encontrar **oito itens**. Entre eles há:
 
 - dois arquivos de inscrições;
-- um cronograma com uma observação ainda não confirmada;
-- um orçamento cuja aprovação não está clara;
+- um cronograma;
+- um orçamento;
 - um modelo de autorização;
 - um cartaz;
 - um recado;
 - o próprio `LEIA-ME.txt`.
+
+Nesse primeiro contato, duas coisas já chamam a atenção: existem **duas versões das inscrições** e alguns nomes tentam passar uma ideia de conclusão, como `novo` e `final`.
+
+Isso é suficiente para sabermos que a pasta precisa de investigação. Ainda não é suficiente para escolher qual arquivo usar.
 
 ### E se aparecer algo diferente?
 
@@ -108,19 +130,25 @@ Não tente “consertar” a pasta.
 
 Confira primeiro se a extração terminou corretamente. Se necessário, extraia novamente ou baixe outra cópia do pacote.
 
-O navegador também pode renomear o ZIP para algo como `(1)`. Isso não significa que o conteúdo interno mudou.
+O navegador também pode renomear o ZIP para algo como `(1)` quando o mesmo arquivo já foi baixado antes. Isso não significa, por si só, que o conteúdo interno mudou.
+
+Se houver uma diferença que você não consegue explicar, **anote a diferença e preserve o material**. Vamos aprender a investigá-la nas próximas aulas.
 
 ## Agora ficou claro por que precisamos registrar
 
 Até aqui você apenas observou a pasta.
 
-Mas, se fechar tudo agora, amanhã talvez não se lembre do que encontrou.
+Imagine, porém, que a aula termine agora e você só volte a esse trabalho amanhã. Como lembrar exatamente o que encontrou sem abrir tudo novamente e confiar na memória?
 
-Por isso vamos criar um pequeno registro.
+Precisamos de uma pequena anotação do estado recebido.
 
-O nome usado no curso será **P-01 — Inventário de arquivos**.
+No curso, esse registro terá o nome:
 
-Não se preocupe com o código `P-01`. Ele é apenas uma forma curta de identificar esse registro durante o curso.
+**P-01 — Inventário de arquivos.**
+
+Aqui, **inventário** significa apenas uma lista organizada do que chegou e das dúvidas percebidas.
+
+Não se preocupe com o código `P-01`. Ele é somente uma forma curta de localizar esse registro durante o projeto.
 
 ## Faça comigo — parte 3: crie o primeiro registro
 
@@ -128,19 +156,42 @@ Abra um editor de texto simples e crie o arquivo:
 
 `P-01_inventario.txt`
 
-Salve-o ao lado da pasta extraída, nunca dentro do ZIP.
+Salve-o **fora da pasta extraída**, no mesmo local em que você consegue ver a pasta de trabalho e o ZIP original. Assim, o registro não se mistura com os arquivos que estamos investigando.
 
 Por enquanto, escreva somente:
 
-- origem: pacote didático da Feira;
-- data e hora da observação;
-- quantidade de itens: 8;
-- diferenças ou dúvidas percebidas;
-- decisão tomada: preservar o ZIP e investigar usando a cópia extraída.
+```text
+P-01 — INVENTÁRIO
+
+Origem: pacote didático da Feira de Projetos
+Data e hora da observação: [preencha]
+Quantidade de itens: 8
+
+Diferenças ou dúvidas percebidas:
+- existem dois arquivos de inscrições
+- há nomes como “novo” e “final” que ainda não provam aprovação
+
+Decisão tomada:
+- preservar o ZIP original
+- investigar usando a pasta extraída
+```
+
+Se você percebeu outra diferença, pode acrescentá-la.
 
 Você **não precisa descobrir a causa dos problemas ainda**.
 
 Nesta aula, estamos apenas descrevendo o estado em que o material chegou.
+
+## Confira se deu certo
+
+Antes de encerrar, veja se você consegue responder “sim” às quatro perguntas:
+
+1. O ZIP original continua intacto?
+2. Você está trabalhando em uma pasta extraída?
+3. Encontrou oito itens?
+4. Criou o `P-01_inventario.txt` sem alterar os arquivos recebidos?
+
+Se alguma resposta for “não”, volte apenas à etapa correspondente. Não é necessário recomeçar tudo.
 
 ## Por que fizemos tudo isso?
 
@@ -152,7 +203,11 @@ e
 
 **“conferi o que recebi e ainda preciso confirmar qual é o arquivo certo”.**
 
-A segunda frase parece menos definitiva, mas é muito mais profissional.
+A segunda frase parece menos definitiva, mas é muito mais segura e profissional.
+
+Você ainda não resolveu a confusão da pasta — e isso é esperado.
+
+O que mudou foi outra coisa: **agora a equipe consegue investigar sem perder o ponto de partida**.
 
 ## Missão concluída
 
@@ -174,7 +229,9 @@ Mas ainda falta responder outra pergunta:
 
 ## Segunda-feira, 9h00 — reunião de alinhamento
 
-Depois de olhar a pasta, Lia pergunta a Paulo:
+Na aula anterior, você e Lia descobriram que a pasta da Feira contém versões diferentes e informações ainda não confirmadas.
+
+Antes de continuar mexendo nos arquivos, Lia faz a Paulo uma pergunta simples:
 
 **“O que exatamente precisamos entregar?”**
 
@@ -184,17 +241,23 @@ A resposta inicial é:
 
 Parece uma instrução, mas ainda é vaga demais.
 
-Quando saberemos que “tudo” está realmente organizado?
+Imagine terminar horas de trabalho e, no final, ouvir:
+
+**“Não era isso que eu precisava.”**
+
+É justamente esse problema que vamos evitar.
 
 ## O problema de hoje
 
-Antes de escolher programa, criar pasta ou formatar documento, precisamos entender o pedido.
+Antes de escolher programa, criar novas pastas ou formatar documentos, precisamos entender o pedido.
 
-Paulo então esclarece que, nesta etapa, são necessárias três entregas:
+Paulo então explica que, nesta etapa, são necessárias três entregas:
 
-1. uma lista pública dos projetos;
-2. um cronograma para revisão;
-3. um pacote interno com os arquivos usados pela equipe.
+1. **uma lista pública dos projetos** — será vista por famílias e visitantes e deve mostrar somente as informações necessárias;
+2. **um cronograma para revisão** — ainda será conferido antes de virar informação oficial;
+3. **um pacote interno** — ficará com a equipe e reunirá os arquivos usados para produzir e conferir as entregas.
+
+Esses arquivos usados como origem do trabalho serão chamados mais adiante de **arquivos-fonte**. Por enquanto, basta pensar neles como os arquivos dos quais as entregas vieram.
 
 Agora já temos algo muito melhor do que “organizem tudo”.
 
@@ -205,27 +268,30 @@ Nesta aula, você vai aprender a transformar um pedido vago em algo que pode ser
 Ao final, você deverá saber responder:
 
 - o que precisa ser entregue;
-- para quem;
-- quem é responsável;
+- para quem cada entrega será feita;
+- quem responde por cada informação;
 - o que ainda está pendente;
-- como saber se a tarefa terminou corretamente.
+- como perceber se o trabalho terminou corretamente.
 
 ## Vamos analisar o pedido juntos
 
-Paulo informa também que:
+Paulo também esclarece quem pode confirmar cada parte:
 
-- Marina responde pelas inscrições;
-- Paulo aprova o horário;
-- Lia organiza os arquivos;
-- a lista pública não pode mostrar observações internas nem dados pessoais.
+- **Marina**, da secretaria, responde pelas inscrições;
+- **Paulo**, da coordenação, confirma o horário oficial;
+- **Lia**, com a sua ajuda, organiza os arquivos e prepara os materiais.
 
-Veja como isso muda o trabalho.
+A lista de projetos será pública. Isso muda o que pode aparecer nela.
 
-Se a lista é pública, não podemos simplesmente copiar tudo o que existe nos arquivos internos.
+Uma anotação interna pode ser útil para Marina, mas inadequada para uma família que apenas quer saber quais projetos estarão na Feira.
 
-O público e a finalidade mudam o que pode ser entregue.
+Por isso a lista pública não pode mostrar dados pessoais nem observações internas.
 
-## Três frases que parecem claras — mas não são
+**Perceba a consequência:** entender para quem estamos produzindo o material muda o próprio conteúdo da entrega.
+
+## Três frases que parecem claras — mas ainda deixam dúvidas
+
+Durante a organização, aparecem instruções como estas.
 
 ### “Faça a lista da Feira.”
 
@@ -233,21 +299,27 @@ Ainda precisamos perguntar:
 
 **lista para quem e contendo quais informações?**
 
+No nosso caso, a resposta começa a ficar clara: será pública e deve conter somente equipe e projeto confirmados, sem dados pessoais ou notas internas.
+
 ### “Use o cronograma novo.”
 
 Ainda precisamos perguntar:
 
 **quem confirmou que esse horário é realmente o aprovado?**
 
-### “Compartilhe com todos.”
+Um nome como `NOVO` não responde a essa pergunta.
 
-Ainda precisamos perguntar:
+### “Depois compartilhe com todos.”
 
-**quem precisa visualizar, comentar ou editar?**
+Mesmo essa frase precisa ser entendida antes da execução:
 
-Perceba o padrão: antes de executar uma ordem vaga, fazemos perguntas que tornam o resultado verificável.
+**quem precisa apenas ver, quem precisa comentar e quem realmente precisa editar?**
 
-## Um teste rápido
+Essa decisão será aprofundada mais adiante. Por enquanto, guarde a ideia principal: **“todos” nem sempre precisam do mesmo tipo de acesso**.
+
+O padrão é o mesmo nos três casos: antes de executar uma ordem vaga, fazemos perguntas que tornam o resultado verificável.
+
+## Um teste rápido com o cronograma
 
 Existe um arquivo chamado `cronograma NOVO.txt`.
 
@@ -259,13 +331,27 @@ Podemos publicar 8h30 como horário oficial?
 
 **Ainda não.**
 
-A frase indica uma possibilidade, não uma aprovação.
+A palavra “acho” indica uma possibilidade, não uma confirmação.
 
-Então o horário deve continuar marcado como **pendente** até Paulo confirmar.
+Como Paulo é o responsável por aprovar o horário, esse dado deve continuar marcado como **pendente** até que exista uma confirmação dele.
+
+Perceba que não estamos ignorando a informação das 8h30. Estamos apenas evitando transformá-la em certeza antes da hora.
+
+## Há outra pendência que não pode aparecer do nada
+
+Entre os materiais da pasta existe também o orçamento `orcamento_final_agora.csv`.
+
+Nele aparece o fornecedor **Gráfica Bairro**, mas a aprovação ainda não está informada.
+
+O nome `final_agora` pode parecer convincente, mas não resolve a dúvida.
+
+Portanto, essa aprovação também precisa permanecer como pendência até ser confirmada.
 
 ## Agora faz sentido criar o P-00
 
-Precisamos de um lugar para registrar o pedido da Feira e não depender da memória.
+Se deixarmos todas essas informações apenas na conversa, amanhã poderemos esquecer o que foi combinado, quem deveria confirmar cada ponto ou o que ainda estava pendente.
+
+Precisamos de um lugar para registrar **o pedido da Feira**.
 
 Esse registro será chamado de:
 
@@ -291,9 +377,9 @@ P-00 — PEDIDO E CRITÉRIOS
 Projeto: Feira de Projetos da Escola Horizonte
 
 Entregas desta etapa:
-1. Lista pública dos projetos
-2. Cronograma para revisão
-3. Pacote interno com as fontes
+1. Lista pública — somente inscrições confirmadas; equipe e projeto; sem dados pessoais ou notas internas
+2. Cronograma — para revisão; horário de abertura ainda pendente
+3. Pacote interno — arquivos de origem preservados e inventário
 
 Responsáveis:
 Marina — inscrições
@@ -302,17 +388,19 @@ Lia — organização dos arquivos
 
 Públicos:
 Lista pública — famílias e visitantes
+Cronograma em revisão — coordenação/equipe responsável
 Pacote interno — equipe da Escola Horizonte
 
-O que não pode aparecer na lista pública:
-dados pessoais e observações internas
-
 Pendências:
-horário de abertura
-aprovação da Gráfica Bairro
+- horário de abertura
+- aprovação relacionada à Gráfica Bairro
 
 Como saber que terminou:
-fontes identificadas, conteúdo conferido, formato adequado e acesso correto
+- a origem de cada informação foi identificada
+- o conteúdo foi conferido
+- o formato é adequado ao uso
+- cada pessoa recebe somente o acesso de que precisa
+- o trabalho pode ser recuperado se algo der errado
 ```
 
 Não é necessário preencher aquilo que ainda não foi confirmado.
@@ -323,45 +411,84 @@ Quando uma informação estiver faltando, escreva **pendente** em vez de inventa
 
 Feche os arquivos originais por alguns instantes e leia apenas o `P-00`.
 
-Tente responder:
+Tente responder com suas próprias palavras:
 
 1. O que precisa ser entregue?
 2. Quem é responsável por cada parte?
-3. Qual informação ainda não pode ser publicada?
-4. O que falta confirmar?
+3. O que pode aparecer na lista pública?
+4. Qual informação ainda não pode ser publicada como oficial?
+5. O que continua dependendo de confirmação?
 
 Se o `P-00` permitir responder a essas perguntas, o registro está cumprindo sua função.
 
+Se alguma resposta continuar confusa, volte ao trecho correspondente e ajuste o P-00. O objetivo não é preencher um modelo por obrigação; é criar um registro que realmente ajude a equipe a trabalhar.
+
 ## Um termo profissional que agora já faz sentido
 
-No trabalho profissional, costuma-se chamar de **critério de aceite** aquilo que define quando uma entrega pode ser considerada concluída.
+Você acabou de definir como reconhecer que uma entrega está pronta.
 
-Você acabou de usar esse conceito antes mesmo de precisar decorar o nome.
+No trabalho profissional, costuma-se chamar isso de **critério de aceite**.
+
+Ou seja:
+
+**critério de aceite = condição que precisa ser atendida para considerarmos a entrega concluída.**
+
+Você usou o conceito antes de precisar decorar o nome.
 
 ## Por que fizemos isso antes de abrir um programa?
 
 Porque ferramenta nenhuma consegue corrigir um pedido mal entendido.
 
-Word, Writer, Excel, Calc ou qualquer outro programa só ajudam depois que sabemos:
+Writer, Word, Calc, Excel ou qualquer outro programa só ajudam depois que sabemos:
 
 **o que produzir, para quem e com quais limites.**
 
+O programa será a ferramenta. O pedido é que dá direção ao trabalho.
+
 ## Missão concluída
 
-Agora a equipe sabe o que precisa entregar.
+Na primeira aula, você preservou o que chegou.
 
-Mas ainda existe um problema:
+Nesta, transformou uma orientação vaga em um pedido que pode ser conferido.
 
-há vários arquivos na pasta e não sabemos qual deles sustenta cada entrega.
+Agora a equipe sabe **o que precisa entregar**, **quem responde por cada informação** e **o que ainda não pode ser tratado como confirmado**.
+
+Mas existe um novo problema:
+
+há vários arquivos na pasta e ainda não sabemos qual deles sustenta cada entrega.
 
 Na próxima aula vamos comparar os arquivos com calma e descobrir o que cada um realmente contém — sem confiar apenas no nome.
 
 ---
 
+# Revisão pelo Modo MbB — o que foi refinado
+
+## Perspectiva do iniciante
+
+- ficou explícito qual é o papel do aluno na história: ele ajuda Lia e executa as decisões;
+- ZIP, inventário, arquivos-fonte e critério de aceite passam a ser explicados quando se tornam necessários;
+- cada bloco deixa claro o que fazer, o que deve aparecer e quando voltar apenas à etapa que deu errado;
+- o aluno não precisa adivinhar onde salvar P-00 e P-01 nem por que esses registros existem.
+
+## Perspectiva pedagógica
+
+- a contextualização deixa de ser apenas abertura e passa a produzir consequências reais nas decisões seguintes;
+- o problema gera a necessidade do conceito antes da apresentação do termo técnico;
+- as transições entre observar, registrar, interpretar e decidir ficaram explícitas;
+- o grau de autonomia ainda é baixo de propósito nestas primeiras aulas: primeiro o curso faz junto; depois poderá retirar apoio gradualmente.
+
+## Perspectiva profissional
+
+- o rigor não foi reduzido;
+- continuam preservados o original, a cópia de trabalho, as pendências, os responsáveis, a privacidade, a autoridade da fonte, os critérios e a possibilidade de recuperação;
+- termos profissionais foram traduzidos, não eliminados;
+- a mesma lógica que será usada nos módulos seguintes começa de forma compreensível para quem nunca trabalhou assim.
+
 # O que foi preservado neste piloto
 
 - Escola Horizonte e Feira de Projetos;
-- personagens e responsabilidades;
+- Marina, Paulo e Lia com suas responsabilidades;
+- referências a SEC-03 e LAB-04 em contexto compreensível;
 - pacote didático e oito itens esperados;
 - preservação do ZIP e trabalho em cópia;
 - P-01 e seus campos essenciais;
@@ -369,11 +496,14 @@ Na próxima aula vamos comparar os arquivos com calma e descobrir o que cada um 
 - distinção entre hipótese e aprovação;
 - privacidade da lista pública;
 - responsáveis, entregas, pendências e critérios;
+- pendência associada à Gráfica Bairro;
 - progressão para a aula de inventário.
 
 # O que mudou
 
-- termos técnicos entram depois da necessidade concreta;
+- o aluno ganhou um papel claro dentro da narrativa;
+- pequenas lacunas de contexto foram fechadas antes de virar instrução;
+- termos técnicos entram depois da necessidade concreta e recebem tradução imediata;
 - procedimentos longos foram divididos em pequenas etapas;
 - cada ação informa o que o aluno deve enxergar ao terminar;
 - a narrativa conversa diretamente com quem está aprendendo;
