@@ -5,13 +5,21 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Uma planilha pode parecer organizada e ainda responder errado',
     objective: 'Diagnosticar uma planilha problemática preservando dados, fórmulas e sinais de erro.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Sexta-feira · 8h05 · reunião financeira</span><h2>Renato encontra dois totais diferentes para a Feira.</h2><p>Na planilha aberta em <strong>SEC-03</strong>, alguns valores incluem “R$” digitado, um total foi escrito manualmente e materiais aparecem duas vezes. Paulo precisa decidir compras hoje, mas cor e borda não garantem que os números estejam corretos.</p></div>
-      <section class="decision-box"><h3>Primeira decisão</h3><div class="choice-list" data-choice data-answer="c" data-explanation="Recalcular manualmente pode repetir o erro. A cópia preservada permite investigar estrutura, tipos e fórmulas."><label><input type="radio" name="d300" value="a"> apagar as linhas duplicadas;</label><label><input type="radio" name="d300" value="b"> substituir o total pelo valor esperado;</label><label><input type="radio" name="d300" value="c"> preservar a fonte, abrir uma cópia e identificar células de entrada, cálculo e resultado.</label><button class="action-button" type="button" data-check-choice>Conferir decisão</button><div class="choice-result" aria-live="polite"></div></div></section>
-      <div class="note-box"><strong>P-20 começa no diagnóstico</strong><p>Como Renato testará estrutura, cálculos e regras ao longo do módulo, crie o registro cumulativo <code>P-20_planilha.txt</code> em <code>10_Em_trabalho</code> usando um editor de texto simples. Neste primeiro momento, registre somente aba, campo ou célula, valor observado, tipo esperado, sintoma, evidência e decisão pendente; o dicionário e as validações serão acrescentados quando surgirem.</p></div>
-      <h3>Laboratório seguro</h3><div class="task-box"><strong>Ferramenta principal: LibreOffice Calc</strong><p>Retome a árvore do Módulo 1: preserve o recebido em <code>00_Entrada</code> e trabalhe na cópia em <code>10_Em_trabalho</code>.</p><ol><li>Baixe a <a href="../downloads/informatica-produtividade/modulo-03/dados-feira.ods" download>planilha de dados fictícios da Feira</a> para <code>00_Entrada</code>.</li><li>Copie para <code>10_Em_trabalho</code> e nomeie <code>2026-09-08_dados-feira_em-analise_v01.ods</code>; preserve o ODS recebido.</li><li>Abra a cópia no Calc. Na barra inferior, identifique as abas <strong>Inscricoes</strong>, <strong>Orcamento</strong>, <strong>Materiais</strong>, <strong>Cronograma</strong> e <strong>Participantes</strong>.</li><li>Clique em três células com aparência diferente e observe a barra de entrada: registre em P-20 se há valor, texto ou fórmula iniciada por <code>=</code>.</li><li>Use <strong>Exibir → Mostrar fórmulas</strong>, se disponível; depois volte à exibição normal.</li><li>Não classifique, exclua ou “corrija” ainda. Continue P-20 com os sintomas e endereços das células.</li></ol></div>
-      <div class="evidence-box"><strong>Resultado esperado</strong><p>Há cabeçalhos incompletos, datas/textos misturados, uma fórmula ausente, uma referência deslocada e uma entrada inválida preparada. Se as abas ou linhas divergirem, feche sem salvar e baixe novamente.</p></div>
-      <div class="artifact-card"><strong>P-20 iniciado</strong><span>Arquivo de texto cumulativo com os campos necessários ao diagnóstico; ele será ampliado nas próximas aulas e reutilizado no Projeto Integrador.</span></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>Antes de calcular, a equipe precisa decidir o que cada linha e cada coluna representam. Sem estrutura tabular, toda fórmula fica frágil.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Sexta-feira · 8h05 · reunião financeira</span><h2>Renato encontra dois totais diferentes para a Feira.</h2><p>Alguns valores incluem “R$” digitado, um total foi escrito manualmente e materiais aparecem de formas inconsistentes. Paulo precisa decidir compras, mas antes a equipe precisa descobrir o que a planilha realmente está calculando.</p></div>
+      <section class="decision-box"><h3>Primeira ação segura</h3><div class="choice-list" data-choice data-answer="c" data-explanation="A cópia preservada permite investigar estrutura, tipos e fórmulas sem apagar pistas."><label><input type="radio" name="d300" value="a"> apagar linhas que parecem duplicadas;</label><label><input type="radio" name="d300" value="b"> substituir o total pelo valor esperado;</label><label><input type="radio" name="d300" value="c"> preservar a fonte, abrir uma cópia e localizar entradas, cálculos e resultados.</label><button class="action-button" type="button" data-check-choice>Conferir decisão</button><div class="choice-result" aria-live="polite"></div></div></section>
+
+      <h3>Faça comigo · abra sem corrigir</h3>
+      <div class="task-box"><strong>Ferramenta principal: LibreOffice Calc</strong><ol>
+        <li>Baixe a <a href="../downloads/informatica-produtividade/modulo-03/dados-feira.ods" download>planilha de dados fictícios da Feira</a> para <code>00_Entrada</code>.</li>
+        <li>Copie para <code>10_Em_trabalho</code> como <code>2026-09-08_dados-feira_em-analise_v01.ods</code>.</li>
+        <li>Abra a cópia e identifique as abas <strong>Inscricoes</strong>, <strong>Orcamento</strong>, <strong>Materiais</strong>, <strong>Cronograma</strong> e <strong>Participantes</strong>.</li>
+        <li>Clique em células com aparências diferentes e observe a barra de entrada: número, texto ou fórmula iniciada por <code>=</code>.</li>
+        <li>Use <strong>Exibir → Mostrar fórmulas</strong> e depois volte à exibição normal.</li>
+        <li>Não exclua, classifique nem “conserte” nada ainda.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>O que você deve perceber</strong><p>há cabeçalhos incompletos, tipos misturados, uma fórmula ausente, uma referência deslocada e uma entrada inválida preparada.</p></div>
+      <p>No <code>CONTROLE_DA_FEIRA.txt</code>, crie <strong>[P-20] Planilha</strong> e anote somente: arquivo analisado, abas, sintomas encontrados e decisões ainda pendentes.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Antes de calcular, precisamos garantir que cada linha e cada coluna representam uma coisa só.</p></div>`
   },
   {
     id: 'planilhas-estrutura', number: '01', menuTitle: 'Uma linha, um registro',
@@ -19,12 +27,19 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Uma linha representa um registro; uma coluna, um campo',
     objective: 'Reestruturar dados para permitir cálculo, filtro e conferência sem ambiguidade.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Sexta-feira · 8h40 · aba Materiais</span><h2>“Cabos, extensões e adaptadores” foi colocado em uma única célula.</h2><p>Lia precisa saber a quantidade e o responsável por cada item. Uma célula com três materiais impede contar, filtrar e atribuir corretamente.</p></div>
-      <div class="visual-lab"><div class="visual-header"><span>Diagrama didático</span><h3>Estrutura que responde perguntas</h3></div><div class="table-anatomy"><span><b>Linha 1</b> cabeçalhos únicos</span><span><b>Cada linha</b> um material</span><span><b>Cada coluna</b> um atributo</span><span><b>ID</b> identifica sem depender da posição</span></div><p class="visual-question"><strong>Preveja:</strong> o que acontece com “responsável” quando três materiais dividem a mesma célula?</p></div>
-      <h3>Aplicar na aba Materiais</h3><div class="task-box"><ol><li>Salve <code>v01</code> como <code>v02.ods</code>.</li><li>Na aba <strong>Materiais</strong>, copie a tabela original para uma área temporária à direita; isso permite retorno.</li><li>Use os cabeçalhos: <code>ID_Material</code>, <code>Material</code>, <code>Categoria</code>, <code>Quantidade</code>, <code>Unidade</code>, <code>Responsavel</code>, <code>Status</code>.</li><li>Separe cada material em uma linha. Não deixe linhas vazias no meio e não mescle células.</li><li>Crie IDs como <code>MAT-001</code>, <code>MAT-002</code>. O ID não muda quando a tabela for classificada.</li><li>Compare quantidade de itens com a fonte e só então marque a área temporária como conferida; não a apague até a revisão.</li></ol></div>
-      <div class="evidence-box"><strong>Validação</strong><p>Selecione qualquer linha: ela deve descrever exatamente um material. Se uma coluna mistura quantidade com unidade (“10 caixas”), separe em duas colunas.</p></div>
-      <div class="note-box"><strong>Quando deixa de ser planilha?</strong><p>Se o trabalho exigir muitos usuários simultâneos, relações complexas entre várias entidades, regras transacionais, histórico rigoroso ou grande volume, a planilha começa a virar banco de dados improvisado. Registre esse limite em P-20; não o esconda com mais abas.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>A estrutura está pronta, mas “08/09”, “8 set” e texto que parece data podem se comportar de maneiras diferentes. O próximo passo é conferir tipos.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Sexta-feira · 8h40 · aba Materiais</span><h2>“Cabos, extensões e adaptadores” aparece em uma única célula.</h2><p>Lia precisa saber quantidade e responsável de cada item. Com três materiais misturados na mesma célula, não é possível filtrar ou atribuir corretamente.</p></div>
+      <div class="visual-lab"><div class="visual-header"><span>Estrutura tabular</span><h3>Dados que respondem perguntas</h3></div><div class="table-anatomy"><span><b>Linha 1</b> cabeçalhos</span><span><b>Cada linha</b> um material</span><span><b>Cada coluna</b> um atributo</span><span><b>ID</b> identificação estável</span></div></div>
+      <div class="task-box"><ol>
+        <li>Salve <code>v01</code> como <code>v02.ods</code>.</li>
+        <li>Na aba <strong>Materiais</strong>, copie a tabela original para uma área temporária à direita.</li>
+        <li>Use os cabeçalhos <code>ID_Material</code>, <code>Material</code>, <code>Categoria</code>, <code>Quantidade</code>, <code>Unidade</code>, <code>Responsavel</code> e <code>Status</code>.</li>
+        <li>Separe cada material em uma linha. Não deixe linhas vazias no meio e não mescle células.</li>
+        <li>Crie IDs como <code>MAT-001</code>, <code>MAT-002</code>.</li>
+        <li>Compare item por item com a área temporária antes de considerar a reorganização concluída.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>qualquer linha descreve exatamente um material e quantidade/unidade estão em colunas diferentes.</p></div>
+      <p>Em <strong>[P-20] Planilha</strong>, registre somente os campos definidos e a regra “uma linha = um material”.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>A estrutura está melhor, mas aparência de número ou data não garante que o Calc armazenou o tipo correto.</p></div>`
   },
   {
     id: 'planilhas-tipos', number: '02', menuTitle: 'Tipos de dados sem disfarce',
@@ -32,10 +47,19 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Formato muda a aparência; não conserta o tipo',
     objective: 'Distinguir valor armazenado de apresentação e corrigir entradas sem perder o original.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Sexta-feira · 9h25 · aba Orçamento</span><h2>Uma célula mostra “R$ 180,00”, mas a soma a ignora.</h2><p>Renato percebe que o símbolo foi digitado junto com o número. Pintar a célula como moeda não transforma texto em valor calculável.</p></div>
-      <h3>Testar antes de converter</h3><div class="task-box"><ol><li>Salve como <code>v03.ods</code>. Na aba <strong>Orcamento</strong>, clique em <code>E6</code>, custo de “Extensões”, e observe na barra de entrada que o símbolo foi digitado junto com o valor.</li><li>Em <code>L6</code>, digite <code>=ÉNÚMERO(E6)</code> (em interface inglesa, <code>=ISNUMBER(E6)</code>) e pressione Enter.</li><li>O resultado esperado é <strong>FALSO</strong>. Antes de corrigir, digite <code>Valor_original</code> em K1 e copie o conteúdo de E6 para K6.</li><li>Em E6, digite apenas <code>79,90</code> conforme a configuração regional. Depois use <strong>Formatar → Células → Números → Moeda</strong> e confira L6: agora deve retornar <strong>VERDADEIRO</strong>.</li><li>Para datas, digite uma data inequívoca conforme a configuração local e aplique formato de data; não misture “a confirmar” na mesma coluna.</li><li>Registre em P-20: campo, tipo esperado, valor original preservado, formato aplicado e tratamento de ausentes. Se o número não for reconhecido, use <strong>Ctrl+Z</strong> e confirme o separador decimal da configuração regional.</li></ol></div>
-      <div class="evidence-box"><strong>Como conferir</strong><p><code>ÉNÚMERO</code> deve retornar VERDADEIRO para quantidades, custos e datas válidas do Calc. Se a conversão alterar o significado, use <strong>Ctrl+Z</strong> e confirme separador decimal/configuração regional.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>Com números reais, a equipe pode calcular custo por item. A fórmula precisa nascer da pergunta de Renato, não de um catálogo de operadores.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Sexta-feira · 9h25 · aba Orçamento</span><h2>Uma célula mostra “R$ 180,00”, mas a soma a ignora.</h2><p>O símbolo foi digitado junto com o número. Aplicar aparência de moeda não transforma texto em valor calculável.</p></div>
+      <h3>Experimente e prove</h3>
+      <div class="task-box"><ol>
+        <li>Salve como <code>v03.ods</code>. Na aba <strong>Orcamento</strong>, clique em <code>E6</code> e observe o conteúdo na barra de entrada.</li>
+        <li>Em <code>L6</code>, digite <code>=ÉNÚMERO(E6)</code> (ou <code>=ISNUMBER(E6)</code> na interface inglesa).</li>
+        <li>O resultado esperado é <strong>FALSO</strong>. Antes de corrigir, escreva <code>Valor_original</code> em K1 e copie o conteúdo de E6 para K6.</li>
+        <li>Em E6, digite apenas <code>79,90</code> conforme a configuração regional e aplique formato <strong>Moeda</strong>.</li>
+        <li>Confira L6: agora deve retornar <strong>VERDADEIRO</strong>.</li>
+        <li>Para datas, use valor de data e formato de data; não misture “a confirmar” na mesma coluna.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>O que o teste demonstra</strong><p>o valor armazenado e a aparência são coisas diferentes. Formatar não converte automaticamente um texto em número.</p></div>
+      <p>Em <strong>[P-20] Planilha</strong>, acrescente os tipos esperados para os campos que serão usados em cálculo.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Com números reais, agora podemos construir fórmulas que respondam às perguntas de Renato.</p></div>`
   },
   {
     id: 'planilhas-formulas', number: '03', menuTitle: 'Fórmulas respondem perguntas',
@@ -43,10 +67,18 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Toda fórmula começa com uma pergunta verificável',
     objective: 'Construir e copiar fórmulas simples, comparando o resultado com cálculo independente.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Sexta-feira · 10h10 · decisão de compra</span><h2>Quanto custa cada linha do orçamento?</h2><p>Renato define a relação: quantidade multiplicada pelo valor unitário. O resultado deve mudar quando uma dessas entradas mudar e permanecer rastreável.</p></div>
-      <h3>Criar e completar a fórmula</h3><div class="task-box"><ol><li>Na aba <strong>Orcamento</strong>, confirme que <code>D</code> contém Quantidade, <code>E</code> Valor_unitario e <code>F</code> Total_item.</li><li>Clique em <code>F2</code> e confira na barra de fórmulas o modelo <code>=D2*E2</code>. Faça uma conferência independente com calculadora; se divergir, inspecione D2 e E2, sem digitar o total por cima da fórmula.</li><li>Observe que F5 não contém a fórmula esperada. Selecione F2 e arraste a alça de preenchimento até F9; isso copia a relação para cada linha na cópia de trabalho.</li><li>Clique em F3 e confirme <code>=D3*E3</code>; clique em F5 e confirme <code>=D5*E5</code>. Se outra coluna for alterada, use <strong>Ctrl+Z</strong> e repita selecionando somente F2.</li><li>Formate a coluna F como moeda.</li><li>Em P-20, escreva a pergunta, a fórmula-modelo, a célula completada e duas linhas conferidas manualmente.</li></ol></div>
-      <div class="evidence-box"><strong>Teste de mudança</strong><p>Altere temporariamente uma quantidade em uma cópia e observe o total recalcular. Use <strong>Ctrl+Z</strong>. Se nada mudar, a célula pode conter texto ou cálculo automático pode estar desativado.</p></div>
-      <div class="bridge-box"><strong>Próximo problema</strong><p>Paulo acrescenta uma taxa de contingência única. Ao copiar a fórmula, a célula da taxa não pode “andar” junto com cada linha.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Sexta-feira · 10h10 · decisão de compra</span><h2>Quanto custa cada linha do orçamento?</h2><p>A pergunta é concreta: quantidade × valor unitário. O resultado precisa mudar quando uma entrada muda.</p></div>
+      <div class="task-box"><ol>
+        <li>Confirme que <code>D</code> contém Quantidade, <code>E</code> Valor_unitario e <code>F</code> Total_item.</li>
+        <li>Em <code>F2</code>, confira <code>=D2*E2</code> e faça uma conferência independente com calculadora.</li>
+        <li>Observe que F5 não contém a fórmula esperada. Selecione F2 e arraste a alça de preenchimento até F9.</li>
+        <li>Confira F3 e F5 na barra de fórmulas: devem usar as linhas correspondentes.</li>
+        <li>Formate a coluna F como moeda.</li>
+        <li>Altere temporariamente uma quantidade, observe o recálculo e use <strong>Ctrl+Z</strong>.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>o total reage às entradas e pelo menos duas linhas batem com um cálculo independente.</p></div>
+      <p>Em <strong>[P-20] Planilha</strong>, registre uma única fórmula-modelo e as linhas usadas na conferência.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Uma taxa única de contingência precisa permanecer fixa quando a fórmula for copiada.</p></div>`
   },
   {
     id: 'planilhas-referencias', number: '04', menuTitle: 'Referências relativas e absolutas',
@@ -54,11 +86,17 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'O cifrão fixa uma referência porque a regra exige',
     objective: 'Escolher referências relativas ou absolutas conforme o que deve variar ao copiar uma fórmula.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Sexta-feira · 10h45 · contingência aprovada</span><h2>Todos os itens recebem a mesma taxa de 5%.</h2><p>O total de cada linha muda, mas a taxa está em uma única célula <code>J2</code>. Copiar <code>=F2*(1+J2)</code> faria a próxima linha procurar J3.</p></div>
-      <section class="decision-box"><h3>Preveja a cópia</h3><div class="choice-list" data-choice data-answer="b" data-explanation="F2 deve virar F3, mas $J$2 precisa continuar apontando para a taxa única."><label><input type="radio" name="d304" value="a"> <code>=F2*(1+J2)</code></label><label><input type="radio" name="d304" value="b"> <code>=F2*(1+$J$2)</code></label><label><input type="radio" name="d304" value="c"> digitar 1,05 em todas as fórmulas</label><button class="action-button" type="button" data-check-choice>Conferir previsão</button><div class="choice-result" aria-live="polite"></div></div></section>
-      <div class="task-box"><ol><li>Confirme que <code>Taxa_contingencia</code> está em J1 e <code>5%</code> em J2; esses são o parâmetro único da planilha recebida.</li><li>Confirme <code>Total_com_contingencia</code> em G1. Em G2, observe a fórmula <code>=F2*(1+$J$2)</code>.</li><li>Enquanto edita a referência J2, use <kbd>F4</kbd> para alternar modos, se disponível; encerre mantendo <code>$J$2</code> e confirme visualmente os cifrões.</li><li>Selecione G2 e arraste a alça de preenchimento até G9. Compare G3 e G9: a linha de F muda, J2 permanece; isso corrige a referência deslocada preparada na última linha.</li><li>Altere temporariamente J2 para 10% e observe todas as linhas. Desfaça.</li><li>Registre em P-20 qual regra justificou a referência absoluta e qual célula foi corrigida.</li></ol></div>
-      <div class="danger-box"><strong>Não memorize sem entender</strong><p><code>$</code> não torna a fórmula “mais correta”. Ele fixa coluna e/ou linha. Use-o apenas quando a pergunta exigir uma referência constante.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>As fórmulas por linha funcionam. Agora Renato precisa de respostas agregadas: total, média, quantidade e soma por condição.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Sexta-feira · 10h45 · contingência aprovada</span><h2>Todos os itens recebem a mesma taxa de 5%.</h2><p>O total muda linha a linha; a taxa permanece em <code>J2</code>. Ao copiar a fórmula, só uma dessas referências deve andar.</p></div>
+      <section class="decision-box"><h3>Qual fórmula pode ser copiada?</h3><div class="choice-list" data-choice data-answer="b" data-explanation="F2 deve variar por linha, mas $J$2 precisa continuar apontando para a taxa única."><label><input type="radio" name="d304" value="a"> <code>=F2*(1+J2)</code></label><label><input type="radio" name="d304" value="b"> <code>=F2*(1+$J$2)</code></label><label><input type="radio" name="d304" value="c"> digitar 1,05 em todas as fórmulas</label><button class="action-button" type="button" data-check-choice>Conferir previsão</button><div class="choice-result" aria-live="polite"></div></div></section>
+      <div class="task-box"><ol>
+        <li>Confirme <code>Taxa_contingencia</code> em J1 e <code>5%</code> em J2.</li>
+        <li>Em G2, confira <code>=F2*(1+$J$2)</code>.</li>
+        <li>Use <kbd>F4</kbd> enquanto edita J2, se disponível, e observe os modos de fixação.</li>
+        <li>Copie G2 até G9. Em G3 e G9, F deve mudar de linha e J2 deve permanecer fixo.</li>
+        <li>Altere J2 temporariamente para 10%, observe todas as linhas e desfaça.</li>
+      </ol></div>
+      <p>Em <strong>[P-20] Planilha</strong>, escreva apenas a regra: “taxa única em J2 → referência absoluta”.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Os cálculos por linha funcionam. Agora precisamos resumir total, média, quantidade e soma por condição.</p></div>`
   },
   {
     id: 'planilhas-funcoes', number: '05', menuTitle: 'Funções essenciais',
@@ -66,10 +104,22 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Funções são escolhidas pela pergunta',
     objective: 'Usar poucas funções essenciais para responder perguntas reais e validar seus intervalos.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Sexta-feira · 13h15 · perguntas de Renato</span><h2>Qual é o total previsto? Quantos itens aguardam aprovação? Quanto já foi aprovado?</h2><p>Cada pergunta exige uma operação diferente. Começar por uma lista de funções não ajuda a escolher o intervalo nem o critério.</p></div>
-      <div class="table-wrap"><table><thead><tr><th>Pergunta</th><th>Fórmula-modelo no Calc em português</th><th>Conferência</th></tr></thead><tbody><tr><td>Total previsto?</td><td><code>=SOMA(G2:G9)</code></td><td>intervalo inclui todas as linhas, sem o próprio total</td></tr><tr><td>Média por item?</td><td><code>=MÉDIA(G2:G9)</code></td><td>ausentes não viraram zero sem decisão</td></tr><tr><td>Quantos pendentes?</td><td><code>=CONT.SE(H2:H9;"Pendente")</code></td><td>grafia do status é consistente</td></tr><tr><td>Total aprovado?</td><td><code>=SOMASE(H2:H9;"Aprovado";G2:G9)</code></td><td>intervalos possuem o mesmo tamanho</td></tr></tbody></table></div>
-      <h3>Executar</h3><div class="task-box"><ol><li>Na própria aba <strong>Orcamento</strong>, comece em M1 uma área chamada <strong>Resumo provisório</strong>; preserve J1:J2, que contêm a taxa, e K1:K6, que guardam o valor original do teste de tipo.</li><li>Digite primeiro cada pergunta em uma célula; ao lado, insira a fórmula correspondente.</li><li>Selecione intervalos com o mouse e confirme seus endereços na barra de fórmula antes de Enter.</li><li>Filtre mentalmente ou conte poucas linhas para obter uma estimativa independente.</li><li>Se aparecer <code>#VALOR!</code>, <code>Err:509</code> ou zero inesperado, não esconda: confira tipos, separadores e intervalos.</li><li>Se a interface estiver em inglês, use os nomes equivalentes <code>SUM</code>, <code>AVERAGE</code>, <code>COUNTIF</code>, <code>SUMIF</code> e <code>IF</code>; registre o ambiente em P-20.</li></ol></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>Os resumos dependem de status escritos de maneira uniforme. “aprovado”, “Aprov.” e “OK” quebram critérios. A planilha precisa controlar novas entradas.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Sexta-feira · 13h15 · perguntas de Renato</span><h2>Qual é o total previsto? Quantos itens aguardam aprovação? Quanto já foi aprovado?</h2><p>Cada pergunta pede uma função e um intervalo. O nome da função vem depois da pergunta.</p></div>
+      <div class="table-wrap"><table><thead><tr><th>Pergunta</th><th>Fórmula-modelo</th><th>O que conferir</th></tr></thead><tbody>
+        <tr><td>Total previsto?</td><td><code>=SOMA(G2:G9)</code></td><td>todas as linhas, sem incluir o próprio total</td></tr>
+        <tr><td>Média por item?</td><td><code>=MÉDIA(G2:G9)</code></td><td>tratamento dos ausentes</td></tr>
+        <tr><td>Quantos pendentes?</td><td><code>=CONT.SE(H2:H9;"Pendente")</code></td><td>status escritos de forma consistente</td></tr>
+        <tr><td>Total aprovado?</td><td><code>=SOMASE(H2:H9;"Aprovado";G2:G9)</code></td><td>intervalos do mesmo tamanho</td></tr>
+      </tbody></table></div>
+      <div class="task-box"><ol>
+        <li>Na aba <strong>Orcamento</strong>, comece em M1 uma área chamada <strong>Resumo provisório</strong>.</li>
+        <li>Escreva cada pergunta em uma célula e a fórmula correspondente ao lado.</li>
+        <li>Selecione os intervalos com o mouse e confira os endereços antes de Enter.</li>
+        <li>Conte ou some algumas linhas manualmente para obter uma estimativa independente.</li>
+        <li>Se aparecer erro ou zero inesperado, investigue tipos, critérios e intervalos; não substitua por um número digitado.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>você consegue explicar qual pergunta cada fórmula responde e por que aquele intervalo foi usado.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>As funções por condição dependem de status padronizados. A planilha precisa impedir novas entradas como “OK”, “Aprov.” e “aprovado”.</p></div>`
   },
   {
     id: 'planilhas-validacao', number: '06', menuTitle: 'Validação de dados',
@@ -77,12 +127,18 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Validar na entrada custa menos do que corrigir depois',
     objective: 'Criar regras de validação e testar entradas válidas, inválidas e preexistentes.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Sexta-feira · 14h00 · cadastro compartilhado</span><h2>Marina digita “Confirmada”; Lia usa “OK”; Renato filtra “Aprovado”.</h2><p>O problema não é falta de atenção individual: o campo aceita qualquer texto. A regra deve surgir da lista de estados autorizados.</p></div>
-      <div class="visual-lab"><div class="visual-header"><span>Representação didática de interface</span><h3>Dados → Validação</h3></div><div class="interface-strip"><span><b>Permitir</b> Lista</span><span><b>Origem</b> Pendente; Aprovado; Rejeitado</span><span><b>Ajuda</b> regra curta</span><span><b>Erro</b> impedir nova entrada inválida</span><span><b>Auditar antigos</b> Detetive → Marcar dados inválidos</span></div><p class="visual-question"><strong>Ação:</strong> localize qual controle restringe novas entradas e qual comando apenas marca valores antigos para conferência.</p></div>
-      <h3>Aplicar e tentar quebrar</h3><div class="task-box"><ol><li>Na aba <strong>Orcamento</strong>, selecione somente as células de entrada da coluna Status, sem o cabeçalho.</li><li>Use <strong>Dados → Validação</strong>. Em Critérios, permita uma <strong>Lista</strong> com <code>Pendente</code>, <code>Aprovado</code> e <code>Rejeitado</code>.</li><li>Configure ajuda de entrada e alerta de erro que interrompa valor inválido. Confirme.</li><li>Em uma linha de teste, escolha “Aprovado”. Depois tente digitar “OK” e observe o bloqueio.</li><li>Use <strong>Ferramentas → Detetive → Marcar dados inválidos</strong> para localizar valores antigos que a nova regra não corrigiu.</li><li>Corrija cada ocorrência consultando a fonte da informação; não substitua tudo automaticamente.</li></ol></div>
-      <div class="note-box"><strong>Limite real</strong><p>Segundo a ajuda oficial, validação atua em novas entradas e pode ser contornada por alguns tipos de colagem/arraste; por isso a auditoria de dados inválidos continua necessária.</p></div>
-      <details class="sources-box"><summary>Fonte oficial consultada</summary><p><a href="https://help.libreoffice.org/latest/pt-BR/text/scalc/guide/validity.html" target="_blank" rel="noopener">Ajuda do LibreOffice — Validação do conteúdo de células</a>.</p></details>
-      <div class="bridge-box"><strong>Consequência</strong><p>Os estados ficaram consistentes. Agora Paulo quer ver somente despesas pendentes, sem perder nem reordenar parcialmente os registros.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Sexta-feira · 14h00 · cadastro compartilhado</span><h2>Marina digita “Confirmada”; Lia usa “OK”; Renato filtra “Aprovado”.</h2><p>Se o campo aceita qualquer texto, a análise quebra mesmo quando cada pessoa acredita ter escrito algo compreensível.</p></div>
+      <div class="task-box"><ol>
+        <li>Selecione somente as células de entrada da coluna Status.</li>
+        <li>Use <strong>Dados → Validação</strong> e permita uma lista com <code>Pendente</code>, <code>Aprovado</code> e <code>Rejeitado</code>.</li>
+        <li>Configure ajuda de entrada e alerta que impeça nova entrada inválida.</li>
+        <li>Escolha “Aprovado” em uma linha de teste; depois tente digitar “OK” e observe o bloqueio.</li>
+        <li>Use <strong>Ferramentas → Detetive → Marcar dados inválidos</strong> para localizar valores antigos que a nova regra não corrigiu.</li>
+        <li>Corrija cada caso consultando a fonte; não faça substituição automática sem evidência.</li>
+      </ol></div>
+      <div class="note-box"><strong>Limite</strong><p>validação ajuda em novas entradas, mas dados antigos ou algumas colagens ainda precisam ser auditados.</p></div>
+      <p>Em <strong>[P-20] Planilha</strong>, registre os valores permitidos para Status.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Agora Paulo quer ver apenas itens pendentes do maior para o menor valor sem separar as colunas.</p></div>`
   },
   {
     id: 'planilhas-filtro', number: '07', menuTitle: 'Classificar e filtrar sem quebrar',
@@ -90,11 +146,17 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Filtro esconde temporariamente; classificação muda a ordem',
     objective: 'Filtrar e classificar o intervalo completo preservando a integridade de cada registro.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Sexta-feira · 15h00 · priorização</span><h2>Paulo pede os itens pendentes do maior para o menor valor.</h2><p>Ordenar somente a coluna de valores separaria custo, fornecedor e status. A linha inteira precisa permanecer unida.</p></div>
-      <h3>Executar com retorno</h3><div class="task-box"><ol><li>Salve uma nova versão antes de classificar.</li><li>Clique em uma célula da tabela e use <strong>Dados → Definir intervalo</strong> se o Calc não reconhecer automaticamente toda a área.</li><li>Ative <strong>Dados → Autofiltro</strong>. No cabeçalho Status, selecione apenas <strong>Pendente</strong>.</li><li>Conte as linhas visíveis e compare com <code>CONT.SE</code>. Linhas filtradas ficam ocultas, não apagadas.</li><li>Com o intervalo completo selecionado, use <strong>Dados → Classificar</strong>; escolha <code>Total_com_contingencia</code> em ordem decrescente e confirme que o intervalo contém cabeçalhos.</li><li>Verifique dois IDs antes/depois: material, fornecedor e valor devem continuar na mesma linha.</li><li>Remova o filtro e confirme que todos os registros reaparecem.</li></ol></div>
-      <div class="danger-box"><strong>Se as colunas se separarem</strong><p>Use Ctrl+Z imediatamente e volte à versão anterior. Não tente “encaixar” visualmente os dados: o vínculo original pode ter sido perdido.</p></div>
-      <details class="sources-box"><summary>Fonte oficial consultada</summary><p><a href="https://help.libreoffice.org/latest/pt-BR/text/scalc/guide/filters.html" target="_blank" rel="noopener">Ajuda do LibreOffice — Aplicar filtros</a>.</p></details>
-      <div class="bridge-box"><strong>Consequência</strong><p>O filtro responde casos específicos. Para comunicar a situação geral, a equipe precisa de um resumo separado dos dados de entrada.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Sexta-feira · 15h00 · priorização</span><h2>Paulo pede os itens pendentes do maior para o menor valor.</h2><p>Ordenar somente a coluna de valores separaria custo, fornecedor e status. A linha inteira precisa continuar junta.</p></div>
+      <div class="task-box"><ol>
+        <li>Salve uma nova versão antes de classificar.</li>
+        <li>Ative <strong>Dados → Autofiltro</strong> e filtre Status por <strong>Pendente</strong>.</li>
+        <li>Conte as linhas visíveis e compare com o resultado de <code>CONT.SE</code>.</li>
+        <li>Com o intervalo completo, use <strong>Dados → Classificar</strong> por <code>Total_com_contingencia</code> em ordem decrescente.</li>
+        <li>Escolha dois IDs e confirme que material, fornecedor, status e valor permanecem na mesma linha.</li>
+        <li>Remova o filtro e confirme que todos os registros reaparecem.</li>
+      </ol></div>
+      <div class="danger-box"><strong>Se as colunas se separarem</strong><p>use <strong>Ctrl+Z</strong> imediatamente. Não tente “encaixar” os dados visualmente.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Filtro responde casos específicos. A reunião precisa de um resumo que se atualize a partir dos dados.</p></div>`
   },
   {
     id: 'planilhas-resumo', number: '08', menuTitle: 'Resumo e análise',
@@ -102,10 +164,16 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Um resumo mostra respostas e mantém o caminho até os dados',
     objective: 'Construir um painel simples de indicadores verificáveis sem duplicar manualmente resultados.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Segunda-feira · 8h20 · reunião de acompanhamento</span><h2>Renato tem dois minutos para explicar o orçamento.</h2><p>Ele precisa mostrar total previsto, total aprovado, pendências e maior despesa. Copiar números à mão criaria um resumo que envelhece.</p></div>
-      <h3>Criar a aba Resumo</h3><div class="task-box"><ol><li>Insira uma nova planilha pelo botão <strong>+</strong> e nomeie <strong>Resumo</strong>.</li><li>Em A1:B5, escreva rótulos claros e fórmulas que referenciem a aba Orcamento, por exemplo <code>=SOMA(Orcamento.G2:G9)</code>.</li><li>Para o maior total, use <code>=MÁXIMO(Orcamento.G2:G9)</code>; para pendências, use <code>CONT.SE</code>.</li><li>Em C1:C5, escreva a pergunta que cada indicador responde e a data da atualização.</li><li>Altere temporariamente um valor na origem e confirme atualização do resumo; desfaça.</li><li>Compare o total com uma soma independente de uma amostra e registre em P-20 qualquer limite: itens sem preço, aprovações pendentes ou datas incompletas.</li></ol></div>
-      <div class="evidence-box"><strong>Interpretação obrigatória</strong><p>Escreva duas frases: uma conclusão sustentada pelos indicadores e uma decisão que ainda não pode ser tomada. “Total de R$ X” é leitura; “é possível comprar tudo” exige comparar orçamento disponível e aprovações.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>O resumo já responde às perguntas. Um gráfico só será criado se tornar uma comparação mais clara do que a tabela.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Segunda-feira · 8h20 · reunião de acompanhamento</span><h2>Renato tem dois minutos para explicar o orçamento.</h2><p>Ele precisa mostrar total previsto, total aprovado, pendências e maior despesa. Copiar números à mão faria o resumo envelhecer assim que a origem mudasse.</p></div>
+      <div class="task-box"><ol>
+        <li>Crie uma nova aba <strong>Resumo</strong>.</li>
+        <li>Em A1:B5, escreva rótulos e fórmulas que referenciem a aba Orcamento, como <code>=SOMA(Orcamento.G2:G9)</code>.</li>
+        <li>Use <code>=MÁXIMO(Orcamento.G2:G9)</code> para maior valor e <code>CONT.SE</code> para pendências.</li>
+        <li>Em C, escreva a pergunta respondida por cada indicador e a data da atualização.</li>
+        <li>Altere temporariamente um valor na origem e confirme que o resumo se atualiza; depois desfaça.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Interprete</strong><p>escreva uma conclusão sustentada pelos indicadores e uma decisão que ainda não pode ser tomada por falta de informação.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Um gráfico só vale a pena se tornar uma comparação mais clara do que a tabela.</p></div>`
   },
   {
     id: 'planilhas-graficos', number: '09', menuTitle: 'Gráficos com pergunta',
@@ -113,11 +181,17 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'O gráfico existe para tornar uma relação visível',
     objective: 'Escolher e construir um gráfico cuja forma corresponda à pergunta e aos dados.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Segunda-feira · 9h10 · reunião com Paulo</span><h2>Qual categoria concentra mais custo aprovado?</h2><p>Uma pizza com muitas categorias dificultaria comparar valores próximos. Barras permitem ler categorias e extensão em uma escala comum.</p></div>
-      <section class="decision-box"><h3>Decida o tipo</h3><div class="choice-list" data-choice data-answer="a" data-explanation="Barras são adequadas para comparar valores entre categorias; a escolha nasce da relação, não do efeito visual."><label><input type="radio" name="d309" value="a"> barras por categoria;</label><label><input type="radio" name="d309" value="b"> pizza 3D com todas as linhas;</label><label><input type="radio" name="d309" value="c"> linha temporal sem datas.</label><button class="action-button" type="button" data-check-choice>Conferir escolha</button><div class="choice-result" aria-live="polite"></div></div></section>
-      <h3>Construir no Calc</h3><div class="task-box"><ol><li>Na aba Resumo, crie em D1:E5 uma pequena tabela com <strong>Categoria</strong> e <strong>Total aprovado</strong>. Em D2:D5, liste cada categoria uma vez.</li><li>Em E2, use <code>=SOMASES(Orcamento.G$2:G$9;Orcamento.C$2:C$9;D2;Orcamento.H$2:H$9;"Aprovado")</code> e copie para baixo. <strong>SOMASES</strong> soma G somente quando a categoria em C e o status em H atendem aos dois critérios; confira os intervalos antes de aceitar o resultado.</li><li>Selecione apenas D1:E5, incluindo cabeçalhos.</li><li>Use <strong>Inserir → Gráfico</strong>; escolha <strong>Barras</strong> ou <strong>Colunas</strong>, com séries em colunas e primeira linha como rótulo.</li><li>Defina o título “Custo aprovado por categoria (R$)” e rótulos dos eixos. Remova legenda redundante se houver uma única série.</li><li>Confira se o eixo começa em zero para comparação de magnitude e se nenhuma barra está cortada.</li><li>Compare duas barras com a tabela e registre em P-20 a fonte da informação: aba, intervalo e versão da planilha.</li></ol></div>
-      <div class="evidence-box"><strong>Teste de mensagem</strong><p>Mostre o gráfico por cinco segundos a um colega. Ele deve identificar a comparação principal sem uma explicação prévia. No estudo individual, observe-o por cinco segundos, oculte-o e escreva a comparação percebida. Depois revele a tabela para conferir valores exatos.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>O gráfico comunica na tela, mas Renato também precisa levar um resumo impresso sem colunas cortadas nem abas acidentais.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Segunda-feira · 9h10 · reunião com Paulo</span><h2>Qual categoria concentra mais custo aprovado?</h2><p>Essa é uma comparação entre categorias. O gráfico deve facilitar essa leitura, não apenas decorar a aba.</p></div>
+      <section class="decision-box"><h3>Qual forma ajuda a comparar?</h3><div class="choice-list" data-choice data-answer="a" data-explanation="Barras permitem comparar magnitudes entre categorias em uma escala comum."><label><input type="radio" name="d309" value="a"> barras por categoria;</label><label><input type="radio" name="d309" value="b"> pizza 3D com todas as linhas;</label><label><input type="radio" name="d309" value="c"> linha temporal sem datas.</label><button class="action-button" type="button" data-check-choice>Conferir escolha</button><div class="choice-result" aria-live="polite"></div></div></section>
+      <div class="task-box"><ol>
+        <li>Na aba Resumo, crie uma tabela Categoria × Total aprovado.</li>
+        <li>Em E2, use <code>=SOMASES(Orcamento.G$2:G$9;Orcamento.C$2:C$9;D2;Orcamento.H$2:H$9;"Aprovado")</code> e copie para baixo.</li>
+        <li>Selecione apenas a pequena tabela e use <strong>Inserir → Gráfico</strong>.</li>
+        <li>Escolha <strong>Barras</strong> ou <strong>Colunas</strong> e dê o título “Custo aprovado por categoria (R$)”.</li>
+        <li>Confira se o eixo começa em zero e compare pelo menos duas barras com os valores da tabela.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>em poucos segundos uma pessoa identifica qual categoria tem maior custo e consegue voltar à tabela para ver o valor exato.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>O resumo funciona na tela. Agora precisamos imprimir/exportar apenas o que realmente será entregue.</p></div>`
   },
   {
     id: 'planilhas-impressao', number: '10', menuTitle: 'Impressão e exportação',
@@ -125,10 +199,18 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Imprimir planilha exige decidir o que é a entrega',
     objective: 'Definir área, páginas e escala de saída sem esconder dados ou reduzir tudo até ficar ilegível.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Segunda-feira · 10h20 · pasta da reunião</span><h2>A primeira prévia gerou oito páginas, duas quase vazias.</h2><p>Havia células de teste distantes e todas as abas foram incluídas. “Caber em uma página” tornaria os rótulos ilegíveis. A saída correta é o resumo e o gráfico, com fonte e data.</p></div>
-      <h3>Preparar a saída</h3><div class="task-box"><ol><li>Na aba Resumo, selecione apenas a tabela de indicadores, a interpretação e o gráfico.</li><li>Use <strong>Formatar → Intervalos de impressão → Definir</strong>.</li><li>Abra <strong>Formatar → Estilo de página</strong>; escolha A4 e orientação adequada ao conteúdo. Configure cabeçalho com projeto e rodapé com data/versão.</li><li>Use <strong>Arquivo → Visualizar impressão</strong>. Confira página por página e legibilidade em 100%.</li><li>Se houver corte, ajuste larguras, orientação ou quebras. Use escala somente depois e nunca abaixo do que o leitor consegue ler.</li><li>Exporte o intervalo em PDF, feche o Calc, abra o PDF e compare total, gráfico, fonte, data e número de páginas.</li></ol></div>
-      <div class="danger-box"><strong>Proteção contra exposição</strong><p>Confirme se abas com dados internos, colunas ocultas ou comentários não foram exportados. O PDF público deve conter somente o que P-00/P-20 autorizam.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>A saída parece correta. Antes de aprovar compras, a equipe ainda precisa rastrear erros preparados e provar que as fórmulas dependem das células certas.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Segunda-feira · 10h20 · pasta da reunião</span><h2>A primeira prévia gerou oito páginas, algumas quase vazias.</h2><p>Células de teste e outras abas entraram na impressão. A entrega correta é o resumo e o gráfico, legíveis e identificados.</p></div>
+      <div class="task-box"><ol>
+        <li>Na aba Resumo, selecione somente indicadores, interpretação e gráfico.</li>
+        <li>Use <strong>Formatar → Intervalos de impressão → Definir</strong>.</li>
+        <li>Configure A4 e orientação adequada. Inclua projeto e versão em cabeçalho/rodapé.</li>
+        <li>Abra <strong>Arquivo → Visualizar impressão</strong> e confira página por página.</li>
+        <li>Se houver corte, ajuste larguras, orientação ou quebras antes de usar escala.</li>
+        <li>Exporte PDF, feche o Calc e abra o PDF separadamente.</li>
+        <li>Confira total, gráfico, data, fonte e número de páginas.</li>
+      </ol></div>
+      <div class="danger-box"><strong>Antes de publicar</strong><p>verifique se dados internos, colunas ocultas ou comentários não foram incluídos na saída.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>A saída parece correta. Falta provar que erros preparados e dependências de fórmulas podem ser encontrados.</p></div>`
   },
   {
     id: 'planilhas-auditoria', number: '11', menuTitle: 'Auditoria de erros',
@@ -136,11 +218,18 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Erro visível é melhor do que resultado falso e silencioso',
     objective: 'Auditar entradas, fórmulas e totais com rastreamento e conferência independente.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Segunda-feira · 13h30 · revisão final do orçamento</span><h2>O total mudou R$ 180 depois da reorganização.</h2><p>Renato não sabe ainda se a diferença é correção, omissão ou duplicidade. A causa não está no enunciado: ela precisa ser localizada por evidências.</p></div>
-      <h3>Roteiro de auditoria</h3><div class="task-box"><ol><li>Salve uma cópia <code>..._auditoria_vNN.ods</code>. Registre em P-20 o total antes do teste.</li><li>Use <strong>Ferramentas → Detetive → Marcar dados inválidos</strong>; liste em P-20 as células marcadas.</li><li>Selecione uma célula de total e use <strong>Ferramentas → Detetive → Rastrear precedentes</strong>. Confirme se as setas alcançam todas e somente as entradas esperadas.</li><li>Mostre fórmulas e compare a primeira, uma intermediária e a última linha. Procure referência deslocada ou total digitado.</li><li>Ordene/filtre por ID para procurar duplicatas sem excluí-las; volte à fonte da informação e decida se são duplicatas reais.</li><li>Reconcilie: some uma amostra por método independente e compare contagens entre fonte, tabela e resumo.</li><li>Corrija uma causa por vez em nova versão, recalcule e registre o efeito em P-20. Se não houver evidência suficiente, marque como pendência.</li></ol></div>
-      <div class="evidence-box"><strong>Conclusão permitida</strong><p>Registre em P-20: “erro localizado em [célula/regra], correção [ação], efeito [antes/depois], validado por [teste]”. Não escreva “planilha corrigida” se itens ainda não tiverem preço ou aprovação.</p></div>
-      <details class="sources-box"><summary>Fontes oficiais consultadas</summary><p><a href="https://help.libreoffice.org/latest/pt-BR/text/scalc/01/06030000.html" target="_blank" rel="noopener">Detetive</a> e <a href="https://help.libreoffice.org/latest/pt-BR/text/scalc/05/02140000.html" target="_blank" rel="noopener">códigos de erro do Calc</a>.</p></details>
-      <div class="bridge-box"><strong>Consequência</strong><p>P-20 já descreve dados, regras, fórmulas e limites. O desafio final deve transferir esse método para inscrições e cronograma.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Segunda-feira · 13h30 · revisão final do orçamento</span><h2>O total mudou depois da reorganização. Isso foi correção ou criou outro erro?</h2><p>A diferença precisa ser explicada por evidência, não pelo valor que “parece certo”.</p></div>
+      <div class="task-box"><ol>
+        <li>Salve uma cópia <code>..._auditoria_vNN.ods</code> e anote o total antes do teste.</li>
+        <li>Use <strong>Detetive → Marcar dados inválidos</strong> e localize células problemáticas.</li>
+        <li>Selecione um total e use <strong>Rastrear precedentes</strong>. Confira se as setas alcançam somente as entradas esperadas.</li>
+        <li>Mostre fórmulas e compare primeira, intermediária e última linha.</li>
+        <li>Procure IDs duplicados sem excluir nada; volte à fonte antes de decidir.</li>
+        <li>Faça uma conferência independente de uma amostra.</li>
+        <li>Corrija uma causa por vez e observe o efeito antes/depois.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Atualize [P-20] somente com o que foi provado</strong><p>erro localizado → correção → efeito antes/depois → teste de validação. Se algo continuar sem evidência, permaneça como pendência.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Agora você vai transferir o método para um controle completo de inscrições e materiais.</p></div>`
   },
   {
     id: 'planilhas-desafio', number: '12', menuTitle: 'Desafio: controle da Feira',
@@ -148,10 +237,26 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Desafio: produzir o Controle da Feira',
     objective: 'Entregar uma planilha auditável de inscrições e materiais, com resumo e saída adequada.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Terça-feira · novo corte dos dados</span><h2>Marina precisa cruzar inscrições confirmadas com materiais solicitados para o dia da Feira.</h2><p>Há dados fictícios em duas abas e uma linha propositalmente inconsistente. A equipe deve localizar a falha, não receber sua causa pronta.</p></div>
-      <h3>Missão</h3><div class="task-box"><ol><li>Duplique a versão auditada e atualize P-03.</li><li>Defina em P-20 uma linha por registro, campos, tipos, valores permitidos, identificadores e regra para ausentes.</li><li>Crie fórmulas somente depois de escrever as perguntas: total de participantes confirmados, materiais por categoria e itens pendentes.</li><li>Use referência absoluta quando houver parâmetro único; valide status; filtre sem separar linhas.</li><li>Crie um Resumo com até cinco indicadores e um gráfico que responda uma comparação real.</li><li>Prepare uma falha de teste em cópia, detecte-a pelo Detetive ou reconciliação, corrija e registre em P-20 o antes/depois.</li><li>Defina área de impressão, exporte PDF, abra e confira separadamente.</li><li>Entregue ODS, PDF e P-20, todos ligados a P-00/P-03.</li></ol></div>
-      <div class="check-card"><strong>Aceite</strong><ul data-checklist><li><label><input type="checkbox"> estrutura tabular e tipos definidos;</label></li><li><label><input type="checkbox"> fórmulas ligadas a perguntas e intervalos conferidos;</label></li><li><label><input type="checkbox"> validações testadas e inválidos antigos auditados;</label></li><li><label><input type="checkbox"> resumo e gráfico sustentam uma interpretação;</label></li><li><label><input type="checkbox"> limites e pendências permanecem visíveis;</label></li><li><label><input type="checkbox"> ODS e PDF abertos e comparados.</label></li></ul><p class="check-progress" data-check-progress></p></div>
-      <div class="artifact-card"><strong>P-20 consolidado</strong><span>Dicionário de dados, tipos, validações, perguntas, fórmulas-modelo, testes, erros encontrados, limites e prova de saída.</span></div>
-      <div class="bridge-box"><strong>Continuidade</strong><p>Os números estão confiáveis, mas a reunião com famílias dura apenas cinco minutos. O próximo módulo transforma documento e planilha em mensagem, evidência, visual e fala.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Terça-feira · novo corte dos dados</span><h2>Marina precisa cruzar inscrições confirmadas com materiais solicitados para o dia da Feira.</h2><p>Uma linha está propositalmente inconsistente. O desafio é localizar o problema pelo método aprendido, não por tentativa e erro.</p></div>
+      <h3>Missão</h3>
+      <div class="task-box"><ol>
+        <li>Duplique a versão auditada.</li>
+        <li>Em <strong>[P-20] Planilha — Controle da Feira</strong>, defina campos, tipos, identificadores, valores permitidos e regra para ausentes.</li>
+        <li>Escreva as perguntas antes das fórmulas: participantes confirmados, materiais por categoria e itens pendentes.</li>
+        <li>Use referência absoluta quando houver parâmetro único; valide status e filtre sem separar linhas.</li>
+        <li>Crie Resumo com até cinco indicadores e um gráfico que responda uma comparação real.</li>
+        <li>Detecte a inconsistência usando validação, Detetive ou reconciliação e registre o antes/depois.</li>
+        <li>Defina área de impressão, exporte PDF e abra o resultado separadamente.</li>
+        <li>Em <strong>[P-03] Versões</strong>, identifique o ODS validado e o PDF que passou pela conferência.</li>
+      </ol></div>
+      <div class="check-card"><strong>Aceite</strong><ul data-checklist>
+        <li><label><input type="checkbox"> estrutura e tipos definidos;</label></li>
+        <li><label><input type="checkbox"> fórmulas ligadas a perguntas e conferidas;</label></li>
+        <li><label><input type="checkbox"> validações testadas;</label></li>
+        <li><label><input type="checkbox"> resumo e gráfico sustentam uma interpretação;</label></li>
+        <li><label><input type="checkbox"> erro foi localizado e retestado;</label></li>
+        <li><label><input type="checkbox"> ODS e PDF foram abertos e comparados.</label></li>
+      </ul><p class="check-progress" data-check-progress></p></div>
+      <div class="bridge-box"><strong>Continuidade</strong><p>Os dados agora sustentam decisões. O próximo módulo transforma essas evidências em uma apresentação curta e compreensível.</p></div>`
   }
 ]);
