@@ -5,18 +5,21 @@ window.produtividadeLessons = (window.produtividadeLessons || []).concat([
     title: 'Uma apresentação não é um documento repartido em telas',
     objective: 'Diagnosticar uma apresentação pela comunicação que ela permite, não por efeitos ou decoração.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quarta-feira · 8h00 · ensaio em LAB-04</span><h2>Paulo tenta apresentar oito slides cheios de parágrafos em cinco minutos.</h2><p>Ele lê a tela, as famílias não veem os dados e um gráfico não informa a origem dos números. O arquivo abre, mas não cumpre a tarefa: explicar o que será a Feira, quando ocorrerá e como participar.</p></div>
-      <section class="decision-box"><h3>Investigue primeiro</h3><div class="choice-list" data-choice data-answer="b" data-explanation="Sem objetivo, público, tempo e mensagem, qualquer mudança visual é chute."><label><input type="radio" name="d400" value="a"> trocar transições e cores;</label><label><input type="radio" name="d400" value="b"> registrar objetivo, público, tempo e mensagem de cada slide;</label><label><input type="radio" name="d400" value="c"> reduzir todo o tamanho da letra até caber.</label><button class="action-button" type="button" data-check-choice>Conferir decisão</button><div class="choice-result" aria-live="polite"></div></div></section>
-      <div class="template-box"><label for="modelo-p30-diagnostico"><strong>P-30 · registro inicial do diagnóstico</strong></label><p>Como Paulo ainda fará várias alterações e ensaios, a equipe precisa de um lugar único para acompanhar o que cada slide deve comunicar. Esse registro cumulativo é P-30. Crie <code>P-30_apresentacao.txt</code> em <code>10_Em_trabalho</code> com um editor de texto simples, copie a estrutura abaixo e repita as cinco linhas para cada slide. P-30 começa simples e será ampliado somente quando novas decisões surgirem.</p><textarea id="modelo-p30-diagnostico" class="record-template" rows="7" readonly>P-30 — DIAGNÓSTICO INICIAL
-Slide:
-Mensagem pretendida:
-Problema observado:
-Evidência ou fonte da informação:
-Observação do ensaio:</textarea><div><button class="action-button" type="button" data-copy="#modelo-p30-diagnostico">Copiar estrutura inicial</button><span class="copy-status" aria-live="polite"></span></div></div>
-      <h3>Laboratório seguro</h3><div class="task-box"><strong>Ferramenta principal: LibreOffice Impress</strong><p>Retome a árvore do Módulo 1: preserve o recebido em <code>00_Entrada</code> e trabalhe na cópia em <code>10_Em_trabalho</code>.</p><ol><li>Baixe a <a href="../downloads/informatica-produtividade/modulo-04/apresentacao-feira-diagnostico.odp" download>apresentação problemática</a> para <code>00_Entrada</code>.</li><li>Copie-a para <code>10_Em_trabalho</code> como <code>2026-09-08_apresentacao-feira_em-analise_v01.odp</code>.</li><li>Abra a cópia no Impress. Se as miniaturas não aparecerem à esquerda, use <strong>Exibir → Painel de slides</strong>. Conte os slides e observe repetição da mesma mensagem, do mesmo texto/dado/imagem ou de um slide que não acrescenta nova função.</li><li>Em cada slide, escreva em P-30 uma frase: “este slide precisa fazer o público compreender que...”. Se não conseguir, marque “sem mensagem definida”.</li><li>Execute a apresentação com <kbd>F5</kbd>, sem corrigir. Cronometre e registre em P-30: onde há tanto texto que Paulo apenas lê a tela; onde número, tabela, gráfico, legenda ou outra informação visual não pode ser lida; e onde falta a referência/origem do dado.</li><li>Pressione <kbd>Esc</kbd> para sair. A cópia correta possui <strong>oito slides</strong>. Se não abrir, faltar slide ou o conteúdo não corresponder ao cenário descrito, feche sem salvar, confirme nome e pasta e baixe novamente.</li></ol></div>
-      <div class="evidence-box"><strong>Resultado esperado</strong><p>P-30 contém oito blocos de diagnóstico. Você registra mensagens repetidas, leitura de parágrafos, evidências visuais ilegíveis e pelo menos um dado sem origem identificada; ainda não corrige os slides.</p></div>
-      <div class="artifact-card"><strong>P-30 iniciado</strong><span>Por enquanto: slide, mensagem pretendida, problema observado, evidência/origem e observação do ensaio. Objetivo, roteiro, acessibilidade e contingência entrarão quando forem necessários.</span></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>O diagnóstico mostra excesso de conteúdo, mas o corte depende do que Paulo quer que as famílias saibam e façam ao final.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quarta-feira · 8h00 · ensaio em LAB-04</span><h2>Paulo tenta apresentar oito slides cheios de parágrafos em cinco minutos.</h2><p>Ele lê a tela, as famílias não enxergam os dados e um gráfico não informa a origem dos números. O arquivo abre, mas a apresentação ainda não comunica bem.</p></div>
+      <section class="decision-box"><h3>O que investigar primeiro?</h3><div class="choice-list" data-choice data-answer="b" data-explanation="Sem objetivo, público, tempo e mensagem, qualquer mudança visual vira tentativa."><label><input type="radio" name="d400" value="a"> trocar transições e cores;</label><label><input type="radio" name="d400" value="b"> identificar objetivo, público, tempo e mensagem de cada slide;</label><label><input type="radio" name="d400" value="c"> reduzir todo o texto até caber.</label><button class="action-button" type="button" data-check-choice>Conferir decisão</button><div class="choice-result" aria-live="polite"></div></div></section>
+
+      <h3>Faça comigo · assista antes de corrigir</h3>
+      <div class="task-box"><strong>Ferramenta principal: LibreOffice Impress</strong><ol>
+        <li>Baixe a <a href="../downloads/informatica-produtividade/modulo-04/apresentacao-feira-diagnostico.odp" download>apresentação problemática</a> para <code>00_Entrada</code>.</li>
+        <li>Copie para <code>10_Em_trabalho</code> como <code>2026-09-08_apresentacao-feira_em-analise_v01.odp</code>.</li>
+        <li>Abra no Impress e confirme que a cópia possui <strong>oito slides</strong>.</li>
+        <li>Execute com <kbd>F5</kbd>, sem corrigir. Cronometre.</li>
+        <li>Em cada slide, responda: “o público deveria entender o quê aqui?”. Marque os slides em que a resposta não é clara.</li>
+        <li>Observe também texto impossível de ler, evidência visual pequena e dado sem origem identificada.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>você consegue apontar quais slides repetem mensagem, quais obrigam Paulo a ler e quais evidências não podem ser compreendidas à distância.</p></div>
+      <p>No <code>CONTROLE_DA_FEIRA.txt</code>, crie <strong>[P-30] Apresentação</strong> e anote apenas: público, tempo observado, mensagens confusas e evidências que precisam ser verificadas.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Para saber o que cortar, precisamos definir o resultado esperado dos cinco minutos de apresentação.</p></div>`
   },
   {
     id: 'apresentacoes-objetivo', number: '01', menuTitle: 'Objetivo e público',
@@ -24,22 +27,18 @@ Observação do ensaio:</textarea><div><button class="action-button" type="butto
     title: 'Objetivo define o que entra e o que fica fora',
     objective: 'Definir resultado esperado, público, tempo e restrições antes de editar slides.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quarta-feira · 8h40 · decisão da coordenação</span><h2>A apresentação não precisa ensinar todo o projeto.</h2><p>Paulo terá cinco minutos com famílias e visitantes. Ao final, o público deve entender a proposta, conhecer data e espaços e saber como acompanhar os projetos. Detalhes de montagem pertencem ao Guia do Expositor, não aos slides.</p></div>
-      <div class="template-box"><label for="modelo-p30a"><strong>P-30 · enquadramento</strong></label><textarea id="modelo-p30a" class="record-template" rows="12" readonly>P-30 — ROTEIRO, FONTES E ENSAIO
-Apresentação: Convite e orientação da Feira de Projetos
-Público: famílias e visitantes
-Tempo: 5 minutos
-Resultado esperado: compreender propósito, data/local e como acompanhar
-Mensagem central: os projetos mostram aprendizagens aplicadas e podem ser visitados por percurso
-Evidências autorizadas: documento aprovado ligado a P-10; indicadores públicos ligados a P-20
-Excluir: custos detalhados, dados pessoais, notas internas e histórico de revisão
-Condição do local: projetor 16:9; sala clara; internet não garantida
-Responsável pela fala: Paulo
-Responsável técnico: Lia
-Critério: uma mensagem por slide, origem da informação rastreável, leitura à distância e cópia offline</textarea><div><button class="action-button" type="button" data-copy="#modelo-p30a">Copiar enquadramento</button><span class="copy-status" aria-live="polite"></span></div></div>
-      <div class="task-box"><strong>Roteiro de validação</strong><ol><li>Continue <code>P-30_apresentacao.txt</code>: cole o enquadramento após os blocos de diagnóstico e confirme objetivo, público e tempo com P-00.</li><li>Registre em P-30 a condição do local e o equipamento que realmente será usado; não suponha internet.</li><li>Liste em P-30 as fontes da informação aprovadas e separe conteúdo interno do público.</li><li>Leia o resultado esperado para um colega e peça que diga o que o público deve compreender ou fazer. No estudo individual, feche P-30 após a leitura e escreva essas respostas sem consultar as fontes.</li><li>Se a resposta incluir detalhes fora do objetivo, refine o recorte antes de editar qualquer slide.</li></ol></div>
-      <div class="note-box"><strong>Equivalentes essenciais</strong><p>No PowerPoint ou Google Apresentações, procure layout, tema/mestre, notas do apresentador e exportação/baixar em PDF. Registre em P-30 a ferramenta e a versão; não tente reproduzir posições exatas de outra interface.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>Com o resultado definido, a equipe pode selecionar conteúdo. Tudo o que é correto ainda não é necessariamente necessário para esta fala.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quarta-feira · 8h40 · decisão da coordenação</span><h2>Paulo terá cinco minutos com famílias e visitantes.</h2><p>Ao final, o público deve compreender a proposta da Feira, conhecer data e espaços e saber como acompanhar os projetos. Detalhes de montagem ficam no Guia do Expositor.</p></div>
+      <h3>Faça o recorte</h3>
+      <div class="task-box"><ol>
+        <li>Escreva em uma frase o resultado esperado: “famílias entendem propósito, data/local e como acompanhar”.</li>
+        <li>Confirme o limite de <strong>5 minutos</strong>.</li>
+        <li>Separe o que pode ir ao público do que é interno: custos detalhados, dados pessoais e histórico de revisão ficam fora.</li>
+        <li>Considere a condição real: projetor 16:9, sala clara e internet não garantida.</li>
+        <li>Liste apenas as fontes aprovadas que poderão sustentar os slides.</li>
+      </ol></div>
+      <p>Em <strong>[P-30] Apresentação</strong>, registre só: público, tempo, resultado esperado, mensagem central, fontes autorizadas e condição do local.</p>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>você consegue dizer por que um detalhe pode ser verdadeiro e mesmo assim não pertencer a esta apresentação.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Agora precisamos escolher, entre tudo o que existe, somente o que ajuda o público a compreender ou agir.</p></div>`
   },
   {
     id: 'apresentacoes-selecao', number: '02', menuTitle: 'Selecionar conteúdo',
@@ -47,10 +46,17 @@ Critério: uma mensagem por slide, origem da informação rastreável, leitura �
     title: 'Selecionar é proteger a mensagem',
     objective: 'Escolher somente informações necessárias, autorizadas e sustentadas por fonte da informação.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quarta-feira · 9h15 · fontes reunidas</span><h2>Marina entrega a programação; Renato oferece quinze indicadores; Lia possui fotos do laboratório.</h2><p>Mais material não significa apresentação melhor. P-30 exige que cada item ajude o público a compreender ou agir dentro dos cinco minutos.</p></div>
-      <h3>Triagem de fontes</h3><div class="task-box"><ol><li>Abra os registros <code>P-10_documento.txt</code> e <code>P-20_planilha.txt</code> concluídos nos módulos anteriores. Use P-03 para localizar os arquivos ODT/ODS marcados como aprovados; não copie de versões em trabalho.</li><li>Crie três listas em P-30: <strong>essencial</strong>, <strong>apoio para fala</strong> e <strong>fora desta apresentação</strong>.</li><li>Para cada candidato, pergunte: sustenta qual mensagem? está autorizado para público? cabe no tempo? a fonte da informação pode ser localizada?</li><li>Escolha no máximo cinco mensagens: propósito, dimensão/participação, data/local, percurso e convite final.</li><li>Se um número não tiver definição ou data, não use. Se uma foto contiver pessoas identificáveis sem autorização, substitua por mapa/diagrama ou retire.</li><li>Registre o caminho e a versão do arquivo-fonte ao lado de cada item escolhido.</li></ol></div>
-      <div class="evidence-box"><strong>Validação</strong><p>Leia somente a lista “essencial”. Ela deve formar uma explicação completa. Um dado interessante que não muda compreensão ou ação fica fora, mesmo sendo verdadeiro.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>Há cinco mensagens, mas ainda não existe narrativa. É preciso decidir a ordem que conduz o público da proposta à ação.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quarta-feira · 9h15 · fontes reunidas</span><h2>Marina oferece a programação; Renato tem muitos indicadores; Lia possui imagens do laboratório.</h2><p>Mais material não significa apresentação melhor. Cada item precisa ajudar o público dentro dos cinco minutos.</p></div>
+      <div class="task-box"><ol>
+        <li>Consulte o documento aprovado e a planilha auditada produzidos nos módulos anteriores.</li>
+        <li>Separe candidatos em três grupos: <strong>essencial</strong>, <strong>apoio para a fala</strong> e <strong>fora desta apresentação</strong>.</li>
+        <li>Para cada item, pergunte: sustenta qual mensagem? está autorizado? cabe no tempo? consigo localizar a fonte?</li>
+        <li>Escolha no máximo cinco mensagens: propósito, dimensão/participação, data/local, percurso e convite final.</li>
+        <li>Não use número sem definição/data nem foto com pessoa identificável sem autorização.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Teste</strong><p>leia somente as cinco mensagens. Elas devem formar uma explicação completa sem depender de detalhes extras.</p></div>
+      <p>Em <strong>[P-30] Apresentação</strong>, associe cada mensagem à sua fonte aprovada.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Temos cinco mensagens. Falta colocá-las em uma ordem que conduza o público até a ação final.</p></div>`
   },
   {
     id: 'apresentacoes-roteiro', number: '03', menuTitle: 'Roteiro antes dos slides',
@@ -58,10 +64,17 @@ Critério: uma mensagem por slide, origem da informação rastreável, leitura �
     title: 'O roteiro cabe em frases antes de virar slide',
     objective: 'Construir uma sequência de mensagens e reservar tempo de fala antes da composição visual.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quarta-feira · 10h00 · quadro de roteiro</span><h2>Paulo percebe que começava pelos detalhes do cronograma antes de explicar a Feira.</h2><p>O público precisava saber primeiro por que valia a pena visitar; depois, ver evidências e orientações.</p></div>
-      <div class="visual-lab"><div class="visual-header"><span>Fluxo de mensagem</span><h3>Uma pergunta por etapa</h3></div><ol class="numbered-process"><li><strong>Por quê?</strong><span>propósito</span></li><li><strong>O quê?</strong><span>projetos e evidência</span></li><li><strong>Quando/onde?</strong><span>data e percurso</span></li><li><strong>Como?</strong><span>participar</span></li><li><strong>Agora?</strong><span>convite final</span></li></ol><p class="visual-question"><strong>Ação:</strong> explique por que o orçamento detalhado não pertence a nenhuma etapa pública.</p></div>
-      <h3>Montar P-30</h3><div class="task-box"><ol><li>Para cada etapa, escreva uma <strong>mensagem completa</strong>, não um tema: “A Feira reúne projetos que aplicam o que foi aprendido”.</li><li>Ao lado, registre evidência, visual possível e tempo de fala.</li><li>Reserve cerca de 30 segundos para abertura e 30 para encerramento; distribua o restante sem exigir velocidade artificial.</li><li>Escreva uma transição entre mensagens: “Para ver essa aprendizagem, organizamos o percurso em...”.</li><li>Leia o roteiro em voz alta com cronômetro, sem slides. Corte repetições até caber com pausa.</li><li>Somente então salve a apresentação como <code>..._roteiro_v02.odp</code>.</li></ol></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>O roteiro determina mensagens. Agora o layout deve mostrar prioridade e relação, não acrescentar decoração.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quarta-feira · 10h00 · quadro de roteiro</span><h2>Paulo começava pelos detalhes antes de explicar por que a Feira importa.</h2><p>O público precisa primeiro entender a proposta; depois, ver evidências e orientações.</p></div>
+      <div class="visual-lab"><div class="visual-header"><span>Fluxo de mensagem</span><h3>Uma pergunta por etapa</h3></div><ol class="numbered-process"><li><strong>Por quê?</strong><span>propósito</span></li><li><strong>O quê?</strong><span>projetos/evidência</span></li><li><strong>Quando e onde?</strong><span>data/percurso</span></li><li><strong>Como?</strong><span>participar</span></li><li><strong>Agora?</strong><span>convite final</span></li></ol></div>
+      <div class="task-box"><ol>
+        <li>Escreva uma frase completa para cada etapa, não apenas um tema.</li>
+        <li>Ao lado, indique evidência, visual possível e tempo.</li>
+        <li>Reserve aproximadamente 30 segundos para abertura e 30 para encerramento.</li>
+        <li>Escreva uma transição curta entre as mensagens.</li>
+        <li>Leia tudo em voz alta com cronômetro. Corte repetições até caber com pausa.</li>
+        <li>Só então salve a apresentação como <code>..._roteiro_v02.odp</code>.</li>
+      </ol></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>O roteiro define a ordem. O layout agora precisa mostrar essa prioridade visualmente.</p></div>`
   },
   {
     id: 'apresentacoes-hierarquia', number: '04', menuTitle: 'Hierarquia visual',
@@ -69,11 +82,17 @@ Critério: uma mensagem por slide, origem da informação rastreável, leitura �
     title: 'O olhar precisa encontrar primeiro o que a fala apresenta primeiro',
     objective: 'Construir layouts consistentes em que posição, tamanho e contraste expressem prioridade.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quarta-feira · 11h00 · primeiro slide reconstruído</span><h2>O título, a data e três logotipos competem pelo mesmo destaque.</h2><p>A mensagem principal é a Feira e sua proposta; data e local são apoio. Logotipos só permanecem quando exigidos e em posição secundária consistente.</p></div>
-      <h3>Aplicar no Impress</h3><div class="task-box"><ol><li>Salve como <code>v03.odp</code>. Use <strong>Slide → Layout</strong> e escolha um layout com título e conteúdo; evite caixas desenhadas sem alinhamento.</li><li>Use <strong>Exibir → Slide mestre</strong> para definir fundo simples, família tipográfica, posição de rodapé e elemento institucional necessário.</li><li>Volte à visualização Normal. No slide 1, mantenha um título dominante e uma linha de apoio; remova elementos sem função.</li><li>Use <strong>Formatar → Alinhamento</strong> para alinhar objetos por uma borda comum. Preserve espaços entre grupos relacionados.</li><li>Duplique um slide estruturado para manter consistência, depois troque conteúdo; não copie erros da versão problemática.</li><li>Projete em tela cheia e afaste-se. Identifique o primeiro e o segundo elementos percebidos; compare com P-30.</li></ol></div>
-      <div class="evidence-box"><strong>Validação</strong><p>A hierarquia deve continuar clara em sala iluminada e em miniatura. Se tudo chama atenção, nada orienta.</p></div>
-      <details class="sources-box"><summary>Fonte oficial consultada</summary><p><a href="https://help.libreoffice.org/latest/pt-BR/text/simpress/01/03150100.html" target="_blank" rel="noopener">Ajuda do LibreOffice — Slide mestre</a>.</p></details>
-      <div class="bridge-box"><strong>Consequência</strong><p>O sistema visual está consistente. Os parágrafos longos ainda competem com a fala e precisam ser transformados em texto de tela.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quarta-feira · 11h00 · primeiro slide reconstruído</span><h2>Título, data e logotipos competem pelo mesmo destaque.</h2><p>A Feira e sua proposta são a mensagem principal; data/local são apoio. Elementos institucionais permanecem secundários.</p></div>
+      <div class="task-box"><ol>
+        <li>Salve como <code>v03.odp</code>.</li>
+        <li>Use <strong>Slide → Layout</strong> e escolha estrutura de título + conteúdo.</li>
+        <li>Use <strong>Exibir → Slide mestre</strong> para definir fundo simples, tipografia e elementos institucionais repetidos.</li>
+        <li>No slide 1, mantenha um título dominante e uma linha de apoio; retire o que não tem função.</li>
+        <li>Use comandos de alinhamento e preserve espaços consistentes entre grupos.</li>
+        <li>Projete em tela cheia e identifique o primeiro e o segundo elementos percebidos.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>a ordem visual percebida combina com a ordem da mensagem e continua clara em miniatura e na sala iluminada.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>A estrutura visual melhorou, mas os parágrafos ainda competem com a fala.</p></div>`
   },
   {
     id: 'apresentacoes-texto', number: '05', menuTitle: 'Texto que apoia a fala',
@@ -81,10 +100,18 @@ Critério: uma mensagem por slide, origem da informação rastreável, leitura �
     title: 'O slide mostra a ideia; a fala desenvolve',
     objective: 'Reduzir texto mantendo precisão e legibilidade, sem transformar slide em teleprompter.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quarta-feira · 13h20 · corte de texto</span><h2>O segundo slide contém 118 palavras copiadas do Guia do Expositor.</h2><p>Paulo precisa explicar a proposta olhando para o público. O documento completo continua disponível; o slide preserva a mensagem e a evidência essencial.</p></div>
-      <div class="comparison-grid"><div class="bad-card"><strong>Tema vago</strong><p>“Nossos projetos” + parágrafo inteiro</p></div><div class="good-card"><strong>Mensagem</strong><p>“32 projetos transformam problemas locais em soluções testáveis”</p></div></div>
-      <h3>Reescrever e testar</h3><div class="task-box"><ol><li>Copie a mensagem de P-30 para o título do slide; use frase afirmativa, não apenas “Resultados”.</li><li>Mantenha na tela somente número, rótulo e condição necessária para entendê-lo. Para guardar a explicação fora da tela, use <strong>Exibir → Notas</strong>, clique na área de notas abaixo do slide e escreva uma frase de apoio; as notas do apresentador serão desenvolvidas na aula 09.</li><li>Use uma família tipográfica sem condensação e tamanho que possa ser lido do fundo da sala; como ponto de partida do projeto, títulos em 30 pt ou mais e corpo em 22 pt ou mais, ajustando pelo teste real.</li><li>Evite caixa alta em frases longas, linhas extensas e contraste baixo. Não use cor como único marcador de estado.</li><li>Execute em tela cheia no projetor de LAB-04 ou simule em distância; peça a Lia que leia sem conhecer o conteúdo. No estudo individual, projete em tela cheia, afaste-se e anote o que consegue ler sem ampliar.</li><li>Se precisar reduzir abaixo do legível para caber, corte ou divida a mensagem — não esconda o problema.</li></ol></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>O texto ficou enxuto. Para explicar o percurso e os resultados, faltam visuais que tragam informação real.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quarta-feira · 13h20 · corte de texto</span><h2>Um slide contém 118 palavras copiadas de outro documento.</h2><p>Paulo precisa olhar para o público. O material completo continua disponível; o slide deve preservar apenas a ideia e a evidência necessárias.</p></div>
+      <div class="comparison-grid"><div class="bad-card"><strong>Tema + parágrafo</strong><p>“Nossos projetos” seguido de texto longo</p></div><div class="good-card"><strong>Mensagem</strong><p>“32 projetos transformam problemas locais em soluções testáveis”</p></div></div>
+      <div class="task-box"><ol>
+        <li>Transforme o título em uma frase-mensagem.</li>
+        <li>Mantenha na tela apenas o número/rótulo necessário para entender a evidência.</li>
+        <li>Leve a explicação complementar para as notas do apresentador.</li>
+        <li>Como ponto de partida, teste títulos em 30 pt ou mais e corpo em 22 pt ou mais; valide na distância real.</li>
+        <li>Evite linhas extensas, contraste baixo e cor como único marcador.</li>
+        <li>Se precisar reduzir demais para caber, corte ou divida a mensagem.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Teste à distância</strong><p>em tela cheia, afaste-se e tente ler sem ampliar. Se a mensagem desaparecer, o slide ainda está carregado demais.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Agora o texto apoia a fala. Precisamos escolher imagens que realmente expliquem algo.</p></div>`
   },
   {
     id: 'apresentacoes-imagens', number: '06', menuTitle: 'Imagens com função',
@@ -92,10 +119,18 @@ Critério: uma mensagem por slide, origem da informação rastreável, leitura �
     title: 'Imagem boa para o slide é a que ajuda a compreender',
     objective: 'Selecionar, inserir e testar imagens relevantes, autorizadas e rastreáveis.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quarta-feira · 14h10 · seleção de visuais</span><h2>Lia possui um mapa e fotos reais, mas duas fotos mostram nomes de estudantes.</h2><p>O mapa orienta o percurso e pode ser usado. As fotos exigem autorização e análise de conteúdo. Enquanto isso, uma captura aproximada de um protótipo sem pessoas pode evidenciar o trabalho.</p></div>
-      <h3>Roteiro de decisão</h3><div class="task-box"><ol><li>Para cada mensagem de P-30, escreva a pergunta que o visual deve responder.</li><li>Use o mapa registrado em P-10 para “onde visitar?” e o gráfico registrado em P-20 para “como os projetos se distribuem?”.</li><li>Antes de inserir foto, confira autoria, autorização, pessoas/dados visíveis e resolução. Registre em P-30 a origem da imagem.</li><li>No Impress, use <strong>Inserir → Imagem</strong>. Redimensione pelas alças de canto e recorte para destacar a evidência, sem alterar o sentido.</li><li>Adicione uma legenda curta quando a imagem não for autoexplicativa. Nas propriedades, preencha descrição alternativa.</li><li>Projete em tela cheia: a informação deve permanecer identificável; se não, simplifique ou retire.</li></ol></div>
-      <div class="danger-box"><strong>Não use como preenchimento</strong><p>Imagem genérica de “tecnologia”, ícone repetido ou foto sem relação não melhora a mensagem. Também não use imagem encontrada na internet sem verificar origem e direito de uso.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>Os visuais explicam percurso e contexto. O dado numérico ainda precisa chegar com escala, rótulo e origem corretos.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quarta-feira · 14h10 · seleção de visuais</span><h2>O mapa ajuda a orientar; algumas fotos exibem nomes de estudantes.</h2><p>A escolha do visual depende da pergunta que ele precisa responder e da autorização de uso.</p></div>
+      <div class="task-box"><ol>
+        <li>Para cada mensagem, escreva a pergunta que o visual deve responder.</li>
+        <li>Use o mapa da entrada para “onde visitar?” e o gráfico da planilha para uma comparação que os dados sustentem.</li>
+        <li>Antes de inserir foto, confira autoria, autorização, pessoas/dados visíveis e resolução.</li>
+        <li>Use <strong>Inserir → Imagem</strong>, redimensione mantendo proporção e recorte sem alterar o sentido.</li>
+        <li>Adicione legenda quando necessário e descrição alternativa significativa.</li>
+        <li>Projete: se a informação não puder ser identificada à distância, simplifique ou retire.</li>
+      </ol></div>
+      <div class="danger-box"><strong>Não use imagem como preenchimento</strong><p>foto genérica ou ícone decorativo não melhora a mensagem e ainda compete por atenção.</p></div>
+      <p>Em <strong>[P-30] Apresentação</strong>, anote somente a origem dos visuais efetivamente usados.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>O próximo slide usa dados. Precisamos garantir que o gráfico continue verdadeiro fora da planilha.</p></div>`
   },
   {
     id: 'apresentacoes-dados', number: '07', menuTitle: 'Dados, gráficos e fontes',
@@ -103,10 +138,17 @@ Critério: uma mensagem por slide, origem da informação rastreável, leitura �
     title: 'O gráfico do slide precisa continuar verdadeiro fora da planilha',
     objective: 'Levar dados auditados para a apresentação preservando mensagem, contexto e origem da informação.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quinta-feira · 8h10 · atualização de números</span><h2>O gráfico do primeiro ensaio ainda mostrava 28 projetos; P-20 aprovado registra 32.</h2><p>Copiar como imagem estabilizou o visual, mas também congelou uma versão antiga. P-30 precisa registrar a origem da informação e a data do recorte.</p></div>
-      <h3>Atualizar com rastreabilidade</h3><div class="task-box"><ol><li>Abra <code>P-20_planilha.txt</code> e use sua ligação com P-03 para localizar a planilha ODS aprovada. Nela, confirme pergunta, filtros ativos, intervalo, total e data.</li><li>Escolha somente o gráfico que sustenta a mensagem do slide. Remova grade, legenda ou casas decimais que não ajudam, sem alterar escala ou dados.</li><li>Copie o gráfico e cole no Impress. Se usar vínculo, teste o que acontece quando a planilha é movida; para entrega offline, prefira incorporação e registre a versão.</li><li>Escreva título-mensagem, como “A maioria dos projetos está nos blocos A e B”, somente se os dados sustentarem.</li><li>No rodapé do slide, registre “Fonte da informação: Controle da Feira, P-20, versão/data”.</li><li>Compare duas categorias com a planilha e atualize P-30. Se o total mudar, gere nova versão da apresentação e repita o teste.</li></ol></div>
-      <div class="evidence-box"><strong>Validação</strong><p>Uma pessoa deve conseguir dizer o que está sendo comparado, em qual unidade e de quando são os dados. Se o gráfico sustentar mais de uma leitura plausível, ajuste título/rótulos ou evite a conclusão.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>Mensagens e evidências estão ligadas. Falta garantir leitura por pessoas com diferentes necessidades e tecnologias assistivas.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quinta-feira · 8h10 · atualização de números</span><h2>Um gráfico antigo mostra 28 projetos; o controle aprovado registra 32.</h2><p>Copiar um gráfico como imagem estabiliza o visual, mas também congela a versão dos dados. A origem e a data precisam acompanhar a evidência.</p></div>
+      <div class="task-box"><ol>
+        <li>Abra a planilha aprovada e confirme pergunta, filtros, intervalo, total e data.</li>
+        <li>Escolha somente o gráfico que sustenta a mensagem do slide.</li>
+        <li>Remova elementos desnecessários sem alterar escala ou dados.</li>
+        <li>Cole/incorpore o gráfico no Impress e escreva um título-mensagem apenas se os dados sustentarem a conclusão.</li>
+        <li>No rodapé, registre a fonte de informação e a versão/data.</li>
+        <li>Compare pelo menos duas categorias com a planilha original.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Deu certo se...</strong><p>uma pessoa consegue dizer o que está sendo comparado, a unidade e de quando são os dados.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Mensagens e evidências estão corretas. Falta verificar se a apresentação continua compreensível para diferentes formas de acesso.</p></div>`
   },
   {
     id: 'apresentacoes-acessibilidade', number: '08', menuTitle: 'Acessibilidade da apresentação',
@@ -114,10 +156,18 @@ Critério: uma mensagem por slide, origem da informação rastreável, leitura �
     title: 'Apresentar para todos exige mais do que letra grande',
     objective: 'Verificar ordem de leitura, contraste, alternativas e compreensão oral/visual.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quinta-feira · 9h00 · revisão inclusiva</span><h2>O mapa usa apenas vermelho e verde; o gráfico depende de cores semelhantes.</h2><p>A sala clara reduz contraste e parte do público pode não distinguir cores. Lia propõe rótulos, padrões simples e descrição oral dos dados.</p></div>
-      <h3>Checklist executável</h3><div class="task-box"><ol><li>Na visualização Normal, clique fora dos objetos e pressione <kbd>Tab</kbd> repetidamente: a seleção deve percorrer título, conteúdo e elementos essenciais em ordem compreensível. Use <kbd>Shift+Tab</kbd> para voltar; se a ordem não fizer sentido, reorganize os objetos pelo comando de ordem disponível no menu <strong>Formatar → Dispor</strong>.</li><li>Adicione texto alternativo significativo a imagens e gráficos; objetos decorativos, se inevitáveis, não devem interromper a leitura.</li><li>Substitua diferenças somente por cor por rótulos, formas ou texto. Teste em escala de cinza na impressão/PDF.</li><li>Garanta contraste forte e tamanhos legíveis. Evite texto sobre fotografia com fundo irregular.</li><li>Nas notas do apresentador, escreva a descrição oral do gráfico e da imagem essencial.</li><li>Use <strong>Ferramentas → Verificação de acessibilidade</strong>, quando disponível. Corrija alertas compreendidos e registre as limitações em P-30.</li><li>Exporte uma cópia PDF e teste navegação/seleção de texto. O verificador não substitui pessoa revisora.</li></ol></div>
-      <div class="evidence-box"><strong>Teste humano</strong><p>Uma pessoa ouve a fala sem ver a tela e outra vê os slides sem áudio. Ambas devem captar a mensagem central e a ação final; nenhum modo precisa repetir todos os detalhes.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>Os slides já comunicam. Paulo precisa agora ensaiar a fala, usar notas como apoio e medir o tempo real.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quinta-feira · 9h00 · revisão inclusiva</span><h2>Mapa e gráfico dependem de cores semelhantes.</h2><p>Parte do público pode não distinguir essas diferenças, e a sala clara reduz o contraste. A informação precisa de rótulos, ordem e descrição.</p></div>
+      <div class="task-box"><ol>
+        <li>Na visualização Normal, pressione <kbd>Tab</kbd> e confira a ordem em que título e objetos são selecionados.</li>
+        <li>Adicione texto alternativo significativo a imagens e gráficos essenciais.</li>
+        <li>Substitua diferenças apenas por cor por rótulos, formas ou texto.</li>
+        <li>Teste contraste e legibilidade; evite texto sobre fundo irregular.</li>
+        <li>Nas notas, prepare descrição oral dos gráficos e imagens essenciais.</li>
+        <li>Use a verificação de acessibilidade quando disponível e corrija alertas compreendidos.</li>
+        <li>Exporte uma cópia PDF e confira seleção/leitura.</li>
+      </ol></div>
+      <div class="evidence-box"><strong>Teste de dupla entrada</strong><p>a mensagem central deve ser compreensível tanto por quem acompanha principalmente a fala quanto por quem depende mais do visual.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Os slides funcionam. Agora Paulo precisa transformar o arquivo em uma apresentação de cinco minutos.</p></div>`
   },
   {
     id: 'apresentacoes-notas', number: '09', menuTitle: 'Notas e ensaio',
@@ -125,10 +175,18 @@ Critério: uma mensagem por slide, origem da informação rastreável, leitura �
     title: 'Ensaio transforma o arquivo em comunicação',
     objective: 'Preparar notas, ensaiar com tempo e registrar ajustes baseados em observação.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quinta-feira · 10h20 · segundo ensaio</span><h2>Paulo termina em 7min40 e acelera justamente na orientação de entrada.</h2><p>O problema não se resolve ocultando o cronômetro. A equipe precisa cortar repetição e proteger a informação que orienta o público.</p></div>
-      <h3>Ensaiar com evidência</h3><div class="task-box"><ol><li>Use <strong>Exibir → Notas</strong>. Para cada slide, clique na área de notas e escreva: mensagem, evidência a explicar, transição e alerta de pronúncia/tempo.</li><li>Não transcreva um discurso inteiro. Use frases-gatilho que permitam olhar para o público.</li><li>Execute com <kbd>F5</kbd>. Lia cronometra cada slide e registra em P-30; Paulo não para para corrigir durante a primeira rodada.</li><li>Após o ensaio, classifique problemas: conteúdo, ordem, visual, fala ou operação.</li><li>Corte primeiro repetições da fala e dados secundários. Só remova um slide se a mensagem continuar completa.</li><li>Faça novo ensaio em condições próximas às reais: projetor, controle, posição e tempo. Registre em P-30 duração e mudanças.</li></ol></div>
-      <div class="evidence-box"><strong>Critério de aceite</strong><p>A apresentação cabe em cinco minutos com pausas, a mensagem principal de cada slide é dita e o apresentador não depende de ler parágrafos.</p></div>
-      <div class="bridge-box"><strong>Consequência</strong><p>O ensaio funciona em LAB-04. No dia da Feira, porém, internet, família tipográfica, cabo ou arquivo podem falhar. A equipe precisa preparar saídas e contingência.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quinta-feira · 10h20 · segundo ensaio</span><h2>Paulo termina em 7min40 e acelera justamente na orientação de entrada.</h2><p>O tempo real mostra onde a apresentação ainda está pesada.</p></div>
+      <div class="task-box"><ol>
+        <li>Use <strong>Exibir → Notas</strong>. Para cada slide, escreva mensagem, evidência a explicar, transição e alerta de tempo.</li>
+        <li>Use frases-gatilho, não um discurso inteiro.</li>
+        <li>Execute com <kbd>F5</kbd> e cronometre cada slide sem interromper o primeiro ensaio.</li>
+        <li>Classifique os problemas observados: conteúdo, ordem, visual, fala ou operação.</li>
+        <li>Corte repetições e dados secundários antes de remover mensagens essenciais.</li>
+        <li>Faça novo ensaio em condições próximas às reais.</li>
+      </ol></div>
+      <p>Em <strong>[P-30] Apresentação</strong>, registre somente duração total, slides que estouraram o tempo e ajustes feitos.</p>
+      <div class="evidence-box"><strong>Critério</strong><p>a apresentação cabe em cinco minutos com pausas e Paulo não depende de ler parágrafos na tela.</p></div>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>O ensaio funciona. Agora precisamos garantir que a apresentação sobreviva a falha de internet, fonte ou formato.</p></div>`
   },
   {
     id: 'apresentacoes-contingencia', number: '10', menuTitle: 'Exportação e contingência',
@@ -136,21 +194,43 @@ Critério: uma mensagem por slide, origem da informação rastreável, leitura �
     title: 'Uma apresentação pronta também precisa abrir no lugar certo',
     objective: 'Exportar formatos adequados, testar no equipamento e preparar contingência sem perder o arquivo-fonte.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Quinta-feira · 13h30 · teste no auditório</span><h2>O notebook COORD-02 abre o ODP, mas o projetor troca a proporção e não há internet.</h2><p>O arquivo editável continua necessário; PDF garante uma versão visual estável; a fala precisa sobreviver até sem projeção.</p></div>
-      <h3>Preparar o pacote</h3><div class="task-box"><ol><li>Confirme em P-03 qual ODP foi aprovado. Feche versões antigas.</li><li>Use <strong>Arquivo → Exportar como → Exportar como PDF</strong>. Não inclua notas nem slides ocultos na cópia pública, salvo decisão explícita.</li><li>Abra o PDF e compare todos os slides, famílias tipográficas, imagens, gráfico e links.</li><li>Crie uma cópia offline da pasta com ODP, PDF, imagens incorporadas e P-30. Inclua arquivo de fonte tipográfica somente se ele for necessário, autorizado e puder ser distribuído; não dependa de link externo.</li><li>Em COORD-02 conectado ao projetor, teste resolução 16:9, avanço, tela cheia e saída por <kbd>Esc</kbd>.</li><li>Imprima ou salve uma página-resumo com as cinco mensagens. Defina quem continua a fala se o projetor falhar.</li><li>Registre em P-30 teste, equipamento, data, problema, correção e plano de contingência.</li></ol></div>
-      <div class="danger-box"><strong>Segurança e privacidade</strong><p>Remova notas internas, slides ocultos e dados de autoria não destinados ao público. Não conecte pendrive desconhecido nem desative proteção para “fazer abrir”.</p></div>
-      <details class="sources-box"><summary>Fontes oficiais consultadas</summary><p><a href="https://help.libreoffice.org/latest/pt-BR/text/shared/01/ref_pdf_export_general.html" target="_blank" rel="noopener">Opções gerais de PDF</a> e <a href="https://help.libreoffice.org/latest/pt-BR/text/simpress/01/06080000.html" target="_blank" rel="noopener">configurações da apresentação</a>.</p></details>
-      <div class="bridge-box"><strong>Consequência</strong><p>Há mensagem, evidência, visual, fala e contingência. A apresentação final deve provar o conjunto em condição real.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Quinta-feira · 13h30 · teste no auditório</span><h2>O ODP abre, mas o projetor muda a proporção e a internet não está disponível.</h2><p>A entrega precisa funcionar offline e ter uma alternativa visual estável.</p></div>
+      <div class="task-box"><ol>
+        <li>Confirme qual ODP é a versão aprovada e feche versões antigas.</li>
+        <li>Exporte uma cópia PDF sem notas internas nem slides que não pertençam ao público.</li>
+        <li>Abra o PDF e compare todos os slides, imagens, gráfico e textos.</li>
+        <li>Monte uma pasta offline com ODP, PDF e recursos necessários autorizados.</li>
+        <li>No equipamento do auditório, teste proporção 16:9, tela cheia, avanço e saída por <kbd>Esc</kbd>.</li>
+        <li>Prepare uma página-resumo com as cinco mensagens para o caso de falha de projeção.</li>
+      </ol></div>
+      <div class="danger-box"><strong>Antes de entregar</strong><p>remova notas internas, dados indevidos e dependências desnecessárias de links externos.</p></div>
+      <p>Em <strong>[P-30] Apresentação</strong>, registre teste do equipamento, problema encontrado e plano B. Em <strong>[P-03] Versões</strong>, identifique o ODP aprovado e o PDF offline que passou pela conferência.</p>
+      <div class="bridge-box"><strong>Próximo problema</strong><p>Agora o pacote precisa funcionar nas mãos de outra pessoa, sem explicação oral de Paulo.</p></div>`
   },
   {
     id: 'apresentacoes-final', number: '11', menuTitle: 'Apresentação final',
     unit: 'Módulo 4 · Apresentações e Comunicação Visual', technicalTitle: 'Integração · execução, observação e passagem',
     title: 'Entrega: apresentar a Feira e permitir continuidade',
-    objective: 'Realizar a apresentação, registrar evidências e entregar P-30 para outro apresentador continuar.',
+    objective: 'Realizar a apresentação, registrar evidências e permitir que outro apresentador continue.',
     content: `
-      <div class="story-opening"><span class="eyebrow">Sexta-feira · simulação com equipe substituta</span><h2>Paulo será chamado por alguns minutos; Marina precisa assumir sem improvisar dados.</h2><p>Se P-30 estiver completo, a transferência não depende de decorar a fala de Paulo. A substituta recebe mensagens, fontes da informação, notas, tempo e contingência.</p></div>
-      <h3>Prova final do módulo</h3><div class="task-box"><ol><li>Entregue à pessoa substituta somente o pacote aprovado: ODP, PDF, resumo offline e P-30. No estudo individual, feche todos os arquivos e reabra o pacote como substituto, sem consultar os arquivos-fonte.</li><li>Em dois minutos, a pessoa substituta localiza objetivo, tempo, origem de cada dado e plano B, sem explicação oral.</li><li>A substituta executa a apresentação em até cinco minutos. Um observador registra em P-30: mensagem compreendida, evidência legível, transições, tempo e dificuldade operacional; no estudo individual, grave apenas o tempo e faça a conferência logo após encerrar.</li><li>Prepare uma falha controlada: abra o PDF em vez do ODP ou desligue apenas a conexão de rede autorizada. Não desligue equipamento nem remova arquivo real.</li><li>A equipe aciona a contingência, conclui a fala e registra em P-30 o que funcionou.</li><li>Corrija somente falhas comprovadas, gere nova versão e repita o trecho afetado.</li></ol></div>
-      <div class="check-card"><strong>P-30 completo</strong><ul data-checklist><li><label><input type="checkbox"> objetivo, público e tempo definidos;</label></li><li><label><input type="checkbox"> cada slide tem mensagem, evidência, visual e fala;</label></li><li><label><input type="checkbox"> fontes da informação apontam para arquivos aprovados ligados a P-10/P-20;</label></li><li><label><input type="checkbox"> acessibilidade e leitura à distância testadas;</label></li><li><label><input type="checkbox"> ensaio cronometrado e ajustes registrados;</label></li><li><label><input type="checkbox"> ODP, PDF e contingência foram abertos e usados.</label></li></ul><p class="check-progress" data-check-progress></p></div>
-      <div class="bridge-box"><strong>Continuidade</strong><p>A equipe já produz artefatos confiáveis. O próximo risco é a dispersão: enviar arquivo errado, escolher canal inadequado ou deixar uma decisão sem responsável.</p></div>`
+      <div class="story-opening"><span class="eyebrow">Sexta-feira · simulação com substituição</span><h2>Paulo precisa se ausentar e Marina assume a apresentação.</h2><p>Ela recebe apenas o pacote aprovado e o <code>CONTROLE_DA_FEIRA.txt</code>. Se a preparação estiver clara, não precisa decorar a fala de Paulo.</p></div>
+      <h3>Prova final</h3>
+      <div class="task-box"><ol>
+        <li>Entregue ODP, PDF, resumo offline e a seção <strong>[P-30] Apresentação</strong>.</li>
+        <li>A pessoa substituta deve localizar objetivo, tempo, origem dos dados e plano B em poucos minutos.</li>
+        <li>Ela executa a apresentação em até cinco minutos.</li>
+        <li>Prepare uma falha controlada: usar o PDF em vez do ODP ou retirar apenas a dependência de rede autorizada.</li>
+        <li>A apresentação deve continuar usando o plano de contingência.</li>
+        <li>Corrija somente falhas observadas e repita o trecho afetado.</li>
+      </ol></div>
+      <div class="check-card"><strong>Aceite</strong><ul data-checklist>
+        <li><label><input type="checkbox"> objetivo, público e tempo estão claros;</label></li>
+        <li><label><input type="checkbox"> cada slide possui mensagem e evidência;</label></li>
+        <li><label><input type="checkbox"> fontes dos dados são localizáveis;</label></li>
+        <li><label><input type="checkbox"> acessibilidade e leitura à distância foram testadas;</label></li>
+        <li><label><input type="checkbox"> ensaio e tempo foram validados;</label></li>
+        <li><label><input type="checkbox"> ODP, PDF e contingência funcionaram.</label></li>
+      </ul><p class="check-progress" data-check-progress></p></div>
+      <div class="bridge-box"><strong>Continuidade</strong><p>Documento, planilha e apresentação estão confiáveis. O próximo módulo trata do risco que ainda sobra: comunicação dispersa, acesso errado e tarefa sem responsável.</p></div>`
   }
 ]);
