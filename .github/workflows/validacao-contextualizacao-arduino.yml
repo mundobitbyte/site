@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Verificar sintaxe JavaScript
         run: |
           node --check js/arduino.js
@@ -44,4 +46,4 @@ jobs:
           print('VALIDACAO_CONTEXTO_ARDUINO_OK')
           PY
       - name: Diff check
-        run: git diff --check HEAD^ HEAD
+        run: git diff --check origin/main...HEAD
