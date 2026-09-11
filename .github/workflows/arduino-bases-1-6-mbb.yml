@@ -1,0 +1,50 @@
+name: Complementar bases 1-6 Arduino
+
+on:
+  push:
+    branches:
+      - arduino-bases-1-6-mbb
+    paths:
+      - scripts/patch_arduino_bases_1_6.py
+      - .github/workflows/arduino-bases-1-6-mbb.yml
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar-complementos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout da branch
+        uses: actions/checkout@v4
+        with:
+          ref: arduino-bases-1-6-mbb
+          fetch-depth: 0
+
+      - name: Aplicar complementação cirúrgica
+        run: python scripts/patch_arduino_bases_1_6.py
+
+      - name: Validar escopo da alteração
+        shell: bash
+        run: |
+          git diff --check
+          files=$(git diff --name-only)
+          echo "$files"
+          test "$files" = "pages/arduino.html"
+          grep -q 'id="fund-plataforma-aberta"' pages/arduino.html
+          grep -q 'placa-microcontrolador.svg' pages/arduino.html
+          grep -q 'ciclo-maker-tinkering.svg' pages/arduino.html
+          grep -q 'componentes-prototipacao.svg' pages/arduino.html
+
+      - name: Commitar somente a página Arduino
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "Nenhuma alteração a commitar."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pages/arduino.html
+          git commit -m "Completa fundamentos Arduino com bases curriculares ausentes"
+          git push origin HEAD:arduino-bases-1-6-mbb
