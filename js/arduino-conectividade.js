@@ -158,8 +158,21 @@ document.addEventListener('DOMContentLoaded', manterModuloAtivoVisivel);
 window.addEventListener('pageshow', manterModuloAtivoVisivel);
 window.addEventListener('resize', manterModuloAtivoVisivel);
 
-(() => {
-  const script = document.createElement('script');
-  script.src = '../js/arduino-circuitos-visuais.js?v=20260910-1';
-  document.head.appendChild(script);
-})();
+/* O circuito-base é conteúdo desta própria página. Mantemos o mesmo data-attribute do fallback antigo para impedir duplicação. */
+document.addEventListener('DOMContentLoaded', function(){
+  const secao = document.getElementById('b6-prep');
+  if(!secao || secao.querySelector('[data-mbb-circuito="b6-prep"]')) return;
+
+  const cabecalho = secao.querySelector('.projectHead');
+  if(!cabecalho) return;
+
+  cabecalho.insertAdjacentHTML('afterend', `
+    <div class="circuitPanel" data-mbb-circuito="b6-prep">
+      <h3>Circuito-base do bloco</h3>
+      <figure class="circuitFigure">
+        <img class="circuitPhoto" src="../img/arduino/esp32-led-gpio23.svg" alt="Diagrama técnico do ESP32 com GPIO 23 ligado a resistor de 220 ohms, LED e GND." loading="lazy" decoding="async"/>
+        <figcaption>Use este circuito-base durante o Bloco 6: GPIO 23 → resistor de 220 Ω → LED → GND. A comunicação muda; a montagem permanece.</figcaption>
+      </figure>
+    </div>
+  `);
+});
