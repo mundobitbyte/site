@@ -23,7 +23,7 @@
       labels: {1:'Modelo, sistema e agente',2:'Multimodalidade',3:'Fontes e contexto',4:'Prompt injection',5:'Agentes e ações',6:'IA na programação',7:'Proveniência',8:'Transparência e regulação',9:'Formação em IA',10:'Integração da trilha'},
       special: {
         'Checklist MbB para IA em 12 de setembro de 2026': {id:'checklist-2026', label:'Checklist 2026', num:'✓'},
-        'Fontes oficiais consultadas nesta revisão': {id:'fontes-oficiais', label:'Fontes oficiais', num:'↗'}
+        'Fontes oficiais para conferir e aprofundar': {id:'fontes-oficiais', label:'Fontes oficiais', num:'↗'}
       }
     }
   };
