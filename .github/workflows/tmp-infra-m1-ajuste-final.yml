@@ -1,0 +1,57 @@
+name: tmp-infra-m1-ajuste-final
+
+on:
+  push:
+    branches: [lapidacao-infraestrutura-mbb]
+
+permissions:
+  contents: write
+
+jobs:
+  ajustar:
+    if: ${{ !contains(github.event.head_commit.message, '[infra-m1-final]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+          fetch-depth: 0
+      - name: Ajustar bastidores remanescentes
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('js/infraestrutura/conteudo-04-06.js')
+          t=p.read_text(encoding='utf-8')
+          t=t.replace('Interface reconhecida; sem aprofundar diagnóstico de rede neste módulo.','Interface reconhecida e função de conexão verificada; falhas de caminho exigem investigação própria.')
+          p.write_text(t,encoding='utf-8')
+
+          p=Path('js/infraestrutura/conteudo-07-10.js')
+          t=p.read_text(encoding='utf-8')
+          t=t.replace('<div class="bridge-box"><strong>Fechamento do módulo</strong><p>Os três chamados deixam registros com informações ainda ausentes, testes possíveis e limites. Na oficina 99, sua equipe herdará um desses atendimentos e precisará conduzir triagem, plano, intervenção, validação e relatório sem inventar o que não foi observado.</p></div>', '<div class="bridge-box"><strong>O plantão muda de equipe</strong><p>Os três chamados deixam informações ainda ausentes, testes possíveis e limites. Outra equipe receberá um desses atendimentos e precisará continuar a investigação a partir do estado encontrado, sem inventar o que não foi observado.</p></div>')
+          p.write_text(t,encoding='utf-8')
+      - name: Validar
+        run: |
+          node --check js/infraestrutura/conteudo-04-06.js
+          node --check js/infraestrutura/conteudo-07-10.js
+          python - <<'PY'
+          from pathlib import Path
+          files=[Path('js/infraestrutura/conteudo-00-03.js'),Path('js/infraestrutura/conteudo-04-06.js'),Path('js/infraestrutura/conteudo-07-10.js'),Path('js/infraestrutura/conteudo-99.js')]
+          bad=[]
+          for p in files:
+              for i,line in enumerate(p.read_text(encoding='utf-8').splitlines(),1):
+                  low=line.lower()
+                  if ('módulo' in low or 'capítulo' in low) and not any(x in low for x in ['módulo de memória','módulo de 8 gb','módulos e placas']):
+                      bad.append((str(p),i,line.strip()))
+          print('Ocorrências curriculares remanescentes:', len(bad))
+          for x in bad: print(*x, sep=':')
+          assert not bad, 'Ainda há voz curricular/bastidor no M1'
+          PY
+          git diff --check
+      - name: Commit e limpeza
+        run: |
+          rm .github/workflows/tmp-infra-m1-ajuste-final.yml
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add js/infraestrutura/conteudo-04-06.js js/infraestrutura/conteudo-07-10.js .github/workflows/tmp-infra-m1-ajuste-final.yml
+          git commit -m "Remove bastidores remanescentes do Módulo 1 [infra-m1-final]"
+          git push origin HEAD:lapidacao-infraestrutura-mbb
