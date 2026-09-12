@@ -1,4 +1,13 @@
+function copyCode(id){
+  const code = document.getElementById(id);
+  if(code && navigator.clipboard){
+    navigator.clipboard.writeText(code.textContent);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  let contador = 0;
+
   const deveIgnorar = (elemento) => {
     if (elemento.classList.contains('prompt') && elemento.closest('.bad')) {
       return true;
@@ -6,16 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (elemento.classList.contains('code')) {
       const texto = elemento.innerText.trim();
+      const secao = elemento.closest('section.card');
+      const titulo = secao?.querySelector('h2')?.textContent || '';
 
       if (
         texto.startsWith('FileNotFoundError:') ||
         texto.startsWith('ModuleNotFoundError:') ||
-        texto.startsWith('projeto_emprestimos/')
+        texto.startsWith('projeto_emprestimos/') ||
+        texto.includes('# Windows PowerShell') ||
+        titulo.startsWith('13.')
       ) {
-        return true;
-      }
-
-      if (elemento.closest('.grid-2') && (elemento.closest('.bad') || elemento.closest('.good'))) {
         return true;
       }
     }
@@ -23,27 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
     return false;
   };
 
-  const copiarTexto = async (texto) => {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(texto);
-      return;
-    }
-
-    const area = document.createElement('textarea');
-    area.value = texto;
-    area.setAttribute('readonly', '');
-    area.style.position = 'fixed';
-    area.style.opacity = '0';
-    document.body.appendChild(area);
-    area.select();
-    document.execCommand('copy');
-    area.remove();
-  };
-
   document.querySelectorAll('.prompt, pre.code').forEach((elemento) => {
     if (deveIgnorar(elemento) || elemento.closest('.copy-wrap')) {
       return;
     }
+
+    contador += 1;
+    const id = elemento.id || `ia-copy-${contador}`;
+    elemento.id = id;
 
     const envoltorio = document.createElement('div');
     envoltorio.className = 'copy-wrap';
@@ -56,23 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
     botao.className = 'copy-btn';
     botao.textContent = 'Copiar';
     botao.setAttribute('aria-label', 'Copiar conteúdo');
-    botao.title = 'Copiar para a área de transferência';
+    botao.title = 'Copiar';
 
-    botao.addEventListener('click', async () => {
-      const textoOriginal = botao.textContent;
-
-      try {
-        await copiarTexto(elemento.innerText);
-        botao.textContent = 'Copiado!';
-        botao.classList.add('copied');
-      } catch (erro) {
-        botao.textContent = 'Não copiou';
-      }
+    botao.addEventListener('click', () => {
+      copyCode(id);
+      botao.textContent = 'Copiado!';
+      botao.classList.add('copied');
 
       window.setTimeout(() => {
-        botao.textContent = textoOriginal;
+        botao.textContent = 'Copiar';
         botao.classList.remove('copied');
-      }, 1600);
+      }, 1400);
     });
 
     envoltorio.appendChild(botao);
