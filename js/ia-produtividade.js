@@ -21,7 +21,7 @@ function copyPrompt(button) {
 (() => {
   if (document.querySelector('script[data-ia-trilha-modulos]')) return;
   const script = document.createElement('script');
-  script.src = '../../js/ia-trilha-modulos.js?v=4';
+  script.src = '../../js/ia-trilha-modulos.js?v=5';
   script.defer = true;
   script.dataset.iaTrilhaModulos = '1';
   document.head.appendChild(script);
