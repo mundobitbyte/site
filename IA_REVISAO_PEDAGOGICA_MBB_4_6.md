@@ -58,8 +58,8 @@ Além disso:
 - projeto da cantina funciona como fio condutor principal;
 - problema, algoritmo, código, previsão e primeira alteração seguem uma sequência única;
 - leitura de código existente foi preservada como situação de transferência;
-- erro de execução nasce depois da alteração;
-- erro lógico nasce da introdução do desconto;
+- erro de execução nasce de uma entrada inválida ao calcular valor médio por item;
+- erro lógico nasce de uma média de vendas que executa sem exceção, mas devolve resultado incorreto;
 - testes são definidos antes da correção para criar critério verificável;
 - ambiente/versão surgem quando o programa funciona em casa e falha no laboratório;
 - verificação de API/biblioteca surge quando a sugestão da IA não é encontrada na documentação;
@@ -67,7 +67,7 @@ Além disso:
 - refatoração nasce da necessidade de reduzir repetição sem mudar o comportamento;
 - segurança usa outra situação, de propósito, porque não faria sentido forçar uma API com segredo dentro da história da cantina;
 - agentes de código de 2026 entram quando a IA passa a alterar vários arquivos, com branch, escopo, diff e testes;
-- laboratório continua exigindo previsão, observação, hipótese, pequena correção e testes.
+- o laboratório final usa um erro de desconto diferente dos exemplos guiados, exigindo transferência do método de depuração.
 
 ### Módulo 6
 - seleção de 10 vagas entre 60 inscrições passa a ser o fio condutor principal;
