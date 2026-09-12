@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded",()=>{
       .replace(/[‘’]/g,"'")
       .replace(/[–—]/g,"-")
       .replace(/→/g,"->")
+      .replace(/deo888cisão/g,"decisão")
+      .replace(/^99\s+(?=Mais do que utilizar computadores)/," ")
       .trim();
   }
 
@@ -29,7 +31,11 @@ document.addEventListener("DOMContentLoaded",()=>{
     const main=doc.querySelector("main");
     if(!main) throw new Error("Conteúdo antigo da TIA não encontrado.");
 
-    const blocks=[];
+    const blocks=[
+      {type:"h1",text:"Tecnologia da Informação em Administração"},
+      {type:"p",text:"Material de apoio - versão anterior do módulo TIA"},
+      {type:"p",text:"Professor Ronaldo Lavestein - Mundo bit Byte"}
+    ];
     const visit=node=>{
       if(node.nodeType!==1) return;
       const tag=node.tagName;
