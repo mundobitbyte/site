@@ -1,0 +1,181 @@
+name: tmp-lapida-moderna-mbb-v2
+
+on:
+  push:
+    branches: [lapidacao-infraestrutura-mbb]
+
+permissions:
+  contents: write
+
+jobs:
+  lapidar:
+    if: ${{ !contains(github.event.head_commit.message, '[moderna-m4-final]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+          fetch-depth: 0
+
+      - name: Lapidar conteúdo moderno
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          files=[
+              Path('js/infraestrutura/moderna-00-03.js'),
+              Path('js/infraestrutura/moderna-04-07.js'),
+              Path('js/infraestrutura/moderna-08-10.js'),
+              Path('js/infraestrutura/moderna-99.js'),
+          ]
+
+          exact={
+            "unit: 'Unidade 1 · Decidir antes de implantar'":"unit: 'Portal de Eventos · Decidir antes de implantar'",
+            "unit: 'Unidade 2 · Contêiner observável'":"unit: 'Portal de Eventos · Contêiner observável'",
+            "unit: 'Unidade 3 · Operar e expor com controle'":"unit: 'Portal de Eventos · Operar e expor com controle'",
+            "unit: 'Unidade 4 · Arquitetura justificável'":"unit: 'Portal de Eventos · Arquitetura justificável'",
+            '<div class="record-box"><strong>A-00 · necessidade e alternativas</strong><p>Guarde requisitos, responsáveis, impacto, restrições, critérios de sucesso e dúvidas. Este registro será confrontado com as medições dos capítulos seguintes.</p></div>':'<div class="note-box compact"><strong>Registro da Evolução · necessidade e alternativas</strong><p>Crie <code>REGISTRO_DA_EVOLUCAO.md</code> e mantenha nele requisitos, responsáveis, impacto, restrições, critérios de sucesso e dúvidas. Confronte esse registro com as medições reais do laboratório antes de ampliar a solução.</p></div>',
+            'O nome da VM, a ISO e os recursos correspondem ao A-00?':'O nome da VM, a ISO e os recursos correspondem à necessidade registrada?',
+            'o custo precisa aparecer no A-02.':'o custo precisa aparecer na comparação de capacidade.',
+            'anexe ao A-03 a origem do repositório':'registre no inventário do runtime a origem do repositório',
+            'com base nos requisitos A-00.':'com base nos requisitos já registrados.',
+            'responsáveis de A-00;':'responsáveis já registrados;',
+            'A-00/A-01: domínio de falha separado':'necessidade + VM: domínio de falha separado',
+            'A-01/A-02/A-03: medidas e tarefas':'VM + capacidade + runtime: medidas e tarefas',
+            'A-04/A-05/A-06':'persistência + Compose + atualização',
+            'A-08/A-09':'implantação + exposição',
+            'A-07 + decisão institucional':'hospedagem + decisão institucional',
+            'cite evidências A-00 a A-09 que sustentam a proposta':'cite as seções e evidências do Registro da Evolução que sustentam a proposta',
+            'Joana recebe um arquivo Compose preparado pelo professor.':'Joana recebe o arquivo Compose da homologação.',
+            'segunda VM preparada pelo professor':'segunda VM do laboratório',
+            'O professor entrega IP, fingerprint e conta individual de Joana.':'A documentação de acesso informa IP, fingerprint e a conta individual de Joana.',
+            'por canal do professor':'por um canal separado de confirmação',
+            'se o professor fornecer':'se houver',
+            'receba do professor três saídas representativas':'receba três saídas representativas do cenário',
+            'O professor aplicou uma condição desconhecida.':'O ambiente contém uma condição controlada cuja causa não foi informada.',
+            '<span class="visual-kicker">Falha controlada · escolha do professor</span>':'<span class="visual-kicker">Ambiente controlado · causa desconhecida</span>',
+            'artefatos A-00 a A-10':'o Registro da Evolução atualizado',
+            'Comparamos inventário real com A-01/A-03/A-05 antes de executar Compose.':'Comparamos o inventário real com as seções de VM, runtime e Compose antes de executar o conjunto.',
+            'Divergências dos A-registros:':'Divergências do Registro da Evolução:',
+            'A-registros atualizados:':'Seções do Registro da Evolução atualizadas:',
+            'A-registros atualizados':'Registro da Evolução atualizado',
+            'OFICINA DE INFRAESTRUTURA MODERNA — MÓDULO 4':'OFICINA DE INFRAESTRUTURA MODERNA — ESCOLA HORIZONTE',
+            '<div class="essence"><strong>Essência do Módulo 4</strong>':'<div class="essence"><strong>Essência da infraestrutura moderna</strong>',
+            '<div class="bridge-box"><strong>Módulo 4 concluído</strong><p>A oficina fecha Infraestrutura Moderna. O Laboratório Integrador da área reutilizará os artefatos dos quatro módulos e introduzirá uma missão única de passagem entre equipes.</p></div>':'<div class="bridge-box"><strong>A infraestrutura agora precisa funcionar como um todo</strong><p>O Portal de Eventos deixou evidências sobre atendimento, rede, servidor, virtualização, contêineres, dados e recuperação. A próxima decisão da Escola Horizonte não pode olhar essas partes isoladamente: outra equipe deverá receber o ambiente, entender o estado e continuar o trabalho sem depender da memória de quem o montou.</p></div>',
+            'preserve o diretório como evidência do exercício.':'preserve o diretório como evidência do teste.',
+            '<td>atualiza artefatos e explicita limites</td>':'<td>atualiza o Registro da Evolução e explicita limites</td>',
+          }
+
+          heading_map={
+            'A-01 · projeto e medição da VM':'Registro da Evolução · VM e medições',
+            'A-02 · comparação de custo':'Registro da Evolução · capacidade e custo',
+            'A-03 · inventário do runtime':'Registro da Evolução · runtime e contêineres',
+            'A-04 · evidência de persistência':'Registro da Evolução · persistência',
+            'A-05 · manifesto implantado':'Registro da Evolução · Compose e serviços',
+            'A-06 · plano de atualização':'Registro da Evolução · atualização e retorno',
+            'A-07 · matriz de decisão':'Registro da Evolução · hospedagem e responsabilidades',
+            'A-08 · implantação remota':'Registro da Evolução · implantação remota',
+            'A-09 · mapa de exposição':'Registro da Evolução · exposição e TLS',
+            'A-10 · decisão arquitetural':'Registro da Evolução · decisão arquitetural',
+          }
+
+          labels={
+            'A-00':'necessidade registrada',
+            'A-01':'projeto e medição da VM',
+            'A-02':'comparação de capacidade e custo',
+            'A-03':'inventário do runtime',
+            'A-04':'evidência de persistência',
+            'A-05':'manifesto Compose',
+            'A-06':'plano de atualização',
+            'A-07':'decisão de hospedagem',
+            'A-08':'implantação remota',
+            'A-09':'mapa de exposição',
+            'A-10':'decisão arquitetural',
+          }
+
+          for p in files:
+              t=p.read_text(encoding='utf-8')
+              for old,new in exact.items():
+                  t=t.replace(old,new)
+              for old,new in heading_map.items():
+                  t=t.replace(f'<strong>{old}</strong>',f'<strong>{new}</strong>')
+              t=t.replace('<div class="record-box">','<div class="note-box compact">')
+              t=re.sub(r'Missão\s+A-\d\d\s*·\s*','Missão · ',t)
+              t=re.sub(r'<strong>E-M\d+\s*·\s*','<strong>',t)
+              t=re.sub(r'<strong>F-M\d+\s*·\s*','<strong>',t)
+              for code,label in labels.items():
+                  t=re.sub(rf'(?<![A-Z0-9]){re.escape(code)}(?![A-Z0-9])',label,t)
+
+              # Bastidores que podem estar dentro de linhas extensas.
+              t=re.sub(r'(?i)\bo professor\b','a equipe responsável pelo laboratório',t)
+              t=re.sub(r'(?i)\bprofessor\b','responsável pelo laboratório',t)
+              t=re.sub(r'(?i)\bos alunos\b','as equipes',t)
+              t=re.sub(r'(?i)\bo aluno\b','a equipe',t)
+              t=re.sub(r'(?i)\balunos\b','equipes',t)
+              t=re.sub(r'(?i)\baluno\b','equipe',t)
+              p.write_text(t,encoding='utf-8')
+
+          fluency={
+            'porta, rede ou mount diverge do manifesto Compose.':'porta, rede ou mount diverge do manifesto Compose aprovado.',
+            'A equipe recebe sintoma, não a etiqueta da falha':'A equipe recebe o sintoma, não a causa pronta',
+            'Guarde Compose revisado sem valores secretos':'Atualize o Registro da Evolução com o Compose revisado sem valores secretos',
+            'Guarde baseline, origem, arquivos transferidos':'Atualize o Registro da Evolução com baseline, origem, arquivos transferidos',
+            'Inclua previsão, comandos, caminho, conteúdo antes/depois':'Atualize o Registro da Evolução com previsão, comandos, caminho, conteúdo antes/depois',
+            'Inclua critérios, pesos, evidências, responsáveis':'Atualize o Registro da Evolução com critérios, pesos, evidências, responsáveis',
+            'Entregue contexto, alternativas, critérios/pesos':'Atualize o Registro da Evolução com contexto, alternativas, critérios/pesos',
+            'pelo responsável pelo laboratório':'pelo responsável do laboratório',
+            'do responsável pelo laboratório':'do responsável do laboratório',
+          }
+          for p in files:
+              t=p.read_text(encoding='utf-8')
+              for old,new in fluency.items():
+                  t=t.replace(old,new)
+              p.write_text(t,encoding='utf-8')
+
+      - name: Validar conteúdo final
+        run: |
+          set -e
+          for f in js/infraestrutura/moderna-00-03.js js/infraestrutura/moderna-04-07.js js/infraestrutura/moderna-08-10.js js/infraestrutura/moderna-99.js; do node --check "$f"; done
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          files=[Path('js/infraestrutura/moderna-00-03.js'),Path('js/infraestrutura/moderna-04-07.js'),Path('js/infraestrutura/moderna-08-10.js'),Path('js/infraestrutura/moderna-99.js')]
+          txt='\n'.join(p.read_text(encoding='utf-8') for p in files)
+          ids=[]
+          for p in files: ids += re.findall(r"\bid:\s*'([^']+)'",p.read_text(encoding='utf-8'))
+          checks=[
+            ('12 aulas únicas',len(ids)==12 and len(set(ids))==12 and txt.count('window.infraestruturaModernLessons.push({')==12),
+            ('ativos preservados',all(x in txt for x in ['SRV-01','APP-LAB-01','VPS-LAB-01'])),
+            ('sem taxonomia A',not re.search(r'(?<![A-Z0-9])A-\d\d(?![A-Z0-9])',txt)),
+            ('sem taxonomia E-M',not re.search(r'\bE-M\d+\b',txt)),
+            ('sem taxonomia F-M',not re.search(r'\bF-M\d+\b',txt)),
+            ('sem record-box','<div class="record-box">' not in txt),
+            ('sem professor/aluno',not re.search(r'(?i)\b(professor|aluno|alunos)\b',txt)),
+            ('sem módulo/capítulo',not re.search(r'(?i)\b(módulo|capítulo)\b',txt)),
+            ('registro único','REGISTRO_DA_EVOLUCAO.md' in txt and txt.count('Registro da Evolução')>=8),
+            ('Docker preservado',all(x in txt for x in ['docker run','docker compose config','docker compose up -d','docker compose down'])),
+            ('implantação preservada','ssh -L' in txt),
+            ('TLS preservado','openssl s_client' in txt),
+            ('virtualização preservada','VirtualBox' in txt and 'snapshot' in txt),
+          ]
+          for name,ok in checks: print(name,':','OK' if ok else 'FALHOU')
+          if not all(ok for _,ok in checks):
+              for p in files:
+                  for i,line in enumerate(p.read_text(encoding='utf-8').splitlines(),1):
+                      if re.search(r'(?i)\b(professor|aluno|alunos|módulo|capítulo)\b|(?<![A-Z0-9])A-\d\d(?![A-Z0-9])|\bE-M\d+\b|\bF-M\d+\b',line):
+                          print('RESÍDUO',p.name,i,' '.join(line.strip().split())[:700],sep=' | ')
+          assert all(ok for _,ok in checks)
+          print('Validação final Infraestrutura Moderna OK.')
+          PY
+          git diff --check
+
+      - name: Commitar e limpar
+        run: |
+          set -e
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git rm .github/workflows/tmp-lapida-moderna-mbb-v2.yml
+          git add js/infraestrutura/moderna-00-03.js js/infraestrutura/moderna-04-07.js js/infraestrutura/moderna-08-10.js js/infraestrutura/moderna-99.js
+          git commit -m "Lapida Infraestrutura Moderna no padrão MbB [moderna-m4-final]"
+          git push origin HEAD:lapidacao-infraestrutura-mbb
