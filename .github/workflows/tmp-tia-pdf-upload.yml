@@ -1,0 +1,44 @@
+name: Temporary TIA PDF upload
+
+on:
+  push:
+    branches:
+      - tmp-tia-pdf-upload-20260912
+    paths:
+      - '.tmp-tia-pdf/READY'
+
+permissions:
+  contents: write
+
+jobs:
+  upload-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout temporary branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reconstruct and verify PDF
+        shell: bash
+        run: |
+          cat .tmp-tia-pdf/chunk_* | tr -d '\n' | base64 -d > /tmp/tia.pdf.xz
+          xz -dc /tmp/tia.pdf.xz > /tmp/TIA_Material_de_Apoio_Versao_Anterior.pdf
+          echo "2459e628b6cf68fbe26f042eaa1dcd2e3919a67fdc1e0c937944c4d7fb3c67db  /tmp/TIA_Material_de_Apoio_Versao_Anterior.pdf" | sha256sum -c -
+
+      - name: Replace PDF on main
+        shell: bash
+        run: |
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git checkout -B main origin/main
+          mkdir -p assets/pdf
+          cp /tmp/TIA_Material_de_Apoio_Versao_Anterior.pdf assets/pdf/TIA_Material_de_Apoio_Versao_Anterior.pdf
+          git add assets/pdf/TIA_Material_de_Apoio_Versao_Anterior.pdf
+          git commit -m "Substitui PDF de apoio da TIA pela versão completa"
+          git push origin HEAD:main
+
+      - name: Remove temporary upload branch
+        if: success()
+        shell: bash
+        run: git push origin --delete tmp-tia-pdf-upload-20260912 || true
