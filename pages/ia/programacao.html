@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Aprenda a usar Inteligência Artificial para compreender problemas, planejar soluções, escrever, testar, revisar e depurar código sem terceirizar o raciocínio de programação."/>
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/ia/programacao.html"/>
+<title>Mundo bit Byte — IA e Programação</title>
+<link href="../../css/ia-programacao.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="topbar"><div class="header-left"><a class="portal-link" href="index.html">← Voltar IA</a><h1>IA e Programação</h1></div><div class="brand">Professor Ronaldo Lavestein</div></div>
+<div class="container">
+<section class="hero">
+<span class="badge">Módulo 5 · IA e Programação</span>
+<h1>Use a IA para programar melhor — não para deixar de aprender programação</h1>
+<p>Você precisa criar um programa simples, pede à IA “faça o código” e, em poucos segundos, recebe dezenas de linhas. Parece ótimo até surgir a primeira alteração: mudar uma regra, corrigir um erro ou explicar por que aquela solução funciona. Se você não entende o código, deixou de ser autor da solução e passou a depender dela.</p>
+<p>Neste módulo, a IA será usada como <strong>parceira de raciocínio</strong>: ajudar a compreender o problema, discutir alternativas, explicar código, sugerir pequenos trechos, criar testes, investigar erros e revisar mudanças. O objetivo continua sendo o mesmo do módulo de Programação do Mundo bit Byte: <strong>entender → experimentar → programar → aplicar</strong>.</p>
+<div class="note warn"><h3>Regra central</h3><p>Se a IA entregar um código que você não consegue explicar, modificar e testar, a tarefa ainda não terminou.</p></div>
+<div class="note idea"><h3>Este módulo não substitui Programação de Computadores</h3><p>Aqui você aprenderá <strong>como trabalhar com IA durante a programação</strong>. Algoritmos, variáveis, decisões, repetições, funções, estruturas de dados, testes e depuração continuam sendo conhecimentos de programação. Se algum conceito ainda for novo, use também o módulo <a href="../programacao.html">Programação de Computadores</a>.</p></div>
+</section>
+
+<section class="card">
+<h2>1. O primeiro pedido não deveria ser “faça o código”</h2>
+<p>Imagine que uma cantina queira informar se o valor recebido é suficiente para pagar uma compra e, quando for, calcular o troco. Antes de pensar em Python, precisamos saber o que entra, o que acontece e o que deve sair.</p>
+<div class="grid-2">
+<div class="note bad"><h3>Pular direto para o código</h3><div class="prompt">Faça um programa em Python para uma cantina.</div><p>A IA terá de adivinhar regras que nunca foram informadas.</p></div>
+<div class="note good"><h3>Começar pelo problema</h3><div class="prompt">Ainda não escreva código. Analise este problema: uma cantina recebe o total da compra e o valor pago. Se o valor pago for menor, deve informar quanto falta; caso contrário, deve informar o troco. Separe entradas, decisões, cálculos e saídas.</div><p>Agora a conversa começa pelo raciocínio.</p></div>
+</div>
+<p>A IA pode ajudar a organizar o problema, mas você deve conferir se a interpretação corresponde à situação real.</p>
+</section>
+
+<section class="card">
+<h2>2. Planeje antes de gerar</h2>
+<p>Depois de entender o problema, peça uma solução em linguagem simples, pseudocódigo ou passos. Isso cria uma ponte entre a necessidade e a sintaxe.</p>
+<div class="flow">
+<div class="step"><strong>Problema</strong>O que precisa ser resolvido?</div>
+<div class="step"><strong>Entradas</strong>Quais dados são necessários?</div>
+<div class="step"><strong>Processamento</strong>O que será calculado ou decidido?</div>
+<div class="step"><strong>Saídas</strong>O que o programa deve responder?</div>
+<div class="step"><strong>Testes</strong>Como saberemos se funcionou?</div>
+</div>
+<div class="prompt">Proponha primeiro um algoritmo em passos numerados. Depois crie três exemplos de entrada e saída esperada. Não escreva Python ainda.</div>
+<div class="note good"><h3>Por que isso é melhor?</h3><p>Se a lógica estiver errada, é mais fácil corrigir cinco passos do que descobrir o problema depois dentro de cinquenta linhas de código.</p></div>
+</section>
+
+<section class="card">
+<h2>3. Código gerado é uma proposta, não uma verdade</h2>
+<p>Agora suponha que o plano foi aprovado e a IA produziu este código:</p>
+<pre class="code">total = float(input("Total da compra: R$ "))
+pago = float(input("Valor pago: R$ "))
+
+if pago &lt; total:
+    print(f"Faltam R$ {total - pago:.2f}")
+else:
+    print(f"Troco: R$ {pago - total:.2f}")</pre>
+<p>Antes de copiar e seguir em frente, faça perguntas que obriguem a compreender a solução.</p>
+<div class="grid-3">
+<div class="note idea"><h3>Explique</h3><p>Por que existe um <code>if</code>? O que significa <code>pago &lt; total</code>?</p></div>
+<div class="note idea"><h3>Preveja</h3><p>O que acontece com total 21 e pagamento 30? E com pagamento 18?</p></div>
+<div class="note idea"><h3>Modifique</h3><p>Você conseguiria acrescentar uma mensagem para pagamento exato?</p></div>
+</div>
+<div class="prompt">Explique este código linha por linha para alguém que está aprendendo decisões em Python. Depois faça duas perguntas para verificar se eu entendi. Não altere o código.</div>
+</section>
+
+<section class="card">
+<h2>4. Peça pequenas mudanças em vez de reconstruir tudo</h2>
+<p>O programa funciona, mas agora a cantina quer tratar pagamento exato separadamente. Não há motivo para pedir “faça tudo novamente”. Uma alteração pequena deve produzir uma mudança pequena e fácil de revisar.</p>
+<div class="grid-2">
+<div class="note bad"><h3>Reescrita ampla</h3><div class="prompt">Refaça o programa melhor e mais completo.</div><p>Além da regra nova, a IA pode mudar nomes, estrutura e partes que já estavam corretas.</p></div>
+<div class="note good"><h3>Alteração cirúrgica</h3><div class="prompt">Preserve o código atual. Altere apenas a decisão para criar três casos: pago menor que total, pago igual ao total e pago maior que total. Mostre primeiro somente o trecho alterado e explique a lógica.</div></div>
+</div>
+<p>Essa forma de trabalhar facilita a comparação entre antes e depois e reduz o risco de introduzir erros em partes já aprovadas.</p>
+</section>
+
+<section class="card">
+<h2>5. Quando der erro, leve evidências — não apenas “não funciona”</h2>
+<p>Você executa um programa e aparece um erro. Para investigar, a IA precisa ver o que aconteceu de verdade: código relevante, mensagem completa, entrada usada e resultado esperado.</p>
+<div class="grid-2">
+<div class="note bad"><h3>Pedido sem evidência</h3><div class="prompt">Meu Python deu erro. Arruma.</div></div>
+<div class="note good"><h3>Pedido investigável</h3><div class="prompt">Ao executar este trecho em Python 3, informei 10 e 0. Recebi a mensagem completa abaixo. Eu esperava impedir a divisão por zero. Explique a causa antes de sugerir alteração.
+
+[cole o trecho]
+[cole a mensagem completa]</div></div>
+</div>
+<div class="note warn"><h3>Não esconda a mensagem de erro</h3><p>O tipo do erro, a linha indicada e o texto da exceção são pistas. Resumir tudo como “deu erro” elimina justamente a evidência mais útil.</p></div>
+</section>
+
+<section class="card">
+<h2>6. Depurar é formular hipótese e testar</h2>
+<p>Nem todo programa errado gera uma mensagem de erro. Às vezes ele executa normalmente e produz um resultado incorreto. Observe:</p>
+<pre class="code">def calcular_media(notas):
+    total = 0
+    for nota in notas:
+        total = nota
+    return total / len(notas)
+
+print(calcular_media([7, 8, 9]))</pre>
+<p>O programa executa, mas retorna <strong>3.0</strong> em vez de <strong>8.0</strong>. Isso é um erro de lógica.</p>
+<div class="prompt">Não corrija ainda. Simule a função passo a passo com [7, 8, 9]. Mostre o valor de total depois de cada repetição e identifique em que momento o comportamento se afasta do objetivo de somar as notas.</div>
+<p>Ao acompanhar os valores, fica visível que <code>total = nota</code> substitui o conteúdo anterior em vez de acumular.</p>
+<div class="note good"><h3>O ciclo de depuração</h3><p>Reproduzir o problema → observar evidências → formular uma hipótese → fazer uma mudança pequena → executar novamente → comparar com o resultado esperado.</p></div>
+</section>
+
+<section class="card">
+<h2>7. Um caso de teste transforma “acho que funciona” em algo verificável</h2>
+<p>Se sabemos o resultado esperado antes de executar, fica mais fácil perceber regressões. Para a função de média, podemos pensar em casos simples:</p>
+<div class="table-wrap"><table><thead><tr><th>Entrada</th><th>Resultado esperado</th><th>Por que testar?</th></tr></thead><tbody>
+<tr><td>[7, 8, 9]</td><td>8.0</td><td>Caso comum.</td></tr>
+<tr><td>[10]</td><td>10.0</td><td>Lista com um único valor.</td></tr>
+<tr><td>[0, 10]</td><td>5.0</td><td>Inclui zero sem ser erro.</td></tr>
+<tr><td>[]</td><td>Precisa de regra definida</td><td>Expõe um caso limite.</td></tr>
+</tbody></table></div>
+<div class="prompt">Com base no comportamento esperado da função, proponha casos de teste comuns e casos limite. Para cada um, diga o que ele tenta revelar. Não altere a função ainda.</div>
+<p>A IA pode ajudar a imaginar cenários que esquecemos, mas é o problema real que define qual resultado é correto.</p>
+</section>
+
+<section class="card">
+<h2>8. Peça explicação de código que você encontrou</h2>
+<p>Nem sempre a IA estará escrevendo código novo. Você pode abrir um projeto existente e encontrar um trecho que não entende. Nesse caso, fornecer o trecho real costuma ser melhor do que perguntar genericamente sobre o assunto.</p>
+<pre class="code">def buscar_aprovados(alunos):
+    return [aluno for aluno in alunos if aluno["media"] &gt;= 6]</pre>
+<div class="prompt">Explique o que esta função recebe e devolve. Depois reescreva a mesma lógica de forma mais explícita, usando um for tradicional, para que um iniciante consiga acompanhar. Por fim, compare as duas versões sem dizer que uma é sempre melhor.</div>
+<p>A IA pode funcionar como uma ponte entre código compacto e conceitos que você já conhece.</p>
+</section>
+
+<section class="card">
+<h2>9. Contexto técnico importa: linguagem, versão e ambiente</h2>
+<p>Um código pode estar correto em um ambiente e falhar em outro. Biblioteca, versão da linguagem, sistema operacional e plataforma podem mudar instruções e recursos disponíveis.</p>
+<div class="grid-2">
+<div class="note bad"><h3>Contexto ausente</h3><div class="prompt">Como faço uma interface para esse programa?</div></div>
+<div class="note good"><h3>Contexto suficiente</h3><div class="prompt">Estou usando Python 3.12 no Windows e executando o projeto localmente no VS Code. Quero uma interface desktop simples apenas para aprendizado. Antes de gerar código, apresente duas opções adequadas e compare complexidade, instalação e portabilidade.</div></div>
+</div>
+<p>Quando uma solução depende de pacote externo, peça também o nome do pacote, a forma de instalação e quais partes do código realmente dependem dele.</p>
+</section>
+
+<section class="card">
+<h2>10. Não aceite bibliotecas, funções ou APIs “de memória” sem verificar</h2>
+<p>A IA pode sugerir um pacote inexistente, um método removido ou uma assinatura diferente da versão que você usa. Quanto mais específica for a tecnologia, maior a importância de verificar documentação e ambiente real.</p>
+<div class="prompt">Você sugeriu a função X da biblioteca Y. Antes de eu usar, indique exatamente qual versão da biblioteca está assumindo, quais parâmetros a função recebe e que parte eu devo confirmar na documentação oficial. Se não tiver certeza, diga explicitamente.</div>
+<div class="note warn"><h3>Em programação, “parece plausível” não basta</h3><p>Código precisa executar no ambiente real e produzir o comportamento esperado. A validação final acontece no programa, nos testes e, quando necessário, na documentação oficial.</p></div>
+</section>
+
+<section class="card">
+<h2>11. Revisão de código: peça crítica, não apenas aprovação</h2>
+<p>Um programa que “funciona” ainda pode ter repetição desnecessária, nomes ruins, tratamento inadequado de entrada ou lógica difícil de manter. A IA pode ajudar a revisar — desde que você defina o que quer avaliar.</p>
+<div class="prompt">Revise este código sem reescrevê-lo. Separe os achados em: CORREÇÃO, LEGIBILIDADE, REPETIÇÃO, TRATAMENTO DE ERROS e TESTABILIDADE. Para cada ponto, explique o impacto. Não proponha alterações cosméticas que não tragam benefício claro.</div>
+<p>Depois da crítica, escolha conscientemente quais mudanças fazem sentido. Não aplique automaticamente uma lista inteira de sugestões.</p>
+</section>
+
+<section class="card">
+<h2>12. Refatorar significa preservar comportamento</h2>
+<p>Refatoração altera a estrutura interna sem mudar aquilo que o usuário espera do programa. Por isso, antes de refatorar, registre exemplos ou testes que representem o comportamento atual.</p>
+<div class="flow">
+<div class="step"><strong>1. Registrar</strong>Qual comportamento deve permanecer?</div>
+<div class="step"><strong>2. Testar</strong>O código atual passa nos casos definidos?</div>
+<div class="step"><strong>3. Alterar</strong>Faça uma mudança estrutural pequena.</div>
+<div class="step"><strong>4. Repetir testes</strong>O comportamento continua igual?</div>
+<div class="step"><strong>5. Revisar</strong>A mudança realmente melhorou o código?</div>
+</div>
+<div class="prompt">Quero reduzir repetição neste código sem alterar entradas, saídas nem regras. Primeiro identifique a duplicação. Depois proponha uma única refatoração pequena e mostre quais testes devo repetir para verificar que o comportamento permaneceu igual.</div>
+</section>
+
+<section class="card">
+<h2>13. Segurança: nunca cole segredos para “facilitar” a ajuda</h2>
+<p>Durante a programação, arquivos podem conter senhas, tokens, chaves de API, strings de conexão e dados pessoais. Normalmente a IA não precisa desses valores reais para explicar ou depurar a estrutura do código.</p>
+<div class="grid-2">
+<div class="note bad"><h3>Expor o valor real</h3><pre class="code">API_KEY = "valor-real-aqui"</pre></div>
+<div class="note good"><h3>Substituir antes de compartilhar</h3><pre class="code">API_KEY = "SUA_CHAVE_AQUI"</pre><p>O formato do código continua visível sem revelar o segredo.</p></div>
+</div>
+<ul class="checklist">
+<li>Remova senhas, tokens e chaves antes de compartilhar trechos.</li>
+<li>Não envie arquivos <code>.env</code> com valores reais.</li>
+<li>Anonimize dados pessoais usados em exemplos.</li>
+<li>Se um segredo foi exposto, não basta apagá-lo do texto: considere revogá-lo e gerar outro.</li>
+</ul>
+</section>
+
+<section class="card">
+<h2>14. Laboratório — corrigindo um programa sem entregar o raciocínio</h2>
+<p>Você recebeu uma função que deveria calcular o preço final de um produto com desconto. Ela executa, mas os resultados estão errados.</p>
+<div class="lab">
+<p><strong>Código recebido:</strong></p>
+<pre class="code">def preco_com_desconto(preco, percentual):
+    desconto = percentual / 100
+    return preco - desconto
+
+print(preco_com_desconto(200, 10))</pre>
+<p><strong>Comportamento esperado:</strong> 10% de R$ 200,00 corresponde a R$ 20,00; portanto, o resultado esperado é R$ 180,00.</p>
+</div>
+<h3>Etapa A — prever</h3>
+<p>Antes de usar IA, faça a conta manualmente e identifique quais operações deveriam acontecer.</p>
+<h3>Etapa B — observar</h3>
+<div class="prompt">Simule esta função passo a passo com preco=200 e percentual=10. Mostre os valores intermediários. Não corrija ainda.</div>
+<h3>Etapa C — formular hipótese</h3>
+<div class="prompt">Compare os valores intermediários com a conta manual. Identifique exatamente qual variável representa uma taxa e qual deveria representar o valor monetário do desconto.</div>
+<h3>Etapa D — corrigir o mínimo</h3>
+<div class="prompt">Agora proponha a menor alteração possível para que desconto represente o valor descontado do preço. Preserve nome da função, parâmetros e retorno.</div>
+<h3>Etapa E — testar</h3>
+<p>Execute pelo menos os casos: R$ 200 com 10%, R$ 100 com 0% e R$ 100 com 100%. Depois pense: percentuais abaixo de 0 ou acima de 100 devem ser aceitos? Essa decisão pertence à regra do sistema, não à IA.</p>
+<div class="note good"><h3>O aprendizado</h3><p>A IA não “consertou por mágica”. Você definiu o esperado, observou valores, localizou a divergência, fez uma mudança pequena e testou.</p></div>
+</section>
+
+<section class="card">
+<h2>15. Desafio — trabalhe com um código seu</h2>
+<p>Escolha um programa pequeno que você já escreveu ou esteja estudando. Pode ser VisuAlg, Python, JavaScript, Java ou outra linguagem que você consiga executar.</p>
+<ol>
+<li>Explique com suas palavras o objetivo do programa.</li>
+<li>Peça à IA para identificar entradas, processamento, decisões e saídas.</li>
+<li>Compare a análise com o que você realmente programou.</li>
+<li>Escolha apenas um trecho e peça uma explicação.</li>
+<li>Crie casos de teste antes de pedir qualquer alteração.</li>
+<li>Peça uma única melhoria ou correção.</li>
+<li>Execute novamente e compare os resultados.</li>
+<li>Explique você mesmo o que mudou e por quê.</li>
+</ol>
+<div class="note warn"><h3>Critério do desafio</h3><p>O exercício só termina quando você consegue responder sem ajuda: <strong>qual era o problema, qual mudança foi feita, por que ela funciona e como você verificou?</strong></p></div>
+</section>
+
+<section class="card">
+<h2>Resumo do módulo</h2>
+<ul class="checklist">
+<li>Comece pelo problema e pelo comportamento esperado, não pelo código.</li>
+<li>Use IA para discutir plano, algoritmo e casos de teste antes da implementação.</li>
+<li>Trate código gerado como proposta que precisa ser compreendida e executada.</li>
+<li>Faça mudanças pequenas para conseguir comparar antes e depois.</li>
+<li>Ao depurar, forneça código relevante, entrada, saída esperada e mensagem de erro completa.</li>
+<li>Use testes para transformar expectativas em verificações reproduzíveis.</li>
+<li>Informe linguagem, versão, ambiente e dependências quando forem relevantes.</li>
+<li>Confirme bibliotecas e APIs no ambiente real e na documentação adequada.</li>
+<li>Peça crítica de código por critérios, não apenas “está bom?”.</li>
+<li>Proteja senhas, tokens, chaves e dados pessoais.</li>
+<li>Se você não consegue explicar e modificar o código, ainda não terminou o trabalho.</li>
+</ul>
+</section>
+
+<section class="card next">
+<div><strong>Próximo passo:</strong> IA, Ética e Sociedade — analisar privacidade, vieses, autoria, desinformação, decisões automatizadas e responsabilidade humana.</div>
+<a href="index.html">Voltar ao painel de IA</a>
+</section>
+<div class="footer">Mundo bit Byte · Inteligência Artificial · IA e Programação</div>
+</div>
+</body>
+</html>
