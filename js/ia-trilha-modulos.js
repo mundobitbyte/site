@@ -17,6 +17,14 @@
     'etica-sociedade': {
       title: 'Jornada de decisão',
       labels: {1:'Qual decisão está sendo tomada?',2:'Dados necessários',3:'Critérios e vieses',4:'Correlação não é causa',5:'Revisão e contestação',6:'Autoria e responsabilidade',7:'Conferir referências',8:'Áudio, imagem e prova',9:'Transparência útil',10:'Benefício, risco e impacto',11:'Automação com limites',12:'Quem responde?',13:'Laboratório',14:'Desafio',15:'Fechamento da trilha'}
+    },
+    'panorama-2026': {
+      title: 'Panorama 2026',
+      labels: {1:'Modelo, sistema e agente',2:'Multimodalidade',3:'Fontes e contexto',4:'Prompt injection',5:'Agentes e ações',6:'IA na programação',7:'Proveniência',8:'Transparência e regulação',9:'Formação em IA',10:'Integração da trilha'},
+      special: {
+        'Checklist MbB para IA em 12 de setembro de 2026': {id:'checklist-2026', label:'Checklist 2026', num:'✓'},
+        'Fontes oficiais consultadas nesta revisão': {id:'fontes-oficiais', label:'Fontes oficiais', num:'↗'}
+      }
     }
   };
 
@@ -94,6 +102,10 @@
             number = parseInt(m[1], 10);
             startedTopics = true;
             current = makePanel('topico-' + number, cfg.labels[number] || text(h2).replace(/^\d+\.\s*/, ''), String(number));
+          } else if (cfg.special && cfg.special[text(h2)]) {
+            var special = cfg.special[text(h2)];
+            startedTopics = true;
+            current = makePanel(special.id, special.label, special.num);
           }
         }
       }
