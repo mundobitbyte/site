@@ -35,6 +35,12 @@ function toggleBox(id) {
   if (box) box.classList.toggle('show');
 }
 
+// Atualização 2026: o endereço principal do ChatGPT passou a ser chatgpt.com.
+// Mantém o HTML antigo funcional sem exigir reescrita repetitiva dos laboratórios aprovados.
+document.querySelectorAll('a[href="https://chat.openai.com/"]').forEach(link => {
+  link.href = 'https://chatgpt.com/';
+});
+
 // Mundo bit Byte — navegação por painel único.
 // Não altera conteúdo; apenas mostra o tópico selecionado sem rolagem longa.
 document.addEventListener('DOMContentLoaded', function(){
