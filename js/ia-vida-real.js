@@ -35,7 +35,6 @@ function toggleBox(id) {
   if (box) box.classList.toggle('show');
 }
 
-// Atualização 2026: endereço principal do ChatGPT.
 document.querySelectorAll('a[href="https://chat.openai.com/"]').forEach(link => {
   link.href = 'https://chatgpt.com/';
 });
@@ -66,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  function showPanel(hash, updateHistory) {
+  function marcarPanel(hash) {
     const destino = normalizarHash(hash);
     const target = document.querySelector(destino);
     if (!target) return;
@@ -74,6 +73,11 @@ document.addEventListener('DOMContentLoaded', function () {
     sections.forEach(section => section.classList.remove('active-panel'));
     target.classList.add('active-panel');
     setActive(destino);
+  }
+
+  function showPanel(hash, updateHistory) {
+    const destino = normalizarHash(hash);
+    marcarPanel(destino);
 
     if (updateHistory && window.location.hash !== destino) {
       history.pushState(null, '', destino);
@@ -83,15 +87,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function configurarModo() {
-    if (isMobile()) {
-      main.classList.remove('panel-nav-ready');
-      sections.forEach(section => section.classList.remove('active-panel'));
-      setActive(window.location.hash || '#inicio');
-      return;
-    }
-
     main.classList.add('panel-nav-ready');
-    showPanel(window.location.hash || '#inicio', false);
+    if (isMobile()) marcarPanel(window.location.hash || '#inicio');
+    else showPanel(window.location.hash || '#inicio', false);
   }
 
   links.forEach(link => {
@@ -99,8 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const hash = this.getAttribute('href');
 
       if (isMobile()) {
-        setActive(hash);
-        return; // deixa a âncora nativa rolar até o tópico
+        marcarPanel(hash);
+        return;
       }
 
       event.preventDefault();
@@ -116,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!hashesValidos.has(hash)) return;
 
     if (isMobile()) {
-      setActive(hash);
+      marcarPanel(hash);
       return;
     }
 
@@ -125,12 +123,12 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   window.addEventListener('hashchange', function () {
-    if (isMobile()) setActive(window.location.hash || '#inicio');
+    if (isMobile()) marcarPanel(window.location.hash || '#inicio');
     else showPanel(window.location.hash || '#inicio', false);
   });
 
   window.addEventListener('popstate', function () {
-    if (isMobile()) setActive(window.location.hash || '#inicio');
+    if (isMobile()) marcarPanel(window.location.hash || '#inicio');
     else showPanel(window.location.hash || '#inicio', false);
   });
 
