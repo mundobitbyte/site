@@ -134,7 +134,11 @@ def devolver(codigo):
 
     item["emprestado_para"] = None
     return f'{item["nome"]} devolvido com sucesso.'</pre>
-<p>Não procure o erro imediatamente. Use os casos definidos na etapa anterior. Como ainda não existe menu, faça um teste provisório chamando as funções diretamente no final do arquivo:</p>
+<div class="note idea"><h3>A assinatura da função mudou</h3><p>Antes, <code>emprestar()</code> recebia apenas o código. Agora ela também precisa do aluno. Portanto, <strong>não deixe no arquivo a chamada antiga</strong> <code>print(emprestar(codigo))</code>. Substitua as duas últimas linhas do programa por:</p></div>
+<pre class="code">codigo = input("Código do equipamento: ")
+aluno = input("Nome do aluno: ")
+print(emprestar(codigo, aluno))</pre>
+<p>Agora vamos reproduzir especificamente a sequência empréstimo → devolução → novo empréstimo. Como ainda não existe menu, <strong>substitua temporariamente</strong> essas três linhas de interação pelas chamadas abaixo:</p>
 <pre class="code">print(emprestar("NB01", "Ana"))
 print(devolver("NB01"))
 print(emprestar("NB01", "Bruno"))</pre>
@@ -153,6 +157,68 @@ Depois de cada etapa, mostre os valores de disponivel e emprestado_para de NB01.
 <p>Ao acompanhar o estado, fica evidente que <code>devolver()</code> remove o responsável, mas nunca devolve <code>disponivel</code> para <code>True</code>.</p>
 <div class="prompt">Agora proponha a menor correção possível. Não altere nomes, estrutura ou mensagens fora do necessário. Depois diga quais testes da tabela anterior precisam ser repetidos.</div>
 <div class="note good"><h3>O ciclo de depuração</h3><p><strong>Reproduzir → observar → localizar evidência → formular hipótese → alterar pouco → repetir testes.</strong> A IA ajudou na investigação, não substituiu o raciocínio.</p></div>
+<div class="lab" style="margin-top:18px">
+<h3>Checkpoint 1 — empréstimo e devolução funcionando em memória</h3>
+<p>Antes de avançar, seu <code>app.py</code> pode ficar assim. Esta é a primeira versão completa do projeto que vamos considerar aprovada:</p>
+<pre class="code">equipamentos = {
+    "NB01": {
+        "nome": "Notebook 01",
+        "disponivel": True,
+        "emprestado_para": None
+    },
+    "CAM01": {
+        "nome": "Câmera 01",
+        "disponivel": True,
+        "emprestado_para": None
+    },
+    "ARD01": {
+        "nome": "Kit Arduino 01",
+        "disponivel": True,
+        "emprestado_para": None
+    }
+}
+
+
+def emprestar(codigo, aluno):
+    codigo = codigo.strip().upper()
+    item = equipamentos.get(codigo)
+
+    if item is None:
+        return "Equipamento não encontrado."
+    if not item["disponivel"]:
+        return "Equipamento indisponível."
+
+    item["disponivel"] = False
+    item["emprestado_para"] = aluno
+    return f'{item["nome"]} emprestado para {aluno}.'
+
+
+def devolver(codigo):
+    codigo = codigo.strip().upper()
+    item = equipamentos.get(codigo)
+
+    if item is None:
+        return "Equipamento não encontrado."
+    if item["disponivel"]:
+        return "Este equipamento já está disponível."
+
+    item["disponivel"] = True
+    item["emprestado_para"] = None
+    return f'{item["nome"]} devolvido com sucesso.'
+
+
+acao = input("Digite E para emprestar ou D para devolver: ").strip().upper()
+codigo = input("Código do equipamento: ")
+
+if acao == "E":
+    aluno = input("Nome do aluno: ")
+    print(emprestar(codigo, aluno))
+elif acao == "D":
+    print(devolver(codigo))
+else:
+    print("Opção inválida.")</pre>
+<div class="note good"><h3>Confira antes de seguir</h3><p>Empreste NB01 para Ana, tente emprestar novamente, devolva e faça um novo empréstimo. Se essas regras funcionam, temos uma base conhecida para a próxima mudança.</p></div>
+</div>
 </section>
 
 <section class="card">
@@ -194,11 +260,105 @@ def carregar_dados():
 <p>Durante a correção, uma resposta da IA sugere <code>Path.makedirs()</code> para criar a pasta. O nome parece plausível, mas o método correto de <code>pathlib.Path</code> para esse caso é <code>mkdir()</code>.</p>
 <div class="prompt">Você sugeriu Path.makedirs(). Antes de alterar meu código, indique a classe e o método exatos que está assumindo, os parâmetros relevantes e o que devo confirmar na documentação oficial do Python. Se o método sugerido não existir, corrija a orientação sem inventar outro.</div>
 <div class="note warn"><h3>Programação tem uma fonte de verdade executável</h3><p>Nome de método, assinatura, versão e comportamento precisam existir no ambiente real. Uma explicação muito segura não transforma uma API inexistente em API válida.</p></div>
-<p>Para salvar com segurança, o projeto pode criar a pasta com algo como <code>Path(ARQUIVO_DADOS).parent.mkdir(parents=True, exist_ok=True)</code> antes de abrir o arquivo para escrita.</p>
+<p>Para salvar com segurança, o projeto pode criar a pasta com <code>Path(ARQUIVO_DADOS).parent.mkdir(parents=True, exist_ok=True)</code> antes de abrir o arquivo para escrita.</p>
+<div class="lab" style="margin-top:18px">
+<h3>Checkpoint 2 — persistência funcionando</h3>
+<p>Agora feche o arco da persistência. Esta versão completa carrega os dados existentes, cria dados iniciais na primeira execução e salva o estado depois de uma operação:</p>
+<pre class="code">import json
+from pathlib import Path
+
+ARQUIVO_DADOS = Path("dados/equipamentos.json")
+
+
+def criar_dados_iniciais():
+    return {
+        "NB01": {
+            "nome": "Notebook 01",
+            "disponivel": True,
+            "emprestado_para": None
+        },
+        "CAM01": {
+            "nome": "Câmera 01",
+            "disponivel": True,
+            "emprestado_para": None
+        },
+        "ARD01": {
+            "nome": "Kit Arduino 01",
+            "disponivel": True,
+            "emprestado_para": None
+        }
+    }
+
+
+def carregar_dados():
+    if not ARQUIVO_DADOS.exists():
+        return criar_dados_iniciais()
+
+    with ARQUIVO_DADOS.open("r", encoding="utf-8") as arquivo:
+        return json.load(arquivo)
+
+
+def salvar_dados(dados):
+    ARQUIVO_DADOS.parent.mkdir(parents=True, exist_ok=True)
+
+    with ARQUIVO_DADOS.open("w", encoding="utf-8") as arquivo:
+        json.dump(dados, arquivo, ensure_ascii=False, indent=2)
+
+
+equipamentos = carregar_dados()
+
+
+def emprestar(codigo, aluno):
+    codigo = codigo.strip().upper()
+    item = equipamentos.get(codigo)
+
+    if item is None:
+        return "Equipamento não encontrado."
+    if not item["disponivel"]:
+        return "Equipamento indisponível."
+
+    item["disponivel"] = False
+    item["emprestado_para"] = aluno
+    return f'{item["nome"]} emprestado para {aluno}.'
+
+
+def devolver(codigo):
+    codigo = codigo.strip().upper()
+    item = equipamentos.get(codigo)
+
+    if item is None:
+        return "Equipamento não encontrado."
+    if item["disponivel"]:
+        return "Este equipamento já está disponível."
+
+    item["disponivel"] = True
+    item["emprestado_para"] = None
+    return f'{item["nome"]} devolvido com sucesso.'
+
+
+acao = input("Digite E para emprestar ou D para devolver: ").strip().upper()
+codigo = input("Código do equipamento: ")
+
+if acao == "E":
+    aluno = input("Nome do aluno: ")
+    resultado = emprestar(codigo, aluno)
+elif acao == "D":
+    resultado = devolver(codigo)
+else:
+    resultado = "Opção inválida."
+
+if acao in ("E", "D"):
+    salvar_dados(equipamentos)
+
+print(resultado)</pre>
+<div class="note good"><h3>Teste de continuidade</h3><p>Empreste NB01, encerre o programa e execute novamente. Se NB01 continuar indisponível, a persistência está realmente funcionando. O arquivo JSON deve ser criado automaticamente; você não precisa criá-lo à mão.</p></div>
+<div class="note warn"><h3>O que ainda não estamos escondendo</h3><p>Esta versão trata a ausência do arquivo como primeira execução. Se o JSON existir mas estiver corrompido, o erro continua aparecendo para ser investigado; não estamos transformando todo problema de arquivo em “comece do zero”.</p></div>
+</div>
+<div class="note idea" style="margin-top:18px"><h3>Fim da primeira semana</h3><p>Você recebeu um programa simples, entendeu o comportamento, definiu requisitos, encontrou e corrigiu um bug e fez o estado sobreviver ao encerramento. Na segunda semana, o problema muda: <strong>como preparar esse projeto para ser testado, revisado e continuado por outras pessoas?</strong></p></div>
 </section>
 
 <section class="card">
-<h2>10. Na semana seguinte, outro aluno precisa testar o projeto — e o arquivo único começa a atrapalhar</h2>
+<h2>10. Segunda semana — outro aluno precisa testar o projeto, e o arquivo único começa a atrapalhar</h2>
 <p>O <code>app.py</code> agora lê teclado, altera dados, salva arquivo e contém todas as regras. Importar o arquivo para testar uma função também dispara o programa interativo. O problema deixou de ser “código bonito”; virou <strong>testabilidade e manutenção</strong>.</p>
 <div class="prompt">Revise a estrutura atual sem reescrever tudo. Quero separar apenas o necessário para que as regras de empréstimo e devolução possam ser testadas sem executar input(). Identifique responsabilidades misturadas e proponha uma divisão mínima de arquivos. Preserve o comportamento já aprovado.</div>
 <p>Uma divisão possível, depois de revisada pela equipe, é:</p>
@@ -208,7 +368,7 @@ def carregar_dados():
 ├── dados/
 │   └── equipamentos.json
 └── test_emprestimos.py</pre>
-<div class="note idea"><h3>Agora a refatoração tem motivo</h3><p><code>app.py</code> cuida da interação. <code>emprestimos.py</code> concentra regras que podem ser chamadas e testadas. Não dividimos arquivos para “parecer profissional”; dividimos porque uma necessidade concreta apareceu.</p></div>
+<div class="note idea"><h3>Agora a refatoração tem motivo</h3><p><code>app.py</code> cuida da interação e da persistência. <code>emprestimos.py</code> concentra regras que podem ser chamadas e testadas. Não dividimos arquivos para “parecer profissional”; dividimos porque uma necessidade concreta apareceu.</p></div>
 <p>Para os testes ficarem independentes entre si, a equipe também deixa de esconder os dados numa variável global. O núcleo de <code>emprestimos.py</code> passa a receber explicitamente o dicionário que deve alterar:</p>
 <pre class="code">def criar_dados_iniciais():
     return {
@@ -256,13 +416,27 @@ def devolver(dados, codigo):
     item["disponivel"] = True
     item["emprestado_para"] = None
     return f'{item["nome"]} devolvido com sucesso.'</pre>
-<p>Agora cada teste pode criar seus próprios dados, executar uma regra e conferir o resultado sem depender do que outro teste fez antes. <code>app.py</code> e a persistência continuam responsáveis por carregar e salvar o estado real.</p>
+<p>Agora cada teste pode criar seus próprios dados, executar uma regra e conferir o resultado sem depender do que outro teste fez antes. <code>app.py</code> continua responsável por carregar e salvar o estado real.</p>
 </section>
 
 <section class="card">
 <h2>11. Os testes deixam de ser uma tabela no caderno e passam a proteger mudanças futuras</h2>
-<p>Os casos que você escreveu antes agora podem virar testes automatizados. Um deles registra justamente o bug que já aconteceu:</p>
-<pre class="code">def test_devolver_libera_equipamento():
+<p>Até aqui usamos casos de teste escritos e execuções manuais. Para repetir essas verificações com rapidez, a equipe escolhe <strong>pytest</strong>, uma ferramenta externa de testes para Python. Ela não faz parte da biblioteca padrão; por isso a dependência e o ambiente precisam ficar explícitos.</p>
+<div class="note idea"><h3>Prepare um ambiente do projeto</h3><p>Crie um ambiente virtual e instale o pytest nele. Execute apenas a linha de ativação correspondente ao seu sistema:</p></div>
+<pre class="code">python -m venv .venv
+
+# Windows
+.venv\Scripts\activate
+
+# Linux/macOS
+source .venv/bin/activate
+
+python -m pip install pytest</pre>
+<p>Agora crie <code>test_emprestimos.py</code>. Repare que o teste importa explicitamente as funções que acabou de separar:</p>
+<pre class="code">from emprestimos import criar_dados_iniciais, emprestar, devolver
+
+
+def test_devolver_libera_equipamento():
     dados = criar_dados_iniciais()
 
     emprestar(dados, "NB01", "Ana")
@@ -270,21 +444,68 @@ def devolver(dados, codigo):
 
     assert dados["NB01"]["disponivel"] is True
     assert dados["NB01"]["emprestado_para"] is None</pre>
+<p>Na pasta do projeto, execute:</p>
+<pre class="code">python -m pytest -q</pre>
 <p>Esse teste não existe para agradar a ferramenta. Ele existe para impedir que uma mudança futura faça o mesmo defeito voltar silenciosamente.</p>
 <div class="prompt">Com base nas regras já aprovadas do projeto, proponha testes para: empréstimo válido, segundo empréstimo recusado, devolução, código inexistente e normalização do código. Para cada teste, explique qual regra ele protege. Não crie regras novas.</div>
 <div class="note good"><h3>Teste não substitui requisito</h3><p>A IA pode sugerir casos. Quem define o resultado correto continua sendo a regra do sistema que você conhece e aprovou.</p></div>
+<div class="lab" style="margin-top:18px">
+<h3>Checkpoint 3 — projeto preparado para testes</h3>
+<p>Neste ponto, você já tem o <code>emprestimos.py</code> mostrado acima e o <code>test_emprestimos.py</code>. O <code>app.py</code> fica responsável pela interação e pela persistência:</p>
+<pre class="code">import json
+from pathlib import Path
+
+from emprestimos import criar_dados_iniciais, emprestar, devolver
+
+ARQUIVO_DADOS = Path("dados/equipamentos.json")
+
+
+def carregar_dados():
+    if not ARQUIVO_DADOS.exists():
+        return criar_dados_iniciais()
+
+    with ARQUIVO_DADOS.open("r", encoding="utf-8") as arquivo:
+        return json.load(arquivo)
+
+
+def salvar_dados(dados):
+    ARQUIVO_DADOS.parent.mkdir(parents=True, exist_ok=True)
+
+    with ARQUIVO_DADOS.open("w", encoding="utf-8") as arquivo:
+        json.dump(dados, arquivo, ensure_ascii=False, indent=2)
+
+
+dados = carregar_dados()
+acao = input("Digite E para emprestar ou D para devolver: ").strip().upper()
+codigo = input("Código do equipamento: ")
+
+if acao == "E":
+    aluno = input("Nome do aluno: ")
+    resultado = emprestar(dados, codigo, aluno)
+elif acao == "D":
+    resultado = devolver(dados, codigo)
+else:
+    resultado = "Opção inválida."
+
+if acao in ("E", "D"):
+    salvar_dados(dados)
+
+print(resultado)</pre>
+<p>O estado do projeto agora está fechado: <code>emprestimos.py</code> contém as regras, <code>app.py</code> cuida da execução real e <code>test_emprestimos.py</code> protege comportamentos já aprovados.</p>
+</div>
 </section>
 
 <section class="card">
 <h2>12. “Na minha máquina funciona” — agora o problema é ambiente, não lógica</h2>
-<p>Um colega organiza os testes com <code>pytest</code>. No computador dele tudo passa. No laboratório da escola aparece:</p>
+<p>Um colega recebe a pasta do projeto e tenta rodar os testes em outro computador. No computador original tudo passa. No laboratório da escola aparece:</p>
 <pre class="code">ModuleNotFoundError: No module named 'pytest'</pre>
-<p>A regra de empréstimo não ficou errada. O ambiente não possui a dependência usada para executar os testes.</p>
+<p>A regra de empréstimo não ficou errada. O novo ambiente ainda não possui a dependência usada para executar os testes.</p>
 <div class="grid-2">
 <div class="note bad"><h3>Diagnóstico sem contexto</h3><div class="prompt">Por que meu teste não funciona?</div></div>
 <div class="note good"><h3>Contexto que muda a resposta</h3><div class="prompt">Os testes rodam em outro computador, mas neste laboratório Python 3.12 informa ModuleNotFoundError: No module named 'pytest'. Antes de mandar instalar qualquer coisa, explique o que preciso verificar sobre interpretador selecionado, ambiente virtual, instalação do pacote e registro de dependências do projeto.</div></div>
 </div>
 <p>Versão do Python, interpretador selecionado, ambiente virtual e dependências fazem parte do contexto técnico. Código idêntico pode se comportar de forma diferente quando esse contexto muda.</p>
+<div class="note idea"><h3>Deixe a dependência visível</h3><p>Depois que o ambiente estiver correto, registre as dependências do projeto de forma que outra pessoa saiba o que precisa instalar. Em um projeto simples de estudo, uma opção é gerar um <code>requirements.txt</code> a partir do ambiente controlado:</p><div class="prompt">python -m pip freeze &gt; requirements.txt</div><p>Em projetos maiores, dependências de desenvolvimento podem ser separadas das dependências necessárias para executar a aplicação.</p></div>
 </section>
 
 <section class="card">
@@ -305,7 +526,7 @@ def devolver(dados, codigo):
 
 <section class="card">
 <h2>14. O professor pede uma revisão antes de outra turma assumir o projeto</h2>
-<p>Agora existe algo concreto para revisar: regras separadas em <code>emprestimos.py</code>, interface em <code>app.py</code>, persistência e testes. A revisão deixa de ser “deixe meu código melhor”.</p>
+<p>Agora existe algo concreto para revisar: use o estado do <strong>Checkpoint 3</strong> — <code>emprestimos.py</code>, <code>app.py</code> e <code>test_emprestimos.py</code>. Não envie o JSON real se ele contiver nomes de alunos; use dados fictícios ou apenas os arquivos de código necessários.</p>
 <div class="prompt">Revise este projeto sem editar ainda. Organize os achados em:
 - CORREÇÃO: comportamento que pode estar errado;
 - LEGIBILIDADE: algo que dificulta entender;
@@ -318,8 +539,9 @@ Para cada achado, cite o arquivo e o trecho. Não proponha mudanças apenas cosm
 </section>
 
 <section class="card">
-<h2>15. Sexta-feira — uma IA com acesso ao repositório pode agir, não apenas sugerir</h2>
+<h2>15. Sexta-feira da segunda semana — uma IA com acesso ao repositório pode agir, não apenas sugerir</h2>
 <p>Até aqui você poderia copiar trechos para um chatbot. Agora imagine um agente de programação conectado ao projeto. Ele consegue localizar arquivos, editá-los e executar testes. Isso é poderoso, mas amplia o impacto de uma instrução ruim.</p>
+<div class="note idea"><h3>Dois termos antes de continuar</h3><p><strong>Branch</strong> é uma linha separada de trabalho: você pode experimentar uma mudança sem alterar diretamente a versão principal do projeto.</p><p><strong>Diff</strong> é a comparação que mostra exatamente o que foi adicionado, removido ou alterado entre duas versões.</p><p>Você não precisa aprender Git inteiro aqui. Para aprofundar esses conceitos, consulte o módulo <a href="../git.html"><strong>Git/GitHub</strong></a>.</p></div>
 <div class="note warn"><h3>Novo pedido do laboratório</h3><p>Além de emprestar e devolver, o sistema deve permitir <strong>reservar</strong> um equipamento disponível para uma aula futura. A reserva não pode marcar o equipamento como emprestado e deve poder ser cancelada.</p></div>
 <div class="grid-2">
 <div class="note bad"><h3>Delegação sem controle</h3><div class="prompt">Adicione reservas no projeto inteiro e corrija o que precisar.</div></div>
