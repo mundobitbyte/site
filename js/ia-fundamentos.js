@@ -112,6 +112,28 @@ document.addEventListener('DOMContentLoaded', function () {
     link.href = 'https://chatgpt.com/';
   });
 
+  const laboratorioD = Array.from(document.querySelectorAll('#primeiros-laboratorios .note')).find(note => {
+    const titulo = note.querySelector('h3');
+    return titulo && titulo.textContent.includes('Laboratório D');
+  });
+  const promptLaboratorioD = laboratorioD ? laboratorioD.querySelector('.prompt') : null;
+  if (promptLaboratorioD) {
+    promptLaboratorioD.textContent = `Compare o material didático abaixo e classifique cada afirmação da explicação como CONFIRMADO PELA FONTE, INTERPRETAÇÃO PLAUSÍVEL ou NÃO SUSTENTADO PELO TRECHO. Não use conhecimento externo para preencher o que a fonte não diz.
+
+TRECHO DIDÁTICO DE DOCUMENTAÇÃO:
+"O aplicativo cria uma cópia local automática a cada 10 minutos. Quando há conexão disponível, essa cópia pode ser sincronizada com a nuvem. Este trecho não informa por quanto tempo versões anteriores são mantidas."
+
+EXPLICAÇÃO PARA ANALISAR:
+"O aplicativo cria cópias locais a cada 10 minutos. Quando existe conexão, essas cópias podem ser sincronizadas com a nuvem, o que ajuda a reduzir o risco de perda entre salvamentos. Além disso, o sistema mantém um histórico de versões por 30 dias."
+
+Explique brevemente por que cada trecho recebeu essa classificação.`;
+  }
+
+  const tituloTutor = document.querySelector('#lab5-estudar-sem-copiar .note.good h3');
+  if (tituloTutor) {
+    tituloTutor.textContent = 'MODELO REUTILIZÁVEL — use quando tiver um exercício real';
+  }
+
   const praticasCopiaveis = [
     ...document.querySelectorAll('#aprendizagem .prompt'),
     ...document.querySelectorAll('#geracao-respostas .prompt'),
