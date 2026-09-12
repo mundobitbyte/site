@@ -1,0 +1,22 @@
+name: tmp-audita-infra-final
+on:
+  push:
+    branches:
+      - lapidacao-infraestrutura-mbb
+    paths:
+      - .github/workflows/tmp-audita-infra-final.yml
+permissions:
+  contents: read
+jobs:
+  auditar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+      - name: Validar JavaScript
+        run: |
+          set -e
+          for f in js/infraestrutura/*.js js/infraestrutura.js; do node --check "$f"; done
+      - name: Auditoria estrutural e pedagógica
+        run: node scripts/tmp-audita-infra-final.mjs
