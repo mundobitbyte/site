@@ -134,7 +134,11 @@ def devolver(codigo):
 
     item["emprestado_para"] = None
     return f'{item["nome"]} devolvido com sucesso.'</pre>
-<p>Não procure o erro imediatamente. Use os casos definidos na etapa anterior. Empreste NB01, devolva e tente emprestar novamente.</p>
+<p>Não procure o erro imediatamente. Use os casos definidos na etapa anterior. Como ainda não existe menu, faça um teste provisório chamando as funções diretamente no final do arquivo:</p>
+<pre class="code">print(emprestar("NB01", "Ana"))
+print(devolver("NB01"))
+print(emprestar("NB01", "Bruno"))</pre>
+<p>Execute as três linhas na mesma execução. Assim, o segundo empréstimo depende exatamente do estado deixado pelas chamadas anteriores.</p>
 <div class="note warn"><h3>O resultado surpreende</h3><p>A função informa que a devolução foi concluída, mas o próximo empréstimo continua sendo recusado. Não há mensagem vermelha. O programa simplesmente mantém um estado incoerente.</p></div>
 </section>
 
@@ -205,6 +209,54 @@ def carregar_dados():
 │   └── equipamentos.json
 └── test_emprestimos.py</pre>
 <div class="note idea"><h3>Agora a refatoração tem motivo</h3><p><code>app.py</code> cuida da interação. <code>emprestimos.py</code> concentra regras que podem ser chamadas e testadas. Não dividimos arquivos para “parecer profissional”; dividimos porque uma necessidade concreta apareceu.</p></div>
+<p>Para os testes ficarem independentes entre si, a equipe também deixa de esconder os dados numa variável global. O núcleo de <code>emprestimos.py</code> passa a receber explicitamente o dicionário que deve alterar:</p>
+<pre class="code">def criar_dados_iniciais():
+    return {
+        "NB01": {
+            "nome": "Notebook 01",
+            "disponivel": True,
+            "emprestado_para": None
+        },
+        "CAM01": {
+            "nome": "Câmera 01",
+            "disponivel": True,
+            "emprestado_para": None
+        },
+        "ARD01": {
+            "nome": "Kit Arduino 01",
+            "disponivel": True,
+            "emprestado_para": None
+        }
+    }
+
+
+def emprestar(dados, codigo, aluno):
+    codigo = codigo.strip().upper()
+    item = dados.get(codigo)
+
+    if item is None:
+        return "Equipamento não encontrado."
+    if not item["disponivel"]:
+        return "Equipamento indisponível."
+
+    item["disponivel"] = False
+    item["emprestado_para"] = aluno
+    return f'{item["nome"]} emprestado para {aluno}.'
+
+
+def devolver(dados, codigo):
+    codigo = codigo.strip().upper()
+    item = dados.get(codigo)
+
+    if item is None:
+        return "Equipamento não encontrado."
+    if item["disponivel"]:
+        return "Este equipamento já está disponível."
+
+    item["disponivel"] = True
+    item["emprestado_para"] = None
+    return f'{item["nome"]} devolvido com sucesso.'</pre>
+<p>Agora cada teste pode criar seus próprios dados, executar uma regra e conferir o resultado sem depender do que outro teste fez antes. <code>app.py</code> e a persistência continuam responsáveis por carregar e salvar o estado real.</p>
 </section>
 
 <section class="card">
