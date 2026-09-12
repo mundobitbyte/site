@@ -1,0 +1,89 @@
+from pathlib import Path
+import re
+
+p=Path('js/infraestrutura/integrador-99.js')
+t=p.read_text(encoding='utf-8')
+
+repl={
+    "unit: 'Fechamento da área · Projeto de plantão'":"unit: 'Plantão da Feira · Passagem entre equipes'",
+    "objective: 'Integrar os quatro módulos em uma missão realista: preparar ou recuperar um pequeno serviço, provar segurança e continuidade e transferir a operação para outra equipe.'":"objective: 'Assumir o ambiente da Feira de Projetos, recuperar ou preparar funções autorizadas, provar segurança e continuidade e transferir o plantão para outra equipe.'",
+    "O ambiente inclui rede documentada, <strong>SRV-01</strong>, APP-LAB-01/VPS-LAB-01 e registros dos módulos anteriores. Há dados fictícios de teste e documentação parcial. O professor aplicará uma ou mais falhas sem revelar a causa.":"O ambiente inclui rede documentada, <strong>SRV-01</strong>, APP-LAB-01/VPS-LAB-01, o Registro de Suporte da SEC-02, o Registro da Rede, o Registro do Servidor e o Registro da Evolução. Há dados fictícios de teste e documentação parcial. Uma ou mais condições controladas podem divergir do estado esperado, sem causa informada.",
+    "<strong>M1 · estação e sistema</strong><span>chamado, inventário, baseline, acesso, logs, manutenção e recuperação</span>":"<strong>Registro de Suporte · SEC-02</strong><span>chamado, inventário, baseline, acesso, logs, manutenção e recuperação</span>",
+    "<strong>R-00–R-09 · rede</strong><span>topologia, portas, endereços, DNS, serviços, segmentação e Wi-Fi</span>":"<strong>Registro da Rede</strong><span>topologia, portas, endereços, DNS, serviços, segmentação e Wi-Fi</span>",
+    "<strong>S-00–S-10 · servidor</strong><span>identidades, storage, SSH, systemd, Nginx, Samba, UFW e backup</span>":"<strong>Registro do Servidor</strong><span>identidades, armazenamento, SSH, systemd, Nginx, Samba, UFW e backup</span>",
+    "<strong>A-00–A-10 · arquitetura</strong><span>requisitos, VM, Docker, Compose, persistência, exposição e decisão</span>":"<strong>Registro da Evolução</strong><span>requisitos, VM, Docker, Compose, persistência, exposição e decisão</span>",
+    "<h3>Falhas controladas — área do professor</h3>":"<h3>Possíveis fronteiras de divergência</h3>",
+    "<span class=\"visual-kicker\">Não revelar a seleção à equipe</span>":"<span class=\"visual-kicker\">Ambiente controlado · causa não informada</span>",
+    "O professor fornece apenas relato, impacto e condição inicial. A etiqueta acima entra no gabarito, não no chamado.":"O chamado informa relato, impacto e condição inicial. A causa não vem pronta: a equipe precisa separar hipóteses pelas evidências.",
+    "<h3>Pacote de evidências da área</h3>":"<h3>Evidências do plantão</h3>",
+    "Artefatos M1 / R / S / A consultados:":"Registros consultados — Suporte / Rede / Servidor / Evolução:",
+    "<div class=\"essence\"><strong>Infraestrutura e Sistemas concluída</strong>":"<div class=\"essence\"><strong>Essência do plantão</strong>",
+    "<div class=\"bridge-box\"><strong>Encerramento</strong><p>Este laboratório fecha a área. Ele não inicia outro módulo nem transforma o cenário didático em produção. O produto final é um ambiente explicado e um plantão que outra equipe consegue assumir.</p></div>":"<div class=\"bridge-box\"><strong>Passagem concluída</strong><p>A equipe das 12h recebe um ambiente explicado, sabe o que funciona, o que ainda está em risco, onde estão as evidências e qual teste repetir primeiro. O trabalho deixa de depender da memória de quem estava no plantão anterior.</p></div>",
+}
+for a,b in repl.items():
+    if a not in t:
+        print('AVISO trecho não encontrado:',a[:80])
+    t=t.replace(a,b)
+
+start='<h3>Missão em 20 movimentos</h3>'
+end='<div class="mbb-pause-question">'
+if start not in t or end not in t:
+    raise SystemExit('bloco missão não encontrado')
+before,rest=t.split(start,1)
+_,after=rest.split(end,1)
+mission='''<h3>Missão do plantão</h3>
+    <div class="task-box"><strong>Fase 1 · receber e compreender</strong><ol><li><strong>Identifique o impacto:</strong> pessoa, função, ativo, origem, horário, condição e prioridade.</li><li><strong>Compare os quatro registros:</strong> Suporte, Rede, Servidor e Evolução; marque divergências, lacunas e o estado que deveria existir.</li><li><strong>Defina limites:</strong> dados, público, janela, autorização, exposição, recuperação e critérios de parada.</li></ol></div>
+    <div class="task-box"><strong>Fase 2 · proteger e preparar</strong><ol start="4"><li><strong>Registre o baseline:</strong> estação, caminho de rede, servidor, VM, serviço, portas, dados e capacidade relevantes para a função.</li><li><strong>Confirme a arquitetura recebida:</strong> identidades, menor privilégio, Compose/imagens, digests, volumes, escutas e alcance permitido/negado.</li><li><strong>Prove recuperação antes de arriscar:</strong> faça backup autorizado e restaure uma amostra em destino separado.</li></ol></div>
+    <div class="task-box"><strong>Fase 3 · investigar e intervir</strong><ol start="7"><li><strong>Reproduza a função:</strong> teste com a pessoa/origem do cenário e correlacione horário, log e mensagem sem alterar o ambiente por impulso.</li><li><strong>Formule H1 e H2:</strong> escreva o que cada hipótese prevê e escolha o teste observacional de menor risco que melhor as separa.</li><li><strong>Decida:</strong> faça uma única mudança autorizada com rollback preparado ou pare e encaminhe quando o risco superar a evidência.</li></ol></div>
+    <div class="task-box"><strong>Fase 4 · validar e passar</strong><ol start="10"><li><strong>Valide novamente:</strong> repita a função principal e um teste relacionado, incluindo persistência, log e uma negação quando pertinente.</li><li><strong>Atualize somente o que mudou:</strong> registre antes/depois, limite da conclusão, risco residual, recuperação e pendências nos quatro registros correspondentes.</li><li><strong>Entregue o plantão:</strong> a equipe receptora deve localizar as evidências e repetir um teste sem ajuda de quem realizou a intervenção.</li></ol></div>
+
+    '''
+t=before+mission+end+after
+
+t=re.sub(r'<strong>F-I\d+\s*·\s*','<strong>',t)
+t=re.sub(r'<strong>EI-\d+\s*·\s*','<strong>',t)
+t=re.sub(r'\s+—\s+EI-\d+(?:/EI-\d+)?','',t)
+t=re.sub(r'\bEI-\d+\b','',t)
+
+small={
+    '<strong>estação</strong>':'<strong>Estação</strong>',
+    '<strong>rede/DNS</strong>':'<strong>Rede e DNS</strong>',
+    '<strong>identidade</strong>':'<strong>Identidade</strong>',
+    '<strong>armazenamento</strong>':'<strong>Armazenamento</strong>',
+    '<strong>systemd/serviço</strong>':'<strong>Serviço e systemd</strong>',
+    '<strong>firewall/porta</strong>':'<strong>Firewall e porta</strong>',
+    '<strong>container/Compose</strong>':'<strong>Contêiner e Compose</strong>',
+    '<strong>volume</strong>':'<strong>Volume</strong>',
+    '<strong>certificado</strong>':'<strong>TLS e certificado</strong>',
+    '<strong>capacidade</strong>':'<strong>Capacidade</strong>',
+    '<strong>chamado</strong>':'<strong>Chamado e impacto</strong>',
+    '<strong>estado</strong>':'<strong>Estado comparado</strong>',
+    '<strong>arquitetura</strong>':'<strong>Decisão de arquitetura</strong>',
+    '<strong>implantação</strong>':'<strong>Implantação</strong>',
+    '<strong>segurança</strong>':'<strong>Segurança e limites</strong>',
+    '<strong>continuidade</strong>':'<strong>Continuidade e recuperação</strong>',
+    '<strong>investigação</strong>':'<strong>Investigação</strong>',
+    '<strong>antes/depois</strong>':'<strong>Validação antes/depois</strong>',
+    '<strong>passagem</strong>':'<strong>Passagem</strong>',
+    'registros dos quatro módulos':'quatro registros operacionais',
+    'dos quatro módulos':'dos quatro registros operacionais',
+}
+for a,b in small.items():
+    t=t.replace(a,b)
+
+p.write_text(t,encoding='utf-8')
+
+checks=[
+    ('uma missão',t.count('window.infraestruturaIntegratorLessons.push({')==1),
+    ('ativos',all(x in t for x in ['SEC-02','LAB-06','SRV-01','APP-LAB-01','VPS-LAB-01'])),
+    ('quatro registros',all(x in t for x in ['Registro de Suporte','Registro da Rede','Registro do Servidor','Registro da Evolução'])),
+    ('12 decisões','Missão do plantão' in t and 'start="10"' in t and '20 movimentos' not in t),
+    ('sem taxonomia',not re.search(r'(?<![A-Z0-9])(?:R-\d\d|S-\d\d|A-\d\d|EI-\d+|F-I\d+)(?![A-Z0-9])',t)),
+    ('sem bastidor',not re.search(r'(?i)\b(professor|aluno|módulo|módulos|capítulo|capítulos)\b',t)),
+    ('diagnóstico',all(x in t for x in ['H1','H2','rollback','restaura','logs'])),
+    ('moderno',all(x in t for x in ['Compose','digest','volume','TLS'])),
+]
+for n,o in checks:
+    print(n,':','OK' if o else 'FALHOU')
+if not all(o for _,o in checks):
+    raise SystemExit('validação do Integrador falhou')
