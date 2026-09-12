@@ -20,6 +20,12 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
+
+          p=Path('js/infraestrutura/conteudo-00-03.js')
+          t=p.read_text(encoding='utf-8')
+          t=t.replace('Esses dados vieram do inventário iniciado no capítulo anterior;', 'O inventário do Chamado 014 já registra esses dados;')
+          p.write_text(t,encoding='utf-8')
+
           p=Path('js/infraestrutura/conteudo-04-06.js')
           t=p.read_text(encoding='utf-8')
           t=t.replace('Interface reconhecida; sem aprofundar diagnóstico de rede neste módulo.','Interface reconhecida e função de conexão verificada; falhas de caminho exigem investigação própria.')
@@ -31,27 +37,36 @@ jobs:
           p.write_text(t,encoding='utf-8')
       - name: Validar
         run: |
-          node --check js/infraestrutura/conteudo-04-06.js
-          node --check js/infraestrutura/conteudo-07-10.js
+          set -e
+          for f in js/infraestrutura/conteudo-00-03.js js/infraestrutura/conteudo-04-06.js js/infraestrutura/conteudo-07-10.js js/infraestrutura/conteudo-99.js; do node --check "$f"; done
           python - <<'PY'
           from pathlib import Path
           files=[Path('js/infraestrutura/conteudo-00-03.js'),Path('js/infraestrutura/conteudo-04-06.js'),Path('js/infraestrutura/conteudo-07-10.js'),Path('js/infraestrutura/conteudo-99.js')]
+          txt='\n'.join(p.read_text(encoding='utf-8') for p in files)
+          assert txt.count('window.infraestruturaLessons.push({') == 12
+          assert '<div class="record-box">' not in txt
+          assert 'E-01 ·' not in txt and 'E-06 ·' not in txt
+          assert 'O Módulo 1 termina aqui' not in txt
           bad=[]
+          allowed=['módulo de memória','módulo de 8 gb','módulos e placas','o módulo encaixou']
           for p in files:
               for i,line in enumerate(p.read_text(encoding='utf-8').splitlines(),1):
                   low=line.lower()
-                  if ('módulo' in low or 'capítulo' in low) and not any(x in low for x in ['módulo de memória','módulo de 8 gb','módulos e placas']):
+                  if ('módulo' in low or 'capítulo' in low) and not any(x in low for x in allowed):
                       bad.append((str(p),i,line.strip()))
           print('Ocorrências curriculares remanescentes:', len(bad))
           for x in bad: print(*x, sep=':')
           assert not bad, 'Ainda há voz curricular/bastidor no M1'
+          print('M1 validado: 12 aulas, sintaxe OK, prática preservada, burocracia reduzida e sem bastidor curricular.')
           PY
           git diff --check
       - name: Commit e limpeza
         run: |
+          set -e
           rm .github/workflows/tmp-infra-m1-ajuste-final.yml
+          rm -f .infra-m1-trigger.tmp
           git config user.name "Mundo bit Byte"
           git config user.email "mundobitbyte@gmail.com"
-          git add js/infraestrutura/conteudo-04-06.js js/infraestrutura/conteudo-07-10.js .github/workflows/tmp-infra-m1-ajuste-final.yml
-          git commit -m "Remove bastidores remanescentes do Módulo 1 [infra-m1-final]"
+          git add js/infraestrutura/conteudo-00-03.js js/infraestrutura/conteudo-04-06.js js/infraestrutura/conteudo-07-10.js js/infraestrutura/conteudo-99.js .github/workflows/tmp-infra-m1-ajuste-final.yml .infra-m1-trigger.tmp
+          git commit -m "Fecha lapidação MbB do Módulo 1 de Infraestrutura [infra-m1-final]"
           git push origin HEAD:lapidacao-infraestrutura-mbb
