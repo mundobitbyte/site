@@ -30,13 +30,13 @@ window.infraestruturaNetworkLessons.push({
       <li><label><input type="checkbox"> Registramos saída relevante com origem, destino e horário.</label></li>
       <li><label><input type="checkbox"> Alteramos apenas uma variável autorizada ou encaminhamos.</label></li>
       <li><label><input type="checkbox"> Repetimos a função real e um teste relacionado após a intervenção.</label></li>
-      <li><label><input type="checkbox"> Atualizamos mapa/baseline/matriz e entregamos conclusão limitada.</label></li>
+      <li><label><input type="checkbox"> Atualizamos mapa, baseline e matriz e entregamos conclusão limitada.</label></li>
     </ul></div>
 
     <div class="danger-box"><strong>Critérios de parada</strong><p>Pare e encaminhe se houver risco físico, perda de acesso administrativo, ausência de backup de configuração, necessidade de afetar produção, dados pessoais expostos, escopo não autorizado ou resultado diferente da previsão que possa ampliar impacto.</p></div>
 
     <h3>Evidências mínimas da entrega</h3>
-    <div class="table-wrap"><table><thead><tr><th>Entrega</th><th>Evidência concreta</th><th>Não vale sozinho</th></tr></thead><tbody><tr><td>Estado inicial</td><td>registro datado, interface/porta/local e função testada</td><td>“estava sem internet”</td></tr><tr><td>Inventário/topologia</td><td>mapa e inventário e portas e cabos corrigidos, com lacunas marcadas</td><td>desenho sem fonte</td></tr><tr><td>Hipótese e teste</td><td>matriz hipótese–teste com previsão e resultado discriminante</td><td>lista de comandos</td></tr><tr><td>Antes/depois</td><td>mesma origem, destino, função e condição comparável</td><td>“voltou a funcionar”</td></tr><tr><td>Intervenção/rollback</td><td>alvo, mudança, autorização e retorno aplicável</td><td>tentativas sem registro</td></tr><tr><td>Conclusão</td><td>o que a evidência fortalece, enfraquece e não prova</td><td>causa definitiva por ausência breve</td></tr></tbody></table></div>
+    <div class="table-wrap"><table><thead><tr><th>Entrega</th><th>Evidência concreta</th><th>Não vale sozinho</th></tr></thead><tbody><tr><td>Estado inicial</td><td>registro datado, interface/porta/local e função testada</td><td>“estava sem internet”</td></tr><tr><td>Inventário/topologia</td><td>mapa, inventário, portas e cabos corrigidos, com lacunas marcadas</td><td>desenho sem fonte</td></tr><tr><td>Hipótese e teste</td><td>matriz hipótese–teste com previsão e resultado discriminante</td><td>lista de comandos</td></tr><tr><td>Antes/depois</td><td>mesma origem, destino, função e condição comparável</td><td>“voltou a funcionar”</td></tr><tr><td>Intervenção/rollback</td><td>alvo, mudança, autorização e retorno aplicável</td><td>tentativas sem registro</td></tr><tr><td>Conclusão</td><td>o que a evidência fortalece, enfraquece e não prova</td><td>causa definitiva por ausência breve</td></tr></tbody></table></div>
 
     <h3>Modelo de relatório do plantão</h3>
     <textarea id="network-final-report" class="report-template" readonly>PLANTÃO DE REDE — ESCOLA HORIZONTE
@@ -59,9 +59,9 @@ Função que falha:
 Evidências relacionadas (horário e local):
 
 3. REGISTRO DA REDE REUTILIZADO
-Mapa/inventário e portas e cabos:
+Mapa, inventário, portas e cabos:
 Endereçamento e estado de rede:
-Serviços, segmentação e acesso e Wi-Fi:
+Serviços, segmentação, acessos e Wi-Fi:
 Lacunas ou divergências:
 
 4. HIPÓTESES E TESTE

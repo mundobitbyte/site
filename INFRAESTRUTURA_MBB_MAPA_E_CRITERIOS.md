@@ -163,7 +163,7 @@ Aparece sempre que houver:
 ## Diagnóstico
 Método transversal:
 
-**Sintoma → contexto → hipótese → teste seguro → evidência → isolamento → correção → validação → documentação.**
+**Sintoma → contexto → hipótese → teste seguro → evidência → redução de hipóteses → correção ou encaminhamento → validação → documentação.**
 
 Nunca incentivar “tentar coisas até funcionar”.
 
