@@ -1,0 +1,161 @@
+name: tmp-lapida-linux-mbb-v2
+
+on:
+  push:
+    branches: [lapidacao-infraestrutura-mbb]
+
+permissions:
+  contents: write
+
+jobs:
+  lapidar:
+    if: ${{ !contains(github.event.head_commit.message, '[linux-m3-final]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+          fetch-depth: 0
+      - name: Lapidar Servidores Linux no padrão MbB
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          files=[Path('js/infraestrutura/linux-00-03.js'),Path('js/infraestrutura/linux-04-07.js'),Path('js/infraestrutura/linux-08-10.js'),Path('js/infraestrutura/linux-99.js')]
+
+          exact={
+            'Ele prova que o destino foi usado nos testes do Módulo 2, não onde estão seus arquivos, quem publica avisos nem se existe cópia restaurável.':'O Registro da Rede confirma que esse destino já foi usado em testes, mas não informa onde estão seus arquivos, quem publica avisos nem se existe cópia restaurável.',
+            'O registro do Módulo 2 confirma nome, IP e testes de rede; não comprova propriedade dos dados, administração ou recuperação.':'O Registro da Rede confirma nome, IP e testes de comunicação; não comprova propriedade dos dados, administração ou recuperação.',
+            '<p>2. O R-06 registra a intranet. O que isso não prova?</p>':'<p>2. O Registro da Rede identifica a intranet. O que isso não prova?</p>',
+            '<td>R-06: nome e serviço esperado</td>':'<td>Registro da Rede: nome e serviço esperado</td>',
+            '<strong>Missão 00 · abrir S-00 — Registro de Necessidade</strong>':'<strong>Missão 00 · iniciar o Registro do Servidor</strong>',
+            '<strong>A OS 018 é aberta</strong><p>S-00 autoriza um laboratório de implantação sem dados reais.':'<strong>A OS 018 é aberta</strong><p>O registro de necessidade autoriza um laboratório de implantação sem dados reais.',
+            'S-00 prevê poucos usuários simultâneos, página estática e documentos de teste.':'O registro de necessidade prevê poucos usuários simultâneos, página estática e documentos de teste.',
+            '<th>Pergunta em S-00</th>':'<th>Pergunta do registro de necessidade</th>',
+            'Qual proposta melhor corresponde a S-00?':'Qual proposta melhor corresponde à necessidade registrada?',
+            'Redes virtuais e snapshots serão aprofundados no Módulo 4.':'Nesta etapa, a VM serve apenas para oferecer isolamento, console e retorno seguro; redes virtuais e snapshots não são o foco do atendimento.',
+            '<h3>S-01 · baseline pós-instalação</h3>':'<h3>Baseline pós-instalação</h3>',
+            'boot local e S-01 coletado':'boot local e baseline coletado',
+            '<strong>Reutilização</strong><p>S-01 será comparado após atualizações, armazenamento, rede e incidentes. Registre data, comandos, saídas relevantes e limites; saídas de exemplo deste módulo são sempre identificadas como representativas.':'<strong>Baseline reutilizável</strong><p>O baseline será comparado após atualizações, armazenamento, rede e incidentes. Registre data, comandos, saídas relevantes e limites; saídas fornecidas como exemplo devem permanecer identificadas como representativas.',
+            'S-01 é o estado de referência.':'O baseline é o estado de referência.',
+            '<strong>S-02 · Registro Administrativo</strong>':'<strong>Mudanças e atualizações</strong>',
+            '<h3>S-03 começa como decisão, não como comando</h3>':'<h3>Identidades e permissões começam como decisão, não como comando</h3>',
+            '<strong>S-03 · Matriz de Identidades e Permissões</strong>':'<strong>Identidades e permissões</strong>',
+            '<strong>S-04 · Mapa de Armazenamento</strong>':'<strong>Armazenamento</strong>',
+            "objective: 'Reutilizar o plano do Módulo 2 para configurar a rede do servidor com Netplan, prever perda de acesso e validar interface, rota, DNS e nome.',":"objective: 'Reutilizar o plano de rede já documentado para configurar o servidor com Netplan, prever perda de acesso e validar interface, rota, DNS e nome.',",
+            'R-03 e R-04 já documentam endereço, gateway e DNS;':'O Registro da Rede já documenta endereço, gateway e DNS;',
+            'R-03 coloca funcionários em <strong>192.168.10.0/26</strong>. R-04 registra gateway/DNS <strong>192.168.10.1</strong>; R-06 associa a intranet a <strong>192.168.10.20</strong>.':'O plano de endereçamento coloca funcionários em <strong>192.168.10.0/26</strong>. O estado de rede registra gateway/DNS <strong>192.168.10.1</strong>; a matriz de serviços associa a intranet a <strong>192.168.10.20</strong>.',
+            'registre S-01, R-03/R-04 e o estado atual;':'registre o baseline do servidor, o plano de endereçamento, o estado de rede e a configuração atual;',
+            '<strong>S-05 · Baseline de Rede</strong>':'<strong>Rede do servidor</strong>',
+            '<strong>S-06 · Registro de Acesso Remoto</strong>':'<strong>Acesso remoto</strong>',
+            '<strong>S-07 · Registro Serviço–Log</strong>':'<strong>Serviços e logs</strong>',
+            'R-06 registra o endpoint existente;':'A matriz de serviços da rede registra o endpoint existente;',
+            'O R-06 registra HTTPS como requisito do endpoint existente.':'A matriz de serviços da rede registra HTTPS como requisito do endpoint existente.',
+            '<strong>S-08 · Ficha do Serviço Web</strong>':'<strong>Serviço Web</strong>',
+            '<h3>Compartilhamento nasce da matriz S-03</h3>':'<h3>O compartilhamento nasce das identidades e permissões</h3>',
+            '<h3>S-09 começa como matriz, não como <code>ufw enable</code></h3>':'<h3>O firewall começa como matriz de fluxos, não como <code>ufw enable</code></h3>',
+            '<strong>S-09 · Matriz de Serviços e Firewall</strong>':'<strong>Serviços e firewall</strong>',
+            '<strong>S-10 · Continuidade e Monitoramento</strong>':'<strong>Continuidade e monitoramento</strong>',
+            'S-10 e todos os registros anteriores formam o envelope do plantão 99.':'Essa seção e os registros anteriores formam a passagem de plantão.',
+            'Joana entrega a VM <strong>SRV-01</strong>, S-00 a S-10 e dois relatos.':'Joana entrega a VM <strong>SRV-01</strong>, o Registro do Servidor atualizado e dois relatos.',
+            '<strong>S-00 · necessidade</strong>':'<strong>Necessidade e escopo</strong>',
+            '<strong>S-01 · baseline</strong>':'<strong>Baseline do servidor</strong>',
+            '<strong>S-02 · mudanças</strong>':'<strong>Mudanças e atualizações</strong>',
+            '<strong>S-03 · identidades</strong>':'<strong>Identidades e permissões</strong>',
+            '<strong>S-04 · armazenamento</strong>':'<strong>Armazenamento</strong>',
+            '<strong>S-05 · rede</strong>':'<strong>Rede do servidor</strong>',
+            '<strong>S-06 · SSH</strong>':'<strong>Acesso remoto</strong>',
+            '<strong>S-07 · serviço/log</strong>':'<strong>Serviços e logs</strong>',
+            '<strong>S-08 · Web</strong>':'<strong>Serviço Web</strong>',
+            '<strong>S-09 · Samba/UFW</strong>':'<strong>Serviços e firewall</strong>',
+            '<strong>S-10 · continuidade</strong>':'<strong>Continuidade e monitoramento</strong>',
+            'Consultamos os S-registros relevantes e marcamos divergências.':'Consultamos as seções relevantes do Registro do Servidor e marcamos divergências.',
+            'S-registros consultados:':'Seções do Registro do Servidor consultadas:',
+            'S-registros atualizados:':'Seções do Registro do Servidor atualizadas:',
+            'S-registro, esperado, observado e divergência':'seção do Registro do Servidor, esperado, observado e divergência',
+            'PLANTÃO DO SERVIDOR — MÓDULO 3':'PLANTÃO DO SERVIDOR — ESCOLA HORIZONTE',
+            'Resultado e evidência (ID):':'Resultado e evidência relevante:',
+            '<div class="essence"><strong>Essência do Módulo 3</strong>':'<div class="essence"><strong>Essência do trabalho com servidores</strong>',
+            '<div class="bridge-box"><strong>Limite desta etapa</strong><p>O Módulo 3 termina aqui. A VM foi usada apenas como laboratório seguro. Não foram iniciados Módulo 4, containers, nuvem, orquestração ou o Laboratório Integrador geral da área.</p></div>':'<div class="bridge-box"><strong>O serviço agora pode mudar de forma</strong><p>SRV-01 funciona em uma VM porque o laboratório precisava de isolamento, console e retorno seguro. Quando surgirem novas necessidades de implantação, escala e portabilidade, a equipe terá de comparar máquina física, VM, container e recursos externos a partir do serviço, do risco e da recuperação — não da ferramenta da moda.</p></div>',
+            '<strong>E-S1 · impacto e estado</strong>':'<strong>Impacto e estado</strong>',
+            '<strong>E-S2 · baseline comparado</strong>':'<strong>Baseline comparado</strong>',
+            '<strong>E-S3 · hipótese e previsão</strong>':'<strong>Hipótese e previsão</strong>',
+            '<strong>E-S4 · teste observacional</strong>':'<strong>Teste observacional</strong>',
+            '<strong>E-S5 · mudança/rollback</strong>':'<strong>Mudança e retorno</strong>',
+            '<strong>E-S6 · validação e passagem</strong>':'<strong>Validação e passagem</strong>',
+            'Identifique a evidência no texto: “H2 ganhou força porque E-S4 mostrou...”.':'Explique a evidência no texto: “H2 ganhou força porque o teste observacional mostrou...”.',
+          }
+          labels={'S-00':'registro de necessidade','S-01':'baseline do servidor','S-02':'registro de mudanças','S-03':'matriz de identidades e permissões','S-04':'mapa de armazenamento','S-05':'baseline de rede','S-06':'registro de acesso remoto','S-07':'registro de serviços e logs','S-08':'ficha do serviço Web','S-09':'matriz de serviços e firewall','S-10':'registro de continuidade e monitoramento','R-03':'plano de endereçamento','R-04':'estado de rede','R-06':'matriz de serviços'}
+          for p in files:
+              t=p.read_text(encoding='utf-8')
+              for old,new in exact.items(): t=t.replace(old,new)
+              t=t.replace('<div class="record-box">','<div class="note-box compact">')
+              for code,label in labels.items(): t=re.sub(rf'(?<![A-Z0-9]){re.escape(code)}(?![A-Z0-9])',label,t)
+              t=re.sub(r'\bE-S[1-6]\b\s*·\s*','',t)
+              t=t.replace('S-registro','seção do Registro do Servidor').replace('S-registros','seções do Registro do Servidor')
+              p.write_text(t,encoding='utf-8')
+
+          fluent={
+            'O mapa de armazenamento registra':'O registro de armazenamento mostra',
+            'mapa de armazenamento identifica':'o registro de armazenamento identifica',
+            'ficha do serviço Web, a configuração Web':'o registro do serviço Web, a configuração Web',
+            'matriz de serviços e firewall, Samba e firewall':'o registro de serviços e firewall, Samba e firewall',
+            'Comparação com registro de continuidade e monitoramento':'Comparação com o registro de continuidade e monitoramento',
+            'use registro de mudanças para registrar a instalação':'registre a instalação na seção de mudanças e atualizações',
+            'planejados em matriz de identidades e permissões':'planejados na matriz de identidades e permissões',
+            'matriz de identidades e permissões define':'A matriz de identidades e permissões define',
+            'mapa de armazenamento localiza':'O registro de armazenamento localiza',
+            'baseline de rede separa':'O registro de rede separa',
+            'confirme console/registro de acesso remoto':'confirme o console e o plano de recuperação do acesso remoto',
+            'Reutiliza matriz de identidades e permissões, baseline de rede, registro de acesso remoto e ficha do serviço Web;':'Reutiliza identidades e permissões, rede, acesso remoto e serviço Web;',
+            'Se qualquer dado divergir de baseline do servidor, pare.':'Se qualquer dado divergir do baseline do servidor, pare.',
+            'confrontada com baseline do servidor e com a configuração da VM':'confrontada com o baseline do servidor e com a configuração da VM',
+            'confirmado por baseline do servidor e VM':'confirmado pelo baseline do servidor e pela VM',
+            'baseline do servidor, lsblk e a configuração':'o baseline do servidor, lsblk e a configuração',
+            'aplique matriz de identidades e permissões':'aplique as identidades e permissões planejadas',
+            'baseline de rede registra':'O registro de rede mostra',
+            'registro de acesso remoto confirma':'O registro de acesso remoto confirma',
+            'registro de mudanças registra':'O registro de mudanças informa',
+            'Compare com registro de acesso remoto/registro de mudanças':'Compare com os registros de acesso remoto e de mudanças',
+          }
+          for p in files:
+              t=p.read_text(encoding='utf-8')
+              for old,new in fluent.items(): t=t.replace(old,new)
+              p.write_text(t,encoding='utf-8')
+
+      - name: Validar sintaxe, identidade e voz editorial
+        run: |
+          set -e
+          for f in js/infraestrutura/linux-00-03.js js/infraestrutura/linux-04-07.js js/infraestrutura/linux-08-10.js js/infraestrutura/linux-99.js; do node --check "$f"; done
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          files=[Path('js/infraestrutura/linux-00-03.js'),Path('js/infraestrutura/linux-04-07.js'),Path('js/infraestrutura/linux-08-10.js'),Path('js/infraestrutura/linux-99.js')]
+          txt='\n'.join(p.read_text(encoding='utf-8') for p in files)
+          ids=[]
+          for p in files: ids += re.findall(r"\bid:\s*'([^']+)'",p.read_text(encoding='utf-8'))
+          checks=[
+            ('12 aulas únicas',len(ids)==12 and len(set(ids))==12),
+            ('12 pushes',txt.count('window.infraestruturaLinuxLessons.push({')==12),
+            ('SRV-01 preservado','SRV-01' in txt),
+            ('sem S-*',not re.search(r'(?<![A-Z0-9])S-\d\d(?![A-Z0-9])',txt)),
+            ('sem R-*',not re.search(r'(?<![A-Z0-9])R-\d\d(?![A-Z0-9])',txt)),
+            ('sem E-S*',not re.search(r'\bE-S[1-6]\b',txt)),
+            ('sem record-box','<div class="record-box">' not in txt),
+            ('sem voz curricular',not re.search(r'(?i)\b(módulo|capítulo)\b',txt)),
+            ('sem S-registro','S-registro' not in txt and 'S-registros' not in txt),
+            ('comandos preservados',all(x in txt for x in ['sudo apt update','netplan try','nginx -t','testparm -s','ufw','journalctl'])),
+          ]
+          for name,ok in checks: print(name,':','OK' if ok else 'FALHOU')
+          assert all(ok for _,ok in checks)
+          print('Validação MbB Linux concluída.')
+          PY
+          git diff --check
+      - name: Commitar e limpar rotinas temporárias
+        run: |
+          rm -f .github/workflows/tmp-audita-linux-mbb.yml .github/workflows/tmp-lapida-linux-mbb-v2.yml
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add js/infraestrutura/linux-00-03.js js/infraestrutura/linux-04-07.js js/infraestrutura/linux-08-10.js js/infraestrutura/linux-99.js .github/workflows/tmp-audita-linux-mbb.yml .github/workflows/tmp-lapida-linux-mbb-v2.yml
+          git commit -m "Lapida Módulo 3 Linux no padrão MbB [linux-m3-final]"
+          git push origin HEAD:lapidacao-infraestrutura-mbb
