@@ -24,8 +24,36 @@
   display:none !important;
 }
 
+/* Desktop: mantém um tópico por vez. */
+main > #inicio{display:block;}
+main.panel-nav-ready > section[id]{display:none;}
+main.panel-nav-ready > section[id].active-panel{display:block;}
+
 @media(max-width:980px){
+  :root{--topo:46px;}
   .hero{padding:18px 20px;}
+
+  /* No celular, a trilha vira navegação por âncoras sobre uma leitura vertical.
+     Evita o conflito entre toque, menu rolável e troca de painéis por JavaScript. */
+  .layout{padding-top:46px;}
+  aside{
+    position:sticky !important;
+    top:46px !important;
+    z-index:45;
+    width:100% !important;
+    max-width:100%;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+  }
+  main > section[id],
+  main.panel-nav-ready > section[id]{
+    display:block !important;
+  }
+  main > section[id]{
+    scroll-margin-top:112px;
+  }
 }
 
 @media(max-width:560px){
