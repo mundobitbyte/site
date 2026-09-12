@@ -9,8 +9,6 @@ function copyCode(id){
 document.addEventListener('DOMContentLoaded', () => {
   let contador = 0;
 
-  // A ativação do ambiente depende do terminal. Um bloco único com três comandos
-  // não deve ser copiado inteiro; separamos as opções antes de criar os botões.
   document.querySelectorAll('pre.code').forEach(bloco => {
     const texto = bloco.innerText;
     if (!texto.includes('# Windows PowerShell') || !texto.includes('# Linux/macOS')) return;
@@ -27,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     bloco.replaceWith(grupo);
   });
 
-  // O diagnóstico do ambiente não depende de uma versão específica de Python.
   document.querySelectorAll('.prompt').forEach(prompt => {
     if (prompt.textContent.includes('Python 3.12 informa ModuleNotFoundError')) {
       prompt.textContent = prompt.textContent.replace(
@@ -37,8 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Antes de apresentar um agente conectado ao repositório, fechamos a lacuna
-  // entre ambiente local, dados pessoais e versionamento.
   const secaoAgente = Array.from(document.querySelectorAll('section.card'))
     .find(secao => secao.querySelector('h2')?.textContent.startsWith('15.'));
 
@@ -122,7 +117,6 @@ dados/equipamentos.json</pre>
     envoltorio.appendChild(botao);
   });
 
-  // A passagem de módulo deve ser direta, além do retorno ao painel.
   const proximo = Array.from(document.querySelectorAll('section.card.next'))[0];
   if (proximo && !proximo.querySelector('a[href="etica-sociedade.html"]')) {
     const voltar = proximo.querySelector('a[href="index.html"]');
@@ -134,11 +128,10 @@ dados/equipamentos.json</pre>
   }
 });
 
-// Mantém a navegação dos módulos 3 a 6 coerente com a trilha dos módulos iniciais.
 (() => {
   if (document.querySelector('script[data-ia-trilha-modulos]')) return;
   const script = document.createElement('script');
-  script.src = '../../js/ia-trilha-modulos.js?v=4';
+  script.src = '../../js/ia-trilha-modulos.js?v=5';
   script.defer = true;
   script.dataset.iaTrilhaModulos = '1';
   document.head.appendChild(script);
