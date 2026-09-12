@@ -1,0 +1,135 @@
+name: tmp-corrige-inspecao-infra
+on:
+  push:
+    branches:
+      - lapidacao-infraestrutura-mbb
+    paths:
+      - .github/workflows/tmp-corrige-inspecao-infra.yml
+permissions:
+  contents: write
+jobs:
+  corrigir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+          fetch-depth: 0
+      - name: Aplicar correções MbB encontradas na inspeção
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          def edit(path, replacements):
+              p=Path(path); t=p.read_text(encoding='utf-8')
+              for old,new in replacements:
+                  if old not in t:
+                      print('AVISO trecho não encontrado',path,old[:90])
+                  t=t.replace(old,new)
+              p.write_text(t,encoding='utf-8')
+
+          edit('js/infraestrutura/conteudo-00-03.js',[
+            ("objective: 'Identificar o ponto de partida do aluno em decisões práticas de hardware, sistema, dados, permissões e diagnóstico, sem transformar o diagnóstico em revisão teórica.'",
+             "objective: 'Identificar o ponto de partida em decisões práticas de hardware, sistema, dados, permissões e diagnóstico, sem transformar o diagnóstico em revisão teórica.'"),
+          ])
+
+          edit('js/infraestrutura/conteudo-04-06.js',[
+            ('Use máquina ou VM preparada pelo professor.','Use apenas máquina ou VM de laboratório autorizada, preparada para esta prática.'),
+            ('<small class="evidence-id">EVIDÊNCIA I-01</small>','<small class="evidence-id">origem e intenção conferidas</small>'),
+            ('<small class="evidence-id">EVIDÊNCIA I-02</small>','<small class="evidence-id">alvo confirmado</small>'),
+            ('<small class="evidence-id">EVIDÊNCIA I-03</small>','<small class="evidence-id">boot confirmado</small>'),
+            ('<small class="evidence-id">EVIDÊNCIA I-04</small>','<small class="evidence-id">configuração inicial conferida</small>'),
+            ('as evidências I-01 a I-04 foram anexadas','as quatro verificações da instalação foram anexadas'),
+          ])
+
+          edit('js/infraestrutura/conteudo-07-10.js',[
+            ('Ambiente preparado pelo professor.','Ambiente de laboratório preparado para esta prática.'),
+            ('Em uma VM fornecida pelo professor, escolha somente um serviço indicado para a aula,','Em uma VM de laboratório, escolha somente um serviço indicado no cenário,'),
+            ('<small class="evidence-id">EVIDÊNCIA P-01</small>','<small class="evidence-id">ANTES</small>'),
+            ('<small class="evidence-id">MUDANÇA M-01</small>','<small class="evidence-id">MUDANÇA AUTORIZADA</small>'),
+            ('<small class="evidence-id">EVIDÊNCIA P-02</small>','<small class="evidence-id">DEPOIS</small>'),
+            ('anexou P-01, M-01 e P-02 ao chamado','anexou ao chamado a comparação antes → mudança → depois'),
+          ])
+
+          edit('js/infraestrutura/redes-00-03.js',[
+            ('<span class="evidence-id">E-02A</span>','<span class="evidence-id">ANTES</span>'),
+            ('<span class="evidence-id">E-02B</span>','<span class="evidence-id">DEPOIS</span>'),
+          ])
+
+          edit('js/infraestrutura/redes-04-07.js',[
+            ('<strong>E-06A · pergunta: a porta documentada aceita TCP?</strong>','<strong>Teste de porta TCP · pergunta: a porta documentada aceita TCP?</strong>'),
+          ])
+
+          edit('js/infraestrutura/redes-08-10.js',[
+            ('Em equipamento didático ou simulador preparado pelo professor,','Em equipamento didático ou simulador de laboratório,'),
+            ('O aluno terá de reconstruir contexto, investigar, corrigir apenas quando autorizado, validar e produzir um relatório que outro técnico consiga usar.','A equipe terá de reconstruir o contexto, investigar, corrigir apenas quando autorizado, validar e produzir um relatório que outro técnico consiga usar.'),
+          ])
+
+          p=Path('js/infraestrutura/redes-99.js'); t=p.read_text(encoding='utf-8')
+          t=t.replace('Cenário controlado pelo professor','Cenário controlado de laboratório')
+          t=t.replace('Falhas possíveis — a equipe não sabe de antemão qual foi aplicada','Possíveis fronteiras de divergência — a causa não é informada')
+          t=t.replace('O responsável injeta uma ou duas condições em ativos de laboratório. Nenhuma falha exige acesso à rede de produção.','O ambiente pode conter uma ou duas condições controladas em ativos de laboratório. A causa não é informada e nenhuma condição exige acesso à rede de produção.')
+          t=re.sub(r'<strong>F-([1-5])\s*·\s*([^<]+)</strong>',lambda m:f'<strong>{m.group(2)[:1].upper()+m.group(2)[1:]}</strong>',t)
+          p.write_text(t,encoding='utf-8')
+
+          edit('js/infraestrutura/linux-08-10.js',[
+            ('<h3>S-10A · política proporcional</h3>','<h3>Política proporcional</h3>'),
+          ])
+
+          # Página: cache-busting uniforme e formulação diagnóstica mais precisa.
+          p=Path('pages/infraestrutura.html'); t=p.read_text(encoding='utf-8')
+          t=re.sub(r'(src="\.\./js/infraestrutura/(?:conteudo|redes|linux|moderna|integrador)-[^"?]+\.js)\?v=\d+(\")',r'\1?v=4\2',t)
+          t=t.replace('<li><strong>Analisar</strong><span>a evidência e isolar a causa</span></li>','<li><strong>Analisar</strong><span>a evidência e reduzir hipóteses</span></li>')
+          p.write_text(t,encoding='utf-8')
+
+          # Fonte de verdade: registrar o padrão que a lapidação estabeleceu.
+          p=Path('INFRAESTRUTURA_MBB_MAPA_E_CRITERIOS.md'); t=p.read_text(encoding='utf-8')
+          marker='''- conclusão limitada ao que os testes permitem.\n\n## Acessibilidade/inclusão'''
+          insert='''- conclusão limitada ao que os testes permitem.\n\n### Registros operacionais — regra de simplicidade\nA documentação deve apoiar a operação, não criar uma segunda disciplina de códigos.\n\nPadrão consolidado da área:\n- **Registro de Suporte** acompanha chamado, estado, evidência, mudança e continuidade da estação/caso;\n- **Registro da Rede** acumula mapa, endereçamento, serviços, segmentação, Wi-Fi, testes e decisões;\n- **Registro do Servidor** acumula necessidade, baseline, identidades, armazenamento, rede, acesso remoto, serviços, logs, segurança e continuidade;\n- **Registro da Evolução** acumula requisitos, VM, capacidade, containers, persistência, Compose, atualização, hospedagem, exposição e decisão arquitetural.\n\nCódigos locais podem aparecer quando fazem parte de um ativo real, chamado, OS, porta, padrão técnico ou comparação imediata. **Não criar taxonomias cumulativas artificiais que o aluno precise decorar para saber onde registrar uma evidência.** O nome do registro ou da seção deve dizer o que ele significa.\n\n## Acessibilidade/inclusão'''
+          if marker not in t: raise SystemExit('Marcador de documentação não encontrado no mapa')
+          t=t.replace(marker,insert)
+          start='''O aluno/equipe deve entregar:\n1. inventário e requisitos;\n2. decisão de arquitetura;\n3. instalação/configuração;\n4. endereçamento e conectividade;\n5. usuários/permissões;\n6. serviço funcionando;\n7. controles mínimos de segurança;\n8. backup e teste de restauração;\n9. evidências de monitoramento/logs;\n10. falha controlada preparada pelo professor;\n11. diagnóstico baseado em evidência;\n12. correção e validação;\n13. documentação curta que permita outra pessoa entender o ambiente.\n'''
+          repl='''A equipe recebe os quatro registros operacionais — **Suporte, Rede, Servidor e Evolução** — e assume um plantão com documentação parcial e uma ou mais condições controladas cuja causa não é informada.\n\nA missão integradora deve seguir quatro fases, sem criar uma nova taxonomia documental:\n1. **receber e compreender** — impacto, registros, divergências, autorização e limites;\n2. **proteger e preparar** — baseline, arquitetura recebida, backup e restauração de amostra;\n3. **investigar e intervir** — reproduzir a função, formular H1/H2, testar com baixo risco e alterar uma variável autorizada ou escalar;\n4. **validar e passar** — repetir função e teste relacionado, atualizar somente o que mudou e entregar o plantão para outra equipe repetir uma validação sem ajuda.\n\nO produto final é o **estado explicado e transferível**, com evidências suficientes para outra pessoa continuar o trabalho.\n'''
+          if start not in t: raise SystemExit('Bloco antigo do Integrador não encontrado no mapa')
+          t=t.replace(start,repl)
+          p.write_text(t,encoding='utf-8')
+
+      - name: Validar correções finais
+        shell: bash
+        run: |
+          set -e
+          for f in js/infraestrutura/*.js js/infraestrutura.js; do node --check "$f"; done
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          files=list(Path('js/infraestrutura').glob('*.js'))
+          txt='\n'.join(p.read_text(encoding='utf-8') for p in files)
+          page=Path('pages/infraestrutura.html').read_text(encoding='utf-8')
+          mapa=Path('INFRAESTRUTURA_MBB_MAPA_E_CRITERIOS.md').read_text(encoding='utf-8')
+          banned=[
+            r'preparad[oa] pelo professor',r'fornecida pelo professor',r'O aluno terá de',r'Cenário controlado pelo professor',
+            r'(?<![A-Z0-9])E-\d{2}[A-Z](?![A-Z0-9])',r'(?<![A-Z0-9])F-[1-5](?![A-Z0-9])',
+            r'(?<![A-Z0-9])I-0[1-4](?![A-Z0-9])',r'(?<![A-Z0-9])P-0[12](?![A-Z0-9])',
+            r'(?<![A-Z0-9])M-01(?![A-Z0-9])',r'(?<![A-Z0-9])S-10A(?![A-Z0-9])'
+          ]
+          for pat in banned:
+              assert not re.search(pat,txt,re.I), pat
+          scripts=re.findall(r'src="\.\./js/infraestrutura/[^"?]+\.js\?v=(\d+)"',page)
+          assert len(scripts)==17 and all(v=='4' for v in scripts),scripts
+          assert 'a evidência e reduzir hipóteses' in page
+          for name in ['Registro de Suporte','Registro da Rede','Registro do Servidor','Registro da Evolução']:
+              assert name in mapa
+          assert 'Não criar taxonomias cumulativas artificiais' in mapa
+          print('Correções finais MbB validadas.')
+          PY
+          git diff --check
+      - name: Limpar temporários e gravar branch
+        run: |
+          set -e
+          git config user.name 'Mundo bit Byte'
+          git config user.email 'mundobitbyte@gmail.com'
+          rm -f .github/workflows/tmp-audita-infra-final.yml .github/workflows/tmp-inspeciona-editorial-infra.yml .github/workflows/tmp-audita-codigos-links-infra.yml .github/workflows/tmp-inspeciona-codigos-infra.yml .github/workflows/tmp-corrige-inspecao-infra.yml scripts/tmp-audita-infra-final.mjs
+          git add -A
+          git commit -m 'Corrige achados da inspeção final de Infraestrutura [infra-final-qa]'
+          git push origin HEAD:lapidacao-infraestrutura-mbb
