@@ -7,6 +7,34 @@
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/infraestrutura.html">
   <title>Infraestrutura e Sistemas | Mundo bit Byte</title>
   <link rel="stylesheet" href="../css/infraestrutura.css?v=4">
+  <style>
+    /* Ajuste cirúrgico do portal: entrada mais direta, compacta e funcional. */
+    .portal-main { padding-top: clamp(22px, 3.5vw, 34px); }
+    .portal-heading { max-width: none; margin-bottom: 18px; padding: 22px 26px 23px; border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(135deg, #fff 0%, #f5f9ff 72%, #edf5ff 100%); box-shadow: var(--shadow); }
+    .portal-heading h1 { max-width: 790px; margin: 5px 0 7px; font-size: clamp(1.65rem, 2.8vw, 2.35rem); line-height: 1.08; }
+    .portal-heading p { max-width: 800px; margin: 0; font-size: .96rem; line-height: 1.5; }
+    .portal-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .portal-cta { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--primary); border-radius: 9px; padding: 8px 13px; background: var(--primary); color: #fff; text-decoration: none; font-size: .86rem; font-weight: 900; }
+    .portal-cta:hover { background: var(--primary-dark); color: #fff; }
+    .module-grid { margin-top: 0; }
+
+    .compact-method { display: flex; align-items: center; gap: 18px; margin-top: 14px; padding: 10px 14px; box-shadow: none; }
+    .compact-method h2 { flex: 0 0 auto; margin: 0; font-size: .86rem; line-height: 1.25; }
+    .compact-method .method-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 0; margin: 0; }
+    .compact-method .method-flow li { min-height: 0; display: inline-flex; align-items: center; padding: 0; border: 0; border-radius: 0; background: transparent; font-size: .82rem; counter-increment: none; }
+    .compact-method .method-flow li::before { display: none; }
+    .compact-method .method-flow li:not(:last-child)::after { content: "→"; margin: 0 8px; color: var(--primary); font-weight: 900; }
+    .compact-method .method-flow strong { display: inline; }
+
+    @media (max-width: 650px) {
+      .portal-heading { padding: 18px 16px 20px; }
+      .portal-heading h1 { font-size: clamp(1.55rem, 8vw, 2rem); }
+      .portal-heading p { font-size: .93rem; }
+      .portal-cta { width: 100%; }
+      .compact-method { align-items: flex-start; flex-direction: column; gap: 6px; padding: 10px 12px; }
+      .compact-method .method-flow { row-gap: 3px; }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -18,9 +46,22 @@
     <main class="portal-main">
       <header class="portal-heading">
         <span class="eyebrow">Infraestrutura e Sistemas</span>
-        <h1>Da máquina que “funciona” ao ambiente que pode ser explicado, mantido e recuperado.</h1>
-        <p>Aprenda a intervir com método: observar o estado, planejar, alterar uma variável, testar, registrar evidências e saber como voltar.</p>
+        <h1>Aprenda a instalar, configurar e resolver problemas em computadores, redes e servidores.</h1>
+        <p>Na prática, você vai montar ambientes, testar mudanças, diagnosticar falhas e aprender a recuperar o que estava funcionando.</p>
+        <div class="portal-actions">
+          <a class="portal-cta" href="#diagnostico">Começar pelo módulo 1 →</a>
+        </div>
       </header>
+
+      <section class="method-card compact-method" aria-labelledby="method-title">
+        <h2 id="method-title">Como você vai trabalhar</h2>
+        <ol class="method-flow" aria-label="Etapas do método de aprendizagem">
+          <li><strong>Entender</strong></li>
+          <li><strong>Experimentar</strong></li>
+          <li><strong>Analisar</strong></li>
+          <li><strong>Aplicar</strong></li>
+        </ol>
+      </section>
 
       <div class="module-grid" aria-label="Módulos da área">
         <a class="module-card available" href="#diagnostico">
@@ -54,19 +95,6 @@
           <span class="card-action">Iniciar projeto final →</span>
         </a>
       </div>
-
-      <section class="method-card" aria-labelledby="method-title">
-        <div>
-          <span class="eyebrow">Método MbB</span>
-          <h2 id="method-title">Resolver sem adivinhar</h2>
-        </div>
-        <ol class="method-flow">
-          <li><strong>Entender</strong><span>o sintoma e o estado inicial</span></li>
-          <li><strong>Experimentar</strong><span>um teste seguro e controlado</span></li>
-          <li><strong>Analisar</strong><span>a evidência e reduzir hipóteses</span></li>
-          <li><strong>Aplicar</strong><span>a correção e documentar</span></li>
-        </ol>
-      </section>
     </main>
   </section>
 
