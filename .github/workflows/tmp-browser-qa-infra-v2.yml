@@ -1,0 +1,118 @@
+name: tmp-browser-qa-infra-v2
+on:
+  push:
+    branches:
+      - lapidacao-infraestrutura-mbb
+    paths:
+      - .github/workflows/tmp-browser-qa-infra-v2.yml
+permissions:
+  contents: write
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+          fetch-depth: 0
+      - name: Preparar navegador
+        run: |
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install chromium
+      - name: Testar desktop e mobile
+        run: |
+          set -e
+          mkdir -p /tmp/infra-shots
+          python3 -m http.server 8000 >/tmp/mbb-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          sleep 2
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const cases=[['desktop',{width:1440,height:900}],['mobile',{width:390,height:844}]];
+            const starts=[
+              ['diagnostico','00. Você consegue investigar antes de mexer?'],
+              ['redes-diagnostico','00. “A rede caiu” ainda não é um diagnóstico'],
+              ['linux-diagnostico','00. O que precisa deixar de depender de improviso?'],
+              ['moderna-diagnostico','00. O portal cabe no servidor que já existe?'],
+              ['integrador-final','99. Coloque a Feira de Projetos em operação — e entregue o plantão']
+            ];
+            let failures=[];
+            for(const [label,viewport] of cases){
+              const context=await browser.newContext({viewport});
+              const page=await context.newPage();
+              const consoleErrors=[],pageErrors=[],badResponses=[];
+              page.on('console',m=>{if(m.type()==='error') consoleErrors.push(m.text())});
+              page.on('pageerror',e=>pageErrors.push(String(e)));
+              page.on('response',r=>{if(r.url().startsWith('http://127.0.0.1:8000/')&&r.status()>=400)badResponses.push(`${r.status()} ${r.url()}`)});
+              await page.goto('http://127.0.0.1:8000/pages/infraestrutura.html',{waitUntil:'networkidle'});
+              if(!(await page.locator('#portalView').isVisible())) failures.push(`${label}: portal não visível`);
+              if(await page.locator('.module-card.available').count()!==5) failures.push(`${label}: quantidade de cards incorreta`);
+              await page.screenshot({path:`/tmp/infra-shots/portal-${label}.png`,fullPage:true});
+              for(const [hash,title] of starts){
+                await page.goto(`http://127.0.0.1:8000/pages/infraestrutura.html#${hash}`,{waitUntil:'networkidle'});
+                const h1=(await page.locator('#lessonTitle').textContent()||'').trim();
+                if(h1!==title) failures.push(`${label}/${hash}: título inesperado: ${h1}`);
+                const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
+                if(overflow>2) failures.push(`${label}/${hash}: overflow horizontal ${overflow}px`);
+                await page.locator('#openMenu').click();
+                if(!(await page.locator('#lessonMenu').isVisible())) failures.push(`${label}/${hash}: menu não abriu`);
+                await page.keyboard.press('Escape');
+                if(await page.locator('#lessonMenu').evaluate(el=>el.classList.contains('open'))) failures.push(`${label}/${hash}: Escape não fechou menu`);
+              }
+              // Navegação entre aulas.
+              await page.goto('http://127.0.0.1:8000/pages/infraestrutura.html#diagnostico',{waitUntil:'networkidle'});
+              const next=page.locator('.lesson-navigation .primary').first();
+              if(!(await next.count())) failures.push(`${label}: botão próxima aula ausente`);
+              else {await next.click(); if(!locationHash(await page.url()).includes('atendimento-inicial')) failures.push(`${label}: próxima aula não atualizou hash`);}
+              // Quiz.
+              await page.goto('http://127.0.0.1:8000/pages/infraestrutura.html#diagnostico',{waitUntil:'networkidle'});
+              const group=page.locator('[data-quiz-group]').first();
+              if(await group.count()){
+                const qs=group.locator('[data-quiz-question]');
+                for(let i=0;i<await qs.count();i++) await qs.nth(i).locator('input[type=radio]').first().check();
+                await group.locator('[data-check-quiz]').click();
+                if(!(await group.locator('[data-quiz-result]').textContent()||'').trim()) failures.push(`${label}: quiz sem feedback`);
+              }
+              // Checklist integrador.
+              await page.goto('http://127.0.0.1:8000/pages/infraestrutura.html#integrador-final',{waitUntil:'networkidle'});
+              const check=page.locator('[data-checklist] input[type=checkbox]').first();
+              if(await check.count()){
+                await check.check();
+                const progress=(await page.locator('[data-check-progress]').first().textContent()||'').trim();
+                if(!/^1\//.test(progress)) failures.push(`${label}: checklist não atualizou (${progress})`);
+              }
+              await page.screenshot({path:`/tmp/infra-shots/integrador-${label}.png`,fullPage:true});
+              // Imagens reais locais em aula de hardware.
+              await page.goto('http://127.0.0.1:8000/pages/infraestrutura.html#componentes-compatibilidade',{waitUntil:'networkidle'});
+              const imgs=page.locator('.object-card img');
+              if(await imgs.count()<3) failures.push(`${label}: imagens de hardware não renderizadas`);
+              for(let i=0;i<await imgs.count();i++) if(await imgs.nth(i).evaluate(img=>img.naturalWidth===0)) failures.push(`${label}: imagem ${i} não carregou`);
+              if(consoleErrors.length) failures.push(`${label}: console errors ${consoleErrors.join(' | ')}`);
+              if(pageErrors.length) failures.push(`${label}: page errors ${pageErrors.join(' | ')}`);
+              if(badResponses.length) failures.push(`${label}: recursos locais com erro ${[...new Set(badResponses)].join(' | ')}`);
+              await context.close();
+            }
+            await browser.close();
+            if(failures.length){console.error('FALHAS_BROWSER');failures.forEach(x=>console.error(x));process.exit(1)}
+            console.log('BROWSER_QA_OK: desktop/mobile, portal, 5 entradas, menu, próxima aula, quiz, checklist, imagens e ausência de overflow/erros locais.');
+            function locationHash(url){return new URL(url).hash}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: infra-browser-screenshots
+          path: /tmp/infra-shots/*.png
+          if-no-files-found: ignore
+      - name: Remover workflow temporário
+        if: always()
+        run: |
+          set -e
+          git config user.name 'Mundo bit Byte'
+          git config user.email 'mundobitbyte@gmail.com'
+          git rm .github/workflows/tmp-browser-qa-infra-v2.yml
+          git commit -m 'Remove inspeção visual temporária final de Infraestrutura'
+          git push origin HEAD:lapidacao-infraestrutura-mbb
