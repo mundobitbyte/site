@@ -169,7 +169,7 @@ window.infraestruturaLessons.push({
     <div class="hero-box story-opening">
       <span class="eyebrow">Chamado 014 · Inventário da SEC-02</span>
       <h2>A estação tem 8 GB de RAM, SSD de 256 GB quase cheio e processador de quatro núcleos.</h2>
-      <p>Esses dados vieram do inventário iniciado no capítulo anterior; durante a condição registrada no chamado, a memória chega a 92%. Um fornecedor propõe trocar o processador e um colega quer instalar “mais memória de qualquer modelo”. Antes de a coordenação autorizar a compra, precisamos responder: <strong>qual recurso satura, qual expansão a placa aceita e qual problema a troca resolveria?</strong></p>
+      <p>O inventário do Chamado 014 já registra esses dados; durante a condição registrada no chamado, a memória chega a 92%. Um fornecedor propõe trocar o processador e um colega quer instalar “mais memória de qualquer modelo”. Antes de a coordenação autorizar a compra, precisamos responder: <strong>qual recurso satura, qual expansão a placa aceita e qual problema a troca resolveria?</strong></p>
     </div>
 
     <h3>Observar: reconhecer antes de comparar</h3>

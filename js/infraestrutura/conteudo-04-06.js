@@ -274,7 +274,7 @@ window.infraestruturaLessons.push({
       <thead><tr><th>Função</th><th>Teste observável</th><th>Evidência</th></tr></thead>
       <tbody>
         <tr><td>Armazenamento</td><td>Criar, salvar, reabrir e excluir um arquivo de teste na pasta autorizada</td><td>Operação concluída e espaço/capacidade coerentes.</td></tr>
-        <tr><td>Rede</td><td>Confirmar conexão da organização e acesso a recurso permitido</td><td>Interface reconhecida; sem aprofundar diagnóstico de rede neste módulo.</td></tr>
+        <tr><td>Rede</td><td>Confirmar conexão da organização e acesso a recurso permitido</td><td>Interface reconhecida e função de conexão verificada; falhas de caminho exigem investigação própria.</td></tr>
         <tr><td>Áudio</td><td>Reproduzir som de teste em volume seguro e verificar entrada quando necessária</td><td>Dispositivo correto selecionado e funcionamento observado.</td></tr>
         <tr><td>Vídeo</td><td>Confirmar resolução, escala e monitores previstos</td><td>Sem dispositivo desconhecido ou resolução genérica inadequada.</td></tr>
         <tr><td>USB/periféricos</td><td>Conectar dispositivo de teste autorizado</td><td>Reconhecimento e remoção segura quando aplicável.</td></tr>

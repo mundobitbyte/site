@@ -379,6 +379,6 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Diagnóstico controlado descreve, prevê, testa e limita a conclusão. <strong>Known-good e troca cruzada só valem quando compatibilidade, segurança e variáveis estão sob controle.</strong></p></div>
-    <div class="bridge-box"><strong>Fechamento do módulo</strong><p>Os três chamados deixam registros com informações ainda ausentes, testes possíveis e limites. Na oficina 99, sua equipe herdará um desses atendimentos e precisará conduzir triagem, plano, intervenção, validação e relatório sem inventar o que não foi observado.</p></div>
+    <div class="bridge-box"><strong>O plantão muda de equipe</strong><p>Os três chamados deixam informações ainda ausentes, testes possíveis e limites. Outra equipe receberá um desses atendimentos e precisará continuar a investigação a partir do estado encontrado, sem inventar o que não foi observado.</p></div>
   `
 });
