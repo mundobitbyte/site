@@ -1,0 +1,29 @@
+name: tmp-inspeciona-codigos-infra
+on:
+  push:
+    branches:
+      - lapidacao-infraestrutura-mbb
+    paths:
+      - .github/workflows/tmp-inspeciona-codigos-infra.yml
+permissions:
+  contents: read
+jobs:
+  inspecionar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+      - name: Mostrar códigos suspeitos em contexto
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          tokens=['E-02A','E-02B','E-06A','F-1','F-2','F-3','F-4','F-5','I-01','I-02','I-03','I-04','M-01','P-01','P-02','S-10A']
+          for p in Path('js/infraestrutura').glob('*.js'):
+              t=p.read_text(encoding='utf-8')
+              for tok in tokens:
+                  for m in re.finditer(re.escape(tok),t):
+                      a=max(0,m.start()-220); b=min(len(t),m.end()+260)
+                      s=re.sub(r'\s+',' ',t[a:b])
+                      print(f'{p} | {tok} | ...{s}...')
