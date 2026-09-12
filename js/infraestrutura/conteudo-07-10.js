@@ -274,15 +274,15 @@ window.infraestruturaLessons.push({
       </ol>
     </div>
     <div class="state-comparison" aria-label="Antes, intervenção, depois e interpretação do teste de restauração">
-      <div class="state-step"><strong>Antes</strong><span>Três arquivos conhecidos; conteúdo, data e tamanho registrados.</span><small class="evidence-id">AMOSTRA B-01</small></div>
-      <div class="state-step"><strong>Intervenção</strong><span>Alterar/excluir na origem e restaurar em pasta separada.</span><small class="evidence-id">TESTE R-01</small></div>
-      <div class="state-step"><strong>Depois</strong><span>Arquivos restaurados abrem e correspondem ao registro da amostra.</span><small class="evidence-id">EVIDÊNCIA R-01</small></div>
+      <div class="state-step"><strong>Antes</strong><span>Três arquivos conhecidos; conteúdo, data e tamanho registrados.</span><small class="evidence-id">AMOSTRA REGISTRADA</small></div>
+      <div class="state-step"><strong>Intervenção</strong><span>Alterar/excluir na origem e restaurar em pasta separada.</span><small class="evidence-id">ALTERAÇÃO CONTROLADA</small></div>
+      <div class="state-step"><strong>Depois</strong><span>Arquivos restaurados abrem e correspondem ao registro da amostra.</span><small class="evidence-id">RESTAURAÇÃO CONFERIDA</small></div>
       <div class="state-step"><strong>O que prova?</strong><span>Essa amostra foi recuperada por esse caminho; não prova todo o ambiente.</span></div>
     </div>
     <div class="mbb-pause-question"><strong>“Backup concluído” não basta.</strong><p>O teste com três arquivos prova apenas essa amostra e esse caminho de restauração. Documente a conclusão no tamanho correto: não afirme que todo o ambiente é recuperável sem testar o necessário.</p></div>
 
     <h3>Aplicar: calendário com responsável</h3>
-    <div class="record-box"><ul>
+    <div class="note-box compact"><ul>
       <li><strong>semanal:</strong> atualizações, espaço, alertas e resultado do backup;</li>
       <li><strong>mensal:</strong> teste de restauração de amostra e revisão de inicialização;</li>
       <li><strong>conforme ambiente:</strong> inspeção física e limpeza pelo procedimento do fabricante;</li>
@@ -369,7 +369,7 @@ window.infraestruturaLessons.push({
 
     <h3>Decidir substituir</h3>
     <p>Substituição é justificável quando compatibilidade foi confirmada, o teste isolou o componente com evidência suficiente, o custo/risco é aceitável e existe plano de validação. “É velho” ou “o novo é mais rápido” não constitui diagnóstico.</p>
-    <div class="record-box"><strong>Conclusão técnica curta · LAB-06</strong><p>“O sintoma acompanhou o cabo em três repetições; com cabo conhecido, os dois monitores permaneceram estáveis sob a mesma carga. Substituição do cabo aprovada. Limite: a falha não reapareceu durante 30 minutos de teste.”</p></div>
+    <div class="note-box compact"><strong>Conclusão técnica curta · LAB-06</strong><p>“O sintoma acompanhou o cabo em três repetições; com cabo conhecido, os dois monitores permaneceram estáveis sob a mesma carga. Substituição do cabo aprovada. Limite: a falha não reapareceu durante 30 minutos de teste.”</p></div>
 
     <section class="checkpoint compact-check" data-quiz-group>
       <span class="eyebrow">Isolamento</span><h3>O problema mudou depois da troca</h3>

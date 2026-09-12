@@ -24,7 +24,7 @@ window.infraestruturaLessons.push({
       <article><strong>Caso C · LAB-06 · aula interrompida</strong><p>O monitor apaga sob uma condição ainda incompleta no chamado. Há cabos compatíveis known-good, inventário e outra estação para troca cruzada controlada.</p></article>
       <article><strong>Caso D · pasta do laboratório · integridade</strong><p>A identidade de consulta consegue modificar arquivos de atividade. A matriz de acesso prevê somente leitura, mas todos ainda trabalham com contas administrativas.</p></article>
     </div>
-    <div class="note-box compact"><strong>Continue o trabalho; não comece do zero.</strong><p>Reutilize o modelo de chamado do capítulo 01, o inventário do 02, o baseline do 06, a matriz de acesso do 07, a linha do tempo de evidências do 08 e o registro de manutenção/restauração do 09. O professor pode ocultar uma informação ou introduzir uma falha controlada; peça o que falta e registre o limite.</p></div>
+    <div class="note-box compact"><strong>Continue o trabalho; não comece do zero.</strong><p>Use o histórico recebido: chamado, inventário, baseline, acessos, linha do tempo e registros de manutenção/restauração. Se faltar uma informação, peça ou observe antes de agir e registre o limite da conclusão.</p></div>
 
     <h3>Fluxo obrigatório da entrega</h3>
     <div class="table-wrap"><table>
@@ -41,17 +41,17 @@ window.infraestruturaLessons.push({
       </tbody>
     </table></div>
 
-    <h3>Pacote de evidências obrigatório</h3>
-    <p>Não basta contar o que ocorreu. Entregue evidências identificadas e relacionadas ao chamado, sem expor dados pessoais, senhas ou chaves.</p>
+    <h3>Evidências que sustentam o atendimento</h3>
+    <p>Não basta contar o que ocorreu. Guarde apenas evidências que sustentem uma decisão, uma comparação ou o estado entregue, sem expor dados pessoais, senhas ou chaves.</p>
     <div class="artifact-grid" aria-label="Artefatos obrigatórios da oficina">
-      <div class="artifact-card"><strong>E-01 · Chamado e estado inicial</strong><span>Linha do tempo, impacto, fotografia/captura autorizada ou registro equivalente.</span></div>
-      <div class="artifact-card"><strong>E-02 · Inventário e riscos</strong><span>Alvo, fonte dos dados, itens críticos, preservação e critério de parada.</span></div>
-      <div class="artifact-card"><strong>E-03 · Hipótese e previsão</strong><span>O que o teste diferencia e qual resultado era esperado antes da ação.</span></div>
-      <div class="artifact-card"><strong>E-04 · Antes e depois</strong><span>Mesma métrica, identidade, carga ou condição; horário e unidade registrados.</span></div>
-      <div class="artifact-card"><strong>E-05 · Mudança e rollback</strong><span>Alvo exato, autorização, procedimento, forma de desfazer e resultado quando testado.</span></div>
-      <div class="artifact-card"><strong>E-06 · Validação e conclusão</strong><span>Repetição, funções essenciais, limites, pendências e próximo responsável.</span></div>
+      <div class="artifact-card"><strong>Chamado e estado inicial</strong><span>Linha do tempo, impacto, fotografia/captura autorizada ou registro equivalente.</span></div>
+      <div class="artifact-card"><strong>Inventário e riscos</strong><span>Alvo, fonte dos dados, itens críticos, preservação e critério de parada.</span></div>
+      <div class="artifact-card"><strong>Hipótese e previsão</strong><span>O que o teste diferencia e qual resultado era esperado antes da ação.</span></div>
+      <div class="artifact-card"><strong>Antes e depois</strong><span>Mesma métrica, identidade, carga ou condição; horário e unidade registrados.</span></div>
+      <div class="artifact-card"><strong>Mudança e rollback</strong><span>Alvo exato, autorização, procedimento, forma de desfazer e resultado quando testado.</span></div>
+      <div class="artifact-card"><strong>Validação e conclusão</strong><span>Repetição, funções essenciais, limites, pendências e próximo responsável.</span></div>
     </div>
-    <div class="note-box compact"><strong>Evidência sem vínculo vira anexo decorativo.</strong><p>No relatório, cite o identificador: “A hipótese H1 ganhou força porque E-04 mostrou...”. Se uma tela não ajuda a decidir ou provar um estado, ela não precisa ser incluída.</p></div>
+    <div class="note-box compact"><strong>Evidência sem vínculo vira anexo decorativo.</strong><p>No relatório, ligue a evidência diretamente à decisão: “A hipótese H1 ganhou força porque o teste antes/depois mostrou...”. Se uma tela não ajuda a decidir ou provar um estado, ela não precisa ser incluída.</p></div>
 
     <h3>Prática: trabalhe em ciclos curtos</h3>
     <div class="process-flow" aria-label="Ciclo de trabalho da oficina">
@@ -109,7 +109,7 @@ H3 — evidência a favor/contra:
 5. TESTES
 Pergunta e resultado previsto:
 Procedimento / variável controlada:
-Resultado observado / evidência (ID):
+Resultado observado / evidência relacionada:
 Interpretação e próxima decisão:
 
 6. INTERVENÇÃO
@@ -121,7 +121,7 @@ Rollback foi necessário/testado? Resultado:
 7. VALIDAÇÃO
 Repetição da condição original:
 Funções essenciais verificadas:
-Comparação antes/depois (IDs das evidências):
+Comparação antes/depois (evidências relacionadas):
 
 8. CONCLUSÃO E ENTREGA
 Conclusão limitada às evidências:
@@ -149,7 +149,7 @@ Rotina preventiva / próximo responsável:</textarea>
       <button class="action-button primary" type="button" data-check-quiz>Conferir</button><div class="quiz-result" data-quiz-result aria-live="polite"></div>
     </section>
 
-    <div class="essence"><strong>Essência do Módulo 1</strong><p>Administrar e manter sistemas é controlar estados: <strong>identificar, preservar, planejar, intervir, testar, recuperar e documentar</strong>. O técnico confiável não é o que tenta mais coisas; é o que produz evidência, reduz risco e deixa o ambiente compreensível.</p></div>
-    <div class="bridge-box"><strong>Limite desta fase</strong><p>O Módulo 1 termina aqui. Conectividade apareceu apenas como função a validar ou limite de encaminhamento. A configuração e o diagnóstico de redes pertencem ao próximo módulo e não foram iniciados.</p></div>
+    <div class="essence"><strong>Essência do trabalho de suporte</strong><p>Administrar e manter sistemas é controlar estados: <strong>identificar, preservar, planejar, intervir, testar, recuperar e documentar</strong>. O técnico confiável não é o que tenta mais coisas; é o que produz evidência, reduz risco e deixa o ambiente compreensível.</p></div>
+    <div class="bridge-box"><strong>O próximo problema nasce da própria operação</strong><p>A estação agora pode ser identificada, mantida e recuperada com método. Quando ela depende de impressoras, servidores, Wi-Fi e outros computadores, o diagnóstico precisa seguir o caminho da comunicação sem abandonar as mesmas regras: observar, testar, interpretar e só então alterar.</p></div>
   `
 });

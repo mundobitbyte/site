@@ -71,7 +71,7 @@ window.infraestruturaLessons.push({
     <div class="danger-box"><strong>Firmware não é lugar para tentativa aleatória.</strong><p>Alterações em modo UEFI/Legacy, Secure Boot, armazenamento ou chaves podem impedir a inicialização e acionar recuperação do BitLocker. Antes de qualquer mudança autorizada, registre o estado e confirme a chave de recuperação quando a criptografia estiver ativa.</p></div>
 
     <h3>Preparar a mídia oficial</h3>
-    <p>Para a estação deste módulo, a plataforma principal é o <strong>Windows 11</strong>. O Windows 10 encerrou o suporte regular em 14 de outubro de 2025; por isso não é a base de uma instalação nova em 2026.</p>
+    <p>Para a nova instalação da <strong>SEC-02</strong>, a plataforma principal é o <strong>Windows 11</strong>. O Windows 10 encerrou o suporte regular em 14 de outubro de 2025; por isso não é a base de uma instalação nova em 2026.</p>
     <div class="task-box">
       <strong>Em um computador confiável, com Internet e permissão</strong>
       <ol>
@@ -205,7 +205,7 @@ window.infraestruturaLessons.push({
     </div>
 
     <h3>Aplicar: primeiro baseline</h3>
-    <div class="record-box"><p><strong>Complete o primeiro baseline da OS 006</strong> antes de instalar aplicações:</p><ul>
+    <div class="note-box compact"><p><strong>Complete o primeiro baseline da OS 006</strong> antes de instalar aplicações:</p><ul>
       <li>edição, versão e compilação do Windows;</li>
       <li>data da instalação e nome do equipamento;</li>
       <li>capacidade/partições do disco-alvo;</li>
@@ -291,7 +291,7 @@ window.infraestruturaLessons.push({
     </div>
 
     <h3>Aplicar: baseline pós-instalação</h3>
-    <div class="record-box"><p><strong>Feche o baseline da OS 006.</strong> O registro deve permitir comparar o estado futuro:</p><ul>
+    <div class="note-box compact"><p><strong>Feche o baseline da OS 006.</strong> O registro deve permitir comparar o estado futuro:</p><ul>
       <li>edição, versão e compilação do sistema;</li>
       <li>data/hora da última busca de atualização;</li>
       <li>drivers críticos: origem e versão quando houve intervenção manual;</li>

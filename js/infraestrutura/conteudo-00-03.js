@@ -15,7 +15,7 @@ window.infraestruturaLessons.push({
       <p>A atendente atualizou programas, um colega trocou cabos e alguém sugeriu formatar. A coordenadora sabe que há planilhas de matrícula apenas na máquina, mas ninguém registrou o que mudou. <strong>Sua primeira competência não é saber um comando: é saber o que ainda precisa ser descoberto.</strong></p>
     </div>
 
-    <div class="note-box"><strong>Como usar este diagnóstico</strong><p>Responda pelo que você faria de verdade. O resultado não é nota. Ele indica quais decisões precisam de mais atenção durante o módulo.</p></div>
+    <div class="note-box"><strong>Como usar este diagnóstico</strong><p>Responda pelo que você faria de verdade. O resultado não é nota. Ele mostra quais decisões ainda precisam de mais atenção nos próximos atendimentos.</p></div>
 
     <section class="checkpoint" data-quiz-group>
       <span class="eyebrow">Decisões de entrada</span>
@@ -60,7 +60,7 @@ window.infraestruturaLessons.push({
       <div class="quiz-result" data-quiz-result aria-live="polite"></div>
     </section>
 
-    <div class="record-box"><strong>Registro de partida</strong><p>Anote as questões em que sua justificativa foi diferente. Ao final do módulo, refaça o diagnóstico e compare <em>como</em> você decidiu, não apenas quantos itens acertou.</p></div>
+    <div class="note-box compact"><strong>Registro de partida</strong><p>Anote as questões em que sua justificativa foi diferente. No fechamento, refaça o diagnóstico e compare <em>como</em> você decidiu, não apenas quantos itens acertou.</p></div>
     <div class="essence"><strong>Essência</strong><p>Infraestrutura começa com uma disciplina: <strong>não destruir o estado que ainda precisa ser compreendido</strong>. Observe, limite o risco, produza evidência e só então intervenha.</p></div>
     <div class="bridge-box"><strong>O caso continua</strong><p>A equipe abre o Chamado 014 e identifica o equipamento como <strong>SEC-02</strong>. Antes de abrir ou alterar a estação, precisamos transformar “está ruim” em um registro que outra pessoa consiga continuar.</p></div>
   `
@@ -124,8 +124,9 @@ window.infraestruturaLessons.push({
     </ol>
     <div class="danger-box"><strong>Não transforme recuperação de dados em improviso.</strong><p>Quando a unidade apresenta sinais físicos, arquivos essenciais ou valor institucional, insistir pode piorar a possibilidade de recuperação profissional.</p></div>
 
-    <h3>Aplicar: um chamado que permite continuidade</h3>
-    <textarea id="ticket-template" class="report-template" aria-label="Modelo de registro de chamado" readonly>CHAMADO:
+    <h3>Aplicar: manter um registro que ajuda a próxima decisão</h3>
+    <textarea id="ticket-template" class="report-template" aria-label="Modelo de registro de chamado" readonly>REGISTRO DE SUPORTE — SEC-02
+CHAMADO:
 Responsável e contato:
 Equipamento / patrimônio:
 
@@ -142,6 +143,7 @@ RISCOS IDENTIFICADOS:
 ESTADO INICIAL REGISTRADO:
 PRÓXIMO TESTE SEGURO:
 Critério para interromper/encaminhar:</textarea>
+    <p class="microcopy"><strong>Um registro, várias decisões.</strong> Continue neste mesmo registro enquanto o caso evolui. Acrescente somente fatos, evidências, mudanças e decisões que ajudem a próxima pessoa a continuar o atendimento.</p>
     <p><button class="action-button" type="button" data-copy-template="#ticket-template">Copiar modelo</button><span class="copy-status" data-copy-status aria-live="polite"></span></p>
 
     <section class="checkpoint compact-check" data-quiz-group>
@@ -251,12 +253,12 @@ window.infraestruturaLessons.push({
     <h3>Analisar: o recurso que satura durante o sintoma</h3>
     <div class="evidence-grid">
       <article><strong>Observação A</strong><p>Memória em 92%, disco muito ativo e paginação ao abrir as planilhas. Fechar um aplicativo reduz o atraso.</p><p><strong>Hipótese fortalecida:</strong> pressão de memória. Ainda é preciso verificar expansão compatível e padrão de uso.</p></article>
-      <article><strong>Observação B</strong><p>CPU em 18%, memória em 55%, disco em 30%, mas a aplicação aguarda um arquivo remoto.</p><p><strong>Hipótese enfraquecida:</strong> trocar CPU ou RAM. O gargalo pode estar fora da estação — sem antecipar o módulo de redes.</p></article>
+      <article><strong>Observação B</strong><p>CPU em 18%, memória em 55%, disco em 30%, mas a aplicação aguarda um arquivo remoto.</p><p><strong>Hipótese enfraquecida:</strong> trocar CPU ou RAM. O gargalo pode estar fora da estação — sem concluir além da evidência disponível.</p></article>
     </div>
     <div class="mbb-pause-question"><strong>Uma peça antiga pode funcionar perfeitamente.</strong><p>Gargalo é a limitação que domina uma carga específica. Não é sinônimo de componente mais velho, menor número ou aparência desgastada.</p></div>
 
     <h3>Aplicar: inventário mínimo da estação</h3>
-    <div class="record-box"><p><strong>Anexe ao Chamado 014:</strong></p><ul>
+    <div class="note-box compact"><p><strong>Anexe ao Chamado 014:</strong></p><ul>
       <li>fabricante, modelo e patrimônio;</li>
       <li>CPU, RAM instalada e configuração de slots quando verificável;</li>
       <li>unidades de armazenamento, capacidade e espaço livre;</li>
@@ -291,7 +293,7 @@ window.infraestruturaLessons.push({
       <p>O ticket acompanha a peça com o modelo aprovado, o inventário da SEC-02 e a fotografia do estado inicial. A equipe tem manual, bancada adequada, controle antiestático e autorização. <strong>A meta não é apenas encaixar a RAM: é controlar risco, alterar uma variável e provar que a estação continua íntegra.</strong></p>
     </div>
 
-    <div class="danger-box"><strong>Limite absoluto deste módulo</strong><p><strong>Nunca abra uma fonte de alimentação.</strong> Capacitores internos podem manter cargas perigosas mesmo desconectados. Não realize reparo elétrico, soldagem ou intervenção fora da sua formação, equipamento e supervisão.</p></div>
+    <div class="danger-box"><strong>Limite absoluto de segurança</strong><p><strong>Nunca abra uma fonte de alimentação.</strong> Capacitores internos podem manter cargas perigosas mesmo desconectados. Não realize reparo elétrico, soldagem ou intervenção fora da sua formação, equipamento e supervisão.</p></div>
 
     <h3>Preparar: procedimento depende do modelo</h3>
     <p>Desktop, notebook e mini-PC têm travas, baterias, parafusos e sequências diferentes. Antes de abrir, consulte o manual de serviço do <strong>modelo exato</strong> e confirme garantia, autorização e ferramentas.</p>
