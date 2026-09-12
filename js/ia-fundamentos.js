@@ -136,14 +136,18 @@ document.addEventListener('DOMContentLoaded', function(){
   // Botão Copiar só em práticas nas quais o aluno realmente executa o prompt.
   const praticasCopiaveis = [
     ...document.querySelectorAll('#aprendizagem .prompt'),
+    ...document.querySelectorAll('#geracao-respostas .prompt'),
     ...document.querySelectorAll('#pratique .prompt'),
-    ...document.querySelectorAll('#primeiros-laboratorios .prompt')
-  ];
+    ...document.querySelectorAll('#laboratorio-erros .prompt'),
+    ...document.querySelectorAll('#laboratorio-parece-saber .prompt'),
+    ...document.querySelectorAll('#primeiros-laboratorios .prompt'),
+    ...document.querySelectorAll('#lab5-estudar-sem-copiar .prompt')
+  ].filter(prompt => !prompt.closest('.bad'));
   praticasCopiaveis.forEach((prompt, i) => adicionarBotaoCopiarPrompt(prompt, i + 1));
 
   // No primeiro laboratório crítico os prompts estavam em <code>; continuam sendo ações reais.
   document.querySelectorAll('#laboratorio-erro .lab-step code').forEach((code, i) => {
-    adicionarBotaoCopiarCodigo(code, i + 1);
+    adicionarBotaoCopiarCodigo(code, i + 1));
   });
 
   // A prática 13 compara dois pedidos, não fornecedores. Uma IA é suficiente aqui.
