@@ -1,0 +1,165 @@
+name: tmp-lapida-redes-mbb
+
+on:
+  push:
+    branches: [lapidacao-infraestrutura-mbb]
+
+permissions:
+  contents: write
+
+jobs:
+  lapidar:
+    if: ${{ !contains(github.event.head_commit.message, '[redes-m2-final]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+          fetch-depth: 0
+      - name: Lapidar Redes no padrão MbB
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          files=[
+              Path('js/infraestrutura/redes-00-03.js'),
+              Path('js/infraestrutura/redes-04-07.js'),
+              Path('js/infraestrutura/redes-08-10.js'),
+              Path('js/infraestrutura/redes-99.js'),
+          ]
+
+          exact={
+            'Os registros do Módulo 1 confirmam que SEC-02 foi validado após a OS 006, mas não há mapa atual da rede.':'O histórico de suporte confirma que SEC-02 foi validado após a OS 006, mas não há mapa atual da rede.',
+            '<strong>Missão 00 · abrir o Registro de Rede R-00</strong>':'<strong>Missão 00 · iniciar o Registro da Rede</strong>',
+            '<strong>Artefato iniciado · R-00</strong>':'<strong>Registro da Rede iniciado</strong>',
+            'O registro de entrada acompanhará o módulo. Ele será confrontado com o inventário, o mapa e as evidências dos capítulos seguintes.':'Use o mesmo Registro da Rede durante os atendimentos. Atualize-o somente quando uma observação, teste ou mudança ajudar a próxima decisão.',
+            'O inventário do Módulo 1 localiza SEC-02, LAB-06, SALA-04 e ADM-01, mas não registra portas de rede.':'O inventário recebido do suporte localiza SEC-02, LAB-06, SALA-04 e ADM-01, mas não registra portas de rede.',
+            '<strong>R-01 Inventário e Topologia</strong>':'<strong>Mapa e inventário</strong>',
+            '<strong>Artefato R-01</strong>':'<strong>Mapa e inventário</strong>',
+            '<strong>Missão 02 · produzir R-02 Mapa de portas e cabos</strong>':'<strong>Missão 02 · mapear portas e cabos</strong>',
+            '<strong>R-02 alimenta R-01</strong>':'<strong>O mapa físico atualiza o mapa da rede</strong>',
+            '<strong>Missão 03 · R-03 Plano de Endereçamento</strong>':'<strong>Missão 03 · planejar o endereçamento</strong>',
+            'No capítulo 08, VLANs e políticas serão avaliadas com base neste plano.':'Quando a segmentação for testada, VLANs e políticas deverão partir deste plano.',
+            '<strong>Artefato R-03</strong>':'<strong>Plano de endereçamento</strong>',
+            '<strong>Missão 04 · R-04 Tabela de Estado de Rede</strong>':'<strong>Missão 04 · comparar estados de rede</strong>',
+            '<strong>Missão 05 · R-05 Registro de Caminho</strong>':'<strong>Missão 05 · registrar o caminho</strong>',
+            '<strong>Missão 06 · R-06 Matriz de Serviços</strong>':'<strong>Missão 06 · mapear serviços necessários</strong>',
+            '<strong>Missão 07 · R-07 Matriz Hipótese–Teste</strong>':'<strong>Missão 07 · escolher hipótese, previsão e teste</strong>',
+            'R-07 será obrigatório na oficina.':'Essa matriz hipótese–teste será reutilizada na passagem de plantão.',
+            '<strong>Missão 08 · R-08 Plano de Segmentação e Acesso</strong>':'<strong>Missão 08 · planejar segmentação e acesso</strong>',
+            '<strong>Artefato R-08</strong>':'<strong>Plano de segmentação e acesso</strong>',
+            'A foto do capítulo 02 ajuda a reconhecer o equipamento, mas somente uma medição distribuída explica o uso.':'A foto de reconhecimento físico usada no levantamento ajuda a reconhecer o equipamento, mas somente uma medição distribuída explica o uso.',
+            '<strong>Missão 09 · R-09 Levantamento Wi-Fi</strong>':'<strong>Missão 09 · medir o Wi-Fi nas condições reais</strong>',
+            '<strong>R-09 fecha uma lacuna do R-01</strong>':'<strong>O levantamento Wi-Fi completa o mapa da rede</strong>',
+            'No capítulo 10, o aluno precisa escolher <strong>o próximo teste mais informativo</strong> em incidentes integrados.':'Na passagem de plantão, a equipe precisa escolher <strong>o próximo teste mais informativo</strong> em incidentes integrados.',
+            "objective: 'Integrar os artefatos do módulo para diagnosticar incidentes em camadas, evitando ações amplas e conclusões além da evidência.',":"objective: 'Integrar os registros acumulados da rede para diagnosticar incidentes em camadas, evitando ações amplas e conclusões além da evidência.',",
+            '<strong>Prontuário de rede</strong>':'<strong>Registro da Rede</strong>',
+            'R-00 a R-09 não são exercícios descartáveis. Juntos, formam memória operacional:':'As seções do Registro da Rede não são exercícios descartáveis. Juntas, formam memória operacional:',
+            '<strong>R-00 · entrada</strong>':'<strong>Entrada e relatos</strong>',
+            '<strong>R-01 · topologia v3</strong>':'<strong>Mapa e inventário · v3</strong>',
+            '<strong>R-02 · portas/cabos</strong>':'<strong>Portas e cabos</strong>',
+            '<strong>R-03 · endereçamento</strong>':'<strong>Plano de endereçamento</strong>',
+            '<strong>R-04 · baseline</strong>':'<strong>Estado de referência</strong>',
+            '<strong>R-06 · serviços</strong>':'<strong>Matriz de serviços</strong>',
+            '<strong>R-08 · acessos</strong>':'<strong>Segmentação e acessos</strong>',
+            '<strong>R-09 · Wi-Fi</strong>':'<strong>Levantamento Wi-Fi</strong>',
+            'Consultamos R-01 a R-09 e marcamos lacunas ou divergências.':'Consultamos as seções relevantes do Registro da Rede e marcamos lacunas ou divergências.',
+            'R-01/R-02 corrigidos e lacunas marcadas':'mapa/inventário e portas/cabos corrigidos, com lacunas marcadas',
+            'R-07 com previsão e resultado discriminante':'matriz hipótese–teste com previsão e resultado discriminante',
+            'PLANTÃO DE REDE — MÓDULO 2':'PLANTÃO DE REDE — ESCOLA HORIZONTE',
+            '3. DOCUMENTAÇÃO REUTILIZADA\nR-01/R-02:\nR-03/R-04:\nR-06/R-08/R-09:':'3. REGISTRO DA REDE REUTILIZADO\nMapa/inventário e portas/cabos:\nEndereçamento e estado de rede:\nServiços, segmentação/acesso e Wi-Fi:',
+            'Artefatos atualizados:':'Seções atualizadas:',
+            'O relatório final referencia e atualiza R-00 a R-09. O próximo técnico recebe chamados, mapa, baseline, matriz de serviços e acessos, levantamento Wi-Fi, evidências antes/depois e pendências com responsável — não uma pasta de exercícios isolados.':'O relatório final atualiza o mesmo Registro da Rede. O próximo técnico recebe chamados, mapa, estado de referência, serviços, acessos, levantamento Wi-Fi, evidências antes/depois e pendências com responsável — não uma pasta de exercícios isolados.',
+            '<div class="essence"><strong>Essência do Módulo 2</strong>':'<div class="essence"><strong>Essência do trabalho em redes</strong>',
+            '<div class="bridge-box"><strong>Limite desta fase</strong><p>O Módulo 2 termina aqui. Não foram iniciados Servidores Linux nem Infraestrutura Moderna. Serviços apareceram apenas como destinos necessários ao diagnóstico de rede.</p></div>':'<div class="bridge-box"><strong>A rede agora sustenta uma nova necessidade</strong><p>Mapa, endereçamento, serviços e políticas já permitem explicar como as estações se comunicam. Quando a escola precisa centralizar arquivos, páginas e outros serviços, o próximo problema deixa de ser apenas o caminho da rede e passa a incluir a máquina que deverá oferecer esses serviços com controle e recuperação.</p></div>',
+            '<strong>E-05A · <code>tracert portal.exemplo.gov.br</code> · 10h14</strong>':'<strong>Rastreamento observado · <code>tracert portal.exemplo.gov.br</code> · 10h14</strong>',
+            'Qual conclusão cabe após E-05A?':'Qual conclusão cabe após o rastreamento observado?',
+            'mantenha E-05A':'mantenha a saída registrada',
+          }
+
+          names={
+            'R-00':'registro de entrada',
+            'R-01':'mapa/inventário',
+            'R-02':'mapa de portas/cabos',
+            'R-03':'plano de endereçamento',
+            'R-04':'estado de rede',
+            'R-05':'registro de caminho',
+            'R-06':'matriz de serviços',
+            'R-07':'matriz hipótese–teste',
+            'R-08':'plano de segmentação/acesso',
+            'R-09':'levantamento Wi-Fi',
+          }
+
+          for p in files:
+              t=p.read_text(encoding='utf-8')
+              for old,new in exact.items():
+                  t=t.replace(old,new)
+              # Remove a aparência de formulário como protagonista; a documentação continua, mas como apoio.
+              t=t.replace('<div class="record-box">','<div class="note-box compact">')
+              # Faixas/listas primeiro para não produzir frases artificiais.
+              t=t.replace('R-01 a R-09','as seções acumuladas do Registro da Rede')
+              t=t.replace('R-00 a R-09','as seções do Registro da Rede')
+              # Referências residuais passam a usar o significado, não o código.
+              for code,label in names.items():
+                  t=t.replace(code,label)
+              p.write_text(t,encoding='utf-8')
+
+          # Ajustes de fluência depois da expansão dos nomes.
+          fluent={
+            'A equipe abre o plano de endereçamento e coleta a configuração antes de modificar.':'A equipe consulta o plano de endereçamento e coleta a configuração antes de modificar.',
+            'comparar LED/link e porta com mapa de portas/cabos;':'comparar LED/link e porta com o mapa de portas/cabos;',
+            'O estado de rede mostra configuração coerente.':'O estado de rede registrado mostra configuração coerente.',
+            'conforme estado de rede.':'conforme o estado de rede registrado.',
+            'mapa/inventário agora localiza IMP-01':'O mapa/inventário agora localiza IMP-01',
+            'estado de rede registra seu endereço reservado':'o estado de rede registra seu endereço reservado',
+            'compare o DNS com estado de rede.':'compare o DNS com o estado de rede registrado.',
+            'O plano de endereçamento já propôs grupos;':'O plano de endereçamento já propôs grupos;',
+            'Do plano plano de endereçamento à matriz de acesso':'Do plano de endereçamento à matriz de acesso',
+            'Reutilize mapa/inventário, plano de endereçamento e matriz de serviços':'Reutilize o mapa/inventário, o plano de endereçamento e a matriz de serviços',
+            'preservando mapa de portas/cabos.':'preservando o mapa de portas/cabos.',
+            'estado de rede diverge apenas no DNS.':'o estado de rede diverge apenas no DNS.',
+            'matriz de serviços informa serviço TCP específico.':'a matriz de serviços informa o serviço TCP específico.',
+            'repetir levantamento Wi-Fi em horário':'repetir o levantamento Wi-Fi em horário',
+            'preencha matriz hipótese–teste,':'preencha a matriz hipótese–teste,',
+          }
+          for p in files:
+              t=p.read_text(encoding='utf-8')
+              for old,new in fluent.items():
+                  t=t.replace(old,new)
+              p.write_text(t,encoding='utf-8')
+
+      - name: Validar sintaxe e voz editorial
+        run: |
+          set -e
+          for f in js/infraestrutura/redes-00-03.js js/infraestrutura/redes-04-07.js js/infraestrutura/redes-08-10.js js/infraestrutura/redes-99.js; do
+            node --check "$f"
+          done
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          files=[Path('js/infraestrutura/redes-00-03.js'),Path('js/infraestrutura/redes-04-07.js'),Path('js/infraestrutura/redes-08-10.js'),Path('js/infraestrutura/redes-99.js')]
+          txt='\n'.join(p.read_text(encoding='utf-8') for p in files)
+          assert txt.count('window.infraestruturaNetworkLessons.push({') == 12, 'Quantidade de aulas de Redes mudou'
+          assert not re.search(r'R-0\d', txt), 'Ainda há taxonomia R-* visível'
+          assert 'E-05A' not in txt, 'Código artificial de evidência permaneceu'
+          assert '<div class="record-box">' not in txt, 'record-box ainda protagoniza documentação'
+          curricular=[]
+          for p in files:
+              for i,line in enumerate(p.read_text(encoding='utf-8').splitlines(),1):
+                  if re.search(r'(?i)\b(módulo|capítulo)\b', line):
+                      curricular.append((p,i,line.strip()))
+          print('Ocorrências curriculares:',len(curricular))
+          for x in curricular: print(*x,sep=':')
+          assert not curricular, 'Ainda há voz curricular/bastidor em Redes'
+          print('Validação MbB Redes: 12 aulas, sintaxe OK, taxonomia R removida da voz do aluno e bastidores limpos.')
+          PY
+          git diff --check
+      - name: Commitar e limpar rotinas temporárias
+        run: |
+          rm -f .github/workflows/tmp-audita-redes-mbb.yml .github/workflows/tmp-lapida-redes-mbb.yml
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add js/infraestrutura/redes-00-03.js js/infraestrutura/redes-04-07.js js/infraestrutura/redes-08-10.js js/infraestrutura/redes-99.js .github/workflows/tmp-audita-redes-mbb.yml .github/workflows/tmp-lapida-redes-mbb.yml
+          git commit -m "Lapida Módulo 2 de Redes no padrão MbB [redes-m2-final]"
+          git push origin HEAD:lapidacao-infraestrutura-mbb
