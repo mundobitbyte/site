@@ -27,7 +27,6 @@
   display:none !important;
 }
 
-/* As antigas perguntas da coluna direita viram uma faixa horizontal. */
 .hero .mini-panel{
   display:block !important;
   padding:12px 14px;
@@ -58,7 +57,7 @@
   box-shadow:0 0 0 3px #e5f0ff;
 }
 
-/* Desktop: um painel por vez. O Início é o fallback antes do JS inicializar. */
+/* Um único painel por vez no desktop. */
 main > #inicio{display:block;}
 main.panel-nav-ready > section[id]{display:none;}
 main.panel-nav-ready > section[id].active-panel{display:block;}
@@ -67,10 +66,8 @@ main.panel-nav-ready > section[id].active-panel{display:block;}
   :root{--topo:46px;}
   .hero{padding:18px 20px;}
   .hero .mini-flow{grid-template-columns:repeat(2,minmax(0,1fr));}
-
-  /* Mobile usa navegação nativa por âncoras e rolagem vertical.
-     É deliberadamente independente do JS para não travar em toque/viewport móvel. */
   .layout{padding-top:46px;}
+
   aside{
     position:sticky !important;
     top:46px !important;
@@ -82,13 +79,22 @@ main.panel-nav-ready > section[id].active-panel{display:block;}
     -webkit-overflow-scrolling:touch;
     overscroll-behavior-x:contain;
   }
+
+  /* Mobile: um painel por vez, mas com duas garantias independentes:
+     .active-panel (JS) e :target (âncora nativa). Assim a navegação continua
+     funcionando mesmo se CSS e JS forem atualizados em momentos diferentes. */
   main > section[id],
-  main.panel-nav-ready > section[id]{
-    display:block !important;
+  main.panel-nav-ready > section[id]{display:none !important;}
+  main > #inicio,
+  main > section[id].active-panel,
+  main > section[id]:target{display:block !important;}
+
+  /* Ao existir um destino diferente de Início, ele substitui o fallback inicial. */
+  main:has(> section[id]:target:not(#inicio)) > #inicio:not(:target):not(.active-panel){
+    display:none !important;
   }
-  main > section[id]{
-    scroll-margin-top:112px;
-  }
+
+  main > section[id]{scroll-margin-top:112px;}
 }
 
 @media(max-width:560px){
