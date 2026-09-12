@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   if(headerLeft && portalLink && !document.querySelector(".tia-pdf-header")){
     const button=document.createElement("a");
     button.className="portal-link tia-pdf-header";
-    button.href="../assets/pdf/TIA_Material_de_Apoio_Versao_Anterior.pdf";
+    button.href="../assets/pdf/TIA_Material_de_Apoio_Versao_Anterior.pdf?v=20260912-2";
     button.download="TIA_Material_de_Apoio_Versao_Anterior.pdf";
     button.setAttribute("aria-label","Baixar PDF de apoio da versão anterior do módulo TIA");
     button.title="Material complementar para revisão, estudo em casa e atividades";
