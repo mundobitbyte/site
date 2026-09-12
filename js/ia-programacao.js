@@ -34,6 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  const secaoLaboratorioFinal = Array.from(document.querySelectorAll('section.card'))
+    .find(secao => secao.querySelector('h2')?.textContent.startsWith('16.'));
+  const promptRegras = secaoLaboratorioFinal?.querySelector('.prompt');
+  if (promptRegras && !promptRegras.textContent.includes('[COLE AQUI')) {
+    promptRegras.textContent = `Estas são minhas regras de reserva:
+
+[COLE AQUI AS REGRAS QUE VOCÊ ESCREVEU NA ETAPA A]
+
+Antes de propor código, identifique no máximo cinco decisões que ainda estejam ambíguas e que possam alterar a implementação. Não invente respostas para elas.`;
+  }
+
   const secaoAgente = Array.from(document.querySelectorAll('section.card'))
     .find(secao => secao.querySelector('h2')?.textContent.startsWith('15.'));
 
