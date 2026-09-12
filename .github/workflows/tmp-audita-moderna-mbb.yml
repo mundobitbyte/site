@@ -1,0 +1,33 @@
+name: tmp-audita-moderna-mbb
+
+on:
+  push:
+    branches: [lapidacao-infraestrutura-mbb]
+
+permissions:
+  contents: read
+
+jobs:
+  auditar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+      - name: Mapear linguagem, taxonomia e estrutura
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          files=[Path('js/infraestrutura/moderna-00-03.js'),Path('js/infraestrutura/moderna-04-07.js'),Path('js/infraestrutura/moderna-08-10.js'),Path('js/infraestrutura/moderna-99.js')]
+          for p in files:
+              t=p.read_text(encoding='utf-8')
+              print(f'\n### {p}')
+              print('aulas=',t.count('window.infraestruturaModernLessons.push({'),'record-box=',t.count('record-box'))
+              for m in re.finditer(r"id:\s*'([^']+)'[\s\S]{0,160}?number:\s*'([^']+)'[\s\S]{0,280}?title:\s*'([^']+)'",t):
+                  print('AULA',m.group(2),m.group(1),'|',m.group(3))
+              for i,line in enumerate(t.splitlines(),1):
+                  if re.search(r'(?i)(?<![A-Z0-9])A-\d\d(?![A-Z0-9])|E-M\d|F-M\d|record-box|\bprofessor\b|\baluno\b|\bmódulo\b|\bcapítulo\b|\bnesta aula\b|\bpróxima aula\b',line):
+                      s=' '.join(line.strip().split())
+                      if len(s)>480: s=s[:480]+'...'
+                      print(f'{i}: {s}')
