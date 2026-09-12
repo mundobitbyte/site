@@ -35,62 +35,113 @@ function toggleBox(id) {
   if (box) box.classList.toggle('show');
 }
 
-// Atualização 2026: o endereço principal do ChatGPT passou a ser chatgpt.com.
-// Mantém o HTML antigo funcional sem exigir reescrita repetitiva dos laboratórios aprovados.
+// Atualização 2026: endereço principal do ChatGPT.
 document.querySelectorAll('a[href="https://chat.openai.com/"]').forEach(link => {
   link.href = 'https://chatgpt.com/';
 });
 
-// Mundo bit Byte — navegação por painel único.
-// Não altera conteúdo; apenas mostra o tópico selecionado sem rolagem longa.
-document.addEventListener('DOMContentLoaded', function(){
-  const links = Array.from(document.querySelectorAll(".side-link[href^='#']"));
+document.addEventListener('DOMContentLoaded', function () {
+  const main = document.querySelector('main');
+  const links = Array.from(document.querySelectorAll('.side-link[href^="#"]'));
   const sections = links
-    .map(a => document.querySelector(a.getAttribute('href')))
+    .map(link => document.querySelector(link.getAttribute('href')))
     .filter(Boolean);
 
-  if(!links.length || !sections.length) return;
+  if (!main || !links.length || !sections.length) return;
 
-  function setActive(hash){
-    links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === hash));
+  const hashesValidos = new Set(links.map(link => link.getAttribute('href')));
+  const isMobile = () => window.matchMedia('(max-width: 980px)').matches;
+
+  function normalizarHash(hash) {
+    return hashesValidos.has(hash) ? hash : '#inicio';
   }
 
-  function showPanel(hash, updateHistory){
-    const target = document.querySelector(hash);
-    if(!target) return;
+  function setActive(hash) {
+    const destino = normalizarHash(hash);
+    links.forEach(link => {
+      const active = link.getAttribute('href') === destino;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  function showPanel(hash, updateHistory) {
+    const destino = normalizarHash(hash);
+    const target = document.querySelector(destino);
+    if (!target) return;
 
     sections.forEach(section => section.classList.remove('active-panel'));
     target.classList.add('active-panel');
-    setActive(hash);
+    setActive(destino);
 
-    if(updateHistory){
-      history.replaceState(null, '', hash);
+    if (updateHistory && window.location.hash !== destino) {
+      history.pushState(null, '', destino);
     }
 
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
+  function configurarModo() {
+    if (isMobile()) {
+      main.classList.remove('panel-nav-ready');
+      sections.forEach(section => section.classList.remove('active-panel'));
+      setActive(window.location.hash || '#inicio');
+      return;
+    }
+
+    main.classList.add('panel-nav-ready');
+    showPanel(window.location.hash || '#inicio', false);
+  }
+
   links.forEach(link => {
-    link.addEventListener('click', function(e){
+    link.addEventListener('click', function (event) {
       const hash = this.getAttribute('href');
-      if(!document.querySelector(hash)) return;
-      e.preventDefault();
+
+      if (isMobile()) {
+        setActive(hash);
+        return; // deixa a âncora nativa rolar até o tópico
+      }
+
+      event.preventDefault();
       showPanel(hash, true);
     });
   });
 
-  document.addEventListener('click', function(e){
-    const anchor = e.target.closest("a[href^='#']");
-    if(!anchor || anchor.classList.contains('side-link')) return;
+  document.addEventListener('click', function (event) {
+    const anchor = event.target.closest('a[href^="#"]');
+    if (!anchor || anchor.classList.contains('side-link')) return;
+
     const hash = anchor.getAttribute('href');
-    if(!links.some(link => link.getAttribute('href') === hash)) return;
-    e.preventDefault();
+    if (!hashesValidos.has(hash)) return;
+
+    if (isMobile()) {
+      setActive(hash);
+      return;
+    }
+
+    event.preventDefault();
     showPanel(hash, true);
   });
 
-  const initialHash = location.hash && document.querySelector(location.hash)
-    ? location.hash
-    : links[0].getAttribute('href');
+  window.addEventListener('hashchange', function () {
+    if (isMobile()) setActive(window.location.hash || '#inicio');
+    else showPanel(window.location.hash || '#inicio', false);
+  });
 
-  showPanel(initialHash, Boolean(location.hash));
+  window.addEventListener('popstate', function () {
+    if (isMobile()) setActive(window.location.hash || '#inicio');
+    else showPanel(window.location.hash || '#inicio', false);
+  });
+
+  let ultimoModoMobile = isMobile();
+  window.addEventListener('resize', function () {
+    const atual = isMobile();
+    if (atual !== ultimoModoMobile) {
+      ultimoModoMobile = atual;
+      configurarModo();
+    }
+  });
+
+  configurarModo();
 });
