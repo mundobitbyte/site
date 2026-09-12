@@ -74,27 +74,9 @@ if (validationDetail) {
   });
 }
 
-const links = document.querySelectorAll('.side-link');
-const sections = [...document.querySelectorAll('main section[id]')];
-
-const markActive = () => {
-  const pos = window.scrollY + 120;
-  let current = sections[0]?.id;
-
-  sections.forEach(sec => {
-    if (sec.offsetTop <= pos) current = sec.id;
-  });
-
-  links.forEach(link => {
-    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-  });
-};
-
-window.addEventListener('scroll', markActive, { passive: true });
-markActive();
-
 function adicionarBotaoCopiarPrompt(prompt, indice) {
   if (!prompt || prompt.querySelector('button')) return;
+
   const id = prompt.id || `fundamentos-pratica-${indice}`;
   prompt.id = id;
 
@@ -107,7 +89,7 @@ function adicionarBotaoCopiarPrompt(prompt, indice) {
   prompt.appendChild(botao);
 }
 
-function adicionarBotaoCopiarCodigo(code, indice) {
+function adicionarBotaoCopiarCodigo(code) {
   if (!code || code.dataset.copyReady === 'true') return;
   code.dataset.copyReady = 'true';
 
@@ -125,15 +107,11 @@ function adicionarBotaoCopiarCodigo(code, indice) {
   code.insertAdjacentElement('afterend', botao);
 }
 
-// Mundo bit Byte — navegação por painel único.
-// Não altera conteúdo; apenas mostra o tópico selecionado sem rolagem longa.
-document.addEventListener('DOMContentLoaded', function(){
-  // Endereço atual do ChatGPT; evita depender de redirecionamento legado.
+document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('a[href="https://chat.openai.com/"]').forEach(link => {
     link.href = 'https://chatgpt.com/';
   });
 
-  // Botão Copiar só em práticas nas quais o aluno realmente executa o prompt.
   const praticasCopiaveis = [
     ...document.querySelectorAll('#aprendizagem .prompt'),
     ...document.querySelectorAll('#geracao-respostas .prompt'),
@@ -143,21 +121,19 @@ document.addEventListener('DOMContentLoaded', function(){
     ...document.querySelectorAll('#primeiros-laboratorios .prompt'),
     ...document.querySelectorAll('#lab5-estudar-sem-copiar .prompt')
   ].filter(prompt => !prompt.closest('.bad'));
+
   praticasCopiaveis.forEach((prompt, i) => adicionarBotaoCopiarPrompt(prompt, i + 1));
 
-  // No primeiro laboratório crítico os prompts estavam em <code>; continuam sendo ações reais.
-  document.querySelectorAll('#laboratorio-erro .lab-step code').forEach((code, i) => {
-    adicionarBotaoCopiarCodigo(code, i + 1));
+  document.querySelectorAll('#laboratorio-erro .lab-step code').forEach(code => {
+    adicionarBotaoCopiarCodigo(code);
   });
 
-  // A prática 13 compara dois pedidos, não fornecedores. Uma IA é suficiente aqui.
   const pratica13 = document.querySelector('#pratique');
-  const gradeFerramentasPratica13 = pratica13?.querySelector('.note.ai');
+  const gradeFerramentasPratica13 = pratica13 ? pratica13.querySelector('.note.ai') : null;
   if (gradeFerramentasPratica13) {
     gradeFerramentasPratica13.innerHTML = '<h3>FAÇA AGORA — teste os dois pedidos na mesma IA</h3><p>Execute o Teste A e depois o Teste B sem trocar de ferramenta. Assim você observa o efeito do contexto sem confundir essa diferença com a troca de modelo.</p>';
   }
 
-  // A prática final é o ponto deliberado de comparação entre fornecedores/modelos.
   const praticaFinal = document.querySelector('#primeiros-laboratorios');
   if (praticaFinal) {
     const intro = praticaFinal.querySelector('p');
@@ -166,53 +142,67 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
-  const navLinks = Array.from(document.querySelectorAll(".side-link[href^='#']"));
+  const main = document.querySelector('main');
+  const navLinks = Array.from(document.querySelectorAll('.side-link[href^="#"]'));
   const panels = navLinks
-    .map(a => document.querySelector(a.getAttribute('href')))
+    .map(link => document.querySelector(link.getAttribute('href')))
     .filter(Boolean);
 
-  if(!navLinks.length || !panels.length) return;
+  if (!main || !navLinks.length || !panels.length) return;
 
-  function setActive(hash){
-    navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === hash));
+  const hashesValidos = new Set(navLinks.map(link => link.getAttribute('href')));
+  main.classList.add('panel-nav-ready');
+
+  function normalizarHash(hash) {
+    return hashesValidos.has(hash) ? hash : '#inicio';
   }
 
-  function showPanel(hash, updateHistory){
-    const target = document.querySelector(hash);
-    if(!target) return;
+  function setActive(hash) {
+    navLinks.forEach(link => {
+      const active = link.getAttribute('href') === hash;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  }
 
-    panels.forEach(section => section.classList.remove('active-panel'));
+  function showPanel(hash, updateHistory) {
+    const destino = normalizarHash(hash);
+    const target = document.querySelector(destino);
+    if (!target) return;
+
+    panels.forEach(panel => panel.classList.remove('active-panel'));
     target.classList.add('active-panel');
-    setActive(hash);
+    setActive(destino);
 
-    if(updateHistory){
-      history.replaceState(null, '', hash);
+    if (updateHistory && window.location.hash !== destino) {
+      history.pushState(null, '', destino);
     }
 
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
   navLinks.forEach(link => {
-    link.addEventListener('click', function(e){
-      const hash = this.getAttribute('href');
-      if(!document.querySelector(hash)) return;
-      e.preventDefault();
-      showPanel(hash, true);
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      showPanel(this.getAttribute('href'), true);
     });
   });
 
-  document.addEventListener('click', function(e){
-    const anchor = e.target.closest("a[href^='#']");
-    if(!anchor || anchor.classList.contains('side-link')) return;
+  document.addEventListener('click', function (event) {
+    const anchor = event.target.closest('a[href^="#"]');
+    if (!anchor || anchor.classList.contains('side-link')) return;
+
     const hash = anchor.getAttribute('href');
-    if(!navLinks.some(link => link.getAttribute('href') === hash)) return;
-    e.preventDefault();
+    if (!hashesValidos.has(hash)) return;
+
+    event.preventDefault();
     showPanel(hash, true);
   });
 
-  const initialHash = location.hash && document.querySelector(location.hash)
-    ? location.hash
-    : navLinks[0].getAttribute('href');
+  window.addEventListener('popstate', function () {
+    showPanel(window.location.hash || '#inicio', false);
+  });
 
-  showPanel(initialHash, Boolean(location.hash));
+  showPanel(window.location.hash || '#inicio', false);
 });
