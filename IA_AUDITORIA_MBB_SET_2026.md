@@ -146,6 +146,29 @@ As caixas de prompt dos tópicos conceituais pareciam atividades prontas, embora
 - laboratório final virou fluxo executável por etapas;
 - navegação direta para IA e Programação.
 
+## QA pedagógico prático posterior — 12/09/2026
+
+Depois da auditoria por conteúdo, o módulo foi percorrido novamente como se fosse um aluno executando cada instrução na ordem. Essa segunda volta encontrou problemas que a leitura estrutural não havia revelado:
+
+- enviar apenas as anotações para a IA antes de receber a instrução seguinte podia gerar uma resposta inesperada e deixar o aluno sem saber se deveria ignorá-la;
+- o tópico 4 mostrava uma tabela de referência sem antes pedir explicitamente que o aluno produzisse a tabela que deveria comparar;
+- o tópico 7 mandava repetir uma extração já realizada no tópico 2;
+- a comparação de versões ainda podia ser enviada em duas mensagens de forma ambígua;
+- faltava um ponto explícito de conferência no exercício de dependências;
+- o tópico 12 havia herdado por engano o contexto de **saída às 7h30 e transporte**, pertencente à visita técnica, embora o fio condutor ainda fosse a Feira de Projetos;
+- o laboratório final usava “sexta-feira, dia 25” sem mês/ano, o que deixava uma data operacional desnecessariamente ambígua;
+- o desafio com situação real precisava repetir a barreira de privacidade antes do envio de material próprio.
+
+Correções do QA:
+- fonte e prompt inicial agora são preparados na mesma mensagem antes do envio;
+- tópico 4 ganhou uma ação real de geração do quadro antes da referência esperada;
+- tópico 7 virou **exemplo conceitual**, sem botão Copiar e sem repetir a atividade;
+- comparação A/B passa a ser preparada integralmente antes do envio e marca impactos inferidos como **INFERÊNCIA**;
+- dependências ganharam critério explícito de sucesso;
+- tópico 12 voltou ao fio correto da Feira de Projetos e usa a abertura às 19h ainda não confirmada pela direção;
+- laboratório de visita técnica ganhou datas completas e sequência de envio inequívoca;
+- desafio final reforça anonimização e minimização de dados.
+
 ---
 
 # Módulo 5 — IA e Programação
