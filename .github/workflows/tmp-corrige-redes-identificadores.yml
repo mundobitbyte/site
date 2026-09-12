@@ -1,0 +1,54 @@
+name: tmp-corrige-redes-identificadores
+
+on:
+  push:
+    branches: [lapidacao-infraestrutura-mbb]
+
+permissions:
+  contents: write
+
+jobs:
+  corrigir:
+    if: ${{ !contains(github.event.head_commit.message, '[redes-m2-corrigido]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+          fetch-depth: 0
+      - name: Corrigir substituições que atingiram identificadores
+        shell: python
+        run: |
+          from pathlib import Path
+          files=[Path('js/infraestrutura/redes-00-03.js'),Path('js/infraestrutura/redes-04-07.js'),Path('js/infraestrutura/redes-08-10.js'),Path('js/infraestrutura/redes-99.js')]
+          for p in files:
+              t=p.read_text(encoding='utf-8')
+              t=t.replace('RTmapa/inventário','RTR-01')
+              t=t.replace('mapa mapa/inventário','mapa/inventário')
+              p.write_text(t,encoding='utf-8')
+      - name: Validar conteúdo corrigido
+        run: |
+          set -e
+          for f in js/infraestrutura/redes-00-03.js js/infraestrutura/redes-04-07.js js/infraestrutura/redes-08-10.js js/infraestrutura/redes-99.js; do node --check "$f"; done
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          files=[Path('js/infraestrutura/redes-00-03.js'),Path('js/infraestrutura/redes-04-07.js'),Path('js/infraestrutura/redes-08-10.js'),Path('js/infraestrutura/redes-99.js')]
+          txt='\n'.join(p.read_text(encoding='utf-8') for p in files)
+          assert 'RTmapa/inventário' not in txt
+          assert 'mapa mapa/inventário' not in txt
+          assert not re.search(r'\bRT[a-záéíóúãõç]', txt, flags=re.I), 'Identificador RTR pode ter sido corrompido'
+          assert txt.count('window.infraestruturaNetworkLessons.push({') == 12
+          assert not re.search(r'R-0\d', txt), 'Taxonomia R-* reapareceu'
+          assert '<div class="record-box">' not in txt
+          print('Correção de identificadores OK; 12 aulas; taxonomia R-* continua ausente.')
+          PY
+          git diff --check
+      - name: Commitar e limpar
+        run: |
+          rm .github/workflows/tmp-corrige-redes-identificadores.yml
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add js/infraestrutura/redes-00-03.js js/infraestrutura/redes-04-07.js js/infraestrutura/redes-08-10.js js/infraestrutura/redes-99.js .github/workflows/tmp-corrige-redes-identificadores.yml
+          git commit -m "Corrige identificadores após lapidação de Redes [redes-m2-corrigido]"
+          git push origin HEAD:lapidacao-infraestrutura-mbb
