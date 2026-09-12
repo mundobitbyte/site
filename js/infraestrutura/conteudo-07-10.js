@@ -34,7 +34,7 @@ window.infraestruturaLessons.push({
     </table></div>
 
     <h3>Experimentar: laboratório de duas identidades</h3>
-    <div class="danger-box compact"><strong>Ambiente preparado pelo professor.</strong><p>Não altere permissões de pastas do Windows, perfis reais ou documentos institucionais. Use somente contas e uma pasta de teste criadas para a aula.</p></div>
+    <div class="danger-box compact"><strong>Ambiente de laboratório preparado para esta prática.</strong><p>Não altere permissões de pastas do Windows, perfis reais ou documentos institucionais. Use somente contas e uma pasta de teste criadas para a aula.</p></div>
     <div class="task-box">
       <strong>Missão</strong><p>A conta <strong>Secretaria</strong> deve criar e alterar arquivos da pasta de teste. A conta <strong>Consulta</strong> deve apenas ler. A conta técnica mantém controle para reverter.</p>
       <ol>
@@ -193,15 +193,15 @@ window.infraestruturaLessons.push({
       <li>se o sintoma não mudar, reative e revise a hipótese.</li>
     </ol>
     <div class="state-comparison" aria-label="Antes, intervenção, depois e interpretação do teste de inicialização">
-      <div class="state-step"><strong>Antes</strong><span>Após login: pico de disco 96%; sintoma em 2 min; evento 204 às 08:02.</span><small class="evidence-id">EVIDÊNCIA P-01</small></div>
-      <div class="state-step"><strong>Intervenção</strong><span>Desabilitar somente a inicialização automática aprovada.</span><small class="evidence-id">MUDANÇA M-01</small></div>
-      <div class="state-step"><strong>Depois</strong><span>Mesma carga: pico 24%; sintoma não observado em 10 min.</span><small class="evidence-id">EVIDÊNCIA P-02</small></div>
+      <div class="state-step"><strong>Antes</strong><span>Após login: pico de disco 96%; sintoma em 2 min; evento 204 às 08:02.</span><small class="evidence-id">ANTES</small></div>
+      <div class="state-step"><strong>Intervenção</strong><span>Desabilitar somente a inicialização automática aprovada.</span><small class="evidence-id">MUDANÇA AUTORIZADA</small></div>
+      <div class="state-step"><strong>Depois</strong><span>Mesma carga: pico 24%; sintoma não observado em 10 min.</span><small class="evidence-id">DEPOIS</small></div>
       <div class="state-step"><strong>O que prova?</strong><span>A hipótese ficou mais forte nessa condição. Ainda é preciso repetir e manter a sincronização por outro fluxo.</span></div>
     </div>
     <div class="mbb-pause-question"><strong>Alívio não é solução completa.</strong><p>Se desabilitar a inicialização reduz a lentidão, ainda precisamos decidir quando e como a sincronização necessária ocorrerá. Uma correção não pode criar perda de proteção dos arquivos.</p></div>
 
     <h3>Serviços: laboratório reversível</h3>
-    <div class="danger-box compact"><strong>Não pare serviços aleatoriamente.</strong><p>Em uma VM fornecida pelo professor, escolha somente um serviço indicado para a aula, registre estado/tipo de inicialização, pare, observe o efeito previsto e restaure imediatamente. Nunca use estação de produção.</p></div>
+    <div class="danger-box compact"><strong>Não pare serviços aleatoriamente.</strong><p>Em uma VM de laboratório, escolha somente um serviço indicado no cenário, registre estado/tipo de inicialização, pare, observe o efeito previsto e restaure imediatamente. Nunca use estação de produção.</p></div>
     <p>O objetivo é demonstrar a relação <strong>serviço → função → evidência → restauração</strong>, não decorar nomes nem “otimizar” o Windows removendo componentes.</p>
 
     <section class="checkpoint compact-check" data-quiz-group>
@@ -212,7 +212,7 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Gerenciador de Tarefas mostra estado; serviços sustentam funções; logs registram eventos. O diagnóstico nasce da <strong>correlação entre horário, sintoma, componente, mudança e repetição</strong>.</p></div>
-    <div class="bridge-box"><strong>Consequência do Chamado 021</strong><p>A equipe programou a sincronização fora do início do atendimento e anexou P-01, M-01 e P-02 ao chamado. Ao explicar a mudança, percebeu que sincronização era tratada como backup, mas ninguém havia testado uma restauração. A coordenação solicita um plano preventivo para a escola.</p></div>
+    <div class="bridge-box"><strong>Consequência do Chamado 021</strong><p>A equipe programou a sincronização fora do início do atendimento e anexou ao chamado a comparação antes → mudança → depois. Ao explicar a mudança, percebeu que sincronização era tratada como backup, mas ninguém havia testado uma restauração. A coordenação solicita um plano preventivo para a escola.</p></div>
 
     <details class="sources-box"><summary>Referência oficial</summary><ul><li><a href="https://learn.microsoft.com/en-us/shows/inside/event-viewer" target="_blank" rel="noopener">Microsoft Learn — Event Viewer</a></li></ul></details>
   `

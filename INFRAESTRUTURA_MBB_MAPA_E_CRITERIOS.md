@@ -177,6 +177,17 @@ O aluno deve aprender a registrar:
 - como desfazer;
 - conclusão limitada ao que os testes permitem.
 
+### Registros operacionais — regra de simplicidade
+A documentação deve apoiar a operação, não criar uma segunda disciplina de códigos.
+
+Padrão consolidado da área:
+- **Registro de Suporte** acompanha chamado, estado, evidência, mudança e continuidade da estação/caso;
+- **Registro da Rede** acumula mapa, endereçamento, serviços, segmentação, Wi-Fi, testes e decisões;
+- **Registro do Servidor** acumula necessidade, baseline, identidades, armazenamento, rede, acesso remoto, serviços, logs, segurança e continuidade;
+- **Registro da Evolução** acumula requisitos, VM, capacidade, containers, persistência, Compose, atualização, hospedagem, exposição e decisão arquitetural.
+
+Códigos locais podem aparecer quando fazem parte de um ativo real, chamado, OS, porta, padrão técnico ou comparação imediata. **Não criar taxonomias cumulativas artificiais que o aluno precise decorar para saber onde registrar uma evidência.** O nome do registro ou da seção deve dizer o que ele significa.
+
 ## Acessibilidade/inclusão
 - alternativas quando uma tarefa física não puder ser executada por todos;
 - instruções que não dependam exclusivamente de cor;
@@ -403,20 +414,15 @@ Missão sugerida:
 
 A organização precisa colocar um pequeno serviço interno/externo em funcionamento e provar que consegue operá-lo.
 
-O aluno/equipe deve entregar:
-1. inventário e requisitos;
-2. decisão de arquitetura;
-3. instalação/configuração;
-4. endereçamento e conectividade;
-5. usuários/permissões;
-6. serviço funcionando;
-7. controles mínimos de segurança;
-8. backup e teste de restauração;
-9. evidências de monitoramento/logs;
-10. falha controlada preparada pelo professor;
-11. diagnóstico baseado em evidência;
-12. correção e validação;
-13. documentação curta que permita outra pessoa entender o ambiente.
+A equipe recebe os quatro registros operacionais — **Suporte, Rede, Servidor e Evolução** — e assume um plantão com documentação parcial e uma ou mais condições controladas cuja causa não é informada.
+
+A missão integradora deve seguir quatro fases, sem criar uma nova taxonomia documental:
+1. **receber e compreender** — impacto, registros, divergências, autorização e limites;
+2. **proteger e preparar** — baseline, arquitetura recebida, backup e restauração de amostra;
+3. **investigar e intervir** — reproduzir a função, formular H1/H2, testar com baixo risco e alterar uma variável autorizada ou escalar;
+4. **validar e passar** — repetir função e teste relacionado, atualizar somente o que mudou e entregar o plantão para outra equipe repetir uma validação sem ajuda.
+
+O produto final é o **estado explicado e transferível**, com evidências suficientes para outra pessoa continuar o trabalho.
 
 A avaliação deve privilegiar **raciocínio e operação segura**, não velocidade ou memorização de comandos.
 

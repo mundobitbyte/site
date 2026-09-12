@@ -7,7 +7,7 @@ window.infraestruturaLessons.push({
   menuTitle: 'Diagnóstico inicial',
   technicalTitle: 'estado inicial • risco • evidência • hipótese • teste • documentação',
   title: 'Você consegue investigar antes de mexer?',
-  objective: 'Identificar o ponto de partida do aluno em decisões práticas de hardware, sistema, dados, permissões e diagnóstico, sem transformar o diagnóstico em revisão teórica.',
+  objective: 'Identificar o ponto de partida em decisões práticas de hardware, sistema, dados, permissões e diagnóstico, sem transformar o diagnóstico em revisão teórica.',
   content: `
     <div class="hero-box story-opening">
       <span class="eyebrow">Primeiro dia de suporte · pequena escola</span>

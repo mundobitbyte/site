@@ -136,7 +136,7 @@ window.infraestruturaLessons.push({
       <p>A ficha da OS 006 traz capacidade, modelo e finalidade de cada disco, além da confirmação da cópia feita pela coordenadora. Mesmo assim, os botões “Excluir” e “Formatar” não sabem qual disco você pretendia usar. <strong>A diferença entre um procedimento profissional e uma perda de dados é conferir o alvo com o registro antes da ação.</strong></p>
     </div>
 
-    <div class="danger-box"><strong>Laboratório autorizado somente</strong><p>Use máquina ou VM preparada pelo professor. Não pratique instalação limpa no computador pessoal, de trabalho ou em equipamento que contenha dados não verificados. Excluir partição e formatar são ações destrutivas.</p></div>
+    <div class="danger-box"><strong>Laboratório autorizado somente</strong><p>Use apenas máquina ou VM de laboratório autorizada, preparada para esta prática. Não pratique instalação limpa no computador pessoal, de trabalho ou em equipamento que contenha dados não verificados. Excluir partição e formatar são ações destrutivas.</p></div>
 
     <h3>Entender: três níveis que não devem ser confundidos</h3>
     <div class="comparison-grid three">
@@ -189,10 +189,10 @@ window.infraestruturaLessons.push({
 
     <h4>Conduza a instalação por estados verificáveis</h4>
     <div class="state-comparison" aria-label="Sequência de estados verificáveis da instalação">
-      <div class="state-step"><strong>Mídia e intenção</strong><span>Origem oficial; idioma, teclado, edição e instalação limpa planejada.</span><small class="evidence-id">EVIDÊNCIA I-01</small></div>
-      <div class="state-step"><strong>Alvo e partições</strong><span>Unidade identificada; backup validado; apenas o SSD novo será alterado.</span><small class="evidence-id">EVIDÊNCIA I-02</small></div>
-      <div class="state-step"><strong>Primeiro reinício</strong><span>O equipamento inicia pelo SSD; a mídia não reabre o instalador.</span><small class="evidence-id">EVIDÊNCIA I-03</small></div>
-      <div class="state-step"><strong>Configuração inicial</strong><span>Nome, conta, privacidade e responsável seguem a política da organização.</span><small class="evidence-id">EVIDÊNCIA I-04</small></div>
+      <div class="state-step"><strong>Mídia e intenção</strong><span>Origem oficial; idioma, teclado, edição e instalação limpa planejada.</span><small class="evidence-id">origem e intenção conferidas</small></div>
+      <div class="state-step"><strong>Alvo e partições</strong><span>Unidade identificada; backup validado; apenas o SSD novo será alterado.</span><small class="evidence-id">alvo confirmado</small></div>
+      <div class="state-step"><strong>Primeiro reinício</strong><span>O equipamento inicia pelo SSD; a mídia não reabre o instalador.</span><small class="evidence-id">boot confirmado</small></div>
+      <div class="state-step"><strong>Configuração inicial</strong><span>Nome, conta, privacidade e responsável seguem a política da organização.</span><small class="evidence-id">configuração inicial conferida</small></div>
     </div>
     <div class="mbb-pause-question"><strong>Se o instalador não permite identificar o alvo com segurança, pare.</strong><p>Desconectar fisicamente uma unidade pode reduzir ambiguidade, mas somente se o manual, a autorização e a competência permitirem. Não improvise com dados institucionais.</p></div>
 
@@ -228,7 +228,7 @@ window.infraestruturaLessons.push({
     </section>
 
     <div class="essence"><strong>Essência</strong><p>Instalação limpa começa antes do instalador: <strong>requisitos, licença, backup testado, alvo identificado e recuperação planejada</strong>. Dentro do instalador, cada clique deve confirmar um estado conhecido.</p></div>
-    <div class="bridge-box"><strong>A OS 006 continua</strong><p>O Windows iniciou no SSD correto e as evidências I-01 a I-04 foram anexadas. A entrega à secretaria ainda está bloqueada: áudio, atualizações, dispositivos e funções essenciais não foram validados contra o baseline.</p></div>
+    <div class="bridge-box"><strong>A OS 006 continua</strong><p>O Windows iniciou no SSD correto e as quatro verificações da instalação foram anexadas. A entrega à secretaria ainda está bloqueada: áudio, atualizações, dispositivos e funções essenciais não foram validados contra o baseline.</p></div>
 
     <details class="sources-box"><summary>Documentação oficial atual</summary><ul>
       <li><a href="https://support.microsoft.com/pt-br/windows/deployment/install-upgrade/ways-to-install-windows-11" target="_blank" rel="noopener">Microsoft — maneiras de instalar o Windows 11</a></li>
