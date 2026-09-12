@@ -1,0 +1,88 @@
+name: tmp-linux-microfinal-v3
+
+on:
+  push:
+    branches: [lapidacao-infraestrutura-mbb]
+
+permissions:
+  contents: write
+
+jobs:
+  lapidar:
+    if: ${{ !contains(github.event.head_commit.message, '[linux-m3-microfinal]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+          fetch-depth: 0
+      - name: Refinar voz e fluência
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          files=[Path('js/infraestrutura/linux-00-03.js'),Path('js/infraestrutura/linux-04-07.js'),Path('js/infraestrutura/linux-08-10.js'),Path('js/infraestrutura/linux-99.js')]
+          repl={
+            'se o professor não entregar a VM pronta':'se a VM não estiver pronta',
+            'rede interna MBB-LAB preparada pelo professor':'rede interna MBB-LAB do laboratório',
+            'elementos de rede preparados pelo professor':'elementos de rede do laboratório',
+            'O aluno identifica o alvo por tamanho/ausência de filesystem <em>e</em> pela configuração do hipervisor.':'A equipe identifica o alvo por tamanho/ausência de filesystem <em>e</em> pela configuração do hipervisor.',
+            'se o professor entregou uma partição vazia <code>/dev/vdb1</code>':'se o laboratório já vier com uma partição vazia <code>/dev/vdb1</code>',
+            '<p>baseline do servidor registra o disco de 40 GB com Ubuntu e o disco vazio de 20 GB. matriz de identidades e permissões já define quem usará cada pasta.':'<p>O baseline do servidor registra o disco de 40 GB com Ubuntu e o disco vazio de 20 GB. A matriz de identidades e permissões já define quem usará cada pasta.',
+            'registre a saída observacional em mapa de armazenamento':'registre a saída observacional na seção Armazenamento do Registro do Servidor',
+            'mapa de armazenamento definirá caminhos do Samba e do backup.':'Esse registro definirá os caminhos do Samba e do backup.',
+            'baseline de rede orientará SSH, Nginx, Samba, UFW e o plantão.':'Esse registro orientará SSH, Nginx, Samba, UFW e o plantão.',
+            'ficha do serviço Web orientará firewall e backup.':'Esse registro orientará firewall e backup.',
+            'A matriz de identidades e permissões define identidades e grupos.':'O registro de identidades e permissões define quem pode usar cada recurso.',
+            'não há corte de produção nesta aula.':'não há corte de produção nesta homologação.',
+            'A VM isola o exercício; não elimina dependências':'A VM isola o laboratório; não elimina dependências',
+            'O professor preparou uma falha sem revelar a causa.':'O ambiente contém uma falha controlada, mas a causa não foi informada.',
+            'a falha foi injetada pelo professor após o snapshot.':'a falha controlada foi introduzida após o snapshot do laboratório.',
+            'não ensine o aluno a ignorar aviso de certificado.':'não ignore aviso de certificado.',
+            'Joana entrega a VM <strong>SRV-01</strong>, o Registro do Servidor atualizado e dois relatos. O professor aplicou uma ou mais falhas no ambiente isolado, mas não informa quais.':'Joana entrega a VM <strong>SRV-01</strong>, o Registro do Servidor atualizado e dois relatos. O ambiente isolado contém uma ou mais falhas controladas, mas a causa não foi informada.',
+            '<span class="visual-kicker">Falha controlada · não revelada à equipe</span><h3>O professor escolhe uma ou duas condições</h3><p>Os rótulos abaixo ficam com o professor. O aluno recebe apenas sintoma, impacto e os registros.</p>':'<span class="visual-kicker">Ambiente controlado · causa desconhecida</span><h3>A causa não vem pronta</h3><p>As divergências podem estar em montagem, permissão, serviço, configuração, firewall, capacidade ou recuperação. O sintoma e o Registro do Servidor devem orientar o próximo teste.</p>',
+            'Grupo, proprietário ou modo diverge de matriz de identidades e permissões/mapa de armazenamento.':'Grupo, proprietário ou modo diverge do que foi registrado em Identidades e permissões ou Armazenamento.',
+            'Uma origem necessária ou indevida produz resultado diferente de matriz de serviços e firewall.':'Uma origem necessária ou indevida produz resultado diferente do fluxo previsto em Serviços e firewall.',
+            '<td>registro de necessidade/matriz de identidades e permissões e limite da janela</td>':'<td>necessidade, identidades/permissões e limite da janela</td>',
+            '<td>baseline do servidor a registro de continuidade e monitoramento citados, não “memória” da equipe</td>':'<td>seções relevantes do Registro do Servidor, não “memória” da equipe</td>',
+            'Saídas preparadas pelo professor devem permanecer rotuladas como representativas.':'Saídas fornecidas no cenário devem permanecer rotuladas como representativas.',
+            '<td>atualiza artefatos e permite continuidade</td>':'<td>atualiza o Registro do Servidor e permite continuidade</td>'
+          }
+          for p in files:
+              t=p.read_text(encoding='utf-8')
+              for old,new in repl.items(): t=t.replace(old,new)
+              t=t.replace('Nginx, Samba e exercícios','Nginx, Samba e testes práticos')
+              if p.name=='linux-99.js': t=re.sub(r'<strong>F-[1-7]\s*·\s*([^<]+)</strong>',r'<strong>\1</strong>',t)
+              p.write_text(t,encoding='utf-8')
+      - name: Validar estrutura e técnica
+        run: |
+          set -e
+          for f in js/infraestrutura/linux-00-03.js js/infraestrutura/linux-04-07.js js/infraestrutura/linux-08-10.js js/infraestrutura/linux-99.js; do node --check "$f"; done
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          files=[Path('js/infraestrutura/linux-00-03.js'),Path('js/infraestrutura/linux-04-07.js'),Path('js/infraestrutura/linux-08-10.js'),Path('js/infraestrutura/linux-99.js')]
+          txt='\n'.join(p.read_text(encoding='utf-8') for p in files)
+          ids=sum((re.findall(r"\bid:\s*'([^']+)'",p.read_text(encoding='utf-8')) for p in files),[])
+          assert len(ids)==12 and len(set(ids))==12
+          assert txt.count('window.infraestruturaLinuxLessons.push({')==12
+          assert 'SRV-01' in txt
+          assert not re.search(r'(?<![A-Z0-9])S-\d\d(?![A-Z0-9])',txt)
+          assert not re.search(r'(?<![A-Z0-9])R-\d\d(?![A-Z0-9])',txt)
+          assert not re.search(r'\bE-S\d\b|\bF-[1-7]\b',txt)
+          assert '<div class="record-box">' not in txt
+          assert not re.search(r'(?i)\b(professor|aluno|módulo|capítulo|exercícios?)\b',txt)
+          assert not re.search(r'(?i)\b(nesta aula|próxima aula|aula anterior|aula seguinte)\b',txt)
+          for cmd in ['sudo apt update','netplan try','nginx -t','testparm -s','ufw','journalctl']:
+              assert cmd in txt, cmd
+          print('Linux final: 12 aulas, SRV-01 e comandos-chave preservados; códigos artificiais e bastidores explícitos removidos.')
+          PY
+          git diff --check
+      - name: Commitar e limpar
+        run: |
+          rm -f .github/workflows/tmp-linux-microfinal-v3.yml
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add js/infraestrutura/linux-00-03.js js/infraestrutura/linux-04-07.js js/infraestrutura/linux-08-10.js js/infraestrutura/linux-99.js .github/workflows/tmp-linux-microfinal-v3.yml
+          git commit -m "Refina linguagem final do Módulo 3 Linux [linux-m3-microfinal]"
+          git push origin HEAD:lapidacao-infraestrutura-mbb
