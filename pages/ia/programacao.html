@@ -175,13 +175,14 @@ aluno = input("Nome do aluno: ")
 print(emprestar(codigo, aluno))</pre>
 <div class="note good"><h3>FAÇA AGORA — primeiro teste da nova versão</h3><p>Salve e execute uma vez. Digite <code>NB01</code> e depois <code>Ana</code>. Você deve receber uma mensagem dizendo que Notebook 01 foi emprestado para Ana.</p></div>
 
-<div class="note idea"><h3>Agora faremos um teste temporário</h3><p>As três linhas de interação acima não estão erradas. Vamos apenas retirá-las por alguns minutos para conseguir executar empréstimo, devolução e novo empréstimo <strong>na mesma execução</strong>.</p></div>
+<div class="note idea"><h3>Agora faremos um teste temporário</h3><p>As três linhas de interação acima não estão erradas. Vamos apenas retirá-las por alguns minutos para testar várias operações <strong>na mesma execução</strong>.</p></div>
 <div class="note good"><h3>FAÇA AGORA — substitua temporariamente as três linhas finais por estas</h3></div>
 <pre class="code">print(emprestar("NB01", "Ana"))
+print(emprestar("NB01", "Bruno"))
 print(devolver("NB01"))
 print(emprestar("NB01", "Bruno"))</pre>
 <p>Execute uma única vez.</p>
-<div class="note warn"><h3>PARE E OBSERVE — não corrija ainda</h3><p>O programa informa que a devolução aconteceu, mas o empréstimo para Bruno continua sendo recusado. Não há erro de sintaxe; há um <strong>estado incoerente</strong>. Esse defeito é proposital nesta etapa.</p></div>
+<div class="note warn"><h3>PARE E OBSERVE — não corrija ainda</h3><p>O primeiro empréstimo é aceito e o segundo é recusado, como esperado. Depois a função informa que a devolução aconteceu, mas o novo empréstimo para Bruno continua sendo recusado. Não há erro de sintaxe; há um <strong>estado incoerente</strong>. Esse defeito é proposital nesta etapa.</p></div>
 </section>
 
 <section class="card">
@@ -189,11 +190,15 @@ print(emprestar("NB01", "Bruno"))</pre>
 <p>Agora existe uma evidência concreta: depois de devolver, o equipamento continua indisponível. Em vez de pedir “arruma”, vamos localizar exatamente onde a regra deixa de ser verdadeira.</p>
 <div class="note idea"><h3>PROMPT PARA A IA — investigue sem corrigir</h3><div class="prompt">Não corrija ainda. Simule esta sequência usando o código atual:
 1. emprestar("NB01", "Ana");
-2. devolver("NB01");
-3. emprestar("NB01", "Bruno").
+2. emprestar("NB01", "Bruno");
+3. devolver("NB01");
+4. emprestar("NB01", "Bruno").
 Depois de cada etapa, mostre os valores de disponivel e emprestado_para de NB01. Identifique em qual etapa o estado deixa de representar a regra esperada.</div></div>
-<div class="note good"><h3>FAÇA AGORA — confirme no programa, não apenas na resposta da IA</h3><p>Troque temporariamente as três chamadas finais pelo bloco abaixo. Ele mostra o estado real de NB01 depois de cada operação.</p></div>
+<div class="note good"><h3>FAÇA AGORA — confirme no programa, não apenas na resposta da IA</h3><p>Troque temporariamente as quatro chamadas finais pelo bloco abaixo. Ele mostra o estado real de NB01 depois de cada operação.</p></div>
 <pre class="code">print(emprestar("NB01", "Ana"))
+print(equipamentos["NB01"])
+
+print(emprestar("NB01", "Bruno"))
 print(equipamentos["NB01"])
 
 print(devolver("NB01"))
@@ -201,11 +206,11 @@ print(equipamentos["NB01"])
 
 print(emprestar("NB01", "Bruno"))
 print(equipamentos["NB01"])</pre>
-<div class="note warn"><h3>PARE E LOCALIZE</h3><p>Depois de <code>devolver("NB01")</code>, <code>emprestado_para</code> volta a <code>None</code>, mas <code>disponivel</code> continua <code>False</code>. É nessa etapa que o estado deixa de representar a regra esperada.</p></div>
+<div class="note warn"><h3>PARE E LOCALIZE</h3><p>O segundo empréstimo é corretamente recusado. O problema aparece depois de <code>devolver("NB01")</code>: <code>emprestado_para</code> volta a <code>None</code>, mas <code>disponivel</code> continua <code>False</code>. É nessa etapa que o estado deixa de representar a regra esperada.</p></div>
 <div class="note idea"><h3>PROMPT PARA A IA — agora sim peça a menor correção</h3><div class="prompt">Agora proponha a menor correção possível. Não altere nomes, estrutura ou mensagens fora do necessário. Depois diga quais testes da tabela anterior precisam ser repetidos.</div></div>
 <div class="note good"><h3>FAÇA AGORA — aplique somente a correção necessária</h3><p>Dentro de <code>devolver()</code>, antes de limpar o responsável, acrescente:</p></div>
 <pre class="code">item["disponivel"] = True</pre>
-<p>Repita o teste empréstimo → devolução → novo empréstimo. Bruno deve conseguir receber NB01 depois da devolução.</p>
+<p>Repita o teste completo. O segundo empréstimo deve continuar recusado enquanto NB01 está emprestado, e Bruno deve conseguir recebê-lo depois da devolução.</p>
 <div class="note good"><h3>Checkpoint 1 — versão aprovada em memória</h3><p>Depois de comprovar a correção, remova os <code>print</code> temporários de investigação e deixe seu <code>app.py</code> assim:</p></div>
 <pre class="code">equipamentos = {
     "NB01": {
@@ -264,7 +269,7 @@ elif acao == "D":
     print(devolver(codigo))
 else:
     print("Opção inválida.")</pre>
-<div class="note warn"><h3>PARE E CONFIRA</h3><p>Na mesma execução de teste, você já comprovou empréstimo, bloqueio de segundo empréstimo, devolução e novo empréstimo. Agora vamos descobrir um problema diferente: o programa esquece tudo quando termina.</p></div>
+<div class="note warn"><h3>PARE E CONFIRA</h3><p>No teste temporário você comprovou empréstimo, bloqueio de segundo empréstimo, devolução e novo empréstimo. Agora vamos descobrir um problema diferente: o programa esquece tudo quando termina.</p></div>
 </section>
 
 <section class="card">
@@ -462,6 +467,7 @@ def devolver(dados, codigo):
     item["disponivel"] = True
     item["emprestado_para"] = None
     return f'{item["nome"]} devolvido com sucesso.'</pre>
+<div class="note idea"><h3>Por enquanto, preserve o <code>app.py</code></h3><p>Nesta etapa você está apenas criando o núcleo testável. <strong>Não remova ainda as funções do <code>app.py</code></strong>. Depois que o primeiro teste automatizado estiver funcionando, o Checkpoint 3 mostrará exatamente como adaptar o arquivo principal sem deixar o projeto quebrado no meio do caminho.</p></div>
 <div class="note warn"><h3>PARE E CONFIRA</h3><p><code>emprestimos.py</code> não deve conter <code>input()</code>, <code>print()</code> da interface nem leitura/escrita do JSON. Ele contém apenas criação dos dados iniciais e regras de empréstimo/devolução.</p></div>
 </section>
 
@@ -473,7 +479,7 @@ def devolver(dados, codigo):
 <pre class="code">python -m venv .venv</pre>
 <p>Ative somente com o comando correspondente ao seu terminal:</p>
 <pre class="code"># Windows PowerShell
-.venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 
 # Windows Prompt de Comando (cmd)
 .venv\Scripts\activate.bat
@@ -498,11 +504,11 @@ def test_devolver_libera_equipamento():
 <pre class="code">python -m pytest -q</pre>
 <div class="note warn"><h3>PARE E CONFIRA</h3><p>O primeiro teste precisa passar antes de você criar os demais. Se falhar, investigue a falha; não altere o teste apenas para deixá-lo verde.</p></div>
 <div class="note idea"><h3>PROMPT PARA A IA — amplie a proteção sem inventar regras</h3><div class="prompt">Com base nas regras já aprovadas do projeto, proponha testes para: empréstimo válido, segundo empréstimo recusado, devolução, código inexistente e normalização do código. Para cada teste, explique qual regra ele protege. Não crie regras novas.</div></div>
-<div class="note good"><h3>FAÇA AGORA</h3><p>Revise os testes propostos, acrescente apenas os que correspondem à tabela de requisitos e execute novamente <code>python -m pytest -q</code>.</p></div>
+<div class="note good"><h3>FAÇA AGORA</h3><p>Revise os testes propostos e copie para o mesmo <code>test_emprestimos.py</code> somente as funções de teste que correspondem à tabela de requisitos. Execute novamente <code>python -m pytest -q</code>.</p></div>
 
 <div class="lab">
 <h3>Checkpoint 3 — projeto preparado para testes</h3>
-<p>Seu <code>emprestimos.py</code> já é o mostrado na etapa anterior. O <code>app.py</code> deve ficar responsável pela interação e pela persistência:</p>
+<p>Seu <code>emprestimos.py</code> já é o mostrado na etapa anterior. Agora substitua o conteúdo do <code>app.py</code> pela versão abaixo, que deixa a interface e a persistência no arquivo principal e importa as regras do núcleo:</p>
 <pre class="code">import json
 from pathlib import Path
 
