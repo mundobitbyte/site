@@ -1,0 +1,124 @@
+name: tmp-infra-qa-definitivo
+on:
+  push:
+    branches:
+      - lapidacao-infraestrutura-mbb
+    paths:
+      - .github/workflows/tmp-infra-qa-definitivo.yml
+permissions:
+  contents: write
+jobs:
+  fechar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lapidacao-infraestrutura-mbb
+          fetch-depth: 0
+      - name: Aplicar microcorreções finais
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('js/infraestrutura/redes-99.js'); t=p.read_text(encoding='utf-8')
+          for a,b in {
+            'mapa e inventário e portas e cabos corrigidos, com lacunas marcadas':'mapa, inventário, portas e cabos corrigidos, com lacunas marcadas',
+            'Mapa/inventário e portas e cabos:':'Mapa, inventário, portas e cabos:',
+            'Serviços, segmentação e acesso e Wi-Fi:':'Serviços, segmentação, acessos e Wi-Fi:',
+            'mapa/baseline/matriz':'mapa, baseline e matriz',
+          }.items(): t=t.replace(a,b)
+          p.write_text(t,encoding='utf-8')
+          p=Path('INFRAESTRUTURA_MBB_MAPA_E_CRITERIOS.md'); t=p.read_text(encoding='utf-8')
+          old='**Sintoma → contexto → hipótese → teste seguro → evidência → isolamento → correção → validação → documentação.**'
+          new='**Sintoma → contexto → hipótese → teste seguro → evidência → redução de hipóteses → correção ou encaminhamento → validação → documentação.**'
+          if old in t: t=t.replace(old,new)
+          elif new not in t: raise SystemExit('Cadeia diagnóstica canônica não localizada')
+          p.write_text(t,encoding='utf-8')
+      - name: Validar estrutura final
+        run: |
+          set -e
+          for f in js/infraestrutura/*.js js/infraestrutura.js; do node --check "$f"; done
+          ! grep -Fq 'mapa e inventário e portas e cabos' js/infraestrutura/redes-99.js
+          ! grep -Fq 'segmentação e acesso e Wi-Fi' js/infraestrutura/redes-99.js
+          grep -Fq 'redução de hipóteses → correção ou encaminhamento' INFRAESTRUTURA_MBB_MAPA_E_CRITERIOS.md
+          git diff --check
+      - name: Preparar Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install chromium
+      - name: QA real desktop e mobile
+        run: |
+          set -e
+          python3 -m http.server 8000 >/tmp/http.log 2>&1 &
+          P=$!
+          trap 'kill $P || true' EXIT
+          sleep 2
+          node <<'NODE'
+          const { chromium }=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const expected={
+              diagnostico:'00. Você consegue investigar antes de mexer?',
+              'redes-diagnostico':'00. “A rede caiu” ainda não é um diagnóstico',
+              'linux-diagnostico':'00. O que precisa deixar de depender de improviso?',
+              'moderna-diagnostico':'00. O portal cabe no servidor que já existe?',
+              'integrador-final':'99. Coloque a Feira de Projetos em operação — e entregue o plantão'
+            };
+            const failures=[];
+            for(const [label,viewport] of [['desktop',{width:1440,height:900}],['mobile',{width:390,height:844}]]){
+              const ctx=await browser.newContext({viewport}); const page=await ctx.newPage();
+              const errors=[],bad=[];
+              page.on('pageerror',e=>errors.push(String(e)));
+              page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+              page.on('response',r=>{if(r.url().startsWith('http://127.0.0.1:8000/')&&r.status()>=400)bad.push(`${r.status()} ${r.url()}`)});
+              await page.goto('http://127.0.0.1:8000/pages/infraestrutura.html',{waitUntil:'networkidle'});
+              if(await page.locator('.module-card.available').count()!==5) failures.push(`${label}: cards`);
+              for(const [hash,title] of Object.entries(expected)){
+                await page.goto(`http://127.0.0.1:8000/pages/infraestrutura.html#${hash}`,{waitUntil:'networkidle'});
+                const got=(await page.locator('#lessonTitle').textContent()||'').trim(); if(got!==title)failures.push(`${label}/${hash}: ${got}`);
+                const over=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth); if(over>2)failures.push(`${label}/${hash}: overflow ${over}`);
+                await page.locator('#openMenu').click(); if(!(await page.locator('#lessonMenu').isVisible()))failures.push(`${label}/${hash}: menu`); await page.keyboard.press('Escape');
+              }
+              // Imagens lazy: só exigir carregamento depois de entrarem na viewport.
+              await page.goto('http://127.0.0.1:8000/pages/infraestrutura.html#componentes-compatibilidade',{waitUntil:'networkidle'});
+              const imgs=page.locator('.object-card img');
+              if(await imgs.count()<3)failures.push(`${label}: poucas imagens`);
+              for(let i=0;i<await imgs.count();i++){
+                await imgs.nth(i).scrollIntoViewIfNeeded(); await page.waitForTimeout(250);
+                if(!(await imgs.nth(i).evaluate(img=>img.complete&&img.naturalWidth>0)))failures.push(`${label}: imagem ${i}`);
+              }
+              // Quiz do Integrador deve responder.
+              await page.goto('http://127.0.0.1:8000/pages/infraestrutura.html#integrador-final',{waitUntil:'networkidle'});
+              const group=page.locator('[data-quiz-group]').first(); const qs=group.locator('[data-quiz-question]');
+              if(await group.count()===0||await qs.count()===0) failures.push(`${label}: quiz integrador ausente`);
+              else {
+                for(let i=0;i<await qs.count();i++) await qs.nth(i).locator('input[type=radio]').first().check();
+                await group.locator('[data-check-quiz]').click();
+                if(!(await group.locator('[data-quiz-result]').textContent()||'').trim())failures.push(`${label}: quiz sem feedback`);
+              }
+              if(errors.length)failures.push(`${label}: JS ${errors.join(' | ')}`);
+              if(bad.length)failures.push(`${label}: HTTP local ${[...new Set(bad)].join(' | ')}`);
+              await ctx.close();
+            }
+            await browser.close();
+            if(failures.length){console.error('FALHAS');failures.forEach(x=>console.error(x));process.exit(1)}
+            console.log('QA_DEFINITIVO_OK — desktop/mobile, 5 entradas, menu, quiz, lazy images, hashes, recursos locais e overflow.');
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Commitar somente após QA aprovado
+        if: success()
+        run: |
+          set -e
+          git config user.name 'Mundo bit Byte'
+          git config user.email 'mundobitbyte@gmail.com'
+          git rm .github/workflows/tmp-infra-qa-definitivo.yml
+          git add js/infraestrutura/redes-99.js INFRAESTRUTURA_MBB_MAPA_E_CRITERIOS.md
+          git commit -m 'Fecha inspeção MbB de Infraestrutura [infra-qa-definitivo]'
+          git push origin HEAD:lapidacao-infraestrutura-mbb
+      - name: Limpar QA se falhar
+        if: failure()
+        run: |
+          git config user.name 'Mundo bit Byte'
+          git config user.email 'mundobitbyte@gmail.com'
+          git rm .github/workflows/tmp-infra-qa-definitivo.yml
+          git commit -m 'Remove QA temporário definitivo de Infraestrutura'
+          git push origin HEAD:lapidacao-infraestrutura-mbb
