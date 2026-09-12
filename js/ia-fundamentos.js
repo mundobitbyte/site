@@ -151,15 +151,16 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!main || !navLinks.length || !panels.length) return;
 
   const hashesValidos = new Set(navLinks.map(link => link.getAttribute('href')));
-  main.classList.add('panel-nav-ready');
+  const isMobile = () => window.matchMedia('(max-width: 980px)').matches;
 
   function normalizarHash(hash) {
     return hashesValidos.has(hash) ? hash : '#inicio';
   }
 
   function setActive(hash) {
+    const destino = normalizarHash(hash);
     navLinks.forEach(link => {
-      const active = link.getAttribute('href') === hash;
+      const active = link.getAttribute('href') === destino;
       link.classList.toggle('active', active);
       if (active) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
@@ -182,10 +183,29 @@ document.addEventListener('DOMContentLoaded', function () {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
+  function configurarModo() {
+    if (isMobile()) {
+      main.classList.remove('panel-nav-ready');
+      panels.forEach(panel => panel.classList.remove('active-panel'));
+      setActive(window.location.hash || '#inicio');
+      return;
+    }
+
+    main.classList.add('panel-nav-ready');
+    showPanel(window.location.hash || '#inicio', false);
+  }
+
   navLinks.forEach(link => {
     link.addEventListener('click', function (event) {
+      const hash = this.getAttribute('href');
+
+      if (isMobile()) {
+        setActive(hash);
+        return; // navegação nativa da âncora: mais robusta no celular
+      }
+
       event.preventDefault();
-      showPanel(this.getAttribute('href'), true);
+      showPanel(hash, true);
     });
   });
 
@@ -196,13 +216,33 @@ document.addEventListener('DOMContentLoaded', function () {
     const hash = anchor.getAttribute('href');
     if (!hashesValidos.has(hash)) return;
 
+    if (isMobile()) {
+      setActive(hash);
+      return;
+    }
+
     event.preventDefault();
     showPanel(hash, true);
   });
 
-  window.addEventListener('popstate', function () {
-    showPanel(window.location.hash || '#inicio', false);
+  window.addEventListener('hashchange', function () {
+    if (isMobile()) setActive(window.location.hash || '#inicio');
+    else showPanel(window.location.hash || '#inicio', false);
   });
 
-  showPanel(window.location.hash || '#inicio', false);
+  window.addEventListener('popstate', function () {
+    if (isMobile()) setActive(window.location.hash || '#inicio');
+    else showPanel(window.location.hash || '#inicio', false);
+  });
+
+  let ultimoModoMobile = isMobile();
+  window.addEventListener('resize', function () {
+    const atual = isMobile();
+    if (atual !== ultimoModoMobile) {
+      ultimoModoMobile = atual;
+      configurarModo();
+    }
+  });
+
+  configurarModo();
 });
