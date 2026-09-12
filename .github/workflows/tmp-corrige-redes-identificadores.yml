@@ -39,9 +39,9 @@ jobs:
           assert 'mapa mapa/inventário' not in txt, 'Expressão duplicada ainda presente'
           assert 'RTR-01' in txt, 'Identificador RTR-01 desapareceu do conteúdo'
           assert txt.count('window.infraestruturaNetworkLessons.push({') == 12, 'Quantidade de aulas de Redes mudou'
-          assert not re.search(r'R-0\d', txt), 'Taxonomia R-* reapareceu'
+          assert not re.search(r'(?<![A-Za-z])R-0\d', txt), 'Taxonomia R-* isolada reapareceu'
           assert '<div class="record-box">' not in txt, 'record-box reapareceu'
-          print('Correção de identificadores OK; RTR-01 preservado; 12 aulas; taxonomia R-* continua ausente.')
+          print('Correção de identificadores OK; RTR-01 preservado; 12 aulas; taxonomia R-* isolada ausente.')
           PY
           git diff --check
       - name: Commitar e limpar
