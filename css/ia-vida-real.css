@@ -6,9 +6,7 @@
   padding:20px 24px;
   margin-bottom:14px;
 }
-.hero-grid{
-  display:block;
-}
+.hero-grid{display:block;}
 .hero h1{
   font-size:clamp(1.9rem,3vw,2.65rem);
   margin-bottom:7px;
@@ -20,22 +18,21 @@
   line-height:1.5;
 }
 .hero-actions,
-.hero .mini-panel{
-  display:none !important;
-}
+.hero .mini-panel{display:none !important;}
 
-/* Desktop: mantém um tópico por vez. */
+/* Um painel por vez. As duas seções sem id pertencem conceitualmente ao Início. */
 main > #inicio{display:block;}
 main.panel-nav-ready > section[id]{display:none;}
 main.panel-nav-ready > section[id].active-panel{display:block;}
+main.panel-nav-ready:has(> section[id].active-panel:not(#inicio)) > section:not([id]){
+  display:none;
+}
 
 @media(max-width:980px){
   :root{--topo:46px;}
   .hero{padding:18px 20px;}
-
-  /* No celular, a trilha vira navegação por âncoras sobre uma leitura vertical.
-     Evita o conflito entre toque, menu rolável e troca de painéis por JavaScript. */
   .layout{padding-top:46px;}
+
   aside{
     position:sticky !important;
     top:46px !important;
@@ -47,13 +44,27 @@ main.panel-nav-ready > section[id].active-panel{display:block;}
     -webkit-overflow-scrolling:touch;
     overscroll-behavior-x:contain;
   }
+
+  /* Mobile: .active-panel e :target funcionam como rotas equivalentes.
+     Isso evita tela parada mesmo se o navegador estiver entre versões de cache. */
   main > section[id],
-  main.panel-nav-ready > section[id]{
-    display:block !important;
+  main.panel-nav-ready > section[id]{display:none !important;}
+  main > #inicio,
+  main > section[id].active-panel,
+  main > section[id]:target{display:block !important;}
+
+  main:has(> section[id]:target:not(#inicio)) > #inicio:not(:target):not(.active-panel),
+  main:has(> section[id].active-panel:not(#inicio)) > #inicio:not(.active-panel){
+    display:none !important;
   }
-  main > section[id]{
-    scroll-margin-top:112px;
+
+  /* Jornada + instruções pertencem ao painel Início e somem nos demais tópicos. */
+  main:has(> section[id]:target:not(#inicio)) > section:not([id]),
+  main:has(> section[id].active-panel:not(#inicio)) > section:not([id]){
+    display:none !important;
   }
+
+  main > section[id]{scroll-margin-top:112px;}
 }
 
 @media(max-width:560px){
