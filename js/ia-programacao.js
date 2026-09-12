@@ -1,3 +1,4 @@
+// IA e Programação — botão Copiar alinhado ao padrão usado no módulo Arduino.
 function copyCode(id){
   const code = document.getElementById(id);
   if(code && navigator.clipboard){
