@@ -133,3 +133,13 @@ dados/equipamentos.json</pre>
     else proximo.appendChild(link);
   }
 });
+
+// Mantém a navegação dos módulos 3 a 6 coerente com a trilha dos módulos iniciais.
+(() => {
+  if (document.querySelector('script[data-ia-trilha-modulos]')) return;
+  const script = document.createElement('script');
+  script.src = '../../js/ia-trilha-modulos.js?v=1';
+  script.defer = true;
+  script.dataset.iaTrilhaModulos = '1';
+  document.head.appendChild(script);
+})();
