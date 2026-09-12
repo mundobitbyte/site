@@ -47,7 +47,7 @@
 <section class="card">
 <h2>2. O material real precisa entrar antes da organização</h2>
 <p>A equipe reúne o que realmente foi registrado. Não são dados perfeitos; são anotações como aparecem no trabalho cotidiano.</p>
-<div class="note good"><h3>FAÇA AGORA — envie a fonte</h3><p>Copie as anotações abaixo e envie para uma IA de texto. <strong>Não peça organização ainda.</strong></p></div>
+<div class="note good"><h3>FAÇA AGORA — prepare a primeira mensagem</h3><p>Abra uma nova conversa em uma IA de texto. Copie as anotações abaixo e cole na caixa de mensagem, mas <strong>ainda não envie</strong>.</p></div>
 <div class="lab">
 <div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Feira de Projetos — anotações da reunião
 - laboratório 2 reservado para robótica
@@ -58,7 +58,7 @@
 - impressão dos certificados ainda sem responsável</span></div>
 </div>
 <p>Se a IA não receber esse material, terá de preencher lacunas. O primeiro ganho de produtividade, portanto, não é escrever: é <strong>parar de adivinhar</strong>.</p>
-<div class="note idea"><h3>PROMPT PARA A IA — use na mesma conversa</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Use somente estas anotações como fonte. Não complete lacunas. Separe o que está confirmado, o que exige ação, o que ainda é dúvida e o que precisa de responsável.</span></div></div>
+<div class="note idea"><h3>PROMPT PARA A IA — cole abaixo das anotações e só então envie</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Use somente estas anotações como fonte. Não complete lacunas. Separe o que está confirmado, o que exige ação, o que ainda é dúvida e o que precisa de responsável.</span></div></div>
 <div class="note warn"><h3>PARE E CONFIRA</h3><p>Compare linha por linha com as anotações. Se aparecer nome, prazo ou decisão que não estava nelas, a organização já começou contaminada.</p></div>
 </section>
 
@@ -71,12 +71,14 @@
 <div class="step"><strong>Dúvida</strong>Algo que precisa ser esclarecido.</div>
 <div class="step"><strong>Decisão</strong>Algo que altera o caminho do trabalho.</div>
 </div>
-<div class="note idea" style="margin-top:16px"><h3>FAÇA AGORA — sem IA</h3><p>Classifique mentalmente “abertura prevista para 19h, mas falta confirmação da direção”. Ela não pode ser tratada como horário final. A parte “19h” é uma previsão; a confirmação continua pendente.</p></div>
+<div class="note idea" style="margin-top:16px"><h3>FAÇA AGORA — sem IA</h3><p>Antes de seguir, classifique com suas palavras a frase “abertura prevista para 19h, mas falta confirmação da direção”. Depois confira: <strong>19h é uma previsão, não um horário final</strong>; a confirmação da direção continua pendente.</p></div>
 </section>
 
 <section class="card">
 <h2>4. A primeira saída útil não é um relatório: é um quadro de ação</h2>
-<p>Depois de separar o material, a pergunta da equipe muda: <strong>o que precisa acontecer agora?</strong> A tabela abaixo é uma <strong>referência para conferência</strong>, não algo para copiar ou executar.</p>
+<p>Depois de separar o material, a pergunta da equipe muda: <strong>o que precisa acontecer agora?</strong></p>
+<div class="note idea"><h3>PROMPT PARA A IA — continue na mesma conversa</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Com base somente nas anotações e na separação que acabamos de conferir, monte uma tabela com: tarefa, responsável confirmado, prazo confirmado e situação. Quando uma informação não estiver disponível, escreva “não definido”. Não transforme previsão em decisão confirmada.</span></div></div>
+<p>A tabela abaixo é uma <strong>referência para conferência</strong>, não algo para copiar ou executar.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Tarefa</th><th>Responsável</th><th>Prazo</th><th>Situação</th></tr></thead>
 <tbody>
@@ -85,7 +87,7 @@
 <tr><td>Verificar extensão elétrica</td><td>Não definido</td><td>Não definido</td><td>Pendência aberta</td></tr>
 <tr><td>Imprimir certificados</td><td>Não definido</td><td>Não definido</td><td>Precisa de responsável</td></tr>
 </tbody></table></div>
-<div class="note warn" style="margin-top:16px"><h3>PARE E COMPARE</h3><p>A organização produzida pela IA na etapa 2 preservou essas lacunas ou tentou “completar” a tabela? Uma tabela parece oficial; por isso um dado inventado pode ficar mais convincente justamente por estar organizado.</p></div>
+<div class="note warn" style="margin-top:16px"><h3>PARE E COMPARE</h3><p>A tabela produzida pela IA preservou essas lacunas ou tentou “completar” campos? Ela pode organizar de forma diferente da referência, mas <strong>não pode inventar dados</strong>. Uma tabela parece oficial; por isso um dado inventado pode ficar mais convincente justamente por estar organizado.</p></div>
 </section>
 
 <section class="card">
@@ -120,20 +122,21 @@
 <div class="step"><strong>Produzir</strong>Qual saída deve ser criada?</div>
 <div class="step"><strong>Conferir</strong>A saída respeitou a fonte e a finalidade?</div>
 </div>
-<div class="note idea"><h3>PROMPT PARA A IA — experimente a decomposição</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Primeiro extraia somente tarefas, responsáveis, prazos e dúvidas. Não produza mensagens ainda. Depois que eu conferir a extração, continuaremos.</span></div></div>
+<div class="note idea"><h3>LEIA — exemplo de decomposição</h3><div class="prompt">Primeiro extraia somente tarefas, responsáveis, prazos e dúvidas. Não produza mensagens ainda. Depois que eu conferir a extração, continuaremos.</div><p style="margin-top:12px">Você já executou uma extração semelhante no tópico 2. <strong>Não precisa repeti-la agora.</strong> Observe a estratégia: uma tarefa grande é dividida em uma etapa que pode ser conferida antes da seguinte.</p></div>
 <div class="note good"><h3>Por que trabalhar por etapas?</h3><p>Cada etapa vira um ponto de controle. Você consegue localizar o erro antes que ele seja carregado para o restante do fluxo.</p></div>
 </section>
 
 <section class="card">
 <h2>8. Uma nova versão do regulamento chega — e a memória não é um método de comparação</h2>
 <p>A coordenação recebe uma versão nova do regulamento. Para tornar a ideia testável sem depender de um PDF externo, use os dois trechos fictícios abaixo.</p>
+<div class="note good"><h3>FAÇA AGORA — prepare uma comparação limpa</h3><p>Abra uma <strong>nova conversa</strong>. Copie as duas versões abaixo e cole na caixa de mensagem, mas ainda não envie.</p></div>
 <div class="lab"><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">VERSÃO A
 A montagem dos estandes deverá terminar até 18h. Cada equipe levará sua própria extensão elétrica.
 
 VERSÃO B
 A montagem dos estandes deverá terminar até 17h30. A escola fornecerá extensões elétricas para os estandes previamente cadastrados.</span></div></div>
-<div class="note idea"><h3>PROMPT PARA A IA — envie depois das duas versões</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Compare a versão A e a versão B. Liste somente mudanças que alterem obrigação, prazo, responsável, regra ou conteúdo. Para cada mudança, mostre: antes, depois e impacto provável. Marque alterações apenas de redação como “sem mudança de significado”.</span></div></div>
-<div class="note warn"><h3>PARE E CONFIRA</h3><p>A IA deve localizar pelo menos a mudança de horário e a mudança de responsabilidade sobre as extensões. Em documento real, volte sempre aos trechos originais antes de agir.</p></div>
+<div class="note idea"><h3>PROMPT PARA A IA — cole abaixo das versões e envie tudo junto</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Compare a versão A e a versão B. Liste somente mudanças que alterem obrigação, prazo, responsável, regra ou conteúdo. Para cada mudança, mostre: antes, depois e impacto provável. Se indicar um impacto que não esteja escrito diretamente nos trechos, marque-o como INFERÊNCIA. Marque alterações apenas de redação como “sem mudança de significado”.</span></div></div>
+<div class="note warn"><h3>PARE E CONFIRA</h3><p>A IA deve localizar pelo menos a mudança de horário e a mudança de responsabilidade sobre as extensões. Qualquer “impacto provável” precisa continuar distinguido do que os trechos realmente afirmam. Em documento real, volte sempre aos trechos originais antes de agir.</p></div>
 </section>
 
 <section class="card">
@@ -151,6 +154,7 @@ A montagem dos estandes deverá terminar até 17h30. A escola fornecerá extens�
 - entregar certificados no evento.
 
 Identifique dependências. Não invente datas. Marque quais itens bloqueiam os seguintes.</span></div></div>
+<div class="note warn"><h3>PARE E CONFIRA</h3><p>A confirmação da lista final precisa aparecer antes da revisão dos nomes e da impressão. Se a IA tratar todas as tarefas como independentes, ela não identificou o bloqueio principal.</p></div>
 <div class="note idea"><h3>O ganho real</h3><p>Prioridade deixa de ser “o que parece urgente” e passa a considerar o que destrava o restante do trabalho.</p></div>
 </section>
 
@@ -183,25 +187,27 @@ Identifique dependências. Não invente datas. Marque quais itens bloqueiam os s
 
 <section class="card">
 <h2>12. O quadro ficou pronto. Antes de enviar, alguma coisa ainda pode dar errado?</h2>
-<p>A equipe está prestes a distribuir uma mensagem para famílias. O horário de saída aparece como 7h30, mas o transporte ainda não confirmou. Uma resposta da IA pode estar perfeitamente escrita e, ainda assim, ser prematura.</p>
+<p>A equipe da Feira de Projetos está prestes a distribuir uma mensagem para famílias e participantes. A abertura aparece como <strong>19h</strong>, mas a própria anotação original dizia que esse horário ainda aguardava confirmação da direção. Uma resposta da IA pode estar perfeitamente escrita e, ainda assim, transformar uma previsão em informação oficial.</p>
 <div class="grid-2">
 <div class="note idea"><h3>Conferência factual</h3><p>Nomes, datas, valores e decisões aparecem na fonte?</p></div>
 <div class="note idea"><h3>Conferência de lacunas</h3><p>O que ainda está pendente ficou visível?</p></div>
 <div class="note idea"><h3>Conferência de uso</h3><p>O destinatário recebe somente o que precisa?</p></div>
 <div class="note idea"><h3>Conferência de consequência</h3><p>Alguma informação ainda depende de uma decisão humana?</p></div>
 </div>
-<div class="note idea"><h3>PROMPT PARA A IA — antes de finalizar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Antes de finalizar, crie uma seção chamada “Itens que precisam de conferência humana” e liste somente pontos em que um erro poderia alterar prazo, responsabilidade, valor, decisão ou informação enviada a outra pessoa.</span></div></div>
+<div class="note good"><h3>FAÇA AGORA — retome a conversa da Feira</h3><p>Volte à conversa usada nos tópicos 2 a 5 e aplique o prompt abaixo à mensagem para a equipe que você produziu.</p></div>
+<div class="note idea"><h3>PROMPT PARA A IA — antes de finalizar</h3><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Revise a mensagem para a equipe que produzimos nesta conversa. Antes de finalizar, crie uma seção chamada “Itens que precisam de conferência humana” e liste somente pontos em que um erro poderia alterar prazo, responsabilidade, valor, decisão ou informação enviada a outra pessoa. Não transforme previsões ou pendências em informações confirmadas.</span></div></div>
+<div class="note warn"><h3>PARE E CONFIRA</h3><p>O horário de 19h deve continuar marcado como pendente de confirmação da direção. Se a revisão o apresentar como horário oficial, o fluxo ainda não está seguro.</p></div>
 <p>O fluxo não termina quando a IA produz. Termina quando o resultado está <strong>pronto para ser usado com segurança</strong>.</p>
 </section>
 
 <section class="card">
 <h2>13. Laboratório — de informações espalhadas a um plano utilizável</h2>
 <p>Agora mude de contexto. Uma turma fará uma visita técnica e as informações chegaram em momentos diferentes. O objetivo é verificar se você aprendeu o processo, e não apenas a história da feira.</p>
-<div class="note good"><h3>FAÇA AGORA — abra uma nova conversa e envie a fonte</h3></div>
+<div class="note good"><h3>FAÇA AGORA — abra uma nova conversa e prepare a primeira mensagem</h3><p>Copie as anotações abaixo e cole na caixa de mensagem, mas <strong>ainda não envie</strong>. Em seguida, copie a Etapa A, cole logo abaixo das anotações e envie as duas partes juntas.</p></div>
 <div class="lab"><div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Visita técnica — anotações da organização
-- visita prevista para sexta-feira, dia 25
+- visita prevista para sexta-feira, 25 de setembro de 2026
 - saída planejada para 7h30, ainda aguardando confirmação do transporte
-- empresa pediu a lista de visitantes até quarta-feira
+- empresa pediu a lista de visitantes até quarta-feira, 23 de setembro
 - professora Ana vai conferir as autorizações assinadas
 - dois alunos ainda não entregaram autorização
 - alimentação não será fornecida pela empresa
@@ -210,19 +216,20 @@ Identifique dependências. Não invente datas. Marque quais itens bloqueiam os s
 - a coordenação pediu uma mensagem final para as famílias depois que transporte e horários forem confirmados</span></div></div>
 <h3>Etapa A — descubra o que existe</h3>
 <div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Extraia apenas fatos confirmados, tarefas, dependências e dúvidas. Não proponha soluções.</span></div>
-<div class="note warn"><p><strong>PARE E CONFIRA:</strong> procure pessoa, horário, prazo ou responsabilidade que não apareça nas anotações.</p></div>
+<div class="note warn"><p><strong>PARE E CONFIRA:</strong> procure pessoa, horário, prazo ou responsabilidade que não apareça nas anotações. A saída às 7h30 ainda não pode ser tratada como confirmada.</p></div>
 <h3>Etapa B — transforme em ação</h3>
 <div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Com base somente na extração aprovada, monte um plano de ação. Use “não definido” quando faltar responsável ou prazo e mostre dependências.</span></div>
 <div class="note warn"><p><strong>PARE E CONFIRA:</strong> o plano precisa manter a confirmação do transporte como pendência e não pode inventar responsável pelo kit.</p></div>
 <h3>Etapa C — prepare a comunicação sem antecipar o que ainda é incerto</h3>
 <div class="prompt"><button class="prompt-copy-inside" onclick="copyPrompt(this)">Copiar</button><span class="prompt-text">Prepare um rascunho para as famílias usando somente informações confirmadas. Em uma seção separada, liste o que impede o envio final.</span></div>
-<div class="note warn"><p><strong>PARE E CONFIRA:</strong> decida você mesmo se a mensagem já pode ser enviada e justifique usando as evidências do material.</p></div>
+<div class="note warn"><p><strong>PARE E CONFIRA:</strong> decida você mesmo se a mensagem já pode ser enviada e justifique usando as evidências do material. O próprio enunciado informa que a mensagem final só deve sair depois da confirmação do transporte e dos horários.</p></div>
 <div class="note good"><h3>O que deve ficar evidente</h3><p>A qualidade veio da sequência <strong>fonte → extração → conferência → organização → comunicação → validação</strong>, não de uma frase mágica.</p></div>
 </section>
 
 <section class="card">
 <h2>14. Desafio — use uma situação sua</h2>
-<p>Escolha um problema pequeno e real: preparação de aula, reunião, estudo, evento, projeto, documento ou lista de tarefas. Não comece pela ferramenta.</p>
+<div class="note good"><h3>FAÇA AGORA — transfira o método</h3><p>Escolha um problema pequeno e real: preparação de aula, reunião, estudo, evento, projeto, documento ou lista de tarefas. Não comece pela ferramenta.</p></div>
+<div class="note warn"><h3>Antes de enviar material real</h3><p>Se houver nomes, contatos, documentos, credenciais, observações internas ou outros dados pessoais que não sejam necessários para a tarefa, remova ou anonimize antes de usar a IA. Se o dado for necessário e envolver terceiros, respeite as regras da instituição e do serviço utilizado.</p></div>
 <ol>
 <li>Defina o resultado que você precisa no mundo real.</li>
 <li>Separe a matéria-prima verdadeira.</li>
