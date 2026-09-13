@@ -164,7 +164,7 @@
 
       <div class="concept-box"><strong>O que você acabou de praticar:</strong> dedução, restrições, decomposição, sequência, condição e repetição. No próximo passo, essas estratégias passam a ser organizadas formalmente como um <strong>algoritmo</strong>.</div>
 
-      <div class="note-box"><strong>Sem saturar:</strong> estes desafios são treino de raciocínio, não uma nova disciplina dentro do módulo. O objetivo é preparar o aluno para entender por que algoritmos, decisões e repetições existem.</div>`
+      <div class="note-box"><strong>Use como aquecimento:</strong> tente resolver primeiro sem abrir as respostas. O objetivo é tornar visíveis as estratégias de raciocínio que depois serão formalizadas em algoritmos e programas.</div>`
   };
 
   // Evita duplicação se o arquivo for carregado mais de uma vez.
