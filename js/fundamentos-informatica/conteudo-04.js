@@ -9,7 +9,7 @@ window.fundamentosInformaticaLessons.push({
   menuTitle: 'O que é computador?',
   technicalTitle: 'computador • entrada • processamento • memória • saída • periféricos • sistemas',
   title: 'Afinal, o que é um computador?',
-  objective: 'Construir uma definição técnica de computador que funcione mesmo quando a aparência do equipamento muda.',
+  objective: 'Construir uma definição técnica de computador que funcione mesmo quando a aparência do equipamento muda e classificar periféricos pelo papel que exercem no sistema.',
   content: `
     <div class="hero-box story-opening">
       <span class="eyebrow">Agora a pergunta faz sentido</span>
@@ -79,6 +79,23 @@ window.fundamentosInformaticaLessons.push({
     </div>
     <p>Teclado e mouse são periféricos do PC. Isso não significa que internamente sejam obrigatoriamente “eletrônica sem inteligência”: um teclado USB moderno pode conter um pequeno microcontrolador. <strong>A classificação depende também do nível em que estamos olhando.</strong></p>
 
+    <h3>Entrada, saída ou os dois?</h3>
+    <p>Uma classificação tradicional continua útil quando entendemos que ela descreve <strong>o papel do dispositivo em relação ao sistema</strong>. Em vez de decorar listas, pergunte: os dados estão chegando, saindo ou fazendo os dois movimentos?</p>
+    <div class="comparison-grid four">
+      <article><strong>Entrada</strong><p>Envia dados ou sinais para o sistema. Exemplos: teclado, mouse, scanner, microfone, webcam e sensores.</p></article>
+      <article><strong>Saída</strong><p>Apresenta ou produz resultados. Exemplos: monitor, impressora, alto-falantes e projetor.</p></article>
+      <article><strong>Entrada e saída</strong><p>Faz os dois papéis. Uma tela sensível ao toque exibe imagem e também recebe toques; um headset pode reunir fones e microfone.</p></article>
+      <article><strong>Outros papéis úteis</strong><p>Armazenamento e comunicação merecem destaque próprio: SSD externo, pendrive, interface de rede e adaptador Bluetooth são exemplos.</p></article>
+    </div>
+    <div class="note-box compact">
+      <strong>A classificação não é uma prisão.</strong>
+      <p>Um dispositivo moderno pode reunir várias funções. Um smartphone, por exemplo, possui tela, microfones, câmeras, sensores, armazenamento e interfaces de rede no mesmo equipamento. <strong>Classificamos a função que estamos analisando.</strong></p>
+    </div>
+    <div class="mbb-pause-question">
+      <strong>Experimente olhar ao redor</strong>
+      <p>Escolha cinco dispositivos próximos e diga qual papel cada um exerce em relação ao computador: entrada, saída, entrada/saída, armazenamento ou comunicação. Se um deles tiver mais de um papel, explique por quê.</p>
+    </div>
+
     <h3>Smartphone, roteador e Arduino</h3>
     <div class="comparison-grid three">
       <article>
@@ -125,13 +142,20 @@ window.fundamentosInformaticaLessons.push({
         <label><input type="radio" name="q4b" value="c"> um periférico de entrada.</label>
       </div>
 
+      <div class="quiz-item" data-quiz-question data-answer="a" data-explanation="A tela sensível ao toque apresenta informação e também recebe toques do usuário.">
+        <p>Uma tela sensível ao toque pode ser classificada como:</p>
+        <label><input type="radio" name="q4c" value="a"> entrada e saída, porque exibe e também recebe dados.</label>
+        <label><input type="radio" name="q4c" value="b"> apenas armazenamento.</label>
+        <label><input type="radio" name="q4c" value="c"> apenas processamento.</label>
+      </div>
+
       <button class="action-button primary" type="button" data-check-quiz>Conferir</button>
       <div class="quiz-result" data-quiz-result aria-live="polite"></div>
     </section>
 
     <div class="essence">
       <strong>Essência</strong>
-      <p>Computador não é definido por monitor, gabinete ou teclado. O critério central é ser um <strong>dispositivo programável que processa dados segundo instruções</strong>. Sistemas computacionais podem combinar vários equipamentos, programas e dados para realizar uma solução completa.</p>
+      <p>Computador não é definido por monitor, gabinete ou teclado. O critério central é ser um <strong>dispositivo programável que processa dados segundo instruções</strong>. Periféricos podem fornecer entrada, apresentar saída, fazer os dois papéis, armazenar ou comunicar dados. Sistemas computacionais combinam equipamentos, programas e dados para realizar uma solução completa.</p>
     </div>
 
     <div class="bridge-box">
