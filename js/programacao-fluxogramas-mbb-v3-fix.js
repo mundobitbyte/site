@@ -22,40 +22,40 @@
       <path class="node display" d="M134 263 H382 Q410 263 410 290 Q410 317 382 317 H134 L110 290 Z"></path>
       <text class="node-title" x="265" y="295" text-anchor="middle">&quot;Digite a quantidade&quot;</text>
 
-      <path class="arrow" d="M260 317V337"></path><polygon points="260,346 253,334 267,346" fill="#1e3a8a"></polygon>
+      <path class="arrow" d="M260 317V337"></path><polygon points="260,346 253,334 267,334" fill="#1e3a8a"></polygon>
       <polygon class="node manual-input" points="150,363 370,349 370,403 150,403"></polygon>
       <text class="node-title" x="260" y="382" text-anchor="middle">quantidade</text>
 
-      <path class="arrow" d="M260 403V423"></path><polygon points="260,432 253,420 267,432" fill="#1e3a8a"></polygon>
+      <path class="arrow" d="M260 403V423"></path><polygon points="260,432 253,420 267,420" fill="#1e3a8a"></polygon>
       <rect class="node process" x="120" y="435" width="280" height="54" rx="2"></rect>
       <text class="node-title" x="260" y="468" text-anchor="middle">total = preco * quantidade</text>
 
-      <path class="arrow" d="M260 489V509"></path><polygon points="260,518 253,506 267,518" fill="#1e3a8a"></polygon>
+      <path class="arrow" d="M260 489V509"></path><polygon points="260,518 253,506 267,506" fill="#1e3a8a"></polygon>
       <path class="node display" d="M134 521 H382 Q410 521 410 548 Q410 575 382 575 H134 L110 548 Z"></path>
       <text class="node-title" x="265" y="553" text-anchor="middle">&quot;Total = &quot;, total</text>
 
-      <path class="arrow" d="M260 575V595"></path><polygon points="260,604 253,592 267,604" fill="#1e3a8a"></polygon>
+      <path class="arrow" d="M260 575V595"></path><polygon points="260,604 253,592 267,592" fill="#1e3a8a"></polygon>
       <path class="node display" d="M134 607 H382 Q410 607 410 634 Q410 661 382 661 H134 L110 634 Z"></path>
       <text class="node-title" x="265" y="639" text-anchor="middle">&quot;Digite o valor pago&quot;</text>
 
-      <path class="arrow" d="M260 661V681"></path><polygon points="260,690 253,678 267,690" fill="#1e3a8a"></polygon>
+      <path class="arrow" d="M260 661V681"></path><polygon points="260,690 253,678 267,678" fill="#1e3a8a"></polygon>
       <polygon class="node manual-input" points="150,707 370,693 370,747 150,747"></polygon>
       <text class="node-title" x="260" y="726" text-anchor="middle">valorPago</text>
 
-      <path class="arrow" d="M260 747V772"></path><polygon points="260,781 253,769 267,781" fill="#1e3a8a"></polygon>
+      <path class="arrow" d="M260 747V772"></path><polygon points="260,781 253,769 267,769" fill="#1e3a8a"></polygon>
       <polygon class="node decision" points="260,786 380,845 260,904 140,845"></polygon>
       <text class="node-title" x="260" y="838" text-anchor="middle">valorPago</text>
       <text class="node-title" x="260" y="858" text-anchor="middle">&gt;= total?</text>
 
-      <path class="arrow" d="M260 904V929"></path><polygon points="260,938 253,926 267,938" fill="#1e3a8a"></polygon>
+      <path class="arrow" d="M260 904V929"></path><polygon points="260,938 253,926 267,926" fill="#1e3a8a"></polygon>
       <text class="branch-label" x="280" y="922" text-anchor="start">SIM</text>
       <rect class="node process" x="125" y="941" width="270" height="54" rx="2"></rect>
       <text class="node-title" x="260" y="974" text-anchor="middle">troco = valorPago - total</text>
 
-      <path class="arrow" d="M260 995V1015"></path><polygon points="260,1024 253,1012 267,1024" fill="#1e3a8a"></polygon>
+      <path class="arrow" d="M260 995V1015"></path><polygon points="260,1024 253,1012 267,1012" fill="#1e3a8a"></polygon>
       <path class="node display" d="M134 1027 H382 Q410 1027 410 1054 Q410 1081 382 1081 H134 L110 1054 Z"></path>
       <text class="node-title" x="265" y="1059" text-anchor="middle">&quot;Troco = &quot;, troco</text>
-      <path class="arrow" d="M260 1081V1092"></path><polygon points="260,1101 253,1089 267,1101" fill="#1e3a8a"></polygon>
+      <path class="arrow" d="M260 1081V1092"></path><polygon points="260,1101 253,1089 267,1089" fill="#1e3a8a"></polygon>
       <ellipse class="node terminal" cx="260" cy="1110" rx="72" ry="25"></ellipse>
       <text class="node-title" x="260" y="1116" text-anchor="middle">FIM</text>
 
@@ -64,7 +64,7 @@
       <path class="node display" d="M505 813 H632 Q657 813 657 845 Q657 877 632 877 H505 L480 845 Z"></path>
       <text class="node-title" x="568" y="840" text-anchor="middle">&quot;Valor</text>
       <text class="node-text" x="568" y="859" text-anchor="middle">insuficiente&quot;</text>
-      <path class="arrow" d="M568 877V901"></path><polygon points="568,910 561,898 575,910" fill="#1e3a8a"></polygon>
+      <path class="arrow" d="M568 877V901"></path><polygon points="568,910 561,898 575,898" fill="#1e3a8a"></polygon>
       <ellipse class="node terminal" cx="568" cy="934" rx="60" ry="23"></ellipse>
       <text class="node-title" x="568" y="940" text-anchor="middle">FIM</text>
     </svg>`;
