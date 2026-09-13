@@ -7,9 +7,9 @@ window.fundamentosInformaticaLessons.push({
   number: "08",
   unit: "Ato 2 · Como funciona",
   menuTitle: "Software e programação",
-  technicalTitle: "software • algoritmo • pensamento computacional • código-fonte • ISA • código de máquina • compilação • interpretação • processo • firmware • driver • bug",
+  technicalTitle: "software de sistema • aplicativos • desenvolvimento • algoritmo • linguagem • compilação • processo • firmware • driver • bug",
   title: "Se o hardware executa instruções, quem diz o que fazer?",
-  objective: "Relacionar problema, raciocínio, algoritmo, código e execução, distinguindo programa, processo, firmware, driver e diferentes tipos de erro.",
+  objective: "Organizar os principais tipos de software e relacionar problema, algoritmo, código e execução, distinguindo programa, processo, linguagem, firmware, driver e diferentes tipos de erro.",
   content: `
     <div class="hero-box story-opening"><span class="eyebrow">A parte lógica</span><h2>As mesmas peças conseguem editar texto, tocar música ou executar um jogo.</h2><p>O hardware fornece capacidade de processamento. O que muda é <strong>quais instruções e dados serão usados</strong>. É isso que nos leva ao software.</p></div>
 
@@ -17,6 +17,22 @@ window.fundamentosInformaticaLessons.push({
 
     <h3>Programa, software e aplicativo</h3>
     <div class="comparison-grid three"><article><strong>Programa</strong><p>Conjunto organizado de instruções capaz de realizar uma tarefa.</p></article><article><strong>Software</strong><p>Conceito mais amplo, podendo envolver programas, bibliotecas, configurações e dados associados.</p></article><article><strong>Aplicativo</strong><p>Software voltado principalmente a uma tarefa útil para o usuário, como navegador, planilha ou jogo.</p></article></div>
+
+    <h3>Nem todo software faz o mesmo trabalho</h3>
+    <p>Imagine um computador com Windows, driver de vídeo, navegador, editor de textos, VS Code e compilador. Chamar tudo apenas de “programa” é possível no uso cotidiano, mas não ajuda a entender <strong>o papel de cada software dentro do sistema</strong>.</p>
+    <div class="comparison-grid three">
+      <article><strong>Software de sistema</strong><p>Fornece a base para o funcionamento e a administração do computador. Sistema operacional, drivers e muitos utilitários entram aqui.</p></article>
+      <article><strong>Software aplicativo</strong><p>Ajuda o usuário a realizar tarefas específicas: navegador, editor de texto, planilha, sistema de gestão, jogo, editor de imagem.</p></article>
+      <article><strong>Software de desenvolvimento</strong><p>Ajuda a criar e testar outros programas: editores/IDEs, compiladores, interpretadores, depuradores e ferramentas de desenvolvimento.</p></article>
+    </div>
+    <div class="note-box compact"><strong>E “software básico”?</strong><p>Esse nome aparece em muitos materiais mais antigos como uma categoria ampla para software ligado ao funcionamento do computador. Ele continua compreensível, mas <strong>software de sistema</strong> é uma expressão mais clara para organizar sistema operacional, drivers e utilitários.</p></div>
+
+    <h3>Firmware merece aparecer na classificação</h3>
+    <p>Firmware é software, mas fica muito próximo do equipamento que controla. Ele aparece em placas-mãe, roteadores, SSDs, impressoras, câmeras e inúmeros sistemas embarcados.</p>
+    <div class="concept-flow"><div><strong>Hardware</strong><span>parte física</span></div><span class="flow-arrow">↔</span><div><strong>Firmware / drivers / SO</strong><span>controle e serviços</span></div><span class="flow-arrow">↔</span><div><strong>Aplicativos</strong><span>tarefas do usuário</span></div></div>
+    <p>Essa figura é uma simplificação: as camadas podem interagir de formas diferentes. O objetivo é perceber que <strong>software também possui papéis e níveis</strong>.</p>
+
+    <div class="danger-box compact"><strong>Linguagem de programação não é uma categoria de software.</strong><p>Python, Java, C e JavaScript são <strong>linguagens formais</strong>. Já CPython, compiladores, IDEs e depuradores são softwares que implementam ou dão suporte ao uso dessas linguagens.</p></div>
 
     <h3>Antes do código existe um problema</h3>
     <div class="hero-box">
@@ -84,11 +100,13 @@ window.fundamentosInformaticaLessons.push({
       <div class="quiz-item" data-quiz-question data-answer="b" data-explanation="Dividir o problema de 500 alunos em entrada, cálculo, decisão e registro é decomposição."><p>Ao separar o problema dos 500 alunos em partes menores, qual ideia está sendo usada?</p><label><input type="radio" name="q8a" value="a"> Compactação.</label><label><input type="radio" name="q8a" value="b"> Decomposição.</label><label><input type="radio" name="q8a" value="c"> Criptografia.</label></div>
       <div class="quiz-item" data-quiz-question data-answer="c" data-explanation="Código-fonte precisa passar por mecanismos de tradução ou execução até chegar às instruções que a arquitetura consegue executar."><p>A CPU executa diretamente palavras de Python como <code>print</code>?</p><label><input type="radio" name="q8b" value="a"> Sim, qualquer CPU entende Python nativamente.</label><label><input type="radio" name="q8b" value="b"> Sim, se houver RAM suficiente.</label><label><input type="radio" name="q8b" value="c"> Não. O código precisa chegar a uma forma executável pela arquitetura.</label></div>
       <div class="quiz-item" data-quiz-question data-answer="a" data-explanation="Erro lógico pode produzir uma resposta errada mesmo sem travamento."><p>Um programa executa até o fim, mas calcula uma média incorreta. Qual hipótese faz sentido?</p><label><input type="radio" name="q8c" value="a"> Erro lógico.</label><label><input type="radio" name="q8c" value="b"> Necessariamente defeito da placa-mãe.</label><label><input type="radio" name="q8c" value="c"> Não pode haver bug se não travou.</label></div>
+      <div class="quiz-item" data-quiz-question data-answer="b" data-explanation="Python é uma linguagem; CPython é uma implementação de software que executa programas escritos nessa linguagem."><p>Qual frase é mais precisa?</p><label><input type="radio" name="q8d" value="a"> Python é um periférico de entrada.</label><label><input type="radio" name="q8d" value="b"> Python é uma linguagem de programação; uma implementação como CPython é software.</label><label><input type="radio" name="q8d" value="c"> Toda linguagem de programação é um sistema operacional.</label></div>
+      <div class="quiz-item" data-quiz-question data-answer="c" data-explanation="Um navegador é aplicativo; sistema operacional e drivers pertencem ao software de sistema."><p>Qual exemplo é principalmente software aplicativo?</p><label><input type="radio" name="q8e" value="a"> Driver da placa de vídeo.</label><label><input type="radio" name="q8e" value="b"> Kernel do sistema operacional.</label><label><input type="radio" name="q8e" value="c"> Navegador Web.</label></div>
       <button class="action-button primary" type="button" data-check-quiz>Conferir</button><div class="quiz-result" data-quiz-result aria-live="polite"></div>
     </section>
 
-    <div class="essence"><strong>Essência</strong><p>Programação começa pela compreensão do problema. <strong>Decomposição, padrões, abstração e algoritmos</strong> ajudam a construir a solução. O código-fonte precisa chegar, por mecanismos de compilação, interpretação ou execução, a instruções compatíveis com a arquitetura da CPU. Programa e processo são diferentes; firmware e drivers também são software. E <strong>bug</strong> é defeito — a mariposa de 1947 tornou famosa uma palavra que já existia.</p></div>
-    <div class="bridge-box"><strong>Próxima pergunta</strong><p>Se vários programas querem CPU, RAM, arquivos, rede e dispositivos ao mesmo tempo, quem organiza esse compartilhamento?</p></div>
+    <div class="essence"><strong>Essência</strong><p>Software pode cumprir papéis diferentes: <strong>sistema, aplicação, desenvolvimento e firmware</strong> são categorias úteis para organizar o ecossistema. Linguagem de programação é uma linguagem formal, não simplesmente “mais um tipo de programa”. Programação começa pela compreensão do problema; o código-fonte precisa chegar a instruções compatíveis com a arquitetura da CPU. Programa e processo são diferentes; firmware e drivers também são software.</p></div>
+    <div class="bridge-box"><strong>Próxima pergunta</strong><p>Se vários programas querem CPU, RAM, arquivos, rede e dispositivos ao mesmo tempo, quem organiza esse compartilhamento — e quem prepara o computador antes de o sistema operacional começar?</p></div>
 
     <details class="sources-box"><summary>Fontes e crédito da imagem</summary><ul>
       <li><a href="https://csrc.nist.gov/glossary/term/software" target="_blank" rel="noopener">NIST — Software</a></li>
