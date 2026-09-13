@@ -7,9 +7,9 @@ window.fundamentosInformaticaLessons.push({
   number: "06",
   unit: "Ato 2 · Como funciona",
   menuTitle: "Hardware",
-  technicalTitle: "hardware • placa-mãe • CPU • núcleos • cache • RAM • armazenamento • GPU • barramentos • interfaces • fonte",
+  technicalTitle: "hardware • placa-mãe • CPU • núcleos • threads • cache • GPU • NPU • SoC • PCIe • interfaces • fonte",
   title: "Quem faz o quê dentro de um computador?",
-  objective: "Reconhecer os principais componentes físicos de um computador e compreender por que cada um existe dentro do sistema.",
+  objective: "Reconhecer os principais componentes físicos, interpretar especificações básicas de um computador atual e compreender por que cada parte existe dentro do sistema.",
   content: `
     <div class="hero-box story-opening">
       <span class="eyebrow">Por baixo da tela</span>
@@ -86,7 +86,14 @@ window.fundamentosInformaticaLessons.push({
     </div>
     <p>Ter mais núcleos pode permitir mais trabalho em paralelo, mas <strong>dobrar os núcleos não significa dobrar automaticamente a velocidade</strong>. O software precisa conseguir aproveitar esse paralelismo.</p>
 
-    <details class="sources-box"><summary>Aprofunde: núcleos, threads e cache</summary><p>Uma <strong>thread</strong>, em software, é um fluxo de execução dentro de um processo. Alguns processadores mantêm mais de um fluxo de hardware por núcleo por técnicas como SMT. Por isso “8 núcleos / 16 threads” não significa 16 núcleos físicos.</p><p>Caches costumam ser organizados em níveis como <strong>L1, L2 e L3</strong>. A organização exata depende da arquitetura.</p></details>
+    <h3>Núcleo e thread não são a mesma coisa</h3>
+    <div class="comparison-grid">
+      <article><strong>Núcleo físico</strong><p>É uma unidade real de processamento dentro do chip. Vários núcleos podem executar trabalho em paralelo.</p></article>
+      <article><strong>Thread de hardware / processador lógico</strong><p>Algumas CPUs conseguem manter mais de um fluxo de execução por núcleo por técnicas como SMT. Por isso, <strong>8 núcleos / 16 threads</strong> não significa 16 núcleos físicos.</p></article>
+    </div>
+    <div class="note-box compact"><strong>Nem todos os núcleos precisam ser iguais.</strong><p>Algumas famílias atuais combinam núcleos de perfis diferentes, por exemplo priorizando desempenho ou eficiência. Isso depende da arquitetura e não deve ser assumido para todo processador.</p></div>
+
+    <details class="sources-box"><summary>Aprofunde: cache</summary><p>Caches costumam ser organizados em níveis como <strong>L1, L2 e L3</strong>. A organização exata depende da arquitetura. Mais cache pode ajudar em determinadas cargas, mas tamanho isolado também não determina desempenho total.</p></details>
 
     <h3>RAM e armazenamento: dois trabalhos diferentes</h3>
     <div class="comparison-grid">
@@ -95,9 +102,18 @@ window.fundamentosInformaticaLessons.push({
     </div>
     <div class="mbb-pause-question"><strong>“Meu computador tem 16 GB.”</strong><p>A frase está incompleta. São 16 GB de RAM? armazenamento? memória de vídeo? <strong>A unidade pode ser a mesma, mas o recurso medido é diferente.</strong></p></div>
 
-    <h3>GPU: processamento fortemente paralelo</h3>
-    <div class="definition-box"><span class="term">GPU — Graphics Processing Unit</span><p>É uma unidade de processamento especializada em grande quantidade de operações paralelas. Tornou-se fundamental para gráficos e também pode ser usada em vídeo, computação científica e inteligência artificial.</p></div>
+    <h3>CPU, GPU e NPU: especializações diferentes</h3>
+    <div class="comparison-grid three">
+      <article><strong>CPU</strong><p>Processador de propósito geral. É flexível e executa grande variedade de instruções e tarefas do sistema.</p></article>
+      <article><strong>GPU</strong><p>É especializada em grande quantidade de operações paralelas. Tornou-se fundamental para gráficos e também pode acelerar vídeo, computação científica e IA.</p></article>
+      <article><strong>NPU</strong><p><strong>Neural Processing Unit</strong> é um acelerador especializado em operações usadas por modelos de aprendizado de máquina e IA, especialmente inferência local eficiente.</p></article>
+    </div>
     <p><strong>GPU e placa de vídeo não são exatamente a mesma coisa.</strong> A GPU é o processador gráfico; uma placa de vídeo dedicada é o conjunto que a utiliza. Também existem GPUs integradas, sem placa dedicada separada.</p>
+    <div class="note-box compact"><strong>Ter NPU não acelera qualquer programa automaticamente.</strong><p>O software precisa usar recursos compatíveis com esse acelerador. Em PCs que possuem NPU e suporte adequado, sistemas atuais já conseguem mostrar seu uso em ferramentas de desempenho.</p></div>
+
+    <h3>Quando muitas funções entram no mesmo chip</h3>
+    <div class="definition-box"><span class="term">SoC — System on a Chip</span><p>É um circuito integrado que reúne vários blocos de um sistema, como CPU, controladores, interfaces e, conforme o projeto, GPU, NPU, memória integrada ou outros recursos.</p></div>
+    <p>SoCs são muito comuns em smartphones, tablets e sistemas embarcados e também aparecem em computadores pessoais. <strong>Integração física não apaga as funções:</strong> CPU, GPU e controladores continuam exercendo papéis diferentes mesmo quando estão no mesmo chip.</p>
 
     <h3>Como os componentes trocam dados?</h3>
     <div class="two-col">
@@ -120,6 +136,25 @@ window.fundamentosInformaticaLessons.push({
       <article><strong>Refrigeração</strong><p>Dissipadores, ventoinhas e outros sistemas removem calor para manter componentes dentro de faixas adequadas de temperatura.</p></article>
     </div>
 
+    <h3>Aprenda a ler uma ficha técnica sem cair em números isolados</h3>
+    <div class="hero-box">
+      <span class="eyebrow">Exemplo de computador atual</span>
+      <p><strong>CPU:</strong> 12 núcleos / 16 threads · até 5,0 GHz · 24 MB de cache<br>
+      <strong>Memória:</strong> 16 GB DDR5-5600<br>
+      <strong>Armazenamento:</strong> SSD NVMe PCIe 4.0 de 1 TB<br>
+      <strong>Gráficos:</strong> GPU integrada<br>
+      <strong>IA:</strong> NPU dedicada</p>
+    </div>
+    <div class="comparison-grid three">
+      <article><strong>O que você pode concluir</strong><p>Há vários núcleos, 16 fluxos lógicos anunciados, memória DDR5, armazenamento NVMe e aceleradores integrados.</p></article>
+      <article><strong>O que ainda falta saber</strong><p>Modelo e arquitetura da CPU, limites térmicos, desempenho real, configuração da RAM, qualidade do SSD e comportamento do software.</p></article>
+      <article><strong>O erro comum</strong><p>Escolher “o maior número” em GHz, núcleos ou GB e concluir que o computador inteiro será melhor em qualquer tarefa.</p></article>
+    </div>
+    <p>A Aula 07 vai abrir justamente o trecho <strong>16 GB DDR5-5600</strong> e mostrar o que capacidade, geração e taxa significam.</p>
+
+    <h3>Observe seu próprio computador</h3>
+    <div class="mbb-pause-question"><strong>Windows: Gerenciador de Tarefas → Desempenho</strong><p>Observe CPU, memória, discos e GPU. Registre o modelo da CPU, quantidade de núcleos e processadores lógicos, RAM instalada e tipo de disco. Se o equipamento possuir NPU com suporte do sistema, ela também pode aparecer. <strong>Não altere nada: apenas transforme a ficha do seu computador em informação compreensível.</strong></p></div>
+
     <h3>Uma fotografia aberta no computador</h3>
     <div class="representation-flow" aria-label="Fluxo simplificado ao abrir uma fotografia">
       <div><strong>SSD</strong><span>arquivo permanece armazenado</span></div><span class="flow-arrow">→</span>
@@ -134,15 +169,19 @@ window.fundamentosInformaticaLessons.push({
       <div class="quiz-item" data-quiz-question data-answer="b" data-explanation="Gabinete abriga componentes; CPU é a unidade funcional de processamento."><p>Qual afirmação é tecnicamente correta?</p><label><input type="radio" name="q6a" value="a"> O gabinete é a CPU.</label><label><input type="radio" name="q6a" value="b"> A CPU é uma unidade de processamento; o gabinete abriga vários componentes.</label><label><input type="radio" name="q6a" value="c"> A placa-mãe é sempre a CPU.</label></div>
       <div class="quiz-item" data-quiz-question data-answer="c" data-explanation="Clock é apenas um dos fatores de desempenho."><p>Um processador de 5 GHz é necessariamente mais rápido que um de 4 GHz em qualquer tarefa?</p><label><input type="radio" name="q6b" value="a"> Sim, sempre.</label><label><input type="radio" name="q6b" value="b"> Sim, se tiver mais RAM.</label><label><input type="radio" name="q6b" value="c"> Não. O desempenho depende de vários fatores.</label></div>
       <div class="quiz-item" data-quiz-question data-answer="a" data-explanation="O conector é apenas a parte física; recursos dependem também das especificações e protocolos implementados."><p>Dois equipamentos usam conector USB-C. Podemos concluir que oferecem exatamente os mesmos recursos?</p><label><input type="radio" name="q6c" value="a"> Não.</label><label><input type="radio" name="q6c" value="b"> Sim, o formato determina tudo.</label><label><input type="radio" name="q6c" value="c"> Sim, desde que sejam computadores.</label></div>
+      <div class="quiz-item" data-quiz-question data-answer="b" data-explanation="Threads lógicas podem compartilhar um núcleo físico; 16 threads não significam necessariamente 16 núcleos."><p>Uma ficha diz “8 núcleos / 16 threads”. O que ela NÃO permite afirmar?</p><label><input type="radio" name="q6d" value="a"> Que o processador anuncia oito núcleos físicos.</label><label><input type="radio" name="q6d" value="b"> Que existem 16 núcleos físicos.</label><label><input type="radio" name="q6d" value="c"> Que há mais de um fluxo lógico por núcleo em parte da arquitetura.</label></div>
+      <div class="quiz-item" data-quiz-question data-answer="c" data-explanation="NPU é um acelerador especializado; software precisa ser projetado para utilizá-la."><p>Um computador possui NPU. Qual conclusão é mais correta?</p><label><input type="radio" name="q6e" value="a"> Qualquer programa ficará automaticamente duas vezes mais rápido.</label><label><input type="radio" name="q6e" value="b"> A NPU substitui a CPU.</label><label><input type="radio" name="q6e" value="c"> Ela pode acelerar cargas compatíveis de IA quando o software sabe utilizá-la.</label></div>
       <button class="action-button primary" type="button" data-check-quiz>Conferir</button><div class="quiz-result" data-quiz-result aria-live="polite"></div>
     </section>
 
-    <div class="essence"><strong>Essência</strong><p><strong>Hardware</strong> é a parte física. CPU executa instruções; cache mantém dados muito próximos do processamento; RAM mantém dados e programas em uso; SSD/HDD preservam arquivos; GPU realiza processamento fortemente paralelo; placa-mãe interliga componentes; fonte fornece energia. <strong>O computador funciona como sistema, não como uma peça isolada.</strong></p></div>
-    <div class="bridge-box"><strong>Próxima pergunta</strong><p>Se cache, RAM e SSD conseguem guardar dados, por que o computador precisa dos três?</p></div>
+    <div class="essence"><strong>Essência</strong><p><strong>Hardware</strong> é a parte física. CPU executa instruções; núcleos e threads descrevem formas diferentes de paralelismo; cache reduz espera; RAM mantém dados em uso; SSD/HDD preservam arquivos; GPU e NPU aceleram classes específicas de trabalho; SoCs integram várias funções; placa-mãe e interconexões permitem cooperação entre componentes. <strong>Ficha técnica precisa ser interpretada, não apenas comparada por números maiores.</strong></p></div>
+    <div class="bridge-box"><strong>Próxima pergunta</strong><p>Se cache, RAM e SSD conseguem guardar dados, por que o computador precisa dos três — e o que significam nomes como DDR4, DDR5 e NVMe?</p></div>
 
     <details class="sources-box"><summary>Fontes e créditos das imagens</summary><ul>
       <li><a href="https://csrc.nist.gov/glossary/term/hardware" target="_blank" rel="noopener">NIST — Hardware</a></li>
       <li><a href="https://www.ibm.com/think/topics/central-processing-unit" target="_blank" rel="noopener">IBM — CPU</a></li>
+      <li><a href="https://learn.microsoft.com/pt-br/windows/ai/npu-devices/" target="_blank" rel="noopener">Microsoft Learn — NPU em PCs atuais</a></li>
+      <li><a href="https://learn.microsoft.com/pt-br/windows/ai/faq" target="_blank" rel="noopener">Microsoft Learn — inspeção de GPU/NPU no Windows</a></li>
       <li><a href="https://commons.wikimedia.org/wiki/File:Computer_Motherboard_Closeup.jpg" target="_blank" rel="noopener">Wikimedia Commons — placa-mãe</a></li>
       <li><a href="https://commons.wikimedia.org/wiki/File:Cpu.jpg" target="_blank" rel="noopener">Wikimedia Commons — CPU</a></li>
       <li><a href="https://commons.wikimedia.org/wiki/File:Graphic_card.jpg" target="_blank" rel="noopener">Wikimedia Commons — placa de vídeo (Drgulcu, CC BY-SA 3.0)</a></li>
