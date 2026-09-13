@@ -35,6 +35,14 @@
     if (menuBackdrop) menuBackdrop.hidden = false;
   }
 
+  function scrollToTopInstantly() {
+    const root = document.documentElement;
+    const previousInlineBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    root.style.scrollBehavior = previousInlineBehavior;
+  }
+
   function renderMenu() {
     if (!lessonMenu) return;
     lessonMenu.innerHTML = '';
@@ -60,8 +68,8 @@
       button.dataset.lessonId = lesson.id;
       button.innerHTML = `<span class="menu-number">${lesson.number}</span><span>${getShortTitle(lesson)}</span>`;
       button.addEventListener('click', () => {
-        showLesson(lesson.id);
         closeMenu();
+        showLesson(lesson.id);
       });
       lessonMenu.appendChild(button);
     });
@@ -100,6 +108,10 @@
     const lesson = lessons.find((item) => item.id === id) || lessons[0];
     if (!lesson || !lessonContent) return;
 
+    // Trocar de aula deve parecer uma nova página, sem animar toda a distância
+    // percorrida na aula anterior. O CSS global mantém scroll suave para outros usos.
+    scrollToTopInstantly();
+
     currentLessonId = lesson.id;
     unitName.textContent = lesson.unit;
     technicalTitle.textContent = lesson.technicalTitle;
@@ -124,7 +136,8 @@
       history.replaceState(null, '', wantedHash);
     }
 
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    // Garante o topo também depois da substituição do conteúdo, sem animação.
+    scrollToTopInstantly();
   }
 
   openMenu?.addEventListener('click', () => {
