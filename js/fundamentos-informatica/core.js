@@ -16,6 +16,12 @@
 
   let currentLessonId = null;
 
+  // Neste módulo, trocar de aula deve se comportar como abrir uma nova página:
+  // nada de percorrer visualmente a distância da aula anterior.
+  document.documentElement.style.scrollBehavior = 'auto';
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (lessonContent) lessonContent.style.overflowAnchor = 'none';
+
   function getShortTitle(lesson) {
     return lesson?.menuTitle || lesson?.title || '';
   }
@@ -35,12 +41,10 @@
     if (menuBackdrop) menuBackdrop.hidden = false;
   }
 
-  function scrollToTopInstantly() {
-    const root = document.documentElement;
-    const previousInlineBehavior = root.style.scrollBehavior;
-    root.style.scrollBehavior = 'auto';
+  function forceTop() {
     window.scrollTo(0, 0);
-    root.style.scrollBehavior = previousInlineBehavior;
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }
 
   function renderMenu() {
@@ -108,9 +112,7 @@
     const lesson = lessons.find((item) => item.id === id) || lessons[0];
     if (!lesson || !lessonContent) return;
 
-    // Trocar de aula deve parecer uma nova página, sem animar toda a distância
-    // percorrida na aula anterior. O CSS global mantém scroll suave para outros usos.
-    scrollToTopInstantly();
+    forceTop();
 
     currentLessonId = lesson.id;
     unitName.textContent = lesson.unit;
@@ -136,8 +138,8 @@
       history.replaceState(null, '', wantedHash);
     }
 
-    // Garante o topo também depois da substituição do conteúdo, sem animação.
-    scrollToTopInstantly();
+    forceTop();
+    requestAnimationFrame(forceTop);
   }
 
   openMenu?.addEventListener('click', () => {
