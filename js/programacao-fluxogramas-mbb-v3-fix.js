@@ -24,7 +24,7 @@
   const decisaoDesconto = `
     <div class="flowchart-panel-v3">
       <div class="flowchart-panel-heading"><strong>Fluxograma 2 — decisão</strong><span>A compra pode seguir dois caminhos e depois voltar a um fluxo comum.</span></div>
-      <svg class="flowchart-svg-v3" viewBox="0 0 700 980" role="img" aria-label="Fluxograma de decisão de desconto para compras a partir de trinta reais">
+      <svg class="flowchart-svg-v3" viewBox="0 0 700 1010" role="img" aria-label="Fluxograma de decisão de desconto para compras a partir de trinta reais">
         ${terminal(300,34,'INÍCIO')}
         ${down(300,58,84)}
         ${display(300,114,300,54,'&quot;Digite o preço do produto&quot;')}
@@ -47,8 +47,8 @@
         ${down(300,791,818)}
         ${connector(300,840,'C')}
 
-        ${right(420,566,488)}
-        ${t(454,549,'NÃO','branch-label')}
+        ${right(420,566,460)}
+        ${t(440,549,'NÃO','branch-label')}
         ${process(570,566,220,54,'totalFinal = total')}
         <path class="arrow" d="M570 593V840H327"></path>
         <polygon points="318,840 330,833 330,847" fill="#1e3a8a"></polygon>
@@ -106,8 +106,8 @@
         ${down(315,828,852)}
         ${connector(315,874,'C')}
 
-        ${right(435,610,505)}
-        ${t(470,593,'NÃO','branch-label')}
+        ${right(435,610,482)}
+        ${t(459,593,'NÃO','branch-label')}
         ${process(592,610,220,54,'totalFinal = total')}
         <path class="arrow" d="M592 637V874H342"></path>
         <polygon points="333,874 345,867 345,881" fill="#1e3a8a"></polygon>
@@ -129,8 +129,8 @@
         ${down(315,1419,1443)}
         ${display(315,1473,300,54,'&quot;Troco = &quot;, troco')}
 
-        ${right(440,1282,515)}
-        ${t(477,1265,'NÃO','branch-label')}
+        ${right(440,1282,510)}
+        ${t(475,1265,'NÃO','branch-label')}
         ${display(615,1282,210,62,'&quot;Valor insuficiente&quot;')}
         ${down(615,1313,1342)}
         ${connector(615,1364,'P')}
