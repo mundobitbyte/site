@@ -1,6 +1,7 @@
 (() => {
   const gitStep = id => gitSteps.find(step => String(step.id) === String(id));
   const githubStep = id => githubSteps.find(step => String(step.id) === String(id));
+  const exerciseStep = id => exerciseSteps.find(step => String(step.id) === String(id));
 
   const g7 = gitStep(7);
   if (g7) {
@@ -28,6 +29,14 @@
       .replace('<h3>3. Conheça o fetch: atualizar informações sem incorporar</h3>', '<h3>4. Conheça o fetch: atualizar informações sem incorporar</h3>')
       .replace('<h3>4. Marina aprovou o teste</h3>', '<h3>5. Marina aprovou o teste</h3>')
       .replace('<h3>5. Encerre a branch de teste</h3>', '<h3>6. Encerre a branch de teste</h3>');
+  }
+
+  const e10 = exerciseStep('e10');
+  if (e10) {
+    e10.content = e10.content.replace(
+      '<h3>Antes de conferir a resposta</h3>',
+      '<h3>Entenda por que o remoto começa vazio</h3>'
+    );
   }
 
   const hash = location.hash.match(/^#(git|github|exercicios)-(.+)$/);
