@@ -7,9 +7,9 @@ window.fundamentosInformaticaLessons.push({
   number: '03',
   unit: 'Ato 1 · Como chegamos aqui',
   menuTitle: 'O computador encolhe',
-  technicalTitle: 'gerações • circuito integrado • microprocessador • mainframe • supercomputador • PC',
+  technicalTitle: 'gerações • circuito integrado • microprocessador • PC • x86 • multicore',
   title: 'Como uma máquina de toneladas chegou à mesa?',
-  objective: 'Organizar as gerações de computadores, entender a miniaturização dos componentes e distinguir categorias como mainframe, supercomputador e microcomputador.',
+  objective: 'Organizar as gerações de computadores, entender a miniaturização dos componentes e acompanhar, sem decorar catálogos, a ponte do PC clássico aos processadores atuais.',
   content: `
     <div class="hero-box story-opening">
       <span class="eyebrow">Miniaturização</span>
@@ -117,9 +117,30 @@ window.fundamentosInformaticaLessons.push({
       <p>Significa <strong>computador pessoal</strong>: um computador pensado principalmente para uso individual. “PC” não significa tecnicamente “computador com Windows”, embora o termo tenha ficado fortemente associado à família IBM PC e compatíveis.</p>
     </div>
 
+    <h3>Do PC clássico ao computador atual — uma ponte rápida</h3>
+    <p>Quem acompanhou os PCs nas décadas de 1980 e 1990 lembra de nomes como XT, AT, 286, 386, 486 e Pentium. Eles são úteis como <strong>marcos de uma evolução</strong>, não como uma lista para decorar.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Marco</th><th>O que vale perceber</th></tr></thead>
+        <tbody>
+          <tr><td><strong>IBM PC — 1981</strong></td><td>Usava o Intel 8088 e ajudou a consolidar uma plataforma que teria muitos compatíveis.</td></tr>
+          <tr><td><strong>PC/XT — 1983</strong></td><td>Manteve a família 8088 e tornou comum, nessa linha, o uso de disco rígido interno.</td></tr>
+          <tr><td><strong>PC/AT — 1984</strong></td><td>Adotou o 80286 e marcou uma nova etapa de capacidade e expansão da plataforma.</td></tr>
+          <tr><td><strong>386 e 486</strong></td><td>A família x86 ganhou arquitetura de 32 bits e maior integração e desempenho.</td></tr>
+          <tr><td><strong>Pentium — anos 1990</strong></td><td>Representa a fase em que os PCs se tornaram muito mais capazes em interfaces gráficas, multimídia e aplicações gerais.</td></tr>
+          <tr><td><strong>Multicore — anos 2000</strong></td><td>Vários núcleos passaram a dividir trabalho dentro do mesmo processador.</td></tr>
+          <tr><td><strong>Hoje</strong></td><td>CPUs podem reunir muitos núcleos, GPU integrada, controladores e, em algumas plataformas, aceleradores como NPU; outros dispositivos adotam SoCs altamente integrados.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box compact">
+      <strong>Não transforme essa linha em catálogo.</strong>
+      <p>Entre esses marcos existiram muitas famílias e variações. O que interessa em Fundamentos é enxergar a direção: <strong>mais integração, mais paralelismo e mais funções especializadas dentro do sistema</strong>.</p>
+    </div>
+
     <div class="essence">
       <strong>Essência</strong>
-      <p>As gerações ajudam a enxergar a sequência <strong>válvulas → transistores → circuitos integrados → microprocessadores</strong>. Essa evolução reduziu tamanho e custo e aumentou a capacidade dos computadores. Ao mesmo tempo, categorias como mainframe, supercomputador e microcomputador descrevem finalidades e escalas — não gerações.</p>
+      <p>As gerações ajudam a enxergar a sequência <strong>válvulas → transistores → circuitos integrados → microprocessadores</strong>. A história dos PCs acrescenta outra ponte: <strong>8088/286/386/486/Pentium → multicore → integração atual</strong>. O objetivo não é decorar modelos, e sim entender como tamanho, integração, paralelismo e capacidade foram mudando.</p>
     </div>
 
     <section class="checkpoint" data-quiz-group>
@@ -168,6 +189,7 @@ window.fundamentosInformaticaLessons.push({
       <ul>
         <li><a href="https://www.computerhistory.org/siliconengine/microprocessor-integrates-cpu-function-onto-a-single-chip/" target="_blank" rel="noopener">Computer History Museum — microprocessador</a></li>
         <li><a href="https://www.computerhistory.org/timeline/1981/" target="_blank" rel="noopener">Computer History Museum — IBM PC</a></li>
+        <li><a href="https://www.computerhistory.org/timeline/1984/" target="_blank" rel="noopener">Computer History Museum — evolução dos PCs nos anos 1980</a></li>
         <li><a href="https://commons.wikimedia.org/wiki/File:Intel_C4004.jpg" target="_blank" rel="noopener">Wikimedia Commons — Intel 4004</a></li>
         <li><a href="https://commons.wikimedia.org/wiki/File:IBM_PC-5150.JPG" target="_blank" rel="noopener">Wikimedia Commons — IBM PC 5150</a></li>
       </ul>
