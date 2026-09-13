@@ -9,12 +9,12 @@ window.fundamentosInformaticaLessons.push({
   menuTitle: "Exercícios e desafios",
   technicalTitle: "compreensão • diagnóstico • integração • aplicação",
   title: "Você consegue usar os fundamentos para explicar e resolver situações reais?",
-  objective: "Consolidar o módulo distinguindo conceitos, interpretando situações, diagnosticando por evidências e integrando as camadas de um sistema computacional.",
+  objective: "Consolidar o módulo distinguindo conceitos, interpretando situações, lendo especificações, diagnosticando por evidências e integrando as camadas de um sistema computacional.",
   content: `
     <div class="hero-box story-opening">
       <span class="eyebrow">Agora o conhecimento precisa trabalhar</span>
       <h2>Decorar que DNS significa Domain Name System é fácil. Perceber que o DNS é o suspeito quando IP funciona e nome não funciona é outra coisa.</h2>
-      <p>Os exercícios abaixo começam separando conceitos que costumam ser confundidos e avançam até situações em que você precisa <strong>formular hipóteses, escolher evidências e conectar várias aulas ao mesmo tempo</strong>.</p>
+      <p>Os exercícios abaixo começam separando conceitos que costumam ser confundidos e avançam até situações em que você precisa <strong>formular hipóteses, interpretar especificações, escolher evidências e conectar várias aulas ao mesmo tempo</strong>.</p>
     </div>
 
     <div class="note-box compact">
@@ -99,6 +99,20 @@ window.fundamentosInformaticaLessons.push({
         <label><input type="radio" name="q99a10" value="c"> Aquilo é o gabinete; CPU é a unidade de processamento.</label>
       </div>
 
+      <div class="quiz-item" data-quiz-question data-answer="b" data-explanation="Uma tela sensível ao toque exibe informação e também recebe toques; o papel depende da função analisada.">
+        <p>Como classificar uma tela sensível ao toque em relação ao computador?</p>
+        <label><input type="radio" name="q99a11" value="a"> Apenas entrada.</label>
+        <label><input type="radio" name="q99a11" value="b"> Entrada e saída.</label>
+        <label><input type="radio" name="q99a11" value="c"> Apenas armazenamento.</label>
+      </div>
+
+      <div class="quiz-item" data-quiz-question data-answer="c" data-explanation="Python é uma linguagem formal; CPython é uma implementação de software que executa programas escritos em Python.">
+        <p>Qual frase diferencia linguagem de programação e software?</p>
+        <label><input type="radio" name="q99a12" value="a"> Toda linguagem é um sistema operacional.</label>
+        <label><input type="radio" name="q99a12" value="b"> Python e CPython são exatamente a mesma categoria.</label>
+        <label><input type="radio" name="q99a12" value="c"> Python é uma linguagem; CPython é software que a implementa.</label>
+      </div>
+
       <button class="action-button primary" type="button" data-check-quiz>Conferir Nível 1</button>
       <div class="quiz-result" data-quiz-result aria-live="polite"></div>
     </section>
@@ -166,6 +180,34 @@ window.fundamentosInformaticaLessons.push({
         <label><input type="radio" name="q99b8" value="c"> Não. A infraestrutura física continua existindo, apenas foi abstraída e administrada de outra forma.</label>
       </div>
 
+      <div class="quiz-item" data-quiz-question data-answer="a" data-explanation="35 decimal é 32 + 2 + 1; em oito posições isso resulta em 00100011.">
+        <p>Qual representação binária de 8 bits corresponde a <strong>35₁₀</strong>?</p>
+        <label><input type="radio" name="q99b9" value="a"> <code>00100011</code></label>
+        <label><input type="radio" name="q99b9" value="b"> <code>00110101</code></label>
+        <label><input type="radio" name="q99b9" value="c"> <code>00011100</code></label>
+      </div>
+
+      <div class="quiz-item" data-quiz-question data-answer="b" data-explanation="16 GB é capacidade, DDR5 é geração e 5600 MT/s é taxa de transferências; são propriedades diferentes.">
+        <p>Uma ficha anuncia <code>16 GB DDR5-5600</code>. Qual leitura está correta?</p>
+        <label><input type="radio" name="q99b10" value="a"> DDR5 significa 5 GB de memória.</label>
+        <label><input type="radio" name="q99b10" value="b"> 16 GB é capacidade; DDR5 é geração; 5600 MT/s é taxa.</label>
+        <label><input type="radio" name="q99b10" value="c"> 5600 indica a quantidade de núcleos da RAM.</label>
+      </div>
+
+      <div class="quiz-item" data-quiz-question data-answer="c" data-explanation="Threads lógicas podem compartilhar núcleos; uma ficha 8C/16T não representa automaticamente 16 núcleos físicos.">
+        <p>Um processador é anunciado como <strong>8 núcleos / 16 threads</strong>. O que podemos afirmar?</p>
+        <label><input type="radio" name="q99b11" value="a"> Possui obrigatoriamente 16 núcleos físicos.</label>
+        <label><input type="radio" name="q99b11" value="b"> Threads e núcleos são sempre a mesma coisa.</label>
+        <label><input type="radio" name="q99b11" value="c"> Possui oito núcleos anunciados e 16 fluxos lógicos; isso não equivale a 16 núcleos físicos.</label>
+      </div>
+
+      <div class="quiz-item" data-quiz-question data-answer="a" data-explanation="NPU é um acelerador para determinadas cargas de IA; software precisa ser compatível para utilizá-la.">
+        <p>Um notebook possui NPU. Qual conclusão é segura?</p>
+        <label><input type="radio" name="q99b12" value="a"> Ele possui um acelerador que pode executar cargas compatíveis de IA; o software precisa utilizá-lo.</label>
+        <label><input type="radio" name="q99b12" value="b"> Todo programa ficará automaticamente mais rápido.</label>
+        <label><input type="radio" name="q99b12" value="c"> A NPU substitui CPU, RAM e GPU.</label>
+      </div>
+
       <button class="action-button primary" type="button" data-check-quiz>Conferir Nível 2</button>
       <div class="quiz-result" data-quiz-result aria-live="polite"></div>
     </section>
@@ -231,6 +273,13 @@ window.fundamentosInformaticaLessons.push({
         <label><input type="radio" name="q99c8" value="a"> Aceitar porque o texto está bem escrito.</label>
         <label><input type="radio" name="q99c8" value="b"> Tratar como possível alucinação e verificar em fonte externa confiável.</label>
         <label><input type="radio" name="q99c8" value="c"> Concluir que todo uso de IA é impossível.</label>
+      </div>
+
+      <div class="quiz-item" data-quiz-question data-answer="a" data-explanation="Alterar a ordem de boot pode fazer o firmware tentar iniciar por um dispositivo sem sistema; primeiro restaure/valide a configuração antes de formatar.">
+        <p>Depois de alterar a ordem de boot no Setup, o PC passa a informar que não encontrou sistema. Qual é a primeira investigação coerente?</p>
+        <label><input type="radio" name="q99c9" value="a"> Verificar a ordem/opção de boot e se o SSD do sistema está sendo detectado.</label>
+        <label><input type="radio" name="q99c9" value="b"> Formatar imediatamente o SSD.</label>
+        <label><input type="radio" name="q99c9" value="c"> Trocar a GPU.</label>
       </div>
 
       <button class="action-button primary" type="button" data-check-quiz>Conferir Nível 3</button>
@@ -350,6 +399,24 @@ window.fundamentosInformaticaLessons.push({
       <details class="note-box compact"><summary><strong>Confira uma boa linha de raciocínio</strong></summary><p>Separar fluência de evidência. Verificar se a fonte existe, consultar a fonte original, conferir se ela realmente sustenta a afirmação e considerar atualização/contexto. Modelos generativos podem produzir conteúdo plausível e incorreto; usar ferramenta de busca ou RAG pode ajudar, mas não elimina a necessidade de verificação conforme o risco.</p></details>
     </div>
 
+    <div class="example-box">
+      <strong>Desafio 7 — A ficha técnica parece ótima</strong>
+      <p>Um notebook anuncia: <strong>12 núcleos / 16 threads, até 5,0 GHz, 16 GB DDR5-5600, SSD NVMe PCIe 4.0 de 1 TB, GPU integrada e NPU</strong>. Explique o que você consegue entender dessa ficha e cite pelo menos três coisas que ainda precisaria investigar antes de decidir que ele é “mais rápido”.</p>
+      <details class="note-box compact"><summary><strong>Confira uma boa linha de raciocínio</strong></summary><p>A ficha informa paralelismo anunciado da CPU, frequência máxima, capacidade/geração/taxa da RAM, tecnologia do armazenamento e presença de aceleradores. Ainda faltam modelo/arquitetura da CPU, desempenho real por tarefa, configuração e expansão da RAM, qualidade do SSD, limites térmicos, potência, autonomia e se o software usa GPU/NPU. Números isolados não determinam o desempenho do conjunto.</p></details>
+    </div>
+
+    <div class="example-box">
+      <strong>Desafio 8 — Do número ao caractere</strong>
+      <p>Mostre por que <code>35₁₀ = 00100011₂ = 23₁₆</code>. Depois explique por que <code>01000001</code> só pode ser chamado de letra <strong>A</strong> quando sabemos que o padrão está sendo interpretado segundo uma codificação como ASCII.</p>
+      <details class="note-box compact"><summary><strong>Confira uma boa linha de raciocínio</strong></summary><p>35 = 32 + 2 + 1, então os pesos 32, 2 e 1 recebem bit 1: <code>00100011</code>. Agrupando em 4 bits: <code>0010 = 2</code> e <code>0011 = 3</code>, portanto <code>23₁₆</code>. Já um padrão de bits não possui significado universal; em ASCII, o valor decimal 65/hex 41 é definido como o caractere A.</p></details>
+    </div>
+
+    <div class="example-box">
+      <strong>Desafio 9 — O PC deixou de iniciar depois do Setup</strong>
+      <p>Alguém entrou no Setup, alterou opções de boot e agora aparece “no boot device”. Antes de formatar, que sequência de observação e recuperação você proporia?</p>
+      <details class="note-box compact"><summary><strong>Confira uma boa linha de raciocínio</strong></summary><p>Confirmar se o SSD do sistema é detectado, verificar a opção/ordem de boot, comparar com o estado anterior e restaurar a configuração correta ou padrão documentado quando apropriado. Registrar mudanças e testar uma variável por vez. Formatar não é a primeira ação quando o sintoma começou imediatamente após uma alteração de firmware.</p></details>
+    </div>
+
     <h3>Missões práticas — observe sistemas reais</h3>
     <p>Estas atividades não exigem instalar software nem alterar configurações importantes. O objetivo é transformar conceitos em observação.</p>
 
@@ -357,7 +424,12 @@ window.fundamentosInformaticaLessons.push({
       <article><strong>1. Rede do seu computador</strong><p>Execute <code>ipconfig</code>. Identifique uma interface ativa, endereço IP, prefixo/máscara e gateway. Depois explique por que cada informação existe.</p></article>
       <article><strong>2. Nome × endereço</strong><p>Use <code>nslookup example.com</code>. Explique por que isso não “abre o site” e qual problema o DNS está resolvendo.</p></article>
       <article><strong>3. Arquivos pelo CMD</strong><p>Dentro de uma pasta de laboratório, crie um arquivo com <code>echo</code>, liste com <code>dir</code>, redirecione a saída e explique o papel de <code>&gt;</code>, <code>&gt;&gt;</code> e <code>|</code>.</p></article>
+      <article><strong>4. Raio-X do hardware</strong><p>No Windows, abra <strong>Gerenciador de Tarefas → Desempenho</strong>. Registre CPU, núcleos/processadores lógicos, RAM, discos e GPU; se houver NPU disponível, observe-a também. Explique o papel de cada recurso.</p></article>
+      <article><strong>5. Leia sua memória</strong><p>Na área Memória, registre capacidade, velocidade exibida e slots usados quando disponíveis. Depois identifique no manual/ficha do equipamento se a RAM é DDR3, DDR4, DDR5, LPDDR ou outra e se pode ser expandida.</p></article>
+      <article><strong>6. Setup sem mudanças</strong><p>Somente com orientação do manual do fabricante, entre no BIOS/UEFI Setup e <strong>apenas observe</strong>: CPU, RAM, armazenamento, boot, Secure Boot e virtualização. Saia sem salvar alterações.</p></article>
     </div>
+
+    <div class="danger-box compact"><strong>Prática segura vem antes da curiosidade.</strong><p>Não atualize firmware, não desative Secure Boot/TPM e não altere tensões, clocks ou opções desconhecidas como exercício. A missão é <strong>reconhecer e explicar</strong>, não mudar.</p></div>
 
     <h3>Desafio final — explique um único clique</h3>
     <div class="hero-box">
@@ -385,7 +457,7 @@ window.fundamentosInformaticaLessons.push({
 
     <div class="essence">
       <strong>Conclusão do módulo</strong>
-      <p>Se você consegue <strong>distinguir conceitos próximos, explicar mecanismos, formular hipóteses a partir de evidências e acompanhar uma informação atravessando várias camadas</strong>, Fundamentos cumpriu seu papel. O objetivo nunca foi decorar todas as siglas: foi construir um modelo mental que permita aprender o próximo assunto sem começar do zero.</p>
+      <p>Se você consegue <strong>distinguir conceitos próximos, ler uma especificação sem se deixar enganar por números isolados, explicar mecanismos, formular hipóteses a partir de evidências e acompanhar uma informação atravessando várias camadas</strong>, Fundamentos cumpriu seu papel. O objetivo nunca foi decorar todas as siglas: foi construir um modelo mental que permita aprender o próximo assunto sem começar do zero.</p>
     </div>
   `
 });
