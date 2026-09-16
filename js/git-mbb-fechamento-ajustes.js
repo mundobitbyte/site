@@ -3,6 +3,24 @@
   const githubStep = id => githubSteps.find(step => String(step.id) === String(id));
   const exerciseStep = id => exerciseSteps.find(step => String(step.id) === String(id));
 
+  const g5 = gitStep(5);
+  if (g5 && !g5.content.includes('E se eu usar uma pasta da rede?')) {
+    g5.content = g5.content.replace(
+      `<div class="flow">Pasta do usuário\n└── meus-repositorios\n    └── primeiro-projeto</div>`,
+      `<div class="flow">Pasta do usuário\n└── meus-repositorios\n    └── primeiro-projeto</div>
+
+      <h3>E se eu usar uma pasta da rede?</h3>
+      <p>Você não precisa obrigatoriamente trabalhar dentro da pasta do usuário local do Windows. Se você possui <strong>uma pasta na rede</strong> e tem permissão para criar e alterar arquivos nela, seu projeto também pode ficar nesse local.</p>
+      <p>Por exemplo:</p>
+      <pre class="command">\\\\10.66.53.1\\Publica\\mtec2026\\seuUsuario\\suaPasta</pre>
+      <p>Nesse exemplo, <span class="inline-code">seuUsuario</span> representa a sua pasta de usuário na rede e <span class="inline-code">suaPasta</span> representa a pasta que será usada para o projeto.</p>
+      <p>No Prompt de Comando do Windows, um caminho de rede desse tipo pode ser acessado com:</p>
+      <pre class="command">pushd \\\\10.66.53.1\\Publica\\mtec2026\\seuUsuario\\suaPasta</pre>
+      <p>O Windows associa temporariamente esse caminho a uma unidade e entra na pasta. A partir daí, você poderá seguir normalmente as próximas etapas do Git.</p>
+      <div class="note-box"><strong>Importante:</strong> prefira trabalhar em uma pasta de rede que seja sua. Evite várias pessoas usando ao mesmo tempo a mesma cópia física do repositório. Ao terminar, o comando <span class="inline-code">popd</span> encerra esse acesso temporário.</div>`
+    );
+  }
+
   const g7 = gitStep(7);
   if (g7) {
     g7.content = g7.content
