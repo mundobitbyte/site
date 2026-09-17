@@ -23,7 +23,7 @@
 .concept-question p{margin:12px 13px 8px;font-size:14px;line-height:1.5}
 .answer-space{padding:0 13px 12px}
 .answer-space span{display:block;height:22px;border-bottom:1px solid #a5b8be}
-.page-note{margin:0;padding:0 16px 16px;color:#546670;font-size:12.5px;line-height:1.45}
+.page-note{margin:0;padding:0 16px 16px;color:#546670;font-size:12.5px;line-height:1.45}.stage-menu .stage-divider{height:1px;background:var(--line);margin:8px 0}
 @media(max-width:900px){.assessment-body{grid-template-columns:1fr}.student-line{grid-template-columns:1fr}.assessment-head-top{display:block}.pdf-btn{margin-top:12px}}
 @media(max-width:620px){.assessment-head{padding:14px}.assessment-head h2{font-size:22px}.assessment-body{padding:10px;gap:10px}.concept-question p{font-size:13.5px}}
 @media print{@page{size:A4 portrait;margin:9mm}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body{background:#fff!important;color:#111!important;font-family:Arial,sans-serif!important}header,.module-menu,.stage-sidebar,.stage-backdrop,.stage-toggle,.pdf-btn,.page-note{display:none!important}.layout.arduino-layout{display:block!important;min-height:0!important}.arduino-content main{padding:0!important;margin:0!important;max-width:none!important;width:100%!important}.assessment-shell{border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}.assessment-head{padding:0 0 3mm!important;background:#fff!important;border-bottom:1px solid #777!important}.assessment-head h2{font-size:14pt!important;margin:1mm 0 0!important;color:#000!important}.assessment-head p,.assessment-note{font-size:8.5pt!important;line-height:1.25!important}.assessment-note{padding:2mm!important;margin-top:2mm!important}.student-line{display:grid!important;grid-template-columns:2fr 1fr 1fr!important;gap:5mm!important;margin-top:2mm!important;font-size:8pt!important}.assessment-body{display:grid!important;grid-template-columns:1fr 1fr!important;gap:3mm 5mm!important;padding:3mm 0 0!important}.concept-question{border:1px solid #999!important;border-radius:2mm!important;overflow:hidden!important}.concept-question h3{padding:1.5mm 2mm!important;background:#f2f2f2!important;font-size:8.5pt!important;color:#000!important}.concept-question p{margin:1.5mm 2mm 1mm!important;font-size:8pt!important;line-height:1.2!important}.answer-space{padding:0 2mm 1.5mm!important}.answer-space span{height:4mm!important;border-bottom:1px solid #888!important}}
@@ -45,18 +45,17 @@
 <a class="module-btn active" href="arduino-exercicios.html">99. Exercícios</a>
 </div>
 <div class="layout arduino-layout" id="arduinoLayout">
-<aside class="stage-sidebar" id="stageSidebar" aria-label="Opções de exercícios">
-  <div class="stage-sidebar-head"><h3>Exercícios</h3><button class="stage-close" id="stageClose" type="button" aria-label="Fechar exercícios">×</button></div>
+<aside class="stage-sidebar" id="stageSidebar" aria-label="Avaliação conceitual">
+  <div class="stage-sidebar-head"><h3>Avaliação</h3><button class="stage-close" id="stageClose" type="button" aria-label="Fechar avaliação">×</button></div>
   <div class="stage-menu" id="stageMenu">
+    <a class="stage-link module-visible stage-exercises" href="arduino-exercicios.html">← Voltar para 99 — Exercícios</a>
+    <div class="stage-divider"></div>
     <a class="stage-link module-visible active" href="#avaliacao">Avaliação Conceitual</a>
-    <a class="stage-link module-visible" href="arduino-avaliacoes-bimestrais.html">Avaliações Bimestrais</a>
-    <a class="stage-link module-visible" href="arduino-exercicios.html">Revisão Bimestral</a>
-    <a class="stage-link module-visible stage-exercises" href="arduino.html#exercicios">Exercícios dos projetos</a>
   </div>
 </aside>
 <div class="stage-backdrop" id="stageBackdrop" hidden></div>
 <div class="arduino-content">
-<button class="stage-toggle" id="stageToggle" type="button" aria-controls="stageSidebar" aria-expanded="false">☰ Exercícios</button>
+<button class="stage-toggle" id="stageToggle" type="button" aria-controls="stageSidebar" aria-expanded="false">☰ Avaliação</button>
 <main id="avaliacao">
 <section class="assessment-shell active-panel">
   <div class="assessment-head"><div class="assessment-head-top"><div><span class="badge">99</span><h2>Avaliação Conceitual — Arduino e IoT</h2><p>Atividade individual com 20 questões que percorrem o percurso completo, dos fundamentos de sistemas embarcados ao projeto IoT integrado.</p></div><button class="pdf-btn" type="button" onclick="window.print()">Salvar / Imprimir PDF</button></div>
