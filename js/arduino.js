@@ -61,7 +61,7 @@ function montarMenuEtapas(){
     <a class="stage-link" data-module="atuadores" href="#lab3">RGB + botões</a>
     <a class="stage-link" data-module="atuadores" href="#p9">Servo Motor</a>
     <a class="stage-link" data-module="atuadores" href="#lab4">Lixeira automática</a>
-    <a class="stage-link stage-exercises" data-module="io sensores atuadores" href="#exercicios">Exercícios</a>
+    <a class="stage-link stage-exercises" data-module="fundamentos io sensores atuadores" href="#exercicios">Exercícios</a>
   `;
   const ioButton = document.querySelector('#arduinoModuleMenu .module-btn[data-module="io"]');
   if(ioButton) ioButton.dataset.target = '#p2';
@@ -106,7 +106,11 @@ function iniciarNavegacaoArduino(){
     '#intro':'fundamentos', '#fund-experimentar':'fundamentos', '#fund-minilabs':'fundamentos', '#fund-desafios':'fundamentos', '#p1':'fundamentos',
     '#p2':'io', '#p3':'io', '#p4':'io', '#p5':'io', '#lab1':'io',
     '#p6':'sensores', '#p7':'sensores', '#lab2':'sensores',
-    '#p8':'atuadores', '#lab3':'atuadores', '#p9':'atuadores', '#lab4':'atuadores'
+    '#p8':'atuadores', '#lab3':'atuadores', '#p9':'atuadores', '#lab4':'atuadores',
+    '#ex-fundamentos':'fundamentos', '#ex-led':'fundamentos',
+    '#ex-blink':'io', '#ex-botao':'io', '#ex-buzzer':'io', '#ex-pwm':'io', '#ex-monitor-serial':'io',
+    '#ex-ldr':'sensores', '#ex-sensor-re':'sensores',
+    '#ex-led-rgb':'atuadores', '#ex-servo':'atuadores', '#ex-led-rgb-botoes':'atuadores', '#ex-lixeira':'atuadores'
   };
 
   function closeDrawer(){ layout.classList.remove('drawer-open'); if(stageBackdrop) stageBackdrop.hidden=true; if(stageToggle) stageToggle.setAttribute('aria-expanded','false'); }
@@ -122,7 +126,8 @@ function iniciarNavegacaoArduino(){
     closeDrawer();
   }
   function setActiveStage(hash){
-    stageLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === hash));
+    const stageHash = hash.startsWith('#ex-') ? '#exercicios' : hash;
+    stageLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === stageHash));
   }
   function showPanel(hash, updateUrl){
     const target = document.querySelector(hash);
