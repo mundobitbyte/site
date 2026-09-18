@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 0 — Antes do aplicativo | React Native do Zero</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+  <link rel="stylesheet" href="curso.css" />
+</head>
+<body class="rn-body">
+  <header class="topbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte">
+      <span class="brand-mark">mbb</span>
+      <span><strong>Academia</strong><small>by Mundo bit Byte</small></span>
+    </a>
+    <nav class="topnav" aria-label="Navegação principal">
+      <a href="index.html">React Native do Zero</a>
+      <a href="capitulo-00.html" aria-current="page">Capítulo 0</a>
+    </nav>
+  </header>
+
+  <main class="rn-course-shell">
+    <div class="rn-topline">
+      <p class="rn-breadcrumb"><a href="../../index.html">Academia</a> / <a href="index.html">React Native do Zero</a> / Capítulo 0</p>
+      <span class="pill success">Contexto do projeto</span>
+    </div>
+
+    <section class="rn-lesson-head">
+      <span class="rn-kicker">Capítulo 0</span>
+      <h1>Antes do aplicativo</h1>
+      <p class="lead">Antes de programarmos qualquer aplicativo em React Native, precisamos compreender para quem estamos construindo, qual problema queremos resolver e como funciona a realidade que dará origem ao sistema.</p>
+    </section>
+
+    <div class="rn-grid">
+      <section class="rn-main">
+        <article class="rn-step" id="conheca">
+          <h2>1. Conheça a Água &amp; Gás Santa Filomena</h2>
+          <p>A Água &amp; Gás Santa Filomena é uma pequena distribuidora que atende clientes da região com água mineral, gás de cozinha e alguns produtos relacionados.</p>
+          <p>Durante o dia, a empresa:</p>
+          <ul>
+            <li>recebe pedidos;</li>
+            <li>separa produtos;</li>
+            <li>organiza entregas;</li>
+            <li>atende clientes;</li>
+            <li>recebe mercadorias dos fornecedores;</li>
+            <li>acompanha produtos cheios e recipientes vazios que retornam.</li>
+          </ul>
+          <div class="rn-flow" aria-label="Fluxo inicial do pedido">
+            <span>Cliente</span><b>→</b><span>Pedido</span><b>→</b><span>Separação</span><b>→</b><span>Entrega</span>
+          </div>
+          <div class="rn-block rn-context"><strong>Olhe além da tela</strong><p>À primeira vista, a rotina parece simples. Mas basta acompanhar um único pedido para perceber que existe muito mais acontecendo.</p></div>
+        </article>
+
+        <article class="rn-step" id="pedido">
+          <h2>2. Acompanhe um pedido</h2>
+          <p>Imagine que um cliente peça:</p>
+          <ul>
+            <li>2 galões de água mineral de 20 litros;</li>
+            <li>1 botijão de GLP de 13 kg.</li>
+          </ul>
+          <p>A empresa precisa saber:</p>
+          <ol>
+            <li>quem fez o pedido;</li>
+            <li>onde será feita a entrega;</li>
+            <li>quais produtos foram escolhidos;</li>
+            <li>quais são as quantidades;</li>
+            <li>quanto deverá ser cobrado;</li>
+            <li>como será feito o pagamento;</li>
+            <li>em que situação o pedido se encontra.</li>
+          </ol>
+          <p>Depois, alguém precisa separar os produtos e encaminhá-los para entrega. Enquanto isso, outros pedidos continuam chegando. Alguns estão sendo confirmados, outros em separação, alguns saíram para entrega e outros já foram concluídos.</p>
+          <div class="rn-block rn-observe"><strong>Primeira conclusão</strong><p>Nosso futuro sistema precisará acompanhar esse movimento.</p></div>
+        </article>
+
+        <article class="rn-step" id="cheios-vazios">
+          <h2>3. Cheios saem. Vazios voltam.</h2>
+          <p>Água e gás trazem uma característica importante para nossa empresa: em muitas vendas, os recipientes fazem parte de um ciclo de troca.</p>
+          <div class="rn-diagram">FORNECEDOR
+↓ entrega recipientes cheios
+ÁGUA &amp; GÁS SANTA FILOMENA
+↓ entrega recipiente cheio
+CLIENTE
+↓ devolve recipiente vazio
+ÁGUA &amp; GÁS SANTA FILOMENA
+↓ devolve/encaminha recipientes vazios
+FORNECEDOR</div>
+          <p>Agora o ciclo fica completo: a distribuidora não é o ponto final dos vazios; eles também retornam à cadeia de reposição.</p>
+          <p>Por isso, em algum momento, a empresa poderá precisar saber:</p>
+          <ul>
+            <li>quantos botijões cheios estão disponíveis;</li>
+            <li>quantos vazios retornaram;</li>
+            <li>quantos galões cheios existem;</li>
+            <li>quantos vazios aguardam reposição;</li>
+            <li>quais produtos já saíram para entrega.</li>
+          </ul>
+          <div class="rn-block rn-context"><strong>Ainda não</strong><p>Não vamos controlar tudo isso agora. Por trás de uma tela aparentemente simples existe uma empresa funcionando.</p></div>
+        </article>
+
+        <article class="rn-step" id="pedidos-chegam">
+          <h2>4. Como os pedidos chegam?</h2>
+          <p>Uma pequena distribuidora pode receber pedidos por telefone, mensagens, atendimento direto ou de clientes que já compram com frequência.</p>
+          <p>Esse processo pode funcionar, mas também podem surgir situações como:</p>
+          <ul>
+            <li>endereço incompleto;</li>
+            <li>quantidade anotada incorretamente;</li>
+            <li>dificuldade para localizar um pedido;</li>
+            <li>cliente perguntando se a entrega já saiu;</li>
+            <li>atendente tentando descobrir quais pedidos ainda estão pendentes;</li>
+            <li>informações espalhadas em lugares diferentes.</li>
+          </ul>
+          <p>Isso não significa que telefone, papel ou mensagens sejam ruins. Significa apenas que certas informações podem ser organizadas melhor com a ajuda de um sistema.</p>
+        </article>
+
+        <article class="rn-step" id="aplicativo">
+          <h2>5. E se o cliente pudesse fazer o pedido pelo aplicativo?</h2>
+          <p>Imagine que o cliente abra o aplicativo da Água &amp; Gás Santa Filomena. Nele, poderia:</p>
+          <ol>
+            <li>visualizar os produtos;</li>
+            <li>escolher o que deseja;</li>
+            <li>informar quantidades;</li>
+            <li>conferir o pedido;</li>
+            <li>informar seus dados;</li>
+            <li>informar o endereço;</li>
+            <li>confirmar.</li>
+          </ol>
+          <div class="rn-flow" aria-label="Fluxo imaginado do aplicativo">
+            <span>Produtos</span><b>→</b><span>Escolha</span><b>→</b><span>Carrinho</span><b>→</b><span>Cliente</span><b>→</b><span>Endereço</span><b>→</b><span>Confirmação</span>
+          </div>
+          <div class="rn-block rn-context"><strong>Mas surge imediatamente uma pergunta</strong><p>Para onde vai o pedido depois que o cliente confirma?</p></div>
+          <p>Ele não pode ficar apenas no celular do cliente. A distribuidora precisa recebê-lo, separar os produtos, realizar a entrega e concluir o atendimento.</p>
+          <p><strong>Não construiremos apenas algumas telas. Vamos construir um sistema.</strong></p>
+        </article>
+
+        <article class="rn-step" id="dois-lados">
+          <h2>6. Dois lados do mesmo pedido</h2>
+          <p>O mesmo pedido é visto de formas diferentes por quem compra e por quem atende.</p>
+          <div class="rn-diagram">LADO DO CLIENTE                 PEDIDO                 LADO DA DISTRIBUIDORA
+Escolhe os produtos                                      Recebe
+↓                                                        ↓
+Informa quantidades              → informações →          Separa
+↓                                                        ↓
+Confirma                                                  Entrega
+                                                         ↓
+                                                         Conclui</div>
+          <p>Mais adiante, construiremos a tecnologia que permitirá que esses dois lados compartilhem o mesmo pedido. Por enquanto, basta compreender o fluxo.</p>
+          <p>Com o crescimento do sistema, teremos de responder perguntas como:</p>
+          <ul>
+            <li>Onde os pedidos serão armazenados?</li>
+            <li>Como o aplicativo enviará as informações?</li>
+            <li>Como a distribuidora receberá e atualizará um pedido?</li>
+            <li>Como o cliente poderá acompanhar o que aconteceu?</li>
+            <li>Como produtos e estoque serão mantidos atualizados?</li>
+          </ul>
+          <div class="rn-block rn-observe"><strong>Regra do projeto</strong><p>Cada resposta aparecerá quando o projeto realmente precisar dela.</p></div>
+        </article>
+
+        <article class="rn-step" id="passo-a-passo">
+          <h2>7. Não construiremos tudo de uma vez</h2>
+          <p>Um sistema real pode ter muitas telas, vários arquivos, diferentes tipos de usuários, regras de negócio, banco de dados e centenas ou milhares de linhas de código.</p>
+          <p>Isso é normal. O que não faria sentido seria tentar construir tudo no primeiro dia.</p>
+          <p>Nosso aplicativo crescerá pouco a pouco. Primeiro ele precisará existir. Depois ganhará identidade. Mais adiante exibirá produtos, permitirá escolhas, montará pedidos e aprenderá a enviar e receber informações.</p>
+          <p><strong>Cada nova necessidade abrirá espaço para um novo conhecimento.</strong></p>
+        </article>
+
+        <article class="rn-step" id="metodo">
+          <h2>8. Como vamos aprender</h2>
+          <div class="rn-flow" aria-label="Método Mundo bit Byte">
+            <span>Entender</span><b>→</b><span>Experimentar</span><b>→</b><span>Programar</span><b>→</b><span>Aplicar</span>
+          </div>
+          <p>Na prática:</p>
+          <ol>
+            <li>surge uma necessidade;</li>
+            <li>entendemos o problema;</li>
+            <li>construímos uma pequena solução;</li>
+            <li>observamos o resultado;</li>
+            <li>compreendemos o que aconteceu;</li>
+            <li>continuamos a partir dali.</li>
+          </ol>
+          <p>Você poderá encontrar elementos no código que ainda não conhece completamente. Não tente decorar tudo. Vamos compreendê-los quando passarem a ser necessários.</p>
+        </article>
+
+        <article class="rn-step" id="programar">
+          <h2>9. Você vai programar</h2>
+          <p>Este percurso não vai esconder o código. Você escreverá código, cometerá erros, corrigirá caminhos, modificará arquivos e verá o projeto crescer.</p>
+          <p>Mas existe diferença entre programar e apenas redigitar centenas de linhas que já foram compreendidas.</p>
+          <p>Ao longo do projeto também aprenderemos a localizar código, modificar apenas o necessário, reaproveitar estruturas, organizar arquivos, trabalhar com componentes e comparar seu projeto com versões funcionais.</p>
+        </article>
+
+        <article class="rn-step" id="apoio">
+          <h2>10. Material de apoio no Mundo bit Byte</h2>
+          <p>O Mundo bit Byte é o site educacional que acompanha este projeto. O endereço principal é <strong>www.mundobitbyte.com.br</strong>.</p>
+          <p>Conforme forem sendo produzidos, os materiais de apoio poderão reunir:</p>
+          <ul>
+            <li>códigos completos;</li>
+            <li>checkpoints;</li>
+            <li>arquivos utilizados;</li>
+            <li>imagens;</li>
+            <li>materiais para download;</li>
+            <li>vídeos das etapas práticas.</li>
+          </ul>
+          <p>Os vídeos funcionarão como apoio. O percurso continuará utilizável mesmo quando determinado vídeo ainda não estiver publicado.</p>
+        </article>
+
+        <article class="rn-step" id="snack">
+          <h2>11. Nosso primeiro laboratório: Snack</h2>
+          <p><strong>Expo</strong> é um ecossistema de ferramentas e serviços que facilita o desenvolvimento com React Native. Uma dessas ferramentas é o <strong>Snack</strong>, um ambiente online que permite experimentar React Native diretamente pelo navegador.</p>
+          <p>Mais adiante utilizaremos ferramentas instaladas no computador e um ambiente de desenvolvimento mais completo. Mas ainda não precisamos começar por isso.</p>
+          <div class="rn-block rn-action"><strong>Nosso primeiro objetivo</strong><p>Começar a programar com o mínimo de barreiras. Quando o projeto crescer e precisarmos de algo mais completo, haverá uma razão concreta para mudar.</p></div>
+        </article>
+
+        <article class="rn-step" id="prontos">
+          <h2>12. Estamos prontos</h2>
+          <p>Agora conhecemos a empresa, parte de sua rotina, o caminho básico de um pedido, o ciclo de cheios e vazios, alguns problemas que o sistema poderá ajudar a resolver e a ideia geral da solução.</p>
+          <p>Mas existe uma coisa que ainda não temos.</p>
+          <div class="rn-block rn-observe"><strong>O aplicativo.</strong><p>No próximo capítulo isso começa a mudar.</p></div>
+        </article>
+
+        <article class="rn-step">
+          <h2>Fechamento do capítulo</h2>
+          <ul class="rn-checklist">
+            <li>Entendi quem é a Água &amp; Gás Santa Filomena e por que o sistema será construído.</li>
+            <li>Consigo explicar o caminho básico de um pedido.</li>
+            <li>Percebi que cheios e vazios fazem parte de um ciclo.</li>
+            <li>Entendi que não vamos construir tudo de uma vez.</li>
+            <li>Conheço a sequência Entender → Experimentar → Programar → Aplicar.</li>
+          </ul>
+          <button class="rn-complete" type="button" data-complete-key="rn-cap-0" aria-pressed="false">Marcar capítulo como concluído</button>
+        </article>
+      </section>
+
+      <aside class="rn-side" aria-label="Mapa do capítulo">
+        <h2>Neste capítulo</h2>
+        <ol>
+          <li><a href="#conheca">Conheça a empresa</a></li>
+          <li><a href="#pedido">Acompanhe um pedido</a></li>
+          <li><a href="#cheios-vazios">Cheios e vazios</a></li>
+          <li><a href="#pedidos-chegam">Como os pedidos chegam</a></li>
+          <li><a href="#aplicativo">E se houvesse um aplicativo?</a></li>
+          <li><a href="#dois-lados">Dois lados do pedido</a></li>
+          <li><a href="#passo-a-passo">Construir aos poucos</a></li>
+          <li><a href="#metodo">Como vamos aprender</a></li>
+          <li><a href="#programar">Você vai programar</a></li>
+          <li><a href="#snack">Primeiro laboratório</a></li>
+        </ol>
+        <div class="rn-progress">
+          <div class="rn-progress-text"><span>Progresso geral</span><span data-rn-progress-text>0%</span></div>
+          <div class="rn-progress-track"><span data-rn-progress-bar></span></div>
+        </div>
+      </aside>
+    </div>
+
+    <nav class="rn-nav-bottom" aria-label="Navegação entre capítulos">
+      <a href="index.html">← Voltar ao módulo</a>
+      <a class="primary" href="capitulo-01.html">Capítulo 1 — O aplicativo começa a existir →</a>
+    </nav>
+  </main>
+
+  <footer class="rn-footer">Academia Mundo bit Byte — aprender fazendo.</footer>
+  <script src="../../js/academia.js"></script>
+  <script src="curso.js"></script>
+</body>
+</html>
