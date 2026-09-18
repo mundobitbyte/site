@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 2 — O aplicativo ganha sua própria interface | React Native do Zero</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+  <link rel="stylesheet" href="curso.css" />
+</head>
+<body class="rn-body">
+  <header class="topbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte">
+      <span class="brand-mark">mbb</span>
+      <span><strong>Academia</strong><small>by Mundo bit Byte</small></span>
+    </a>
+    <nav class="topnav" aria-label="Navegação principal">
+      <a href="index.html">React Native do Zero</a>
+      <a href="capitulo-02.html" aria-current="page">Capítulo 2</a>
+    </nav>
+  </header>
+
+  <main class="rn-course-shell">
+    <div class="rn-topline">
+      <p class="rn-breadcrumb"><a href="../../index.html">Academia</a> / <a href="index.html">React Native do Zero</a> / Capítulo 2</p>
+      <span class="pill warning">Candidato à validação prática</span>
+    </div>
+
+    <section class="rn-lesson-head">
+      <span class="rn-kicker">Capítulo 2</span>
+      <h1>O aplicativo ganha sua própria interface</h1>
+      <p class="lead">No capítulo anterior, o projeto deixou de ser apenas o exemplo original do Snack. Agora vamos começar a construir uma interface realmente pensada para a Água &amp; Gás Santa Filomena.</p>
+      <div class="rn-block rn-context"><strong>Como ler os códigos deste capítulo</strong><p>Em cada etapa prática, o quadro mostra o arquivo completo naquele momento. Dentro do mesmo quadro, somente as linhas destacadas são as que você deve digitar ou alterar naquela etapa.</p></div>
+    </section>
+
+    <div class="rn-grid">
+      <section class="rn-main">
+        <article class="rn-step" id="onde-paramos">
+          <h2>1. Onde paramos</h2>
+          <p>Não precisamos rever todos os códigos do capítulo anterior. Basta lembrar a pequena estrutura que já existe:</p>
+          <div class="rn-diagram">App.js
+components/
+    IdentidadeEmpresa.js
+assets/
+    agua-gas.png</div>
+          <p>O <strong>App.js</strong> organiza a tela. O componente <strong>IdentidadeEmpresa</strong> já existe e, neste momento, apresenta a imagem da empresa.</p>
+        </article>
+
+        <article class="rn-step" id="observe">
+          <h2>2. Observe antes de mexer</h2>
+          <p>Olhe a pré-visualização do aplicativo e tente identificar o fundo, o nome da empresa, a área onde a imagem aparece e os espaços entre esses elementos.</p>
+          <div class="rn-block rn-observe"><strong>A primeira pergunta é simples</strong><p>O que podemos mudar primeiro para a tela começar a deixar de parecer o exemplo original?</p></div>
+          <p>Vamos começar pelo que envolve toda a interface: o fundo.</p>
+        </article>
+
+        <article class="rn-step" id="fundo">
+          <h2>3. Primeira mudança: o fundo</h2>
+          <p>Abra <strong>App.js</strong>. O arquivo inteiro aparece abaixo para você não precisar adivinhar onde está a alteração. Altere somente a linha destacada.</p>
+          <div class="rn-code-frame">
+            <div class="rn-code-head"><span>App.js — altere somente a linha destacada</span><button class="rn-copy" type="button" data-copy-target="app-fundo">Copiar</button></div>
+            <pre id="app-fundo"><code>import * as React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
+import { Card } from 'react-native-paper';
+
+import IdentidadeEmpresa from './components/IdentidadeEmpresa';
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.paragraph}&gt;
+        Água &amp; Gás Santa Filomena
+      &lt;/Text&gt;
+
+      &lt;Card&gt;
+        &lt;IdentidadeEmpresa /&gt;
+      &lt;/Card&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+<span class="linha-nova">    backgroundColor: '#eef3f7',</span>
+    padding: 8,
+  },
+
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});</code></pre>
+          </div>
+          <p class="rn-code-legend">Destaque = linha que deve ser alterada agora.</p>
+          <div class="rn-block rn-observe"><strong>Depois da alteração, observe a pré-visualização</strong><p>A estrutura não mudou. O conteúdo também não. Apenas o fundo passou a ter outra aparência.</p></div>
+          <p><strong>Um estilo pode mudar a aparência de um componente sem mudar aquilo que ele contém.</strong></p>
+        </article>
+
+        <article class="rn-step" id="cartao">
+          <h2>4. O conteúdo precisa de uma área própria</h2>
+          <p>O fundo mudou, mas o conteúdo ainda está dentro do <strong>Card</strong> que veio no exemplo. Queremos começar a controlar essa área por conta própria.</p>
+          <div class="rn-block rn-action"><strong>Antes de digitar</strong><p>Apague a linha <code>import { Card } from 'react-native-paper';</code>. Depois, substituiremos o Card por uma View nossa.</p></div>
+          <p>No quadro abaixo, o arquivo inteiro já aparece no novo estado. Digite ou ajuste somente as linhas destacadas.</p>
+          <div class="rn-code-frame">
+            <div class="rn-code-head"><span>App.js — digite/ajuste as linhas destacadas</span><button class="rn-copy" type="button" data-copy-target="app-cartao">Copiar</button></div>
+            <pre id="app-cartao"><code>import * as React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
+
+import IdentidadeEmpresa from './components/IdentidadeEmpresa';
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.paragraph}&gt;
+        Água &amp; Gás Santa Filomena
+      &lt;/Text&gt;
+
+<span class="linha-nova">      &lt;View style={styles.cartao}&gt;</span>
+        &lt;IdentidadeEmpresa /&gt;
+<span class="linha-nova">      &lt;/View&gt;</span>
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#eef3f7',
+<span class="linha-nova">    padding: 16,</span>
+  },
+
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+<span class="linha-nova">  cartao: {</span>
+<span class="linha-nova">    backgroundColor: '#ffffff',</span>
+<span class="linha-nova">    borderRadius: 16,</span>
+<span class="linha-nova">    padding: 20,</span>
+<span class="linha-nova">  },</span>
+});</code></pre>
+          </div>
+          <ul>
+            <li><strong>backgroundColor</strong> define o fundo do cartão;</li>
+            <li><strong>borderRadius</strong> arredonda seus cantos;</li>
+            <li><strong>padding</strong> cria espaço entre a borda e o conteúdo.</li>
+          </ul>
+          <div class="rn-block rn-observe"><strong>Observe a pré-visualização</strong><p>A área branca que envolve o conteúdo agora foi construída por nós. As propriedades apareceram porque a interface passou a precisar delas.</p></div>
+        </article>
+
+        <article class="rn-step" id="mesmo-conjunto">
+          <h2>5. Nome e imagem pertencem ao mesmo conjunto</h2>
+          <p>Agora olhe novamente para a tela. O nome da empresa aparece acima do cartão, enquanto a imagem está dentro de <strong>IdentidadeEmpresa</strong>.</p>
+          <p>Visualmente, porém, nome e imagem fazem parte da mesma apresentação da empresa. Esse é o momento em que o componente criado no capítulo anterior passa a ter uma função mais clara.</p>
+          <p>Vamos mover o nome para <strong>components/IdentidadeEmpresa.js</strong>.</p>
+          <div class="rn-block rn-action"><strong>Primeiro, no App.js</strong><p>Apague o bloco <code>Text</code> que mostra “Água &amp; Gás Santa Filomena” e retire <code>Text</code> da linha de importação. Como nesta operação estamos apenas apagando, não há linha nova destacada.</p></div>
+          <div class="rn-code-frame">
+            <div class="rn-code-head"><span>App.js — estado completo depois de retirar o título</span><button class="rn-copy" type="button" data-copy-target="app-sem-titulo">Copiar</button></div>
+            <pre id="app-sem-titulo"><code>import * as React from 'react';
+import { View, StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
+
+import IdentidadeEmpresa from './components/IdentidadeEmpresa';
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;View style={styles.cartao}&gt;
+        &lt;IdentidadeEmpresa /&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#eef3f7',
+    padding: 16,
+  },
+
+  cartao: {
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 20,
+  },
+});</code></pre>
+          </div>
+        </article>
+
+        <article class="rn-step" id="titulo-componente">
+          <h2>5.1. Coloque o nome dentro de IdentidadeEmpresa</h2>
+          <p>Agora abra <strong>components/IdentidadeEmpresa.js</strong>. Este é o primeiro momento do capítulo em que vamos ampliar esse componente.</p>
+          <p>Digite somente as linhas destacadas.</p>
+          <div class="rn-code-frame">
+            <div class="rn-code-head"><span>IdentidadeEmpresa.js — digite as linhas destacadas</span><button class="rn-copy" type="button" data-copy-target="identidade-titulo">Copiar</button></div>
+            <pre id="identidade-titulo"><code>import * as React from 'react';
+<span class="linha-nova">import { View, Text, Image, StyleSheet } from 'react-native';</span>
+
+export default function IdentidadeEmpresa() {
+  return (
+    &lt;View style={styles.container}&gt;
+<span class="linha-nova">      &lt;Text style={styles.titulo}&gt;</span>
+<span class="linha-nova">        Água &amp; Gás Santa Filomena</span>
+<span class="linha-nova">      &lt;/Text&gt;</span>
+
+      &lt;Image
+        source={require('../assets/agua-gas.png')}
+        style={styles.logo}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+
+<span class="linha-nova">  titulo: {</span>
+<span class="linha-nova">    fontSize: 24,</span>
+<span class="linha-nova">    fontWeight: 'bold',</span>
+<span class="linha-nova">    textAlign: 'center',</span>
+<span class="linha-nova">    marginBottom: 16,</span>
+<span class="linha-nova">  },</span>
+
+  logo: {
+    height: 128,
+    width: 128,
+  },
+});</code></pre>
+          </div>
+          <div class="rn-block rn-observe"><strong>Observe a pré-visualização</strong><p>O nome continua aparecendo, mas agora está junto da imagem no mesmo componente.</p></div>
+          <p>Sem começar por uma explicação abstrata de arquitetura, percebemos uma ideia útil: <strong>quando elementos representam a mesma parte da interface, pode fazer sentido mantê-los juntos no mesmo componente.</strong></p>
+        </article>
+
+        <article class="rn-step" id="hierarquia">
+          <h2>6. A identidade precisa de hierarquia visual</h2>
+          <p>Nome e imagem já estão juntos. Agora precisamos organizar melhor essa apresentação: o nome deve ter uma área de destaque e a imagem precisa ocupar um espaço previsível.</p>
+          <p>Continue em <strong>components/IdentidadeEmpresa.js</strong>. Neste passo, o espaçamento do título passará a ser controlado pela nova barra superior; por isso, apague <code>marginBottom: 16</code> do estilo <code>titulo</code>. O quadro abaixo mostra o estado final.</p>
+          <div class="rn-code-frame">
+            <div class="rn-code-head"><span>IdentidadeEmpresa.js — digite/ajuste as linhas destacadas</span><button class="rn-copy" type="button" data-copy-target="identidade-hierarquia">Copiar</button></div>
+            <pre id="identidade-hierarquia"><code>import * as React from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
+
+export default function IdentidadeEmpresa() {
+  return (
+<span class="linha-nova">    &lt;View style={styles.identidade}&gt;</span>
+<span class="linha-nova">      &lt;View style={styles.barraSuperior}&gt;</span>
+        &lt;Text style={styles.titulo}&gt;
+          Água &amp; Gás Santa Filomena
+        &lt;/Text&gt;
+<span class="linha-nova">      &lt;/View&gt;</span>
+
+      &lt;Image
+        source={require('../assets/agua-gas.png')}
+<span class="linha-nova">        style={styles.imagem}</span>
+<span class="linha-nova">        resizeMode="contain"</span>
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+<span class="linha-nova">  identidade: {</span>
+    alignItems: 'center',
+  },
+
+<span class="linha-nova">  barraSuperior: {</span>
+<span class="linha-nova">    width: '100%',</span>
+<span class="linha-nova">    backgroundColor: '#dbeafe',</span>
+<span class="linha-nova">    paddingVertical: 12,</span>
+<span class="linha-nova">    borderRadius: 12,</span>
+<span class="linha-nova">    marginBottom: 16,</span>
+<span class="linha-nova">  },</span>
+
+  titulo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+<span class="linha-nova">  imagem: {</span>
+<span class="linha-nova">    width: '100%',</span>
+<span class="linha-nova">    height: 180,</span>
+<span class="linha-nova">  },</span>
+});</code></pre>
+          </div>
+          <ul>
+            <li><strong>barraSuperior</strong> cria uma área própria para o nome;</li>
+            <li><strong>width</strong> e <strong>height</strong> reservam o espaço da imagem;</li>
+            <li><strong>resizeMode="contain"</strong> ajuda a manter a imagem inteira dentro desse espaço.</li>
+          </ul>
+          <div class="rn-diagram">IdentidadeEmpresa
+├── barraSuperior
+│   └── titulo
+└── imagem</div>
+          <div class="rn-block rn-observe"><strong>Observe a pré-visualização e compare</strong><p>Cada estrutura apareceu porque a interface passou a precisar dela.</p></div>
+        </article>
+
+        <article class="rn-step" id="servico">
+          <h2>7. A tela precisa dizer o que a empresa oferece</h2>
+          <p>Nome e imagem identificam a empresa, mas ainda falta uma informação curta que explique o serviço.</p>
+          <p>Vamos acrescentar uma descrição principal e uma mensagem complementar. Ainda em <strong>IdentidadeEmpresa.js</strong>, digite somente as linhas destacadas.</p>
+          <div class="rn-code-frame">
+            <div class="rn-code-head"><span>IdentidadeEmpresa.js — digite as linhas destacadas</span><button class="rn-copy" type="button" data-copy-target="identidade-completa">Copiar</button></div>
+            <pre id="identidade-completa"><code>import * as React from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
+
+export default function IdentidadeEmpresa() {
+  return (
+    &lt;View style={styles.identidade}&gt;
+      &lt;View style={styles.barraSuperior}&gt;
+        &lt;Text style={styles.titulo}&gt;
+          Água &amp; Gás Santa Filomena
+        &lt;/Text&gt;
+      &lt;/View&gt;
+
+      &lt;Image
+        source={require('../assets/agua-gas.png')}
+        style={styles.imagem}
+        resizeMode="contain"
+      /&gt;
+
+<span class="linha-nova">      &lt;Text style={styles.subtitulo}&gt;</span>
+<span class="linha-nova">        Água mineral e gás com entrega</span>
+<span class="linha-nova">      &lt;/Text&gt;</span>
+
+<span class="linha-nova">      &lt;Text style={styles.mensagem}&gt;</span>
+<span class="linha-nova">        Peça com praticidade e acompanhe sua entrega.</span>
+<span class="linha-nova">      &lt;/Text&gt;</span>
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  identidade: {
+    alignItems: 'center',
+  },
+
+  barraSuperior: {
+    width: '100%',
+    backgroundColor: '#dbeafe',
+    paddingVertical: 12,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+
+  titulo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  imagem: {
+    width: '100%',
+    height: 180,
+  },
+
+<span class="linha-nova">  subtitulo: {</span>
+<span class="linha-nova">    fontSize: 18,</span>
+<span class="linha-nova">    fontWeight: 'bold',</span>
+<span class="linha-nova">    textAlign: 'center',</span>
+<span class="linha-nova">    marginTop: 16,</span>
+<span class="linha-nova">  },</span>
+
+<span class="linha-nova">  mensagem: {</span>
+<span class="linha-nova">    fontSize: 15,</span>
+<span class="linha-nova">    textAlign: 'center',</span>
+<span class="linha-nova">    marginTop: 8,</span>
+<span class="linha-nova">  },</span>
+});</code></pre>
+          </div>
+          <div class="rn-block rn-observe"><strong>Observe a pré-visualização</strong><p>A apresentação da empresa agora reúne nome, imagem, descrição e mensagem.</p></div>
+        </article>
+
+        <article class="rn-step" id="resultado">
+          <h2>8. O que construímos</h2>
+          <p>O mapa abaixo representa a composição que estamos construindo. As cores e medidas finais ainda serão confirmadas na validação prática no Snack.</p>
+          <div class="rn-diagram">TELA
+└── cartão
+    └── IdentidadeEmpresa
+        ├── Água &amp; Gás Santa Filomena
+        ├── [ IMAGEM ]
+        ├── Água mineral e gás com entrega
+        └── Peça com praticidade e acompanhe sua entrega.</div>
+          <p>O importante é reconhecer a sequência visual: <strong>tela → cartão → identidade da empresa → título, imagem e informações.</strong></p>
+        </article>
+
+        <article class="rn-step" id="experimento">
+          <h2>9. Experimente para entender</h2>
+          <p>Antes de encerrar, vamos fazer um pequeno teste para enxergar melhor o efeito de uma propriedade.</p>
+          <p>Abra <strong>App.js</strong>. No quadro abaixo, altere somente a linha destacada e observe os cantos do cartão.</p>
+          <div class="rn-code-frame">
+            <div class="rn-code-head"><span>App.js — experimento temporário</span><button class="rn-copy" type="button" data-copy-target="app-experimento">Copiar</button></div>
+            <pre id="app-experimento"><code>import * as React from 'react';
+import { View, StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
+
+import IdentidadeEmpresa from './components/IdentidadeEmpresa';
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;View style={styles.cartao}&gt;
+        &lt;IdentidadeEmpresa /&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#eef3f7',
+    padding: 16,
+  },
+
+  cartao: {
+    backgroundColor: '#ffffff',
+<span class="linha-nova">    borderRadius: 0,</span>
+    padding: 20,
+  },
+});</code></pre>
+          </div>
+          <p>Depois de observar, volte <code>borderRadius</code> para <strong>16</strong>.</p>
+          <div class="rn-block rn-observe"><strong>O objetivo não é escolher números ao acaso</strong><p>É relacionar diretamente uma propriedade ao efeito que ela produz. Experimentar também é uma forma de compreender.</p></div>
+        </article>
+
+        <article class="rn-step" id="marco-app">
+          <h2>10. Marco do capítulo — App.js completo</h2>
+          <p>Agora veja o arquivo inteiro sem destaque. Tudo o que aparece abaixo já faz parte do projeto neste ponto.</p>
+          <div class="rn-code-frame">
+            <div class="rn-code-head"><span>App.js — estado ao final do Capítulo 2</span><button class="rn-copy" type="button" data-copy-target="app-final">Copiar</button></div>
+            <pre id="app-final"><code>import * as React from 'react';
+import { View, StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
+
+import IdentidadeEmpresa from './components/IdentidadeEmpresa';
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;View style={styles.cartao}&gt;
+        &lt;IdentidadeEmpresa /&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#eef3f7',
+    padding: 16,
+  },
+
+  cartao: {
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 20,
+  },
+});</code></pre>
+          </div>
+        </article>
+
+        <article class="rn-step" id="marco-identidade">
+          <h2>11. Marco do capítulo — IdentidadeEmpresa.js completo</h2>
+          <p>O componente de identidade também pode ser visto agora como um todo.</p>
+          <div class="rn-code-frame">
+            <div class="rn-code-head"><span>components/IdentidadeEmpresa.js — estado ao final do Capítulo 2</span><button class="rn-copy" type="button" data-copy-target="identidade-final">Copiar</button></div>
+            <pre id="identidade-final"><code>import * as React from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
+
+export default function IdentidadeEmpresa() {
+  return (
+    &lt;View style={styles.identidade}&gt;
+      &lt;View style={styles.barraSuperior}&gt;
+        &lt;Text style={styles.titulo}&gt;
+          Água &amp; Gás Santa Filomena
+        &lt;/Text&gt;
+      &lt;/View&gt;
+
+      &lt;Image
+        source={require('../assets/agua-gas.png')}
+        style={styles.imagem}
+        resizeMode="contain"
+      /&gt;
+
+      &lt;Text style={styles.subtitulo}&gt;
+        Água mineral e gás com entrega
+      &lt;/Text&gt;
+
+      &lt;Text style={styles.mensagem}&gt;
+        Peça com praticidade e acompanhe sua entrega.
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  identidade: {
+    alignItems: 'center',
+  },
+
+  barraSuperior: {
+    width: '100%',
+    backgroundColor: '#dbeafe',
+    paddingVertical: 12,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+
+  titulo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  imagem: {
+    width: '100%',
+    height: 180,
+  },
+
+  subtitulo: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 16,
+  },
+
+  mensagem: {
+    fontSize: 15,
+    textAlign: 'center',
+    marginTop: 8,
+  },
+});</code></pre>
+          </div>
+          <p>O <strong>App.js</strong> organiza a tela e o cartão. <strong>IdentidadeEmpresa.js</strong> reúne aquilo que apresenta a empresa.</p>
+        </article>
+
+        <article class="rn-step" id="aprendemos">
+          <h2>12. O que aprendemos</h2>
+          <p>Os conceitos deste capítulo surgiram porque a interface precisou deles:</p>
+          <ul>
+            <li><strong>View</strong> para criar áreas da interface;</li>
+            <li><strong>Text</strong> para apresentar informações;</li>
+            <li><strong>Image</strong> para apresentar a imagem;</li>
+            <li><strong>StyleSheet</strong> para organizar estilos;</li>
+            <li><strong>backgroundColor</strong>, <strong>padding</strong> e <strong>borderRadius</strong> para construir a área visual;</li>
+            <li><strong>fontSize</strong>, <strong>fontWeight</strong> e <strong>textAlign</strong> para criar hierarquia;</li>
+            <li><strong>width</strong>, <strong>height</strong> e <strong>resizeMode</strong> para controlar a imagem.</li>
+          </ul>
+          <p>Também começamos a perceber que componentes podem reunir partes da interface que pertencem ao mesmo conjunto.</p>
+        </article>
+
+        <article class="rn-step" id="checklist">
+          <h2>13. Confira antes de encerrar</h2>
+          <ul class="rn-checklist">
+            <li>O fundo da tela já foi alterado e eu sei onde isso acontece no código.</li>
+            <li>O cartão é uma View criada por nós, sem depender do Card do exemplo.</li>
+            <li>O nome e a imagem agora fazem parte de IdentidadeEmpresa.</li>
+            <li>A apresentação da empresa possui título, imagem, descrição e mensagem.</li>
+            <li>Nos quadros de código, consigo identificar que apenas as linhas destacadas são as que devo digitar ou alterar naquela etapa.</li>
+            <li>A pré-visualização continua sendo exibida sem erros.</li>
+          </ul>
+        </article>
+
+        <article class="rn-step" id="checkpoint">
+          <h2>14. Checkpoint 02 — Nossa primeira interface</h2>
+          <p>Depois da validação prática, este estado dará origem ao segundo checkpoint oficial.</p>
+          <ul>
+            <li>App.js completo;</li>
+            <li>IdentidadeEmpresa.js completo;</li>
+            <li>imagem utilizada;</li>
+            <li>Snack correspondente;</li>
+            <li>screenshot do resultado validado;</li>
+            <li>arquivos de recuperação;</li>
+            <li>vídeos práticos quando forem produzidos.</li>
+          </ul>
+          <button class="rn-complete" type="button" data-complete-key="rn-cap-2" aria-pressed="false">Marcar capítulo como concluído</button>
+        </article>
+
+        <article class="rn-step" id="proximo">
+          <h2>15. O próximo problema já apareceu</h2>
+          <p>O aplicativo agora apresenta a empresa de maneira organizada. Mas um delivery precisa mostrar mais do que quem é a empresa.</p>
+          <div class="rn-block rn-observe"><strong>Ele precisa apresentar aquilo que a empresa vende.</strong><p>É dessa necessidade que nascerá o próximo capítulo.</p></div>
+        </article>
+
+        <article class="rn-step">
+          <h2>Validação prática antes da aprovação comercial</h2>
+          <div class="rn-pending"><strong>O capítulo está pedagogicamente estruturado, mas ainda deve ser percorrido no Snack como um iniciante faria.</strong>Se em qualquer etapa surgir a pergunta “onde exatamente eu mexo?”, a instrução ainda precisa voltar para a próxima espiral MbB.</div>
+          <ol>
+            <li>confirmar o estado real herdado do Capítulo 1;</li>
+            <li>alterar somente o fundo e conferir a pré-visualização;</li>
+            <li>remover Card, criar a View <code>cartao</code> e conferir a pré-visualização;</li>
+            <li>mover o título para <code>IdentidadeEmpresa.js</code> e conferir a pré-visualização;</li>
+            <li>criar a hierarquia visual e conferir a pré-visualização;</li>
+            <li>adicionar descrição e mensagem e conferir a pré-visualização;</li>
+            <li>realizar o experimento de <code>borderRadius</code> e restaurar 16;</li>
+            <li>conferir se cada quadro mostra o arquivo completo daquele momento;</li>
+            <li>conferir se apenas as linhas digitadas/alteradas aparecem destacadas no próprio quadro.</li>
+          </ol>
+        </article>
+      </section>
+
+      <aside class="rn-side" aria-label="Mapa do capítulo">
+        <h2>Neste capítulo</h2>
+        <ol>
+          <li><a href="#onde-paramos">Onde paramos</a></li>
+          <li><a href="#observe">Observe antes de mexer</a></li>
+          <li><a href="#fundo">Mudar o fundo</a></li>
+          <li><a href="#cartao">Criar o cartão</a></li>
+          <li><a href="#mesmo-conjunto">Nome e imagem juntos</a></li>
+          <li><a href="#hierarquia">Hierarquia visual</a></li>
+          <li><a href="#servico">Explicar o serviço</a></li>
+          <li><a href="#experimento">Experimentar</a></li>
+          <li><a href="#marco-app">App.js final</a></li>
+          <li><a href="#marco-identidade">Identidade final</a></li>
+          <li><a href="#checkpoint">Checkpoint 02</a></li>
+        </ol>
+        <div class="rn-progress">
+          <div class="rn-progress-text"><span>Progresso geral</span><span data-rn-progress-text>0%</span></div>
+          <div class="rn-progress-track"><span data-rn-progress-bar></span></div>
+        </div>
+      </aside>
+    </div>
+
+    <nav class="rn-nav-bottom" aria-label="Navegação entre capítulos">
+      <a href="capitulo-01.html">← Capítulo 1</a>
+      <a class="primary" href="index.html">Voltar ao índice do módulo</a>
+    </nav>
+  </main>
+
+  <footer class="rn-footer">Academia Mundo bit Byte — aprender fazendo.</footer>
+  <script src="../../js/academia.js"></script>
+  <script src="curso.js"></script>
+</body>
+</html>
