@@ -6,12 +6,15 @@
   const livro0 = { title: '0. Antes do aplicativo', steps: cap0 };
   const livro1 = { title: '1. O aplicativo começa a existir', steps: cap1 };
 
-  // Coloca os capítulos do livro no início do menu, sem recriar os módulos existentes.
+  // Mantém Fundamentos em primeiro lugar e insere os capítulos do livro logo depois.
   const antigos = Object.entries(modules).filter(([k]) => !['livroCap0','livroCap1'].includes(k));
+  const fundamentos = antigos.find(([k]) => k === 'fundamentosMobile');
+  const demais = antigos.filter(([k]) => k !== 'fundamentosMobile');
   Object.keys(modules).forEach(k => delete modules[k]);
+  if (fundamentos) modules[fundamentos[0]] = fundamentos[1];
   modules.livroCap0 = livro0;
   modules.livroCap1 = livro1;
-  antigos.forEach(([k,v]) => { modules[k] = v; });
+  demais.forEach(([k,v]) => { modules[k] = v; });
 
   const style=document.createElement('style');
   style.id='mbb-book-rn-style';
@@ -60,9 +63,10 @@
     };
   }
 
-  // Deixa a inclusão imediatamente visível ao abrir a página.
-  currentModuleKey='livroCap0';
+  // Mantém Fundamentos como entrada principal do curso.
+  currentModuleKey='fundamentosMobile';
   if (typeof renderModuleMenu==='function') renderModuleMenu();
   if (typeof renderStepMenu==='function') renderStepMenu();
-  if (typeof showStep==='function' && cap0[0]) showStep(cap0[0].id);
+  const primeiroFundamento=modules.fundamentosMobile?.steps?.[0];
+  if (typeof showStep==='function' && primeiroFundamento) showStep(primeiroFundamento.id);
 })();
