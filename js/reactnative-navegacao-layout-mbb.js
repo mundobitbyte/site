@@ -44,23 +44,28 @@
        * Leitura MbB dos passos 1, 2 e 4 a 7:
        * esquerda = código + orientação;
        * direita = resultado visual ocupando as duas linhas.
+       * O roteiro recebe altura confortável; em telas menores, o workspace rola.
        */
       #workspace.nav-mbb-readable-workspace {
         grid-template-columns: minmax(560px, 1fr) minmax(390px, 470px) !important;
-        grid-template-rows: minmax(270px, 1.15fr) minmax(285px, .95fr) !important;
+        grid-template-rows: minmax(300px, 1fr) minmax(420px, 1.25fr) !important;
         gap: 10px !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding-right: 4px;
+        align-content: start;
       }
 
       #workspace.nav-mbb-readable-workspace #codeCard {
         grid-column: 1 !important;
         grid-row: 1 !important;
-        min-height: 0 !important;
+        min-height: 300px !important;
       }
 
       #workspace.nav-mbb-readable-workspace #resultCard {
         grid-column: 2 !important;
         grid-row: 1 / 3 !important;
-        min-height: 0 !important;
+        min-height: 730px !important;
         height: 100% !important;
       }
 
@@ -72,16 +77,16 @@
         grid-column: 1 !important;
         grid-row: 2 !important;
         display: grid !important;
-        min-height: 0 !important;
+        min-height: 420px !important;
         height: 100% !important;
       }
 
       #workspace.nav-mbb-readable-workspace #note.nav-beginner-note {
         position: relative;
         height: 100% !important;
-        min-height: 0 !important;
+        min-height: 420px !important;
         overflow: auto !important;
-        padding: 42px 14px 14px !important;
+        padding: 42px 16px 18px !important;
         background: #f8fbff !important;
         border: 1px solid #bfdbfe !important;
         border-left: 5px solid var(--primary) !important;
@@ -93,7 +98,7 @@
         top: 0;
         left: 0;
         right: 0;
-        min-height: 32px;
+        min-height: 34px;
         display: flex;
         align-items: center;
         padding: 0 12px;
@@ -106,7 +111,7 @@
 
       #workspace.nav-mbb-readable-workspace .nav-beginner-guide-grid {
         grid-template-columns: 1fr 1fr !important;
-        gap: 10px !important;
+        gap: 12px !important;
       }
 
       #workspace.nav-mbb-readable-workspace .nav-beginner-guide-grid section:first-child {
@@ -115,39 +120,45 @@
       }
 
       #workspace.nav-mbb-readable-workspace .nav-beginner-guide-grid section {
-        padding: 10px 12px !important;
+        padding: 12px 14px !important;
       }
 
       #workspace.nav-mbb-readable-workspace .nav-beginner-guide-title {
-        font-size: 13.5px !important;
-        line-height: 1.3 !important;
+        font-size: 14px !important;
+        line-height: 1.35 !important;
       }
 
       #workspace.nav-mbb-readable-workspace .nav-beginner-guide-inner p,
       #workspace.nav-mbb-readable-workspace .nav-beginner-guide-inner li {
-        font-size: 13px !important;
-        line-height: 1.46 !important;
+        font-size: 13.5px !important;
+        line-height: 1.52 !important;
       }
 
       #workspace.nav-mbb-readable-workspace .nav-beginner-guide-inner li + li {
-        margin-top: 5px !important;
+        margin-top: 6px !important;
       }
 
       #workspace.nav-mbb-readable-workspace .nav-beginner-guide-footer {
         grid-template-columns: 1fr 1fr !important;
-        gap: 10px !important;
-        margin-top: 10px !important;
-        font-size: 13px !important;
-        line-height: 1.45 !important;
+        gap: 12px !important;
+        margin-top: 12px !important;
+        font-size: 13.5px !important;
+        line-height: 1.5 !important;
       }
 
       #workspace.nav-mbb-readable-workspace .nav-beginner-guide-footer > div {
-        padding: 9px 10px !important;
+        padding: 10px 12px !important;
       }
 
       @media (max-width: 1180px) {
         #workspace.nav-mbb-readable-workspace {
           grid-template-columns: minmax(500px, 1fr) minmax(340px, 410px) !important;
+          grid-template-rows: minmax(300px, 1fr) minmax(460px, auto) !important;
+        }
+
+        #workspace.nav-mbb-readable-workspace #noteWrap,
+        #workspace.nav-mbb-readable-workspace #note.nav-beginner-note {
+          min-height: 460px !important;
         }
 
         #workspace.nav-mbb-readable-workspace .nav-beginner-guide-grid,
