@@ -9,3 +9,7 @@ Publicação recomendada:
 
 URL esperada no domínio atual:
 `https://www.mundobitbyte.com.br/academia/`
+
+Cursos disponíveis nesta estrutura:
+- `cursos/chatgpt-na-vida-real/`
+- `cursos/react-native-do-zero/`
