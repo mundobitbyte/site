@@ -268,7 +268,29 @@ Ao final desta etapa, a Agenda possui fundo, cartão, título, foto, campos e gr
     }
   }
 
+  function installAcademiaPreviewLink() {
+    const LINK_ID = 'mbb-academia-react-native-preview';
+    if (document.getElementById(LINK_ID)) return;
+
+    const header = document.querySelector('body > header');
+    if (!header) return;
+
+    const link = document.createElement('a');
+    link.id = LINK_ID;
+    link.href = 'https://raw.githack.com/mundobitbyte/site/academia-react-native-do-zero-zip-20260920/academia/cursos/react-native-do-zero/index.html';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = '🎓 Academia React Native — prévia';
+    link.title = 'Abrir a prévia da Academia React Native do Zero';
+    link.style.cssText = 'display:inline-flex;align-items:center;min-height:30px;padding:5px 10px;border-radius:999px;background:#ffffff;color:#114b9e;text-decoration:none;font-size:12px;font-weight:900;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.18);';
+
+    const brand = header.querySelector('.brand');
+    if (brand) header.insertBefore(link, brand);
+    else header.appendChild(link);
+  }
+
   installStyles();
+  installAcademiaPreviewLink();
 
   if (typeof showStep === 'function') {
     const previousShowStep = showStep;
