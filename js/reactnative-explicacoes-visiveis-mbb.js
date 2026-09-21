@@ -1,6 +1,6 @@
 // Restaura a camada explicativa das etapas práticas do React Native.
 // Mantém um único quadro de código completo e apresenta o conteúdo pedagógico
-// de step.added em um painel claro, visível e separado do preview.
+// em um painel claro, visível e separado do preview.
 
 (() => {
   if (typeof modules === 'undefined') return;
@@ -115,11 +115,6 @@
         color: #263548;
       }
 
-      #mbbStepExplanation .mbb-explanation-text code,
-      #mbbStepExplanation .mbb-explanation-code-line {
-        font-family: Consolas, "Courier New", monospace;
-      }
-
       @media (max-width: 1180px) {
         #workspace.mbb-visible-explanation-workspace {
           grid-template-columns: minmax(500px, 1fr) minmax(340px, 410px) !important;
@@ -166,12 +161,20 @@
       step.glossaryPage
     ) return false;
 
-    return (
-      typeof step.code === 'string' &&
-      step.code.trim() !== '' &&
-      typeof step.added === 'string' &&
-      step.added.trim() !== ''
-    );
+    // Toda etapa prática comum com código deve manter uma camada explicativa.
+    return typeof step.code === 'string' && step.code.trim() !== '';
+  }
+
+  function explanationText(step) {
+    if (typeof step.added === 'string' && step.added.trim() !== '') {
+      return step.added.trim();
+    }
+
+    const parts = [];
+    if (step.objective) parts.push(`Objetivo desta etapa:\n${step.objective}`);
+    if (step.note) parts.push(`Como interpretar o resultado:\n${step.note}`);
+
+    return parts.join('\n\n') || 'Compare o código desta etapa com o anterior e identifique as linhas destacadas. Elas representam a alteração necessária neste ponto do projeto.';
   }
 
   function removeExplanation() {
@@ -201,7 +204,7 @@
 
     const text = document.createElement('div');
     text.className = 'mbb-explanation-text';
-    text.textContent = step.added;
+    text.textContent = explanationText(step);
 
     body.append(action, title, text);
     panel.append(head, body);
