@@ -32,7 +32,8 @@
         overflow-y: auto !important;
         overflow-x: hidden !important;
         padding-right: 6px !important;
-        padding-bottom: 14px !important;
+        padding-bottom: clamp(72px, 10vh, 96px) !important;
+        scroll-padding-bottom: clamp(72px, 10vh, 96px);
         scrollbar-gutter: stable;
       }
 
@@ -112,7 +113,8 @@
           grid-template-rows: auto auto auto !important;
           overflow: visible !important;
           padding-right: 0 !important;
-          padding-bottom: 12px !important;
+          padding-bottom: 64px !important;
+          scroll-padding-bottom: 64px;
         }
 
         #workspace.nav-mbb-readable-workspace #codeCard {
@@ -146,6 +148,8 @@
           height: auto !important;
           overflow: visible !important;
           gap: 10px !important;
+          padding-bottom: 40px !important;
+          scroll-padding-bottom: 40px;
         }
 
         #workspace.nav-mbb-readable-workspace #codeCard {
