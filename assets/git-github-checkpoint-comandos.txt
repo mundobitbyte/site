@@ -40,7 +40,19 @@ cd /d "%USERPROFILE%"
 
 OPÇÃO B — sua pasta na rede
 
+Formato genérico:
+
 pushd \\<<<SERVIDOR>>>\<<<PASTA>>>\<<<SEU-USUARIO>>>
+
+Exemplo concreto de entrada na pasta-base da rede:
+
+pushd \\10.66.53.1\Publica\mtec2026\caio.goncalves\P.A
+
+Se as pastas já existirem e você quiser entrar diretamente no projeto:
+
+pushd \\10.66.53.1\Publica\mtec2026\caio.goncalves\P.A\meus-repositorios\site-cafe-aurora
+
+Neste primeiro percurso, use a pasta-base e depois crie as pastas abaixo.
 
 Depois, nas duas opções:
 
@@ -48,7 +60,13 @@ mkdir meus-repositorios
 cd meus-repositorios
 mkdir site-cafe-aurora
 cd site-cafe-aurora
+cd
 dir
+
+ANTES DE CONTINUAR:
+- o caminho atual deve terminar em site-cafe-aurora;
+- se aparecer apenas C:\Users\seuUsuario, você ainda não entrou no projeto;
+- NÃO execute git init fora da pasta site-cafe-aurora.
 
 Resultado esperado:
 - Você está dentro de site-cafe-aurora.
@@ -56,6 +74,14 @@ Resultado esperado:
 ============================================================
 CHECKPOINT 02 — INICIAR O REPOSITÓRIO
 ============================================================
+
+Confirme novamente o local:
+
+cd
+
+Só continue se o caminho terminar em site-cafe-aurora.
+
+Agora:
 
 git init
 
@@ -67,25 +93,59 @@ git status
 ATENÇÃO — SOMENTE SE APARECER:
 fatal: detected dubious ownership in repository
 
-No Git CMD, use o caminho EXATO mostrado pelo próprio Git e use ASPAS DUPLAS:
+Em uma unidade de rede mapeada, o CMD pode mostrar algo como Y:\..., mas o Git pode identificar o mesmo repositório como //10.66.53.1/Publica/...
+Use o caminho EXATO mostrado pelo próprio Git.
 
-git config --global --add safe.directory "<<<CAMINHO EXATO MOSTRADO PELO GIT>>>"
+NO GIT CMD:
+Se o Git sugerir o comando com ASPAS SIMPLES, troque por ASPAS DUPLAS.
+
+Exemplo:
+
+Git mostra o repositório:
+//10.66.53.1/Publica/mtec2026/caio.goncalves/P.A/meus-repositorios/site-cafe-aurora
+
+Use:
+
+git config --global --add safe.directory "%(prefix)///10.66.53.1/Publica/mtec2026/caio.goncalves/P.A/meus-repositorios/site-cafe-aurora"
 git status
 
-Se antes você gravou uma entrada errada de safe.directory:
+SE TAMBÉM APARECER:
+warning: safe.directory '...' not absolute
+
+isso normalmente indica uma entrada antiga ou incorreta na configuração global.
+Veja o que está gravado:
 
 git config --global --get-all safe.directory
 
-Se aquela entrada errada for a única da lista:
+Se a lista mostrar somente entradas antigas ou incorretas que você NÃO precisa preservar:
 
 git config --global --unset-all safe.directory
 
+Depois cadastre somente o repositório atual:
+
 git config --global --add safe.directory "<<<CAMINHO EXATO MOSTRADO PELO GIT>>>"
+git config --global --get-all safe.directory
 git status
 
 Se houver outras entradas corretas na lista, NÃO use --unset-all. Use:
 
 git config --global --edit
+
+Remova somente a linha incorreta e preserve as demais.
+
+IMPORTANTE:
+Não use safe.directory * como atalho.
+Autorize somente repositórios que você reconheça e em que confie.
+
+SE VOCÊ EXECUTOU git init ANTES DE ENTRAR NO PROJETO:
+Por exemplo:
+
+C:\Users\lenovo>git init
+
+então o repositório foi iniciado na pasta errada.
+Não continue executando comandos Git nesse local.
+Entre primeiro em site-cafe-aurora e só então use git init.
+Não apague uma pasta .git manualmente sem ter certeza de que ela foi criada por engano.
 
 Depois continue:
 
