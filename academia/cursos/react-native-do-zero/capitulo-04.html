@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 4 de React Native do Zero: Extraia um cartão reutilizável e descubra as props a partir da repetição real." />
+  <title>Capítulo 4 — Um produto que pode ser reutilizado | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="4">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-03.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-05.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 4</h2><p>Um produto que pode ser reutilizado</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-onde-paramos">1. Onde paramos</a></li><li><a href="#2-o-que-se-repete-e-o-que-muda">2. O que se repete e o que muda?</a></li><li><a href="#3-primeiro-extraia-um-unico-produto">3. Primeiro, extraia um único produto</a></li><li><a href="#4-use-produto-sem-mudar-o-resultado">4. Use Produto sem mudar o resultado</a></li><li><a href="#5-agora-tente-reutilizar-produto">5. Agora tente reutilizar Produto</a></li><li><a href="#6-a-necessidade-das-props-apareceu">6. A necessidade das props apareceu</a></li><li><a href="#7-experimente-para-entender">7. Experimente para entender</a></li><li><a href="#8-o-que-mudou-para-o-usuario">8. O que mudou para o usuário?</a></li><li><a href="#9-o-que-cada-componente-faz-agora">9. O que cada componente faz agora</a></li><li><a href="#10-marco-do-capitulo-produto-js-completo">10. Marco do capítulo - Produto.js completo</a></li><li><a href="#11-marco-do-capitulo-produtos-js-completo">11. Marco do capítulo - Produtos.js completo</a></li><li><a href="#12-o-que-aprendemos">12. O que aprendemos</a></li><li><a href="#13-o-que-ainda-nao-precisamos">13. O que ainda não precisamos</a></li><li><a href="#14-confira-antes-de-encerrar">14. Confira antes de encerrar</a></li><li><a href="#15-checkpoint-04-produto-reutilizavel">15. Checkpoint 04 - Produto reutilizável</a></li><li><a href="#16-o-proximo-problema-ja-apareceu">16. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 4</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Componente reutilizável</p><h1>Um produto que pode ser reutilizado</h1><p class="lead">No capítulo anterior, o aplicativo passou a mostrar dois produtos da Santa Filomena Água &amp; Gás. Para o usuário, a tela já cumpre melhor sua função: agora é possível reconhecer a empresa e enxergar o que ela vende.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 4"><div class="rn-app-screen"><div class="rn-app-identity"><div class="rn-app-brand">Santa Filomena Água &amp; Gás</div><img class="rn-app-logo" src="assets/checkpoint-01/assets/santa-filomena.png" alt="Identidade visual da Santa Filomena Água &amp; Gás" /><strong>Água mineral e gás com entrega</strong><small>Peça com praticidade e acompanhe sua entrega.</small></div><div class="rn-app-section-title">Produtos</div>
+      <div class="rn-app-product"><strong>Água mineral 20 L</strong><small>Galão retornável de água mineral.</small></div>
+      <div class="rn-app-product"><strong>Gás 13 kg</strong><small>Botijão residencial de 13 kg.</small></div></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><p>Mas o olhar do desenvolvedor encontra outra coisa: para mostrar dois produtos, repetimos praticamente a mesma estrutura de View e Text duas vezes.</p><div class="rn-note concept"><p>A interface funciona. O problema agora é repetir código para representar coisas que têm a mesma forma.</p></div></section><section class="rn-step rn-action" id="1-onde-paramos"><span class="rn-step-label">Construa e confira</span><h2>1. Onde paramos</h2><p>Abra components/Produtos.js. Este é o estado que herdamos do Capítulo 3:</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - estado ao início do Capítulo 4</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      &lt;View style={styles.produto}&gt;
+        &lt;Text style={styles.nomeProduto}&gt;Água mineral 20 L&lt;/Text&gt;
+        &lt;Text style={styles.descricaoProduto}&gt;
+          Galão retornável de água mineral.
+        &lt;/Text&gt;
+      &lt;/View&gt;
+      &lt;View style={styles.produto}&gt;
+        &lt;Text style={styles.nomeProduto}&gt;Gás 13 kg&lt;/Text&gt;
+        &lt;Text style={styles.descricaoProduto}&gt;
+          Botijão residencial de 13 kg.
+        &lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Não altere nada ainda. Compare apenas os dois blocos que representam Água mineral 20 L e Gás 13 kg.</p></section><section class="rn-step rn-action" id="2-o-que-se-repete-e-o-que-muda"><span class="rn-step-label">Construa e confira</span><h2>2. O que se repete e o que muda?</h2><p>Os dois produtos são diferentes, mas a forma usada para apresentá-los é quase idêntica.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A estrutura se repete: View, nome, descrição e os mesmos estilos.</p><p class="rn-list-line"><span aria-hidden="true">•</span>O conteúdo muda: nome do produto e descrição.</p><p>Essa distinção é importante. Antes de pensar em uma solução, precisamos saber exatamente qual parte é repetida e qual parte varia.</p><div class="rn-note concept"><p>Estrutura igual + informações diferentes. Esse é o problema real deste capítulo.</p></div><p>A primeira tentativa será simples: dar um componente próprio à estrutura de um produto. Ainda não vamos falar de props, listas ou map.</p></section><section class="rn-step rn-action" id="3-primeiro-extraia-um-unico-produto"><span class="rn-step-label">Construa e confira</span><h2>3. Primeiro, extraia um único produto</h2><p>Na lista de arquivos do Snack, use o comando de novo arquivo e crie components/Produto.js. Depois, mantenha esse arquivo aberto para digitar o conteúdo da etapa.</p><p>Neste primeiro momento, Produto ainda representa somente a Água mineral 20 L. Isso é intencional: primeiro vamos separar a estrutura repetida.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - arquivo novo; digite todo o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import { View, Text, StyleSheet } from &#x27;react-native&#x27;;</span>
+
+<span class="code-new">export default function Produto() {</span>
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;View style={styles.produto}&gt;</span>
+<span class="code-new">      &lt;Text style={styles.nomeProduto}&gt;</span>
+<span class="code-new">        Água mineral 20 L</span>
+<span class="code-new">      &lt;/Text&gt;</span>
+<span class="code-new">      &lt;Text style={styles.descricaoProduto}&gt;</span>
+<span class="code-new">        Galão retornável de água mineral.</span>
+<span class="code-new">      &lt;/Text&gt;</span>
+<span class="code-new">    &lt;/View&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span>
+<span class="code-new">const styles = StyleSheet.create({</span>
+<span class="code-new">  produto: {</span>
+<span class="code-new">    backgroundColor: &#x27;#f8fafc&#x27;,</span>
+<span class="code-new">    borderRadius: 12,</span>
+<span class="code-new">    padding: 14,</span>
+<span class="code-new">    marginBottom: 12,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  nomeProduto: {</span>
+<span class="code-new">    fontSize: 17,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  descricaoProduto: {</span>
+<span class="code-new">    fontSize: 14,</span>
+<span class="code-new">    marginTop: 4,</span>
+<span class="code-new">  },</span>
+<span class="code-new">});</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe que os estilos do cartão também foram trazidos para Produto.js. Agora esse arquivo sabe como um produto aparece na tela.</p></section><section class="rn-step rn-action" id="4-use-produto-sem-mudar-o-resultado"><span class="rn-step-label">Construa e confira</span><h2>4. Use Produto sem mudar o resultado</h2><p>Agora vamos usar o novo componente apenas no primeiro cartão. O segundo continuará como estava. Assim conseguimos comparar as duas formas lado a lado sem mudar aquilo que o usuário vê.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - arquivo completo; digite/ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+<span class="code-new">import Produto from &#x27;./Produto&#x27;;</span>
+
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+<span class="code-new">      &lt;Produto /&gt;</span>
+
+      &lt;View style={styles.produto}&gt;
+        &lt;Text style={styles.nomeProduto}&gt;Gás 13 kg&lt;/Text&gt;
+        &lt;Text style={styles.descricaoProduto}&gt;
+          Botijão residencial de 13 kg.
+        &lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a pré-visualização. A Água mineral 20 L deve continuar aparecendo como antes, e o cartão de Gás 13 kg também.</p><div class="rn-note concept"><p>Mudamos a organização interna do código, mas não precisamos mudar a experiência do usuário.</p></div><p>Isso também faz parte do trabalho profissional: melhorar a estrutura sem alterar um resultado que já estava correto.</p></section><section class="rn-step rn-action" id="5-agora-tente-reutilizar-produto"><span class="rn-step-label">Construa e confira</span><h2>5. Agora tente reutilizar Produto</h2><p>Se Produto já sabe desenhar um cartão, parece natural tentar usá-lo novamente para o segundo produto.</p><p>Substitua o bloco manual do gás por outro &lt;Produto /&gt;. Como os estilos do cartão não são mais usados em Produtos.js, eles também podem sair deste arquivo.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - experimento; arquivo completo após a substituição</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      &lt;Produto /&gt;
+<span class="code-new">      &lt;Produto /&gt;</span>
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a pré-visualização com atenção.</p><div class="rn-note concept"><p>Os dois cartões agora mostram Água mineral 20 L.</p></div><p>O reaproveitamento funcionou para a estrutura, mas revelou um novo problema: Produto ainda carrega as informações da água dentro dele. Para representar produtos diferentes, ele precisa receber informações diferentes.</p></section><section class="rn-step rn-action" id="6-a-necessidade-das-props-apareceu"><span class="rn-step-label">Construa e confira</span><h2>6. A necessidade das props apareceu</h2><p>Agora existe uma razão concreta para o componente receber informações de fora. É aqui que entra a ideia de props.</p><p>Vamos chamar de props o conjunto de informações que um componente recebe quando é utilizado. Neste projeto, Produto precisa receber apenas duas informações por enquanto: nome e descrição.</p><div class="rn-note concept"><p>Produtos.js informa os dados. Produto.js usa esses dados para montar o cartão.</p></div><h3>6.1. Faça Produto usar as informações recebidas</h3><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - arquivo completo; altere somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+
+<span class="code-new">export default function Produto(props) {</span>
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+<span class="code-new">        {props.nome}</span>
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+<span class="code-new">        {props.descricao}</span>
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Em function Produto(props), a palavra props representa as informações recebidas pelo componente. Em {props.nome} e {props.descricao}, as chaves permitem usar esses valores dentro do JSX.</p><p>Os nomes nome e descricao foram escolhidos por nós porque fazem sentido para este projeto.</p><h3>6.2. Envie os dados de cada produto</h3><p>Agora Produtos.js pode usar a mesma estrutura duas vezes e enviar conteúdos diferentes para cada uso.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - arquivo completo; digite/ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+<span class="code-new">      &lt;Produto</span>
+<span class="code-new">        nome=&quot;Água mineral 20 L&quot;</span>
+<span class="code-new">        descricao=&quot;Galão retornável de água mineral.&quot;</span>
+<span class="code-new">      /&gt;</span>
+
+<span class="code-new">      &lt;Produto</span>
+<span class="code-new">        nome=&quot;Gás 13 kg&quot;</span>
+<span class="code-new">        descricao=&quot;Botijão residencial de 13 kg.&quot;</span>
+<span class="code-new">      /&gt;</span>
+<span class="code-new">    &lt;/View&gt;</span>
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a pré-visualização. Os dois cartões voltam a mostrar conteúdos diferentes: Água mineral 20 L e Gás 13 kg.</p><div class="rn-note concept"><p>A mesma estrutura foi reutilizada. O que muda agora são apenas os dados enviados para ela.</p></div></section><section class="rn-step rn-observe" id="7-experimente-para-entender"><span class="rn-step-label">Construa e confira</span><h2>7. Experimente para entender</h2><p>Em Produtos.js, altere temporariamente somente o nome do segundo produto:</p><div class="rn-note concept"><p>nome=&quot;Gás residencial 13 kg&quot;</p></div><p>Observe a pré-visualização. Apenas o segundo cartão deve mudar. Depois volte para:</p><div class="rn-note concept"><p>nome=&quot;Gás 13 kg&quot;</p></div><p>Esse teste confirma que Produto define a estrutura e que cada uso pode fornecer informações próprias.</p></section><section class="rn-step rn-action" id="8-o-que-mudou-para-o-usuario"><span class="rn-step-label">Construa e confira</span><h2>8. O que mudou para o usuário?</h2><p>Visualmente, quase nada. E isso é proposital.</p><p>O usuário continua vendo dois cartões claros e separados. A melhoria aconteceu principalmente na organização interna do aplicativo.</p><div class="rn-note concept"><p>Nem toda evolução de um sistema precisa mudar a tela. Algumas mudanças tornam o código mais fácil de manter e ampliar.</p></div></section><section class="rn-step rn-action" id="9-o-que-cada-componente-faz-agora"><span class="rn-step-label">Construa e confira</span><h2>9. O que cada componente faz agora</h2><div class="rn-flow"><span>App.js → organiza a tela maior</span><span class="arrow">→</span><span>IdentidadeEmpresa.js → apresenta a empresa</span><span class="arrow">→</span><span>Produtos.js → decide quais produtos aparecem</span><span class="arrow">→</span><span>Produto.js → define como cada produto aparece</span></div><p>Essa divisão não surgiu de uma regra abstrata. Cada arquivo apareceu quando o projeto criou uma necessidade real para ele.</p></section><section class="rn-step rn-action" id="10-marco-do-capitulo-produto-js-completo"><span class="rn-step-label">Construa e confira</span><h2>10. Marco do capítulo - Produto.js completo</h2><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - estado ao final do Capítulo 4</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function Produto(props) {
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+        {props.nome}
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+        {props.descricao}
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="11-marco-do-capitulo-produtos-js-completo"><span class="rn-step-label">Construa e confira</span><h2>11. Marco do capítulo - Produtos.js completo</h2><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - estado ao final do Capítulo 4</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      &lt;Produto
+        nome=&quot;Água mineral 20 L&quot;
+        descricao=&quot;Galão retornável de água mineral.&quot;
+      /&gt;
+
+      &lt;Produto
+        nome=&quot;Gás 13 kg&quot;
+        descricao=&quot;Botijão residencial de 13 kg.&quot;
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-observe" id="12-o-que-aprendemos"><span class="rn-step-label">Construa e confira</span><h2>12. O que aprendemos</h2><p>Os conhecimentos deste capítulo nasceram da repetição encontrada no código:</p><p class="rn-list-line"><span aria-hidden="true">•</span>uma estrutura repetida pode ganhar um componente próprio;</p><p class="rn-list-line"><span aria-hidden="true">•</span>um componente pode ser utilizado mais de uma vez;</p><p class="rn-list-line"><span aria-hidden="true">•</span>props permitem que a mesma estrutura receba informações diferentes;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js define a aparência de um produto;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js escolhe quais produtos aparecem e quais dados envia para cada um;</p><p class="rn-list-line"><span aria-hidden="true">•</span>uma melhoria interna pode preservar exatamente a experiência que já funcionava para o usuário.</p></section><section class="rn-step rn-action" id="13-o-que-ainda-nao-precisamos"><span class="rn-step-label">Construa e confira</span><h2>13. O que ainda não precisamos</h2><p>Mesmo com dois produtos reutilizando Produto.js, ainda não surgiu necessidade de acrescentar:</p><p class="rn-list-line"><span aria-hidden="true">•</span>array;</p><p class="rn-list-line"><span aria-hidden="true">•</span>map;</p><p class="rn-list-line"><span aria-hidden="true">•</span>useState;</p><p class="rn-list-line"><span aria-hidden="true">•</span>quantidade;</p><p class="rn-list-line"><span aria-hidden="true">•</span>carrinho;</p><p class="rn-list-line"><span aria-hidden="true">•</span>navegação;</p><p class="rn-list-line"><span aria-hidden="true">•</span>backend ou banco de dados.</p><p>Esses recursos continuam esperando o momento em que o próprio projeto pedir por eles.</p></section><section class="rn-step rn-observe" id="14-confira-antes-de-encerrar"><span class="rn-step-label">Construa e confira</span><h2>14. Confira antes de encerrar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>Existe um arquivo components/Produto.js.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js contém a estrutura visual de um cartão de produto.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto recebe nome e descrição por props.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js usa Produto duas vezes com informações diferentes.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Água mineral 20 L e Gás 13 kg continuam aparecendo corretamente.</p><p class="rn-list-line"><span aria-hidden="true">•</span>O usuário não perdeu nenhuma informação que já estava disponível.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A pré-visualização continua sendo exibida sem erros.</p></section><section class="rn-step rn-checkpoint" id="15-checkpoint-04-produto-reutilizavel"><span class="rn-step-label">Checkpoint</span><h2>15. Checkpoint 04 - Produto reutilizável</h2><p>Ao concluir as conferências acima, preserve este estado como referência do checkpoint do capítulo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js completo;</p><p class="rn-list-line"><span aria-hidden="true">•</span>IdentidadeEmpresa.js preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js completo;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js completo;</p><p class="rn-list-line"><span aria-hidden="true">•</span>santa-filomena.png;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Snack correspondente;</p><p class="rn-list-line"><span aria-hidden="true">•</span>screenshot do resultado validado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>arquivos de recuperação.</p></section><section class="rn-step rn-action" id="16-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>16. O próximo problema já apareceu</h2><p>Agora não repetimos mais toda a estrutura do cartão. Mas Produtos.js ainda precisa escrever um &lt;Produto&gt; para cada item que queremos mostrar.</p><p>Com dois produtos isso é simples. E se a Santa Filomena Água &amp; Gás tiver cinco, dez ou vinte produtos?</p><div class="rn-note concept"><p>Vamos continuar escrevendo uma chamada &lt;Produto&gt; para cada item?</p></div><p>Essa é a próxima limitação. Somente a partir dela fará sentido estudar uma forma de reunir os dados dos produtos e produzir os componentes a partir desses dados.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 4 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-03.html"><small>Capítulo anterior</small><strong>Capítulo 3</strong></a><a href="capitulo-05.html"><small>Próximo capítulo</small><strong>Capítulo 5</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

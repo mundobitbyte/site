@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 18 de React Native do Zero: Gere um APK de preview, instale no Android e valide sem o Expo Go." />
+  <title>Capítulo 18 — O aplicativo pode ser instalado | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="18">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-17.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 18</h2><p>O aplicativo pode ser instalado</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-desenvolvimento-e-instalacao-sao-coisas-diferentes">1. Desenvolvimento e instalação são coisas diferentes</a></li><li><a href="#2-entre-no-servico-de-build-da-expo">2. Entre no serviço de build da Expo</a></li><li><a href="#3-defina-a-identificacao-android">3. Defina a identificação Android</a></li><li><a href="#4-configure-o-eas-build">4. Configure o EAS Build</a></li><li><a href="#5-gere-o-apk">5. Gere o APK</a></li><li><a href="#6-instale-no-aparelho">6. Instale no aparelho</a></li><li><a href="#7-o-teste-que-fecha-o-volume">7. O teste que fecha o volume</a></li><li><a href="#8-apk-nao-e-o-mesmo-que-publicacao-na-loja">8. APK não é o mesmo que publicação na loja</a></li><li><a href="#9-checkpoint-18-aplicativo-instalavel">9. Checkpoint 18 - Aplicativo instalável</a></li><li><a href="#10-o-volume-1-termina-aqui">10. O Volume 1 termina aqui</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 18</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Aplicativo instalável</p><h1>O aplicativo pode ser instalado</h1><p class="lead">O aplicativo já possui código, navegação, comunicação de rede e identidade configurada. Falta retirar a última dependência do percurso de desenvolvimento: ele precisa abrir como aplicativo instalado, sem Expo Go e sem o servidor do computador.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 18"><div class="rn-app-screen"><div class="rn-build-preview"><span>✓</span><strong>Build Android concluído</strong><code>santa-filomena-app.apk</code><small>Pronto para instalar e testar no aparelho</small></div></div></div>
+      </section>
+      <section class="rn-step rn-action" id="1-desenvolvimento-e-instalacao-sao-coisas-diferentes"><span class="rn-step-label">Construa e confira</span><h2>1. Desenvolvimento e instalação são coisas diferentes</h2><div class="rn-note success"><strong>Artefato de teste</strong><p>O perfil <code>preview</code> com <code>android.buildType: "apk"</code> gera um arquivo instalável diretamente no aparelho.</p></div><p>Expo Go é excelente para desenvolver e testar. Um usuário final, porém, não deveria depender dele. Para uma instalação direta no Android, precisamos gerar um APK.</p></section><section class="rn-step rn-action" id="2-entre-no-servico-de-build-da-expo"><span class="rn-step-label">Construa e confira</span><h2>2. Entre no serviço de build da Expo</h2><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>npm install --global eas-cli
+eas login
+eas whoami</code></pre>
+        </div><p>A conta usada pode ser a mesma conta Expo criada no início do curso.</p></section><section class="rn-step rn-action" id="3-defina-a-identificacao-android"><span class="rn-step-label">Construa e confira</span><h2>3. Defina a identificação Android</h2><p>No app.json, acrescente um identificador de aplicativo. Para o projeto didático deste curso, usaremos:</p><div class="code-card"><div class="code-card-head"><span>app.json — arquivo completo com identificação Android</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div><pre><code>{
+  &quot;expo&quot;: {
+    &quot;name&quot;: &quot;Santa Filomena Água &amp; Gás&quot;,
+    &quot;slug&quot;: &quot;santa-filomena-agua-e-gas&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;orientation&quot;: &quot;portrait&quot;,
+    &quot;icon&quot;: &quot;./assets/icon.png&quot;,
+    &quot;userInterfaceStyle&quot;: &quot;light&quot;,
+    &quot;plugins&quot;: [
+      [
+        &quot;expo-splash-screen&quot;,
+        {
+          &quot;image&quot;: &quot;./assets/splash-icon.png&quot;,
+          &quot;imageWidth&quot;: 200,
+          &quot;resizeMode&quot;: &quot;contain&quot;,
+          &quot;backgroundColor&quot;: &quot;#eef3f7&quot;
+        }
+      ]
+    ],
+    &quot;android&quot;: {
+      &quot;package&quot;: &quot;com.mundobitbyte.santafilomena&quot;
+    }
+  }
+}</code></pre></div><p>Esse identificador pertence ao aplicativo Android e não é o nome mostrado ao usuário.</p></section><section class="rn-step rn-action" id="4-configure-o-eas-build"><span class="rn-step-label">Construa e confira</span><h2>4. Configure o EAS Build</h2><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>eas build:configure -p android</code></pre>
+        </div><p>O comando cria ou atualiza eas.json. Para este percurso, configure um perfil de preview que produza um APK instalável.</p><div class="code-card">
+          <div class="code-card-head"><span>eas.json - configuração mínima deste percurso</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>{
+  &quot;build&quot;: {
+    &quot;preview&quot;: {
+      &quot;distribution&quot;: &quot;internal&quot;,
+      &quot;android&quot;: {
+        &quot;buildType&quot;: &quot;apk&quot;
+      }
+    },
+    &quot;production&quot;: {}
+  }
+}</code></pre>
+        </div></section><section class="rn-step rn-action" id="5-gere-o-apk"><span class="rn-step-label">Construa e confira</span><h2>5. Gere o APK</h2><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>eas build -p android --profile preview</code></pre>
+        </div><p>O build ocorre na infraestrutura da Expo. Na primeira execução, o EAS pode pedir confirmação ou criação das credenciais de assinatura Android. Para este projeto didático, escolha a opção de deixar o serviço gerenciar as credenciais.</p></section><section class="rn-step rn-action" id="6-instale-no-aparelho"><span class="rn-step-label">Construa e confira</span><h2>6. Instale no aparelho</h2><p>Quando o build terminar, abra a página do build indicada pelo EAS e use a opção de instalação no aparelho Android. O perfil internal/preview gera um APK apropriado para instalação direta.</p></section><section class="rn-step rn-action" id="7-o-teste-que-fecha-o-volume"><span class="rn-step-label">Construa e confira</span><h2>7. O teste que fecha o volume</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Feche o Expo Go.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Encerre o servidor npx expo start no computador.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Abra o aplicativo Santa Filomena Água &amp; Gás pelo ícone instalado no Android.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Observe a abertura e valide a identidade visual nativa.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Percorra produtos, cliente, endereço e revisão.</p><p class="rn-list-line"><span aria-hidden="true">6.</span>Execute o envio de demonstração.</p><p class="rn-list-line"><span aria-hidden="true">7.</span>Feche e abra o aplicativo novamente.</p></section><section class="rn-step rn-action" id="8-apk-nao-e-o-mesmo-que-publicacao-na-loja"><span class="rn-step-label">Construa e confira</span><h2>8. APK não é o mesmo que publicação na loja</h2><p>O APK deste capítulo serve para instalação e validação interna. Para publicar um novo aplicativo na Google Play, o fluxo de produção normalmente usa Android App Bundle (AAB) e ainda envolve cadastro, políticas, ficha da loja e processo de distribuição. Isso não é necessário para provar o objetivo deste volume: gerar e instalar o aplicativo construído.</p></section><section class="rn-step rn-checkpoint" id="9-checkpoint-18-aplicativo-instalavel"><span class="rn-step-label">Checkpoint</span><h2>9. Checkpoint 18 - Aplicativo instalável</h2><p class="rn-list-line"><span aria-hidden="true">•</span>código do projeto preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>app.json com identidade e android.package;</p><p class="rn-list-line"><span aria-hidden="true">•</span>assets de ícone e splash;</p><p class="rn-list-line"><span aria-hidden="true">•</span>eas.json com perfil preview;</p><p class="rn-list-line"><span aria-hidden="true">•</span>APK gerado pelo EAS Build;</p><p class="rn-list-line"><span aria-hidden="true">•</span>instalação e abertura independentes do Expo Go;</p><p class="rn-list-line"><span aria-hidden="true">•</span>evidências do percurso completo no aplicativo instalado.</p></section><section class="rn-step rn-action" id="10-o-volume-1-termina-aqui"><span class="rn-step-label">Construa e confira</span><h2>10. O Volume 1 termina aqui</h2><p>O leitor partiu de um problema real, construiu a interface, organizou dados e componentes, criou interação, montou um pedido, navegou entre telas, enviou dados por rede, levou o projeto para fora do Snack e terminou com um aplicativo instalável.</p><p>O próximo volume poderá tratar do que este protótipo ainda não possui: backend próprio, API própria, banco de dados em nuvem, persistência de pedidos reais e área administrativa.</p><p>Entender → Experimentar → Programar → Aplicar.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 18 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-17.html"><small>Capítulo anterior</small><strong>Capítulo 17</strong></a><a href="index.html"><small>Percurso completo</small><strong>Voltar ao curso</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

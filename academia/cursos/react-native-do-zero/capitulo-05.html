@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 5 de React Native do Zero: Transforme os produtos em dados e gere os cartões com map e key." />
+  <title>Capítulo 5 — Os produtos viram uma lista | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="5">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-04.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-06.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 5</h2><p>Os produtos viram uma lista</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-onde-paramos">1. Onde paramos</a></li><li><a href="#2-o-que-realmente-muda-de-um-produto-para-outro">2. O que realmente muda de um produto para outro?</a></li><li><a href="#3-uma-lista-para-guardar-os-produtos">3. Uma lista para guardar os produtos</a></li><li><a href="#4-leia-a-estrutura-antes-de-continuar">4. Leia a estrutura antes de continuar</a></li><li><a href="#5-a-lista-existe-mas-ainda-nao-controla-a-tela">5. A lista existe, mas ainda não controla a tela</a></li><li><a href="#6-para-cada-produto-crie-um-produto">6. Para cada produto, crie um Produto</a></li><li><a href="#7-por-que-existe-key">7. Por que existe key?</a></li><li><a href="#8-experimente-para-comprovar">8. Experimente para comprovar</a></li><li><a href="#9-marco-do-capitulo-produtos-js-completo">9. Marco do capítulo - Produtos.js completo</a></li><li><a href="#10-o-que-mudou-e-o-que-permaneceu">10. O que mudou e o que permaneceu</a></li><li><a href="#11-o-que-aprendemos">11. O que aprendemos</a></li><li><a href="#12-confira-antes-de-encerrar">12. Confira antes de encerrar</a></li><li><a href="#13-checkpoint-05-produtos-vindos-de-uma-lista">13. Checkpoint 05 - Produtos vindos de uma lista</a></li><li><a href="#14-o-proximo-problema-ja-apareceu">14. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 5</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Lista de dados</p><h1>Os produtos viram uma lista</h1><p class="lead">No fim do capítulo anterior, o mesmo componente Produto já consegue representar Água mineral 20 L e Gás 13 kg. A tela continua simples, mas o código ficou melhor organizado.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 5"><div class="rn-app-screen"><div class="rn-app-identity"><div class="rn-app-brand">Santa Filomena Água &amp; Gás</div><img class="rn-app-logo" src="assets/checkpoint-01/assets/santa-filomena.png" alt="Identidade visual da Santa Filomena Água &amp; Gás" /><strong>Água mineral e gás com entrega</strong><small>Peça com praticidade e acompanhe sua entrega.</small></div><div class="rn-app-section-title">Produtos</div>
+      <div class="rn-app-product"><strong>Água mineral 20 L</strong><small>Galão retornável de água mineral.</small></div>
+      <div class="rn-app-product"><strong>Gás 13 kg</strong><small>Botijão residencial de 13 kg.</small></div></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><p>Agora observe Produtos.js. A estrutura interna dos cartões não se repete mais, porém ainda existe uma repetição clara: para cada produto escrevemos outra chamada &lt;Produto&gt;.</p></section><section class="rn-step rn-action" id="1-onde-paramos"><span class="rn-step-label">Construa e confira</span><h2>1. Onde paramos</h2><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - estado herdado do Capítulo 4</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      &lt;Produto
+        nome=&quot;Água mineral 20 L&quot;
+        descricao=&quot;Galão retornável de água mineral.&quot;
+      /&gt;
+
+      &lt;Produto
+        nome=&quot;Gás 13 kg&quot;
+        descricao=&quot;Botijão residencial de 13 kg.&quot;
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Com dois produtos, isso ainda parece pequeno. Mas o problema já está visível.</p><div class="rn-note concept"><p>Se a empresa tiver 10 produtos, teremos 10 chamadas &lt;Produto&gt;. Se tiver 30, teremos 30 chamadas.</p></div></section><section class="rn-step rn-action" id="2-o-que-realmente-muda-de-um-produto-para-outro"><span class="rn-step-label">Construa e confira</span><h2>2. O que realmente muda de um produto para outro?</h2><p>Compare as duas chamadas. A estrutura é a mesma. O que muda são apenas as informações enviadas ao componente:</p><p class="rn-list-line"><span aria-hidden="true">•</span>nome do produto;</p><p class="rn-list-line"><span aria-hidden="true">•</span>descrição.</p><p>Isso sugere uma mudança de organização: antes de pedir ao aplicativo que repita automaticamente os cartões, precisamos ter um lugar único para guardar as informações dos produtos.</p><div class="rn-note concept"><p>Primeiro organizamos os dados. Depois fazemos a interface usar esses dados.</p></div></section><section class="rn-step rn-action" id="3-uma-lista-para-guardar-os-produtos"><span class="rn-step-label">Construa e confira</span><h2>3. Uma lista para guardar os produtos</h2><p>Em JavaScript, uma lista desse tipo pode ser representada por um array. Cada item da lista pode guardar as informações de um produto.</p><p>Também vamos dar a cada produto um id. Ele não aparece para o cliente; serve como uma identificação estável dentro do aplicativo.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - arquivo completo; acrescente somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+<span class="code-new">const produtos = [</span>
+<span class="code-new">  {</span>
+<span class="code-new">    id: 1,</span>
+<span class="code-new">    nome: &#x27;Água mineral 20 L&#x27;,</span>
+<span class="code-new">    descricao: &#x27;Galão retornável de água mineral.&#x27;,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  {</span>
+<span class="code-new">    id: 2,</span>
+<span class="code-new">    nome: &#x27;Gás 13 kg&#x27;,</span>
+<span class="code-new">    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,</span>
+<span class="code-new">  },</span>
+<span class="code-new">];</span>
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      &lt;Produto
+        nome=&quot;Água mineral 20 L&quot;
+        descricao=&quot;Galão retornável de água mineral.&quot;
+      /&gt;
+
+      &lt;Produto
+        nome=&quot;Gás 13 kg&quot;
+        descricao=&quot;Botijão residencial de 13 kg.&quot;
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a pré-visualização: visualmente, nada mudou. Isso é esperado. Criamos a lista, mas a tela ainda continua usando as duas chamadas escritas manualmente.</p></section><section class="rn-step rn-action" id="4-leia-a-estrutura-antes-de-continuar"><span class="rn-step-label">Construa e confira</span><h2>4. Leia a estrutura antes de continuar</h2><p>O trecho novo pode ser lido assim:</p><div class="rn-flow"><span>produtos</span><span class="arrow">→</span><span>→ é a lista inteira.</span><span class="arrow">→</span><span>[ ... ]</span><span class="arrow">→</span><span>→ indica que estamos guardando vários itens.</span><span class="arrow">→</span><span>{ ... }</span><span class="arrow">→</span><span>→ reúne as informações de um único produto.</span><span class="arrow">→</span><span>id, nome e descricao</span><span class="arrow">→</span><span>→ são informações pertencentes àquele produto.</span></div><p>Não precisamos transformar isso em uma aula abstrata sobre arrays e objetos. Aqui eles apareceram porque o projeto passou a precisar de uma forma organizada de representar vários produtos.</p></section><section class="rn-step rn-action" id="5-a-lista-existe-mas-ainda-nao-controla-a-tela"><span class="rn-step-label">Construa e confira</span><h2>5. A lista existe, mas ainda não controla a tela</h2><p>Agora temos duas fontes para as mesmas informações: a lista produtos e as duas chamadas &lt;Produto&gt; escritas manualmente.</p><p>Isso cria a próxima necessidade:</p><div class="rn-note concept"><p>Como fazer uma chamada &lt;Produto&gt; para cada item que já está dentro da lista?</p></div><p>É exatamente para esse tipo de situação que vamos usar map.</p></section><section class="rn-step rn-action" id="6-para-cada-produto-crie-um-produto"><span class="rn-step-label">Construa e confira</span><h2>6. Para cada produto, crie um Produto</h2><p>O método map percorre os itens do array. Em nosso caso, para cada item chamado produto, ele produzirá um componente &lt;Produto&gt;.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - arquivo completo; substitua as duas chamadas manuais pelo bloco em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+];
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+<span class="code-new">      {produtos.map((produto) =&gt; (</span>
+<span class="code-new">        &lt;Produto</span>
+<span class="code-new">          key={produto.id}</span>
+<span class="code-new">          nome={produto.nome}</span>
+<span class="code-new">          descricao={produto.descricao}</span>
+<span class="code-new">        /&gt;</span>
+<span class="code-new">      ))}</span>
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a pré-visualização. O resultado esperado continua sendo dois cartões: Água mineral 20 L e Gás 13 kg.</p><p>A diferença está no código: Produtos.js não precisa mais ter uma chamada escrita manualmente para cada item.</p><div class="rn-note concept"><p>produtos.map(...) pode ser lido, neste momento, como: “para cada produto da lista, monte um componente Produto”.</p></div></section><section class="rn-step rn-action" id="7-por-que-existe-key"><span class="rn-step-label">Construa e confira</span><h2>7. Por que existe key?</h2><p>Dentro do map aparece uma linha nova:</p><div class="rn-note concept"><p>key={produto.id}</p></div><p>Quando React cria vários componentes a partir de uma lista, ele precisa distinguir um item do outro. Por isso usamos o id estável de cada produto como key.</p><p>key não é uma informação mostrada na interface e também não precisa ser enviada como uma prop comum para Produto. Ela ajuda o React a acompanhar cada item da lista.</p></section><section class="rn-step rn-observe" id="8-experimente-para-comprovar"><span class="rn-step-label">Construa e confira</span><h2>8. Experimente para comprovar</h2><p>Agora vamos testar se a lista realmente controla quantos cartões aparecem. Acrescente temporariamente um terceiro item ao array.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - experimento temporário; acrescente somente o novo item em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+<span class="code-new">  {</span>
+<span class="code-new">    id: 99,</span>
+<span class="code-new">    nome: &#x27;Produto de teste&#x27;,</span>
+<span class="code-new">    descricao: &#x27;Item temporário para observar a lista.&#x27;,</span>
+<span class="code-new">  },</span>
+];
+
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      {produtos.map((produto) =&gt; (
+        &lt;Produto
+          key={produto.id}
+          nome={produto.nome}
+          descricao={produto.descricao}
+        /&gt;
+      ))}
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a pré-visualização. Um terceiro cartão deve aparecer sem que você tenha escrito uma terceira chamada &lt;Produto&gt;.</p><p>Depois do teste, apague o produto temporário e volte ao array com apenas Água mineral 20 L e Gás 13 kg.</p><div class="rn-note concept"><p>A lista passou a controlar quantos produtos a interface apresenta.</p></div></section><section class="rn-step rn-action" id="9-marco-do-capitulo-produtos-js-completo"><span class="rn-step-label">Construa e confira</span><h2>9. Marco do capítulo - Produtos.js completo</h2><p>Veja o arquivo inteiro sem destaques. Este é o estado final do componente neste capítulo.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - estado ao final do Capítulo 5</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+];
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      {produtos.map((produto) =&gt; (
+        &lt;Produto
+          key={produto.id}
+          nome={produto.nome}
+          descricao={produto.descricao}
+        /&gt;
+      ))}
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="10-o-que-mudou-e-o-que-permaneceu"><span class="rn-step-label">Construa e confira</span><h2>10. O que mudou e o que permaneceu</h2><p>Para o usuário, a tela continua apresentando os mesmos dois produtos. Para o código, porém, aconteceu uma mudança importante:</p><p class="rn-list-line"><span aria-hidden="true">•</span>os dados dos produtos agora ficam reunidos em uma lista;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto continua responsável pela aparência de um cartão;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos percorre a lista e cria os cartões necessários;</p><p class="rn-list-line"><span aria-hidden="true">•</span>adicionar outro produto passa a significar adicionar outro item aos dados, e não copiar um bloco de interface.</p><p>Essa é uma evolução interna do sistema. Nem toda melhoria profissional precisa mudar imediatamente aquilo que o usuário vê.</p></section><section class="rn-step rn-observe" id="11-o-que-aprendemos"><span class="rn-step-label">Construa e confira</span><h2>11. O que aprendemos</h2><p>Os conceitos entraram porque a repetição criou uma necessidade real:</p><p class="rn-list-line"><span aria-hidden="true">•</span>array como uma lista de produtos;</p><p class="rn-list-line"><span aria-hidden="true">•</span>objeto para reunir id, nome e descrição de cada produto;</p><p class="rn-list-line"><span aria-hidden="true">•</span>map para percorrer a lista e produzir componentes;</p><p class="rn-list-line"><span aria-hidden="true">•</span>key para identificar cada item de forma estável.</p><p>Não precisamos dominar todas as possibilidades de arrays, objetos ou map agora. Precisamos compreender o suficiente para saber por que apareceram neste projeto.</p></section><section class="rn-step rn-observe" id="12-confira-antes-de-encerrar"><span class="rn-step-label">Construa e confira</span><h2>12. Confira antes de encerrar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js possui um array chamado produtos.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Cada produto possui id, nome e descricao.</p><p class="rn-list-line"><span aria-hidden="true">•</span>As duas chamadas manuais &lt;Produto&gt; foram substituídas por produtos.map(...).</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js continua recebendo nome e descricao por props.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A interface continua mostrando Água mineral 20 L e Gás 13 kg.</p><p class="rn-list-line"><span aria-hidden="true">•</span>O produto temporário usado no experimento foi removido.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A pré-visualização continua sendo exibida sem erros.</p></section><section class="rn-step rn-checkpoint" id="13-checkpoint-05-produtos-vindos-de-uma-lista"><span class="rn-step-label">Checkpoint</span><h2>13. Checkpoint 05 - Produtos vindos de uma lista</h2><p>Ao concluir as conferências acima, preserve este estado como referência do checkpoint do capítulo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js completo;</p><p class="rn-list-line"><span aria-hidden="true">•</span>IdentidadeEmpresa.js preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js reutilizável;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js com array e map;</p><p class="rn-list-line"><span aria-hidden="true">•</span>asset oficial santa-filomena.png;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Snack correspondente e screenshot validado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>arquivos de recuperação.</p></section><section class="rn-step rn-action" id="14-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>14. O próximo problema já apareceu</h2><p>Agora o aplicativo consegue apresentar quantos produtos existirem na lista. Mas, para o cliente, todos eles ainda são apenas informações na tela.</p><div class="rn-note concept"><p>O cliente já consegue ver os produtos. Mas ainda não consegue escolher nenhum deles.</p></div><p>A próxima evolução deverá nascer dessa limitação. Não vamos decidir antecipadamente se isso exigirá botão, estado, quantidade ou outra solução. Primeiro observaremos qual é a menor interação útil para o usuário.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 5 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-04.html"><small>Capítulo anterior</small><strong>Capítulo 4</strong></a><a href="capitulo-06.html"><small>Próximo capítulo</small><strong>Capítulo 6</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

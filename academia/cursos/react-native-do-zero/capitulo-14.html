@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 14 de React Native do Zero: Envie uma demonstração por HTTP e trate espera, sucesso e falha." />
+  <title>Capítulo 14 — O pedido sai do aplicativo | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="14">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-13.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-15.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 14</h2><p>O pedido sai do aplicativo</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-agora-precisamos-conversar-com-outro-sistema">1. Agora precisamos conversar com outro sistema</a></li><li><a href="#2-o-teste-precisa-ser-seguro-e-honesto">2. O teste precisa ser seguro e honesto</a></li><li><a href="#3-a-comunicacao-externa-ganha-um-lugar-proprio">3. A comunicação externa ganha um lugar próprio</a></li><li><a href="#4-leia-a-requisicao-antes-de-decorar">4. Leia a requisição antes de decorar</a></li><li><a href="#5-antes-de-enviar-o-pedido-precisa-estar-pronto">5. Antes de enviar, o pedido precisa estar pronto</a></li><li><a href="#6-a-tela-de-revisao-ganha-a-acao-final">6. A tela de revisão ganha a ação final</a></li><li><a href="#7-o-que-exatamente-enviamos">7. O que exatamente enviamos</a></li><li><a href="#8-por-que-existem-try-catch-e-finally">8. Por que existem try, catch e finally</a></li><li><a href="#9-faca-o-percurso-completo">9. Faça o percurso completo</a></li><li><a href="#10-sucesso-de-demonstracao-nao-e-venda-real">10. Sucesso de demonstração não é venda real</a></li><li><a href="#11-o-que-seria-necessario-em-producao">11. O que seria necessário em produção</a></li><li><a href="#12-o-percurso-que-voce-construiu">12. O percurso que você construiu</a></li><li><a href="#13-o-que-aprendemos-neste-capitulo">13. O que aprendemos neste capítulo</a></li><li><a href="#14-confira-antes-de-encerrar">14. Confira antes de encerrar</a></li><li><a href="#15-checkpoint-14-o-pedido-sai-do-aplicativo">15. Checkpoint 14 - O pedido sai do aplicativo</a></li><li><a href="#16-fechamento">16. Fechamento</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 14</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Comunicação de rede</p><h1>O pedido sai do aplicativo</h1><p class="lead">Até aqui, o aplicativo consegue montar um pedido completo e conduzir o cliente por produtos, dados, endereço e revisão.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 14"><div class="rn-app-screen"><div class="rn-app-route"><span>1 Produtos</span><span>2 Cliente</span><span>3 Endereço</span><span class="active">4 Revisão</span></div><div class="rn-app-review"><strong>Revise seu pedido</strong><p>Pedido completo para demonstração.</p><b>Total: R$ 140,00</b></div><button class="rn-app-primary">Enviar pedido</button><p class="rn-app-ok">Envio de demonstração concluído. Protocolo simulado: 101.</p></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><p>Mas tudo ainda existe somente dentro do próprio aplicativo.</p><div class="rn-note concept"><p>Se o cliente tocar em confirmar, para onde esses dados devem ir?</p></div></section><section class="rn-step rn-action" id="1-agora-precisamos-conversar-com-outro-sistema"><span class="rn-step-label">Construa e confira</span><h2>1. Agora precisamos conversar com outro sistema</h2><p>Um aplicativo real normalmente envia dados pela rede para algum serviço: uma API, um servidor ou outro sistema capaz de receber e processar o pedido.</p><p>React Native já disponibiliza a API Fetch para realizar requisições de rede. Neste curso, vamos usá-la com HTTPS e com uma API pública criada para testes.</p><div class="rn-flow"><span>Aplicativo → requisição HTTP → API → resposta → aplicativo</span></div></section><section class="rn-step rn-action" id="2-o-teste-precisa-ser-seguro-e-honesto"><span class="rn-step-label">Construa e confira</span><h2>2. O teste precisa ser seguro e honesto</h2><p>Não vamos fingir que existe um servidor real da Santa Filomena Água &amp; Gás. Usaremos JSONPlaceholder, uma API pública para testes e protótipos.</p><p>Ela aceita uma requisição POST e devolve uma resposta como se um recurso tivesse sido criado. O próprio serviço informa que essa criação é simulada e não fica realmente persistida.</p><div class="rn-note concept"><p>Neste capítulo, &#x27;pedido enviado&#x27; significa: o aplicativo conseguiu realizar uma requisição de demonstração e recebeu uma resposta.</p></div></section><section class="rn-step rn-action" id="3-a-comunicacao-externa-ganha-um-lugar-proprio"><span class="rn-step-label">Construa e confira</span><h2>3. A comunicação externa ganha um lugar próprio</h2><p>Até agora, components guarda partes da interface e screens guarda telas. A comunicação com um serviço externo é outra responsabilidade.</p><div class="rn-flow"><span>components/ → interface reutilizável</span><span class="arrow">→</span><span>screens/ → telas completas</span><span class="arrow">→</span><span>services/ → comunicação com serviços externos</span></div><p>Crie a pasta services e, dentro dela, o arquivo pedidoApi.js.</p><div class="code-card">
+          <div class="code-card-head"><span>services/pedidoApi.js - arquivo novo; digite todo o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">const URL_PEDIDOS =</span>
+<span class="code-new">  &#x27;https://jsonplaceholder.typicode.com/posts&#x27;;</span>
+
+<span class="code-new">export async function enviarPedido(pedido) {</span>
+<span class="code-new">  const resposta = await fetch(URL_PEDIDOS, {</span>
+<span class="code-new">    method: &#x27;POST&#x27;,</span>
+<span class="code-new">    headers: {</span>
+<span class="code-new">      Accept: &#x27;application/json&#x27;,</span>
+<span class="code-new">      &#x27;Content-Type&#x27;: &#x27;application/json; charset=UTF-8&#x27;,</span>
+<span class="code-new">    },</span>
+<span class="code-new">    body: JSON.stringify(pedido),</span>
+<span class="code-new">  });</span>
+
+<span class="code-new">  if (!resposta.ok) {</span>
+<span class="code-new">    throw new Error(</span>
+<span class="code-new">      `Falha no envio. Status: ${resposta.status}`</span>
+<span class="code-new">    );</span>
+<span class="code-new">  }</span>
+
+<span class="code-new">  return resposta.json();</span>
+<span class="code-new">}</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="4-leia-a-requisicao-antes-de-decorar"><span class="rn-step-label">Construa e confira</span><h2>4. Leia a requisição antes de decorar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>fetch recebe a URL do serviço e as opções da requisição;</p><p class="rn-list-line"><span aria-hidden="true">•</span>method: &#x27;POST&#x27; indica que estamos enviando dados;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Content-Type informa que o corpo está em JSON;</p><p class="rn-list-line"><span aria-hidden="true">•</span>JSON.stringify transforma o objeto JavaScript em texto JSON para envio;</p><p class="rn-list-line"><span aria-hidden="true">•</span>await espera a resposta antes de continuar;</p><p class="rn-list-line"><span aria-hidden="true">•</span>response.ok precisa ser verificado porque um status HTTP de erro não vira automaticamente uma exceção;</p><p class="rn-list-line"><span aria-hidden="true">•</span>response.json() lê o corpo da resposta como JSON.</p><p>A função foi marcada como async porque contém operações assíncronas aguardadas com await.</p></section><section class="rn-step rn-action" id="5-antes-de-enviar-o-pedido-precisa-estar-pronto"><span class="rn-step-label">Construa e confira</span><h2>5. Antes de enviar, o pedido precisa estar pronto</h2><p>Não faz sentido disparar a requisição com nenhum produto, sem nome, sem telefone ou sem endereço básico.</p><p>A tela de revisão já conhece todas essas informações. Portanto, a condição de envio pode ser calculada ali, sem criar outro estado duplicado.</p><div class="rn-note concept"><p>Pedido pronto = há item + nome + telefone + rua + número + bairro</p></div><p>Complemento continua opcional.</p></section><section class="rn-step rn-action" id="6-a-tela-de-revisao-ganha-a-acao-final"><span class="rn-step-label">Construa e confira</span><h2>6. A tela de revisão ganha a ação final</h2><p>TelaRevisao agora precisará de três capacidades novas: validar se o pedido pode ser enviado, mostrar que a requisição está em andamento e apresentar o resultado.</p><p>O estado enviando é local porque somente esta tela precisa saber se está aguardando a rede. Da mesma forma, mensagemEnvio só interessa à experiência desta tela.</p><div class="code-card">
+          <div class="code-card-head"><span>screens/TelaRevisao.js - arquivo completo; nesta etapa, substitua pelo estado abaixo</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import {</span>
+<span class="code-new">  View,</span>
+<span class="code-new">  ScrollView,</span>
+<span class="code-new">  Button,</span>
+<span class="code-new">  Text,</span>
+<span class="code-new">  ActivityIndicator,</span>
+<span class="code-new">  StyleSheet,</span>
+<span class="code-new">} from &#x27;react-native&#x27;;</span>
+
+<span class="code-new">import RevisaoPedido from &#x27;../components/RevisaoPedido&#x27;;</span>
+<span class="code-new">import { ContextoPedido } from &#x27;../components/Pedido&#x27;;</span>
+<span class="code-new">import { enviarPedido } from &#x27;../services/pedidoApi&#x27;;</span>
+
+<span class="code-new">export default function TelaRevisao({ navigation }) {</span>
+<span class="code-new">  const pedido = React.useContext(ContextoPedido);</span>
+<span class="code-new">  const [enviando, setEnviando] = React.useState(false);</span>
+<span class="code-new">  const [mensagemEnvio, setMensagemEnvio] = React.useState(&#x27;&#x27;);</span>
+<span class="code-new">  const pedidoPronto =</span>
+<span class="code-new">    pedido.itensPedido.length &gt; 0 &amp;&amp;</span>
+<span class="code-new">    pedido.nome.trim() !== &#x27;&#x27; &amp;&amp;</span>
+<span class="code-new">    pedido.telefone.trim() !== &#x27;&#x27; &amp;&amp;</span>
+<span class="code-new">    pedido.rua.trim() !== &#x27;&#x27; &amp;&amp;</span>
+<span class="code-new">    pedido.numero.trim() !== &#x27;&#x27; &amp;&amp;</span>
+<span class="code-new">    pedido.bairro.trim() !== &#x27;&#x27;;</span>
+
+<span class="code-new">  async function confirmarEnvio() {</span>
+<span class="code-new">    if (!pedidoPronto) {</span>
+<span class="code-new">      setMensagemEnvio(</span>
+<span class="code-new">        &#x27;Complete produtos, cliente e endereço antes de enviar.&#x27;</span>
+<span class="code-new">      );</span>
+<span class="code-new">      return;</span>
+<span class="code-new">    }</span>
+<span class="code-new">    const dadosParaEnvio = {</span>
+<span class="code-new">      cliente: {</span>
+<span class="code-new">        nome: pedido.nome,</span>
+<span class="code-new">        telefone: pedido.telefone,</span>
+<span class="code-new">      },</span>
+<span class="code-new">      entrega: {</span>
+<span class="code-new">        rua: pedido.rua,</span>
+<span class="code-new">        numero: pedido.numero,</span>
+<span class="code-new">        bairro: pedido.bairro,</span>
+<span class="code-new">        complemento: pedido.complemento,</span>
+<span class="code-new">      },</span>
+<span class="code-new">      itens: pedido.itensPedido,</span>
+<span class="code-new">    };</span>
+
+<span class="code-new">    try {</span>
+<span class="code-new">      setEnviando(true);</span>
+<span class="code-new">      setMensagemEnvio(&#x27;&#x27;);</span>
+<span class="code-new">      const resposta = await enviarPedido(dadosParaEnvio);</span>
+
+<span class="code-new">      setMensagemEnvio(</span>
+<span class="code-new">        `Envio de demonstração concluído. ` +</span>
+<span class="code-new">        `Protocolo simulado: ${resposta.id}.`</span>
+<span class="code-new">      );</span>
+<span class="code-new">    } catch (erro) {</span>
+<span class="code-new">      setMensagemEnvio(</span>
+<span class="code-new">        &#x27;Não foi possível enviar o pedido. Tente novamente.&#x27;</span>
+<span class="code-new">      );</span>
+<span class="code-new">    } finally {</span>
+<span class="code-new">      setEnviando(false);</span>
+<span class="code-new">    }</span>
+<span class="code-new">  }</span>
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;</span>
+<span class="code-new">      &lt;View style={styles.cartao}&gt;</span>
+<span class="code-new">        &lt;RevisaoPedido</span>
+<span class="code-new">          produtos={pedido.produtos}</span>
+<span class="code-new">          itensPedido={pedido.itensPedido}</span>
+<span class="code-new">          nome={pedido.nome}</span>
+<span class="code-new">          telefone={pedido.telefone}</span>
+<span class="code-new">          rua={pedido.rua}</span>
+<span class="code-new">          numero={pedido.numero}</span>
+<span class="code-new">          bairro={pedido.bairro}</span>
+<span class="code-new">          complemento={pedido.complemento}</span>
+<span class="code-new">        /&gt;</span>
+
+<span class="code-new">        {!pedidoPronto &amp;&amp; (</span>
+<span class="code-new">          &lt;Text style={styles.aviso}&gt;</span>
+<span class="code-new">            Complete os dados obrigatórios antes do envio.</span>
+<span class="code-new">          &lt;/Text&gt;</span>
+<span class="code-new">        )}</span>
+<span class="code-new">        {enviando &amp;&amp; (</span>
+<span class="code-new">          &lt;View style={styles.enviando}&gt;</span>
+<span class="code-new">            &lt;ActivityIndicator /&gt;</span>
+<span class="code-new">            &lt;Text style={styles.textoEnviando}&gt;</span>
+<span class="code-new">              Enviando pedido...</span>
+<span class="code-new">            &lt;/Text&gt;</span>
+<span class="code-new">          &lt;/View&gt;</span>
+<span class="code-new">        )}</span>
+
+<span class="code-new">        {mensagemEnvio !== &#x27;&#x27; &amp;&amp; (</span>
+<span class="code-new">          &lt;Text style={styles.mensagem}&gt;</span>
+<span class="code-new">            {mensagemEnvio}</span>
+<span class="code-new">          &lt;/Text&gt;</span>
+<span class="code-new">        )}</span>
+<span class="code-new">        &lt;View style={styles.acoes}&gt;</span>
+<span class="code-new">          &lt;Button</span>
+<span class="code-new">            title={enviando ? &#x27;Enviando...&#x27; : &#x27;Enviar pedido&#x27;}</span>
+<span class="code-new">            onPress={confirmarEnvio}</span>
+<span class="code-new">            disabled={enviando}</span>
+<span class="code-new">          /&gt;</span>
+<span class="code-new">        &lt;/View&gt;</span>
+
+<span class="code-new">        &lt;View style={styles.acoesSecundarias}&gt;</span>
+<span class="code-new">          &lt;Button</span>
+<span class="code-new">            title=&quot;Voltar aos produtos&quot;</span>
+<span class="code-new">            onPress={() =&gt; navigation.navigate(&#x27;Produtos&#x27;)}</span>
+<span class="code-new">          /&gt;</span>
+<span class="code-new">        &lt;/View&gt;</span>
+<span class="code-new">      &lt;/View&gt;</span>
+<span class="code-new">    &lt;/ScrollView&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span>
+<span class="code-new">const styles = StyleSheet.create({</span>
+<span class="code-new">  conteudo: {</span>
+<span class="code-new">    padding: 16,</span>
+<span class="code-new">    backgroundColor: &#x27;#eef3f7&#x27;,</span>
+<span class="code-new">    flexGrow: 1,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  cartao: {</span>
+<span class="code-new">    backgroundColor: &#x27;#ffffff&#x27;,</span>
+<span class="code-new">    borderRadius: 16,</span>
+<span class="code-new">    padding: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  aviso: {</span>
+<span class="code-new">    color: &#x27;#92400e&#x27;,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginTop: 16,</span>
+<span class="code-new">    textAlign: &#x27;center&#x27;,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  enviando: {</span>
+<span class="code-new">    alignItems: &#x27;center&#x27;,</span>
+<span class="code-new">    marginTop: 16,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  textoEnviando: {</span>
+<span class="code-new">    marginTop: 8,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  mensagem: {</span>
+<span class="code-new">    color: &#x27;#374151&#x27;,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginTop: 16,</span>
+<span class="code-new">    textAlign: &#x27;center&#x27;,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  acoes: {</span>
+<span class="code-new">    marginTop: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  acoesSecundarias: {</span>
+<span class="code-new">    marginTop: 12,</span>
+<span class="code-new">  },</span>
+<span class="code-new">});</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="7-o-que-exatamente-enviamos"><span class="rn-step-label">Construa e confira</span><h2>7. O que exatamente enviamos</h2><p>Observe o objeto dadosParaEnvio. Ele contém três grupos:</p><p class="rn-list-line"><span aria-hidden="true">•</span>cliente: nome e telefone;</p><p class="rn-list-line"><span aria-hidden="true">•</span>entrega: rua, número, bairro e complemento;</p><p class="rn-list-line"><span aria-hidden="true">•</span>itens: ids e quantidades escolhidas.</p><p>Nesta demonstração, não enviamos o total calculado como fonte de verdade. Em um sistema comercial real, o servidor deveria consultar os preços atuais e calcular o valor final com regras próprias, em vez de confiar cegamente no valor enviado pelo aparelho.</p><div class="rn-note concept"><p>Interface calcula para informar o usuário.<br />Servidor real deve validar novamente o pedido.</p></div></section><section class="rn-step rn-action" id="8-por-que-existem-try-catch-e-finally"><span class="rn-step-label">Construa e confira</span><h2>8. Por que existem try, catch e finally</h2><p>Rede não é instantânea nem garantida. A conexão pode falhar, o serviço pode responder com erro e o usuário precisa saber o que aconteceu.</p><p class="rn-list-line"><span aria-hidden="true">•</span>try contém a tentativa de envio;</p><p class="rn-list-line"><span aria-hidden="true">•</span>catch trata falhas e apresenta uma mensagem compreensível;</p><p class="rn-list-line"><span aria-hidden="true">•</span>finally é executado ao final da tentativa e encerra o estado enviando;</p><p class="rn-list-line"><span aria-hidden="true">•</span>ActivityIndicator mostra visualmente que existe uma operação em andamento.</p><p>O botão também muda para Enviando... durante a requisição, evitando múltiplos envios simultâneos pela mesma ação.</p></section><section class="rn-step rn-action" id="9-faca-o-percurso-completo"><span class="rn-step-label">Construa e confira</span><h2>9. Faça o percurso completo</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Escolha pelo menos um produto e ajuste a quantidade.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Avance e preencha nome e telefone.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Preencha rua, número e bairro.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Abra a revisão e confira o pedido.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Toque em Enviar pedido.</p><p class="rn-list-line"><span aria-hidden="true">6.</span>Observe o indicador de atividade enquanto a requisição é processada.</p><p class="rn-list-line"><span aria-hidden="true">7.</span>Confirme a mensagem de demonstração e o protocolo retornado.</p><p class="rn-list-line"><span aria-hidden="true">8.</span>Volte aos produtos e confirme que a navegação continua disponível.</p><div class="rn-note concept"><p>Agora o usuário não apenas monta o pedido: ele executa uma operação de rede e recebe retorno sobre ela.</p></div></section><section class="rn-step rn-action" id="10-sucesso-de-demonstracao-nao-e-venda-real"><span class="rn-step-label">Construa e confira</span><h2>10. Sucesso de demonstração não é venda real</h2><p>Este ponto precisa ficar absolutamente claro. JSONPlaceholder é um serviço de teste. A resposta recebida demonstra que o aplicativo sabe realizar um POST e tratar a resposta.</p><p>Ela não cria um pedido real para a empresa e não deve ser usada como backend comercial.</p><div class="rn-note concept"><p>Protótipo educacional concluído ≠ sistema comercial pronto para produção.</p></div></section><section class="rn-step rn-action" id="11-o-que-seria-necessario-em-producao"><span class="rn-step-label">Construa e confira</span><h2>11. O que seria necessário em produção</h2><p>A arquitetura construída no curso já mostra o fluxo principal. Um produto comercial acrescentaria outras responsabilidades conforme a necessidade real.</p><p class="rn-list-line"><span aria-hidden="true">•</span>API própria da empresa ou serviço backend confiável;</p><p class="rn-list-line"><span aria-hidden="true">•</span>persistência em banco de dados;</p><p class="rn-list-line"><span aria-hidden="true">•</span>validação de preços, estoque e área de entrega no servidor;</p><p class="rn-list-line"><span aria-hidden="true">•</span>proteção dos dados pessoais e políticas de privacidade;</p><p class="rn-list-line"><span aria-hidden="true">•</span>autenticação quando necessária;</p><p class="rn-list-line"><span aria-hidden="true">•</span>tratamento mais completo de falhas e tentativas de reenvio;</p><p class="rn-list-line"><span aria-hidden="true">•</span>pagamento, caso o negócio exija pagamento no aplicativo;</p><p class="rn-list-line"><span aria-hidden="true">•</span>notificações e acompanhamento do pedido;</p><p class="rn-list-line"><span aria-hidden="true">•</span>testes automatizados e publicação nas lojas.</p><p>Esses assuntos não entram artificialmente neste curso porque o objetivo foi conduzir um iniciante do primeiro componente até um fluxo completo de pedido com comunicação de rede.</p></section><section class="rn-step rn-action" id="12-o-percurso-que-voce-construiu"><span class="rn-step-label">Construa e confira</span><h2>12. O percurso que você construiu</h2><div class="rn-flow"><span>empresa se apresenta</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>produtos aparecem</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>estrutura é reutilizada</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>dados viram lista</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>cliente escolhe</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>escolhas são reunidas</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>quantidades entram</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>valores são calculados</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>cliente é identificado</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>endereço é informado</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>pedido é revisado</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>fluxo ganha telas</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>pedido sai do aplicativo</span></div></section><section class="rn-step rn-observe" id="13-o-que-aprendemos-neste-capitulo"><span class="rn-step-label">Construa e confira</span><h2>13. O que aprendemos neste capítulo</h2><p class="rn-list-line"><span aria-hidden="true">•</span>fetch realiza requisições de rede em React Native;</p><p class="rn-list-line"><span aria-hidden="true">•</span>POST envia dados para um serviço;</p><p class="rn-list-line"><span aria-hidden="true">•</span>JSON.stringify prepara um objeto para um corpo JSON;</p><p class="rn-list-line"><span aria-hidden="true">•</span>async e await permitem aguardar operações assíncronas de forma legível;</p><p class="rn-list-line"><span aria-hidden="true">•</span>response.ok ajuda a distinguir uma resposta HTTP bem-sucedida de uma resposta de erro;</p><p class="rn-list-line"><span aria-hidden="true">•</span>try/catch/finally permite tratar sucesso, falha e encerramento de uma operação;</p><p class="rn-list-line"><span aria-hidden="true">•</span>ActivityIndicator comunica ao usuário que existe trabalho em andamento;</p><p class="rn-list-line"><span aria-hidden="true">•</span>estado local continua adequado para informações que pertencem apenas à própria tela;</p><p class="rn-list-line"><span aria-hidden="true">•</span>uma API de testes deve ser apresentada como simulação, nunca como backend real.</p></section><section class="rn-step rn-observe" id="14-confira-antes-de-encerrar"><span class="rn-step-label">Construa e confira</span><h2>14. Confira antes de encerrar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>Existe a pasta services.</p><p class="rn-list-line"><span aria-hidden="true">•</span>pedidoApi.js exporta enviarPedido.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A requisição usa HTTPS e método POST.</p><p class="rn-list-line"><span aria-hidden="true">•</span>O corpo enviado usa JSON.stringify.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A resposta HTTP é verificada antes de ler o JSON.</p><p class="rn-list-line"><span aria-hidden="true">•</span>TelaRevisao valida os campos essenciais.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Durante o envio, o usuário vê um indicador de atividade.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Em caso de sucesso, aparece uma confirmação de demonstração.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Em caso de falha, aparece uma mensagem compreensível.</p><p class="rn-list-line"><span aria-hidden="true">•</span>O texto deixa claro que nenhum pedido comercial real é persistido no serviço de teste.</p></section><section class="rn-step rn-checkpoint" id="15-checkpoint-14-o-pedido-sai-do-aplicativo"><span class="rn-step-label">Checkpoint</span><h2>15. Checkpoint 14 - O pedido sai do aplicativo</h2><p>Ao concluir as conferências acima, preserve este estado como referência do checkpoint do capítulo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js com navegação preservada;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Pedido.js e ContextoPedido preservados;</p><p class="rn-list-line"><span aria-hidden="true">•</span>quatro telas do fluxo;</p><p class="rn-list-line"><span aria-hidden="true">•</span>services/pedidoApi.js com POST de demonstração;</p><p class="rn-list-line"><span aria-hidden="true">•</span>TelaRevisao.js com validação, envio, espera, sucesso e erro;</p><p class="rn-list-line"><span aria-hidden="true">•</span>todos os componentes construídos ao longo do curso;</p><p class="rn-list-line"><span aria-hidden="true">•</span>asset oficial santa-filomena.png;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Snack correspondente e evidências da validação prática.</p></section><section class="rn-step rn-action" id="16-fechamento"><span class="rn-step-label">Construa e confira</span><h2>16. Fechamento</h2><p>O aplicativo começou como uma tela quase vazia. Cada evolução entrou quando o próprio projeto demonstrou uma necessidade.</p><p>Esse é o princípio que deve continuar depois deste percurso: entender o problema, observar a limitação, escolher a menor solução correta, testar o resultado e só então avançar.</p><div class="rn-flow"><span>Entender → Experimentar → Programar → Aplicar.</span></div></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 14 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-13.html"><small>Capítulo anterior</small><strong>Capítulo 13</strong></a><a href="capitulo-15.html"><small>Próximo capítulo</small><strong>Capítulo 15</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

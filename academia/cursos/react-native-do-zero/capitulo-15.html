@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 15 de React Native do Zero: Transporte o projeto validado do Snack para uma pasta Expo no computador." />
+  <title>Capítulo 15 — O aplicativo sai do Snack | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="15">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-14.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-16.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 15</h2><p>O aplicativo sai do Snack</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-por-que-sair-do-snack-agora">1. Por que sair do Snack agora</a></li><li><a href="#2-o-que-precisa-existir-no-computador">2. O que precisa existir no computador</a></li><li><a href="#3-crie-um-projeto-expo-minimo">3. Crie um projeto Expo mínimo</a></li><li><a href="#4-primeiro-teste-a-base-local-funciona">4. Primeiro teste: a base local funciona?</a></li><li><a href="#5-leve-o-projeto-que-ja-existe">5. Leve o projeto que já existe</a></li><li><a href="#6-instale-a-navegacao-que-o-aplicativo-usa">6. Instale a navegação que o aplicativo usa</a></li><li><a href="#7-confira-a-estrutura-antes-de-executar">7. Confira a estrutura antes de executar</a></li><li><a href="#8-execute-novamente">8. Execute novamente</a></li><li><a href="#9-faca-uma-verificacao-de-dependencias">9. Faça uma verificação de dependências</a></li><li><a href="#10-checkpoint-15-o-projeto-existe-fora-do-snack">10. Checkpoint 15 - O projeto existe fora do Snack</a></li><li><a href="#11-o-proximo-problema-ja-apareceu">11. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 15</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Projeto local</p><h1>O aplicativo sai do Snack</h1><p class="lead">Até aqui, o aplicativo foi construído e testado em um ambiente online. Isso foi útil para aprender sem começar pela instalação de ferramentas. Agora surgiu uma necessidade nova: o mesmo projeto precisa existir em uma pasta real do computador.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 15"><div class="rn-app-screen"><div class="rn-local-preview"><strong>santa-filomena-app/</strong><code>App.js<br>app.json<br>package.json<br>assets/<br>components/<br>screens/<br>services/</code><span>› npx expo start</span><small>Servidor de desenvolvimento iniciado</small></div></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><div class="rn-note success"><strong>Versão conferida</strong><p>O comando com <code>blank@57</code> e a instalação das dependências nativas pelo Expo estão alinhados à documentação oficial atual.</p></div><div class="rn-note concept"><p>Não vamos reescrever o aplicativo. Vamos transportar o que já funciona.</p></div></section><section class="rn-step rn-action" id="1-por-que-sair-do-snack-agora"><span class="rn-step-label">Construa e confira</span><h2>1. Por que sair do Snack agora</h2><p class="rn-list-line"><span aria-hidden="true">•</span>o código já possui vários arquivos e pastas;</p><p class="rn-list-line"><span aria-hidden="true">•</span>a aplicação já usa navegação e rede;</p><p class="rn-list-line"><span aria-hidden="true">•</span>os próximos passos exigem configurações que pertencem a um projeto Expo completo;</p><p class="rn-list-line"><span aria-hidden="true">•</span>para gerar um aplicativo instalável, precisamos de um projeto local.</p><p>O Snack não foi um atalho descartável: ele cumpriu sua função pedagógica. A mudança de ambiente acontece somente quando o próprio projeto passou a exigir isso.</p></section><section class="rn-step rn-action" id="2-o-que-precisa-existir-no-computador"><span class="rn-step-label">Construa e confira</span><h2>2. O que precisa existir no computador</h2><p class="rn-list-line"><span aria-hidden="true">•</span>Node.js em versão LTS compatível com o Expo SDK usado no projeto;</p><p class="rn-list-line"><span aria-hidden="true">•</span>um terminal no Windows;</p><p class="rn-list-line"><span aria-hidden="true">•</span>um editor como o Visual Studio Code;</p><p class="rn-list-line"><span aria-hidden="true">•</span>conexão com a internet para criar o projeto e instalar dependências.</p><p>Neste percurso, o alvo é Expo SDK 57. Use o comando indicado nesta etapa para criar a mesma base e mantenha as versões registradas em package.json.</p></section><section class="rn-step rn-action" id="3-crie-um-projeto-expo-minimo"><span class="rn-step-label">Construa e confira</span><h2>3. Crie um projeto Expo mínimo</h2><p>Abra o PowerShell ou o terminal do VS Code na pasta em que deseja criar o projeto e execute:</p><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>npx create-expo-app@latest santa-filomena-app --template blank@57</code></pre>
+        </div><p>Depois entre na pasta criada:</p><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>cd santa-filomena-app</code></pre>
+        </div><p>O template blank é proposital: ele cria a base mínima e mantém App.js como ponto de entrada, combinando com a arquitetura que construímos no curso.</p></section><section class="rn-step rn-action" id="4-primeiro-teste-a-base-local-funciona"><span class="rn-step-label">Construa e confira</span><h2>4. Primeiro teste: a base local funciona?</h2><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>npx expo start</code></pre>
+        </div><p>Neste momento, o objetivo é apenas confirmar que o servidor de desenvolvimento inicia sem erro. Encerre com Ctrl+C antes de substituir os arquivos.</p></section><section class="rn-step rn-action" id="5-leve-o-projeto-que-ja-existe"><span class="rn-step-label">Construa e confira</span><h2>5. Leve o projeto que já existe</h2><p>Com o projeto do Snack aberto, crie no projeto local as mesmas pastas e copie o conteúdo atual de cada arquivo para a raiz do novo projeto:</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js;</p><p class="rn-list-line"><span aria-hidden="true">•</span>a pasta components;</p><p class="rn-list-line"><span aria-hidden="true">•</span>a pasta screens;</p><p class="rn-list-line"><span aria-hidden="true">•</span>a pasta services;</p><p class="rn-list-line"><span aria-hidden="true">•</span>assets/santa-filomena.png.</p><p>Não copie node_modules. Também não substitua o package.json gerado pelo Expo por um package.json antigo: as dependências devem ser instaladas no projeto recém-criado para permanecer compatíveis com o SDK real.</p></section><section class="rn-step rn-action" id="6-instale-a-navegacao-que-o-aplicativo-usa"><span class="rn-step-label">Construa e confira</span><h2>6. Instale a navegação que o aplicativo usa</h2><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>npm install @react-navigation/native @react-navigation/native-stack
+npx expo install react-native-screens react-native-safe-area-context</code></pre>
+        </div><p>O segundo comando deixa o Expo escolher versões compatíveis das dependências nativas com o SDK atual do projeto.</p></section><section class="rn-step rn-observe" id="7-confira-a-estrutura-antes-de-executar"><span class="rn-step-label">Construa e confira</span><h2>7. Confira a estrutura antes de executar</h2><div class="rn-file-tree">santa-filomena-app/
+├── App.js
+├── app.json
+├── package.json
+├── assets/
+│   └── santa-filomena.png
+├── components/
+│   ├── DadosCliente.js
+│   ├── EnderecoEntrega.js
+│   ├── IdentidadeEmpresa.js
+│   ├── Pedido.js
+│   ├── Produto.js
+│   ├── Produtos.js
+│   └── RevisaoPedido.js
+├── screens/
+│   ├── TelaProdutos.js
+│   ├── TelaCliente.js
+│   ├── TelaEndereco.js
+│   └── TelaRevisao.js
+└── services/
+└── pedidoApi.js</div></section><section class="rn-step rn-action" id="8-execute-novamente"><span class="rn-step-label">Construa e confira</span><h2>8. Execute novamente</h2><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>npx expo start</code></pre>
+        </div><p>Se o terminal abrir o servidor sem erros de importação, o projeto já saiu do Snack sem perder a organização construída nos capítulos anteriores.</p></section><section class="rn-step rn-action" id="9-faca-uma-verificacao-de-dependencias"><span class="rn-step-label">Construa e confira</span><h2>9. Faça uma verificação de dependências</h2><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>npx expo-doctor</code></pre>
+        </div><p>Corrija apenas problemas reais apontados para o projeto. Não atualize pacotes aleatoriamente durante este capítulo.</p></section><section class="rn-step rn-checkpoint" id="10-checkpoint-15-o-projeto-existe-fora-do-snack"><span class="rn-step-label">Checkpoint</span><h2>10. Checkpoint 15 - O projeto existe fora do Snack</h2><p class="rn-list-line"><span aria-hidden="true">•</span>projeto Expo local criado com template blank;</p><p class="rn-list-line"><span aria-hidden="true">•</span>fontes do Checkpoint 14 preservadas;</p><p class="rn-list-line"><span aria-hidden="true">•</span>dependências de navegação instaladas no projeto local;</p><p class="rn-list-line"><span aria-hidden="true">•</span>package.json real gerado/atualizado pelo próprio ambiente;</p><p class="rn-list-line"><span aria-hidden="true">•</span>servidor Expo inicia sem erro.</p></section><section class="rn-step rn-action" id="11-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>11. O próximo problema já apareceu</h2><p>O aplicativo agora existe no computador, mas ainda precisamos confirmar que ele funciona como aplicativo móvel de verdade no aparelho. É isso que faremos a seguir.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 15 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-14.html"><small>Capítulo anterior</small><strong>Capítulo 14</strong></a><a href="capitulo-16.html"><small>Próximo capítulo</small><strong>Capítulo 16</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

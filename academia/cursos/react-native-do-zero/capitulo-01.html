@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 1 de React Native do Zero: conheça o Snack e faça o aplicativo da Santa Filomena Água & Gás começar a existir." />
+  <title>Capítulo 1 — O aplicativo começa a existir | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="1">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte">
+      <span class="brand-mark">mbb</span>
+      <span><strong>Academia</strong><small>by Mundo bit Byte</small></span>
+    </a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso">
+      <a href="capitulo-00.html">Capítulo anterior</a>
+      <a href="index.html">React Native do Zero</a>
+      <a href="capitulo-02.html">Próximo capítulo</a>
+    </nav>
+  </header>
+
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p>
+      <h2>Capítulo 1</h2>
+      <p>O aplicativo começa a existir</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div>
+      <div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map">
+        <li><a href="#ambiente">1. Conheça o ambiente</a></li>
+        <li><a href="#login">2. Entre na conta</a></li>
+        <li><a href="#apos-login">3. Depois do login</a></li>
+        <li><a href="#salvos">4. Projetos salvos</a></li>
+        <li><a href="#salvar">5. Salve o projeto</a></li>
+        <li><a href="#app-js">6. Primeiro contato com App.js</a></li>
+        <li><a href="#alteracao">7. Primeira alteração</a></li>
+        <li><a href="#experimente">8. Experimente</a></li>
+        <li><a href="#dois-arquivos">9. Nem tudo está em App.js</a></li>
+        <li><a href="#imagem">10. Primeira imagem</a></li>
+        <li><a href="#identidade">11. O exemplo muda</a></li>
+        <li><a href="#renomear">12. Renomeie e limpe</a></li>
+        <li><a href="#limpeza">13. Limpeza dos assets</a></li>
+        <li><a href="#pastas">14. O que fica igual</a></li>
+        <li><a href="#confira">15. Confira</a></li>
+        <li><a href="#checkpoint">16. Checkpoint 01</a></li>
+        <li><a href="#construcao">17. O que construímos</a></li>
+      </ol>
+    </aside>
+
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em">
+        <a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 1</span>
+      </nav>
+      <header class="rn-lesson-head">
+        <p class="brandline">Primeira vitória visível</p>
+        <h1>O aplicativo começa a existir</h1>
+        <p class="lead">No capítulo anterior conhecemos a Santa Filomena Água &amp; Gás. Agora vamos transformar a primeira parte daquela ideia em algo que já pode ser visto e alterado na tela.</p>
+        <div class="rn-method-strip" aria-label="Jornada deste capítulo">
+          <span>Observar</span><span>Salvar</span><span>Alterar</span><span>Organizar</span><span>Validar</span>
+        </div>
+      </header>
+
+      <section class="rn-step rn-action" id="ambiente">
+        <span class="rn-step-label">Observe antes de modificar</span>
+        <h2>1. Conhecendo o ambiente</h2>
+        <p>Acesse <a href="https://snack.expo.dev" target="_blank" rel="noopener noreferrer"><strong>snack.expo.dev</strong></a>. O Snack abre e executa um exemplo inicial mesmo sem login. Antes de programarmos, observe como a tela está organizada.</p>
+        <p>Na interface usada neste curso, temos três regiões principais:</p>
+        <ol>
+          <li><strong>À esquerda:</strong> a estrutura do projeto, com arquivos e pastas como <em>assets</em>, <em>components</em>, <em>App.js</em>, package.json e README.md.</li>
+          <li><strong>No centro:</strong> o editor de código. É aqui que abriremos e alteraremos os arquivos.</li>
+          <li><strong>À direita:</strong> a pré-visualização do aplicativo. As alterações no código são refletidas automaticamente nessa área.</li>
+        </ol>
+        <p>O Snack atribui automaticamente um nome temporário e aleatório ao projeto enquanto ele ainda não foi salvo. Esse nome pode mudar entre sessões e será substituído quando você salvar o projeto com o nome definitivo.</p>
+        <figure class="rn-figure">
+          <img src="assets/images/cap01_img01_snack-inicial.png" alt="Ambiente inicial do Snack antes do login" />
+          <figcaption>Figura 1.1 — Ambiente inicial do Snack antes do login.</figcaption>
+        </figure>
+      </section>
+
+      <section class="rn-step" id="login">
+        <span class="rn-step-label">Preserve seu trabalho</span>
+        <h2>2. O Snack funciona sem login, mas não queremos perder o projeto</h2>
+        <p>Observe a parte superior da tela. Antes do login, o Snack informa que é necessário entrar em uma conta para salvar as alterações durante o trabalho.</p>
+        <p>Isso significa que podemos experimentar o ambiente sem conta, mas o projeto do curso precisa ficar associado a uma conta para ser salvo e retomado depois.</p>
+        <p>Use o próprio link <strong>Log in</strong> mostrado pelo Snack ou o acesso de conta disponível na interface e conclua o login na Expo. Se ainda não tiver uma conta Expo, crie uma gratuitamente antes de continuar.</p>
+        <div class="rn-note pending"><strong>Importante</strong><p>Entrar na conta não é a mesma coisa que salvar o projeto.</p></div>
+      </section>
+
+      <section class="rn-step rn-observe" id="apos-login">
+        <span class="rn-step-label">Compare</span>
+        <h2>3. Depois do login, o ambiente continua o mesmo</h2>
+        <p>Após o login, voltamos ao editor. A estrutura à esquerda, o código no centro e a execução à direita continuam ali. A diferença visível é que a conta passa a estar identificada no canto superior direito pelo avatar.</p>
+        <p>O projeto ainda pode aparecer como <strong>Not saved yet</strong>. Isso confirma que login e salvamento são etapas diferentes.</p>
+        <figure class="rn-figure">
+          <img src="assets/images/cap01_img02_snack-depois-login.png" alt="Snack após o login, ainda sem salvar o projeto" />
+          <figcaption>Figura 1.2 — Snack após o login, ainda sem salvar o projeto.</figcaption>
+        </figure>
+      </section>
+
+      <section class="rn-step" id="salvos">
+        <span class="rn-step-label">Localize</span>
+        <h2>4. Onde ficam os projetos que já foram salvos?</h2>
+        <p>Abra o menu do avatar e escolha <strong>My Snacks</strong>. Essa área reúne os projetos salvos na conta.</p>
+        <figure class="rn-figure compact">
+          <img src="assets/images/cap01_img03_avatar-my-snacks.png" alt="Menu do avatar com acesso a My Snacks" />
+          <figcaption>Figura 1.3 — Menu do avatar com acesso a My Snacks.</figcaption>
+        </figure>
+        <p>Se a conta ainda não tiver nenhum projeto salvo, a área Snacks aparecerá vazia e oferecerá <strong>Create a Snack</strong>. Em uma conta já utilizada, os projetos salvos aparecem nessa mesma área.</p>
+        <figure class="rn-figure">
+          <img src="assets/images/cap01_img04_area-snacks.png" alt="Área Snacks vazia antes do primeiro salvamento" />
+          <figcaption>Figura 1.4 — Área Snacks vazia antes do primeiro salvamento.</figcaption>
+        </figure>
+      </section>
+
+      <section class="rn-step rn-action" id="salvar">
+        <span class="rn-step-label">Faça</span>
+        <h2>5. Salve o projeto pela primeira vez</h2>
+        <p>Volte ao editor. Antes de alterar qualquer código, salve o projeto pela primeira vez:</p>
+        <ol>
+          <li>confirme que seu avatar aparece no canto superior direito;</li>
+          <li>observe se o projeto ainda indica que não foi salvo;</li>
+          <li>clique em <strong>Save</strong>.</li>
+        </ol>
+        <figure class="rn-figure compact">
+          <img src="assets/images/cap01_img05_salvar-snack.png" alt="Janela Save your Snack com o nome temporário" />
+          <figcaption>Figura 1.5 — Janela Save your Snack com o nome temporário.</figcaption>
+        </figure>
+        <p>No campo <strong>Project name</strong>, use <em>Santa Filomena Agua e Gas</em>. O campo de nome aceita letras sem acento, números, espaços, hífen (-) e underscore (_). Caracteres como &amp; e letras acentuadas não são aceitos nesse campo.</p>
+        <p>Na descrição, use: <strong>Aplicativo da Santa Filomena Água &amp; Gás.</strong></p>
+        <figure class="rn-figure compact">
+          <img src="assets/images/cap01_img06_dados-para-salvar.png" alt="Dados definidos para o primeiro salvamento" />
+          <figcaption>Figura 1.6 — Dados definidos para o primeiro salvamento.</figcaption>
+        </figure>
+        <p>Clique em <strong>Save</strong> e aguarde a confirmação.</p>
+        <figure class="rn-figure compact">
+          <img src="assets/images/cap01_img07_projeto-salvo.png" alt="Confirmação de que o Snack foi salvo" />
+          <figcaption>Figura 1.7 — Confirmação de que o Snack foi salvo.</figcaption>
+        </figure>
+        <p>Use <strong>View your Snacks</strong> para conferir que o projeto passou a aparecer na conta.</p>
+        <figure class="rn-figure">
+          <img src="assets/images/cap01_img08_snack-na-conta.png" alt="Projeto salvo na área Snacks da conta" />
+          <figcaption>Figura 1.8 — Projeto salvo na área Snacks da conta.</figcaption>
+        </figure>
+      </section>
+
+      <section class="rn-step" id="app-js">
+        <span class="rn-step-label">Localize o código</span>
+        <h2>6. Primeiro contato com App.js</h2>
+        <p>Na coluna da esquerda, localize <em>App.js</em> e abra o arquivo. O código aparece no editor central. Não tente compreender todas as linhas de uma vez.</p>
+        <p>Procure exatamente o texto principal exibido no exemplo:</p>
+        <div class="code-card">
+          <div class="code-card-head"><span>Texto original a localizar</span></div>
+          <pre><code>Change code in the editor and watch it change on your phone!
+Save to get a shareable url.</code></pre>
+        </div>
+        <p>Esse texto também aparece no preview. Vamos usá-lo para comprovar a relação entre código e resultado.</p>
+      </section>
+
+      <section class="rn-step rn-action" id="alteracao">
+        <span class="rn-step-label">Faça e observe</span>
+        <h2>7. Faça sua primeira alteração</h2>
+        <p>Substitua somente o texto localizado por:</p>
+        <div class="code-card">
+          <div class="code-card-head"><span>Novo texto</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>Santa Filomena Água &amp; Gás</code></pre>
+        </div>
+        <p>Não altere <em>Text</em>, não apague as tags e não mexa em outras linhas. Assim que terminar, observe a área de execução à direita. O Snack atualiza a pré-visualização automaticamente.</p>
+        <figure class="rn-figure">
+          <img src="assets/images/cap01_img09_primeira-alteracao.png" alt="Primeira alteração em App.js e resultado imediato no preview" />
+          <figcaption>Figura 1.9 — Primeira alteração em App.js e resultado imediato no preview.</figcaption>
+        </figure>
+      </section>
+
+      <section class="rn-step rn-observe" id="experimente">
+        <span class="rn-step-label">Experimente</span>
+        <h2>8. Experimente antes de continuar</h2>
+        <p>Troque temporariamente o mesmo texto por <em>Meu primeiro aplicativo</em>. Observe o preview. Depois volte para <strong>Santa Filomena Água &amp; Gás</strong>.</p>
+        <p>Essa experiência confirma três coisas: você sabe onde está o texto, consegue alterá-lo e consegue conferir o resultado. Depois do teste, mantenha novamente Santa Filomena Água &amp; Gás antes de continuar.</p>
+      </section>
+
+      <section class="rn-step" id="dois-arquivos">
+        <span class="rn-step-label">Nova necessidade</span>
+        <h2>9. Nem tudo da tela está em App.js</h2>
+        <p>A pré-visualização também mostra uma imagem. Na coluna da esquerda, abra a pasta <em>components</em> e localize <em>AssetExample.js</em>.</p>
+        <p>Agora temos dois arquivos envolvidos na mesma interface. Por enquanto, basta perceber que um arquivo pode utilizar algo definido em outro.</p>
+        <figure class="rn-figure">
+          <img src="assets/images/cap01_img10_assetexample-aberto.png" alt="AssetExample.js aberto no editor" />
+          <figcaption>Figura 1.10 — AssetExample.js aberto no editor.</figcaption>
+        </figure>
+      </section>
+
+      <section class="rn-step rn-action" id="imagem">
+        <span class="rn-step-label">Importe e organize</span>
+        <h2>10. Nossa primeira imagem</h2>
+        <p>Baixe o arquivo <em>santa-filomena.png</em> na área de apoio deste curso. Não é necessário copiar icon ou splash-icon nesta etapa.</p>
+        <div class="rn-resource-actions"><a class="btn ghost" href="assets/checkpoint-01/assets/santa-filomena.png" download>Baixar santa-filomena.png</a></div>
+        <p>No Snack, abra o menu <strong>Project</strong> e escolha <strong>Import files</strong>.</p>
+        <figure class="rn-figure compact">
+          <img src="assets/images/cap01_img11_import-files.png" alt="Comando Import files no menu do projeto" />
+          <figcaption>Figura 1.11 — Comando Import files no menu do projeto.</figcaption>
+        </figure>
+        <p>Ao importar pela interface web do Snack, o arquivo aparece inicialmente na raiz do projeto.</p>
+        <figure class="rn-figure compact">
+          <img src="assets/images/cap01_img12_imagem-na-raiz.png" alt="santa-filomena.png importada na raiz do projeto" />
+          <figcaption>Figura 1.12 — santa-filomena.png importada na raiz do projeto.</figcaption>
+        </figure>
+        <p>Arraste <em>santa-filomena.png</em> para a pasta <em>assets</em>. Confirme que o arquivo está dentro de <em>assets</em> antes de alterar o código.</p>
+        <figure class="rn-figure compact">
+          <img src="assets/images/cap01_img13_imagem-em-assets.png" alt="santa-filomena.png dentro de assets" />
+          <figcaption>Figura 1.13 — santa-filomena.png dentro de assets.</figcaption>
+        </figure>
+        <p>Abra <em>AssetExample.js</em> e altere apenas a referência da imagem para:</p>
+        <div class="code-card">
+          <div class="code-card-head"><span>Referência da imagem</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>source={require('../assets/santa-filomena.png')}</code></pre>
+        </div>
+        <p>Nesta linha, <strong>require('../assets/santa-filomena.png')</strong> informa ao React Native qual arquivo local deve ser usado pela propriedade <strong>source</strong> da imagem. Os dois pontos <strong>../</strong> indicam que o código sai da pasta <strong>components</strong>, volta um nível e então entra na pasta <strong>assets</strong>.</p>
+        <p>Confirme no preview que a imagem da Santa Filomena substituiu a imagem padrão e que o Snack continua indicando <strong>No errors</strong>.</p>
+        <figure class="rn-figure">
+          <img src="assets/images/cap01_img14_imagem-no-preview.png" alt="Nova imagem referenciada em AssetExample.js e exibida no preview" />
+          <figcaption>Figura 1.14 — Nova imagem referenciada em AssetExample.js e exibida no preview.</figcaption>
+        </figure>
+      </section>
+
+      <section class="rn-step" id="identidade">
+        <span class="rn-step-label">Resultado visível</span>
+        <h2>11. O exemplo começa a virar nosso aplicativo</h2>
+        <p>Depois da troca do texto e da imagem, o projeto já deixou parte da identidade genérica do Snack. Temos, pela primeira vez, o nome Santa Filomena Água &amp; Gás, uma imagem relacionada ao negócio e um projeto salvo que continuará nos próximos capítulos.</p>
+      </section>
+
+      <section class="rn-step rn-action" id="renomear">
+        <span class="rn-step-label">Renomeie e limpe</span>
+        <h2>12. Um nome que deixa de fazer sentido</h2>
+        <p><em>AssetExample.js</em> veio do exemplo genérico. Agora ele representa a identidade da empresa. Vamos renomear o arquivo e limpar o que sobrou do exemplo padrão.</p>
+        <p>Para renomear um arquivo no Snack, abra o menu de três pontos verticais que aparece ao lado do item na árvore do projeto e escolha <strong>Rename</strong>. Esse menu também reúne outras ações e voltará a ser usado ao longo do projeto.</p>
+        <figure class="rn-figure compact">
+          <img src="assets/images/cap01_img15_menu-renomear-arquivo.png" alt="Menu de três pontos com a opção Rename" />
+          <figcaption>Figura 1.15 — Menu de três pontos com a opção Rename.</figcaption>
+        </figure>
+        <p>Faça as alterações abaixo, nesta ordem:</p>
+        <ol>
+          <li>renomeie <em>AssetExample.js</em> para <em>IdentidadeEmpresa.js</em>;</li>
+          <li>no arquivo renomeado, troque o nome da função AssetExample por IdentidadeEmpresa;</li>
+          <li>apague o bloco <em>Text</em> que contém a mensagem padrão <em>Local files and assets can be imported by dragging and dropping them into the editor</em>;</li>
+          <li>remova <em>Text</em> da importação de <em>react-native</em>;</li>
+          <li>apague todo o estilo <em>paragraph</em> de <em>IdentidadeEmpresa.js</em>;</li>
+          <li>em <em>App.js</em>, troque o import de AssetExample pelo import de IdentidadeEmpresa;</li>
+          <li>em <em>App.js</em>, troque <code>&lt;AssetExample /&gt;</code> por <code>&lt;IdentidadeEmpresa /&gt;</code>.</li>
+        </ol>
+        <div class="rn-note pending"><strong>Limpeza completa</strong><p>Não apague apenas o texto visível. Remova também <em>Text</em> da importação e o estilo <em>paragraph</em> para não deixar código sem uso no componente.</p></div>
+        <div class="rn-note concept"><strong>Importar e usar são ações diferentes</strong><p>Em <em>App.js</em>, o <strong>import</strong> torna <strong>IdentidadeEmpresa</strong> disponível. Já <strong>&lt;IdentidadeEmpresa /&gt;</strong> usa o componente no JSX e faz sua interface aparecer naquele ponto. A barra <strong>/</strong> antes de <strong>&gt;</strong> fecha a marca na mesma linha.</p></div>
+        <p>Ao final, <em>IdentidadeEmpresa.js</em> deve ficar sem referências a <em>Text</em> ou <em>paragraph</em> e continuar apontando para <em>santa-filomena.png</em>.</p>
+        <figure class="rn-figure">
+          <img src="assets/images/cap01_img16_identidadeempresa-renomeado.png" alt="IdentidadeEmpresa.js após renomeação e limpeza" />
+          <figcaption>Figura 1.16 — IdentidadeEmpresa.js após renomeação e limpeza.</figcaption>
+        </figure>
+        <p>Agora confira <em>App.js</em>. O import e o uso do componente devem apontar para IdentidadeEmpresa.</p>
+        <figure class="rn-figure">
+          <img src="assets/images/cap01_img17_app-identidadeempresa.png" alt="App.js atualizado para usar IdentidadeEmpresa" />
+          <figcaption>Figura 1.17 — App.js atualizado para usar IdentidadeEmpresa.</figcaption>
+        </figure>
+      </section>
+
+      <section class="rn-step rn-action" id="limpeza">
+        <span class="rn-step-label">Conclua a organização</span>
+        <h2>13. Limpeza final dos assets</h2>
+        <p>Depois de confirmar que <em>IdentidadeEmpresa.js</em> usa <em>santa-filomena.png</em> e que o preview funciona sem erros, remova a imagem padrão <em>snack-icon.png</em>.</p>
+        <ol>
+          <li>na pasta <em>assets</em>, abra o menu de três pontos de <em>snack-icon.png</em>;</li>
+          <li>escolha <strong>Delete</strong>;</li>
+          <li>confirme que <em>santa-filomena.png</em> permanece em <em>assets</em>;</li>
+          <li>confira novamente o preview;</li>
+          <li>confirme <strong>No errors</strong>.</li>
+        </ol>
+        <p>Remova <em>snack-icon.png</em> somente depois de confirmar que ele não está mais sendo usado pelo componente.</p>
+        <figure class="rn-figure">
+          <img src="assets/images/cap01_img18_limpeza-final-assets.png" alt="Estado final do capítulo com apenas santa-filomena.png em assets e componente limpo" />
+          <figcaption>Figura 1.18 — Estado final do capítulo: apenas santa-filomena.png em assets e componente limpo.</figcaption>
+        </figure>
+      </section>
+
+      <section class="rn-step" id="pastas">
+        <span class="rn-step-label">Sem mudanças desnecessárias</span>
+        <h2>14. O que ainda não vamos reorganizar</h2>
+        <p>As pastas <em>assets</em> e <em>components</em> continuarão com esses nomes por enquanto. Nossa intenção é usar português nos nomes que pertencem ao nosso projeto, mas só faremos essa reorganização quando houver uma necessidade pedagógica clara para isso.</p>
+        <p>Assim evitamos ensinar várias mudanças de caminho logo no primeiro contato.</p>
+      </section>
+
+      <section class="rn-step rn-checkpoint" id="confira">
+        <span class="rn-step-label">Valide</span>
+        <h2>15. Confira antes de terminar o capítulo</h2>
+        <ul class="rn-checklist">
+          <li><label><input id="c1-estrutura" type="checkbox" data-step-check /> Consigo identificar a estrutura do projeto à esquerda.</label></li>
+          <li><label><input id="c1-editor" type="checkbox" data-step-check /> Sei que o código é editado na área central.</label></li>
+          <li><label><input id="c1-preview" type="checkbox" data-step-check /> Sei que a execução aparece à direita e é atualizada automaticamente.</label></li>
+          <li><label><input id="c1-login" type="checkbox" data-step-check /> Entendi que o Snack funciona sem login, mas o login permite trabalhar com projetos salvos.</label></li>
+          <li><label><input id="c1-salvar" type="checkbox" data-step-check /> Entendi que fazer login e salvar são ações diferentes.</label></li>
+          <li><label><input id="c1-nome-projeto" type="checkbox" data-step-check /> Salvei o projeto como Santa Filomena Agua e Gas.</label></li>
+          <li><label><input id="c1-appjs" type="checkbox" data-step-check /> Localizei App.js e fiz a primeira alteração.</label></li>
+          <li><label><input id="c1-imagem" type="checkbox" data-step-check /> Localizei components/AssetExample.js e substituí a imagem padrão.</label></li>
+          <li><label><input id="c1-assets" type="checkbox" data-step-check /> Movi santa-filomena.png da raiz para assets.</label></li>
+          <li><label><input id="c1-renomear" type="checkbox" data-step-check /> Renomeei AssetExample.js para IdentidadeEmpresa.js.</label></li>
+          <li><label><input id="c1-limpeza-componente" type="checkbox" data-step-check /> Removi o texto genérico, Text e o estilo paragraph de IdentidadeEmpresa.js.</label></li>
+          <li><label><input id="c1-identidade" type="checkbox" data-step-check /> Atualizei App.js para usar IdentidadeEmpresa.</label></li>
+          <li><label><input id="c1-snack-icon" type="checkbox" data-step-check /> Removi snack-icon.png depois de confirmar que não era mais usado.</label></li>
+          <li><label><input id="c1-no-errors" type="checkbox" data-step-check /> A pré-visualização funciona e o Snack indica No errors.</label></li>
+        </ul>
+      </section>
+
+      <section class="rn-step rn-checkpoint" id="checkpoint">
+        <span class="rn-step-label">Checkpoint 01</span>
+        <h2>16. O aplicativo começa a existir</h2>
+        <p>Este estado forma o primeiro checkpoint oficial do percurso. Ele serve para comparar, recuperar ou retomar o projeto — nunca para substituir a construção realizada durante o capítulo.</p>
+        <p>O checkpoint contém <em>App.js</em>, <em>components/IdentidadeEmpresa.js</em> e <em>assets/santa-filomena.png</em>, sem <em>snack-icon.png</em>.</p>
+        <div class="rn-resource-actions">
+          <a class="btn primary" href="assets/checkpoint-01/checkpoint-01.zip" download>Baixar Checkpoint 01</a>
+          <a class="btn ghost" href="assets/checkpoint-01/README.md">Consultar conteúdo</a>
+        </div>
+        <h3>App.js completo</h3>
+        <div class="code-card">
+          <div class="code-card-head"><span>Checkpoint 01 — App.js</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import { StyleSheet, Text, View } from 'react-native';
+import { Card } from 'react-native-paper';
+import IdentidadeEmpresa from './components/IdentidadeEmpresa';
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.paragraph}&gt;Santa Filomena Água &amp; Gás&lt;/Text&gt;
+      &lt;Card&gt;
+        &lt;IdentidadeEmpresa /&gt;
+      &lt;/Card&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});</code></pre>
+        </div>
+        <h3>IdentidadeEmpresa.js completo</h3>
+        <div class="code-card">
+          <div class="code-card-head"><span>Checkpoint 01 — components/IdentidadeEmpresa.js</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import { View, StyleSheet, Image } from 'react-native';
+
+export default function IdentidadeEmpresa() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Image style={styles.logo} source={require('../assets/santa-filomena.png')} /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  logo: {
+    height: 128,
+    width: 128,
+  },
+});</code></pre>
+        </div>
+      </section>
+
+      <section class="rn-step rn-observe" id="construcao">
+        <span class="rn-step-label">Fechamento</span>
+        <h2>17. O que construímos?</h2>
+        <p>Começamos observando um exemplo pronto. Depois aprendemos a localizar uma informação, alterar o código, acompanhar o resultado, salvar o projeto, importar um arquivo, organizar <em>assets</em> e transformar um componente genérico em uma parte real do nosso aplicativo.</p>
+        <div class="rn-note concept"><strong>O aplicativo começou a existir.</strong><p>No próximo capítulo, ele deixará de parecer apenas um exemplo adaptado e começará a ganhar uma interface realmente pensada para a Santa Filomena Água &amp; Gás.</p></div>
+      </section>
+
+      <section class="rn-step rn-complete-panel">
+        <div><h2>Checkpoint alcançado</h2><p>Marque o capítulo neste dispositivo e avance para a construção da primeira interface própria.</p></div>
+        <button class="rn-complete-button" type="button" data-complete-chapter>Concluir Capítulo 1</button>
+      </section>
+
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos">
+        <a href="capitulo-00.html"><small>Anterior</small><strong>Capítulo 0 — Antes do aplicativo</strong></a>
+        <a href="capitulo-02.html"><small>Próximo</small><strong>Capítulo 2 — O aplicativo ganha sua própria interface</strong></a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer"><p>Academia Mundo bit Byte — observar, alterar e compreender.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 6 de React Native do Zero: Permita que o cliente escolha e cancele um produto em cada cartão." />
+  <title>Capítulo 6 — O cliente faz sua primeira escolha | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="6">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-05.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-07.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 6</h2><p>O cliente faz sua primeira escolha</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-onde-paramos">1. Onde paramos</a></li><li><a href="#2-a-tela-precisa-oferecer-uma-acao">2. A tela precisa oferecer uma ação</a></li><li><a href="#3-o-que-acabou-de-acontecer">3. O que acabou de acontecer?</a></li><li><a href="#4-experimente-a-primeira-escolha">4. Experimente a primeira escolha</a></li><li><a href="#5-e-se-o-cliente-escolher-por-engano">5. E se o cliente escolher por engano?</a></li><li><a href="#6-uma-mesma-acao-dois-resultados-possiveis">6. Uma mesma ação, dois resultados possíveis</a></li><li><a href="#7-experimente-para-entender">7. Experimente para entender</a></li><li><a href="#8-marco-do-capitulo-produto-js-completo">8. Marco do capítulo - Produto.js completo</a></li><li><a href="#9-o-que-mudou-para-o-usuario">9. O que mudou para o usuário</a></li><li><a href="#10-o-que-aprendemos">10. O que aprendemos</a></li><li><a href="#11-confira-antes-de-encerrar">11. Confira antes de encerrar</a></li><li><a href="#12-checkpoint-06-a-primeira-escolha">12. Checkpoint 06 - A primeira escolha</a></li><li><a href="#13-o-proximo-problema-ja-apareceu">13. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 6</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Primeira interação</p><h1>O cliente faz sua primeira escolha</h1><p class="lead">O aplicativo já consegue apresentar Água mineral 20 L e Gás 13 kg a partir de uma lista. Para quem olha a tela, porém, os produtos ainda são apenas informações.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 6"><div class="rn-app-screen"><div class="rn-app-identity"><div class="rn-app-brand">Santa Filomena Água &amp; Gás</div><img class="rn-app-logo" src="assets/checkpoint-01/assets/santa-filomena.png" alt="Identidade visual da Santa Filomena Água &amp; Gás" /><strong>Água mineral e gás com entrega</strong><small>Peça com praticidade e acompanhe sua entrega.</small></div><div class="rn-app-section-title">Produtos</div><div class="rn-app-product"><strong>Água mineral 20 L</strong><small>Galão retornável de água mineral.</small><button>Escolher</button></div><div class="rn-app-product selected"><strong>Gás 13 kg</strong><small>Produto selecionado.</small><button>Cancelar escolha</button></div></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><p>Coloque-se no lugar do cliente: ele identifica o que a empresa vende, mas ainda não consegue dizer ao aplicativo qual produto deseja.</p><div class="rn-note concept"><p>Ver um produto não é o mesmo que escolhê-lo.</p></div></section><section class="rn-step rn-action" id="1-onde-paramos"><span class="rn-step-label">Construa e confira</span><h2>1. Onde paramos</h2><p>Produto.js já sabe receber nome e descrição e montar um cartão reutilizável. Neste momento, ele ainda não possui nenhuma área de interação.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - estado herdado do Capítulo 5</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function Produto(props) {
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+        {props.nome}
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+        {props.descricao}
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Antes de modificar qualquer coisa, observe o resultado atual. O cartão informa, mas não recebe uma escolha do usuário.</p></section><section class="rn-step rn-action" id="2-a-tela-precisa-oferecer-uma-acao"><span class="rn-step-label">Construa e confira</span><h2>2. A tela precisa oferecer uma ação</h2><p>Se queremos que o cliente escolha um produto, o cartão precisa oferecer uma área que responda ao toque. Para isso, entra Pressable.</p><p>Mas apenas receber um toque não é suficiente. Depois do toque, o aplicativo precisa lembrar que aquele produto foi escolhido. É essa necessidade que faz surgir um estado dentro do componente.</p><div class="rn-flow"><span>toque do usuário → mudança de estado → interface mostra o resultado</span></div><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - arquivo completo; digite/ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+<span class="code-new">import { View, Text, Pressable, StyleSheet } from &#x27;react-native&#x27;;</span>
+
+export default function Produto(props) {
+<span class="code-new">  const [selecionado, setSelecionado] = React.useState(false);</span>
+
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+        {props.nome}
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+        {props.descricao}
+      &lt;/Text&gt;
+<span class="code-new">      &lt;Pressable</span>
+<span class="code-new">        style={styles.botaoEscolher}</span>
+<span class="code-new">        onPress={() =&gt; setSelecionado(true)}</span>
+      &gt;
+<span class="code-new">        &lt;Text style={styles.textoBotao}&gt;Escolher&lt;/Text&gt;</span>
+<span class="code-new">      &lt;/Pressable&gt;</span>
+
+<span class="code-new">      {selecionado &amp;&amp; (</span>
+<span class="code-new">        &lt;Text style={styles.confirmacao}&gt;</span>
+          Produto selecionado.
+        &lt;/Text&gt;
+      )}
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+<span class="code-new">    fontSize: 14,</span>
+    marginTop: 4,
+  },
+<span class="code-new">  botaoEscolher: {</span>
+<span class="code-new">    backgroundColor: &#x27;#1967D2&#x27;,</span>
+<span class="code-new">    borderRadius: 10,</span>
+<span class="code-new">    paddingVertical: 10,</span>
+<span class="code-new">    marginTop: 12,</span>
+<span class="code-new">    alignItems: &#x27;center&#x27;,</span>
+  },
+<span class="code-new">  textoBotao: {</span>
+<span class="code-new">    color: &#x27;#ffffff&#x27;,</span>
+<span class="code-new">    fontSize: 15,</span>
+    fontWeight: &#x27;bold&#x27;,
+  },
+<span class="code-new">  confirmacao: {</span>
+<span class="code-new">    color: &#x27;#166534&#x27;,</span>
+<span class="code-new">    fontSize: 14,</span>
+    fontWeight: &#x27;bold&#x27;,
+<span class="code-new">    marginTop: 8,</span>
+<span class="code-new">    textAlign: &#x27;center&#x27;,</span>
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="3-o-que-acabou-de-acontecer"><span class="rn-step-label">Construa e confira</span><h2>3. O que acabou de acontecer?</h2><p>A mudança foi pequena na interface, mas importante no comportamento do aplicativo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Pressable cria uma área capaz de responder ao toque.</p><p class="rn-list-line"><span aria-hidden="true">•</span>onPress indica o que deverá acontecer quando essa área for pressionada.</p><p class="rn-list-line"><span aria-hidden="true">•</span>React.useState(false) cria uma pequena memória para o componente: no início, o produto não está selecionado.</p><p class="rn-list-line"><span aria-hidden="true">•</span>setSelecionado(true) altera essa memória quando o cliente toca em Escolher.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A mensagem “Produto selecionado.” aparece somente quando selecionado estiver verdadeiro.</p><div class="rn-note concept"><p>Estado é informação que pode mudar durante o uso do aplicativo e provocar uma atualização da interface.</p></div><p>Não precisamos estudar todos os usos de estado agora. Aqui ele existe porque o cartão precisa lembrar uma escolha feita pelo usuário.</p></section><section class="rn-step rn-observe" id="4-experimente-a-primeira-escolha"><span class="rn-step-label">Construa e confira</span><h2>4. Experimente a primeira escolha</h2><p>Toque em Escolher no cartão de Água mineral 20 L. Observe a confirmação. Depois toque em Escolher no cartão de Gás 13 kg.</p><p>Cada cartão é uma instância diferente de Produto. Por isso, cada um possui seu próprio estado de seleção.</p><div class="rn-note concept"><p>Um componente reutilizável não compartilha automaticamente a memória de outra instância dele.</p></div></section><section class="rn-step rn-action" id="5-e-se-o-cliente-escolher-por-engano"><span class="rn-step-label">Construa e confira</span><h2>5. E se o cliente escolher por engano?</h2><p>A primeira interação já funciona, mas apareceu uma limitação real: depois de escolher um produto, ainda não há como desfazer a escolha.</p><p>Não precisamos criar outro botão. O mesmo toque pode alternar entre dois estados: não selecionado e selecionado.</p><div class="rn-flow"><span>Escolher → selecionado</span><span class="arrow">→</span><span>Cancelar escolha → não selecionado</span></div><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - arquivo completo; altere somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, Pressable, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function Produto(props) {
+  const [selecionado, setSelecionado] = React.useState(false);
+
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+        {props.nome}
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+        {props.descricao}
+      &lt;/Text&gt;
+      &lt;Pressable
+        style={styles.botaoEscolher}
+<span class="code-new">        onPress={() =&gt; setSelecionado(!selecionado)}</span>
+      &gt;
+        &lt;Text style={styles.textoBotao}&gt;
+<span class="code-new">          {selecionado ? &#x27;Cancelar escolha&#x27; : &#x27;Escolher&#x27;}</span>
+        &lt;/Text&gt;
+      &lt;/Pressable&gt;
+
+      {selecionado &amp;&amp; (
+        &lt;Text style={styles.confirmacao}&gt;
+          Produto selecionado.
+        &lt;/Text&gt;
+      )}
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+  botaoEscolher: {
+    backgroundColor: &#x27;#1967D2&#x27;,
+    borderRadius: 10,
+    paddingVertical: 10,
+    marginTop: 12,
+    alignItems: &#x27;center&#x27;,
+  },
+  textoBotao: {
+    color: &#x27;#ffffff&#x27;,
+    fontSize: 15,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  confirmacao: {
+    color: &#x27;#166534&#x27;,
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 8,
+    textAlign: &#x27;center&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="6-uma-mesma-acao-dois-resultados-possiveis"><span class="rn-step-label">Construa e confira</span><h2>6. Uma mesma ação, dois resultados possíveis</h2><p>Agora o componente usa o valor atual de selecionado para decidir o próximo passo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>!selecionado significa o valor oposto: se estiver falso, passa para verdadeiro; se estiver verdadeiro, volta para falso.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A expressão selecionado ? &#x27;Cancelar escolha&#x27; : &#x27;Escolher&#x27; decide qual texto o botão deve mostrar.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A mensagem de confirmação continua aparecendo somente enquanto o produto estiver selecionado.</p><p>O objetivo não é decorar símbolos. É perceber que a interface agora representa o estado real daquela escolha.</p></section><section class="rn-step rn-observe" id="7-experimente-para-entender"><span class="rn-step-label">Construa e confira</span><h2>7. Experimente para entender</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Escolha Água mineral 20 L e observe a mudança do botão e a confirmação.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Escolha também Gás 13 kg.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Cancele somente a escolha da água.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Confirme que o gás continua selecionado.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Escolha novamente a água e depois cancele as duas escolhas.</p><div class="rn-note concept"><p>O teste mostra que cada cartão consegue lembrar e alterar sua própria escolha de forma independente.</p></div></section><section class="rn-step rn-action" id="8-marco-do-capitulo-produto-js-completo"><span class="rn-step-label">Construa e confira</span><h2>8. Marco do capítulo - Produto.js completo</h2><p>Veja agora o arquivo inteiro sem destaques. Este é o estado final de Produto.js neste capítulo.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - estado ao final do Capítulo 6</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, Pressable, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function Produto(props) {
+  const [selecionado, setSelecionado] = React.useState(false);
+
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+        {props.nome}
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+        {props.descricao}
+      &lt;/Text&gt;
+      &lt;Pressable
+        style={styles.botaoEscolher}
+        onPress={() =&gt; setSelecionado(!selecionado)}
+      &gt;
+        &lt;Text style={styles.textoBotao}&gt;
+          {selecionado ? &#x27;Cancelar escolha&#x27; : &#x27;Escolher&#x27;}
+        &lt;/Text&gt;
+      &lt;/Pressable&gt;
+
+      {selecionado &amp;&amp; (
+        &lt;Text style={styles.confirmacao}&gt;
+          Produto selecionado.
+        &lt;/Text&gt;
+      )}
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+  botaoEscolher: {
+    backgroundColor: &#x27;#1967D2&#x27;,
+    borderRadius: 10,
+    paddingVertical: 10,
+    marginTop: 12,
+    alignItems: &#x27;center&#x27;,
+  },
+  textoBotao: {
+    color: &#x27;#ffffff&#x27;,
+    fontSize: 15,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  confirmacao: {
+    color: &#x27;#166534&#x27;,
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 8,
+    textAlign: &#x27;center&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="9-o-que-mudou-para-o-usuario"><span class="rn-step-label">Construa e confira</span><h2>9. O que mudou para o usuário</h2><p>Nos capítulos anteriores, várias melhorias aconteciam principalmente dentro do código. Agora existe uma mudança diretamente perceptível para quem usa o aplicativo:</p><p class="rn-list-line"><span aria-hidden="true">•</span>cada produto possui uma ação Escolher;</p><p class="rn-list-line"><span aria-hidden="true">•</span>o aplicativo mostra quando aquele produto está selecionado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>o cliente pode cancelar a própria escolha;</p><p class="rn-list-line"><span aria-hidden="true">•</span>uma escolha não altera automaticamente o outro produto.</p><p>Isso é suficiente para a tarefa deste capítulo: o usuário finalmente consegue indicar quais produtos deseja considerar.</p></section><section class="rn-step rn-observe" id="10-o-que-aprendemos"><span class="rn-step-label">Construa e confira</span><h2>10. O que aprendemos</h2><p class="rn-list-line"><span aria-hidden="true">•</span>Pressable como área de interação;</p><p class="rn-list-line"><span aria-hidden="true">•</span>onPress como reação ao toque;</p><p class="rn-list-line"><span aria-hidden="true">•</span>estado como memória de uma informação que muda;</p><p class="rn-list-line"><span aria-hidden="true">•</span>React.useState para guardar essa informação;</p><p class="rn-list-line"><span aria-hidden="true">•</span>renderização condicional para mostrar uma confirmação;</p><p class="rn-list-line"><span aria-hidden="true">•</span>alternância entre selecionado e não selecionado.</p><p>Esses conceitos apareceram juntos porque a tarefa do usuário exigiu toque, memória e resposta visual. Não foram introduzidos como uma lista de assuntos desconectados.</p></section><section class="rn-step rn-observe" id="11-confira-antes-de-encerrar"><span class="rn-step-label">Construa e confira</span><h2>11. Confira antes de encerrar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>Os produtos continuam vindo da lista criada no Capítulo 5.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js recebe nome e descricao por props.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Cada cartão possui o botão Escolher.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Ao tocar, o produto passa a indicar que está selecionado.</p><p class="rn-list-line"><span aria-hidden="true">•</span>É possível cancelar a escolha usando o mesmo botão.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Selecionar um produto não altera automaticamente o estado do outro.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A pré-visualização continua sendo exibida sem erros.</p></section><section class="rn-step rn-checkpoint" id="12-checkpoint-06-a-primeira-escolha"><span class="rn-step-label">Checkpoint</span><h2>12. Checkpoint 06 - A primeira escolha</h2><p>Ao concluir as conferências acima, preserve este estado como referência do checkpoint do capítulo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>IdentidadeEmpresa.js preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js com array e map;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js com props, Pressable e estado local de seleção;</p><p class="rn-list-line"><span aria-hidden="true">•</span>asset oficial santa-filomena.png;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Snack correspondente e screenshot validado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>arquivos de recuperação.</p></section><section class="rn-step rn-action" id="13-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>13. O próximo problema já apareceu</h2><p>Cada cartão consegue lembrar se está selecionado. Mas essa memória está dentro de cada Produto.</p><p>Se o aplicativo precisar montar um pedido com tudo o que o cliente escolheu, uma pergunta nova aparece:</p><div class="rn-note concept"><p>Como o restante do aplicativo saberá quais produtos foram selecionados?</p></div><p>A próxima evolução deverá nascer dessa limitação. Não vamos antecipar carrinho, quantidade ou pedido completo antes de observar qual é a menor forma de reunir essas escolhas.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 6 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-05.html"><small>Capítulo anterior</small><strong>Capítulo 5</strong></a><a href="capitulo-07.html"><small>Próximo capítulo</small><strong>Capítulo 7</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>
