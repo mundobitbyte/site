@@ -1,10 +1,12 @@
-// Ajuste responsivo e de leitura para o módulo Navegação entre Telas.
-// Remove rolagem aninhada do roteiro e preserva a ordem código -> explicação -> resultado.
+// Ajuste responsivo e de navegabilidade para o módulo Navegação entre Telas.
+// Usa a rolagem normal da página, preserva a ordem código -> explicação -> resultado
+// e impede que o frame do resultado visual seja cortado em smartphones.
 
 (() => {
   if (typeof modules === 'undefined' || !modules.navegacao) return;
 
   const STYLE_ID = 'nav-mbb-notebook-layout-style';
+  const BODY_CLASS = 'nav-mbb-navigation-responsive';
   const workspace = document.getElementById('workspace');
   const codeCard = document.getElementById('codeCard');
   const resultCard = document.getElementById('resultCard');
@@ -20,42 +22,71 @@
     style.id = STYLE_ID;
     style.textContent = `
       /*
-       * Passos operacionais 1, 2 e 4 a 7.
-       * Em telas largas, código e resultado ficam lado a lado.
-       * A explicação cresce naturalmente abaixo do código; só o workspace rola.
+       * Navegação usa a rolagem natural do navegador.
+       * Isso evita disputa entre body, workspace e roteiro em telas baixas.
        */
-      #workspace.nav-mbb-readable-workspace {
+      body.${BODY_CLASS} {
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+      }
+
+      body.${BODY_CLASS} .layout {
+        height: auto !important;
+        min-height: calc(100vh - 92px) !important;
+        align-items: start !important;
+      }
+
+      body.${BODY_CLASS} main {
+        overflow: visible !important;
+        min-height: 0 !important;
+        padding-bottom: 28px !important;
+      }
+
+      body.${BODY_CLASS} #workspace {
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        padding-bottom: 72px !important;
+      }
+
+      body.${BODY_CLASS} #introView {
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      /*
+       * Passos operacionais 1, 2 e 4 a 7.
+       * PC/notebook: código e resultado lado a lado; roteiro abaixo do código.
+       */
+      body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace {
         grid-template-columns: minmax(560px, 1fr) minmax(390px, 470px) !important;
         grid-template-rows: minmax(320px, 430px) auto !important;
         gap: 12px !important;
         align-content: start !important;
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
+        overflow: visible !important;
         padding-right: 6px !important;
-        padding-bottom: clamp(72px, 10vh, 96px) !important;
-        scroll-padding-bottom: clamp(72px, 10vh, 96px);
-        scrollbar-gutter: stable;
+        padding-bottom: 72px !important;
       }
 
-      #workspace.nav-mbb-readable-workspace #codeCard {
+      body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #codeCard {
         grid-column: 1 !important;
         grid-row: 1 !important;
         min-height: 320px !important;
         height: 100% !important;
       }
 
-      #workspace.nav-mbb-readable-workspace #resultCard {
+      body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #resultCard {
         grid-column: 2 !important;
         grid-row: 1 !important;
         min-height: 320px !important;
         height: 100% !important;
       }
 
-      #workspace.nav-mbb-readable-workspace #resultCard .preview-area {
+      body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #resultCard .preview-area {
         min-height: 0 !important;
       }
 
-      #workspace.nav-mbb-readable-workspace #noteWrap {
+      body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #noteWrap {
         grid-column: 1 !important;
         grid-row: 2 !important;
         align-self: start !important;
@@ -65,7 +96,7 @@
         overflow: visible !important;
       }
 
-      #workspace.nav-mbb-readable-workspace #note.nav-beginner-note {
+      body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #note.nav-beginner-note {
         position: relative;
         min-height: 0 !important;
         height: auto !important;
@@ -73,58 +104,50 @@
         padding: 44px 16px 18px !important;
       }
 
-      #workspace.nav-mbb-readable-workspace .nav-beginner-guide-inner,
-      #workspace.nav-mbb-readable-workspace .nav-beginner-guide-grid,
-      #workspace.nav-mbb-readable-workspace .nav-beginner-guide-footer {
+      body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace .nav-beginner-guide-inner,
+      body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace .nav-beginner-guide-grid,
+      body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace .nav-beginner-guide-footer {
         min-height: 0 !important;
         height: auto !important;
         overflow: visible !important;
       }
 
-      /* Notebook mais estreito: mantém duas colunas, mas dá toda a altura necessária ao texto. */
+      /* Notebook estreito: duas colunas continuam úteis, sem rolagem interna. */
       @media (max-width: 1180px) and (min-width: 1051px) {
-        #workspace.nav-mbb-readable-workspace {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace {
           grid-template-columns: minmax(500px, 1fr) minmax(340px, 410px) !important;
           grid-template-rows: minmax(320px, 400px) auto !important;
         }
 
-        #workspace.nav-mbb-readable-workspace #noteWrap,
-        #workspace.nav-mbb-readable-workspace #note.nav-beginner-note {
-          min-height: 0 !important;
-          height: auto !important;
-        }
-
-        #workspace.nav-mbb-readable-workspace .nav-beginner-guide-grid,
-        #workspace.nav-mbb-readable-workspace .nav-beginner-guide-footer {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace .nav-beginner-guide-grid,
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace .nav-beginner-guide-footer {
           grid-template-columns: 1fr !important;
         }
 
-        #workspace.nav-mbb-readable-workspace .nav-beginner-guide-grid section:first-child {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace .nav-beginner-guide-grid section:first-child {
           grid-column: 1 !important;
         }
       }
 
-      /* Notebook pequeno/tablet: a leitura vira uma sequência vertical inequívoca. */
+      /* Notebook pequeno/tablet: sequência vertical inequívoca. */
       @media (max-width: 1050px) {
-        #workspace.nav-mbb-readable-workspace {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace {
           display: grid !important;
-          height: auto !important;
           grid-template-columns: 1fr !important;
           grid-template-rows: auto auto auto !important;
-          overflow: visible !important;
+          gap: 12px !important;
           padding-right: 0 !important;
-          padding-bottom: 64px !important;
-          scroll-padding-bottom: 64px;
+          padding-bottom: 56px !important;
         }
 
-        #workspace.nav-mbb-readable-workspace #codeCard {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #codeCard {
           grid-column: 1 !important;
           grid-row: 1 !important;
           min-height: 420px !important;
           height: 420px !important;
         }
 
-        #workspace.nav-mbb-readable-workspace #noteWrap {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #noteWrap {
           grid-column: 1 !important;
           grid-row: 2 !important;
           width: 100% !important;
@@ -132,56 +155,96 @@
           height: auto !important;
         }
 
-        #workspace.nav-mbb-readable-workspace #resultCard {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #resultCard {
           grid-column: 1 !important;
           grid-row: 3 !important;
-          min-height: 520px !important;
-          height: 520px !important;
+          width: 100% !important;
+          min-height: 620px !important;
+          height: auto !important;
+        }
+
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #resultCard .preview-area {
+          flex: 0 0 auto !important;
+          min-height: 580px !important;
+          overflow: visible !important;
         }
       }
 
-      /* Smartphone: o CSS-base usa flex; fixa explicitamente a ordem didática. */
+      /*
+       * Smartphone: mantém a ordem didática e dimensiona o telefone pela largura.
+       * O card cresce com o frame; nenhuma borda fica escondida.
+       */
       @media (max-width: 720px) {
-        #workspace.nav-mbb-readable-workspace {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace {
           display: flex !important;
           flex-direction: column !important;
-          height: auto !important;
-          overflow: visible !important;
           gap: 10px !important;
-          padding-bottom: 40px !important;
-          scroll-padding-bottom: 40px;
+          padding-bottom: 48px !important;
         }
 
-        #workspace.nav-mbb-readable-workspace #codeCard {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #codeCard {
           order: 1 !important;
           width: 100% !important;
           min-height: 360px !important;
           height: 360px !important;
         }
 
-        #workspace.nav-mbb-readable-workspace #noteWrap {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #noteWrap {
           order: 2 !important;
           width: 100% !important;
           min-height: 0 !important;
           height: auto !important;
         }
 
-        #workspace.nav-mbb-readable-workspace #resultCard {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #resultCard {
           order: 3 !important;
           width: 100% !important;
-          min-height: 500px !important;
-          height: 500px !important;
+          min-height: 0 !important;
+          height: auto !important;
+          overflow: hidden !important;
         }
 
-        #workspace.nav-mbb-readable-workspace #note.nav-beginner-note {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #resultCard .preview-area {
+          flex: 0 0 auto !important;
+          min-height: 0 !important;
+          height: auto !important;
+          padding: 16px 10px 18px !important;
+          overflow: visible !important;
+        }
+
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #resultCard .device {
+          width: min(310px, calc(100vw - 54px)) !important;
+          height: auto !important;
+          aspect-ratio: 330 / 560 !important;
+          max-height: none !important;
+          flex: 0 0 auto !important;
+          margin: 0 auto !important;
+          border-radius: 30px !important;
+          padding: 15px 11px !important;
+        }
+
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #resultCard .screen {
+          width: 100% !important;
+          height: 100% !important;
+          border-radius: 21px !important;
+        }
+
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #note.nav-beginner-note {
           padding: 42px 12px 14px !important;
         }
 
-        #workspace.nav-mbb-readable-workspace .nav-beginner-guide-inner p,
-        #workspace.nav-mbb-readable-workspace .nav-beginner-guide-inner li,
-        #workspace.nav-mbb-readable-workspace .nav-beginner-guide-footer {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace .nav-beginner-guide-inner p,
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace .nav-beginner-guide-inner li,
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace .nav-beginner-guide-footer {
           font-size: 13px !important;
           line-height: 1.5 !important;
+        }
+      }
+
+      @media (max-width: 420px) {
+        body.${BODY_CLASS} #workspace.nav-mbb-readable-workspace #resultCard .device {
+          width: min(286px, calc(100vw - 44px)) !important;
+          border-radius: 28px !important;
         }
       }
     `;
@@ -189,39 +252,55 @@
     document.head.appendChild(style);
   }
 
-  function isOperationalNavigationStep(id) {
-    if (typeof currentModuleKey === 'undefined' || currentModuleKey !== 'navegacao') return false;
+  function currentNavigationStep(id) {
+    if (typeof currentModuleKey === 'undefined' || currentModuleKey !== 'navegacao') return null;
 
     const navModule = modules.navegacao;
-    const step = id !== undefined && id !== null
-      ? navModule.steps.find(item => String(item.id) === String(id))
-      : navModule.steps.find(item => {
-          const button = document.getElementById(`btn-navegacao-${item.id}`);
-          return button && button.classList.contains('active');
-        });
+    if (id !== undefined && id !== null) {
+      return navModule.steps.find(item => String(item.id) === String(id)) || null;
+    }
 
+    return navModule.steps.find(item => {
+      const button = document.getElementById(`btn-navegacao-${item.id}`);
+      return button && button.classList.contains('active');
+    }) || null;
+  }
+
+  function isOperationalNavigationStep(step) {
     return Boolean(step && step.mbbGuide && !step.modulePage && !step.customPage);
   }
 
-  function normalizeScroll(id) {
-    if (!isOperationalNavigationStep(id)) return;
+  function syncNavigationPage(id) {
+    const step = currentNavigationStep(id);
+    const navigationActive = typeof currentModuleKey !== 'undefined' && currentModuleKey === 'navegacao';
 
-    // Ao trocar de etapa, começa pelo topo da nova leitura e evita que o aluno
-    // caia no meio do roteiro por causa da posição de rolagem da etapa anterior.
+    document.body.classList.toggle(BODY_CLASS, navigationActive);
+
+    if (!navigationActive) return;
+
+    // Um único eixo de leitura: sempre começa a nova etapa no topo da página.
+    const scroller = document.scrollingElement || document.documentElement;
+    if (scroller) scroller.scrollTop = 0;
     workspace.scrollTop = 0;
-    if (note) note.scrollTop = 0;
+    note.scrollTop = 0;
+
+    // As classes específicas de código/roteiro continuam sendo administradas
+    // pelas camadas anteriores; aqui apenas garantimos a página responsiva.
+    if (!isOperationalNavigationStep(step)) {
+      workspace.style.removeProperty('scroll-behavior');
+    }
   }
 
   installStyles();
 
   if (typeof showStep === 'function') {
     const previousShowStep = showStep;
-    showStep = function navMbbNotebookShowStep(id) {
+    showStep = function navMbbResponsiveShowStep(id) {
       const result = previousShowStep.apply(this, arguments);
-      window.requestAnimationFrame(() => normalizeScroll(id));
+      window.requestAnimationFrame(() => syncNavigationPage(id));
       return result;
     };
   }
 
-  window.requestAnimationFrame(() => normalizeScroll());
+  window.requestAnimationFrame(() => syncNavigationPage());
 })();
