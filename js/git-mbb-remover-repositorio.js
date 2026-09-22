@@ -1,10 +1,7 @@
 (() => {
   const gitStep = id => gitSteps.find(step => String(step.id) === String(id));
 
-  const g4 = gitStep(4);
-  if (g4 && !g4.content.includes('Como remover o controle Git de uma pasta')) {
-    const marker = '<div class="concept-box"><strong>A ordem correta é:</strong> escolher local ou rede → entrar na pasta-base → criar/entrar em <span class="inline-code">site-cafe-aurora</span> → conferir o caminho → <span class="inline-code">git init</span> → <span class="inline-code">git status</span> → somente se necessário, corrigir <span class="inline-code">safe.directory</span>.</div>';
-    const section = `${marker}
+  const secaoRemocao = `
         <h3>Como remover o controle Git de uma pasta</h3>
         <p>Se você executou <span class="inline-code">git init</span> na pasta errada, não existe um comando <span class="inline-code">git deinit</span>. Em um repositório comum criado com <span class="inline-code">git init</span>, o controle Git fica armazenado na pasta interna <span class="inline-code">.git</span>.</p>
         <p>Antes de apagar qualquer coisa, descubra qual pasta o Git considera a raiz do repositório:</p>
@@ -14,12 +11,22 @@
         <p><strong>Somente se tiver certeza de que aquele repositório foi criado por engano</strong>, no Git CMD/CMD do Windows execute:</p>
         <pre class="command">rmdir /s /q .git</pre>
         <p><span class="inline-code">rmdir</span> remove uma pasta; <span class="inline-code">/s</span> remove também todo o conteúdo interno; <span class="inline-code">/q</span> executa sem pedir confirmação; <span class="inline-code">.git</span> é onde ficam os metadados do repositório.</p>
-        <div class="danger-box"><strong>Atenção:</strong> esse comando mantém seus arquivos do projeto, mas apaga o histórico Git local, branches locais, configuração de remoto, área de preparação e demais informações guardadas em <span class="inline-code">.git</span>. Se esse histórico existir apenas nesse computador, ele será perdido.</div>
+        <div class="danger-box"><strong>Atenção:</strong> esse comando mantém os arquivos comuns da pasta, mas apaga o histórico Git local, branches locais, configuração de remoto, área de preparação e demais informações guardadas em <span class="inline-code">.git</span>. Se esse histórico existir apenas nesse computador, ele será perdido.</div>
         <p>Depois, confira:</p>
         <pre class="command">git status</pre>
         <p>Se aparecer uma mensagem parecida com <span class="inline-code">fatal: not a git repository</span>, isso é o resultado esperado: aquela pasta voltou a ser uma pasta comum.</p>
-        <div class="note-box"><strong>Se houver um repositório no GitHub, ele não é apagado.</strong> O comando remove apenas o controle Git daquela cópia local. E não use <span class="inline-code">rmdir /s /q .git</span> dentro de um projeto que você realmente quer continuar versionando.</div>`;
-    g4.content = g4.content.replace(marker, section);
+        <div class="note-box"><strong>Se houver um repositório no GitHub, ele não é apagado.</strong> O comando remove apenas o controle Git daquela cópia local. Não use <span class="inline-code">rmdir /s /q .git</span> dentro de um projeto que você realmente quer continuar versionando.</div>`;
+
+  const g4 = gitStep(4);
+  if (g4 && !g4.content.includes('Como remover o controle Git de uma pasta')) {
+    const marcador = '<div class="concept-box"><strong>A ordem correta é:</strong> escolher local ou rede → entrar na pasta-base → criar/entrar em <span class="inline-code">site-cafe-aurora</span> → conferir o caminho → <span class="inline-code">git init</span> → <span class="inline-code">git status</span> → somente se necessário, corrigir <span class="inline-code">safe.directory</span>.</div>';
+
+    if (g4.content.includes(marcador)) {
+      g4.content = g4.content.replace(marcador, `${marcador}${secaoRemocao}`);
+    } else {
+      // Fallback intencional: não depender de um texto exato de outro overlay.
+      g4.content += secaoRemocao;
+    }
   }
 
   if (typeof modules !== 'undefined' && modules.comandos) {
