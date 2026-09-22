@@ -1,9 +1,15 @@
 /*
  * Configuração pública do SDK Web do Firebase.
  *
- * Ela será preenchida após a criação/autorização do projeto Firebase.
  * Não inserir aqui service account, senha, token privado ou chave administrativa.
- * Enquanto estiver como null, a Academia permanece pública e registra o progresso
- * apenas neste navegador, deixando essa condição visível ao aluno.
+ * Esta configuração identifica o app Web; a proteção dos dados depende do login
+ * e das regras publicadas em firestore.rules.
  */
-window.MBB_FIREBASE_CONFIG = null;
+window.MBB_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBCydBNw1ZybTfWxHJrkPih-GIza6WX-c0",
+  authDomain: "academia-mundo-bit-byte.firebaseapp.com",
+  projectId: "academia-mundo-bit-byte",
+  storageBucket: "academia-mundo-bit-byte.firebasestorage.app",
+  messagingSenderId: "426586282521",
+  appId: "1:426586282521:web:fff9da074d294ec44a6888"
+};

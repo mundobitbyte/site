@@ -5,7 +5,7 @@ Este guia é para o proprietário da Academia. Não é necessário dominar banco
 ## 1. Acessar o Firebase
 
 1. Entre em `https://console.firebase.google.com/` com a conta proprietária.
-2. Abra o projeto da Academia Mundo bit Byte.
+2. Abra o projeto **Academia Mundo bit Byte** (`academia-mundo-bit-byte`).
 3. Não ative faturamento ou o plano Blaze sem avaliar e autorizar conscientemente.
 
 ## 2. Onde estão os usuários
@@ -82,3 +82,15 @@ A configuração normal do SDK Web em `firebase-config.js` identifica o projeto 
 - decidir sobre qualquer serviço pago;
 - responder a pedido de exclusão de dados;
 - alterar domínio, propriedade ou configuração administrativa sensível.
+
+## 10. Configuração implantada em 22/09/2026
+
+- plano: **Spark**, sem cobrança;
+- app Web: **Academia Mundo bit Byte Web**;
+- Authentication: **E-mail/senha** ativo;
+- Firestore: edição **Standard**, banco `(default)`;
+- região dos dados: **southamerica-east1 (São Paulo)**;
+- regras privadas: publicadas a partir de `firestore.rules`;
+- Google Analytics: desativado na criação do projeto;
+- Gemini no Firebase: desativado na criação do projeto;
+- Firebase Hosting: não ativado, pois o site continua no fluxo de publicação existente.
