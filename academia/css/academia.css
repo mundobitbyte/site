@@ -92,6 +92,8 @@ img{max-width:100%;display:block}.shell{width:min(1120px,92%);margin:auto}.topba
   .lesson-hero h1{font-size:clamp(2rem,12vw,3.25rem)}.learning-step{grid-template-columns:1fr;padding:21px}.step-number{width:40px;height:40px}.lesson-nav{grid-template-columns:1fr}.lesson-nav span{display:none}
 }
 
+.mini-progress .progress-7{width:7%}
+
 /* Conta, painel do aluno e privacidade */
 .account-body,.panel-body{min-height:100vh}.account-shell{width:min(1040px,92%);margin:0 auto;padding:52px 0;display:grid;grid-template-columns:1fr 440px;gap:38px;align-items:center}.account-intro h1{font-size:clamp(2.2rem,5vw,4.55rem);line-height:.97;letter-spacing:-.055em;margin:9px 0 18px;text-wrap:balance}.account-intro>p:not(.brandline){color:var(--muted);font-size:1.08rem}
 .account-card{background:#fff;border:1px solid var(--line);border-radius:27px;padding:26px;box-shadow:var(--shadow)}.account-tabs{display:grid;grid-template-columns:1fr 1fr;background:#edf3fa;border-radius:15px;padding:4px;margin-bottom:22px}.account-tabs button{border:0;background:transparent;padding:11px;border-radius:12px;color:var(--muted);font:inherit;font-weight:900;cursor:pointer}.account-tabs button.active{background:#fff;color:var(--primary);box-shadow:0 4px 12px rgba(16,32,51,.08)}
