@@ -4,10 +4,15 @@
   const cmdStep = modules.comandos.steps.find(step => String(step.id) === 'cmd');
   if (!cmdStep) return;
 
-  cmdStep.content = cmdStep.content.replace(
-    String.raw`pushd \\10.66.53.1\Publica\mtec2026\joao\meus-repositorios\site-cafe-aurora`,
-    String.raw`pushd \\servidor\usuarios\seuUsuario`
-  );
+  cmdStep.content = cmdStep.content
+    .replace(
+      String.raw`pushd \\10.66.53.1\Publica\mtec2026\joao\meus-repositorios\site-cafe-aurora`,
+      String.raw`pushd \\10.66.53.1\Publica\mtec2026\caio.goncalves\P.A\meus-repositorios\site-cafe-aurora`
+    )
+    .replace(
+      String.raw`pushd \\servidor\usuarios\seuUsuario`,
+      String.raw`pushd \\10.66.53.1\Publica\mtec2026\caio.goncalves\P.A\meus-repositorios\site-cafe-aurora`
+    );
 
   if (!cmdStep.content.includes('safe.directory no Git CMD')) {
     cmdStep.content += `
@@ -22,8 +27,8 @@
         <div class="command-ref-body">
           <p>Adiciona uma exceção de confiança para um repositório específico.</p>
           <div class="command-ref-warning"><strong>No Git CMD/CMD:</strong> se a recomendação do Git vier entre aspas simples, troque-as por <strong>aspas duplas</strong>. As aspas simples podem ser gravadas como parte do valor e gerar <span class="inline-code">not absolute</span>.</div>
-          <div class="command-ref-example"><strong>Exemplo para rede:</strong><code>git config --global --add safe.directory "%(prefix)///servidor/compartilhamento/seuUsuario/meus-repositorios/site-cafe-aurora"</code></div>
-          <p class="command-ref-note">Em unidade de rede mapeada, o CMD pode mostrar Z:\\..., mas o Git pode identificar o repositório pelo caminho UNC. Prefira o caminho que o próprio Git apresenta na mensagem de erro.</p>
+          <div class="command-ref-example"><strong>Exemplo concreto:</strong><code>git config --global --add safe.directory "%(prefix)///10.66.53.1/Publica/mtec2026/caio.goncalves/P.A/meus-repositorios/site-cafe-aurora"</code></div>
+          <p class="command-ref-note">Em unidade de rede mapeada, o CMD pode mostrar Y:\\..., mas o Git pode identificar o repositório pelo caminho UNC. Prefira o caminho que o próprio Git apresenta na mensagem de erro.</p>
         </div>
       </div>
       <div class="command-ref-card">
@@ -32,7 +37,10 @@
           <button class="command-copy-btn" type="button" data-rede-copy="git config --global --get-all safe.directory">Copiar</button>
         </div>
         <pre class="command-ref-code"><code>git config --global --get-all safe.directory</code></pre>
-        <div class="command-ref-body"><p>Mostra todas as exceções de diretórios seguros já cadastradas.</p></div>
+        <div class="command-ref-body">
+          <p>Mostra todas as exceções de diretórios seguros já cadastradas.</p>
+          <p class="command-ref-note">Use este comando também quando aparecer um aviso <span class="inline-code">safe.directory ... not absolute</span>: normalmente há uma entrada antiga ou incorreta na configuração global.</p>
+        </div>
       </div>
       <div class="command-ref-card">
         <div class="command-ref-head">
@@ -42,7 +50,7 @@
         <pre class="command-ref-code"><code>git config --global --unset-all safe.directory</code></pre>
         <div class="command-ref-body">
           <p>Remove todas as exceções <span class="inline-code">safe.directory</span> do usuário.</p>
-          <div class="command-ref-warning"><strong>Use somente se você tiver certeza de que não precisa preservar outras entradas.</strong> Se houver outras pastas seguras, prefira <span class="inline-code">git config --global --edit</span> e remova apenas a linha incorreta.</div>
+          <div class="command-ref-warning"><strong>Use somente se a lista contiver apenas entradas antigas ou incorretas que você não precisa preservar.</strong> Se houver outras pastas seguras válidas, prefira <span class="inline-code">git config --global --edit</span> e remova somente a linha incorreta.</div>
         </div>
       </div>`;
   }
