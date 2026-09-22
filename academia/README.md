@@ -29,3 +29,18 @@ Consulte `../ADMINISTRACAO_ACADEMIA_MBB.md` para operação e segurança.
 ```bash
 node --test academia/tests/academia-core.test.js
 ```
+
+As regras devem ser testadas com o emulador do Firestore e as dependências de
+`@firebase/rules-unit-testing` e `firebase` disponíveis no ambiente:
+
+```bash
+firebase emulators:exec --only firestore --project demo-mbb \
+  "node academia/tests/firestore-rules.test.cjs"
+```
+
+O teste real cria e remove uma conta técnica temporária. Execute-o somente com
+autorização explícita do proprietário e com o SDK Firebase disponível:
+
+```bash
+MBB_RUN_LIVE_TESTS=1 node --test academia/tests/firebase-live.test.cjs
+```

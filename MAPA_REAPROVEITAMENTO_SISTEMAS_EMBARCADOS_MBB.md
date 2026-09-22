@@ -9,7 +9,7 @@ SHA da fonte de verdade auditada: `64c9b0ffc6ca043f4d25f9491696b83fc328e467`.
 | `#p3`, `#p4`, `#p5` e `#lab1` | Módulo 2 | Botão, buzzer, potenciômetro/PWM e Monitor Serial | Fluxo entrada → processamento → saída, observação de valores e transferência |
 | `#p6`, `#p7` e `#lab2` | Módulo 3 | LDR, HC-SR04 e Sensor de Ré | Calibração baseada em leitura real, faixas, interpretação e diagnóstico por subsistema |
 | `#p8`, `#p9`, `#lab3` e `#lab4` | Módulo 4 | LED RGB, servo, RGB + botões e Lixeira Automática | Integração progressiva, estado lógico, teste por partes e automação comprovada |
-| Trecho de tempo/memória após `#p7` e `arduino-programacao-aplicada.html` | Módulo 5 | `millis()`, `micros()`, memória, funções, matemática, texto e `random()` | Conteitos surgem depois da complexidade prática; programa não bloqueante e modular |
+| Trecho de tempo/memória após `#p7` e `arduino-programacao-aplicada.html` | Módulo 5 | `millis()`, `micros()`, memória, funções, matemática, texto e `random()` | Conceitos surgem depois da complexidade prática; programa não bloqueante e modular |
 | `arduino-conectividade.html#b6-prep`, `#b6-1`, `#b6-2` | Módulo 6 | Códigos do ESP32, Bluetooth e Wi-Fi | Transferência Uno → ESP32, 5 V × 3,3 V e mensagem “você não voltou ao começo” |
 | `#b6-3`, `#b6-4`, `#b6-5` e `arduino-iot.html` | Módulo 7 | HTTP, mDNS, túnel, conceitos e aplicações de IoT | Comparação por finalidade, comportamento na falha de rede e arquitetura do sistema |
 | `arduino-protocolos.html` | Módulo 8 | RTOS, I2C, UART/RS-232, CAN, TCP/IP, 802.11 e Bluetooth | Cada tecnologia responde a uma necessidade; prática curta de RTOS e I2C |
