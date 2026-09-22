@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 7 de React Native do Zero: Reúna as escolhas em um único estado e mantenha o resumo sincronizado." />
+  <title>Capítulo 7 — O aplicativo reúne as escolhas | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="7">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-06.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-08.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 7</h2><p>O aplicativo reúne as escolhas</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-onde-paramos">1. Onde paramos</a></li><li><a href="#2-precisamos-enxergar-o-total-das-escolhas">2. Precisamos enxergar o total das escolhas</a></li><li><a href="#3-faca-o-teste-que-revela-o-problema">3. Faça o teste que revela o problema</a></li><li><a href="#4-onde-a-memoria-precisa-ficar">4. Onde a memória precisa ficar?</a></li><li><a href="#5-produtos-passa-a-guardar-as-escolhas">5. Produtos passa a guardar as escolhas</a></li><li><a href="#6-produto-deixa-de-guardar-uma-memoria-isolada">6. Produto deixa de guardar uma memória isolada</a></li><li><a href="#7-observe-o-caminho-completo">7. Observe o caminho completo</a></li><li><a href="#8-experimente-para-entender">8. Experimente para entender</a></li><li><a href="#9-o-que-mudou-para-o-usuario">9. O que mudou para o usuário</a></li><li><a href="#10-marco-do-capitulo-produtos-js-completo">10. Marco do capítulo - Produtos.js completo</a></li><li><a href="#11-marco-do-capitulo-produto-js-completo">11. Marco do capítulo - Produto.js completo</a></li><li><a href="#12-o-que-aprendemos">12. O que aprendemos</a></li><li><a href="#13-confira-antes-de-encerrar">13. Confira antes de encerrar</a></li><li><a href="#14-checkpoint-07-escolhas-reunidas">14. Checkpoint 07 - Escolhas reunidas</a></li><li><a href="#15-o-proximo-problema-ja-apareceu">15. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 7</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Estado compartilhado</p><h1>O aplicativo reúne as escolhas</h1><p class="lead">No capítulo anterior, cada cartão passou a lembrar a própria escolha. O cliente consegue selecionar água, gás ou os dois e também cancelar uma escolha.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 7"><div class="rn-app-screen"><div class="rn-app-identity"><div class="rn-app-brand">Santa Filomena Água &amp; Gás</div><img class="rn-app-logo" src="assets/checkpoint-01/assets/santa-filomena.png" alt="Identidade visual da Santa Filomena Água &amp; Gás" /><strong>Água mineral e gás com entrega</strong><small>Peça com praticidade e acompanhe sua entrega.</small></div><div class="rn-app-section-title">Produtos</div><div class="rn-app-summary">Tipos selecionados: 1</div>
+      <div class="rn-app-product"><strong>Água mineral 20 L</strong><small>Galão retornável de água mineral.</small></div>
+      <div class="rn-app-product"><strong>Gás 13 kg</strong><small>Botijão residencial de 13 kg.</small></div></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><p>Agora surge um problema que ainda não aparecia na tela: se cada Produto guarda sua memória sozinho, como a área de produtos poderá saber o conjunto das escolhas?</p><div class="rn-note concept"><p>Cada cartão sabe de si. O aplicativo ainda precisa enxergar o conjunto.</p></div></section><section class="rn-step rn-action" id="1-onde-paramos"><span class="rn-step-label">Construa e confira</span><h2>1. Onde paramos</h2><p>Produto.js ainda possui seu próprio React.useState. Isso funciona para mudar o botão e mostrar a confirmação dentro daquele cartão.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - estado herdado do Capítulo 6</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, Pressable, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function Produto(props) {
+  const [selecionado, setSelecionado] = React.useState(false);
+
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+        {props.nome}
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+        {props.descricao}
+      &lt;/Text&gt;
+      &lt;Pressable
+        style={styles.botaoEscolher}
+        onPress={() =&gt; setSelecionado(!selecionado)}
+      &gt;
+        &lt;Text style={styles.textoBotao}&gt;
+          {selecionado ? &#x27;Cancelar escolha&#x27; : &#x27;Escolher&#x27;}
+        &lt;/Text&gt;
+      &lt;/Pressable&gt;
+
+      {selecionado &amp;&amp; (
+        &lt;Text style={styles.confirmacao}&gt;
+          Produto selecionado.
+        &lt;/Text&gt;
+      )}
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+  botaoEscolher: {
+    backgroundColor: &#x27;#1967D2&#x27;,
+    borderRadius: 10,
+    paddingVertical: 10,
+    marginTop: 12,
+    alignItems: &#x27;center&#x27;,
+  },
+  textoBotao: {
+    color: &#x27;#ffffff&#x27;,
+    fontSize: 15,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  confirmacao: {
+    color: &#x27;#166534&#x27;,
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 8,
+    textAlign: &#x27;center&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Produtos.js, por outro lado, conhece a lista de produtos, mas não recebe nenhuma informação sobre o que foi selecionado.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - estado herdado do Capítulo 6</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+];
+export default function Produtos() {
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      {produtos.map((produto) =&gt; (
+        &lt;Produto
+          key={produto.id}
+          nome={produto.nome}
+          descricao={produto.descricao}
+        /&gt;
+      ))}
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="2-precisamos-enxergar-o-total-das-escolhas"><span class="rn-step-label">Construa e confira</span><h2>2. Precisamos enxergar o total das escolhas</h2><p>Antes de mover qualquer estado, vamos criar em Produtos.js uma memória própria para o conjunto das escolhas e mostrar sua quantidade na tela.</p><p>Nesse primeiro teste, não conectaremos essa nova memória aos cartões. Isso é intencional: queremos observar exatamente o que acontece quando duas partes do aplicativo guardam informações separadas.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - arquivo completo; digite somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+];
+export default function Produtos() {
+<span class="code-new">  const [selecionados, setSelecionados] = React.useState([]);</span>
+
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+<span class="code-new">      &lt;Text style={styles.resumo}&gt;</span>
+<span class="code-new">        Selecionados: {selecionados.length}</span>
+      &lt;/Text&gt;
+
+      {produtos.map((produto) =&gt; (
+        &lt;Produto
+          key={produto.id}
+          nome={produto.nome}
+          descricao={produto.descricao}
+        /&gt;
+      ))}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+<span class="code-new">  resumo: {</span>
+<span class="code-new">    color: &#x27;#374151&#x27;,</span>
+<span class="code-new">    fontSize: 14,</span>
+<span class="code-new">    marginBottom: 12,</span>
+<span class="code-new">  },</span>
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a pré-visualização. A nova informação deve começar em:</p><div class="rn-note concept"><p>Selecionados: 0</p></div></section><section class="rn-step rn-action" id="3-faca-o-teste-que-revela-o-problema"><span class="rn-step-label">Construa e confira</span><h2>3. Faça o teste que revela o problema</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Toque em Escolher no cartão de Água mineral 20 L.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Observe que o próprio cartão indica Produto selecionado.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Agora olhe para o resumo acima dos cartões.</p><div class="rn-note concept"><p>O cartão diz que a água está selecionada, mas o resumo continua em Selecionados: 0.</p></div><p>Não é um erro do React. Existem duas memórias diferentes: uma dentro de Produto e outra dentro de Produtos. Alterar uma não altera automaticamente a outra.</p></section><section class="rn-step rn-action" id="4-onde-a-memoria-precisa-ficar"><span class="rn-step-label">Construa e confira</span><h2>4. Onde a memória precisa ficar?</h2><p>Agora a necessidade ficou visível. Se queremos que a área de produtos conheça o conjunto das escolhas, a memória não pode continuar isolada dentro de cada cartão.</p><div class="rn-flow"><span>ANTES</span><span class="arrow">→</span><span>Produto 1 → guarda sua própria escolha</span><span class="arrow">→</span><span>Produto 2 → guarda sua própria escolha</span><span class="arrow">→</span><span>DEPOIS</span><span class="arrow">→</span><span>Produtos → guarda o conjunto das escolhas</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>Produto recebe seu estado e avisa quando for tocado</span></div><p>A menor mudança profissional é colocar o estado no componente comum que enxerga todos os produtos. Essa prática é conhecida como elevar o estado (lifting state up), mas o nome só importa depois de entendermos a necessidade.</p></section><section class="rn-step rn-action" id="5-produtos-passa-a-guardar-as-escolhas"><span class="rn-step-label">Construa e confira</span><h2>5. Produtos passa a guardar as escolhas</h2><p>Agora faremos a conexão completa. Produtos.js guardará os ids selecionados e decidirá se um toque adiciona ou remove aquele id.</p><p>Não tente decorar includes, filter ou os três pontos. Leia a função como uma decisão: se o id já está na lista, removemos; se não está, acrescentamos.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - arquivo completo; digite/ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+];
+export default function Produtos() {
+  const [selecionados, setSelecionados] = React.useState([]);
+
+<span class="code-new">  function alternarProduto(id) {</span>
+<span class="code-new">    const jaSelecionado = selecionados.includes(id);</span>
+
+<span class="code-new">    if (jaSelecionado) {</span>
+<span class="code-new">      const novaLista = selecionados.filter(</span>
+<span class="code-new">        (produtoId) =&gt; produtoId !== id</span>
+<span class="code-new">      );</span>
+<span class="code-new">      setSelecionados(novaLista);</span>
+<span class="code-new">    } else {</span>
+<span class="code-new">      setSelecionados([...selecionados, id]);</span>
+<span class="code-new">    }</span>
+<span class="code-new">  }</span>
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      &lt;Text style={styles.resumo}&gt;
+        Selecionados: {selecionados.length}
+      &lt;/Text&gt;
+
+      {produtos.map((produto) =&gt; (
+        &lt;Produto
+          key={produto.id}
+          nome={produto.nome}
+          descricao={produto.descricao}
+<span class="code-new">          selecionado={selecionados.includes(produto.id)}</span>
+<span class="code-new">          onAlternar={() =&gt; alternarProduto(produto.id)}</span>
+        /&gt;
+      ))}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  resumo: {
+    color: &#x27;#374151&#x27;,
+    fontSize: 14,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>A lista selecionados começa vazia. Cada toque chama alternarProduto com o id daquele produto.</p><p class="rn-list-line"><span aria-hidden="true">•</span>includes verifica se o id já está entre os selecionados;</p><p class="rn-list-line"><span aria-hidden="true">•</span>filter cria uma nova lista sem o id que deve ser removido;</p><p class="rn-list-line"><span aria-hidden="true">•</span>...selecionados mantém os ids atuais antes de acrescentar o novo;</p><p class="rn-list-line"><span aria-hidden="true">•</span>length informa quantos ids existem na lista.</p></section><section class="rn-step rn-action" id="6-produto-deixa-de-guardar-uma-memoria-isolada"><span class="rn-step-label">Construa e confira</span><h2>6. Produto deixa de guardar uma memória isolada</h2><p>Como Produtos passou a ser o responsável pelo conjunto das escolhas, Produto.js não precisa mais de um useState próprio.</p><p>Apague a linha que cria selecionado e setSelecionado. Depois ajuste as referências indicadas em negrito.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - arquivo completo; apague o estado local e ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, Pressable, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function Produto(props) {
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+        {props.nome}
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+        {props.descricao}
+      &lt;/Text&gt;
+
+      &lt;Pressable
+        style={styles.botaoEscolher}
+<span class="code-new">        onPress={props.onAlternar}</span>
+      &gt;
+        &lt;Text style={styles.textoBotao}&gt;
+<span class="code-new">          {props.selecionado ? &#x27;Cancelar escolha&#x27; : &#x27;Escolher&#x27;}</span>
+        &lt;/Text&gt;
+      &lt;/Pressable&gt;
+<span class="code-new">      {props.selecionado &amp;&amp; (</span>
+        &lt;Text style={styles.confirmacao}&gt;
+          Produto selecionado.
+        &lt;/Text&gt;
+      )}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+  botaoEscolher: {
+    backgroundColor: &#x27;#1967D2&#x27;,
+    borderRadius: 10,
+    paddingVertical: 10,
+    marginTop: 12,
+    alignItems: &#x27;center&#x27;,
+  },
+  textoBotao: {
+    color: &#x27;#ffffff&#x27;,
+    fontSize: 15,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  confirmacao: {
+    color: &#x27;#166534&#x27;,
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 8,
+    textAlign: &#x27;center&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Agora Produto não decide sozinho se está selecionado. Ele recebe essa informação por props e, quando o cliente toca, avisa o componente que possui a memória.</p><div class="rn-flow"><span>Produtos guarda o estado → Produto mostra o estado → o toque volta para Produtos.</span></div></section><section class="rn-step rn-observe" id="7-observe-o-caminho-completo"><span class="rn-step-label">Construa e confira</span><h2>7. Observe o caminho completo</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Produtos calcula se o id está em selecionados.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Esse resultado chega ao cartão pela prop selecionado.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>O botão mostra Escolher ou Cancelar escolha conforme essa prop.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Ao tocar, Produto chama a função recebida em onAlternar.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Produtos altera a lista selecionados.</p><p class="rn-list-line"><span aria-hidden="true">6.</span>A interface é atualizada com o novo estado.</p><div class="rn-flow"><span>toque → aviso ao componente pai → estado muda → cartões e resumo recebem o novo resultado</span></div></section><section class="rn-step rn-observe" id="8-experimente-para-entender"><span class="rn-step-label">Construa e confira</span><h2>8. Experimente para entender</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Escolha Água mineral 20 L. O resumo deve passar para Selecionados: 1.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Escolha também Gás 13 kg. O resumo deve passar para Selecionados: 2.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Cancele somente a água. O resumo deve voltar para Selecionados: 1.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Confirme que o gás continua visualmente selecionado.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Cancele o gás. O resumo deve voltar para Selecionados: 0.</p><p>Agora existe uma única fonte de verdade para as escolhas dessa área. Os cartões continuam independentes visualmente, mas a memória que organiza o conjunto está em Produtos.</p><div class="rn-note concept"><p>Quando várias partes precisam conhecer a mesma informação, é importante pensar onde essa informação deve viver.</p></div></section><section class="rn-step rn-action" id="9-o-que-mudou-para-o-usuario"><span class="rn-step-label">Construa e confira</span><h2>9. O que mudou para o usuário</h2><p>A mudança técnica é interna, mas o usuário ganhou uma confirmação nova: além de enxergar cada cartão selecionado, agora consegue conferir quantos produtos fazem parte da sua escolha.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Selecionados: 0 quando não há escolha;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Selecionados: 1 quando apenas um produto está escolhido;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Selecionados: 2 quando água e gás estão escolhidos;</p><p class="rn-list-line"><span aria-hidden="true">•</span>cancelar uma escolha atualiza também o resumo geral.</p></section><section class="rn-step rn-action" id="10-marco-do-capitulo-produtos-js-completo"><span class="rn-step-label">Construa e confira</span><h2>10. Marco do capítulo - Produtos.js completo</h2><p>Veja o estado final do arquivo responsável pela lista e pelo conjunto das escolhas.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - estado ao final do Capítulo 7</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+];
+export default function Produtos() {
+  const [selecionados, setSelecionados] = React.useState([]);
+
+  function alternarProduto(id) {
+    const jaSelecionado = selecionados.includes(id);
+
+    if (jaSelecionado) {
+      const novaLista = selecionados.filter(
+        (produtoId) =&gt; produtoId !== id
+      );
+      setSelecionados(novaLista);
+    } else {
+      setSelecionados([...selecionados, id]);
+    }
+  }
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      &lt;Text style={styles.resumo}&gt;
+        Selecionados: {selecionados.length}
+      &lt;/Text&gt;
+
+      {produtos.map((produto) =&gt; (
+        &lt;Produto
+          key={produto.id}
+          nome={produto.nome}
+          descricao={produto.descricao}
+          selecionado={selecionados.includes(produto.id)}
+          onAlternar={() =&gt; alternarProduto(produto.id)}
+        /&gt;
+      ))}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  resumo: {
+    color: &#x27;#374151&#x27;,
+    fontSize: 14,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="11-marco-do-capitulo-produto-js-completo"><span class="rn-step-label">Construa e confira</span><h2>11. Marco do capítulo - Produto.js completo</h2><p>O cartão agora apresenta e comunica uma escolha, mas não mantém mais uma memória isolada.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - estado ao final do Capítulo 7</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, Pressable, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function Produto(props) {
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+        {props.nome}
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+        {props.descricao}
+      &lt;/Text&gt;
+
+      &lt;Pressable
+        style={styles.botaoEscolher}
+        onPress={props.onAlternar}
+      &gt;
+        &lt;Text style={styles.textoBotao}&gt;
+          {props.selecionado ? &#x27;Cancelar escolha&#x27; : &#x27;Escolher&#x27;}
+        &lt;/Text&gt;
+      &lt;/Pressable&gt;
+      {props.selecionado &amp;&amp; (
+        &lt;Text style={styles.confirmacao}&gt;
+          Produto selecionado.
+        &lt;/Text&gt;
+      )}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+  botaoEscolher: {
+    backgroundColor: &#x27;#1967D2&#x27;,
+    borderRadius: 10,
+    paddingVertical: 10,
+    marginTop: 12,
+    alignItems: &#x27;center&#x27;,
+  },
+  textoBotao: {
+    color: &#x27;#ffffff&#x27;,
+    fontSize: 15,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  confirmacao: {
+    color: &#x27;#166534&#x27;,
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 8,
+    textAlign: &#x27;center&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-observe" id="12-o-que-aprendemos"><span class="rn-step-label">Construa e confira</span><h2>12. O que aprendemos</h2><p class="rn-list-line"><span aria-hidden="true">•</span>estado local é útil quando somente o próprio componente precisa daquela informação;</p><p class="rn-list-line"><span aria-hidden="true">•</span>uma informação compartilhada pode precisar subir para um componente comum;</p><p class="rn-list-line"><span aria-hidden="true">•</span>um array também pode ser usado como estado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>includes ajuda a saber se um id está presente;</p><p class="rn-list-line"><span aria-hidden="true">•</span>filter permite criar uma nova lista sem determinado id;</p><p class="rn-list-line"><span aria-hidden="true">•</span>uma função pode ser enviada por props para que o componente filho avise o pai sobre uma ação;</p><p class="rn-list-line"><span aria-hidden="true">•</span>o mesmo estado pode alimentar vários pontos da interface, como cartões e resumo.</p><p>O termo técnico elevar o estado descreve exatamente o que fizemos: a memória saiu de cada Produto e foi para Produtos porque ali o aplicativo consegue enxergar o conjunto.</p></section><section class="rn-step rn-observe" id="13-confira-antes-de-encerrar"><span class="rn-step-label">Construa e confira</span><h2>13. Confira antes de encerrar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js não possui mais React.useState próprio para seleção.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js guarda os ids selecionados.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Cada Produto recebe selecionado por props.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Cada Produto recebe onAlternar por props.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Selecionar e cancelar continuam funcionando.</p><p class="rn-list-line"><span aria-hidden="true">•</span>O resumo Selecionados acompanha o total correto.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Escolher um produto não altera indevidamente o outro.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A pré-visualização continua sendo exibida sem erros.</p></section><section class="rn-step rn-checkpoint" id="14-checkpoint-07-escolhas-reunidas"><span class="rn-step-label">Checkpoint</span><h2>14. Checkpoint 07 - Escolhas reunidas</h2><p>Ao concluir as conferências acima, preserve este estado como referência do checkpoint do capítulo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>IdentidadeEmpresa.js preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js com lista, estado compartilhado e função alternarProduto;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js controlado por props selecionado e onAlternar;</p><p class="rn-list-line"><span aria-hidden="true">•</span>asset oficial santa-filomena.png;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Snack correspondente e screenshot validado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>arquivos de recuperação.</p></section><section class="rn-step rn-action" id="15-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>15. O próximo problema já apareceu</h2><p>O aplicativo já consegue saber quais tipos de produto foram escolhidos. Mas escolher Água mineral 20 L ainda não responde uma pergunta essencial de um pedido:</p><div class="rn-note concept"><p>Quantos galões? Quantos botijões?</p></div><p>A próxima evolução deverá nascer dessa necessidade. Não vamos criar carrinho completo, pagamento ou envio do pedido antes de resolver a quantidade de cada item.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 7 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-06.html"><small>Capítulo anterior</small><strong>Capítulo 6</strong></a><a href="capitulo-08.html"><small>Próximo capítulo</small><strong>Capítulo 8</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

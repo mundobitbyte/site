@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 11 de React Native do Zero: Construa o endereço de entrega e valide somente os campos obrigatórios." />
+  <title>Capítulo 11 — O pedido sabe onde entregar | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="11">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-10.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-12.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 11</h2><p>O pedido sabe onde entregar</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-onde-paramos">1. Onde paramos</a></li><li><a href="#2-o-endereco-precisa-de-uma-area-propria">2. O endereço precisa de uma área própria</a></li><li><a href="#3-o-componente-precisa-entrar-na-tela">3. O componente precisa entrar na tela</a></li><li><a href="#4-so-a-rua-ainda-nao-entrega-um-pedido">4. Só a rua ainda não entrega um pedido</a></li><li><a href="#5-nem-todo-endereco-cabe-em-tres-campos">5. Nem todo endereço cabe em três campos</a></li><li><a href="#6-preencher-campos-nao-e-o-mesmo-que-validar">6. Preencher campos não é o mesmo que validar</a></li><li><a href="#7-a-propria-informacao-mostra-se-esta-completa">7. A própria informação mostra se está completa</a></li><li><a href="#8-experimente-para-entender">8. Experimente para entender</a></li><li><a href="#9-o-que-mudou-para-o-usuario">9. O que mudou para o usuário</a></li><li><a href="#10-marco-do-capitulo-app-js-completo">10. Marco do capítulo - App.js completo</a></li><li><a href="#11-marco-do-capitulo-enderecoentrega-js-completo">11. Marco do capítulo - EnderecoEntrega.js completo</a></li><li><a href="#12-o-que-aprendemos">12. O que aprendemos</a></li><li><a href="#13-confira-antes-de-encerrar">13. Confira antes de encerrar</a></li><li><a href="#14-checkpoint-11-endereco-de-entrega">14. Checkpoint 11 - Endereço de entrega</a></li><li><a href="#15-o-proximo-problema-ja-apareceu">15. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 11</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Entrega</p><h1>O pedido sabe onde entregar</h1><p class="lead">No capítulo anterior, o aplicativo passou a conhecer o nome e o telefone do cliente. Os produtos, as quantidades e os valores também já existem.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 11"><div class="rn-app-screen"><div class="rn-app-form"><strong>Endereço de entrega</strong><label>Rua ou avenida<input value="Rua das Flores" readonly></label><label>Número<input value="125" readonly></label><label>Bairro<input value="Centro" readonly></label><small class="rn-app-ok">Endereço pronto para entrega.</small></div></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><p>Mas uma distribuidora não consegue concluir uma entrega apenas sabendo quem comprou.</p><div class="rn-note concept"><p>Para onde o pedido deve ir?</p></div><p>É dessa pergunta concreta que nasce a próxima parte do aplicativo.</p></section><section class="rn-step rn-action" id="1-onde-paramos"><span class="rn-step-label">Construa e confira</span><h2>1. Onde paramos</h2><p>O App.js já usa ScrollView porque a tela cresceu e reúne identidade, produtos e dados do cliente.</p><div class="code-card">
+          <div class="code-card-head"><span>App.js - estado herdado do Capítulo 10</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, ScrollView, StyleSheet } from &#x27;react-native&#x27;;
+import Constants from &#x27;expo-constants&#x27;;
+import IdentidadeEmpresa from &#x27;./components/IdentidadeEmpresa&#x27;;
+import Produtos from &#x27;./components/Produtos&#x27;;
+import DadosCliente from &#x27;./components/DadosCliente&#x27;;
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;
+        &lt;View style={styles.cartao}&gt;
+          &lt;IdentidadeEmpresa /&gt;
+          &lt;Produtos /&gt;
+          &lt;DadosCliente /&gt;
+        &lt;/View&gt;
+      &lt;/ScrollView&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: &#x27;#eef3f7&#x27;,
+  },
+  conteudo: {
+    padding: 16,
+  },
+  cartao: {
+    backgroundColor: &#x27;#ffffff&#x27;,
+    borderRadius: 16,
+    padding: 20,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>DadosCliente.js continua responsável apenas por identificar e permitir contato com quem está comprando.</p><div class="rn-note concept"><p>Quem compra não é a mesma pergunta que onde entregar.</p></div></section><section class="rn-step rn-action" id="2-o-endereco-precisa-de-uma-area-propria"><span class="rn-step-label">Construa e confira</span><h2>2. O endereço precisa de uma área própria</h2><p>Poderíamos colocar o endereço dentro de DadosCliente.js. Mas isso misturaria duas responsabilidades que já são diferentes no mundo real: identificar o cliente e localizar a entrega.</p><p>Por isso, criaremos um novo componente: components/EnderecoEntrega.js.</p><p>Na lista de arquivos do Snack, use o comando de novo arquivo e crie components/EnderecoEntrega.js. Mantenha o arquivo aberto: o primeiro passo será pedir apenas a rua ou avenida.</p><div class="code-card">
+          <div class="code-card-head"><span>components/EnderecoEntrega.js - arquivo novo; digite todo o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import { View, Text, TextInput, StyleSheet } from &#x27;react-native&#x27;;</span>
+
+<span class="code-new">export default function EnderecoEntrega() {</span>
+<span class="code-new">  const [endereco, setEndereco] = React.useState(&#x27;&#x27;);</span>
+
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;View style={styles.areaEndereco}&gt;</span>
+<span class="code-new">      &lt;Text style={styles.tituloSecao}&gt;Endereço de entrega&lt;/Text&gt;</span>
+
+<span class="code-new">      &lt;Text style={styles.rotulo}&gt;Rua ou avenida&lt;/Text&gt;</span>
+<span class="code-new">      &lt;TextInput</span>
+<span class="code-new">        style={styles.campo}</span>
+<span class="code-new">        placeholder=&quot;Digite a rua ou avenida&quot;</span>
+<span class="code-new">        value={endereco}</span>
+<span class="code-new">        onChangeText={setEndereco}</span>
+<span class="code-new">        autoCapitalize=&quot;words&quot;</span>
+<span class="code-new">      /&gt;</span>
+<span class="code-new">    &lt;/View&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span>
+
+<span class="code-new">const styles = StyleSheet.create({</span>
+<span class="code-new">  areaEndereco: {</span>
+<span class="code-new">    marginTop: 24,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  tituloSecao: {</span>
+<span class="code-new">    fontSize: 20,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginBottom: 12,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  rotulo: {</span>
+<span class="code-new">    fontSize: 14,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginBottom: 6,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  campo: {</span>
+<span class="code-new">    borderWidth: 1,</span>
+<span class="code-new">    borderColor: &#x27;#cbd5e1&#x27;,</span>
+<span class="code-new">    borderRadius: 10,</span>
+<span class="code-new">    paddingHorizontal: 12,</span>
+<span class="code-new">    paddingVertical: 10,</span>
+<span class="code-new">    fontSize: 16,</span>
+<span class="code-new">    backgroundColor: &#x27;#ffffff&#x27;,</span>
+<span class="code-new">  },</span>
+<span class="code-new">});</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe que nenhum conceito novo foi necessário. Reaproveitamos TextInput e estado porque o usuário agora precisa fornecer outra informação.</p></section><section class="rn-step rn-action" id="3-o-componente-precisa-entrar-na-tela"><span class="rn-step-label">Construa e confira</span><h2>3. O componente precisa entrar na tela</h2><p>Agora App.js deve importar EnderecoEntrega e colocá-lo depois dos dados do cliente.</p><div class="code-card">
+          <div class="code-card-head"><span>App.js - arquivo completo; digite somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, ScrollView, StyleSheet } from &#x27;react-native&#x27;;
+import Constants from &#x27;expo-constants&#x27;;
+import IdentidadeEmpresa from &#x27;./components/IdentidadeEmpresa&#x27;;
+import Produtos from &#x27;./components/Produtos&#x27;;
+import DadosCliente from &#x27;./components/DadosCliente&#x27;;
+<span class="code-new">import EnderecoEntrega from &#x27;./components/EnderecoEntrega&#x27;;</span>
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;
+        &lt;View style={styles.cartao}&gt;
+          &lt;IdentidadeEmpresa /&gt;
+          &lt;Produtos /&gt;
+          &lt;DadosCliente /&gt;
+<span class="code-new">          &lt;EnderecoEntrega /&gt;</span>
+        &lt;/View&gt;
+      &lt;/ScrollView&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: &#x27;#eef3f7&#x27;,
+  },
+  conteudo: {
+    padding: 16,
+  },
+  cartao: {
+    backgroundColor: &#x27;#ffffff&#x27;,
+    borderRadius: 16,
+    padding: 20,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a pré-visualização e use a rolagem. A nova seção deve aparecer abaixo de Dados do cliente.</p></section><section class="rn-step rn-action" id="4-so-a-rua-ainda-nao-entrega-um-pedido"><span class="rn-step-label">Construa e confira</span><h2>4. Só a rua ainda não entrega um pedido</h2><p>Imagine que o cliente escreva apenas “Rua das Flores”. A distribuidora ainda teria duas perguntas imediatas: qual número e em qual bairro?</p><div class="rn-note concept"><p>A necessidade real mostrou que um único campo era insuficiente.</p></div><p>Vamos acrescentar Número e Bairro. O número continua como texto, porque endereços podem usar valores como 120A ou S/N.</p><div class="code-card">
+          <div class="code-card-head"><span>components/EnderecoEntrega.js - arquivo completo; digite/ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, TextInput, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function EnderecoEntrega() {
+  const [endereco, setEndereco] = React.useState(&#x27;&#x27;);
+<span class="code-new">  const [numero, setNumero] = React.useState(&#x27;&#x27;);</span>
+<span class="code-new">  const [bairro, setBairro] = React.useState(&#x27;&#x27;);</span>
+
+  return (
+    &lt;View style={styles.areaEndereco}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Endereço de entrega&lt;/Text&gt;
+
+      &lt;Text style={styles.rotulo}&gt;Rua ou avenida&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Digite a rua ou avenida&quot;
+        value={endereco}
+        onChangeText={setEndereco}
+        autoCapitalize=&quot;words&quot;
+      /&gt;
+<span class="code-new">      &lt;Text style={styles.rotuloSeguinte}&gt;Número&lt;/Text&gt;</span>
+      &lt;TextInput
+        style={styles.campo}
+<span class="code-new">        placeholder=&quot;Ex.: 120 ou S/N&quot;</span>
+<span class="code-new">        value={numero}</span>
+<span class="code-new">        onChangeText={setNumero}</span>
+      /&gt;
+
+<span class="code-new">      &lt;Text style={styles.rotuloSeguinte}&gt;Bairro&lt;/Text&gt;</span>
+      &lt;TextInput
+        style={styles.campo}
+<span class="code-new">        placeholder=&quot;Digite o bairro&quot;</span>
+<span class="code-new">        value={bairro}</span>
+<span class="code-new">        onChangeText={setBairro}</span>
+        autoCapitalize=&quot;words&quot;
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaEndereco: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  rotulo: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 6,
+  },
+<span class="code-new">  rotuloSeguinte: {</span>
+<span class="code-new">    fontSize: 14,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginTop: 14,</span>
+<span class="code-new">    marginBottom: 6,</span>
+<span class="code-new">  },</span>
+  campo: {
+    borderWidth: 1,
+    borderColor: &#x27;#cbd5e1&#x27;,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    backgroundColor: &#x27;#ffffff&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Agora o endereço possui as três informações mínimas que decidimos exigir para localizar uma entrega local: rua ou avenida, número e bairro.</p></section><section class="rn-step rn-action" id="5-nem-todo-endereco-cabe-em-tres-campos"><span class="rn-step-label">Construa e confira</span><h2>5. Nem todo endereço cabe em três campos</h2><p>Alguns clientes moram em apartamento, condomínio, fundos ou precisam deixar uma referência curta. Essa informação pode ajudar, mas nem sempre existe.</p><p>Por isso, o complemento será opcional. O usuário poderá preencher quando precisar, sem transformar esse campo em obrigação.</p><div class="code-card">
+          <div class="code-card-head"><span>components/EnderecoEntrega.js - arquivo completo; digite somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, TextInput, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function EnderecoEntrega() {
+  const [endereco, setEndereco] = React.useState(&#x27;&#x27;);
+  const [numero, setNumero] = React.useState(&#x27;&#x27;);
+  const [bairro, setBairro] = React.useState(&#x27;&#x27;);
+<span class="code-new">  const [complemento, setComplemento] = React.useState(&#x27;&#x27;);</span>
+
+  return (
+    &lt;View style={styles.areaEndereco}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Endereço de entrega&lt;/Text&gt;
+
+      &lt;Text style={styles.rotulo}&gt;Rua ou avenida&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Digite a rua ou avenida&quot;
+        value={endereco}
+        onChangeText={setEndereco}
+        autoCapitalize=&quot;words&quot;
+      /&gt;
+      &lt;Text style={styles.rotuloSeguinte}&gt;Número&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Ex.: 120 ou S/N&quot;
+        value={numero}
+        onChangeText={setNumero}
+      /&gt;
+
+      &lt;Text style={styles.rotuloSeguinte}&gt;Bairro&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Digite o bairro&quot;
+        value={bairro}
+        onChangeText={setBairro}
+        autoCapitalize=&quot;words&quot;
+      /&gt;
+<span class="code-new">      &lt;Text style={styles.rotuloSeguinte}&gt;Complemento (opcional)&lt;/Text&gt;</span>
+      &lt;TextInput
+        style={styles.campo}
+<span class="code-new">        placeholder=&quot;Apto., bloco, referência...&quot;</span>
+<span class="code-new">        value={complemento}</span>
+<span class="code-new">        onChangeText={setComplemento}</span>
+<span class="code-new">        autoCapitalize=&quot;sentences&quot;</span>
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaEndereco: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  rotulo: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 6,
+  },
+  rotuloSeguinte: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 14,
+    marginBottom: 6,
+  },
+  campo: {
+    borderWidth: 1,
+    borderColor: &#x27;#cbd5e1&#x27;,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    backgroundColor: &#x27;#ffffff&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><div class="rn-note concept"><p>Obrigatório: rua ou avenida + número + bairro<br />Opcional: complemento</p></div></section><section class="rn-step rn-action" id="6-preencher-campos-nao-e-o-mesmo-que-validar"><span class="rn-step-label">Construa e confira</span><h2>6. Preencher campos não é o mesmo que validar</h2><p>Agora existe um endereço visualmente completo, mas o aplicativo ainda aceita que rua, número e bairro fiquem vazios. Para o usuário, precisamos deixar claro se as informações essenciais já foram fornecidas.</p><p>Não criaremos outro estado para isso. A situação do endereço pode ser calculada a partir dos valores que já existem.</p></section><section class="rn-step rn-action" id="7-a-propria-informacao-mostra-se-esta-completa"><span class="rn-step-label">Construa e confira</span><h2>7. A própria informação mostra se está completa</h2><div class="code-card">
+          <div class="code-card-head"><span>components/EnderecoEntrega.js - arquivo completo; digite somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, TextInput, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function EnderecoEntrega() {
+  const [endereco, setEndereco] = React.useState(&#x27;&#x27;);
+  const [numero, setNumero] = React.useState(&#x27;&#x27;);
+  const [bairro, setBairro] = React.useState(&#x27;&#x27;);
+  const [complemento, setComplemento] = React.useState(&#x27;&#x27;);
+
+<span class="code-new">  const enderecoCompleto =</span>
+<span class="code-new">    endereco.trim() !== &#x27;&#x27; &amp;&amp;</span>
+<span class="code-new">    numero.trim() !== &#x27;&#x27; &amp;&amp;</span>
+<span class="code-new">    bairro.trim() !== &#x27;&#x27;;</span>
+
+  return (
+    &lt;View style={styles.areaEndereco}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Endereço de entrega&lt;/Text&gt;
+      &lt;Text style={styles.rotulo}&gt;Rua ou avenida&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Digite a rua ou avenida&quot;
+        value={endereco}
+        onChangeText={setEndereco}
+        autoCapitalize=&quot;words&quot;
+      /&gt;
+
+      &lt;Text style={styles.rotuloSeguinte}&gt;Número&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Ex.: 120 ou S/N&quot;
+        value={numero}
+        onChangeText={setNumero}
+      /&gt;
+      &lt;Text style={styles.rotuloSeguinte}&gt;Bairro&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Digite o bairro&quot;
+        value={bairro}
+        onChangeText={setBairro}
+        autoCapitalize=&quot;words&quot;
+      /&gt;
+
+      &lt;Text style={styles.rotuloSeguinte}&gt;Complemento (opcional)&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Apto., bloco, referência...&quot;
+        value={complemento}
+        onChangeText={setComplemento}
+        autoCapitalize=&quot;sentences&quot;
+      /&gt;
+<span class="code-new">      &lt;Text</span>
+<span class="code-new">        style={</span>
+<span class="code-new">          enderecoCompleto</span>
+<span class="code-new">            ? styles.statusOk</span>
+<span class="code-new">            : styles.statusPendente</span>
+<span class="code-new">        }</span>
+<span class="code-new">      &gt;</span>
+<span class="code-new">        {enderecoCompleto</span>
+<span class="code-new">          ? &#x27;Endereço pronto para entrega.&#x27;</span>
+<span class="code-new">          : &#x27;Preencha rua ou avenida, número e bairro.&#x27;}</span>
+<span class="code-new">      &lt;/Text&gt;</span>
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaEndereco: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  rotulo: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 6,
+  },
+  rotuloSeguinte: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 14,
+    marginBottom: 6,
+  },
+  campo: {
+    borderWidth: 1,
+    borderColor: &#x27;#cbd5e1&#x27;,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    backgroundColor: &#x27;#ffffff&#x27;,
+  },
+<span class="code-new">  statusPendente: {</span>
+<span class="code-new">    color: &#x27;#92400e&#x27;,</span>
+<span class="code-new">    fontSize: 14,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginTop: 12,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  statusOk: {</span>
+<span class="code-new">    color: &#x27;#166534&#x27;,</span>
+<span class="code-new">    fontSize: 14,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginTop: 12,</span>
+<span class="code-new">  },</span>
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>trim() remove espaços do começo e do fim antes da comparação. Assim, digitar apenas espaços não faz um campo vazio parecer preenchido.</p><div class="rn-note concept"><p>Se algum campo obrigatório estiver vazio: &#x27;Preencha rua ou avenida, número e bairro.&#x27;<br />Se os três estiverem preenchidos: &#x27;Endereço pronto para entrega.&#x27;</p></div></section><section class="rn-step rn-observe" id="8-experimente-para-entender"><span class="rn-step-label">Construa e confira</span><h2>8. Experimente para entender</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Preencha rua ou avenida, número e bairro. Confirme que a mensagem muda para Endereço pronto para entrega.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Apague somente o bairro. A mensagem deve voltar a indicar que faltam informações.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Digite apenas alguns espaços no bairro. A mensagem deve continuar indicando que o endereço não está completo.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Digite o bairro corretamente e deixe Complemento vazio. O endereço deve continuar sendo considerado pronto.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Preencha um complemento e confirme que ele é preservado sem alterar a regra dos campos obrigatórios.</p><p>A validação ainda é simples, mas já corresponde a uma regra real do domínio: algumas informações são indispensáveis para a entrega; outra é apenas apoio.</p><div class="rn-note concept"><p>Validar não é pedir mais dados. É deixar explícito quais dados realmente precisam existir.</p></div></section><section class="rn-step rn-action" id="9-o-que-mudou-para-o-usuario"><span class="rn-step-label">Construa e confira</span><h2>9. O que mudou para o usuário</h2><p class="rn-list-line"><span aria-hidden="true">•</span>existe uma seção claramente identificada como Endereço de entrega;</p><p class="rn-list-line"><span aria-hidden="true">•</span>o cliente sabe quais informações precisa fornecer;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Complemento aparece como opcional, sem criar uma falsa obrigação;</p><p class="rn-list-line"><span aria-hidden="true">•</span>o aplicativo informa se rua/avenida, número e bairro já estão completos;</p><p class="rn-list-line"><span aria-hidden="true">•</span>a rolagem permite alcançar toda a interface mesmo com o conteúdo maior.</p></section><section class="rn-step rn-action" id="10-marco-do-capitulo-app-js-completo"><span class="rn-step-label">Construa e confira</span><h2>10. Marco do capítulo - App.js completo</h2><p>O App.js apenas incorpora a nova responsabilidade à tela. A lógica do endereço permanece no componente próprio.</p><div class="code-card">
+          <div class="code-card-head"><span>App.js - estado ao final do Capítulo 11</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, ScrollView, StyleSheet } from &#x27;react-native&#x27;;
+import Constants from &#x27;expo-constants&#x27;;
+import IdentidadeEmpresa from &#x27;./components/IdentidadeEmpresa&#x27;;
+import Produtos from &#x27;./components/Produtos&#x27;;
+import DadosCliente from &#x27;./components/DadosCliente&#x27;;
+import EnderecoEntrega from &#x27;./components/EnderecoEntrega&#x27;;
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;
+        &lt;View style={styles.cartao}&gt;
+          &lt;IdentidadeEmpresa /&gt;
+          &lt;Produtos /&gt;
+          &lt;DadosCliente /&gt;
+          &lt;EnderecoEntrega /&gt;
+        &lt;/View&gt;
+      &lt;/ScrollView&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: &#x27;#eef3f7&#x27;,
+  },
+  conteudo: {
+    padding: 16,
+  },
+  cartao: {
+    backgroundColor: &#x27;#ffffff&#x27;,
+    borderRadius: 16,
+    padding: 20,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="11-marco-do-capitulo-enderecoentrega-js-completo"><span class="rn-step-label">Construa e confira</span><h2>11. Marco do capítulo - EnderecoEntrega.js completo</h2><p>Veja o componente inteiro no estado final deste capítulo.</p><div class="code-card">
+          <div class="code-card-head"><span>components/EnderecoEntrega.js - estado ao final do Capítulo 11</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, TextInput, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function EnderecoEntrega() {
+  const [endereco, setEndereco] = React.useState(&#x27;&#x27;);
+  const [numero, setNumero] = React.useState(&#x27;&#x27;);
+  const [bairro, setBairro] = React.useState(&#x27;&#x27;);
+  const [complemento, setComplemento] = React.useState(&#x27;&#x27;);
+
+  const enderecoCompleto =
+    endereco.trim() !== &#x27;&#x27; &amp;&amp;
+    numero.trim() !== &#x27;&#x27; &amp;&amp;
+    bairro.trim() !== &#x27;&#x27;;
+
+  return (
+    &lt;View style={styles.areaEndereco}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Endereço de entrega&lt;/Text&gt;
+      &lt;Text style={styles.rotulo}&gt;Rua ou avenida&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Digite a rua ou avenida&quot;
+        value={endereco}
+        onChangeText={setEndereco}
+        autoCapitalize=&quot;words&quot;
+      /&gt;
+
+      &lt;Text style={styles.rotuloSeguinte}&gt;Número&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Ex.: 120 ou S/N&quot;
+        value={numero}
+        onChangeText={setNumero}
+      /&gt;
+      &lt;Text style={styles.rotuloSeguinte}&gt;Bairro&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Digite o bairro&quot;
+        value={bairro}
+        onChangeText={setBairro}
+        autoCapitalize=&quot;words&quot;
+      /&gt;
+
+      &lt;Text style={styles.rotuloSeguinte}&gt;Complemento (opcional)&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Apto., bloco, referência...&quot;
+        value={complemento}
+        onChangeText={setComplemento}
+        autoCapitalize=&quot;sentences&quot;
+      /&gt;
+      &lt;Text
+        style={
+          enderecoCompleto
+            ? styles.statusOk
+            : styles.statusPendente
+        }
+      &gt;
+        {enderecoCompleto
+          ? &#x27;Endereço pronto para entrega.&#x27;
+          : &#x27;Preencha rua ou avenida, número e bairro.&#x27;}
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaEndereco: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  rotulo: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 6,
+  },
+  rotuloSeguinte: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 14,
+    marginBottom: 6,
+  },
+  campo: {
+    borderWidth: 1,
+    borderColor: &#x27;#cbd5e1&#x27;,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    backgroundColor: &#x27;#ffffff&#x27;,
+  },
+  statusPendente: {
+    color: &#x27;#92400e&#x27;,
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 12,
+  },
+  statusOk: {
+    color: &#x27;#166534&#x27;,
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-observe" id="12-o-que-aprendemos"><span class="rn-step-label">Construa e confira</span><h2>12. O que aprendemos</h2><p class="rn-list-line"><span aria-hidden="true">•</span>uma nova responsabilidade pode justificar um novo componente;</p><p class="rn-list-line"><span aria-hidden="true">•</span>TextInput e estado podem ser reutilizados em novos contextos sem reaprender o conceito;</p><p class="rn-list-line"><span aria-hidden="true">•</span>campos obrigatórios e opcionais cumprem papéis diferentes para o usuário;</p><p class="rn-list-line"><span aria-hidden="true">•</span>uma condição pode ser calculada a partir de estados existentes sem criar estado duplicado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>trim() ajuda a não aceitar apenas espaços como informação válida;</p><p class="rn-list-line"><span aria-hidden="true">•</span>renderização condicional também pode comunicar o estado de preenchimento de um formulário.</p><p>O conhecimento novo surgiu porque o pedido precisava chegar a um lugar real. O formulário não cresceu por catálogo de componentes.</p></section><section class="rn-step rn-observe" id="13-confira-antes-de-encerrar"><span class="rn-step-label">Construa e confira</span><h2>13. Confira antes de encerrar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>Existe components/EnderecoEntrega.js.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js importa e utiliza EnderecoEntrega.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Rua ou avenida, número e bairro são obrigatórios para o status de endereço completo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Complemento é opcional.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A mensagem muda conforme o preenchimento dos campos obrigatórios.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Apenas espaços não fazem o campo ser considerado preenchido.</p><p class="rn-list-line"><span aria-hidden="true">•</span>DadosCliente.js continua separado do endereço de entrega.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A pré-visualização continua sendo exibida sem erros.</p></section><section class="rn-step rn-checkpoint" id="14-checkpoint-11-endereco-de-entrega"><span class="rn-step-label">Checkpoint</span><h2>14. Checkpoint 11 - Endereço de entrega</h2><p>Ao concluir as conferências acima, preserve este estado como referência do checkpoint do capítulo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js com EnderecoEntrega incluído;</p><p class="rn-list-line"><span aria-hidden="true">•</span>DadosCliente.js preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js e Produto.js preservados;</p><p class="rn-list-line"><span aria-hidden="true">•</span>EnderecoEntrega.js completo;</p><p class="rn-list-line"><span aria-hidden="true">•</span>asset oficial santa-filomena.png;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Snack correspondente e screenshot validado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>arquivos de recuperação.</p></section><section class="rn-step rn-action" id="15-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>15. O próximo problema já apareceu</h2><p>O aplicativo agora possui produtos, quantidades, valores, nome, telefone e endereço. Só que cada parte conhece seus próprios dados em lugares diferentes.</p><div class="rn-note concept"><p>Antes de confirmar, o cliente consegue conferir o pedido inteiro em um único lugar?</p></div><p>É dessa necessidade que deverá nascer o próximo capítulo: reunir as informações para revisão antes da confirmação.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 11 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-10.html"><small>Capítulo anterior</small><strong>Capítulo 10</strong></a><a href="capitulo-12.html"><small>Próximo capítulo</small><strong>Capítulo 12</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

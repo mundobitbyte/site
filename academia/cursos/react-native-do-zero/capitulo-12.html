@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 12 de React Native do Zero: Reúna os dados do pedido e apresente uma revisão sempre atualizada." />
+  <title>Capítulo 12 — O cliente confere o pedido | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="12">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-11.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-13.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 12</h2><p>O cliente confere o pedido</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-o-problema-nao-esta-na-falta-de-dados">1. O problema não está na falta de dados</a></li><li><a href="#2-surge-uma-nova-responsabilidade-pedido">2. Surge uma nova responsabilidade: Pedido</a></li><li><a href="#3-app-deixa-de-montar-cada-parte-do-pedido-separadamente">3. App deixa de montar cada parte do pedido separadamente</a></li><li><a href="#4-a-memoria-do-pedido-sobe-para-pedido-js">4. A memória do pedido sobe para Pedido.js</a></li><li><a href="#5-produtos-passa-a-receber-o-estado-que-antes-era-so-dele">5. Produtos passa a receber o estado que antes era só dele</a></li><li><a href="#6-dadoscliente-deixa-de-guardar-uma-copia-isolada">6. DadosCliente deixa de guardar uma cópia isolada</a></li><li><a href="#7-enderecoentrega-compartilha-a-mesma-logica">7. EnderecoEntrega compartilha a mesma lógica</a></li><li><a href="#8-agora-a-revisao-finalmente-pode-existir">8. Agora a revisão finalmente pode existir</a></li><li><a href="#9-o-que-a-revisao-faz-com-os-dados">9. O que a revisão faz com os dados</a></li><li><a href="#10-experimente-para-entender">10. Experimente para entender</a></li><li><a href="#11-o-que-mudou-para-o-usuario">11. O que mudou para o usuário</a></li><li><a href="#12-marco-do-capitulo-pedido-js-completo">12. Marco do capítulo - Pedido.js completo</a></li><li><a href="#13-marco-do-capitulo-revisaopedido-js-completo">13. Marco do capítulo - RevisaoPedido.js completo</a></li><li><a href="#14-o-que-aprendemos">14. O que aprendemos</a></li><li><a href="#15-confira-antes-de-encerrar">15. Confira antes de encerrar</a></li><li><a href="#16-checkpoint-12-pedido-pronto-para-revisao">16. Checkpoint 12 - Pedido pronto para revisão</a></li><li><a href="#17-o-proximo-problema-ja-apareceu">17. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 12</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Revisão</p><h1>O cliente confere o pedido</h1><p class="lead">No capítulo anterior, o aplicativo passou a conhecer o endereço de entrega. Neste momento, já existem produtos, quantidades, valores, nome, telefone e endereço.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 12"><div class="rn-app-screen"><div class="rn-app-review"><strong>Revise seu pedido</strong><h4>Itens</h4><p>2 × Água mineral 20 L — R$ 40,00</p><p>1 × Gás 13 kg — R$ 100,00</p><b>Total: R$ 140,00</b><h4>Cliente</h4><p>Ana Souza · (11) 99999-0000</p><h4>Entrega</h4><p>Rua das Flores, 125, Centro</p></div></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><p>Mas existe uma diferença entre possuir essas informações e permitir que o cliente confira tudo antes de continuar.</p><div class="rn-note concept"><p>Antes de confirmar, o cliente precisa enxergar o pedido inteiro em um único lugar.</p></div></section><section class="rn-step rn-action" id="1-o-problema-nao-esta-na-falta-de-dados"><span class="rn-step-label">Construa e confira</span><h2>1. O problema não está na falta de dados</h2><p>Produtos guarda itens e quantidades. DadosCliente guarda nome e telefone. EnderecoEntrega guarda o endereço. Cada parte funciona, mas nenhuma delas enxerga o pedido completo.</p><div class="rn-flow"><span>Produtos → itens, quantidades e valores</span><span class="arrow">→</span><span>DadosCliente → nome e telefone</span><span class="arrow">→</span><span>EnderecoEntrega → local da entrega</span><span class="arrow">→</span><span>Quem consegue reunir tudo isso para uma revisão?</span></div><p>Poderíamos copiar informações de um componente para outro, mas isso criaria memórias duplicadas e difíceis de manter sincronizadas. O caminho mais seguro é fazer o estado subir para um componente comum.</p></section><section class="rn-step rn-action" id="2-surge-uma-nova-responsabilidade-pedido"><span class="rn-step-label">Construa e confira</span><h2>2. Surge uma nova responsabilidade: Pedido</h2><p>App.js organiza a tela inteira. IdentidadeEmpresa apresenta a empresa. Agora existe uma terceira responsabilidade concreta: organizar tudo o que pertence ao pedido.</p><div class="rn-flow"><span>App.js → estrutura geral da tela</span><span class="arrow">→</span><span>IdentidadeEmpresa.js → identidade da empresa</span><span class="arrow">→</span><span>Pedido.js → dados e partes que formam o pedido</span></div><p>Crie components/Pedido.js. Neste primeiro momento, ele apenas passa a existir como o lugar que, nas próximas etapas, reunirá os estados já usados pelo projeto.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Pedido.js - arquivo novo; digite todo o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import { View } from &#x27;react-native&#x27;;</span>
+
+<span class="code-new">export default function Pedido() {</span>
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;View&gt;</span>
+<span class="code-new">    &lt;/View&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="3-app-deixa-de-montar-cada-parte-do-pedido-separadamente"><span class="rn-step-label">Construa e confira</span><h2>3. App deixa de montar cada parte do pedido separadamente</h2><p>Agora App.js deve usar Pedido. As três partes do pedido sairão do App e serão reorganizadas dentro do novo componente.</p><div class="code-card">
+          <div class="code-card-head"><span>App.js - arquivo completo; ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, ScrollView, StyleSheet } from &#x27;react-native&#x27;;
+import Constants from &#x27;expo-constants&#x27;;
+import IdentidadeEmpresa from &#x27;./components/IdentidadeEmpresa&#x27;;
+<span class="code-new">import Pedido from &#x27;./components/Pedido&#x27;;</span>
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;
+        &lt;View style={styles.cartao}&gt;
+          &lt;IdentidadeEmpresa /&gt;
+<span class="code-new">          &lt;Pedido /&gt;</span>
+        &lt;/View&gt;
+      &lt;/ScrollView&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: &#x27;#eef3f7&#x27;,
+  },
+  conteudo: {
+    padding: 16,
+  },
+  cartao: {
+    backgroundColor: &#x27;#ffffff&#x27;,
+    borderRadius: 16,
+    padding: 20,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>A tela ainda não está completa porque Pedido está vazio. Isso é esperado. Acabamos apenas de criar um lugar coerente para reconstruir a composição sem duplicar dados.</p><div class="rn-note concept"><p>Primeiro organizamos quem é responsável. Depois movemos a memória.</p></div></section><section class="rn-step rn-action" id="4-a-memoria-do-pedido-sobe-para-pedido-js"><span class="rn-step-label">Construa e confira</span><h2>4. A memória do pedido sobe para Pedido.js</h2><p>Produtos, DadosCliente e EnderecoEntrega já possuem estados que pertencem ao mesmo pedido. Agora esses estados passam a viver em Pedido.js.</p><p>Não estamos criando novas informações. Estamos mudando onde elas ficam para que possam ser compartilhadas.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Pedido.js - arquivo completo nesta reorganização; digite o conteúdo indicado</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import { View } from &#x27;react-native&#x27;;</span>
+<span class="code-new">import Produtos from &#x27;./Produtos&#x27;;</span>
+<span class="code-new">import DadosCliente from &#x27;./DadosCliente&#x27;;</span>
+<span class="code-new">import EnderecoEntrega from &#x27;./EnderecoEntrega&#x27;;</span>
+<span class="code-new">import RevisaoPedido from &#x27;./RevisaoPedido&#x27;;</span>
+
+<span class="code-new">const produtos = [</span>
+<span class="code-new">  {</span>
+<span class="code-new">    id: 1,</span>
+<span class="code-new">    nome: &#x27;Água mineral 20 L&#x27;,</span>
+<span class="code-new">    descricao: &#x27;Galão retornável de água mineral.&#x27;,</span>
+<span class="code-new">    preco: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  {</span>
+<span class="code-new">    id: 2,</span>
+<span class="code-new">    nome: &#x27;Gás 13 kg&#x27;,</span>
+<span class="code-new">    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,</span>
+<span class="code-new">    preco: 100,</span>
+<span class="code-new">  },</span>
+<span class="code-new">];</span>
+
+<span class="code-new">export default function Pedido() {</span>
+<span class="code-new">  const [itensPedido, setItensPedido] = React.useState([]);</span>
+<span class="code-new">  const [nome, setNome] = React.useState(&#x27;&#x27;);</span>
+<span class="code-new">  const [telefone, setTelefone] = React.useState(&#x27;&#x27;);</span>
+<span class="code-new">  const [rua, setRua] = React.useState(&#x27;&#x27;);</span>
+<span class="code-new">  const [numero, setNumero] = React.useState(&#x27;&#x27;);</span>
+<span class="code-new">  const [bairro, setBairro] = React.useState(&#x27;&#x27;);</span>
+<span class="code-new">  const [complemento, setComplemento] = React.useState(&#x27;&#x27;);</span>
+
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;View&gt;</span>
+<span class="code-new">      &lt;Produtos</span>
+<span class="code-new">        produtos={produtos}</span>
+<span class="code-new">        itensPedido={itensPedido}</span>
+<span class="code-new">        onAtualizarItens={setItensPedido}</span>
+<span class="code-new">      /&gt;</span>
+<span class="code-new">      &lt;DadosCliente</span>
+<span class="code-new">        nome={nome}</span>
+<span class="code-new">        telefone={telefone}</span>
+<span class="code-new">        onChangeNome={setNome}</span>
+<span class="code-new">        onChangeTelefone={setTelefone}</span>
+<span class="code-new">      /&gt;</span>
+
+<span class="code-new">      &lt;EnderecoEntrega</span>
+<span class="code-new">        rua={rua}</span>
+<span class="code-new">        numero={numero}</span>
+<span class="code-new">        bairro={bairro}</span>
+<span class="code-new">        complemento={complemento}</span>
+<span class="code-new">        onChangeRua={setRua}</span>
+<span class="code-new">        onChangeNumero={setNumero}</span>
+<span class="code-new">        onChangeBairro={setBairro}</span>
+<span class="code-new">        onChangeComplemento={setComplemento}</span>
+<span class="code-new">      /&gt;</span>
+<span class="code-new">      &lt;RevisaoPedido</span>
+<span class="code-new">        produtos={produtos}</span>
+<span class="code-new">        itensPedido={itensPedido}</span>
+<span class="code-new">        nome={nome}</span>
+<span class="code-new">        telefone={telefone}</span>
+<span class="code-new">        rua={rua}</span>
+<span class="code-new">        numero={numero}</span>
+<span class="code-new">        bairro={bairro}</span>
+<span class="code-new">        complemento={complemento}</span>
+<span class="code-new">      /&gt;</span>
+<span class="code-new">    &lt;/View&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a ideia principal antes de se preocupar com cada prop: Pedido agora enxerga, ao mesmo tempo, itens, cliente e endereço.</p></section><section class="rn-step rn-action" id="5-produtos-passa-a-receber-o-estado-que-antes-era-so-dele"><span class="rn-step-label">Construa e confira</span><h2>5. Produtos passa a receber o estado que antes era só dele</h2><p>O catálogo continua responsável por escolher, aumentar e diminuir itens. A diferença é que a lista itensPedido agora chega de Pedido.js.</p><p>Quando Produtos precisa alterar essa lista, usa onAtualizarItens. Assim, a regra continua perto dos produtos, mas a memória pertence ao pedido inteiro.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - arquivo completo; ajuste as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+<span class="code-new">export default function Produtos(props) {</span>
+<span class="code-new">  const { produtos, itensPedido, onAtualizarItens } = props;</span>
+
+  function alternarProduto(id) {
+    const itemExistente = itensPedido.find(
+      (item) =&gt; item.id === id
+    );
+
+    if (itemExistente) {
+      const novaLista = itensPedido.filter(
+        (item) =&gt; item.id !== id
+      );
+<span class="code-new">      onAtualizarItens(novaLista);</span>
+    } else {
+<span class="code-new">      onAtualizarItens([</span>
+        ...itensPedido,
+        { id: id, quantidade: 1 },
+      ]);
+    }
+  }
+
+  function aumentarQuantidade(id) {
+    const novaLista = itensPedido.map((item) =&gt; {
+      if (item.id === id) {
+        return {
+          ...item,
+          quantidade: item.quantidade + 1,
+        };
+      }
+      return item;
+    });
+<span class="code-new">    onAtualizarItens(novaLista);</span>
+  }
+
+  function diminuirQuantidade(id) {
+    const novaLista = itensPedido.map((item) =&gt; {
+      if (item.id === id &amp;&amp; item.quantidade &gt; 1) {
+        return {
+          ...item,
+          quantidade: item.quantidade - 1,
+        };
+      }
+      return item;
+    });
+<span class="code-new">    onAtualizarItens(novaLista);</span>
+  }
+  const totalPedido = itensPedido.reduce((total, item) =&gt; {
+    const produto = produtos.find(
+      (produto) =&gt; produto.id === item.id
+    );
+    return total + produto.preco * item.quantidade;
+  }, 0);
+
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      &lt;Text style={styles.resumo}&gt;
+        Tipos selecionados: {itensPedido.length}
+      &lt;/Text&gt;
+
+      &lt;Text style={styles.total}&gt;
+        Total do pedido: R$ {totalPedido.toFixed(2).replace(&#x27;.&#x27;, &#x27;,&#x27;)}
+      &lt;/Text&gt;
+      {produtos.map((produto) =&gt; {
+        const itemPedido = itensPedido.find(
+          (item) =&gt; item.id === produto.id
+        );
+
+        return (
+          &lt;Produto
+            key={produto.id}
+            nome={produto.nome}
+            descricao={produto.descricao}
+            preco={produto.preco}
+            selecionado={itemPedido !== undefined}
+            quantidade={itemPedido ? itemPedido.quantidade : 0}
+            onAlternar={() =&gt; alternarProduto(produto.id)}
+            onAumentar={() =&gt; aumentarQuantidade(produto.id)}
+            onDiminuir={() =&gt; diminuirQuantidade(produto.id)}
+          /&gt;
+        );
+      })}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  resumo: {
+    color: &#x27;#374151&#x27;,
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  total: {
+    color: &#x27;#166534&#x27;,
+    fontSize: 16,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>O resultado para o cliente continua o mesmo. A mudança é estrutural: agora outra parte do aplicativo poderá consultar as mesmas escolhas.</p></section><section class="rn-step rn-action" id="6-dadoscliente-deixa-de-guardar-uma-copia-isolada"><span class="rn-step-label">Construa e confira</span><h2>6. DadosCliente deixa de guardar uma cópia isolada</h2><p>Nome e telefone também passam a vir de Pedido.js. O componente continua exibindo os campos e avisando quando o texto muda.</p><div class="code-card">
+          <div class="code-card-head"><span>components/DadosCliente.js - arquivo completo; ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, TextInput, StyleSheet } from &#x27;react-native&#x27;;
+
+<span class="code-new">export default function DadosCliente(props) {</span>
+  return (
+    &lt;View style={styles.areaCliente}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Dados do cliente&lt;/Text&gt;
+
+      &lt;Text style={styles.rotulo}&gt;Nome&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Digite seu nome&quot;
+<span class="code-new">        value={props.nome}</span>
+<span class="code-new">        onChangeText={props.onChangeNome}</span>
+        autoCapitalize=&quot;words&quot;
+      /&gt;
+      &lt;Text style={styles.rotuloTelefone}&gt;Telefone&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;(00) 00000-0000&quot;
+<span class="code-new">        value={props.telefone}</span>
+<span class="code-new">        onChangeText={props.onChangeTelefone}</span>
+        keyboardType=&quot;phone-pad&quot;
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaCliente: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  rotulo: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 6,
+  },
+  rotuloTelefone: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 14,
+    marginBottom: 6,
+  },
+  campo: {
+    borderWidth: 1,
+    borderColor: &#x27;#cbd5e1&#x27;,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    backgroundColor: &#x27;#ffffff&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="7-enderecoentrega-compartilha-a-mesma-logica"><span class="rn-step-label">Construa e confira</span><h2>7. EnderecoEntrega compartilha a mesma lógica</h2><p>O endereço não precisa mais manter estados próprios. Ele recebe os valores e as funções de alteração, mas continua responsável por apresentar os campos e indicar se rua, número e bairro estão preenchidos.</p><div class="code-card">
+          <div class="code-card-head"><span>components/EnderecoEntrega.js - arquivo completo; ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, TextInput, StyleSheet } from &#x27;react-native&#x27;;
+
+<span class="code-new">export default function EnderecoEntrega(props) {</span>
+  const enderecoCompleto =
+<span class="code-new">    props.rua.trim() !== &#x27;&#x27; &amp;&amp;</span>
+<span class="code-new">    props.numero.trim() !== &#x27;&#x27; &amp;&amp;</span>
+<span class="code-new">    props.bairro.trim() !== &#x27;&#x27;;</span>
+
+  return (
+    &lt;View style={styles.areaEndereco}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Endereço de entrega&lt;/Text&gt;
+
+      &lt;Text style={styles.rotulo}&gt;Rua ou avenida&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Ex.: Rua das Flores&quot;
+<span class="code-new">        value={props.rua}</span>
+<span class="code-new">        onChangeText={props.onChangeRua}</span>
+      /&gt;
+      &lt;Text style={styles.rotuloSeguinte}&gt;Número&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Ex.: 125&quot;
+<span class="code-new">        value={props.numero}</span>
+<span class="code-new">        onChangeText={props.onChangeNumero}</span>
+        keyboardType=&quot;numeric&quot;
+      /&gt;
+
+      &lt;Text style={styles.rotuloSeguinte}&gt;Bairro&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Ex.: Centro&quot;
+<span class="code-new">        value={props.bairro}</span>
+<span class="code-new">        onChangeText={props.onChangeBairro}</span>
+      /&gt;
+      &lt;Text style={styles.rotuloSeguinte}&gt;
+        Complemento (opcional)
+      &lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Ex.: casa dos fundos&quot;
+<span class="code-new">        value={props.complemento}</span>
+<span class="code-new">        onChangeText={props.onChangeComplemento}</span>
+      /&gt;
+
+      &lt;Text
+        style={
+          enderecoCompleto
+            ? styles.enderecoPronto
+            : styles.enderecoPendente
+        }
+      &gt;
+        {enderecoCompleto
+          ? &#x27;Endereço pronto para entrega.&#x27;
+          : &#x27;Preencha rua, número e bairro.&#x27;}
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaEndereco: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  rotulo: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 6,
+  },
+  rotuloSeguinte: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 14,
+    marginBottom: 6,
+  },
+  campo: {
+    borderWidth: 1,
+    borderColor: &#x27;#cbd5e1&#x27;,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    backgroundColor: &#x27;#ffffff&#x27;,
+  },
+  enderecoPendente: {
+    color: &#x27;#92400e&#x27;,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 12,
+  },
+  enderecoPronto: {
+    color: &#x27;#166534&#x27;,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Agora os três componentes continuam cumprindo seus papéis visuais, mas o estado que forma o pedido está reunido em Pedido.js.</p><div class="rn-note concept"><p>Não colocamos tudo em um único arquivo. Reunimos a memória sem destruir a separação de responsabilidades.</p></div></section><section class="rn-step rn-action" id="8-agora-a-revisao-finalmente-pode-existir"><span class="rn-step-label">Construa e confira</span><h2>8. Agora a revisão finalmente pode existir</h2><p>Só depois dessa reorganização temos um lugar que conhece todas as informações. Agora faz sentido criar o componente RevisaoPedido.</p><p>Crie components/RevisaoPedido.js e use o código abaixo.</p><div class="code-card">
+          <div class="code-card-head"><span>components/RevisaoPedido.js - arquivo novo; digite todo o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import { View, Text, StyleSheet } from &#x27;react-native&#x27;;</span>
+
+<span class="code-new">export default function RevisaoPedido(props) {</span>
+<span class="code-new">  const itensDetalhados = props.itensPedido.map((item) =&gt; {</span>
+<span class="code-new">    const produto = props.produtos.find(</span>
+<span class="code-new">      (produto) =&gt; produto.id === item.id</span>
+<span class="code-new">    );</span>
+
+<span class="code-new">    return {</span>
+<span class="code-new">      ...item,</span>
+<span class="code-new">      nome: produto.nome,</span>
+<span class="code-new">      preco: produto.preco,</span>
+<span class="code-new">      subtotal: produto.preco * item.quantidade,</span>
+<span class="code-new">    };</span>
+<span class="code-new">  });</span>
+<span class="code-new">  const totalPedido = itensDetalhados.reduce(</span>
+<span class="code-new">    (total, item) =&gt; total + item.subtotal,</span>
+<span class="code-new">    0</span>
+<span class="code-new">  );</span>
+
+<span class="code-new">  const endereco = [</span>
+<span class="code-new">    props.rua,</span>
+<span class="code-new">    props.numero,</span>
+<span class="code-new">    props.bairro,</span>
+<span class="code-new">    props.complemento,</span>
+<span class="code-new">  ]</span>
+<span class="code-new">    .filter((parte) =&gt; parte.trim() !== &#x27;&#x27;)</span>
+<span class="code-new">    .join(&#x27;, &#x27;);</span>
+
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;View style={styles.areaRevisao}&gt;</span>
+<span class="code-new">      &lt;Text style={styles.tituloSecao}&gt;Revise seu pedido&lt;/Text&gt;</span>
+<span class="code-new">      &lt;Text style={styles.subtitulo}&gt;Itens&lt;/Text&gt;</span>
+<span class="code-new">      {itensDetalhados.length === 0 ? (</span>
+<span class="code-new">        &lt;Text style={styles.aviso}&gt;Nenhum produto selecionado.&lt;/Text&gt;</span>
+<span class="code-new">      ) : (</span>
+<span class="code-new">        itensDetalhados.map((item) =&gt; (</span>
+<span class="code-new">          &lt;Text key={item.id} style={styles.linha}&gt;</span>
+<span class="code-new">            {item.quantidade} x {item.nome} - R$ {item.subtotal</span>
+<span class="code-new">              .toFixed(2)</span>
+<span class="code-new">              .replace(&#x27;.&#x27;, &#x27;,&#x27;)}</span>
+<span class="code-new">          &lt;/Text&gt;</span>
+<span class="code-new">        ))</span>
+<span class="code-new">      )}</span>
+
+<span class="code-new">      &lt;Text style={styles.total}&gt;</span>
+<span class="code-new">        Total: R$ {totalPedido.toFixed(2).replace(&#x27;.&#x27;, &#x27;,&#x27;)}</span>
+<span class="code-new">      &lt;/Text&gt;</span>
+<span class="code-new">      &lt;Text style={styles.subtitulo}&gt;Cliente&lt;/Text&gt;</span>
+<span class="code-new">      &lt;Text style={styles.linha}&gt;</span>
+<span class="code-new">        {props.nome.trim() !== &#x27;&#x27; ? props.nome : &#x27;Nome não informado&#x27;}</span>
+<span class="code-new">      &lt;/Text&gt;</span>
+<span class="code-new">      &lt;Text style={styles.linha}&gt;</span>
+<span class="code-new">        {props.telefone.trim() !== &#x27;&#x27;</span>
+<span class="code-new">          ? props.telefone</span>
+<span class="code-new">          : &#x27;Telefone não informado&#x27;}</span>
+<span class="code-new">      &lt;/Text&gt;</span>
+
+<span class="code-new">      &lt;Text style={styles.subtitulo}&gt;Entrega&lt;/Text&gt;</span>
+<span class="code-new">      &lt;Text style={styles.linha}&gt;</span>
+<span class="code-new">        {endereco !== &#x27;&#x27; ? endereco : &#x27;Endereço não informado&#x27;}</span>
+<span class="code-new">      &lt;/Text&gt;</span>
+<span class="code-new">    &lt;/View&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span>
+<span class="code-new">const styles = StyleSheet.create({</span>
+<span class="code-new">  areaRevisao: {</span>
+<span class="code-new">    marginTop: 24,</span>
+<span class="code-new">    backgroundColor: &#x27;#eff6ff&#x27;,</span>
+<span class="code-new">    borderRadius: 12,</span>
+<span class="code-new">    padding: 16,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  tituloSecao: {</span>
+<span class="code-new">    fontSize: 20,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginBottom: 12,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  subtitulo: {</span>
+<span class="code-new">    fontSize: 16,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginTop: 12,</span>
+<span class="code-new">    marginBottom: 4,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  linha: {</span>
+<span class="code-new">    fontSize: 14,</span>
+<span class="code-new">    marginBottom: 4,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  aviso: {</span>
+<span class="code-new">    color: &#x27;#92400e&#x27;,</span>
+<span class="code-new">    fontSize: 14,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  total: {</span>
+<span class="code-new">    color: &#x27;#166534&#x27;,</span>
+<span class="code-new">    fontSize: 16,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginTop: 8,</span>
+<span class="code-new">  },</span>
+<span class="code-new">});</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>RevisaoPedido não cria novos estados. Ele recebe o que já existe e monta uma visão consolidada.</p></section><section class="rn-step rn-action" id="9-o-que-a-revisao-faz-com-os-dados"><span class="rn-step-label">Construa e confira</span><h2>9. O que a revisão faz com os dados</h2><p class="rn-list-line"><span aria-hidden="true">•</span>map transforma os itens escolhidos em itens com nome, preço e subtotal;</p><p class="rn-list-line"><span aria-hidden="true">•</span>reduce calcula o total a partir desses subtotais;</p><p class="rn-list-line"><span aria-hidden="true">•</span>filter remove partes vazias do endereço;</p><p class="rn-list-line"><span aria-hidden="true">•</span>join une as partes restantes em uma única linha;</p><p class="rn-list-line"><span aria-hidden="true">•</span>as condições exibem mensagens claras quando alguma informação ainda não foi preenchida.</p><p>Nada disso cria uma segunda versão do pedido. A revisão apenas lê o estado atual e apresenta outra visão dele.</p></section><section class="rn-step rn-observe" id="10-experimente-para-entender"><span class="rn-step-label">Construa e confira</span><h2>10. Experimente para entender</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Sem selecionar produtos, observe que a revisão informa que nenhum produto foi escolhido.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Escolha Água mineral 20 L e aumente a quantidade para 2.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Confira se a revisão mostra 2 x Água mineral 20 L e o subtotal correspondente.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Preencha nome e telefone e confirme que aparecem na seção Cliente.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Preencha rua, número e bairro e observe a linha de entrega.</p><p class="rn-list-line"><span aria-hidden="true">6.</span>Digite também um complemento e veja-o entrar no endereço.</p><p class="rn-list-line"><span aria-hidden="true">7.</span>Altere uma quantidade ou um dado do cliente e confirme que a revisão acompanha a mudança.</p><div class="rn-note concept"><p>A revisão não é uma cópia. Ela é outra forma de enxergar o mesmo estado.</p></div></section><section class="rn-step rn-action" id="11-o-que-mudou-para-o-usuario"><span class="rn-step-label">Construa e confira</span><h2>11. O que mudou para o usuário</h2><p>Antes, o cliente precisava percorrer a tela e lembrar o que havia preenchido. Agora existe uma área específica para conferência.</p><p class="rn-list-line"><span aria-hidden="true">•</span>itens e quantidades aparecem juntos;</p><p class="rn-list-line"><span aria-hidden="true">•</span>o total pode ser conferido;</p><p class="rn-list-line"><span aria-hidden="true">•</span>nome e telefone aparecem na mesma revisão;</p><p class="rn-list-line"><span aria-hidden="true">•</span>o endereço é apresentado em uma linha organizada;</p><p class="rn-list-line"><span aria-hidden="true">•</span>alterações feitas acima se refletem automaticamente na revisão.</p><p>O sistema ainda não enviou nada. Neste capítulo, a conquista é permitir uma conferência confiável antes da próxima ação.</p></section><section class="rn-step rn-action" id="12-marco-do-capitulo-pedido-js-completo"><span class="rn-step-label">Construa e confira</span><h2>12. Marco do capítulo - Pedido.js completo</h2><p>Este arquivo passou a ser o ponto comum que reúne a memória do pedido e distribui os dados para cada parte da interface.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Pedido.js - estado ao final do Capítulo 12</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View } from &#x27;react-native&#x27;;
+import Produtos from &#x27;./Produtos&#x27;;
+import DadosCliente from &#x27;./DadosCliente&#x27;;
+import EnderecoEntrega from &#x27;./EnderecoEntrega&#x27;;
+import RevisaoPedido from &#x27;./RevisaoPedido&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+    preco: 20,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+    preco: 100,
+  },
+];
+
+export default function Pedido() {
+  const [itensPedido, setItensPedido] = React.useState([]);
+  const [nome, setNome] = React.useState(&#x27;&#x27;);
+  const [telefone, setTelefone] = React.useState(&#x27;&#x27;);
+  const [rua, setRua] = React.useState(&#x27;&#x27;);
+  const [numero, setNumero] = React.useState(&#x27;&#x27;);
+  const [bairro, setBairro] = React.useState(&#x27;&#x27;);
+  const [complemento, setComplemento] = React.useState(&#x27;&#x27;);
+
+  return (
+    &lt;View&gt;
+      &lt;Produtos
+        produtos={produtos}
+        itensPedido={itensPedido}
+        onAtualizarItens={setItensPedido}
+      /&gt;
+      &lt;DadosCliente
+        nome={nome}
+        telefone={telefone}
+        onChangeNome={setNome}
+        onChangeTelefone={setTelefone}
+      /&gt;
+
+      &lt;EnderecoEntrega
+        rua={rua}
+        numero={numero}
+        bairro={bairro}
+        complemento={complemento}
+        onChangeRua={setRua}
+        onChangeNumero={setNumero}
+        onChangeBairro={setBairro}
+        onChangeComplemento={setComplemento}
+      /&gt;
+      &lt;RevisaoPedido
+        produtos={produtos}
+        itensPedido={itensPedido}
+        nome={nome}
+        telefone={telefone}
+        rua={rua}
+        numero={numero}
+        bairro={bairro}
+        complemento={complemento}
+      /&gt;
+    &lt;/View&gt;
+  );
+}</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="13-marco-do-capitulo-revisaopedido-js-completo"><span class="rn-step-label">Construa e confira</span><h2>13. Marco do capítulo - RevisaoPedido.js completo</h2><p>A revisão deriva tudo do estado já existente. Não mantém uma segunda versão dos dados.</p><div class="code-card">
+          <div class="code-card-head"><span>components/RevisaoPedido.js - estado ao final do Capítulo 12</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function RevisaoPedido(props) {
+  const itensDetalhados = props.itensPedido.map((item) =&gt; {
+    const produto = props.produtos.find(
+      (produto) =&gt; produto.id === item.id
+    );
+
+    return {
+      ...item,
+      nome: produto.nome,
+      preco: produto.preco,
+      subtotal: produto.preco * item.quantidade,
+    };
+  });
+  const totalPedido = itensDetalhados.reduce(
+    (total, item) =&gt; total + item.subtotal,
+    0
+  );
+
+  const endereco = [
+    props.rua,
+    props.numero,
+    props.bairro,
+    props.complemento,
+  ]
+    .filter((parte) =&gt; parte.trim() !== &#x27;&#x27;)
+    .join(&#x27;, &#x27;);
+
+  return (
+    &lt;View style={styles.areaRevisao}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Revise seu pedido&lt;/Text&gt;
+      &lt;Text style={styles.subtitulo}&gt;Itens&lt;/Text&gt;
+      {itensDetalhados.length === 0 ? (
+        &lt;Text style={styles.aviso}&gt;Nenhum produto selecionado.&lt;/Text&gt;
+      ) : (
+        itensDetalhados.map((item) =&gt; (
+          &lt;Text key={item.id} style={styles.linha}&gt;
+            {item.quantidade} x {item.nome} - R$ {item.subtotal
+              .toFixed(2)
+              .replace(&#x27;.&#x27;, &#x27;,&#x27;)}
+          &lt;/Text&gt;
+        ))
+      )}
+
+      &lt;Text style={styles.total}&gt;
+        Total: R$ {totalPedido.toFixed(2).replace(&#x27;.&#x27;, &#x27;,&#x27;)}
+      &lt;/Text&gt;
+      &lt;Text style={styles.subtitulo}&gt;Cliente&lt;/Text&gt;
+      &lt;Text style={styles.linha}&gt;
+        {props.nome.trim() !== &#x27;&#x27; ? props.nome : &#x27;Nome não informado&#x27;}
+      &lt;/Text&gt;
+      &lt;Text style={styles.linha}&gt;
+        {props.telefone.trim() !== &#x27;&#x27;
+          ? props.telefone
+          : &#x27;Telefone não informado&#x27;}
+      &lt;/Text&gt;
+
+      &lt;Text style={styles.subtitulo}&gt;Entrega&lt;/Text&gt;
+      &lt;Text style={styles.linha}&gt;
+        {endereco !== &#x27;&#x27; ? endereco : &#x27;Endereço não informado&#x27;}
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  areaRevisao: {
+    marginTop: 24,
+    backgroundColor: &#x27;#eff6ff&#x27;,
+    borderRadius: 12,
+    padding: 16,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  subtitulo: {
+    fontSize: 16,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 12,
+    marginBottom: 4,
+  },
+  linha: {
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  aviso: {
+    color: &#x27;#92400e&#x27;,
+    fontSize: 14,
+  },
+  total: {
+    color: &#x27;#166534&#x27;,
+    fontSize: 16,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 8,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-observe" id="14-o-que-aprendemos"><span class="rn-step-label">Construa e confira</span><h2>14. O que aprendemos</h2><p class="rn-list-line"><span aria-hidden="true">•</span>quando vários componentes precisam compartilhar informações, o estado pode subir para um componente comum;</p><p class="rn-list-line"><span aria-hidden="true">•</span>um componente pode ser responsável pelos dados sem assumir toda a interface;</p><p class="rn-list-line"><span aria-hidden="true">•</span>props podem levar valores e funções para componentes filhos;</p><p class="rn-list-line"><span aria-hidden="true">•</span>uma revisão deve derivar informações do estado atual, não copiar o pedido para outro estado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>map, reduce, filter e join podem reaparecer quando o problema realmente exige transformar ou reunir dados;</p><p class="rn-list-line"><span aria-hidden="true">•</span>organização de componentes também é uma decisão de projeto, não apenas uma escolha estética.</p></section><section class="rn-step rn-observe" id="15-confira-antes-de-encerrar"><span class="rn-step-label">Construa e confira</span><h2>15. Confira antes de encerrar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>App.js usa Pedido em vez de montar Produtos, DadosCliente e EnderecoEntrega diretamente.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Pedido.js concentra os estados do pedido.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos recebe catálogo, itens e função de atualização por props.</p><p class="rn-list-line"><span aria-hidden="true">•</span>DadosCliente recebe valores e funções de alteração por props.</p><p class="rn-list-line"><span aria-hidden="true">•</span>EnderecoEntrega recebe valores e funções de alteração por props.</p><p class="rn-list-line"><span aria-hidden="true">•</span>RevisaoPedido não cria estados próprios.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Alterar qualquer informação atualiza também a revisão.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A pré-visualização continua sendo exibida sem erros.</p></section><section class="rn-step rn-checkpoint" id="16-checkpoint-12-pedido-pronto-para-revisao"><span class="rn-step-label">Checkpoint</span><h2>16. Checkpoint 12 - Pedido pronto para revisão</h2><p>Ao concluir as conferências acima, preserve este estado como referência do checkpoint do capítulo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js preservando ScrollView e usando Pedido;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Pedido.js como dono comum dos estados;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js controlado por props;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js preservado do capítulo anterior;</p><p class="rn-list-line"><span aria-hidden="true">•</span>DadosCliente.js controlado por props;</p><p class="rn-list-line"><span aria-hidden="true">•</span>EnderecoEntrega.js controlado por props;</p><p class="rn-list-line"><span aria-hidden="true">•</span>RevisaoPedido.js consolidando itens, total, cliente e endereço;</p><p class="rn-list-line"><span aria-hidden="true">•</span>IdentidadeEmpresa.js e asset oficial santa-filomena.png;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Snack correspondente e screenshot validado.</p></section><section class="rn-step rn-action" id="17-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>17. O próximo problema já apareceu</h2><p>A revisão funciona, mas a tela agora ficou longa: identidade, produtos, cliente, endereço e revisão aparecem em sequência.</p><div class="rn-note concept"><p>O conteúdo está correto. Mas o usuário deveria percorrer tudo isso como uma única tela?</p></div><p>A próxima evolução deverá organizar esse percurso em etapas ou telas sem perder o estado já construído. Só então haverá uma razão concreta para introduzir navegação.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 12 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-11.html"><small>Capítulo anterior</small><strong>Capítulo 11</strong></a><a href="capitulo-13.html"><small>Próximo capítulo</small><strong>Capítulo 13</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

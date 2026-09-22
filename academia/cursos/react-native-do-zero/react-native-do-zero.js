@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const storageKey = 'mbb-academia-react-native-do-zero';
+  const totalChapters = 19;
   const body = document.body;
 
   const readProgress = () => {
@@ -17,14 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateProgress = () => {
     const progress = readProgress();
     const completed = new Set(progress.chapters || []);
-    const percentage = Math.round((completed.size / 3) * 100);
+    const percentage = Math.round((completed.size / totalChapters) * 100);
 
     document.querySelectorAll('[data-course-progress-bar]').forEach(bar => {
       bar.style.width = `${percentage}%`;
     });
 
     document.querySelectorAll('[data-course-progress-text]').forEach(label => {
-      label.textContent = `${completed.size}/3 capítulos`;
+      label.textContent = `${completed.size}/${totalChapters} capítulos`;
     });
 
     document.querySelectorAll('[data-chapter-card]').forEach(card => {

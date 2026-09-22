@@ -16,6 +16,7 @@
     <nav class="topnav rn-topnav" aria-label="Navegação do curso">
       <a href="capitulo-01.html">Capítulo anterior</a>
       <a href="index.html">React Native do Zero</a>
+      <a href="capitulo-03.html">Próximo capítulo</a>
     </nav>
   </header>
 
@@ -24,7 +25,7 @@
       <p class="brandline">React Native do Zero</p>
       <h2>Capítulo 2</h2>
       <p>O aplicativo ganha sua própria interface</p>
-      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/3 capítulos</span></div>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div>
       <div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
       <ol class="rn-lesson-map">
         <li><a href="#onde-paramos">1. Onde paramos</a></li>
@@ -54,7 +55,7 @@
         <p class="brandline">A primeira interface própria</p>
         <h1>O aplicativo ganha sua própria interface</h1>
         <p class="lead">No capítulo anterior, o projeto deixou de ser apenas o exemplo original do Snack. A imagem da Santa Filomena Água &amp; Gás já está no componente IdentidadeEmpresa, e o nome da empresa aparece na tela.</p>
-        <p class="rn-source-status">Candidato à aprovação pedagógica — etapas ainda serão testadas no Snack</p>
+        <p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas poderão ser acrescentadas depois</p>
         <div class="rn-method-strip" aria-label="Jornada deste capítulo">
           <span>Observar</span><span>Alterar</span><span>Comparar</span><span>Consolidar</span>
         </div>
@@ -269,7 +270,7 @@ const styles = StyleSheet.create({
   },
 
 <span class="code-new">  titulo: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 16,
@@ -329,7 +330,7 @@ const styles = StyleSheet.create({
   },</span>
 
   titulo: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -404,7 +405,7 @@ const styles = StyleSheet.create({
   },
 
   titulo: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -435,7 +436,7 @@ const styles = StyleSheet.create({
       <section class="rn-step rn-observe" id="mapa">
         <span class="rn-step-label">Reconheça o conjunto</span>
         <h2>8. O que construímos</h2>
-        <p>O desenho abaixo é apenas um mapa da composição. As cores e medidas serão confirmadas na validação prática no Snack.</p>
+        <p>O desenho abaixo mostra a composição esperada. Compare a ordem, os espaços e a hierarquia; pequenas diferenças de renderização podem ocorrer entre navegador e aparelho.</p>
         <div class="rn-preview-map" aria-label="Mapa da organização visual esperada">
           <div class="rn-preview-card">
             <div class="rn-preview-title">Santa Filomena Água &amp; Gás</div>
@@ -582,7 +583,7 @@ const styles = StyleSheet.create({
   },
 
   titulo: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -641,7 +642,7 @@ const styles = StyleSheet.create({
       <section class="rn-step rn-checkpoint" id="checkpoint">
         <span class="rn-step-label">Checkpoint 02</span>
         <h2>14. Nossa primeira interface</h2>
-        <p>Depois da validação prática, este estado dará origem ao segundo checkpoint oficial:</p>
+        <p>Ao concluir as conferências acima, preserve este estado como referência do Checkpoint 02:</p>
         <ul>
           <li>App.js completo;</li>
           <li>IdentidadeEmpresa.js completo;</li>
@@ -651,7 +652,7 @@ const styles = StyleSheet.create({
           <li>arquivos de recuperação;</li>
           <li>vídeos práticos quando forem produzidos.</li>
         </ul>
-        <div class="rn-note pending"><strong>Status do Checkpoint 02</strong><p>O código completo já está organizado acima; a publicação dos recursos oficiais depende da validação prática no Snack.</p></div>
+        <div class="rn-note success"><strong>Estado reproduzível</strong><p>O código completo está organizado acima. Capturas e pacotes adicionais podem ser acrescentados depois sem impedir a construção do projeto.</p></div>
       </section>
 
       <section class="rn-step rn-observe" id="proximo">
@@ -661,33 +662,14 @@ const styles = StyleSheet.create({
         <div class="rn-note concept"><strong>Ele precisa apresentar aquilo que a empresa vende.</strong><p>É dessa necessidade que nascerá o próximo capítulo.</p></div>
       </section>
 
-      <section class="rn-step">
-        <span class="rn-source-status">Validação prática antes da aprovação comercial</span>
-        <h2>Roteiro de teste preservado</h2>
-        <p>Antes da edição comercial, o capítulo deve ser percorrido exatamente como um iniciante faria:</p>
-        <ol>
-          <li>confirmar o estado real herdado do Capítulo 1;</li>
-          <li>alterar somente o fundo e conferir a pré-visualização;</li>
-          <li>remover Card, criar a View cartao e conferir a pré-visualização;</li>
-          <li>mover o título para IdentidadeEmpresa.js e conferir a pré-visualização;</li>
-          <li>criar a hierarquia visual e conferir a pré-visualização;</li>
-          <li>adicionar descrição e mensagem e conferir a pré-visualização;</li>
-          <li>realizar o experimento de borderRadius e restaurar 16;</li>
-          <li>conferir se cada quadro mostra o arquivo completo daquele momento;</li>
-          <li>conferir se apenas as linhas que devem ser digitadas ou alteradas aparecem destacadas dentro do próprio quadro;</li>
-          <li>produzir screenshots finais somente depois de o código real estar validado.</li>
-        </ol>
-        <p><strong>Se em qualquer etapa surgir a pergunta “onde exatamente eu mexo?”, a experiência ainda precisa voltar para a próxima espiral MbB.</strong></p>
-      </section>
-
       <section class="rn-step rn-complete-panel">
-        <div><h2>Primeira interface construída</h2><p>Marque a conclusão neste dispositivo. Isso registra seu percurso; não substitui a validação prática ainda indicada no material-fonte.</p></div>
+        <div><h2>Primeira interface construída</h2><p>Marque a conclusão depois de copiar o código, comparar a prévia e realizar a conferência indicada.</p></div>
         <button class="rn-complete-button" type="button" data-complete-chapter>Concluir Capítulo 2</button>
       </section>
 
       <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos">
         <a href="capitulo-01.html"><small>Anterior</small><strong>Capítulo 1 — O aplicativo começa a existir</strong></a>
-        <a href="index.html"><small>Voltar ao módulo</small><strong>Visão geral e checkpoints</strong></a>
+        <a href="capitulo-03.html"><small>Próximo capítulo</small><strong>Capítulo 3 — Os produtos entram no aplicativo</strong></a>
       </nav>
     </article>
   </main>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 8 de React Native do Zero: Dê quantidade a cada item e preserve escolhas independentes." />
+  <title>Capítulo 8 — A escolha ganha quantidade | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="8">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-07.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-09.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 8</h2><p>A escolha ganha quantidade</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-onde-paramos">1. Onde paramos</a></li><li><a href="#2-a-memoria-atual-ficou-pequena-para-o-problema">2. A memória atual ficou pequena para o problema</a></li><li><a href="#3-cada-escolha-passa-a-ser-um-item-do-pedido">3. Cada escolha passa a ser um item do pedido</a></li><li><a href="#4-o-cartao-precisa-mostrar-a-quantidade">4. O cartão precisa mostrar a quantidade</a></li><li><a href="#5-o-componente-que-possui-a-memoria-altera-a-quantidade">5. O componente que possui a memória altera a quantidade</a></li><li><a href="#6-observe-o-comportamento-completo">6. Observe o comportamento completo</a></li><li><a href="#7-o-que-mudou-na-estrutura-do-estado">7. O que mudou na estrutura do estado</a></li><li><a href="#8-experimente-para-entender">8. Experimente para entender</a></li><li><a href="#9-marco-do-capitulo-produtos-js-completo">9. Marco do capítulo - Produtos.js completo</a></li><li><a href="#10-marco-do-capitulo-produto-js-completo">10. Marco do capítulo - Produto.js completo</a></li><li><a href="#11-o-que-aprendemos">11. O que aprendemos</a></li><li><a href="#12-confira-antes-de-encerrar">12. Confira antes de encerrar</a></li><li><a href="#13-checkpoint-08-quantidades-do-pedido">13. Checkpoint 08 - Quantidades do pedido</a></li><li><a href="#14-o-proximo-problema-ja-apareceu">14. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 8</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Quantidades</p><h1>A escolha ganha quantidade</h1><p class="lead">No capítulo anterior, o aplicativo passou a saber quais tipos de produto foram escolhidos. Água e gás podem ser selecionados e o resumo acompanha o conjunto.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 8"><div class="rn-app-screen"><div class="rn-app-identity"><div class="rn-app-brand">Santa Filomena Água &amp; Gás</div><img class="rn-app-logo" src="assets/checkpoint-01/assets/santa-filomena.png" alt="Identidade visual da Santa Filomena Água &amp; Gás" /><strong>Água mineral e gás com entrega</strong><small>Peça com praticidade e acompanhe sua entrega.</small></div><div class="rn-app-section-title">Produtos</div><div class="rn-app-summary">Tipos selecionados: 2</div><div class="rn-app-product selected"><strong>Água mineral 20 L</strong><small>Quantidade: 2</small><div class="rn-app-qty"><button>−</button><button>+</button></div></div><div class="rn-app-product selected"><strong>Gás 13 kg</strong><small>Quantidade: 1</small><div class="rn-app-qty"><button>−</button><button>+</button></div></div></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><p>Mas escolha um produto e pense como cliente: selecionar Água mineral 20 L ainda não responde uma pergunta essencial.</p><div class="rn-note concept"><p>Quantos galões?</p></div><p>O mesmo vale para o gás. A partir daqui, uma escolha deixa de ser apenas sim ou não: ela precisa carregar também uma quantidade.</p></section><section class="rn-step rn-action" id="1-onde-paramos"><span class="rn-step-label">Construa e confira</span><h2>1. Onde paramos</h2><p>Produtos.js guarda apenas os ids selecionados. Isso informa quais tipos fazem parte da escolha, mas não contém quantidade.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - estado herdado do Capítulo 7</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+];
+export default function Produtos() {
+  const [selecionados, setSelecionados] = React.useState([]);
+
+  function alternarProduto(id) {
+    const jaSelecionado = selecionados.includes(id);
+
+    if (jaSelecionado) {
+      const novaLista = selecionados.filter(
+        (produtoId) =&gt; produtoId !== id
+      );
+      setSelecionados(novaLista);
+    } else {
+      setSelecionados([...selecionados, id]);
+    }
+  }
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      &lt;Text style={styles.resumo}&gt;
+        Selecionados: {selecionados.length}
+      &lt;/Text&gt;
+
+      {produtos.map((produto) =&gt; (
+        &lt;Produto
+          key={produto.id}
+          nome={produto.nome}
+          descricao={produto.descricao}
+          selecionado={selecionados.includes(produto.id)}
+          onAlternar={() =&gt; alternarProduto(produto.id)}
+        /&gt;
+      ))}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  resumo: {
+    color: &#x27;#374151&#x27;,
+    fontSize: 14,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="2-a-memoria-atual-ficou-pequena-para-o-problema"><span class="rn-step-label">Construa e confira</span><h2>2. A memória atual ficou pequena para o problema</h2><p>Uma lista como [1, 2] consegue dizer que os produtos 1 e 2 foram escolhidos. Mas não consegue representar 3 galões de água e 2 botijões de gás.</p><div class="rn-note concept"><p>Antes: id<br />Agora precisamos: id + quantidade</p></div><p>Portanto, não vamos criar um segundo estado separado apenas para quantidades. Isso abriria espaço para duas memórias relacionadas perderem a sincronia. A menor solução profissional é fazer cada item escolhido guardar as duas informações juntas.</p></section><section class="rn-step rn-action" id="3-cada-escolha-passa-a-ser-um-item-do-pedido"><span class="rn-step-label">Construa e confira</span><h2>3. Cada escolha passa a ser um item do pedido</h2><p>Em Produtos.js, trocaremos a lista de ids por uma lista de objetos. Ao escolher um produto, ele entra com quantidade inicial 1.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - arquivo completo; ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+];
+export default function Produtos() {
+<span class="code-new">  const [itensPedido, setItensPedido] = React.useState([]);</span>
+
+  function alternarProduto(id) {
+<span class="code-new">    const itemExistente = itensPedido.find(</span>
+      (item) =&gt; item.id === id
+    );
+
+<span class="code-new">    if (itemExistente) {</span>
+<span class="code-new">      const novaLista = itensPedido.filter(</span>
+        (item) =&gt; item.id !== id
+      );
+      setItensPedido(novaLista);
+    } else {
+      setItensPedido([
+<span class="code-new">        ...itensPedido,</span>
+<span class="code-new">        { id: id, quantidade: 1 },</span>
+      ]);
+    }
+  }
+
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+
+      &lt;Text style={styles.resumo}&gt;
+<span class="code-new">        Tipos selecionados: {itensPedido.length}</span>
+      &lt;/Text&gt;
+
+      {produtos.map((produto) =&gt; {
+<span class="code-new">        const itemPedido = itensPedido.find(</span>
+          (item) =&gt; item.id === produto.id
+        );
+        return (
+          &lt;Produto
+            key={produto.id}
+            nome={produto.nome}
+            descricao={produto.descricao}
+<span class="code-new">            selecionado={itemPedido !== undefined}</span>
+<span class="code-new">            quantidade={itemPedido ? itemPedido.quantidade : 0}</span>
+            onAlternar={() =&gt; alternarProduto(produto.id)}
+          /&gt;
+        );
+      })}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  resumo: {
+    color: &#x27;#374151&#x27;,
+    fontSize: 14,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a ideia antes dos detalhes: cada item selecionado agora pode guardar mais de uma informação.</p><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>{ id: 1, quantidade: 1 }</code></pre>
+        </div></section><section class="rn-step rn-action" id="4-o-cartao-precisa-mostrar-a-quantidade"><span class="rn-step-label">Construa e confira</span><h2>4. O cartão precisa mostrar a quantidade</h2><p>Produtos.js já consegue descobrir a quantidade de cada item, mas Produto.js ainda não mostra essa informação. Agora existe uma necessidade visual concreta: o cliente precisa enxergar e alterar a quantidade do produto escolhido.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - arquivo completo; digite somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, Pressable, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function Produto(props) {
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+        {props.nome}
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+        {props.descricao}
+      &lt;/Text&gt;
+
+      &lt;Pressable
+        style={styles.botaoEscolher}
+        onPress={props.onAlternar}
+      &gt;
+        &lt;Text style={styles.textoBotao}&gt;
+          {props.selecionado ? &#x27;Cancelar escolha&#x27; : &#x27;Escolher&#x27;}
+        &lt;/Text&gt;
+      &lt;/Pressable&gt;
+      {props.selecionado &amp;&amp; (
+<span class="code-new">        &lt;View style={styles.areaQuantidade}&gt;</span>
+          &lt;Text style={styles.quantidade}&gt;
+<span class="code-new">            Quantidade: {props.quantidade}</span>
+          &lt;/Text&gt;
+
+<span class="code-new">          &lt;View style={styles.botoesQuantidade}&gt;</span>
+            &lt;Pressable
+<span class="code-new">              style={styles.botaoQuantidade}</span>
+<span class="code-new">              onPress={props.onDiminuir}</span>
+            &gt;
+<span class="code-new">              &lt;Text style={styles.textoQuantidade}&gt;-&lt;/Text&gt;</span>
+            &lt;/Pressable&gt;
+            &lt;Pressable
+<span class="code-new">              style={styles.botaoQuantidade}</span>
+<span class="code-new">              onPress={props.onAumentar}</span>
+            &gt;
+<span class="code-new">              &lt;Text style={styles.textoQuantidade}&gt;+&lt;/Text&gt;</span>
+            &lt;/Pressable&gt;
+          &lt;/View&gt;
+        &lt;/View&gt;
+      )}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+  botaoEscolher: {
+    backgroundColor: &#x27;#1967D2&#x27;,
+    borderRadius: 10,
+    paddingVertical: 10,
+    marginTop: 12,
+    alignItems: &#x27;center&#x27;,
+  },
+  textoBotao: {
+    color: &#x27;#ffffff&#x27;,
+    fontSize: 15,
+    fontWeight: &#x27;bold&#x27;,
+  },
+<span class="code-new">  areaQuantidade: {</span>
+<span class="code-new">    marginTop: 12,</span>
+<span class="code-new">    alignItems: &#x27;center&#x27;,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  quantidade: {</span>
+<span class="code-new">    color: &#x27;#166534&#x27;,</span>
+<span class="code-new">    fontSize: 15,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  botoesQuantidade: {</span>
+<span class="code-new">    flexDirection: &#x27;row&#x27;,</span>
+<span class="code-new">    marginTop: 8,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  botaoQuantidade: {</span>
+<span class="code-new">    width: 44,</span>
+<span class="code-new">    height: 40,</span>
+<span class="code-new">    borderRadius: 10,</span>
+<span class="code-new">    backgroundColor: &#x27;#dbeafe&#x27;,</span>
+<span class="code-new">    alignItems: &#x27;center&#x27;,</span>
+<span class="code-new">    justifyContent: &#x27;center&#x27;,</span>
+<span class="code-new">    marginHorizontal: 6,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  textoQuantidade: {</span>
+<span class="code-new">    color: &#x27;#114B9E&#x27;,</span>
+<span class="code-new">    fontSize: 22,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">  },</span>
+<span class="code-new">});</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Neste momento os botões aparecem, mas ainda falta ligá-los às mudanças de quantidade. Isso será feito no componente que possui a memória do pedido: Produtos.js.</p></section><section class="rn-step rn-action" id="5-o-componente-que-possui-a-memoria-altera-a-quantidade"><span class="rn-step-label">Construa e confira</span><h2>5. O componente que possui a memória altera a quantidade</h2><p>Produtos.js ganhará duas funções: uma aumenta a quantidade e outra diminui. A quantidade mínima de um produto selecionado será 1. Para retirar o produto do pedido, o cliente continua usando Cancelar escolha.</p><p>Isso evita duas ações diferentes produzirem a mesma consequência: o botão “-” ajusta quantidade; Cancelar escolha remove o item.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - arquivo completo; acrescente somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+];
+export default function Produtos() {
+  const [itensPedido, setItensPedido] = React.useState([]);
+
+  function alternarProduto(id) {
+    const itemExistente = itensPedido.find(
+      (item) =&gt; item.id === id
+    );
+
+    if (itemExistente) {
+      const novaLista = itensPedido.filter(
+        (item) =&gt; item.id !== id
+      );
+      setItensPedido(novaLista);
+    } else {
+      setItensPedido([
+        ...itensPedido,
+        { id: id, quantidade: 1 },
+      ]);
+    }
+  }
+
+<span class="code-new">  function aumentarQuantidade(id) {</span>
+<span class="code-new">    const novaLista = itensPedido.map((item) =&gt; {</span>
+<span class="code-new">      if (item.id === id) {</span>
+<span class="code-new">        return {</span>
+<span class="code-new">          ...item,</span>
+<span class="code-new">          quantidade: item.quantidade + 1,</span>
+<span class="code-new">        };</span>
+<span class="code-new">      }</span>
+<span class="code-new">      return item;</span>
+<span class="code-new">    });</span>
+<span class="code-new">    setItensPedido(novaLista);</span>
+<span class="code-new">  }</span>
+<span class="code-new">  function diminuirQuantidade(id) {</span>
+<span class="code-new">    const novaLista = itensPedido.map((item) =&gt; {</span>
+<span class="code-new">      if (item.id === id &amp;&amp; item.quantidade &gt; 1) {</span>
+<span class="code-new">        return {</span>
+<span class="code-new">          ...item,</span>
+<span class="code-new">          quantidade: item.quantidade - 1,</span>
+<span class="code-new">        };</span>
+<span class="code-new">      }</span>
+<span class="code-new">      return item;</span>
+<span class="code-new">    });</span>
+<span class="code-new">    setItensPedido(novaLista);</span>
+<span class="code-new">  }</span>
+
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+      &lt;Text style={styles.resumo}&gt;
+        Tipos selecionados: {itensPedido.length}
+      &lt;/Text&gt;
+
+      {produtos.map((produto) =&gt; {
+        const itemPedido = itensPedido.find(
+          (item) =&gt; item.id === produto.id
+        );
+
+        return (
+          &lt;Produto
+            key={produto.id}
+            nome={produto.nome}
+            descricao={produto.descricao}
+            selecionado={itemPedido !== undefined}
+            quantidade={itemPedido ? itemPedido.quantidade : 0}
+            onAlternar={() =&gt; alternarProduto(produto.id)}
+<span class="code-new">            onAumentar={() =&gt; aumentarQuantidade(produto.id)}</span>
+<span class="code-new">            onDiminuir={() =&gt; diminuirQuantidade(produto.id)}</span>
+          /&gt;
+        );
+      })}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  resumo: {
+    color: &#x27;#374151&#x27;,
+    fontSize: 14,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p class="rn-list-line"><span aria-hidden="true">•</span>map percorre os itens para produzir uma nova lista;</p><p class="rn-list-line"><span aria-hidden="true">•</span>quando o id corresponde, criamos uma nova versão daquele item;</p><p class="rn-list-line"><span aria-hidden="true">•</span>...item preserva os dados que já existiam;</p><p class="rn-list-line"><span aria-hidden="true">•</span>quantidade recebe + 1 ou - 1;</p><p class="rn-list-line"><span aria-hidden="true">•</span>se a quantidade já é 1, diminuir não reduz mais.</p></section><section class="rn-step rn-observe" id="6-observe-o-comportamento-completo"><span class="rn-step-label">Construa e confira</span><h2>6. Observe o comportamento completo</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Escolha Água mineral 20 L. A quantidade deve começar em 1.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Toque em + duas vezes. A quantidade deve chegar a 3.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Toque em - uma vez. A quantidade deve voltar a 2.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Continue diminuindo até 1. Um novo toque em - não deve levar a zero.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Use Cancelar escolha. O cartão deixa de fazer parte do pedido.</p><p class="rn-list-line"><span aria-hidden="true">6.</span>Escolha água e gás e atribua quantidades diferentes a cada um.</p><div class="rn-note concept"><p>Produto escolhido = pelo menos 1 unidade.<br />Cancelar escolha = retirar o produto do pedido.</p></div></section><section class="rn-step rn-action" id="7-o-que-mudou-na-estrutura-do-estado"><span class="rn-step-label">Construa e confira</span><h2>7. O que mudou na estrutura do estado</h2><p>Antes, o estado precisava responder apenas “quais produtos?”. Agora ele responde “quais produtos e quantas unidades de cada um?”.</p><div class="rn-note concept"><p>Antes<br />[1, 2]<br />Agora<br />[{ id: 1, quantidade: 3 }, { id: 2, quantidade: 1 }]</p></div><p>Essa mudança não foi feita para deixar o código mais sofisticado. Foi feita porque o pedido passou a exigir uma informação que a estrutura anterior não conseguia representar.</p></section><section class="rn-step rn-observe" id="8-experimente-para-entender"><span class="rn-step-label">Construa e confira</span><h2>8. Experimente para entender</h2><p>Faça um pequeno teste controlado:</p><p class="rn-list-line"><span aria-hidden="true">1.</span>Selecione apenas o gás e deixe a quantidade em 1.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Aumente para 4.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Selecione também a água e deixe em 2.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Confirme que alterar a água não muda a quantidade do gás.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Cancele o gás e confirme que a água continua com sua quantidade.</p><p>O objetivo é verificar que cada item do pedido possui sua própria quantidade dentro da mesma memória compartilhada.</p></section><section class="rn-step rn-action" id="9-marco-do-capitulo-produtos-js-completo"><span class="rn-step-label">Construa e confira</span><h2>9. Marco do capítulo - Produtos.js completo</h2><div class="code-card">
+          <div class="code-card-head"><span>components/Produtos.js - estado ao final do Capítulo 8</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, StyleSheet } from &#x27;react-native&#x27;;
+import Produto from &#x27;./Produto&#x27;;
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+  },
+];
+export default function Produtos() {
+  const [itensPedido, setItensPedido] = React.useState([]);
+
+  function alternarProduto(id) {
+    const itemExistente = itensPedido.find(
+      (item) =&gt; item.id === id
+    );
+
+    if (itemExistente) {
+      const novaLista = itensPedido.filter(
+        (item) =&gt; item.id !== id
+      );
+      setItensPedido(novaLista);
+    } else {
+      setItensPedido([
+        ...itensPedido,
+        { id: id, quantidade: 1 },
+      ]);
+    }
+  }
+
+  function aumentarQuantidade(id) {
+    const novaLista = itensPedido.map((item) =&gt; {
+      if (item.id === id) {
+        return {
+          ...item,
+          quantidade: item.quantidade + 1,
+        };
+      }
+      return item;
+    });
+    setItensPedido(novaLista);
+  }
+  function diminuirQuantidade(id) {
+    const novaLista = itensPedido.map((item) =&gt; {
+      if (item.id === id &amp;&amp; item.quantidade &gt; 1) {
+        return {
+          ...item,
+          quantidade: item.quantidade - 1,
+        };
+      }
+      return item;
+    });
+    setItensPedido(novaLista);
+  }
+
+  return (
+    &lt;View style={styles.areaProdutos}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Produtos&lt;/Text&gt;
+      &lt;Text style={styles.resumo}&gt;
+        Tipos selecionados: {itensPedido.length}
+      &lt;/Text&gt;
+
+      {produtos.map((produto) =&gt; {
+        const itemPedido = itensPedido.find(
+          (item) =&gt; item.id === produto.id
+        );
+
+        return (
+          &lt;Produto
+            key={produto.id}
+            nome={produto.nome}
+            descricao={produto.descricao}
+            selecionado={itemPedido !== undefined}
+            quantidade={itemPedido ? itemPedido.quantidade : 0}
+            onAlternar={() =&gt; alternarProduto(produto.id)}
+            onAumentar={() =&gt; aumentarQuantidade(produto.id)}
+            onDiminuir={() =&gt; diminuirQuantidade(produto.id)}
+          /&gt;
+        );
+      })}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaProdutos: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  resumo: {
+    color: &#x27;#374151&#x27;,
+    fontSize: 14,
+    marginBottom: 12,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="10-marco-do-capitulo-produto-js-completo"><span class="rn-step-label">Construa e confira</span><h2>10. Marco do capítulo - Produto.js completo</h2><div class="code-card">
+          <div class="code-card-head"><span>components/Produto.js - estado ao final do Capítulo 8</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, Pressable, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function Produto(props) {
+  return (
+    &lt;View style={styles.produto}&gt;
+      &lt;Text style={styles.nomeProduto}&gt;
+        {props.nome}
+      &lt;/Text&gt;
+      &lt;Text style={styles.descricaoProduto}&gt;
+        {props.descricao}
+      &lt;/Text&gt;
+
+      &lt;Pressable
+        style={styles.botaoEscolher}
+        onPress={props.onAlternar}
+      &gt;
+        &lt;Text style={styles.textoBotao}&gt;
+          {props.selecionado ? &#x27;Cancelar escolha&#x27; : &#x27;Escolher&#x27;}
+        &lt;/Text&gt;
+      &lt;/Pressable&gt;
+      {props.selecionado &amp;&amp; (
+        &lt;View style={styles.areaQuantidade}&gt;
+          &lt;Text style={styles.quantidade}&gt;
+            Quantidade: {props.quantidade}
+          &lt;/Text&gt;
+
+          &lt;View style={styles.botoesQuantidade}&gt;
+            &lt;Pressable
+              style={styles.botaoQuantidade}
+              onPress={props.onDiminuir}
+            &gt;
+              &lt;Text style={styles.textoQuantidade}&gt;-&lt;/Text&gt;
+            &lt;/Pressable&gt;
+            &lt;Pressable
+              style={styles.botaoQuantidade}
+              onPress={props.onAumentar}
+            &gt;
+              &lt;Text style={styles.textoQuantidade}&gt;+&lt;/Text&gt;
+            &lt;/Pressable&gt;
+          &lt;/View&gt;
+        &lt;/View&gt;
+      )}
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  produto: {
+    backgroundColor: &#x27;#f8fafc&#x27;,
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+  },
+  nomeProduto: {
+    fontSize: 17,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  descricaoProduto: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+  botaoEscolher: {
+    backgroundColor: &#x27;#1967D2&#x27;,
+    borderRadius: 10,
+    paddingVertical: 10,
+    marginTop: 12,
+    alignItems: &#x27;center&#x27;,
+  },
+  textoBotao: {
+    color: &#x27;#ffffff&#x27;,
+    fontSize: 15,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  areaQuantidade: {
+    marginTop: 12,
+    alignItems: &#x27;center&#x27;,
+  },
+  quantidade: {
+    color: &#x27;#166534&#x27;,
+    fontSize: 15,
+    fontWeight: &#x27;bold&#x27;,
+  },
+  botoesQuantidade: {
+    flexDirection: &#x27;row&#x27;,
+    marginTop: 8,
+  },
+  botaoQuantidade: {
+    width: 44,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: &#x27;#dbeafe&#x27;,
+    alignItems: &#x27;center&#x27;,
+    justifyContent: &#x27;center&#x27;,
+    marginHorizontal: 6,
+  },
+  textoQuantidade: {
+    color: &#x27;#114B9E&#x27;,
+    fontSize: 22,
+    fontWeight: &#x27;bold&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-observe" id="11-o-que-aprendemos"><span class="rn-step-label">Construa e confira</span><h2>11. O que aprendemos</h2><p class="rn-list-line"><span aria-hidden="true">•</span>um estado pode guardar objetos, não apenas valores simples;</p><p class="rn-list-line"><span aria-hidden="true">•</span>dados relacionados podem ficar juntos no mesmo item;</p><p class="rn-list-line"><span aria-hidden="true">•</span>find localiza um item pelo id;</p><p class="rn-list-line"><span aria-hidden="true">•</span>map também pode ser usado para atualizar um item sem alterar os demais;</p><p class="rn-list-line"><span aria-hidden="true">•</span>o spread ...item ajuda a preservar propriedades existentes ao criar uma nova versão;</p><p class="rn-list-line"><span aria-hidden="true">•</span>uma quantidade selecionada precisa de uma regra mínima clara para o usuário.</p><p>Mais importante: mudamos a estrutura do estado somente quando a necessidade do pedido mostrou que guardar apenas ids já não era suficiente.</p></section><section class="rn-step rn-observe" id="12-confira-antes-de-encerrar"><span class="rn-step-label">Construa e confira</span><h2>12. Confira antes de encerrar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>Escolher um produto inicia sua quantidade em 1.</p><p class="rn-list-line"><span aria-hidden="true">•</span>O botão + aumenta apenas aquele produto.</p><p class="rn-list-line"><span aria-hidden="true">•</span>O botão - diminui apenas aquele produto.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A quantidade não fica abaixo de 1 enquanto o produto está selecionado.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Cancelar escolha remove o item do pedido.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Água e gás podem ter quantidades diferentes.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A pré-visualização continua sem erros.</p></section><section class="rn-step rn-checkpoint" id="13-checkpoint-08-quantidades-do-pedido"><span class="rn-step-label">Checkpoint</span><h2>13. Checkpoint 08 - Quantidades do pedido</h2><p>Ao concluir as conferências acima, preserve este estado como referência do checkpoint do capítulo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>IdentidadeEmpresa.js preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js com itensPedido e controle de quantidades;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produto.js com controles + e -;</p><p class="rn-list-line"><span aria-hidden="true">•</span>asset oficial santa-filomena.png;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Snack correspondente e screenshot validado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>arquivos de recuperação.</p></section><section class="rn-step rn-action" id="14-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>14. O próximo problema já apareceu</h2><p>Agora o cliente consegue dizer o que deseja e em que quantidade. Mas ainda falta uma informação indispensável para um pedido comercial:</p><div class="rn-note concept"><p>Quanto custa cada produto e quanto ficará o pedido?</p></div><p>A próxima evolução deve nascer desse ponto: preço, subtotal de cada item e total do pedido. Não vamos antecipar pagamento ou finalização antes de o próprio pedido saber calcular seus valores.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 8 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-07.html"><small>Capítulo anterior</small><strong>Capítulo 7</strong></a><a href="capitulo-09.html"><small>Próximo capítulo</small><strong>Capítulo 9</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

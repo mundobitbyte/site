@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 17 de React Native do Zero: Configure nome, ícone e tela de abertura para a identidade nativa." />
+  <title>Capítulo 17 — O aplicativo ganha identidade própria | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="17">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-16.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-18.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 17</h2><p>O aplicativo ganha identidade própria</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-identidade-visual-nao-e-apenas-a-tela">1. Identidade visual não é apenas a tela</a></li><li><a href="#2-prepare-os-arquivos-visuais">2. Prepare os arquivos visuais</a></li><li><a href="#3-instale-o-suporte-de-splash">3. Instale o suporte de splash</a></li><li><a href="#4-configure-app-json">4. Configure app.json</a></li><li><a href="#5-o-que-pode-e-o-que-nao-pode-ser-validado-no-expo-go">5. O que pode e o que não pode ser validado no Expo Go</a></li><li><a href="#6-execute-novamente-e-confirme-que-o-codigo-continua-funcionando">6. Execute novamente e confirme que o código continua funcionando</a></li><li><a href="#7-checkpoint-17-o-projeto-possui-identidade-nativa">7. Checkpoint 17 - O projeto possui identidade nativa</a></li><li><a href="#8-o-proximo-problema-ja-apareceu">8. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 17</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Identidade nativa</p><h1>O aplicativo ganha identidade própria</h1><p class="lead">O aplicativo já roda no celular, mas ainda está sendo executado dentro do Expo Go. Antes de gerar uma instalação independente, precisamos preparar a identidade nativa do projeto.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 17"><div class="rn-app-screen"><div class="rn-splash-preview"><img class="rn-app-logo" src="assets/checkpoint-01/assets/santa-filomena.png" alt="Identidade visual da Santa Filomena Água &amp; Gás" /><strong>Santa Filomena Água &amp; Gás</strong><small>Identidade nativa preparada</small></div></div></div>
+      </section>
+      <section class="rn-step rn-action" id="1-identidade-visual-nao-e-apenas-a-tela"><span class="rn-step-label">Construa e confira</span><h2>1. Identidade visual não é apenas a tela</h2><div class="rn-note success"><strong>Teste correto do splash</strong><p>Confirme a tela de abertura em um build de preview ou produção. O Expo Go não é a referência visual definitiva para essa etapa.</p></div><p class="rn-list-line"><span aria-hidden="true">•</span>o nome exibido pelo sistema operacional;</p><p class="rn-list-line"><span aria-hidden="true">•</span>o ícone do aplicativo;</p><p class="rn-list-line"><span aria-hidden="true">•</span>a imagem e a cor usadas na tela de abertura.</p></section><section class="rn-step rn-action" id="2-prepare-os-arquivos-visuais"><span class="rn-step-label">Construa e confira</span><h2>2. Prepare os arquivos visuais</h2><p>Para concluir agora sem depender das artes finais, duplique o arquivo quadrado assets/santa-filomena.png duas vezes e renomeie as cópias como:</p><p class="rn-list-line"><span aria-hidden="true">•</span>assets/icon.png - primeira cópia da imagem quadrada;</p><p class="rn-list-line"><span aria-hidden="true">•</span>assets/splash-icon.png - segunda cópia da imagem quadrada.</p><p>O arquivo santa-filomena.png continua sendo usado dentro da interface. Os novos arquivos pertencem à identidade nativa do aplicativo.</p></section><section class="rn-step rn-action" id="3-instale-o-suporte-de-splash"><span class="rn-step-label">Construa e confira</span><h2>3. Instale o suporte de splash</h2><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>npx expo install expo-splash-screen</code></pre>
+        </div></section><section class="rn-step rn-action" id="4-configure-app-json"><span class="rn-step-label">Construa e confira</span><h2>4. Configure app.json</h2><p>Substitua o conteúdo de app.json pelo arquivo completo abaixo. Salve antes de continuar.</p><div class="code-card">
+          <div class="code-card-head"><span>app.json — arquivo completo nesta etapa</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>{
+  &quot;expo&quot;: {
+    &quot;name&quot;: &quot;Santa Filomena Água &amp; Gás&quot;,
+    &quot;slug&quot;: &quot;santa-filomena-agua-e-gas&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;orientation&quot;: &quot;portrait&quot;,
+    &quot;icon&quot;: &quot;./assets/icon.png&quot;,
+    &quot;userInterfaceStyle&quot;: &quot;light&quot;,
+    &quot;plugins&quot;: [
+      [
+        &quot;expo-splash-screen&quot;,
+        {
+          &quot;image&quot;: &quot;./assets/splash-icon.png&quot;,
+          &quot;imageWidth&quot;: 200,
+          &quot;resizeMode&quot;: &quot;contain&quot;,
+          &quot;backgroundColor&quot;: &quot;#eef3f7&quot;
+        }
+      ]
+    ]
+  }
+}</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="5-o-que-pode-e-o-que-nao-pode-ser-validado-no-expo-go"><span class="rn-step-label">Construa e confira</span><h2>5. O que pode e o que não pode ser validado no Expo Go</h2><p>O nome e parte da configuração podem aparecer durante o desenvolvimento, mas a tela de abertura nativa não deve ser aprovada visualmente apenas pelo Expo Go. A própria documentação do Expo orienta validar o splash em um build de preview ou produção. Por isso, a confirmação definitiva ficará para o próximo capítulo.</p></section><section class="rn-step rn-action" id="6-execute-novamente-e-confirme-que-o-codigo-continua-funcionando"><span class="rn-step-label">Construa e confira</span><h2>6. Execute novamente e confirme que o código continua funcionando</h2><div class="code-card">
+          <div class="code-card-head"><span>Terminal</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>npx expo start</code></pre>
+        </div><p>A configuração nativa não pode quebrar o fluxo que já estava funcionando. Percorra pelo menos a tela inicial e a revisão do pedido.</p></section><section class="rn-step rn-checkpoint" id="7-checkpoint-17-o-projeto-possui-identidade-nativa"><span class="rn-step-label">Checkpoint</span><h2>7. Checkpoint 17 - O projeto possui identidade nativa</h2><p class="rn-list-line"><span aria-hidden="true">•</span>app.json com nome e slug do projeto;</p><p class="rn-list-line"><span aria-hidden="true">•</span>icon.png e splash-icon.png presentes em assets;</p><p class="rn-list-line"><span aria-hidden="true">•</span>expo-splash-screen instalado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>aplicativo continua executando durante o desenvolvimento;</p><p class="rn-list-line"><span aria-hidden="true">•</span>splash marcado como pendente de confirmação no build instalável.</p></section><section class="rn-step rn-action" id="8-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>8. O próximo problema já apareceu</h2><p>Ainda dependemos do Expo Go e do servidor de desenvolvimento. Para encerrar este volume, o aplicativo precisa existir como arquivo instalável e abrir sem o computador.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 17 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-16.html"><small>Capítulo anterior</small><strong>Capítulo 16</strong></a><a href="capitulo-18.html"><small>Próximo capítulo</small><strong>Capítulo 18</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

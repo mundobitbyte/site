@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 10 de React Native do Zero: Crie os campos de nome e telefone e mantenha os dados durante o uso." />
+  <title>Capítulo 10 — O pedido conhece o cliente | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="10">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-09.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-11.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 10</h2><p>O pedido conhece o cliente</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-onde-paramos">1. Onde paramos</a></li><li><a href="#2-uma-nova-parte-da-interface-precisa-nascer">2. Uma nova parte da interface precisa nascer</a></li><li><a href="#3-o-novo-componente-precisa-entrar-no-aplicativo">3. O novo componente precisa entrar no aplicativo</a></li><li><a href="#4-quando-a-tela-cresce-ela-precisa-poder-rolar">4. Quando a tela cresce, ela precisa poder rolar</a></li><li><a href="#5-falta-uma-forma-de-contato">5. Falta uma forma de contato</a></li><li><a href="#6-o-que-significa-um-campo-controlado">6. O que significa um campo controlado?</a></li><li><a href="#7-experimente-para-entender">7. Experimente para entender</a></li><li><a href="#8-o-que-mudou-para-o-usuario">8. O que mudou para o usuário</a></li><li><a href="#9-o-que-ainda-nao-estamos-fazendo">9. O que ainda não estamos fazendo</a></li><li><a href="#10-marco-do-capitulo-app-js-completo">10. Marco do capítulo - App.js completo</a></li><li><a href="#11-marco-do-capitulo-dadoscliente-js-completo">11. Marco do capítulo - DadosCliente.js completo</a></li><li><a href="#12-o-que-aprendemos">12. O que aprendemos</a></li><li><a href="#13-confira-antes-de-encerrar">13. Confira antes de encerrar</a></li><li><a href="#14-checkpoint-10-o-pedido-conhece-o-cliente">14. Checkpoint 10 - O pedido conhece o cliente</a></li><li><a href="#15-o-proximo-problema-ja-apareceu">15. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 10</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Dados do cliente</p><h1>O pedido conhece o cliente</h1><p class="lead">Até aqui, o aplicativo já consegue montar uma escolha com produtos, quantidades, subtotais e total. Mas uma distribuidora não consegue atender apenas um conjunto de itens: precisa saber quem fez o pedido e como poderá falar com essa pessoa.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 10"><div class="rn-app-screen"><div class="rn-app-identity"><div class="rn-app-brand">Santa Filomena Água &amp; Gás</div><img class="rn-app-logo" src="assets/checkpoint-01/assets/santa-filomena.png" alt="Identidade visual da Santa Filomena Água &amp; Gás" /><strong>Água mineral e gás com entrega</strong><small>Peça com praticidade e acompanhe sua entrega.</small></div><div class="rn-app-section-title">Produtos</div>
+      <div class="rn-app-product"><strong>Água mineral 20 L</strong><small>Galão retornável de água mineral.</small></div>
+      <div class="rn-app-product"><strong>Gás 13 kg</strong><small>Botijão residencial de 13 kg.</small></div><div class="rn-app-form"><strong>Dados do cliente</strong><label>Nome<input value="Ana Souza" readonly></label><label>Telefone<input value="(11) 99999-0000" readonly></label></div></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><div class="rn-note concept"><p>Pedido sem cliente ainda não é um atendimento completo.</p></div></section><section class="rn-step rn-action" id="1-onde-paramos"><span class="rn-step-label">Construa e confira</span><h2>1. Onde paramos</h2><p>O App.js ainda organiza somente a identidade da empresa e a área de produtos. Esse é o estado que recebemos do capítulo anterior.</p><div class="code-card">
+          <div class="code-card-head"><span>App.js - estado herdado do Capítulo 9</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, StyleSheet } from &#x27;react-native&#x27;;
+import Constants from &#x27;expo-constants&#x27;;
+import IdentidadeEmpresa from &#x27;./components/IdentidadeEmpresa&#x27;;
+import Produtos from &#x27;./components/Produtos&#x27;;
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;View style={styles.cartao}&gt;
+        &lt;IdentidadeEmpresa /&gt;
+        &lt;Produtos /&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: &#x27;center&#x27;,
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: &#x27;#eef3f7&#x27;,
+    padding: 16,
+  },
+  cartao: {
+    backgroundColor: &#x27;#ffffff&#x27;,
+    borderRadius: 16,
+    padding: 20,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Repare também em uma decisão antiga: o conteúdo ainda está centralizado verticalmente com justifyContent: &#x27;center&#x27;. Até agora não tínhamos uma necessidade concreta para mudar isso.</p></section><section class="rn-step rn-action" id="2-uma-nova-parte-da-interface-precisa-nascer"><span class="rn-step-label">Construa e confira</span><h2>2. Uma nova parte da interface precisa nascer</h2><p>Os dados do cliente não pertencem à identidade da empresa e também não pertencem à lista de produtos. Por isso, vamos criar um componente próprio chamado DadosCliente.js.</p><div class="rn-flow"><span>IdentidadeEmpresa → quem é a empresa</span><span class="arrow">→</span><span>Produtos → o que o cliente está pedindo</span><span class="arrow">→</span><span>DadosCliente → quem está fazendo o pedido</span></div><p>Começaremos com apenas uma informação: o nome. O campo aparece porque agora existe uma pessoa que precisa se identificar.</p><div class="code-card">
+          <div class="code-card-head"><span>components/DadosCliente.js - arquivo novo; digite todo o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import { View, Text, TextInput, StyleSheet } from &#x27;react-native&#x27;;</span>
+
+<span class="code-new">export default function DadosCliente() {</span>
+<span class="code-new">  const [nome, setNome] = React.useState(&#x27;&#x27;);</span>
+
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;View style={styles.areaCliente}&gt;</span>
+<span class="code-new">      &lt;Text style={styles.tituloSecao}&gt;Dados do cliente&lt;/Text&gt;</span>
+
+<span class="code-new">      &lt;Text style={styles.rotulo}&gt;Nome&lt;/Text&gt;</span>
+<span class="code-new">      &lt;TextInput</span>
+<span class="code-new">        style={styles.campo}</span>
+<span class="code-new">        placeholder=&quot;Digite seu nome&quot;</span>
+<span class="code-new">        value={nome}</span>
+<span class="code-new">        onChangeText={setNome}</span>
+<span class="code-new">        autoCapitalize=&quot;words&quot;</span>
+<span class="code-new">      /&gt;</span>
+<span class="code-new">    &lt;/View&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span>
+
+<span class="code-new">const styles = StyleSheet.create({</span>
+<span class="code-new">  areaCliente: {</span>
+<span class="code-new">    marginTop: 24,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  tituloSecao: {</span>
+<span class="code-new">    fontSize: 20,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginBottom: 12,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  rotulo: {</span>
+<span class="code-new">    fontSize: 14,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginBottom: 6,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  campo: {</span>
+<span class="code-new">    borderWidth: 1,</span>
+<span class="code-new">    borderColor: &#x27;#cbd5e1&#x27;,</span>
+<span class="code-new">    borderRadius: 10,</span>
+<span class="code-new">    paddingHorizontal: 12,</span>
+<span class="code-new">    paddingVertical: 10,</span>
+<span class="code-new">    fontSize: 16,</span>
+<span class="code-new">    backgroundColor: &#x27;#ffffff&#x27;,</span>
+<span class="code-new">  },</span>
+<span class="code-new">});</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>TextInput é o componente que permite ao usuário digitar texto. Mas queremos mais do que mostrar letras na tela: o aplicativo precisa manter o valor digitado disponível para uso posterior. Por isso o nome já nasce ligado a um estado.</p><p class="rn-list-line"><span aria-hidden="true">•</span>value mostra no campo o valor guardado em nome;</p><p class="rn-list-line"><span aria-hidden="true">•</span>onChangeText atualiza nome conforme o usuário digita;</p><p class="rn-list-line"><span aria-hidden="true">•</span>autoCapitalize=&quot;words&quot; ajuda a iniciar palavras com letras maiúsculas em teclados compatíveis.</p></section><section class="rn-step rn-action" id="3-o-novo-componente-precisa-entrar-no-aplicativo"><span class="rn-step-label">Construa e confira</span><h2>3. O novo componente precisa entrar no aplicativo</h2><p>Agora App.js precisa importar DadosCliente e colocá-lo depois da área de produtos. Ainda não vamos mexer em nenhum estilo antigo.</p><div class="code-card">
+          <div class="code-card-head"><span>App.js - arquivo completo; digite somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, StyleSheet } from &#x27;react-native&#x27;;
+import Constants from &#x27;expo-constants&#x27;;
+import IdentidadeEmpresa from &#x27;./components/IdentidadeEmpresa&#x27;;
+import Produtos from &#x27;./components/Produtos&#x27;;
+<span class="code-new">import DadosCliente from &#x27;./components/DadosCliente&#x27;;</span>
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;View style={styles.cartao}&gt;
+        &lt;IdentidadeEmpresa /&gt;
+        &lt;Produtos /&gt;
+<span class="code-new">        &lt;DadosCliente /&gt;</span>
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: &#x27;center&#x27;,
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: &#x27;#eef3f7&#x27;,
+    padding: 16,
+  },
+  cartao: {
+    backgroundColor: &#x27;#ffffff&#x27;,
+    borderRadius: 16,
+    padding: 20,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Observe a pré-visualização. Agora existe uma nova parte abaixo dos produtos. Em telas menores ou quando os produtos estiverem selecionados, o conteúdo já pode ultrapassar a altura disponível.</p><div class="rn-note concept"><p>A tela cresceu. Agora temos uma razão concreta para rever a organização vertical.</p></div><p>Essa é justamente a mudança que não antecipamos nos capítulos anteriores.</p></section><section class="rn-step rn-action" id="4-quando-a-tela-cresce-ela-precisa-poder-rolar"><span class="rn-step-label">Construa e confira</span><h2>4. Quando a tela cresce, ela precisa poder rolar</h2><p>Centralizar uma tela pequena funcionava. Agora o aplicativo reúne identidade, produtos, quantidade, valores e dados do cliente. O conteúdo precisa começar pelo topo e continuar verticalmente.</p><p>Vamos usar ScrollView para permitir rolagem e retirar a centralização que perdeu sentido.</p><div class="code-card">
+          <div class="code-card-head"><span>App.js - arquivo completo; ajuste somente as linhas em negrito e remova justifyContent/padding antigos conforme o estado mostrado</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+<span class="code-new">import { View, ScrollView, StyleSheet } from &#x27;react-native&#x27;;</span>
+import Constants from &#x27;expo-constants&#x27;;
+import IdentidadeEmpresa from &#x27;./components/IdentidadeEmpresa&#x27;;
+import Produtos from &#x27;./components/Produtos&#x27;;
+import DadosCliente from &#x27;./components/DadosCliente&#x27;;
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+<span class="code-new">      &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;</span>
+        &lt;View style={styles.cartao}&gt;
+          &lt;IdentidadeEmpresa /&gt;
+          &lt;Produtos /&gt;
+          &lt;DadosCliente /&gt;
+        &lt;/View&gt;
+<span class="code-new">      &lt;/ScrollView&gt;</span>
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+<span class="code-new">    paddingTop: Constants.statusBarHeight,</span>
+<span class="code-new">    backgroundColor: &#x27;#eef3f7&#x27;,</span>
+  },
+<span class="code-new">  conteudo: {</span>
+<span class="code-new">    padding: 16,</span>
+<span class="code-new">  },</span>
+  cartao: {
+    backgroundColor: &#x27;#ffffff&#x27;,
+    borderRadius: 16,
+    padding: 20,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>A estrutura agora pode ser lida assim:</p><div class="rn-flow"><span>tela → área rolável → cartão → identidade + produtos + dados do cliente</span></div><p>ScrollView não entrou porque “faz parte do React Native”. Entrou porque nosso conteúdo passou a ser maior do que a área visível.</p></section><section class="rn-step rn-action" id="5-falta-uma-forma-de-contato"><span class="rn-step-label">Construa e confira</span><h2>5. Falta uma forma de contato</h2><p>Saber o nome é importante, mas ainda não basta para um delivery. Se surgir uma dúvida sobre o pedido ou a entrega, a Santa Filomena Água &amp; Gás precisa conseguir falar com o cliente.</p><div class="rn-note concept"><p>A próxima informação necessária é o telefone.</p></div><p>Vamos acrescentar um segundo estado e um segundo TextInput no mesmo componente.</p><div class="code-card">
+          <div class="code-card-head"><span>components/DadosCliente.js - arquivo completo; digite/ajuste somente as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, TextInput, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function DadosCliente() {
+  const [nome, setNome] = React.useState(&#x27;&#x27;);
+<span class="code-new">  const [telefone, setTelefone] = React.useState(&#x27;&#x27;);</span>
+
+  return (
+    &lt;View style={styles.areaCliente}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Dados do cliente&lt;/Text&gt;
+
+      &lt;Text style={styles.rotulo}&gt;Nome&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Digite seu nome&quot;
+        value={nome}
+        onChangeText={setNome}
+<span class="code-new">        autoCapitalize=&quot;words&quot;</span>
+<span class="code-new">      /&gt;</span>
+<span class="code-new">      &lt;Text style={styles.rotuloTelefone}&gt;Telefone&lt;/Text&gt;</span>
+<span class="code-new">      &lt;TextInput</span>
+<span class="code-new">        style={styles.campo}</span>
+<span class="code-new">        placeholder=&quot;(00) 00000-0000&quot;</span>
+<span class="code-new">        value={telefone}</span>
+<span class="code-new">        onChangeText={setTelefone}</span>
+<span class="code-new">        keyboardType=&quot;phone-pad&quot;</span>
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaCliente: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  rotulo: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 6,
+  },
+<span class="code-new">  rotuloTelefone: {</span>
+<span class="code-new">    fontSize: 14,</span>
+<span class="code-new">    fontWeight: &#x27;bold&#x27;,</span>
+<span class="code-new">    marginTop: 14,</span>
+<span class="code-new">    marginBottom: 6,</span>
+<span class="code-new">  },</span>
+  campo: {
+    borderWidth: 1,
+    borderColor: &#x27;#cbd5e1&#x27;,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    backgroundColor: &#x27;#ffffff&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>O telefone também passa a ser um campo controlado por estado. keyboardType=&quot;phone-pad&quot; solicita um teclado numérico apropriado em dispositivos compatíveis; a aparência pode variar entre aparelhos.</p></section><section class="rn-step rn-action" id="6-o-que-significa-um-campo-controlado"><span class="rn-step-label">Construa e confira</span><h2>6. O que significa um campo controlado?</h2><p>Agora os dois TextInput seguem o mesmo caminho:</p><div class="rn-flow"><span>usuário digita → onChangeText recebe o novo texto → setNome/setTelefone atualiza o estado → value mostra o estado no campo</span></div><p>Isso é diferente de tratar o campo apenas como uma caixa visual. O componente passa a possuir os valores que foram informados.</p></section><section class="rn-step rn-observe" id="7-experimente-para-entender"><span class="rn-step-label">Construa e confira</span><h2>7. Experimente para entender</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Digite um nome no primeiro campo.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Digite um telefone no segundo campo.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Role a tela para cima e para baixo.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Selecione ou cancele um produto e altere sua quantidade.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Volte aos dados do cliente e confira se os valores digitados continuam nos campos.</p><p>O objetivo é perceber que diferentes partes da interface podem mudar e, ainda assim, DadosCliente preserva seus próprios estados enquanto o componente continuar montado.</p><div class="rn-note concept"><p>A memória agora não existe só nos produtos. Os dados digitados pelo cliente também passaram a fazer parte do estado da interface.</p></div></section><section class="rn-step rn-action" id="8-o-que-mudou-para-o-usuario"><span class="rn-step-label">Construa e confira</span><h2>8. O que mudou para o usuário</h2><p>O aplicativo já oferecia produtos, quantidades e valores. Agora o cliente também consegue informar duas informações pessoais indispensáveis para o atendimento:</p><p class="rn-list-line"><span aria-hidden="true">•</span>nome;</p><p class="rn-list-line"><span aria-hidden="true">•</span>telefone para contato.</p><p>A rolagem também deixa a tela utilizável mesmo quando o conteúdo cresce. Nenhuma dessas mudanças foi acrescentada apenas para “ensinar um componente”: elas surgiram porque o pedido real passou a exigir mais informações e mais espaço.</p></section><section class="rn-step rn-action" id="9-o-que-ainda-nao-estamos-fazendo"><span class="rn-step-label">Construa e confira</span><h2>9. O que ainda não estamos fazendo</h2><p class="rn-list-line"><span aria-hidden="true">•</span>não estamos validando se nome e telefone estão corretos ou completos;</p><p class="rn-list-line"><span aria-hidden="true">•</span>não estamos aplicando máscara automática ao telefone;</p><p class="rn-list-line"><span aria-hidden="true">•</span>não estamos pedindo endereço ainda;</p><p class="rn-list-line"><span aria-hidden="true">•</span>não estamos enviando os dados para servidor ou API;</p><p class="rn-list-line"><span aria-hidden="true">•</span>não estamos reunindo ainda produtos e cliente em uma tela final de confirmação.</p><p>Cada uma dessas necessidades terá seu momento. Colocá-las agora misturaria problemas diferentes.</p></section><section class="rn-step rn-action" id="10-marco-do-capitulo-app-js-completo"><span class="rn-step-label">Construa e confira</span><h2>10. Marco do capítulo - App.js completo</h2><p>O App.js agora organiza uma tela rolável e inclui a nova área de dados do cliente.</p><div class="code-card">
+          <div class="code-card-head"><span>App.js - estado ao final do Capítulo 10</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, ScrollView, StyleSheet } from &#x27;react-native&#x27;;
+import Constants from &#x27;expo-constants&#x27;;
+import IdentidadeEmpresa from &#x27;./components/IdentidadeEmpresa&#x27;;
+import Produtos from &#x27;./components/Produtos&#x27;;
+import DadosCliente from &#x27;./components/DadosCliente&#x27;;
+
+export default function App() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;
+        &lt;View style={styles.cartao}&gt;
+          &lt;IdentidadeEmpresa /&gt;
+          &lt;Produtos /&gt;
+          &lt;DadosCliente /&gt;
+        &lt;/View&gt;
+      &lt;/ScrollView&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: &#x27;#eef3f7&#x27;,
+  },
+  conteudo: {
+    padding: 16,
+  },
+  cartao: {
+    backgroundColor: &#x27;#ffffff&#x27;,
+    borderRadius: 16,
+    padding: 20,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-action" id="11-marco-do-capitulo-dadoscliente-js-completo"><span class="rn-step-label">Construa e confira</span><h2>11. Marco do capítulo - DadosCliente.js completo</h2><p>O componente guarda nome e telefone enquanto apresenta campos adequados para a digitação.</p><div class="code-card">
+          <div class="code-card-head"><span>components/DadosCliente.js - estado ao final do Capítulo 10</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+import { View, Text, TextInput, StyleSheet } from &#x27;react-native&#x27;;
+
+export default function DadosCliente() {
+  const [nome, setNome] = React.useState(&#x27;&#x27;);
+  const [telefone, setTelefone] = React.useState(&#x27;&#x27;);
+
+  return (
+    &lt;View style={styles.areaCliente}&gt;
+      &lt;Text style={styles.tituloSecao}&gt;Dados do cliente&lt;/Text&gt;
+
+      &lt;Text style={styles.rotulo}&gt;Nome&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;Digite seu nome&quot;
+        value={nome}
+        onChangeText={setNome}
+        autoCapitalize=&quot;words&quot;
+      /&gt;
+      &lt;Text style={styles.rotuloTelefone}&gt;Telefone&lt;/Text&gt;
+      &lt;TextInput
+        style={styles.campo}
+        placeholder=&quot;(00) 00000-0000&quot;
+        value={telefone}
+        onChangeText={setTelefone}
+        keyboardType=&quot;phone-pad&quot;
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  areaCliente: {
+    marginTop: 24,
+  },
+  tituloSecao: {
+    fontSize: 20,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 12,
+  },
+  rotulo: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginBottom: 6,
+  },
+  rotuloTelefone: {
+    fontSize: 14,
+    fontWeight: &#x27;bold&#x27;,
+    marginTop: 14,
+    marginBottom: 6,
+  },
+  campo: {
+    borderWidth: 1,
+    borderColor: &#x27;#cbd5e1&#x27;,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    backgroundColor: &#x27;#ffffff&#x27;,
+  },
+});</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p></section><section class="rn-step rn-observe" id="12-o-que-aprendemos"><span class="rn-step-label">Construa e confira</span><h2>12. O que aprendemos</h2><p class="rn-list-line"><span aria-hidden="true">•</span>TextInput permite entrada de texto pelo usuário;</p><p class="rn-list-line"><span aria-hidden="true">•</span>value e onChangeText ligam um campo ao estado do componente;</p><p class="rn-list-line"><span aria-hidden="true">•</span>um formulário simples pode usar mais de um estado local;</p><p class="rn-list-line"><span aria-hidden="true">•</span>ScrollView permite percorrer conteúdo maior que a área visível;</p><p class="rn-list-line"><span aria-hidden="true">•</span>uma decisão de layout, como retirar a centralização, pode ser adiada até a própria evolução da tela justificar a mudança;</p><p class="rn-list-line"><span aria-hidden="true">•</span>componentes diferentes podem cuidar de responsabilidades diferentes dentro da mesma tela.</p></section><section class="rn-step rn-observe" id="13-confira-antes-de-encerrar"><span class="rn-step-label">Construa e confira</span><h2>13. Confira antes de encerrar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>Existe components/DadosCliente.js.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js importa e utiliza DadosCliente.</p><p class="rn-list-line"><span aria-hidden="true">•</span>O cliente consegue digitar nome.</p><p class="rn-list-line"><span aria-hidden="true">•</span>O cliente consegue digitar telefone.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A tela pode ser percorrida verticalmente.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Os valores permanecem nos campos enquanto outras partes da tela mudam.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A área de produtos continua funcionando.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A pré-visualização continua sem erros.</p></section><section class="rn-step rn-checkpoint" id="14-checkpoint-10-o-pedido-conhece-o-cliente"><span class="rn-step-label">Checkpoint</span><h2>14. Checkpoint 10 - O pedido conhece o cliente</h2><p>Ao concluir as conferências acima, preserve este estado como referência do checkpoint do capítulo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js com ScrollView e DadosCliente;</p><p class="rn-list-line"><span aria-hidden="true">•</span>IdentidadeEmpresa.js preservado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos.js e Produto.js preservados no estado do Checkpoint 09;</p><p class="rn-list-line"><span aria-hidden="true">•</span>DadosCliente.js com nome e telefone;</p><p class="rn-list-line"><span aria-hidden="true">•</span>asset oficial santa-filomena.png;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Snack correspondente e screenshot validado;</p><p class="rn-list-line"><span aria-hidden="true">•</span>arquivos de recuperação.</p></section><section class="rn-step rn-action" id="15-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>15. O próximo problema já apareceu</h2><p>Agora sabemos quem está fazendo o pedido e temos uma forma de contato. Mas uma entrega ainda não pode sair sem responder outra pergunta concreta:</p><div class="rn-note concept"><p>Onde esse pedido deve ser entregue?</p></div><p>A próxima evolução deverá nascer do endereço de entrega e, com ele, da necessidade de verificar se informações indispensáveis foram realmente preenchidas.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 10 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-09.html"><small>Capítulo anterior</small><strong>Capítulo 9</strong></a><a href="capitulo-11.html"><small>Próximo capítulo</small><strong>Capítulo 11</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>

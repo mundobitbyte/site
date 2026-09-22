@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Capítulo 13 de React Native do Zero: Divida o percurso em telas sem perder o estado compartilhado do pedido." />
+  <title>Capítulo 13 — O pedido ganha um caminho | Academia MbB</title>
+  <link rel="stylesheet" href="../../css/academia.css" />
+</head>
+<body class="rn-body" data-course="react-native-do-zero" data-chapter="13">
+  <header class="topbar appbar">
+    <a class="brand" href="../../index.html" aria-label="Academia Mundo bit Byte"><span class="brand-mark">mbb</span><span><strong>Academia</strong><small>by Mundo bit Byte</small></span></a>
+    <nav class="topnav rn-topnav" aria-label="Navegação do curso"><a href="capitulo-12.html">Capítulo anterior</a><a href="index.html">React Native do Zero</a><a href="capitulo-14.html">Próximo capítulo</a></nav>
+  </header>
+  <main class="rn-lesson-layout rn-shell">
+    <aside class="rn-lesson-aside" aria-label="Mapa do capítulo">
+      <p class="brandline">React Native do Zero</p><h2>Capítulo 13</h2><p>O pedido ganha um caminho</p>
+      <div class="progress-label"><span>Progresso do curso</span><span data-course-progress-text>0/19 capítulos</span></div><div class="mini-progress"><span data-course-progress-bar style="width:0%"></span></div>
+      <ol class="rn-lesson-map"><li><a href="#previa">Prévia do capítulo</a></li><li><a href="#1-antes-de-programar-observe-o-fluxo">1. Antes de programar, observe o fluxo</a></li><li><a href="#2-uma-biblioteca-passa-a-ser-necessaria">2. Uma biblioteca passa a ser necessária</a></li><li><a href="#3-o-estado-precisa-sobreviver-a-troca-de-tela">3. O estado precisa sobreviver à troca de tela</a></li><li><a href="#4-surge-uma-nova-pasta-screens">4. Surge uma nova pasta: screens</a></li><li><a href="#5-app-js-passa-a-conhecer-as-rotas">5. App.js passa a conhecer as rotas</a></li><li><a href="#6-a-primeira-tela-mantem-a-identidade-e-os-produtos">6. A primeira tela mantém a identidade e os produtos</a></li><li><a href="#7-dados-do-cliente-viram-a-segunda-etapa">7. Dados do cliente viram a segunda etapa</a></li><li><a href="#8-o-endereco-vira-a-terceira-etapa">8. O endereço vira a terceira etapa</a></li><li><a href="#9-a-revisao-vira-o-destino-do-percurso">9. A revisão vira o destino do percurso</a></li><li><a href="#10-faca-o-teste-que-realmente-importa">10. Faça o teste que realmente importa</a></li><li><a href="#11-o-que-realmente-aprendemos-sobre-navegacao">11. O que realmente aprendemos sobre navegação</a></li><li><a href="#12-estrutura-do-projeto-ao-final-do-capitulo">12. Estrutura do projeto ao final do capítulo</a></li><li><a href="#13-confira-antes-de-encerrar">13. Confira antes de encerrar</a></li><li><a href="#14-checkpoint-13-o-pedido-ganha-um-caminho">14. Checkpoint 13 - O pedido ganha um caminho</a></li><li><a href="#15-o-proximo-problema-ja-apareceu">15. O próximo problema já apareceu</a></li></ol>
+    </aside>
+    <article class="rn-lesson">
+      <nav class="rn-breadcrumb" aria-label="Você está em"><a href="../../index.html">Academia</a><span>›</span><a href="index.html">React Native do Zero</a><span>›</span><span>Capítulo 13</span></nav>
+      <header class="rn-lesson-head"><p class="brandline">Navegação</p><h1>O pedido ganha um caminho</h1><p class="lead">No capítulo anterior, o cliente passou a conferir o pedido inteiro. Isso resolveu a revisão, mas revelou uma nova limitação: identidade, produtos, dados do cliente, endereço e revisão aparecem em sequência na mesma tela.</p><p class="rn-source-status rn-source-ready">Código e prévia revisados — imagens práticas serão acrescentadas depois</p><div class="rn-method-strip"><span>Entender</span><span>Experimentar</span><span>Programar</span><span>Aplicar</span></div></header>
+      <section class="rn-step rn-observe" id="previa">
+        <span class="rn-step-label">Prévia revisada</span>
+        <h2>Resultado esperado neste capítulo</h2>
+        <p>Esta representação mantém a escala visual do aplicativo e antecipa o que deve ser conferido na pré-visualização. As capturas definitivas poderão ser inseridas depois sem alterar o percurso.</p>
+        <div class="rn-app-preview" aria-label="Prévia do resultado do Capítulo 13"><div class="rn-app-screen"><div class="rn-app-route"><span class="active">1 Produtos</span><span>2 Cliente</span><span>3 Endereço</span><span>4 Revisão</span></div><div class="rn-app-identity"><div class="rn-app-brand">Santa Filomena Água &amp; Gás</div><img class="rn-app-logo" src="assets/checkpoint-01/assets/santa-filomena.png" alt="Identidade visual da Santa Filomena Água &amp; Gás" /><strong>Água mineral e gás com entrega</strong><small>Peça com praticidade e acompanhe sua entrega.</small></div><button class="rn-app-primary">Continuar</button></div></div>
+      </section>
+      <section class="rn-step rn-observe" id="partida"><span class="rn-step-label">Ponto de partida</span><p>A informação está correta. O problema agora é o percurso.</p><div class="rn-flow"><span>Escolher produtos → informar dados → informar endereço → revisar.</span><span class="arrow">→</span><span>O aplicativo já possui etapas diferentes. Falta transformá-las em um caminho claro.</span></div></section><section class="rn-step rn-observe" id="1-antes-de-programar-observe-o-fluxo"><span class="rn-step-label">Construa e confira</span><h2>1. Antes de programar, observe o fluxo</h2><p>Pelo olhar do usuário, essas partes não precisam aparecer todas ao mesmo tempo. Ele pode concluir uma etapa e avançar para a próxima.</p><div class="rn-flow"><span>1 Produtos</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>2 Dados do cliente</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>3 Endereço de entrega</span><span class="arrow">→</span><span>↓</span><span class="arrow">→</span><span>4 Revisão do pedido</span></div><p>Agora existe uma razão concreta para usar navegação entre telas.</p></section><section class="rn-step rn-action" id="2-uma-biblioteca-passa-a-ser-necessaria"><span class="rn-step-label">Construa e confira</span><h2>2. Uma biblioteca passa a ser necessária</h2><p>Até aqui, tudo cabia em componentes do próprio React Native. Para criar um fluxo de telas com histórico, botão de voltar e transições, usaremos React Navigation com o navegador Native Stack.</p><p class="rn-list-line"><span aria-hidden="true">•</span>@react-navigation/native fornece a estrutura central de navegação;</p><p class="rn-list-line"><span aria-hidden="true">•</span>@react-navigation/native-stack fornece a pilha de telas;</p><p class="rn-list-line"><span aria-hidden="true">•</span>react-native-screens e react-native-safe-area-context são dependências usadas pelo navegador.</p><p>No Snack, abra Dependencies, use Add Dependency e adicione @react-navigation/native, @react-navigation/native-stack, react-native-screens e react-native-safe-area-context. Confirme que os quatro pacotes aparecem na lista antes de continuar.</p></section><section class="rn-step rn-action" id="3-o-estado-precisa-sobreviver-a-troca-de-tela"><span class="rn-step-label">Construa e confira</span><h2>3. O estado precisa sobreviver à troca de tela</h2><p>Se cada tela criasse sua própria cópia de nome, endereço ou itens, voltar e avançar poderia produzir informações desencontradas.</p><p>Pedido.js já é o dono comum dos dados. Vamos preservar esse papel e transformá-lo em um provedor de contexto para as telas.</p><div class="rn-note concept"><p>Pedido continua guardando a memória.<br />As telas mudam.<br />Os dados permanecem.</p></div><p>Aqui surge React.createContext e React.useContext. Não porque precisamos estudar Context isoladamente, mas porque várias telas precisam acessar o mesmo pedido.</p><div class="code-card">
+          <div class="code-card-head"><span>components/Pedido.js - arquivo completo; ajuste as linhas em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code>import * as React from &#x27;react&#x27;;
+
+<span class="code-new">export const ContextoPedido = React.createContext();</span>
+
+const produtos = [
+  {
+    id: 1,
+    nome: &#x27;Água mineral 20 L&#x27;,
+    descricao: &#x27;Galão retornável de água mineral.&#x27;,
+    preco: 20,
+  },
+  {
+    id: 2,
+    nome: &#x27;Gás 13 kg&#x27;,
+    descricao: &#x27;Botijão residencial de 13 kg.&#x27;,
+    preco: 100,
+  },
+];
+export default function Pedido(props) {
+  const [itensPedido, setItensPedido] = React.useState([]);
+  const [nome, setNome] = React.useState(&#x27;&#x27;);
+  const [telefone, setTelefone] = React.useState(&#x27;&#x27;);
+  const [rua, setRua] = React.useState(&#x27;&#x27;);
+  const [numero, setNumero] = React.useState(&#x27;&#x27;);
+  const [bairro, setBairro] = React.useState(&#x27;&#x27;);
+  const [complemento, setComplemento] = React.useState(&#x27;&#x27;);
+
+<span class="code-new">  const valor = {</span>
+<span class="code-new">    produtos,</span>
+<span class="code-new">    itensPedido,</span>
+<span class="code-new">    setItensPedido,</span>
+<span class="code-new">    nome,</span>
+<span class="code-new">    setNome,</span>
+<span class="code-new">    telefone,</span>
+<span class="code-new">    setTelefone,</span>
+<span class="code-new">    rua,</span>
+<span class="code-new">    setRua,</span>
+<span class="code-new">    numero,</span>
+<span class="code-new">    setNumero,</span>
+<span class="code-new">    bairro,</span>
+<span class="code-new">    setBairro,</span>
+<span class="code-new">    complemento,</span>
+<span class="code-new">    setComplemento,</span>
+<span class="code-new">  };</span>
+
+  return (
+<span class="code-new">    &lt;ContextoPedido.Provider value={valor}&gt;</span>
+<span class="code-new">      {props.children}</span>
+<span class="code-new">    &lt;/ContextoPedido.Provider&gt;</span>
+  );
+}</code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>O componente Pedido agora envolve outras partes da aplicação e disponibiliza um único objeto com todo o estado necessário.</p></section><section class="rn-step rn-action" id="4-surge-uma-nova-pasta-screens"><span class="rn-step-label">Construa e confira</span><h2>4. Surge uma nova pasta: screens</h2><p>Até agora usamos components porque construíamos partes reutilizáveis da interface. Agora o projeto ganhou algo diferente: telas completas.</p><div class="rn-flow"><span>components/ → partes da interface</span><span class="arrow">→</span><span>screens/ → etapas completas do fluxo</span></div><p>Crie a pasta screens. Nela teremos quatro arquivos:</p><p class="rn-list-line"><span aria-hidden="true">•</span>TelaProdutos.js</p><p class="rn-list-line"><span aria-hidden="true">•</span>TelaCliente.js</p><p class="rn-list-line"><span aria-hidden="true">•</span>TelaEndereco.js</p><p class="rn-list-line"><span aria-hidden="true">•</span>TelaRevisao.js</p><p>Essa organização não existia antes porque o projeto ainda não precisava dela.</p></section><section class="rn-step rn-action" id="5-app-js-passa-a-conhecer-as-rotas"><span class="rn-step-label">Construa e confira</span><h2>5. App.js passa a conhecer as rotas</h2><p>Agora App.js deixa de renderizar diretamente uma tela longa. Ele passa a registrar o caminho disponível no aplicativo.</p><div class="code-card">
+          <div class="code-card-head"><span>App.js - novo estado completo; digite/ajuste o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import { NavigationContainer } from &#x27;@react-navigation/native&#x27;;</span>
+<span class="code-new">import { createNativeStackNavigator } from &#x27;@react-navigation/native-stack&#x27;;</span>
+
+<span class="code-new">import Pedido from &#x27;./components/Pedido&#x27;;</span>
+<span class="code-new">import TelaProdutos from &#x27;./screens/TelaProdutos&#x27;;</span>
+<span class="code-new">import TelaCliente from &#x27;./screens/TelaCliente&#x27;;</span>
+<span class="code-new">import TelaEndereco from &#x27;./screens/TelaEndereco&#x27;;</span>
+<span class="code-new">import TelaRevisao from &#x27;./screens/TelaRevisao&#x27;;</span>
+
+<span class="code-new">const Stack = createNativeStackNavigator();</span>
+
+<span class="code-new">export default function App() {</span>
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;NavigationContainer&gt;</span>
+<span class="code-new">      &lt;Pedido&gt;</span>
+<span class="code-new">        &lt;Stack.Navigator initialRouteName=&quot;Produtos&quot;&gt;</span>
+<span class="code-new">          &lt;Stack.Screen</span>
+<span class="code-new">            name=&quot;Produtos&quot;</span>
+<span class="code-new">            component={TelaProdutos}</span>
+<span class="code-new">            options={{ title: &#x27;Produtos&#x27; }}</span>
+<span class="code-new">          /&gt;</span>
+<span class="code-new">          &lt;Stack.Screen</span>
+<span class="code-new">            name=&quot;Cliente&quot;</span>
+<span class="code-new">            component={TelaCliente}</span>
+<span class="code-new">            options={{ title: &#x27;Dados do cliente&#x27; }}</span>
+<span class="code-new">          /&gt;</span>
+<span class="code-new">          &lt;Stack.Screen</span>
+<span class="code-new">            name=&quot;Endereco&quot;</span>
+<span class="code-new">            component={TelaEndereco}</span>
+<span class="code-new">            options={{ title: &#x27;Endereço de entrega&#x27; }}</span>
+<span class="code-new">          /&gt;</span>
+<span class="code-new">          &lt;Stack.Screen</span>
+<span class="code-new">            name=&quot;Revisao&quot;</span>
+<span class="code-new">            component={TelaRevisao}</span>
+<span class="code-new">            options={{ title: &#x27;Revisão do pedido&#x27; }}</span>
+<span class="code-new">          /&gt;</span>
+<span class="code-new">        &lt;/Stack.Navigator&gt;</span>
+<span class="code-new">      &lt;/Pedido&gt;</span>
+<span class="code-new">    &lt;/NavigationContainer&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>NavigationContainer envolve a árvore de navegação. Stack.Navigator organiza a pilha de telas. Cada Stack.Screen associa um nome de rota a um componente de tela.</p><div class="rn-flow"><span>Produtos → Cliente → Endereco → Revisao</span></div></section><section class="rn-step rn-action" id="6-a-primeira-tela-mantem-a-identidade-e-os-produtos"><span class="rn-step-label">Construa e confira</span><h2>6. A primeira tela mantém a identidade e os produtos</h2><p>A primeira etapa precisa mostrar a empresa e permitir que o cliente escolha os produtos. No final, o botão Continuar leva para os dados do cliente.</p><div class="code-card">
+          <div class="code-card-head"><span>screens/TelaProdutos.js - arquivo novo; digite todo o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import {</span>
+<span class="code-new">  View,</span>
+<span class="code-new">  ScrollView,</span>
+<span class="code-new">  Button,</span>
+<span class="code-new">  StyleSheet,</span>
+<span class="code-new">} from &#x27;react-native&#x27;;</span>
+
+<span class="code-new">import IdentidadeEmpresa from &#x27;../components/IdentidadeEmpresa&#x27;;</span>
+<span class="code-new">import Produtos from &#x27;../components/Produtos&#x27;;</span>
+<span class="code-new">import { ContextoPedido } from &#x27;../components/Pedido&#x27;;</span>
+
+<span class="code-new">export default function TelaProdutos({ navigation }) {</span>
+<span class="code-new">  const pedido = React.useContext(ContextoPedido);</span>
+
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;</span>
+<span class="code-new">      &lt;View style={styles.cartao}&gt;</span>
+<span class="code-new">        &lt;IdentidadeEmpresa /&gt;</span>
+<span class="code-new">        &lt;Produtos</span>
+<span class="code-new">          produtos={pedido.produtos}</span>
+<span class="code-new">          itensPedido={pedido.itensPedido}</span>
+<span class="code-new">          onAtualizarItens={pedido.setItensPedido}</span>
+<span class="code-new">        /&gt;</span>
+
+<span class="code-new">        &lt;View style={styles.acoes}&gt;</span>
+<span class="code-new">          &lt;Button</span>
+<span class="code-new">            title=&quot;Continuar&quot;</span>
+<span class="code-new">            onPress={() =&gt; navigation.navigate(&#x27;Cliente&#x27;)}</span>
+<span class="code-new">          /&gt;</span>
+<span class="code-new">        &lt;/View&gt;</span>
+<span class="code-new">      &lt;/View&gt;</span>
+<span class="code-new">    &lt;/ScrollView&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span>
+<span class="code-new">const styles = StyleSheet.create({</span>
+<span class="code-new">  conteudo: {</span>
+<span class="code-new">    padding: 16,</span>
+<span class="code-new">    backgroundColor: &#x27;#eef3f7&#x27;,</span>
+<span class="code-new">    flexGrow: 1,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  cartao: {</span>
+<span class="code-new">    backgroundColor: &#x27;#ffffff&#x27;,</span>
+<span class="code-new">    borderRadius: 16,</span>
+<span class="code-new">    padding: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  acoes: {</span>
+<span class="code-new">    marginTop: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">});</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Como TelaProdutos foi registrada no Native Stack, ela recebe navigation diretamente. A chamada navigation.navigate(&#x27;Cliente&#x27;) pede ao navegador que abra a rota Cliente.</p><p>React.useContext(ContextoPedido) recupera a mesma memória que Pedido mantém acima das telas.</p></section><section class="rn-step rn-action" id="7-dados-do-cliente-viram-a-segunda-etapa"><span class="rn-step-label">Construa e confira</span><h2>7. Dados do cliente viram a segunda etapa</h2><p>A segunda tela reutiliza DadosCliente. Não criamos novos estados; ela lê e altera os mesmos valores que já existiam no pedido.</p><div class="code-card">
+          <div class="code-card-head"><span>screens/TelaCliente.js - arquivo novo; digite todo o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import {</span>
+<span class="code-new">  View,</span>
+<span class="code-new">  ScrollView,</span>
+<span class="code-new">  Button,</span>
+<span class="code-new">  StyleSheet,</span>
+<span class="code-new">} from &#x27;react-native&#x27;;</span>
+
+<span class="code-new">import DadosCliente from &#x27;../components/DadosCliente&#x27;;</span>
+<span class="code-new">import { ContextoPedido } from &#x27;../components/Pedido&#x27;;</span>
+
+<span class="code-new">export default function TelaCliente({ navigation }) {</span>
+<span class="code-new">  const pedido = React.useContext(ContextoPedido);</span>
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;</span>
+<span class="code-new">      &lt;View style={styles.cartao}&gt;</span>
+<span class="code-new">        &lt;DadosCliente</span>
+<span class="code-new">          nome={pedido.nome}</span>
+<span class="code-new">          telefone={pedido.telefone}</span>
+<span class="code-new">          onChangeNome={pedido.setNome}</span>
+<span class="code-new">          onChangeTelefone={pedido.setTelefone}</span>
+<span class="code-new">        /&gt;</span>
+
+<span class="code-new">        &lt;View style={styles.acoes}&gt;</span>
+<span class="code-new">          &lt;Button</span>
+<span class="code-new">            title=&quot;Continuar&quot;</span>
+<span class="code-new">            onPress={() =&gt; navigation.navigate(&#x27;Endereco&#x27;)}</span>
+<span class="code-new">          /&gt;</span>
+<span class="code-new">        &lt;/View&gt;</span>
+<span class="code-new">      &lt;/View&gt;</span>
+<span class="code-new">    &lt;/ScrollView&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span>
+
+<span class="code-new">const styles = StyleSheet.create({</span>
+<span class="code-new">  conteudo: {</span>
+<span class="code-new">    padding: 16,</span>
+<span class="code-new">    backgroundColor: &#x27;#eef3f7&#x27;,</span>
+<span class="code-new">    flexGrow: 1,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  cartao: {</span>
+<span class="code-new">    backgroundColor: &#x27;#ffffff&#x27;,</span>
+<span class="code-new">    borderRadius: 16,</span>
+<span class="code-new">    padding: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  acoes: {</span>
+<span class="code-new">    marginTop: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">});</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Depois do preenchimento, Continuar abre a rota Endereco. O botão de voltar do próprio Native Stack também permite retornar à etapa anterior.</p></section><section class="rn-step rn-action" id="8-o-endereco-vira-a-terceira-etapa"><span class="rn-step-label">Construa e confira</span><h2>8. O endereço vira a terceira etapa</h2><p>A terceira tela reaproveita EnderecoEntrega e continua usando os mesmos valores guardados em Pedido.</p><div class="code-card">
+          <div class="code-card-head"><span>screens/TelaEndereco.js - arquivo novo; digite todo o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import {</span>
+<span class="code-new">  View,</span>
+<span class="code-new">  ScrollView,</span>
+<span class="code-new">  Button,</span>
+<span class="code-new">  StyleSheet,</span>
+<span class="code-new">} from &#x27;react-native&#x27;;</span>
+
+<span class="code-new">import EnderecoEntrega from &#x27;../components/EnderecoEntrega&#x27;;</span>
+<span class="code-new">import { ContextoPedido } from &#x27;../components/Pedido&#x27;;</span>
+
+<span class="code-new">export default function TelaEndereco({ navigation }) {</span>
+<span class="code-new">  const pedido = React.useContext(ContextoPedido);</span>
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;</span>
+<span class="code-new">      &lt;View style={styles.cartao}&gt;</span>
+<span class="code-new">        &lt;EnderecoEntrega</span>
+<span class="code-new">          rua={pedido.rua}</span>
+<span class="code-new">          numero={pedido.numero}</span>
+<span class="code-new">          bairro={pedido.bairro}</span>
+<span class="code-new">          complemento={pedido.complemento}</span>
+<span class="code-new">          onChangeRua={pedido.setRua}</span>
+<span class="code-new">          onChangeNumero={pedido.setNumero}</span>
+<span class="code-new">          onChangeBairro={pedido.setBairro}</span>
+<span class="code-new">          onChangeComplemento={pedido.setComplemento}</span>
+<span class="code-new">        /&gt;</span>
+<span class="code-new">        &lt;View style={styles.acoes}&gt;</span>
+<span class="code-new">          &lt;Button</span>
+<span class="code-new">            title=&quot;Revisar pedido&quot;</span>
+<span class="code-new">            onPress={() =&gt; navigation.navigate(&#x27;Revisao&#x27;)}</span>
+<span class="code-new">          /&gt;</span>
+<span class="code-new">        &lt;/View&gt;</span>
+<span class="code-new">      &lt;/View&gt;</span>
+<span class="code-new">    &lt;/ScrollView&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span>
+
+<span class="code-new">const styles = StyleSheet.create({</span>
+<span class="code-new">  conteudo: {</span>
+<span class="code-new">    padding: 16,</span>
+<span class="code-new">    backgroundColor: &#x27;#eef3f7&#x27;,</span>
+<span class="code-new">    flexGrow: 1,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  cartao: {</span>
+<span class="code-new">    backgroundColor: &#x27;#ffffff&#x27;,</span>
+<span class="code-new">    borderRadius: 16,</span>
+<span class="code-new">    padding: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  acoes: {</span>
+<span class="code-new">    marginTop: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">});</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Ao tocar em Revisar pedido, a rota Revisao é aberta.</p></section><section class="rn-step rn-action" id="9-a-revisao-vira-o-destino-do-percurso"><span class="rn-step-label">Construa e confira</span><h2>9. A revisão vira o destino do percurso</h2><p>A quarta tela não cria uma nova versão do pedido. Ela apenas apresenta, novamente, a revisão derivada do estado compartilhado.</p><div class="code-card">
+          <div class="code-card-head"><span>screens/TelaRevisao.js - arquivo novo; digite todo o conteúdo em negrito</span><button class="code-copy" type="button" data-copy-code>Copiar</button></div>
+          <pre><code><span class="code-new">import * as React from &#x27;react&#x27;;</span>
+<span class="code-new">import {</span>
+<span class="code-new">  View,</span>
+<span class="code-new">  ScrollView,</span>
+<span class="code-new">  Button,</span>
+<span class="code-new">  StyleSheet,</span>
+<span class="code-new">} from &#x27;react-native&#x27;;</span>
+
+<span class="code-new">import RevisaoPedido from &#x27;../components/RevisaoPedido&#x27;;</span>
+<span class="code-new">import { ContextoPedido } from &#x27;../components/Pedido&#x27;;</span>
+
+<span class="code-new">export default function TelaRevisao({ navigation }) {</span>
+<span class="code-new">  const pedido = React.useContext(ContextoPedido);</span>
+<span class="code-new">  return (</span>
+<span class="code-new">    &lt;ScrollView contentContainerStyle={styles.conteudo}&gt;</span>
+<span class="code-new">      &lt;View style={styles.cartao}&gt;</span>
+<span class="code-new">        &lt;RevisaoPedido</span>
+<span class="code-new">          produtos={pedido.produtos}</span>
+<span class="code-new">          itensPedido={pedido.itensPedido}</span>
+<span class="code-new">          nome={pedido.nome}</span>
+<span class="code-new">          telefone={pedido.telefone}</span>
+<span class="code-new">          rua={pedido.rua}</span>
+<span class="code-new">          numero={pedido.numero}</span>
+<span class="code-new">          bairro={pedido.bairro}</span>
+<span class="code-new">          complemento={pedido.complemento}</span>
+<span class="code-new">        /&gt;</span>
+<span class="code-new">        &lt;View style={styles.acoes}&gt;</span>
+<span class="code-new">          &lt;Button</span>
+<span class="code-new">            title=&quot;Voltar aos produtos&quot;</span>
+<span class="code-new">            onPress={() =&gt; navigation.navigate(&#x27;Produtos&#x27;)}</span>
+<span class="code-new">          /&gt;</span>
+<span class="code-new">        &lt;/View&gt;</span>
+<span class="code-new">      &lt;/View&gt;</span>
+<span class="code-new">    &lt;/ScrollView&gt;</span>
+<span class="code-new">  );</span>
+<span class="code-new">}</span>
+
+<span class="code-new">const styles = StyleSheet.create({</span>
+<span class="code-new">  conteudo: {</span>
+<span class="code-new">    padding: 16,</span>
+<span class="code-new">    backgroundColor: &#x27;#eef3f7&#x27;,</span>
+<span class="code-new">    flexGrow: 1,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  cartao: {</span>
+<span class="code-new">    backgroundColor: &#x27;#ffffff&#x27;,</span>
+<span class="code-new">    borderRadius: 16,</span>
+<span class="code-new">    padding: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">  acoes: {</span>
+<span class="code-new">    marginTop: 20,</span>
+<span class="code-new">  },</span>
+<span class="code-new">});</span></code></pre>
+        </div>
+        <p class="code-legend">Linhas destacadas são as que entram ou mudam nesta etapa</p><p>Por enquanto, a última ação permite voltar aos produtos. Ainda não existe envio real do pedido. Esse comportamento ficará para a próxima necessidade.</p></section><section class="rn-step rn-action" id="10-faca-o-teste-que-realmente-importa"><span class="rn-step-label">Construa e confira</span><h2>10. Faça o teste que realmente importa</h2><p class="rn-list-line"><span aria-hidden="true">1.</span>Na tela Produtos, escolha água e gás e ajuste quantidades.</p><p class="rn-list-line"><span aria-hidden="true">2.</span>Toque em Continuar.</p><p class="rn-list-line"><span aria-hidden="true">3.</span>Preencha nome e telefone.</p><p class="rn-list-line"><span aria-hidden="true">4.</span>Avance para Endereço e preencha rua, número e bairro.</p><p class="rn-list-line"><span aria-hidden="true">5.</span>Avance para Revisão.</p><p class="rn-list-line"><span aria-hidden="true">6.</span>Confirme que itens, quantidades, total, cliente e endereço continuam corretos.</p><p class="rn-list-line"><span aria-hidden="true">7.</span>Use o botão de voltar do cabeçalho para retornar a uma etapa anterior.</p><p class="rn-list-line"><span aria-hidden="true">8.</span>Altere um dado e avance novamente.</p><p class="rn-list-line"><span aria-hidden="true">9.</span>Confirme que a revisão mostra a alteração sem perder as outras informações.</p><div class="rn-note concept"><p>Trocar de tela não pode significar perder o pedido.</p></div></section><section class="rn-step rn-observe" id="11-o-que-realmente-aprendemos-sobre-navegacao"><span class="rn-step-label">Construa e confira</span><h2>11. O que realmente aprendemos sobre navegação</h2><p class="rn-list-line"><span aria-hidden="true">•</span>uma rota representa uma tela registrada no navegador;</p><p class="rn-list-line"><span aria-hidden="true">•</span>NavigationContainer mantém a árvore de navegação;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Native Stack organiza o histórico das telas visitadas;</p><p class="rn-list-line"><span aria-hidden="true">•</span>navigation.navigate abre uma rota pelo nome;</p><p class="rn-list-line"><span aria-hidden="true">•</span>o histórico permite voltar para a tela anterior;</p><p class="rn-list-line"><span aria-hidden="true">•</span>estado e navegação são problemas diferentes: a tela pode mudar enquanto os dados permanecem;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Context permite que telas diferentes consultem e alterem a mesma memória do pedido.</p><p>O mais importante não é decorar os nomes. É perceber por que a aplicação precisou de um caminho entre etapas sem perder o que já havia sido preenchido.</p></section><section class="rn-step rn-action" id="12-estrutura-do-projeto-ao-final-do-capitulo"><span class="rn-step-label">Construa e confira</span><h2>12. Estrutura do projeto ao final do capítulo</h2><div class="rn-note concept"><p>App.js<br />assets/<br />santa-filomena.png<br />components/<br />DadosCliente.js<br />EnderecoEntrega.js<br />IdentidadeEmpresa.js<br />Pedido.js<br />Produto.js<br />Produtos.js<br />RevisaoPedido.js<br />screens/<br />TelaProdutos.js<br />TelaCliente.js<br />TelaEndereco.js<br />TelaRevisao.js</p></div></section><section class="rn-step rn-observe" id="13-confira-antes-de-encerrar"><span class="rn-step-label">Construa e confira</span><h2>13. Confira antes de encerrar</h2><p class="rn-list-line"><span aria-hidden="true">•</span>App.js registra quatro rotas no Native Stack.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Pedido.js continua sendo o dono do estado compartilhado.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A pasta screens separa telas completas de componentes reutilizáveis.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Produtos aparece na primeira etapa.</p><p class="rn-list-line"><span aria-hidden="true">•</span>DadosCliente aparece na segunda etapa.</p><p class="rn-list-line"><span aria-hidden="true">•</span>EnderecoEntrega aparece na terceira etapa.</p><p class="rn-list-line"><span aria-hidden="true">•</span>RevisaoPedido aparece na quarta etapa.</p><p class="rn-list-line"><span aria-hidden="true">•</span>Avançar e voltar não apagam os dados já preenchidos.</p><p class="rn-list-line"><span aria-hidden="true">•</span>A revisão continua refletindo o estado atual do pedido.</p></section><section class="rn-step rn-checkpoint" id="14-checkpoint-13-o-pedido-ganha-um-caminho"><span class="rn-step-label">Checkpoint</span><h2>14. Checkpoint 13 - O pedido ganha um caminho</h2><p>Ao concluir as conferências acima, preserve este estado como referência do checkpoint do capítulo.</p><p class="rn-list-line"><span aria-hidden="true">•</span>App.js com NavigationContainer e Native Stack;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Pedido.js disponibilizando ContextoPedido;</p><p class="rn-list-line"><span aria-hidden="true">•</span>quatro telas dentro de screens;</p><p class="rn-list-line"><span aria-hidden="true">•</span>componentes de produtos, cliente, endereço e revisão preservados;</p><p class="rn-list-line"><span aria-hidden="true">•</span>asset oficial santa-filomena.png;</p><p class="rn-list-line"><span aria-hidden="true">•</span>dependências de React Navigation registradas no projeto;</p><p class="rn-list-line"><span aria-hidden="true">•</span>Snack correspondente e screenshots do percurso validado.</p></section><section class="rn-step rn-action" id="15-o-proximo-problema-ja-apareceu"><span class="rn-step-label">Construa e confira</span><h2>15. O próximo problema já apareceu</h2><p>O cliente agora consegue percorrer o pedido em etapas, revisar tudo e voltar para corrigir informações.</p><p>Mas existe uma diferença decisiva entre montar um pedido na tela e fazer esse pedido chegar à Santa Filomena Água &amp; Gás.</p><div class="rn-note concept"><p>O pedido está pronto no aplicativo. Para onde ele vai quando o cliente confirmar?</p></div><p>Essa pergunta abre o último capítulo: o aplicativo precisará enviar dados para fora dele, receber uma resposta e informar ao usuário se a operação deu certo.</p></section>
+      <section class="rn-step rn-complete-panel"><div><h2>Capítulo 13 concluído</h2><p>Marque a conclusão somente depois de copiar o código, observar a prévia e realizar os testes indicados.</p></div><button class="rn-complete-button" type="button" data-complete-chapter>Marcar capítulo como concluído</button></section>
+      <nav class="rn-lesson-nav" aria-label="Navegação entre capítulos"><a href="capitulo-12.html"><small>Capítulo anterior</small><strong>Capítulo 12</strong></a><a href="capitulo-14.html"><small>Próximo capítulo</small><strong>Capítulo 14</strong></a></nav>
+    </article>
+  </main>
+  <footer class="footer"><p>Academia Mundo bit Byte — entender, experimentar, programar e aplicar.</p></footer>
+  <script src="react-native-do-zero.js"></script>
+</body>
+</html>
