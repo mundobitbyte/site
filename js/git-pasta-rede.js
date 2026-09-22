@@ -52,17 +52,26 @@
   }
 
   const g4 = gitStep(4);
-  if (g4 && !g4.content.includes('detected dubious ownership')) {
+  if (g4 && !g4.content.includes('No Git CMD, atenção às aspas')) {
     g4.content = g4.content.replace(
-      '<pre class="command">git status</pre>\n        <p><span class="inline-code">horario.txt</span> deverá aparecer como <strong>untracked</strong>: o arquivo existe, mas ainda não foi incluído em nenhum commit.</p>',
+      /<pre class="command">git status<\/pre>[\s\S]*?<p>Depois disso, <span class="inline-code">horario\.txt<\/span> deverá aparecer como <strong>untracked<\/strong>: o arquivo existe, mas ainda não foi incluído em nenhum commit\.<\/p>/,
       `<pre class="command">git status</pre>
         <h3>Se o Git bloquear uma pasta da rede por segurança</h3>
-        <p>Na pasta do usuário local, normalmente o <span class="inline-code">git status</span> seguirá direto. Em algumas redes, porém, o Git pode mostrar uma mensagem parecida com <span class="inline-code">detected dubious ownership in repository</span>. Isso significa que o Git não conseguiu confirmar que a pasta pertence ao mesmo usuário que está executando o comando.</p>
-        <p><strong>Somente se esta for a sua pasta de projeto e você confiar nela</strong>, registre especificamente a pasta atual como segura:</p>
-        <pre class="command">git config --global --add safe.directory "%CD%"\ngit status</pre>
-        <p><span class="inline-code">safe.directory</span> informa ao Git que aquele diretório é confiável; <span class="inline-code">--add</span> acrescenta essa pasta à lista; <span class="inline-code">%CD%</span> representa o caminho em que o CMD está neste momento.</p>
-        <div class="danger-box"><strong>Não libere todas as pastas indiscriminadamente.</strong> Evite usar <span class="inline-code">safe.directory *</span>. Adicione somente o repositório que você reconhece e pretende usar.</div>
-        <p>Depois disso, <span class="inline-code">horario.txt</span> deverá aparecer como <strong>untracked</strong>: o arquivo existe, mas ainda não foi incluído em nenhum commit.</p>`
+        <p>Na pasta do usuário local, normalmente o <span class="inline-code">git status</span> seguirá direto. Em algumas redes, porém, o Git pode mostrar <span class="inline-code">fatal: detected dubious ownership in repository</span>. Isso significa que o Git não conseguiu confirmar que o repositório pertence ao mesmo usuário que está executando o comando.</p>
+        <p>Quando isso acontece em uma pasta de rede mapeada, o CMD pode mostrar algo como <span class="inline-code">Z:\\...</span>, mas o Git pode identificar a mesma pasta pelo endereço de rede, por exemplo <span class="inline-code">//servidor/compartilhamento/...</span>. Por isso, <strong>use o caminho que o próprio Git mostrou na mensagem de erro</strong>.</p>
+        <div class="note-box"><strong>No Git CMD, atenção às aspas.</strong> O Git pode sugerir o comando usando aspas simples. No CMD do Windows, as aspas simples são gravadas como parte do valor e podem provocar o aviso <span class="inline-code">safe.directory ... not absolute</span>. No Git CMD/CMD, troque as aspas simples por <strong>aspas duplas</strong>.</div>
+        <p>Exemplo genérico da correção no Git CMD:</p>
+        <pre class="command">git config --global --add safe.directory "%(prefix)///servidor/compartilhamento/seuUsuario/meus-repositorios/site-cafe-aurora"\ngit status</pre>
+        <p><span class="inline-code">safe.directory</span> cria uma exceção de confiança para <strong>esse repositório específico</strong>. O trecho <span class="inline-code">%(prefix)///...</span> pode aparecer na própria recomendação do Git para caminhos UNC de rede.</p>
+        <div class="danger-box"><strong>Autorize somente uma pasta que você reconheça e em que confie.</strong> Não use <span class="inline-code">safe.directory *</span> como atalho, pois isso desativa a verificação para todos os repositórios.</div>
+
+        <h3>Se você já copiou o comando com aspas simples</h3>
+        <p>Se aparecer um aviso parecido com <span class="inline-code">safe.directory ''...'' not absolute</span>, primeiro confira o que ficou gravado:</p>
+        <pre class="command">git config --global --get-all safe.directory</pre>
+        <p>Se essa foi a <strong>única exceção safe.directory</strong> que você adicionou, pode limpar a lista e cadastrar novamente a entrada correta:</p>
+        <pre class="command">git config --global --unset-all safe.directory\ngit config --global --add safe.directory "CAMINHO-EXATO-MOSTRADO-PELO-GIT"\ngit status</pre>
+        <div class="note-box"><strong>Se já existirem outras pastas seguras na lista, não use --unset-all.</strong> Nesse caso, edite somente a entrada incorreta com <span class="inline-code">git config --global --edit</span> e preserve as demais.</div>
+        <p>Depois que o diretório correto estiver autorizado, <span class="inline-code">horario.txt</span> deverá aparecer como <strong>untracked</strong>: o arquivo existe, mas ainda não foi incluído em nenhum commit.</p>`
     );
   }
 })();
