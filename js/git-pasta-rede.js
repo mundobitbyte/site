@@ -55,19 +55,16 @@
         <div class="danger-box"><strong>Não execute git init em C:\\Users\\seuUsuario ou em outra pasta apenas porque o CMD abriu ali.</strong> O <span class="inline-code">git init</span> transforma a pasta atual em repositório. Primeiro entre em <span class="inline-code">site-cafe-aurora</span>; só depois iniciaremos o Git.</div>
 
         <h3>5. Se o Git bloquear o repositório da rede</h3>
-        <p>Quando você começar a usar Git nessa pasta, ele pode apresentar uma mensagem com <span class="inline-code">detected dubious ownership</span> ou mencionar <span class="inline-code">safe.directory</span>. Isso acontece porque o Git faz uma verificação de segurança e, em alguns caminhos de rede, não consegue confirmar automaticamente a propriedade do repositório.</p>
-        <div class="concept-box"><strong>Quando esse erro pode aparecer?</strong> Se você estiver criando o projeto agora, primeiro iniciaremos o repositório com <span class="inline-code">git init</span> no tópico seguinte. Depois, ao executar um comando como <span class="inline-code">git status</span>, o Git poderá fazer essa verificação e apresentar o aviso. Se a pasta da rede já contiver um repositório Git criado anteriormente, o aviso pode aparecer assim que você executar um comando Git nela.</div>
-        <p><span class="inline-code">git init</span> não é o erro: ele apenas cria o repositório. Se o aviso aparecer quando o Git começar a trabalhar nesse repositório, use o caminho UNC real da sua pasta na rede e escreva esse caminho com barras <span class="inline-code">/</span>, mesmo no Windows.</p>
-        <p>Procedimento validado:</p>
-        <pre class="command">git config --global --unset-all safe.directory\n\ngit config --global --add safe.directory "//10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora"\n\ngit status</pre>
-        <div class="mini-grid">
-          <div class="mini-card"><strong>1. Limpar</strong><br><span class="inline-code">--unset-all safe.directory</span> remove os registros anteriores de diretórios autorizados.</div>
-          <div class="mini-card"><strong>2. Autorizar</strong><br><span class="inline-code">--add safe.directory</span> autoriza somente o repositório indicado.</div>
-          <div class="mini-card"><strong>3. Conferir</strong><br><span class="inline-code">git status</span> confirma se o Git reconheceu corretamente o repositório.</div>
-        </div>
-        <div class="note-box"><strong>Atenção ao primeiro comando.</strong> <span class="inline-code">--unset-all</span> remove todas as entradas <span class="inline-code">safe.directory</span> do seu usuário. Use-o quando as autorizações anteriores puderem ser descartadas. Se você precisa preservar outros repositórios já autorizados, não limpe a lista inteira.</div>
-        <div class="note-box"><strong>Substitua nome.sobrenome pela sua pasta na rede.</strong> No comando do Git, mantenha o caminho UNC com barras <span class="inline-code">/</span>: <span class="inline-code">//servidor/pasta/...</span>.</div>
-        <div class="danger-box"><strong>Não use safe.directory "*".</strong> Isso autorizaria todos os diretórios e reduziria a proteção de segurança. Autorize somente o repositório de que você realmente precisa.</div>
+        <p>Depois que o repositório for criado, um comando como <span class="inline-code">git status</span> pode apresentar <span class="inline-code">detected dubious ownership</span> e, logo abaixo, o próprio Git mostra o comando para autorizar exatamente aquela pasta.</p>
+        <div class="concept-box"><strong>Faça assim:</strong> copie o comando que o próprio Git sugerir. No Git CMD/CMD do Windows, se ele vier entre aspas simples <span class="inline-code">'...'</span>, troque <strong>somente as aspas</strong> por aspas duplas <span class="inline-code">"..."</span>. Mantenha o restante exatamente como apareceu, inclusive <span class="inline-code">%(prefix)///</span> quando estiver presente.</div>
+        <p>Para o nosso exemplo, o Git pode mostrar algo parecido com:</p>
+        <pre class="command">git config --global --add safe.directory '%(prefix)///10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora'</pre>
+        <p>No Git CMD, execute o mesmo comando trocando apenas as aspas:</p>
+        <pre class="command">git config --global --add safe.directory "%(prefix)///10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora"</pre>
+        <p>Depois, tente novamente:</p>
+        <pre class="command">git status</pre>
+        <div class="note-box"><strong>Não digite o caminho de memória.</strong> No computador do aluno, o Git mostrará o caminho real daquele repositório. Copie a sugestão exibida e preserve o <span class="inline-code">%(prefix)</span> se ele aparecer. No exemplo do site, <span class="inline-code">nome.sobrenome</span> representa a pasta de rede de cada usuário.</div>
+        <div class="danger-box"><strong>Não use safe.directory "*".</strong> Isso autorizaria todos os diretórios e reduziria a proteção de segurança. Autorize somente o repositório indicado pelo próprio Git.</div>
         <div class="note-box"><strong>Se você escolheu a rede, não use popd agora.</strong> Continue para o próximo tópico dentro da pasta <span class="inline-code">site-cafe-aurora</span>. Use <span class="inline-code">popd</span> somente quando terminar o trabalho e quiser encerrar esse acesso temporário. Se fechar o CMD e voltar outro dia, use novamente <span class="inline-code">pushd</span> para entrar na pasta do projeto.</div>`
       );
   }
@@ -86,7 +83,7 @@
     g4.content = g4.content.replace(
       /<pre class="command">git status<\/pre>[\s\S]*?<p><span class="inline-code">horario\.txt<\/span> deverá aparecer como <strong>untracked<\/strong>: o arquivo existe, mas ainda não foi incluído em nenhum commit\.<\/p>/,
       `<pre class="command">git status</pre>
-        <div class="note-box"><strong>Se estiver usando uma pasta de rede</strong> e aparecer <span class="inline-code">detected dubious ownership</span> ou uma mensagem sobre <span class="inline-code">safe.directory</span>, volte ao <strong>Git → 3 Localizar</strong> e aplique o procedimento de autorização específica explicado ali.</div>
+        <div class="note-box"><strong>Se estiver usando uma pasta de rede</strong> e aparecer <span class="inline-code">detected dubious ownership</span> ou uma mensagem sobre <span class="inline-code">safe.directory</span>, volte ao <strong>Git → 3 Localizar</strong> e siga a orientação de copiar o comando sugerido pelo próprio Git, trocando apenas as aspas simples por aspas duplas no Git CMD/CMD.</div>
         <p>Depois que o Git reconhecer corretamente o repositório, <span class="inline-code">horario.txt</span> deverá aparecer como <strong>untracked</strong>: o arquivo existe, mas ainda não foi incluído em nenhum commit.</p>`
     );
   }
