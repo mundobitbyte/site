@@ -144,7 +144,11 @@ function lessonFooter(id){
   const prev = activeSteps[index - 1];
   const next = activeSteps[index + 1];
   const lastLabel = activeModule === 'git' ? 'Parte Git concluída' : activeModule === 'github' ? 'GitHub concluído' : 'Exercícios concluídos';
-  return \`<div class="lesson-footer"><button type="button" \${prev ? \`onclick="showStep('\\\${prev.id}')"\` : 'disabled'}>← Anterior</button><button type="button" \${next ? \`onclick="showStep('\\\${next.id}')"\` : 'disabled'}>\${next ? 'Próxima →' : lastLabel}</button></div>\`;
+  return \`
+    <div class="lesson-footer">
+      <button type="button" \${prev ? \`onclick="showStep('\\\${prev.id}')"\` : 'disabled'}>← Anterior</button>
+      <button type="button" \${next ? \`onclick="showStep('\\\${next.id}')"\` : 'disabled'}>\${next ? 'Próxima →' : lastLabel}</button>
+    </div>\`;
 }
 
 window.setModule = setModule;
@@ -310,12 +314,17 @@ for (const group of groups) {
   if (!same) equivalent = false;
 }
 
-const expected = {gitSteps:12, githubSteps:10, exerciseSteps:22};
+const expected = {gitSteps:12, githubSteps:10, exerciseSteps:23};
 for (const [group, count] of Object.entries(expected)) {
   if (canonical[group].length !== count) {
     equivalent = false;
     comparison[group].countError = `Esperado ${count}, encontrado ${canonical[group].length}`;
   }
+}
+const numberedExercises = canonical.exerciseSteps.filter(step => /^e\d+$/.test(String(step.id))).length;
+if (numberedExercises !== 22) {
+  equivalent = false;
+  comparison.exerciseSteps.numberedError = `Esperados 22 exercícios numerados; encontrados ${numberedExercises}.`;
 }
 
 const allText = groups.flatMap(group => canonical[group]).map(step => `${step.menu || ''}\n${step.title || ''}\n${step.objective || ''}\n${step.content || ''}`).join('\n');
