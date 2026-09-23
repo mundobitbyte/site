@@ -46,11 +46,13 @@ pushd \\<<<SERVIDOR>>>\<<<PASTA>>>\<<<SEU-USUARIO>>>
 
 Exemplo concreto de entrada na pasta-base da rede:
 
-pushd \\10.66.53.1\Publica\mtec2026\caio.goncalves\P.A
+pushd \\10.66.53.1\Publica\mtec2025\nome.sobrenome
 
 Se as pastas já existirem e você quiser entrar diretamente no projeto:
 
-pushd \\10.66.53.1\Publica\mtec2026\caio.goncalves\P.A\meus-repositorios\site-cafe-aurora
+pushd \\10.66.53.1\Publica\mtec2025\nome.sobrenome\meus-repositorios\site-cafe-aurora
+
+Substitua nome.sobrenome pelo nome da sua pasta na rede.
 
 Neste primeiro percurso, use a pasta-base e depois crie as pastas abaixo.
 
@@ -68,8 +70,31 @@ ANTES DE CONTINUAR:
 - se aparecer apenas C:\Users\seuUsuario, você ainda não entrou no projeto;
 - NÃO execute git init fora da pasta site-cafe-aurora.
 
+SE VOCÊ ESCOLHEU A PASTA NA REDE:
+Quando o Git começar a trabalhar nesse repositório, ele pode apresentar detected dubious ownership ou uma mensagem sobre safe.directory.
+Isso acontece porque o Git faz uma verificação de segurança e pode não reconhecer automaticamente a propriedade de alguns caminhos de rede.
+
+Se esse erro aparecer depois do git init, use o caminho UNC real com barras /, mesmo no Windows.
+
+Procedimento validado:
+
+git config --global --unset-all safe.directory
+
+git config --global --add safe.directory "//10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora"
+
+git status
+
+O que cada comando faz:
+- --unset-all safe.directory remove os registros anteriores de diretórios autorizados;
+- --add safe.directory autoriza especificamente o repositório indicado;
+- git status confirma se o Git reconheceu corretamente o repositório;
+- substitua nome.sobrenome pelo nome da sua pasta na rede;
+- no caminho usado pelo Git, mantenha as barras /;
+- NÃO use safe.directory "*". Autorize somente o repositório necessário.
+
 Resultado esperado:
 - Você está dentro de site-cafe-aurora.
+- Se houve bloqueio de segurança na rede, o repositório específico foi autorizado.
 
 ============================================================
 CHECKPOINT 02 — INICIAR O REPOSITÓRIO
@@ -90,52 +115,7 @@ type horario.txt
 
 git status
 
-ATENÇÃO — SOMENTE SE APARECER:
-fatal: detected dubious ownership in repository
-
-Em uma unidade de rede mapeada, o CMD pode mostrar algo como Y:\..., mas o Git pode identificar o mesmo repositório como //10.66.53.1/Publica/...
-Use o caminho EXATO mostrado pelo próprio Git.
-
-NO GIT CMD:
-Se o Git sugerir o comando com ASPAS SIMPLES, troque por ASPAS DUPLAS.
-
-Exemplo:
-
-Git mostra o repositório:
-//10.66.53.1/Publica/mtec2026/caio.goncalves/P.A/meus-repositorios/site-cafe-aurora
-
-Use:
-
-git config --global --add safe.directory "%(prefix)///10.66.53.1/Publica/mtec2026/caio.goncalves/P.A/meus-repositorios/site-cafe-aurora"
-git status
-
-SE TAMBÉM APARECER:
-warning: safe.directory '...' not absolute
-
-isso normalmente indica uma entrada antiga ou incorreta na configuração global.
-Veja o que está gravado:
-
-git config --global --get-all safe.directory
-
-Se a lista mostrar somente entradas antigas ou incorretas que você NÃO precisa preservar:
-
-git config --global --unset-all safe.directory
-
-Depois cadastre somente o repositório atual:
-
-git config --global --add safe.directory "<<<CAMINHO EXATO MOSTRADO PELO GIT>>>"
-git config --global --get-all safe.directory
-git status
-
-Se houver outras entradas corretas na lista, NÃO use --unset-all. Use:
-
-git config --global --edit
-
-Remova somente a linha incorreta e preserve as demais.
-
-IMPORTANTE:
-Não use safe.directory * como atalho.
-Autorize somente repositórios que você reconheça e em que confie.
+Se estiver usando a pasta na rede e aparecer detected dubious ownership ou safe.directory, volte ao CHECKPOINT 01 e aplique o procedimento validado antes de continuar.
 
 SE VOCÊ EXECUTOU git init NA PASTA ERRADA:
 
