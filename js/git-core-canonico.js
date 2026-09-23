@@ -65,10 +65,16 @@ function lessonFooter(id){
   const lastLabel = activeModule === 'git' ? 'Parte Git concluída' : activeModule === 'github' ? 'GitHub concluído' : 'Exercícios concluídos';
   return `
     <div class="lesson-footer">
-      <button type="button" ${prev ? `onclick="showStep('\${prev.id}')"` : 'disabled'}>← Anterior</button>
-      <button type="button" ${next ? `onclick="showStep('\${next.id}')"` : 'disabled'}>${next ? 'Próxima →' : lastLabel}</button>
+      <button type="button" ${prev ? `data-step-nav="${prev.id}"` : 'disabled'}>← Anterior</button>
+      <button type="button" ${next ? `data-step-nav="${next.id}"` : 'disabled'}>${next ? 'Próxima →' : lastLabel}</button>
     </div>`;
 }
+
+lesson.addEventListener('click', event => {
+  const button = event.target.closest('[data-step-nav]');
+  if (!button) return;
+  showStep(button.dataset.stepNav);
+});
 
 window.setModule = setModule;
 window.showStep = showStep;
