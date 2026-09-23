@@ -74,7 +74,9 @@ SE VOCÊ ESCOLHEU A PASTA NA REDE:
 Quando o Git começar a trabalhar nesse repositório, ele pode apresentar detected dubious ownership ou uma mensagem sobre safe.directory.
 Isso acontece porque o Git faz uma verificação de segurança e pode não reconhecer automaticamente a propriedade de alguns caminhos de rede.
 
-Se esse erro aparecer depois do git init, use o caminho UNC real com barras /, mesmo no Windows.
+Se você estiver criando o projeto agora, primeiro execute git init no local correto. Depois, ao executar um comando como git status, o Git poderá apresentar esse aviso. Se a pasta da rede já contiver um repositório Git criado anteriormente, o aviso pode aparecer assim que você executar um comando Git nela.
+
+Se isso acontecer, use o caminho UNC real com barras /, mesmo no Windows.
 
 Procedimento validado:
 
@@ -121,43 +123,10 @@ git status
 Se estiver usando a pasta na rede e aparecer detected dubious ownership ou safe.directory, volte ao CHECKPOINT 01 e aplique o procedimento validado antes de continuar.
 
 SE VOCÊ EXECUTOU git init NA PASTA ERRADA:
-
-Não existe um comando git deinit. Em um repositório comum criado com git init, o controle Git fica na pasta interna .git.
-
-Primeiro descubra qual pasta o Git considera a raiz do repositório:
-
-git rev-parse --show-toplevel
-
-Confira com cuidado o caminho mostrado. Entre exatamente nessa pasta e verifique a existência de .git:
-
-dir /a
-
-SOMENTE se tiver certeza de que esse repositório foi criado por engano, no Git CMD/CMD execute:
-
-rmdir /s /q .git
-
-Depois confira:
-
-git status
-
-Resultado esperado nesse caso:
-fatal: not a git repository
-
-Isso significa que a pasta voltou a ser uma pasta comum.
-
-ATENÇÃO:
-- os arquivos comuns da pasta permanecem;
-- o histórico Git local, branches locais, configuração de remoto, área de preparação e demais dados guardados em .git são apagados;
-- se esse histórico existir apenas nesse computador, ele será perdido;
-- um repositório existente no GitHub NÃO é apagado por esse comando;
-- não use rmdir /s /q .git dentro do repositório correto que você pretende continuar versionando.
-
-Exemplo de um erro comum:
-
-C:\Users\lenovo>git init
-
-Se C:\Users\lenovo virou repositório por engano, volte exatamente para essa pasta, confirme .git com dir /a e só então remova .git.
-Depois entre em site-cafe-aurora e execute git init no local correto.
+PARE O CHECKPOINT.
+Não remova a pasta .git enquanto segue esta sequência normal.
+Vá em Comandos → Diagnóstico e consulte "RECUPERAÇÃO — Executei git init na pasta errada".
+Use essa recuperação somente para a pasta que virou repositório por engano. Depois de corrigir o local errado, volte a este checkpoint e continue dentro de site-cafe-aurora.
 
 Depois continue:
 
