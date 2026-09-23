@@ -9,12 +9,14 @@ COMO USAR
 1. Leia cada bloco na ordem.
 2. Copie e cole os comandos no Git CMD.
 3. Sempre que encontrar um trecho entre <<< >>>, pare e substitua pelo valor do seu caso.
-4. Não copie cegamente comandos de HASH, URL ou nome de branch.
+4. Não copie cegamente comandos de HASH, URL, nome de branch ou caminho de rede.
 5. Quando houver uma etapa no navegador, faça essa etapa antes de continuar.
 
 ============================================================
 CHECKPOINT 00 — PREPARAR O GIT
 ============================================================
+
+Abra o Git CMD.
 
 git --version
 
@@ -25,7 +27,7 @@ git config --global user.name
 git config --global user.email
 
 Resultado esperado:
-- Git reconhecido pelo Windows.
+- Git reconhecido.
 - Seu nome e e-mail configurados.
 
 ============================================================
@@ -44,17 +46,11 @@ Formato genérico:
 
 pushd \\<<<SERVIDOR>>>\<<<PASTA>>>\<<<SEU-USUARIO>>>
 
-Exemplo concreto de entrada na pasta-base da rede:
+Exemplo de entrada na pasta-base da rede:
 
 pushd \\10.66.53.1\Publica\mtec2025\nome.sobrenome
 
-Se as pastas já existirem e você quiser entrar diretamente no projeto:
-
-pushd \\10.66.53.1\Publica\mtec2025\nome.sobrenome\meus-repositorios\site-cafe-aurora
-
 Substitua nome.sobrenome pelo nome da sua pasta na rede.
-
-Neste primeiro percurso, use a pasta-base e depois crie as pastas abaixo.
 
 Depois, nas duas opções:
 
@@ -65,41 +61,15 @@ cd site-cafe-aurora
 cd
 dir
 
+No Git CMD, cd sem outro caminho mostra a pasta atual.
+
 ANTES DE CONTINUAR:
 - o caminho atual deve terminar em site-cafe-aurora;
 - se aparecer apenas C:\Users\seuUsuario, você ainda não entrou no projeto;
 - NÃO execute git init fora da pasta site-cafe-aurora.
 
-SE VOCÊ ESCOLHEU A PASTA NA REDE:
-Depois que o repositório for criado, um comando como git status pode apresentar detected dubious ownership e, logo abaixo, o próprio Git mostra o comando para autorizar exatamente aquela pasta.
-
-FAÇA ASSIM:
-1. Copie o comando que o próprio Git sugerir.
-2. No Git CMD/CMD do Windows, se ele vier entre aspas simples '...', troque SOMENTE essas aspas por aspas duplas "...".
-3. Mantenha o restante exatamente como o Git mostrou, inclusive %(prefix)/// quando aparecer.
-4. Execute novamente git status.
-
-Para o nosso exemplo, o Git pode mostrar algo parecido com:
-
-git config --global --add safe.directory '%(prefix)///10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora'
-
-No Git CMD/CMD, execute o mesmo comando trocando apenas as aspas:
-
-git config --global --add safe.directory "%(prefix)///10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora"
-
-Depois:
-
-git status
-
-ATENÇÃO:
-- não digite o caminho de memória: use o caminho real mostrado pelo próprio Git;
-- preserve %(prefix)/// se ele aparecer na sugestão;
-- no exemplo do site, nome.sobrenome representa a pasta de rede de cada usuário;
-- NÃO use safe.directory "*". Autorize somente o repositório indicado pelo próprio Git.
-
-Resultado esperado:
-- Você está dentro de site-cafe-aurora.
-- Se houve bloqueio de segurança na rede, git status passa a reconhecer normalmente o repositório.
+Se você escolheu a rede, apenas continue.
+O possível bloqueio safe.directory será tratado SOMENTE se aparecer depois de git init + git status.
 
 ============================================================
 CHECKPOINT 02 — INICIAR O REPOSITÓRIO
@@ -114,29 +84,60 @@ Só continue se o caminho terminar em site-cafe-aurora.
 Agora:
 
 git init
+git status
 
-echo Sabado: 08:00-18:00 > horario.txt
-type horario.txt
+SE ESTIVER NA REDE E APARECER detected dubious ownership / safe.directory:
+
+1. NÃO monte o caminho manualmente.
+2. Copie o comando que o próprio Git mostrar.
+3. No Git CMD, se o comando vier entre aspas simples '...', troque SOMENTE essas aspas por aspas duplas "...".
+4. Preserve todo o restante, inclusive %(prefix)/// quando aparecer.
+5. Execute novamente git status.
+
+Exemplo do tipo de sugestão que o Git pode mostrar:
+
+git config --global --add safe.directory '%(prefix)///10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora'
+
+No Git CMD, a mesma sugestão fica com aspas duplas:
+
+git config --global --add safe.directory "%(prefix)///10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora"
+
+Depois:
 
 git status
 
-Se estiver usando a pasta na rede e aparecer detected dubious ownership ou safe.directory, volte ao CHECKPOINT 01 e siga a orientação de copiar o comando sugerido pelo próprio Git, trocando apenas as aspas simples por aspas duplas no Git CMD/CMD.
+ATENÇÃO:
+- o exemplo acima NÃO deve ser copiado literalmente se o seu caminho for diferente;
+- use o caminho real mostrado pelo próprio Git;
+- preserve %(prefix)/// se aparecer;
+- não use safe.directory "*";
+- a autorização normalmente fica gravada para aquele repositório;
+- outro repositório em outro caminho da rede pode pedir uma nova autorização.
+
+Só continue quando git status reconhecer normalmente o repositório.
 
 SE VOCÊ EXECUTOU git init NA PASTA ERRADA:
 PARE O CHECKPOINT.
-Não remova a pasta .git enquanto segue esta sequência normal.
-Vá em Comandos → Diagnóstico e consulte "RECUPERAÇÃO — Executei git init na pasta errada".
-Use essa recuperação somente para a pasta que virou repositório por engano. Depois de corrigir o local errado, volte a este checkpoint e continue dentro de site-cafe-aurora.
+Não remova .git enquanto segue a sequência normal.
+Vá em Comandos → Diagnóstico e consulte:
+RECUPERAÇÃO — Executei git init na pasta errada.
 
-Depois continue:
+Agora crie o primeiro arquivo:
+
+echo Sabado: 08:00-18:00 > horario.txt
+type horario.txt
+git status
+
+Depois:
 
 echo teste de horario > rascunho.tmp
+git status
 echo *.tmp > .gitignore
 git status
 
 Resultado esperado:
-- horario.txt aparece como arquivo ainda não registrado.
-- rascunho.tmp deixa de aparecer por causa do .gitignore.
+- horario.txt aparece como arquivo ainda não registrado;
+- rascunho.tmp deixa de aparecer para versionamento por causa do .gitignore.
 
 ============================================================
 CHECKPOINT 03 — PRIMEIROS COMMITS
@@ -174,8 +175,8 @@ git commit -m "Atualiza horario de sabado"
 git status
 
 Resultado esperado:
-- O histórico contém três commits.
-- O último introduziu o horário errado de 20h.
+- o histórico contém três commits;
+- o último introduziu o horário errado de 20h.
 
 ============================================================
 CHECKPOINT 04 — INVESTIGAR O ERRO
@@ -195,7 +196,7 @@ Compare o commit anterior com o commit do erro:
 git diff <<<HASH-ANTES-DO-ERRO>>> <<<HASH-DO-ERRO>>>
 
 Resultado esperado:
-- Você consegue localizar a mudança de 18h para 20h.
+- você consegue localizar a mudança de 18h para 20h.
 
 ============================================================
 CHECKPOINT 05 — CORRIGIR UM COMMIT ERRADO
@@ -211,9 +212,9 @@ git log --oneline
 git status
 
 Resultado esperado:
-- O horário volta para 18h.
-- O commit errado continua no histórico.
-- Um novo commit registra a correção.
+- o horário volta para 18h;
+- o commit errado continua no histórico;
+- um novo commit registra a correção.
 
 ============================================================
 CHECKPOINT 06 — CORRIGIR ANTES DO COMMIT
@@ -241,7 +242,7 @@ git restore avisos.txt
 git status
 
 Resultado esperado:
-- Nenhuma dessas tentativas entra no histórico.
+- nenhuma dessas tentativas entra no histórico.
 
 ============================================================
 CHECKPOINT 07 — FLUXO NORMAL
@@ -285,14 +286,16 @@ git restore --source=<<<HASH-APROVADO>>> -- .
 git status
 git diff
 
-git add -A
+Prepare explicitamente os dois arquivos alterados:
+
+git add horario.txt avisos.txt
 git commit -m "Cancela teste de domingo e retoma versao aprovada"
 git status
 git log --oneline
 
 Resultado esperado:
-- Os arquivos voltam ao conteúdo anterior ao teste.
-- O histórico continua preservado.
+- os arquivos voltam ao conteúdo anterior ao teste;
+- o histórico continua preservado.
 
 ============================================================
 CHECKPOINT 09 — CRIAR UMA BRANCH DE TESTE
@@ -301,7 +304,8 @@ CHECKPOINT 09 — CRIAR UMA BRANCH DE TESTE
 git status
 git branch --show-current
 
-ANOTE o nome mostrado. Neste arquivo chamaremos de <<<BRANCH-PRINCIPAL>>>.
+ANOTE o nome mostrado.
+Neste arquivo chamaremos de <<<BRANCH-PRINCIPAL>>>.
 
 git switch -c teste-reservas
 
@@ -320,7 +324,7 @@ git switch <<<BRANCH-PRINCIPAL>>>
 git branch
 
 Resultado esperado:
-- teste-reservas existe localmente.
+- teste-reservas existe localmente;
 - reservas.txt não faz parte da branch principal.
 
 ============================================================
@@ -345,7 +349,7 @@ git switch <<<BRANCH-PRINCIPAL>>>
 git status
 
 Resultado esperado:
-- Você viu uma versão antiga sem criar commit nem alterar a branch principal.
+- você viu uma versão antiga sem criar commit nem alterar a branch principal.
 
 ============================================================
 CHECKPOINT 11 — CRIAR O REPOSITÓRIO NO GITHUB
@@ -355,9 +359,13 @@ ETAPA NO NAVEGADOR — NÃO É COMANDO.
 
 No GitHub:
 - crie um repositório chamado site-cafe-aurora;
+- para esta prática, escolha Public;
 - deixe-o vazio;
 - não crie README, licença ou outro .gitignore;
 - copie a URL HTTPS.
+
+Em projetos reais, use Public ou Private conforme o que pode ser exposto.
+Repositórios privados podem exigir autenticação na outra cópia.
 
 Volte ao Git CMD:
 
@@ -372,7 +380,7 @@ git branch --show-current
 git push -u origin <<<BRANCH-PRINCIPAL>>>
 
 Resultado esperado:
-- Os commits da branch principal aparecem no GitHub.
+- os commits da branch principal aparecem no GitHub;
 - teste-reservas ainda existe somente no computador original.
 
 ============================================================
@@ -407,8 +415,12 @@ Musica ao vivo: sexta 19h
 Por:
 Musica ao vivo: sexta 19h30
 
-Crie o commit:
+Use a mensagem:
 Corrige horario da musica ao vivo
+
+IMPORTANTE:
+- nesta atividade, faça o commit diretamente na branch principal;
+- não crie uma nova branch pelo navegador.
 
 Volte ao Git CMD:
 
@@ -422,7 +434,7 @@ git log --oneline
 git status
 
 Resultado esperado:
-- O arquivo local passa a mostrar 19h30.
+- o arquivo local passa a mostrar 19h30.
 
 ============================================================
 CHECKPOINT 14 — CLONAR EM OUTRO COMPUTADOR OU OUTRA PASTA
@@ -445,13 +457,15 @@ git remote -v
 git branch -a
 
 Resultado esperado:
-- A nova cópia já conhece origin.
-- Não execute git init depois de clone.
+- a nova cópia já conhece origin;
+- não execute git init depois de clone;
 - teste-reservas ainda não aparece porque ainda não foi publicada.
 
 ============================================================
 CHECKPOINT 15 — A SEGUNDA CÓPIA ENVIA UMA MUDANÇA
 ============================================================
+
+Imagine que algum tempo passou desde o clone.
 
 git status
 git pull
@@ -471,7 +485,11 @@ Se ela estiver no usuário local:
 
 cd /d "%USERPROFILE%\meus-repositorios\site-cafe-aurora"
 
-Se ela estiver na rede, entre novamente com pushd usando o endereço da sua rede e depois chegue até site-cafe-aurora.
+Se ela estiver na rede:
+
+pushd \\10.66.53.1\Publica\mtec2025\nome.sobrenome\meus-repositorios\site-cafe-aurora
+
+Substitua nome.sobrenome pelo nome da sua pasta.
 
 Na cópia original:
 
@@ -479,7 +497,7 @@ type avisos.txt
 git status
 
 Resultado esperado:
-- A linha de retirada ainda NÃO aparece na cópia original.
+- a linha de retirada ainda NÃO aparece na cópia original.
 
 ============================================================
 CHECKPOINT 16 — FETCH E PULL
@@ -495,8 +513,8 @@ git status
 type avisos.txt
 
 Resultado esperado após fetch:
-- O Git sabe que o remoto possui novidade.
-- O arquivo local ainda não mudou.
+- o Git sabe que o remoto possui novidade;
+- o arquivo local ainda não mudou.
 
 Agora:
 
@@ -505,7 +523,7 @@ type avisos.txt
 git status
 
 Resultado esperado após pull:
-- A linha de retirada aparece também na cópia original.
+- a linha de retirada aparece também na cópia original.
 
 ============================================================
 CHECKPOINT 17 — PUBLICAR A BRANCH teste-reservas
@@ -527,19 +545,30 @@ git switch <<<BRANCH-PRINCIPAL>>>
 git status
 
 Resultado esperado:
-- teste-reservas passa a existir também no GitHub.
-- A branch principal ainda não contém reservas.txt.
+- teste-reservas passa a existir também no GitHub;
+- a branch principal ainda não contém reservas.txt.
 
 ============================================================
 CHECKPOINT 18 — INTEGRAR A BRANCH APROVADA
 ============================================================
 
-Na branch principal:
+Confirme a branch:
 
 git status
+git branch --show-current
+
+O nome mostrado deve ser <<<BRANCH-PRINCIPAL>>>.
+Se não for:
+
+git switch <<<BRANCH-PRINCIPAL>>>
+
+Atualize:
+
 git pull
 
-git merge teste-reservas
+Integre a branch sem abrir um editor de mensagem:
+
+git merge --no-edit teste-reservas
 
 type reservas.txt
 git status
@@ -552,8 +581,8 @@ git branch -d teste-reservas
 git push origin --delete teste-reservas
 
 Resultado esperado:
-- reservas.txt faz parte da branch principal.
-- A branch de teste pode ser encerrada sem perder seus commits integrados.
+- reservas.txt faz parte da branch principal;
+- a branch de teste pode ser encerrada sem perder seus commits integrados.
 
 ============================================================
 CHECKPOINT 19 — DIAGNÓSTICO FINAL
@@ -565,11 +594,24 @@ git remote -v
 git log --oneline
 
 Pergunte sempre:
-- Estou na pasta certa?
-- Estou na branch certa?
-- Há alterações locais pendentes?
-- O remoto está configurado corretamente?
-- Quem possui a versão mais nova: meu computador ou o GitHub?
+- estou na pasta certa?
+- estou na branch certa?
+- há alterações locais pendentes?
+- o remoto está configurado corretamente?
+- quem possui a versão mais nova: meu computador ou o GitHub?
+
+Se um push for rejeitado porque o remoto possui commits que sua cópia ainda não integrou:
+
+git status
+git fetch
+git status
+git pull --no-rebase --no-edit
+
+Se concluir sem conflito:
+
+git push
+
+Se houver conflito, pare e resolva-o antes de enviar.
 
 ============================================================
 SE VOCÊ USOU pushd PARA TRABALHAR NA REDE
