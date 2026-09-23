@@ -172,6 +172,13 @@
         const desbloqueadas = core.conquistasDesbloqueadas(curso, snapshot.activities);
         await storage.salvarConquistas(curso, desbloqueadas);
         concluir.textContent = 'Concluída ✓';
+        const indicador = $('.lesson-hero .pill');
+        if (indicador) {
+          indicador.textContent = textoEstado('concluida');
+          indicador.className = 'pill success';
+        }
+        const ponto = $('.lesson-map a.active .lesson-dot');
+        if (ponto) ponto.className = 'lesson-dot concluida';
         feedback.textContent = resultado.modo === 'firebase' ? 'Salvo na nuvem.' : 'Salvo somente neste dispositivo.';
         feedback.className = 'save-feedback saved';
       } catch (error) {
