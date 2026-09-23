@@ -1,7 +1,7 @@
 (() => {
   if (!modules.comandos) return;
 
-  const checkpointUrl = '../assets/git-github-checkpoint-comandos.txt?v=4';
+  const checkpointUrl = '../assets/git-github-checkpoint-comandos.txt?v=5';
   const steps = modules.comandos.steps;
 
   if (!steps.some(step => String(step.id) === 'checkpoint')) {
