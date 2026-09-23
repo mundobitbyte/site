@@ -20,24 +20,23 @@
       <div class="note-box"><strong>Quando usar:</strong> somente se um repositório confiável em sua pasta na rede gerar <span class="inline-code">detected dubious ownership</span> ou uma mensagem sobre <span class="inline-code">safe.directory</span>.</div>
       <div class="command-ref-card">
         <div class="command-ref-head">
-          <span class="cmd-status cmd-edit">⚠ Remove autorizações anteriores</span>
-          <button class="command-copy-btn" type="button" data-rede-copy="git config --global --unset-all safe.directory">Copiar</button>
+          <span class="cmd-status cmd-edit">⚠ Copie a sugestão do Git</span>
         </div>
-        <pre class="command-ref-code"><code>git config --global --unset-all safe.directory</code></pre>
+        <pre class="command-ref-code"><code>git config --global --add safe.directory '%(prefix)///10.66.53.1/Publica/mtec2025/<mark class="cmd-var">nome.sobrenome</mark>/meus-repositorios/site-cafe-aurora'</code></pre>
         <div class="command-ref-body">
-          <p>Remove os registros anteriores de <span class="inline-code">safe.directory</span> do usuário.</p>
+          <p>Esse é o tipo de comando que o próprio Git pode mostrar quando bloquear um repositório da rede.</p>
+          <div class="command-ref-warning"><strong>No Git CMD/CMD do Windows:</strong> copie a sugestão exibida pelo Git e troque somente as aspas simples <span class="inline-code">'...'</span> por aspas duplas <span class="inline-code">"..."</span>. Preserve todo o restante, inclusive <span class="inline-code">%(prefix)///</span> quando ele aparecer.</div>
+          <p class="command-ref-note">No computador real, não digite <span class="inline-code">nome.sobrenome</span> de memória: use o caminho que o próprio Git mostrou para aquele repositório.</p>
         </div>
       </div>
       <div class="command-ref-card">
         <div class="command-ref-head">
-          <span class="cmd-status cmd-edit">⚠ Troque nome.sobrenome</span>
-          <button class="command-copy-btn" type="button" data-rede-copy='git config --global --add safe.directory "//10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora"'>Copiar</button>
+          <span class="cmd-status cmd-ready">✓ Exemplo para Git CMD</span>
+          <button class="command-copy-btn" type="button" data-rede-copy='git config --global --add safe.directory "%(prefix)///10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora"'>Copiar</button>
         </div>
-        <pre class="command-ref-code"><code>git config --global --add safe.directory "//10.66.53.1/Publica/mtec2025/<mark class="cmd-var">nome.sobrenome</mark>/meus-repositorios/site-cafe-aurora"</code></pre>
+        <pre class="command-ref-code"><code>git config --global --add safe.directory "%(prefix)///10.66.53.1/Publica/mtec2025/<mark class="cmd-var">nome.sobrenome</mark>/meus-repositorios/site-cafe-aurora"</code></pre>
         <div class="command-ref-body">
-          <p>Autoriza especificamente o repositório indicado na pasta de rede.</p>
-          <div class="command-ref-warning"><strong>Antes de executar:</strong> substitua <span class="inline-code">nome.sobrenome</span> pelo nome da sua pasta na rede.</div>
-          <p class="command-ref-note">No Git, escreva o caminho UNC com barras <span class="inline-code">/</span>, mesmo no Windows.</p>
+          <p>É a mesma sugestão do Git, apenas com aspas duplas para o Git CMD/CMD.</p>
         </div>
       </div>
       <div class="command-ref-card">
@@ -47,10 +46,10 @@
         </div>
         <pre class="command-ref-code"><code>git status</code></pre>
         <div class="command-ref-body">
-          <p>Confirma se o Git reconheceu corretamente o repositório depois da autorização.</p>
+          <p>Executado novamente depois da autorização, confirma se o Git passou a reconhecer normalmente o repositório.</p>
         </div>
       </div>
-      <div class="danger-box"><strong>Não use safe.directory "*".</strong> Autorizar todos os diretórios reduz a proteção de segurança. Limite a exceção ao repositório necessário.</div>`;
+      <div class="danger-box"><strong>Não use safe.directory "*".</strong> Autorizar todos os diretórios reduz a proteção de segurança. Autorize somente o repositório indicado pelo próprio Git.</div>`;
   }
 
   const lesson = document.getElementById('lesson');
