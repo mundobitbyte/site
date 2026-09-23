@@ -62,7 +62,13 @@ function lessonFooter(id){
   const index = activeSteps.findIndex(item => String(item.id) === String(id));
   const prev = activeSteps[index - 1];
   const next = activeSteps[index + 1];
-  const lastLabel = activeModule === 'git' ? 'Parte Git concluída' : activeModule === 'github' ? 'GitHub concluído' : 'Exercícios concluídos';
+  const completionLabels = {
+    git: 'Parte Git concluída',
+    github: 'GitHub concluído',
+    exercicios: 'Exercícios concluídos',
+    comandos: 'Comandos concluídos'
+  };
+  const lastLabel = completionLabels[activeModule] || 'Módulo concluído';
   return `
     <div class="lesson-footer">
       <button type="button" ${prev ? `data-step-nav="${prev.id}"` : 'disabled'}>← Anterior</button>
