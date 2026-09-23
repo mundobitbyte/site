@@ -56,7 +56,8 @@
 
         <h3>5. Se o Git bloquear o repositório da rede</h3>
         <p>Quando você começar a usar Git nessa pasta, ele pode apresentar uma mensagem com <span class="inline-code">detected dubious ownership</span> ou mencionar <span class="inline-code">safe.directory</span>. Isso acontece porque o Git faz uma verificação de segurança e, em alguns caminhos de rede, não consegue confirmar automaticamente a propriedade do repositório.</p>
-        <p>Se isso ocorrer <strong>depois de você executar git init no tópico seguinte</strong>, use o caminho UNC real da sua pasta na rede e escreva esse caminho com barras <span class="inline-code">/</span>, mesmo no Windows.</p>
+        <div class="concept-box"><strong>Quando esse erro pode aparecer?</strong> Se você estiver criando o projeto agora, primeiro iniciaremos o repositório com <span class="inline-code">git init</span> no tópico seguinte. Depois, ao executar um comando como <span class="inline-code">git status</span>, o Git poderá fazer essa verificação e apresentar o aviso. Se a pasta da rede já contiver um repositório Git criado anteriormente, o aviso pode aparecer assim que você executar um comando Git nela.</div>
+        <p><span class="inline-code">git init</span> não é o erro: ele apenas cria o repositório. Se o aviso aparecer quando o Git começar a trabalhar nesse repositório, use o caminho UNC real da sua pasta na rede e escreva esse caminho com barras <span class="inline-code">/</span>, mesmo no Windows.</p>
         <p>Procedimento validado:</p>
         <pre class="command">git config --global --unset-all safe.directory\n\ngit config --global --add safe.directory "//10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora"\n\ngit status</pre>
         <div class="mini-grid">
