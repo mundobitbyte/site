@@ -69,7 +69,7 @@ try {
     ['exercicios', 'e20', 'git merge --no-edit teste-divulgacao'],
     ['comandos', 'rede', 'safe.directory'],
     ['comandos', 'diagnostico', 'rmdir /s /q .git'],
-    ['comandos', 'checkpoint', 'Checkpoint completo']
+    ['comandos', 'checkpoint', 'Perdeu uma aula']
   ];
 
   for (const [module, id, needle] of critical) {
@@ -87,6 +87,16 @@ try {
   await page.evaluate(() => window.setModule('comandos', 'checkpoint', false));
   assert(await page.$('[data-checkpoint-open]') !== null, 'Checkpoint perdeu o botão Abrir arquivo.');
   assert(await page.$('[data-checkpoint-download]') !== null, 'Checkpoint perdeu o botão Baixar .TXT.');
+
+  await page.evaluate(() => window.setModule('git', '1', false));
+  const next = await page.$('.lesson-footer [data-step-nav]');
+  assert(next !== null, 'Rodapé não criou navegação para a próxima etapa.');
+  if (next) {
+    await next.click();
+    await page.waitForFunction(() => document.getElementById('stepTitle')?.textContent?.startsWith('2 —'), {timeout: 5000});
+    const activeTitle = await page.$eval('#stepTitle', el => el.textContent);
+    assert(activeTitle.startsWith('2 —'), `Rodapé não avançou para a etapa 2: ${activeTitle}`);
+  }
 
   const currentHashBefore = await page.evaluate(() => location.hash);
   await page.evaluate(() => window.setModule('git', '4', true));
