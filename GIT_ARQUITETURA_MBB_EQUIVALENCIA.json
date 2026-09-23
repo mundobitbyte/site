@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-09-23T16:52:46.962Z",
+  "equivalent": true,
+  "comparison": {
+    "gitSteps": {
+      "same": true,
+      "countBefore": 12,
+      "countAfter": 12,
+      "sha256Before": "6c8410db15de94b403eacfc8bc9d5c23f3b38aab9b6c1da32bf0eba91179eabc",
+      "sha256After": "6c8410db15de94b403eacfc8bc9d5c23f3b38aab9b6c1da32bf0eba91179eabc"
+    },
+    "githubSteps": {
+      "same": true,
+      "countBefore": 10,
+      "countAfter": 10,
+      "sha256Before": "40a2f59880f7b79b3e738dfc6ce0c9c82c4523ce11119c1b0722dd53146cec55",
+      "sha256After": "40a2f59880f7b79b3e738dfc6ce0c9c82c4523ce11119c1b0722dd53146cec55"
+    },
+    "exerciseSteps": {
+      "same": true,
+      "countBefore": 23,
+      "countAfter": 23,
+      "sha256Before": "8ca16412ad997651ebb2446ac7fb538cf7dd25dae700cc479ea30a2bca5fef95",
+      "sha256After": "8ca16412ad997651ebb2446ac7fb538cf7dd25dae700cc479ea30a2bca5fef95"
+    },
+    "commandSteps": {
+      "same": true,
+      "countBefore": 12,
+      "countAfter": 12,
+      "sha256Before": "2db20d45e3b20f6c403d56a70a97ee7ba548017d6f6f39e97f7c0879427cc984",
+      "sha256After": "2db20d45e3b20f6c403d56a70a97ee7ba548017d6f6f39e97f7c0879427cc984"
+    }
+  },
+  "semanticChecks": {
+    "onlyGitCmd": true,
+    "noOldBranchPlaceholder": true,
+    "safeDirectory": true,
+    "mergeNoEdit": true,
+    "destructiveCopyRemoved": true
+  },
+  "architecture": {
+    "legacyRuntimeScripts": 15,
+    "canonicalScripts": 5,
+    "canonicalFiles": [
+      "js/git-conteudo-canonico.js",
+      "js/git-exercicios-canonico.js",
+      "js/git-comandos-canonico.js",
+      "js/git-core-canonico.js",
+      "js/git-ui-canonico.js",
+      "css/git-canonico.css",
+      "pages/git-refatorado.html"
+    ]
+  }
+}
