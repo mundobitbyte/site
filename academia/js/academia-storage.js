@@ -49,7 +49,7 @@
       usuario = atual;
       emitir();
     });
-    await authSdk.authStateReady(auth);
+    await auth.authStateReady();
     usuario = auth.currentUser;
     return true;
   }

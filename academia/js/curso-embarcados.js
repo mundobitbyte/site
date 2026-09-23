@@ -183,7 +183,17 @@
     });
 
     if (estado === 'nao-iniciada') {
-      storage.salvarAula(curso, aula, 'em-andamento').catch(error => {
+      storage.salvarAula(curso, aula, 'em-andamento').then(() => {
+        snapshot.activities = snapshot.activities || {};
+        snapshot.activities[aula.id] = { ...snapshot.activities[aula.id], state: 'em-andamento' };
+        const indicador = $('.lesson-hero .pill');
+        if (indicador) {
+          indicador.textContent = textoEstado('em-andamento');
+          indicador.className = 'pill warning';
+        }
+        const ponto = $('.lesson-map a.active .lesson-dot');
+        if (ponto) ponto.className = 'lesson-dot em-andamento';
+      }).catch(error => {
         const feedback = $('[data-save-feedback]');
         if (feedback) {
           feedback.textContent = `Não foi possível registrar o início: ${error.message}`;

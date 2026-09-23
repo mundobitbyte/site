@@ -61,3 +61,8 @@ test('cada aula contém ação, observação, sucesso, diagnóstico e aplicaçã
     assert.equal(aula.pontos, curso.pontos[aula.tipo], `${aula.id}: pontos fora da configuração central`);
   }
 });
+test('inicialização Web aguarda o estado da instância do Firebase Auth', () => {
+  const storage = fs.readFileSync(path.resolve(__dirname, '../js/academia-storage.js'), 'utf8');
+  assert.match(storage, /await auth\.authStateReady\(\);/);
+  assert.doesNotMatch(storage, /authSdk\.authStateReady/);
+});
