@@ -88,6 +88,7 @@ img{max-width:100%;display:block}.shell{width:min(1120px,92%);margin:auto}.topba
 }
 @media(max-width:600px){
   .embedded-hero-copy,.embedded-promise,.course-dashboard{padding:22px;border-radius:23px}.embedded-hero-copy h1{font-size:clamp(2.1rem,13vw,3.2rem)}
+  .embedded-hero-copy .hero-actions .btn{max-width:100%;white-space:normal;text-align:center}
   .course-stats{grid-template-columns:1fr 1fr}.course-stat:last-of-type{grid-column:1/-1}.academy-module-card{grid-template-columns:48px 1fr;padding:17px;gap:13px}.module-card-index{width:46px;height:46px;border-radius:14px;font-size:1rem}
   .lesson-hero h1{font-size:clamp(2rem,11vw,2.8rem)}.learning-step{grid-template-columns:1fr;padding:21px}.step-number{width:40px;height:40px}.lesson-nav{grid-template-columns:1fr}.lesson-nav span{display:none}
 }
