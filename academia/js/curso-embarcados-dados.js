@@ -1,10 +1,8 @@
 (function () {
   'use strict';
 
-  const BASE = '../../../pages/';
-
   const fonte = (pagina, ancora, rotulo) => ({
-    url: `${BASE}${pagina}${ancora ? `#${ancora}` : ''}`,
+    chave: `${pagina}#${ancora}`,
     rotulo
   });
 
@@ -23,6 +21,7 @@
     sucesso: atividade.sucesso,
     diagnostico: atividade.diagnostico,
     aplicar: atividade.aplicar,
+    conteudo: atividade.conteudo || '',
     projeto: atividade.projeto || '',
     obrigatoria: atividade.obrigatoria !== false
   });
@@ -56,7 +55,7 @@
       tipo: 'pratica', pontos: 20,
       contexto: 'O simulador reduz barreiras no início; a montagem real acrescenta alimentação, contato, tolerâncias e falhas físicas.',
       antes: 'Você precisa apenas de navegador. O kit físico é opcional nas primeiras etapas.',
-      fazer: 'Abra o material-base e localize a explicação do Tinkercad. Se tiver hardware, separe Arduino Uno, cabo de dados, protoboard, LEDs, resistores e jumpers sem energizar nada.',
+      fazer: 'Estude nesta aula a explicação do Tinkercad. Se tiver hardware, separe Arduino Uno, cabo de dados, protoboard, LEDs, resistores e jumpers sem energizar nada.',
       observar: 'Tinkercad e Arduino IDE têm funções diferentes: simular não é o mesmo que gravar uma placa.',
       sucesso: 'Você sabe dizer onde o circuito será montado e onde o código será executado.',
       diagnostico: 'Cabo que apenas carrega energia pode impedir o envio do programa à placa real.',
@@ -95,7 +94,7 @@
     aula('emb-01-03', 'emb-01', 'Primeiro circuito: LED protegido', 'Como montar e validar um circuito simples com segurança?', fonte('arduino.html', 'p1', 'Projeto 1 — LED protegido'), {
       tipo: 'pratica', pontos: 20,
       contexto: 'O primeiro sucesso deve comprovar circuito fechado, polaridade e limitação de corrente.',
-      antes: 'Use exatamente os componentes e ligações indicados no material-base.',
+      antes: 'Use exatamente os componentes e ligações apresentados nesta aula.',
       fazer: 'Monte o Projeto 1. Antes de iniciar, preveja o que ocorrerá se o LED for invertido. Execute e registre o resultado.',
       observar: 'O LED fica aceso continuamente porque ainda não é controlado pelo programa.',
       sucesso: 'LED aceso com resistor em série e montagem que você consegue explicar.',
@@ -413,6 +412,26 @@
     aula('emb-07-05', 'emb-07', 'MQTT: publicar sem conhecer cada assinante', 'Quando publicação/assinatura é melhor que solicitação/resposta?', [], {
       tipo: 'pratica', pontos: 20,
       contexto: 'Sensores podem produzir eventos para vários consumidores sem atender cada solicitação HTTP individualmente.',
+      conteudo: `<section class="native-lesson-material">
+        <h2>Por que o MQTT aparece agora?</h2>
+        <p>No HTTP estudado anteriormente, alguém inicia uma solicitação e espera uma resposta. Isso funciona muito bem para abrir uma página, consultar um estado ou enviar um comando. Porém, um sensor que produz leituras continuamente pode precisar entregar a mesma informação a vários destinos.</p>
+        <div class="concept-grid">
+          <article><h3>Publisher</h3><p>É quem publica uma mensagem. No nosso percurso, pode ser o ESP32 enviando a leitura do LDR.</p></article>
+          <article><h3>Broker</h3><p>É o intermediário que recebe mensagens publicadas e as distribui. Publishers e subscribers não precisam se conhecer diretamente.</p></article>
+          <article><h3>Topic</h3><p>É o endereço lógico da mensagem, por exemplo <code>ambiente/luz</code>. Publicar e assinar exigem exatamente o mesmo topic.</p></article>
+          <article><h3>Subscriber</h3><p>É quem assina um topic para receber suas mensagens, como um painel, outro ESP32 ou um serviço de monitoramento.</p></article>
+        </div>
+        <div class="callout"><strong>Mensagem</strong><p>É o conteúdo transportado: uma leitura, um estado ou um comando. Evite dados pessoais, senhas e informações desnecessárias em brokers de teste.</p></div>
+        <h3>HTTP × MQTT</h3>
+        <table><thead><tr><th>Aspecto</th><th>HTTP</th><th>MQTT</th></tr></thead><tbody>
+          <tr><td>Modelo</td><td>Solicitação e resposta</td><td>Publicação e assinatura</td></tr>
+          <tr><td>Intermediário</td><td>Cliente fala com um servidor</td><td>Publisher e subscriber usam um broker</td></tr>
+          <tr><td>Uso didático</td><td>Página, consulta e comando direto</td><td>Eventos e leituras para um ou vários consumidores</td></tr>
+          <tr><td>Escolha</td><td>Boa quando a resposta imediata faz parte da interação</td><td>Boa quando produtores e consumidores devem permanecer desacoplados</td></tr>
+        </tbody></table>
+        <h3>Fluxo que você deve compreender</h3>
+        <p><strong>ESP32 publisher → topic no broker → mensagem distribuída → painel subscriber.</strong> Se nada chegar, confirme nesta ordem: conexão com o broker, endereço e porta, topic idêntico, publicação e conteúdo da mensagem.</p>
+      </section>`,
       antes: 'Você já conhece cliente/servidor e mensagens em rede.',
       fazer: 'Antes de configurar, desenhe o caminho: ESP32 publisher (quem envia) → broker (servidor que recebe e distribui) → topic ambiente/luz (endereço lógico) → painel subscriber (quem assina e recebe). A leitura enviada é a mensagem. Use apenas broker de teste sem dados pessoais ou credenciais reutilizadas.',
       observar: 'No HTTP, um cliente solicita e um servidor responde. No MQTT, o publisher envia uma mensagem a um topic no broker; o broker a entrega aos subscribers, sem o sensor conhecer cada consumidor.',
@@ -489,6 +508,20 @@
     aula('emb-08-06', 'emb-08', 'Alimentação, corrente e multímetro', 'Por que o circuito funciona no simulador e falha no mundo físico?', [], {
       tipo: 'pratica', pontos: 20,
       contexto: 'Servos, motores e outros atuadores podem exigir mais corrente do que a placa oferece com segurança.',
+      conteudo: `<section class="native-lesson-material">
+        <h2>O programa pode estar correto e a energia ser insuficiente</h2>
+        <p>Um GPIO fornece um sinal elétrico, mas não é uma fonte de potência para qualquer carga. Servos, motores, relés e outros atuadores podem exigir corrente acima do que a placa ou a porta USB consegue fornecer com estabilidade.</p>
+        <div class="concept-grid">
+          <article><h3>Tensão</h3><p>É a diferença de potencial entre dois pontos. Deve ser compatível com a placa e o componente.</p></article>
+          <article><h3>Corrente disponível</h3><p>A fonte precisa fornecer a corrente exigida pela carga sem queda excessiva de tensão ou aquecimento.</p></article>
+          <article><h3>GND comum</h3><p>Quando placas ou fontes trocam sinais, normalmente precisam compartilhar a referência de GND.</p></article>
+          <article><h3>Fonte externa</h3><p>Pode alimentar o atuador separadamente, desde que tensão, polaridade, capacidade e referência sejam conferidas.</p></article>
+        </div>
+        <div class="callout warning"><strong>Uso seguro do multímetro</strong><p>Para medir tensão DC, selecione a escala correta e meça em paralelo entre alimentação e GND. Nunca coloque o multímetro configurado para corrente diretamente em paralelo com a fonte.</p></div>
+        <h3>Diagnóstico antes de alterar o código</h3>
+        <ol><li>Desligue o circuito e confira polaridade, ligações e GND.</li><li>Consulte tensão e corrente exigidas pelo componente.</li><li>Observe se a placa reinicia quando o atuador começa a mover.</li><li>Meça a tensão com supervisão adequada.</li><li>Teste sensor e atuador separadamente antes de reintegrar.</li></ol>
+        <p>Reinicializações, movimentos fracos e comportamento aleatório durante a atuação são evidências para investigar alimentação antes de reescrever o programa.</p>
+      </section>`,
       antes: 'Você já viu a advertência de alimentação na lixeira automática.',
       fazer: 'Com o circuito desligado, revise polaridade e continuidade visual. Em hardware real, meça tensão DC entre alimentação e GND com supervisão adequada; não meça corrente colocando o multímetro diretamente em paralelo.',
       observar: 'Fonte externa adequada pode alimentar o atuador, mantendo GND comum quando o sinal precisa de referência compartilhada.',
@@ -589,7 +622,7 @@
       diagnostico: 'Simule o código linha a linha quando a previsão falhar.',
       aplicar: 'Altere um valor e faça nova previsão.'
     }),
-    aula('emb-99-02', 'emb-99', 'Experimente e observe', 'Que evidência o circuito produz?', fonte('arduino.html', 'exercicios', 'Práticas do módulo Arduino'), {
+    aula('emb-99-02', 'emb-99', 'Experimente e observe', 'Que evidência o circuito produz?', fonte('arduino-exercicios.html', '', 'Práticas do módulo Arduino'), {
       tipo: 'pratica', pontos: 20, obrigatoria: false,
       contexto: 'Executar sem observar vira apenas repetição.',
       antes: 'Escolha uma prática compatível com os componentes disponíveis.',

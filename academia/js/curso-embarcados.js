@@ -97,12 +97,55 @@
   }
 
   function fontesHtml(aula) {
-    if (!aula.fontes?.length) return '';
-    return `<section class="lesson-source">
-      <div><span class="step-label">Material-base preservado</span><h2>Estude a explicação e execute a prática original</h2>
-      <p>A Academia conduz a aprendizagem; os códigos, circuitos e imagens aprovados continuam no módulo público.</p></div>
-      <div class="source-links">${aula.fontes.map(item => `<a class="btn ghost" href="${escapar(item.url)}" target="_blank" rel="noopener">${escapar(item.rotulo)} ↗</a>`).join('')}</div>
+    const acervo = window.MBB_CONTEUDO_EMBARCADOS || {};
+    const nativo = aula.conteudo ? `<article class="lesson-material-block native-material-block">
+      <header class="lesson-material-heading"><span class="step-label">Conteúdo da aula</span><h2>Compreenda antes de executar</h2></header>
+      <div class="lesson-material" data-integrated-material>${aula.conteudo}</div>
+    </article>` : '';
+    const blocos = (aula.fontes || []).map(item => {
+      const material = acervo[item.chave];
+      if (!material) return '';
+      return `<article class="lesson-material-block">
+        <header class="lesson-material-heading">
+          <span class="step-label">Conteúdo da aula</span>
+          <h2>${escapar(material.titulo || item.rotulo)}</h2>
+        </header>
+        <div class="lesson-material" data-integrated-material>${material.html}</div>
+      </article>`;
+    }).filter(Boolean).join('');
+    if (!nativo && !blocos) return '';
+    return `<section class="lesson-source integrated-source" aria-label="Conteúdo completo da aula">
+      <div class="integrated-source-intro">
+        <span class="step-label">Aprenda aqui, sem sair da Academia</span>
+        <h2>Conteúdo, circuito e código no mesmo percurso</h2>
+        <p>Estude o conceito, examine a montagem e compreenda o código antes de executar a prática orientada.</p>
+      </div>
+      ${nativo}${blocos}
     </section>`;
+  }
+
+  function prepararMateriaisIntegrados() {
+    document.querySelectorAll('[data-integrated-material] pre').forEach((codigo, indice) => {
+      const envoltorio = document.createElement('div');
+      envoltorio.className = 'integrated-code';
+      codigo.parentNode.insertBefore(envoltorio, codigo);
+      envoltorio.appendChild(codigo);
+      const botao = document.createElement('button');
+      botao.type = 'button';
+      botao.className = 'copy-code-button';
+      botao.textContent = 'Copiar código';
+      botao.setAttribute('aria-label', `Copiar bloco de código ${indice + 1}`);
+      botao.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(codigo.textContent);
+          botao.textContent = 'Código copiado ✓';
+          setTimeout(() => { botao.textContent = 'Copiar código'; }, 1800);
+        } catch (_) {
+          botao.textContent = 'Selecione e copie';
+        }
+      });
+      envoltorio.insertBefore(botao, codigo);
+    });
   }
 
   function renderAula() {
@@ -158,6 +201,8 @@
         ${anterior ? `<a class="btn ghost" href="${linkAula(anterior.id)}">← ${escapar(anterior.titulo)}</a>` : '<span></span>'}
         ${seguinte ? `<a class="btn dark" href="${linkAula(seguinte.id)}">${escapar(seguinte.titulo)} →</a>` : '<a class="btn dark" href="index.html">Voltar ao curso</a>'}
       </nav>`;
+
+    prepararMateriaisIntegrados();
 
     const concluir = $('[data-complete]');
     if (concluir) concluir.addEventListener('click', async () => {

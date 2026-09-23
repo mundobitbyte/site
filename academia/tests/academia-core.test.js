@@ -5,8 +5,10 @@ const path = require('node:path');
 
 global.window = global;
 require('../js/curso-embarcados-dados.js');
+require('../js/curso-embarcados-conteudo.js');
 const core = require('../js/academia-core.js');
 const curso = global.MBB_CURSO_EMBARCADOS;
+const acervo = global.MBB_CONTEUDO_EMBARCADOS;
 
 test('IDs de módulos e aulas são únicos e permanentes', () => {
   const modulos = curso.modulos.map(item => item.id);
@@ -39,16 +41,23 @@ test('conquistas exigem os marcos reais configurados', () => {
   assert.deepEqual(core.conquistasDesbloqueadas(curso, atividades).map(item => item.id), ['primeiro-circuito', 'primeira-entrada']);
 });
 
-test('todos os links internos apontam para páginas e âncoras existentes', () => {
+test('todo material-base usado pelas aulas está integrado à Academia', () => {
   for (const aula of curso.aulas) {
     for (const fonte of aula.fontes) {
-      const [arquivoRelativo, ancora] = fonte.url.replace('../../../pages/', '').split('#');
-      const arquivo = path.resolve(__dirname, '../../pages', arquivoRelativo);
-      assert.ok(fs.existsSync(arquivo), `${aula.id}: arquivo ausente ${arquivoRelativo}`);
-      if (ancora) {
-        const html = fs.readFileSync(arquivo, 'utf8');
-        assert.ok(html.includes(`id="${ancora}"`) || html.includes(`id='${ancora}'`), `${aula.id}: âncora ausente #${ancora}`);
-      }
+      assert.ok(acervo[fonte.chave], `${aula.id}: conteúdo integrado ausente ${fonte.chave}`);
+      assert.ok(acervo[fonte.chave].html.length > 80, `${aula.id}: conteúdo insuficiente ${fonte.chave}`);
+      assert.doesNotMatch(acervo[fonte.chave].html, /href\s*=/i, `${aula.id}: saída indevida para o site público`);
+    }
+  }
+});
+
+test('imagens integradas reutilizam arquivos existentes do site', () => {
+  for (const [chave, material] of Object.entries(acervo)) {
+    for (const correspondencia of material.html.matchAll(/src="([^"]+)"/g)) {
+      const origem = correspondencia[1];
+      assert.match(origem, /^\/img\//, `${chave}: origem de imagem inesperada ${origem}`);
+      const arquivo = path.resolve(__dirname, '../..', origem.replace(/^\//, ''));
+      assert.ok(fs.existsSync(arquivo), `${chave}: imagem ausente ${origem}`);
     }
   }
 });
