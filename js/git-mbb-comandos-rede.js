@@ -7,52 +7,50 @@
   cmdStep.content = cmdStep.content
     .replace(
       String.raw`pushd \\10.66.53.1\Publica\mtec2026\joao\meus-repositorios\site-cafe-aurora`,
-      String.raw`pushd \\10.66.53.1\Publica\mtec2026\caio.goncalves\P.A\meus-repositorios\site-cafe-aurora`
+      String.raw`pushd \\10.66.53.1\Publica\mtec2025\nome.sobrenome\meus-repositorios\site-cafe-aurora`
     )
     .replace(
       String.raw`pushd \\servidor\usuarios\seuUsuario`,
-      String.raw`pushd \\10.66.53.1\Publica\mtec2026\caio.goncalves\P.A\meus-repositorios\site-cafe-aurora`
+      String.raw`pushd \\10.66.53.1\Publica\mtec2025\nome.sobrenome\meus-repositorios\site-cafe-aurora`
     );
 
   if (!cmdStep.content.includes('safe.directory no Git CMD')) {
     cmdStep.content += `
       <h3>safe.directory no Git CMD</h3>
-      <div class="note-box"><strong>Quando usar:</strong> somente se uma pasta de rede confiável gerar <span class="inline-code">detected dubious ownership in repository</span>.</div>
+      <div class="note-box"><strong>Quando usar:</strong> somente se um repositório confiável em sua pasta na rede gerar <span class="inline-code">detected dubious ownership</span> ou uma mensagem sobre <span class="inline-code">safe.directory</span>.</div>
       <div class="command-ref-card">
         <div class="command-ref-head">
-          <span class="cmd-status cmd-edit">⚠ Precisa adaptar</span>
-          <button class="command-copy-btn" type="button" data-rede-copy='git config --global --add safe.directory "CAMINHO-EXATO-MOSTRADO-PELO-GIT"'>Copiar</button>
-        </div>
-        <pre class="command-ref-code"><code>git config --global --add safe.directory "<mark class="cmd-var">CAMINHO-EXATO-MOSTRADO-PELO-GIT</mark>"</code></pre>
-        <div class="command-ref-body">
-          <p>Adiciona uma exceção de confiança para um repositório específico.</p>
-          <div class="command-ref-warning"><strong>No Git CMD/CMD:</strong> se a recomendação do Git vier entre aspas simples, troque-as por <strong>aspas duplas</strong>. As aspas simples podem ser gravadas como parte do valor e gerar <span class="inline-code">not absolute</span>.</div>
-          <div class="command-ref-example"><strong>Exemplo concreto:</strong><code>git config --global --add safe.directory "%(prefix)///10.66.53.1/Publica/mtec2026/caio.goncalves/P.A/meus-repositorios/site-cafe-aurora"</code></div>
-          <p class="command-ref-note">Em unidade de rede mapeada, o CMD pode mostrar Y:\\..., mas o Git pode identificar o repositório pelo caminho UNC. Prefira o caminho que o próprio Git apresenta na mensagem de erro.</p>
-        </div>
-      </div>
-      <div class="command-ref-card">
-        <div class="command-ref-head">
-          <span class="cmd-status cmd-ready">✓ Diagnóstico</span>
-          <button class="command-copy-btn" type="button" data-rede-copy="git config --global --get-all safe.directory">Copiar</button>
-        </div>
-        <pre class="command-ref-code"><code>git config --global --get-all safe.directory</code></pre>
-        <div class="command-ref-body">
-          <p>Mostra todas as exceções de diretórios seguros já cadastradas.</p>
-          <p class="command-ref-note">Use este comando também quando aparecer um aviso <span class="inline-code">safe.directory ... not absolute</span>: normalmente há uma entrada antiga ou incorreta na configuração global.</p>
-        </div>
-      </div>
-      <div class="command-ref-card">
-        <div class="command-ref-head">
-          <span class="cmd-status cmd-edit">⚠ Use com cuidado</span>
+          <span class="cmd-status cmd-edit">⚠ Remove autorizações anteriores</span>
           <button class="command-copy-btn" type="button" data-rede-copy="git config --global --unset-all safe.directory">Copiar</button>
         </div>
         <pre class="command-ref-code"><code>git config --global --unset-all safe.directory</code></pre>
         <div class="command-ref-body">
-          <p>Remove todas as exceções <span class="inline-code">safe.directory</span> do usuário.</p>
-          <div class="command-ref-warning"><strong>Use somente se a lista contiver apenas entradas antigas ou incorretas que você não precisa preservar.</strong> Se houver outras pastas seguras válidas, prefira <span class="inline-code">git config --global --edit</span> e remova somente a linha incorreta.</div>
+          <p>Remove os registros anteriores de <span class="inline-code">safe.directory</span> do usuário.</p>
         </div>
-      </div>`;
+      </div>
+      <div class="command-ref-card">
+        <div class="command-ref-head">
+          <span class="cmd-status cmd-edit">⚠ Troque nome.sobrenome</span>
+          <button class="command-copy-btn" type="button" data-rede-copy='git config --global --add safe.directory "//10.66.53.1/Publica/mtec2025/nome.sobrenome/meus-repositorios/site-cafe-aurora"'>Copiar</button>
+        </div>
+        <pre class="command-ref-code"><code>git config --global --add safe.directory "//10.66.53.1/Publica/mtec2025/<mark class="cmd-var">nome.sobrenome</mark>/meus-repositorios/site-cafe-aurora"</code></pre>
+        <div class="command-ref-body">
+          <p>Autoriza especificamente o repositório indicado na pasta de rede.</p>
+          <div class="command-ref-warning"><strong>Antes de executar:</strong> substitua <span class="inline-code">nome.sobrenome</span> pelo nome da sua pasta na rede.</div>
+          <p class="command-ref-note">No Git, escreva o caminho UNC com barras <span class="inline-code">/</span>, mesmo no Windows.</p>
+        </div>
+      </div>
+      <div class="command-ref-card">
+        <div class="command-ref-head">
+          <span class="cmd-status cmd-ready">✓ Conferir</span>
+          <button class="command-copy-btn" type="button" data-rede-copy="git status">Copiar</button>
+        </div>
+        <pre class="command-ref-code"><code>git status</code></pre>
+        <div class="command-ref-body">
+          <p>Confirma se o Git reconheceu corretamente o repositório depois da autorização.</p>
+        </div>
+      </div>
+      <div class="danger-box"><strong>Não use safe.directory "*".</strong> Autorizar todos os diretórios reduz a proteção de segurança. Limite a exceção ao repositório necessário.</div>`;
   }
 
   const lesson = document.getElementById('lesson');
