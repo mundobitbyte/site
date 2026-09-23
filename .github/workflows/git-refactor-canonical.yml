@@ -31,11 +31,18 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install jsdom for isolated validation
-        run: npm install --no-save --no-package-lock jsdom@24
+      - name: Install isolated validation tools
+        run: npm install --no-save --no-package-lock jsdom@24 puppeteer-core@24
 
-      - name: Build canonical architecture and prove equivalence
+      - name: Build canonical architecture and prove semantic equivalence
         run: node tools/git-refactor/build-canonical.mjs
+
+      - name: Validate canonical architecture in real Chromium
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/mbb-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          node tools/git-refactor/browser-smoke.mjs
 
       - name: Commit generated canonical files
         run: |
