@@ -78,7 +78,7 @@ img{max-width:100%;display:block}.shell{width:min(1120px,92%);margin:auto}.topba
 .lesson-completion{margin-top:22px;padding:25px;display:flex;justify-content:space-between;align-items:center;gap:24px;border-top:7px solid var(--primary)}.lesson-completion h2{margin:4px 0}.lesson-completion p{margin:5px 0;color:var(--muted)}.completion-button{flex:0 0 auto}.completion-button:disabled{opacity:.72;cursor:wait}.save-feedback{font-weight:850}.save-feedback.saving{color:var(--warning)}.save-feedback.saved{color:var(--success)}.save-feedback.error{color:var(--danger)}
 .lesson-nav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.lesson-nav a{white-space:normal;text-align:center}
 
-@media(min-width:1100px){.embedded-hero-copy h1{white-space:nowrap}}
+@media(min-width:1100px){.embedded-hero-copy h1{font-size:clamp(2.25rem,4.2vw,4.15rem)}}
 @media(max-width:920px){
   .embedded-hero,.course-dashboard,.site-academy-difference,.lesson-layout{grid-template-columns:1fr}
   .course-achievements{border-left:0;border-top:1px solid var(--line);padding:22px 0 0}
