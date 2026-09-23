@@ -6,6 +6,7 @@ on:
       - git-arquitetura-mbb-20260923
     paths:
       - 'js/git*.js'
+      - 'pages/git.html'
       - 'pages/git-refatoracao-origem.html'
       - 'pages/git-refatorado.html'
       - 'css/git*.css'
