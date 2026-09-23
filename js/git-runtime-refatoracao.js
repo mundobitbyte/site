@@ -111,6 +111,13 @@
     check(!allText.includes('CMD do Windows'), 'Ainda existe referência a CMD do Windows no conteúdo final.', failures);
     check(!allText.includes('NOME-DA-BRANCH'), 'Ainda existe o placeholder NOME-DA-BRANCH.', failures);
 
+    window.__MBB_GIT_REFACTOR_SNAPSHOT__ = {
+      gitSteps: JSON.parse(JSON.stringify(gitSteps)),
+      githubSteps: JSON.parse(JSON.stringify(githubSteps)),
+      exerciseSteps: JSON.parse(JSON.stringify(exerciseSteps)),
+      commandSteps: JSON.parse(JSON.stringify(modules.comandos.steps))
+    };
+
     addStatus(failures.length === 0, failures);
     window.__MBB_GIT_REFACTOR_VALIDATION__ = {ok: failures.length === 0, failures};
   };
