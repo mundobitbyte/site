@@ -1,0 +1,58 @@
+name: Git refactor canonical validation
+
+on:
+  push:
+    branches:
+      - git-arquitetura-mbb-20260923
+    paths:
+      - 'js/git*.js'
+      - 'pages/git-refatoracao-origem.html'
+      - 'pages/git-refatorado.html'
+      - 'css/git*.css'
+      - 'tools/git-refactor/**'
+      - '.github/workflows/git-refactor-canonical.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  canonicalize:
+    if: ${{ !contains(github.event.head_commit.message, '[canonical-generated]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: git-arquitetura-mbb-20260923
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install jsdom for isolated validation
+        run: npm install --no-save --no-package-lock jsdom@24
+
+      - name: Build canonical architecture and prove equivalence
+        run: node tools/git-refactor/build-canonical.mjs
+
+      - name: Commit generated canonical files
+        run: |
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add \
+            js/git-conteudo-canonico.js \
+            js/git-exercicios-canonico.js \
+            js/git-comandos-canonico.js \
+            js/git-core-canonico.js \
+            js/git-ui-canonico.js \
+            css/git-canonico.css \
+            pages/git-refatorado.html \
+            GIT_ARQUITETURA_MBB_EQUIVALENCIA.json
+          if git diff --cached --quiet; then
+            echo "Arquitetura canônica já está sincronizada."
+          else
+            git commit -m "[canonical-generated] Consolida arquitetura canônica do módulo Git"
+            git push origin HEAD:git-arquitetura-mbb-20260923
+          fi
