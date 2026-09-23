@@ -49,6 +49,15 @@
     if (!condition) failures.push(message);
   };
 
+  const normalizeMissedConsistency = () => {
+    if (typeof modules === 'undefined' || !modules.comandos) return;
+    modules.comandos.steps.forEach(step => {
+      ['menu', 'title', 'objective', 'content'].forEach(field => {
+        if (step[field]) step[field] = step[field].replace(/NOME-DA-BRANCH/g, 'BRANCH_PRINCIPAL');
+      });
+    });
+  };
+
   const validate = () => {
     const failures = [];
 
@@ -82,7 +91,9 @@
     }
 
     if (typeof exerciseSteps !== 'undefined') {
-      check(exerciseSteps.length === 22, `Esperados 22 exercícios; encontrados ${exerciseSteps.length}.`, failures);
+      check(exerciseSteps.length === 23, `Esperados 22 exercícios + abertura; encontrados ${exerciseSteps.length} itens.`, failures);
+      const numbered = exerciseSteps.filter(step => /^e\d+$/.test(String(step.id)));
+      check(numbered.length === 22, `Esperados 22 exercícios numerados; encontrados ${numbered.length}.`, failures);
       const e2 = exerciseSteps.find(step => String(step.id) === 'e2');
       const e20 = exerciseSteps.find(step => String(step.id) === 'e20');
       check(e2 && e2.content.includes('detected dubious ownership'), 'Exercício 2 perdeu a orientação para rede.', failures);
@@ -125,6 +136,7 @@
   (async () => {
     try {
       for (const src of scripts) await loadScript(src);
+      normalizeMissedConsistency();
       validate();
     } catch (error) {
       addStatus(false, [error.message]);
