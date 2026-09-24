@@ -38,7 +38,7 @@
     }
   }
 
-  // 3. Ao navegar pelos exercícios, deixa o título da seção visível com um respiro discreto.
+  // 3. Posiciona a seção escolhida com apenas um pequeno respiro acima do título.
   if (typeof goToExerciseLevel === 'function') {
     goToExerciseLevel = function (levelId) {
       showStep(99);
@@ -49,17 +49,16 @@
       if (!target || !intro) return;
 
       if (typeof isMobileMenu === 'function' && isMobileMenu()) {
-        // Usa o mesmo recuo que já funcionava bem em Integração, evitando mostrar
-        // conteúdo do tópico anterior acima do título escolhido.
-        const y = target.getBoundingClientRect().top + window.pageYOffset - 170;
+        // Compensa apenas o cabeçalho/menu fixo e deixa uma margem curta.
+        const y = target.getBoundingClientRect().top + window.pageYOffset - 112;
         window.scrollTo({ top: Math.max(0, y), behavior: 'auto' });
         if (typeof closeExerciseMenu === 'function') closeExerciseMenu();
       } else {
-        // Calcula a posição em relação ao painel rolável e aplica um respiro curto.
+        // No desktop, quase encosta a seção no topo do painel, sem mostrar o tópico anterior.
         const introRect = intro.getBoundingClientRect();
         const targetRect = target.getBoundingClientRect();
         const targetTop = intro.scrollTop + (targetRect.top - introRect.top);
-        intro.scrollTo({ top: Math.max(0, targetTop - 72), behavior: 'auto' });
+        intro.scrollTo({ top: Math.max(0, targetTop - 24), behavior: 'auto' });
       }
     };
   }
