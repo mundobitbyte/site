@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meu MbB — Mundo bit Byte</title>
+  <link rel="stylesheet" href="../css/home.css"><link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <header><h1>Mundo bit Byte</h1><a class="mbb-header-link" href="../index.html">← Estudar</a></header>
+  <main class="mbb-pagina">
+    <div class="mbb-titulo"><div><h2>Meu MbB</h2><p>Seu espaço de estudo. Piloto: Git no computador.</p></div><button id="sair" class="mbb-secundario" hidden>Sair</button></div>
+    <p id="mensagem" role="status" aria-live="polite">Carregando sua conta…</p>
+    <div id="painel" hidden>
+      <section class="mbb-bloco"><h3>Continuar de onde parei</h3><div id="continuar"></div></section>
+      <section class="mbb-bloco"><h3>Meu progresso</h3><div id="progresso"></div></section>
+      <section class="mbb-bloco"><h3>Recentes</h3><div id="recentes"></div></section>
+      <section class="mbb-bloco"><h3>Favoritos</h3><div id="favoritos"></div></section>
+      <section class="mbb-bloco"><h3>Minhas anotações</h3><div id="anotacoes"></div></section>
+    </div>
+  </main>
+  <script src="firebase-config.js"></script><script src="catalogo-core.js"></script><script src="conta.js"></script><script src="painel.js"></script>
+</body>
+</html>

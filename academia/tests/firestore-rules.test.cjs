@@ -10,6 +10,8 @@ const {
 const {
   doc,
   getDoc,
+  getDocs,
+  collection,
   setDoc,
   serverTimestamp
 } = require('firebase/firestore');
@@ -50,6 +52,29 @@ test('usuário B não lê nem altera dados do usuário A', async () => {
     lastLessonId: 'emb-01-03',
     updatedAt: serverTimestamp()
   }));
+});
+
+test('Meu MbB: dono salva progresso e anotação; outra conta não lê nem altera', async () => {
+  const dbA = ambiente.authenticatedContext('aluno-a', { email: 'a@example.test' }).firestore();
+  const dbB = ambiente.authenticatedContext('aluno-b', { email: 'b@example.test' }).firestore();
+  const registroA = doc(dbA, 'meuMbb', 'aluno-a', 'registros', 'git-local-03');
+  const registroB = doc(dbB, 'meuMbb', 'aluno-a', 'registros', 'git-local-03');
+  await assertSucceeds(setDoc(registroA, {
+    conteudoId: 'git-local-03', versaoVista: 2, concluido: true,
+    favorito: true, anotacao: 'Rever pasta de rede', ultimoAcesso: serverTimestamp(), atualizadoEm: serverTimestamp()
+  }));
+  assert.equal((await getDoc(registroA)).data().anotacao, 'Rever pasta de rede');
+  await assertSucceeds(getDocs(collection(dbA, 'meuMbb', 'aluno-a', 'registros')));
+  await assertFails(getDoc(registroB));
+  await assertFails(getDocs(collection(dbB, 'meuMbb', 'aluno-a', 'registros')));
+  await assertFails(setDoc(registroB, { conteudoId: 'git-local-03', versaoVista: 1, atualizadoEm: serverTimestamp() }));
+});
+
+test('Meu MbB: identidade trocada e anotação excessiva são rejeitadas', async () => {
+  const db = ambiente.authenticatedContext('aluno-a', { email: 'a@example.test' }).firestore();
+  const ref = doc(db, 'meuMbb', 'aluno-a', 'registros', 'git-local-04');
+  await assertFails(setDoc(ref, { conteudoId: 'git-local-99', versaoVista: 1, atualizadoEm: serverTimestamp() }));
+  await assertFails(setDoc(ref, { conteudoId: 'git-local-04', versaoVista: 1, anotacao: 'x'.repeat(2001), atualizadoEm: serverTimestamp() }));
 });
 
 test('atividade válida pode ser concluída novamente sem criar outra identidade', async () => {

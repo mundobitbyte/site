@@ -81,6 +81,10 @@ header h1 {
   white-space: nowrap;
 }
 
+.mbb-home-actions { display: flex; gap: 10px; margin-left: auto; }
+.mbb-home-actions a { color: #fff; font-size: 13px; font-weight: 800; white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 640px) { .mbb-home-actions { gap: 8px; } }
+
 main {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
