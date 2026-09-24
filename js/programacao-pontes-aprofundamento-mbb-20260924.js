@@ -8,7 +8,7 @@
     laboratorioVisuAlg.content += `
       <div class="task-box">
         <h4>Aprofunde em VisuAlg</h4>
-        <p>Aqui o VisuAlg funciona como laboratório para transformar raciocínio em código, executar rapidamente e observar o resultado. Se quiser praticar a linguagem com mais exercícios, estruturas e desafios progressivos, continue no módulo específico.</p>
+        <p>Aqui o VisuAlg funciona como laboratório para transformar raciocínio em código, executar rapidamente e observar o resultado. Se quiser avançar em lógica aplicada, sintaxe, estruturas, integração e exercícios progressivos, continue no módulo específico.</p>
         <p><a href="visualg.html"><strong>Ir para o módulo VisuAlg →</strong></a></p>
       </div>`;
   }
