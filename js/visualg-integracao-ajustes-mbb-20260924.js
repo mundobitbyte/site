@@ -38,7 +38,7 @@
     }
   }
 
-  // 3. Ao navegar pelos exercícios, deixa o título da seção visível.
+  // 3. Ao navegar pelos exercícios, deixa o título da seção com respiro visual.
   if (typeof goToExerciseLevel === 'function') {
     goToExerciseLevel = function (levelId) {
       showStep(99);
@@ -48,12 +48,23 @@
       const intro = document.getElementById('introView');
       if (!target || !intro) return;
 
+      const isIntegration = levelId === integrationId;
+
       if (typeof isMobileMenu === 'function' && isMobileMenu()) {
-        const y = target.getBoundingClientRect().top + window.pageYOffset - 170;
+        // Integração já estava visualmente equilibrada. Os demais níveis recebem
+        // um espaço extra abaixo do menu fixo para o título não ficar colado no topo.
+        const topGap = isIntegration ? 170 : 210;
+        const y = target.getBoundingClientRect().top + window.pageYOffset - topGap;
         window.scrollTo({ top: Math.max(0, y), behavior: 'auto' });
         if (typeof closeExerciseMenu === 'function') closeExerciseMenu();
       } else {
-        intro.scrollTo({ top: Math.max(0, target.offsetTop - 72), behavior: 'auto' });
+        // Calcula a posição em relação ao painel rolável, em vez de depender de offsetTop.
+        // Isso mantém a distância do título consistente entre todas as seções.
+        const introRect = intro.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+        const targetTop = intro.scrollTop + (targetRect.top - introRect.top);
+        const topGap = isIntegration ? 72 : 112;
+        intro.scrollTo({ top: Math.max(0, targetTop - topGap), behavior: 'auto' });
       }
     };
   }
