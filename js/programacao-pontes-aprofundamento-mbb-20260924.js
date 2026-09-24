@@ -24,7 +24,7 @@
         <p>Em VisuAlg, você trabalhou com dados, entrada, processamento, decisão, repetição e funções. Python escreve essas mesmas ideias de outra forma. Aqui, o objetivo não é decorar Python: é reconhecer o raciocínio que você já conhece.</p>
       </div>
 
-      <div class="concept-box"><strong>Regra desta ponte:</strong> primeiro reconheça o que o programa faz; depois observe como cada linguagem escreve a mesma ideia.</div>
+      <div class="concept-box"><strong>Regra desta ponte:</strong> primeiro reconheça o que o programa faz; depois observe como cada linguagem escreve a mesma ideia. Cada comparação abaixo é independente e mostra todos os dados necessários para entender aquele trecho.</div>
 
       <h3>1. Dados e saída</h3>
       <div class="code-compare">
@@ -47,21 +47,27 @@ print("Total: R$", total)</pre>
           <h4>VisuAlg</h4>
           <pre class="command">escreva("Quantidade: ")
 leia(quantidade)
-total &lt;- quantidade * preco</pre>
+escreva("Preço: ")
+leia(preco)
+total &lt;- quantidade * preco
+escreval("Total: R$ ", total)</pre>
         </div>
         <div>
           <h4>Python</h4>
           <pre class="command">quantidade = int(input("Quantidade: "))
-total = quantidade * preco</pre>
+preco = float(input("Preço: "))
+total = quantidade * preco
+print("Total: R$", total)</pre>
         </div>
       </div>
-      <p>O raciocínio continua sendo <strong>receber → transformar → guardar o resultado</strong>. Em Python, <span class="inline-code">input()</span> devolve texto; por isso o exemplo converte a quantidade com <span class="inline-code">int()</span> antes do cálculo.</p>
+      <p>Agora os dois dados usados no cálculo têm origem explícita: <strong>quantidade</strong> e <strong>preço</strong> são recebidos antes de calcular o total. Em Python, <span class="inline-code">input()</span> devolve texto; por isso a quantidade é convertida com <span class="inline-code">int()</span> e o preço com <span class="inline-code">float()</span>.</p>
 
       <h3>3. Decisão</h3>
       <div class="code-compare">
         <div>
           <h4>VisuAlg</h4>
-          <pre class="command">se total &gt;= 50 entao
+          <pre class="command">total &lt;- 40
+se total &gt;= 50 entao
    escreval("Frete grátis")
 senao
    escreval("Frete cobrado")
@@ -69,31 +75,35 @@ fimse</pre>
         </div>
         <div>
           <h4>Python</h4>
-          <pre class="command">if total &gt;= 50:
+          <pre class="command">total = 40
+if total &gt;= 50:
     print("Frete grátis")
 else:
     print("Frete cobrado")</pre>
         </div>
       </div>
-      <p>Nas duas versões, uma condição escolhe entre dois caminhos. Python usa <span class="inline-code">if</span>, <span class="inline-code">else</span>, dois-pontos e indentação; VisuAlg marca o bloco com <span class="inline-code">se</span>, <span class="inline-code">senao</span> e <span class="inline-code">fimse</span>.</p>
+      <p>O valor usado pela condição aparece antes da decisão nas duas versões. Com <span class="inline-code">total = 40</span>, o caminho escolhido é “Frete cobrado”. Se o valor passar para 70, a mesma condição leva ao outro caminho.</p>
 
       <h3>4. Repetição por condição</h3>
       <div class="code-compare">
         <div>
           <h4>VisuAlg</h4>
-          <pre class="command">enquanto continuar = "S" faca
+          <pre class="command">continuar &lt;- "S"
+enquanto continuar = "S" faca
    escreval("Novo atendimento")
+   escreva("Continuar? (S/N): ")
    leia(continuar)
 fimenquanto</pre>
         </div>
         <div>
           <h4>Python</h4>
-          <pre class="command">while continuar == "S":
+          <pre class="command">continuar = "S"
+while continuar == "S":
     print("Novo atendimento")
-    continuar = input()</pre>
+    continuar = input("Continuar? (S/N): ")</pre>
         </div>
       </div>
-      <p>O princípio é o mesmo: testar uma condição antes de cada volta e repetir enquanto ela permanecer verdadeira. Observe apenas que, em Python, <span class="inline-code">=</span> atribui e <span class="inline-code">==</span> compara.</p>
+      <p>A variável <span class="inline-code">continuar</span> recebe um valor inicial antes de ser testada. Depois de cada atendimento, ela é atualizada. O princípio é o mesmo: repetir enquanto a condição continuar verdadeira. Em Python, <span class="inline-code">=</span> atribui e <span class="inline-code">==</span> compara.</p>
 
       <h3>5. Função</h3>
       <div class="code-compare">
@@ -106,7 +116,9 @@ inicio
    senao
       retorne 0
    fimse
-fimfuncao</pre>
+fimfuncao
+
+escreval(calcularDesconto(150))</pre>
         </div>
         <div>
           <h4>Python</h4>
@@ -114,10 +126,12 @@ fimfuncao</pre>
     if valor &gt; 100:
         return valor * 0.10
     else:
-        return 0</pre>
+        return 0
+
+print(calcular_desconto(150))</pre>
         </div>
       </div>
-      <p>Nas duas linguagens, a função recebe um valor, executa uma responsabilidade definida e devolve um resultado. A sintaxe muda; a decomposição do problema permanece.</p>
+      <p>Nas duas linguagens, a função recebe <span class="inline-code">150</span>, executa a regra e devolve <span class="inline-code">15</span>. A chamada ao final deixa visível o caminho completo: <strong>valor recebido → processamento → retorno → saída</strong>.</p>
 
       <div class="mini-grid">
         <div class="mini-card"><strong>O que mudou?</strong><br>Palavras da linguagem, sinais, pontuação, indentação e algumas regras de escrita.</div>
@@ -126,7 +140,7 @@ fimfuncao</pre>
 
       <div class="task-box">
         <h4>Confira se você está transferindo o raciocínio</h4>
-        <p>Sem decorar Python, escolha uma das cinco comparações e explique com suas palavras o que o programa faz. Depois indique apenas o que mudou na forma de escrever. Se você consegue reconhecer a ideia antes de conhecer todos os comandos, a transferência aconteceu.</p>
+        <p>Sem decorar Python, escolha uma das cinco comparações e explique com suas palavras de onde vêm os dados, o que o trecho faz e qual resultado ou caminho pode produzir. Depois indique apenas o que mudou na forma de escrever. Se você consegue reconhecer a ideia antes de conhecer todos os comandos, a transferência aconteceu.</p>
       </div>
 
       <div class="task-box">
