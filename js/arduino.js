@@ -62,6 +62,7 @@ function montarMenuEtapas(){
     <a class="stage-link" data-module="atuadores" href="#p9">Servo Motor</a>
     <a class="stage-link" data-module="atuadores" href="#lab4">Lixeira automática</a>
     <a class="stage-link stage-exercises" data-module="fundamentos io sensores atuadores" href="#exercicios">Exercícios</a>
+    <a class="stage-link stage-questionario" data-module="fundamentos io sensores atuadores" href="https://forms.gle/mifTy8s8NZ2hcWHc8" target="_blank" rel="noopener noreferrer">Questionário</a>
   `;
   const ioButton = document.querySelector('#arduinoModuleMenu .module-btn[data-module="io"]');
   if(ioButton) ioButton.dataset.target = '#p2';
@@ -148,7 +149,16 @@ function iniciarNavegacaoArduino(){
     btn.addEventListener('click', function(){ activateModule(this.dataset.module, this.dataset.target || modules[this.dataset.module].first, true); });
   });
   stageLinks.forEach(link => {
-    link.addEventListener('click', function(e){ e.preventDefault(); const hash=this.getAttribute('href'); const moduleName=(this.dataset.module || '').split(/\s+/)[0]; if(moduleName && modules[moduleName]) setModule(moduleName); showPanel(hash,true); closeDrawer(); });
+    link.addEventListener('click', function(e){
+      const href = this.getAttribute('href') || '';
+      if(/^https?:\/\//i.test(href)){ closeDrawer(); return; }
+      e.preventDefault();
+      const hash=href;
+      const moduleName=(this.dataset.module || '').split(/\s+/)[0];
+      if(moduleName && modules[moduleName]) setModule(moduleName);
+      showPanel(hash,true);
+      closeDrawer();
+    });
   });
   if(stageToggle) stageToggle.addEventListener('click',openDrawer);
   if(stageClose) stageClose.addEventListener('click',closeDrawer);
