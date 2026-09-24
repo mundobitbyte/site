@@ -164,14 +164,24 @@ try {
   assert(Boolean(mobile.title), 'Layout móvel não renderizou o título da etapa.');
   await page.screenshot({path: 'artifacts/meu-mbb/git-celular.png', fullPage: true});
 
+  await page.setViewport({width: 1366, height: 900});
   await page.goto(`${base}/meu-mbb/pesquisar.html`, {waitUntil: 'networkidle0'});
   await page.type('#consulta', 'git status');
   await page.waitForFunction(() => document.querySelectorAll('.mbb-resultado').length > 0);
   const resultados = await page.$$eval('.mbb-resultado a', links => links.map(link => link.getAttribute('href')));
+  assert(resultados[0]?.includes('pages/git.html#git-5'), 'Pesquisa não priorizou a etapa principal de git status.');
   assert(resultados.some(href => href.includes('pages/git.html#git-5')), 'Pesquisa não encontrou a etapa de git status.');
+  await page.screenshot({path: 'artifacts/meu-mbb/pesquisa-desktop.png', fullPage: true});
+  await page.setViewport({width: 390, height: 844, deviceScaleFactor: 1});
   const larguraBusca = await page.evaluate(() => ({tela: innerWidth, pagina: document.documentElement.scrollWidth}));
   assert(larguraBusca.pagina <= larguraBusca.tela + 2, 'Pesquisa criou rolagem horizontal no celular.');
   await page.screenshot({path: 'artifacts/meu-mbb/pesquisa-celular.png', fullPage: true});
+  await page.goto(`${base}/meu-mbb/entrar.html`, {waitUntil: 'networkidle0'});
+  assert(await page.$('#form-entrar') !== null && await page.$('#form-criar') !== null, 'Formulários de conta ausentes.');
+  await page.screenshot({path: 'artifacts/meu-mbb/entrar-celular.png', fullPage: true});
+  await page.setViewport({width: 1366, height: 900});
+  await page.screenshot({path: 'artifacts/meu-mbb/entrar-desktop.png', fullPage: true});
+  await page.setViewport({width: 390, height: 844, deviceScaleFactor: 1});
 
   // Interrompe a camada Firebase e repete o acesso público sem fazer login.
   await page.setRequestInterception(true);
@@ -185,6 +195,12 @@ try {
   const larguraHome = await page.evaluate(() => ({tela: innerWidth, pagina: document.documentElement.scrollWidth}));
   assert(larguraHome.pagina <= larguraHome.tela + 2, 'Home criou rolagem horizontal no celular.');
   await page.screenshot({path: 'artifacts/meu-mbb/home-celular-firebase-indisponivel.png', fullPage: true});
+  await page.click('[data-area-link="programacao-desenvolvimento"]');
+  assert(await page.$eval('#programacao-desenvolvimento', element => !element.hidden), 'Home não abriu área de Programação.');
+  assert(await page.$('#programacao-desenvolvimento a[href="pages/reactnative.html"]') !== null,
+    'Home perdeu módulo React Native.');
+  await page.click('#programacao-desenvolvimento [data-back]');
+  await page.waitForFunction(() => !document.getElementById('areas').hidden);
   await page.goto(`${base}/pages/git.html#git-3`, {waitUntil: 'networkidle0'});
   assert((await page.$eval('#lesson', element => element.textContent)).includes('safe.directory'), 'Git não abriu sem Firebase.');
   await page.goto(`${base}/meu-mbb/pesquisar.html`, {waitUntil: 'networkidle0'});

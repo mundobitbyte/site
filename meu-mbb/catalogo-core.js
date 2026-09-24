@@ -62,11 +62,13 @@
   function pesquisar(catalogo, termo) {
     const tokens = (termo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').trim().split(/\s+/).filter(Boolean);
     if (!tokens.length) return [];
+    const contar = (texto, trecho) => texto.split(trecho).length - 1;
     return atuais(catalogo).map(unidade => {
       const titulo = unidade.titulo.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
       const texto = `${unidade.area} ${unidade.modulo} ${unidade.texto_busca || ''}`.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
       const pontos = tokens.every(token => titulo.includes(token) || texto.includes(token))
-        ? tokens.reduce((soma, token) => soma + (titulo.includes(token) ? 5 : 1), 0) : 0;
+        ? tokens.reduce((soma, token) => soma + (titulo.includes(token) ? 20 : 0) + Math.min(contar(texto, token), 10), 0)
+          + 3 * Math.min(contar(texto, tokens.join(' ')), 10) : 0;
       return { unidade, pontos };
     }).filter(item => item.pontos).sort((a, b) => b.pontos - a.pontos || a.unidade.ordem - b.unidade.ordem).map(item => item.unidade);
   }

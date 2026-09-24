@@ -16,6 +16,7 @@ test('catálogo do piloto tem 12 etapas, IDs únicos e destinos existentes', () 
 });
 
 test('pesquisa pública encontra comando e pasta de rede pelo catálogo', () => {
+  assert.equal(core.pesquisar(catalogo, 'git status')[0].conteudo_id, 'git-local-05');
   assert.ok(core.pesquisar(catalogo, 'git status').some(item => item.conteudo_id === 'git-local-05'));
   assert.ok(core.pesquisar(catalogo, 'pasta de rede').some(item => item.conteudo_id === 'git-local-03'));
   assert.equal(core.pesquisar(catalogo, 'xyzconteudoinexistente').length, 0);

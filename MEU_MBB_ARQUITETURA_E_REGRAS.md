@@ -32,5 +32,6 @@ Cada registro contém `conteudoId`, `versaoVista`, `atualizadoEm` e, conforme o 
 
 1. `node --test meu-mbb/*.test.cjs academia/tests/academia-core.test.js` e `node meu-mbb/atualizar-pesquisa.cjs --check`.
 2. Com emulador Firebase e dependências, executar `firebase emulators:exec --only firestore --project demo-mbb "node academia/tests/firestore-rules.test.cjs"` para conferir também que as regras da Academia continuam válidas.
+   Para testar cadastro, login, persistência e privacidade usando contas descartáveis locais: `firebase emulators:exec --only auth,firestore --project demo-mbb "node meu-mbb/integracao-emuladores.cjs"`.
 3. Conferir home, Git e pesquisa sem login, no computador e no celular; bloquear SDK/rede Firebase e repetir. Depois validar entrada, saída, progresso, favoritos e anotações em conta técnica de teste.
 4. Publicar o site e as regras Firestore correspondentes no mesmo lançamento, após revisão. Antes de ativar a interface em produção, testar as regras com emulador; sem as novas regras, a gravação privada será recusada, mas o site público continuará funcionando.
