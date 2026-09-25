@@ -217,8 +217,6 @@ ${classicos}
     if (mostrarClassicos && typeof window.showExerciseInterface === 'function') {
       window.showExerciseInterface(1);
     }
-
-    window.setTimeout(() => seletor.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
   };
 
   if (typeof renderStepMenu === 'function') renderStepMenu();
