@@ -78,13 +78,13 @@
   const SCRIPT_ID = 'reactnative-mbb-20260925-js';
   const FIX_ID = 'reactnative-mbb-20260925-fix';
   const FULL_EXERCISES_ID = 'reactnative-mbb-20260925-full-exercises-v5';
-  const SELECTOR_ID = 'reactnative-mbb-20260925-exercise-selector-v1';
+  const SELECTOR_ID = 'reactnative-mbb-20260925-exercise-selector-v2';
 
   const loadSelector = () => {
     if (document.getElementById(SELECTOR_ID)) return;
     const selector = document.createElement('script');
     selector.id = SELECTOR_ID;
-    selector.src = '../js/reactnative-mbb-exercicios-seletor-20260925.js?v=20260925-1';
+    selector.src = '../js/reactnative-mbb-exercicios-seletor-20260925.js?v=20260925-2';
     selector.async = false;
     document.body.appendChild(selector);
   };
