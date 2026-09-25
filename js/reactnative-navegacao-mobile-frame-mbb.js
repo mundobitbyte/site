@@ -77,28 +77,14 @@
   const CSS_ID = 'reactnative-mbb-20260925-css';
   const SCRIPT_ID = 'reactnative-mbb-20260925-js';
   const FIX_ID = 'reactnative-mbb-20260925-fix';
-  const FULL_EXERCISES_ID = 'reactnative-mbb-20260925-full-exercises';
-  const FULL_EXERCISES_VISUAL_ID = 'reactnative-mbb-20260925-full-exercises-visual';
-
-  const loadFullExercisesVisual = () => {
-    if (document.getElementById(FULL_EXERCISES_VISUAL_ID)) return;
-    const visual = document.createElement('script');
-    visual.id = FULL_EXERCISES_VISUAL_ID;
-    visual.src = '../js/reactnative-mbb-exercicios-visual-20260925.js?v=20260925-2';
-    visual.async = false;
-    document.body.appendChild(visual);
-  };
+  const FULL_EXERCISES_ID = 'reactnative-mbb-20260925-full-exercises-v3';
 
   const loadFullExercises = () => {
-    if (document.getElementById(FULL_EXERCISES_ID)) {
-      loadFullExercisesVisual();
-      return;
-    }
+    if (document.getElementById(FULL_EXERCISES_ID)) return;
     const extra = document.createElement('script');
     extra.id = FULL_EXERCISES_ID;
-    extra.src = '../js/reactnative-mbb-exercicios-completos-20260925.js?v=20260925-2';
+    extra.src = '../js/reactnative-mbb-exercicios-completos-20260925.js?v=20260925-3';
     extra.async = false;
-    extra.onload = loadFullExercisesVisual;
     document.body.appendChild(extra);
   };
 
