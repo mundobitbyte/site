@@ -69,3 +69,27 @@
 
   document.head.appendChild(style);
 })();
+
+// Carrega por último a lapidação pedagógica MbB de 25/09/2026.
+// Mantém o HTML-base intacto e garante que as correções consolidadas anteriores
+// sejam preservadas antes da nova camada de conteúdo e exercícios.
+(() => {
+  const CSS_ID = 'reactnative-mbb-20260925-css';
+  const SCRIPT_ID = 'reactnative-mbb-20260925-js';
+
+  if (!document.getElementById(CSS_ID)) {
+    const link = document.createElement('link');
+    link.id = CSS_ID;
+    link.rel = 'stylesheet';
+    link.href = '../css/reactnative-mbb-20260925.css?v=20260925-1';
+    document.head.appendChild(link);
+  }
+
+  if (!document.getElementById(SCRIPT_ID)) {
+    const script = document.createElement('script');
+    script.id = SCRIPT_ID;
+    script.src = '../js/reactnative-mbb-20260925.js?v=20260925-1';
+    script.async = false;
+    document.body.appendChild(script);
+  }
+})();
