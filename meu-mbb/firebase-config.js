@@ -1,15 +1,7 @@
 /*
- * Configuração pública do SDK Web do Firebase.
- *
- * Não inserir aqui service account, senha, token privado ou chave administrativa.
- * Esta configuração identifica o app Web; a proteção dos dados depende do login
- * e das regras publicadas em firestore.rules.
+ * A configuração de produção do Meu MbB ainda não foi aprovada.
+ * O site público funciona sem Firebase; o login permanece indisponível até
+ * que um projeto e regras próprios sejam configurados para o Meu MbB.
+ * A prévia temporária usa exclusivamente sua configuração isolada de teste.
  */
-window.MBB_FIREBASE_CONFIG = {
-  apiKey: "AIzaSyBCydBNw1ZybTfWxHJrkPih-GIza6WX-c0",
-  authDomain: "academia-mundo-bit-byte.firebaseapp.com",
-  projectId: "academia-mundo-bit-byte",
-  storageBucket: "academia-mundo-bit-byte.firebasestorage.app",
-  messagingSenderId: "426586282521",
-  appId: "1:426586282521:web:fff9da074d294ec44a6888"
-};
+window.MBB_FIREBASE_CONFIG = null;

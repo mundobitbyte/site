@@ -82,28 +82,6 @@ service cloud.firestore {
       }
     }
 
-    // Domínio próprio do Meu MbB. Não compartilha coleções nem validações da Academia.
-    match /meuMbb/{uid}/registros/{conteudoId} {
-      allow read, delete: if isOwner(uid);
-      allow create, update: if isOwner(uid)
-        && request.resource.data.keys().hasOnly([
-          'conteudoId', 'versaoVista', 'atualizadoEm', 'ultimoAcesso',
-          'ancora', 'concluido', 'favorito', 'anotacao'
-        ])
-        && request.resource.data.keys().hasAll(['conteudoId', 'versaoVista', 'atualizadoEm'])
-        && request.resource.data.conteudoId == conteudoId
-        && conteudoId.matches('^[a-z0-9]+(-[a-z0-9]+)*$')
-        && conteudoId.size() <= 100
-        && request.resource.data.versaoVista is int
-        && request.resource.data.versaoVista >= 1
-        && request.resource.data.atualizadoEm == request.time
-        && (!('ultimoAcesso' in request.resource.data) || request.resource.data.ultimoAcesso is timestamp)
-        && (!('ancora' in request.resource.data) || (request.resource.data.ancora is string && request.resource.data.ancora.size() <= 100))
-        && (!('concluido' in request.resource.data) || request.resource.data.concluido is bool)
-        && (!('favorito' in request.resource.data) || request.resource.data.favorito is bool)
-        && (!('anotacao' in request.resource.data) || (request.resource.data.anotacao is string && request.resource.data.anotacao.size() <= 2000));
-    }
-
     match /{document=**} {
       allow read, write: if false;
     }

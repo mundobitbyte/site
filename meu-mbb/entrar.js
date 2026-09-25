@@ -4,6 +4,12 @@
   const mensagem = document.getElementById('mensagem');
   const login = document.getElementById('form-entrar');
   const cadastro = document.getElementById('form-criar');
+  if (!window.MBB_FIREBASE_CONFIG?.apiKey || !window.MBB_FIREBASE_CONFIG?.projectId) {
+    document.querySelector('.mbb-abas').hidden = true;
+    login.hidden = true; cadastro.hidden = true;
+    mensagem.textContent = 'O acesso ao Meu MbB está temporariamente indisponível. Os conteúdos e a pesquisa públicos continuam acessíveis.';
+    return;
+  }
   document.querySelectorAll('[data-aba]').forEach(botao => botao.addEventListener('click', () => {
     const criar = botao.dataset.aba === 'criar';
     login.hidden = criar; cadastro.hidden = !criar; mensagem.textContent = '';

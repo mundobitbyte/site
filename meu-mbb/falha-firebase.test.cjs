@@ -16,6 +16,16 @@ test('Firebase ausente: falha isolada e pesquisa pública continua acessível', 
   assert.doesNotMatch(pagina, /firebase-config|conta\.js|academia-storage/);
 });
 
+test('configuração padrão e regras mantêm a Academia isolada', () => {
+  const configuracao = fs.readFileSync(path.join(__dirname, 'firebase-config.js'), 'utf8');
+  const regrasAcademia = fs.readFileSync(path.resolve(__dirname, '../firestore.rules'), 'utf8');
+  const regrasMeuMbb = fs.readFileSync(path.join(__dirname, 'firestore.rules'), 'utf8');
+  assert.match(configuracao, /window\.MBB_FIREBASE_CONFIG\s*=\s*null/);
+  assert.doesNotMatch(configuracao, /academia-mundo-bit-byte/);
+  assert.doesNotMatch(regrasAcademia, /match \/meuMbb\//);
+  assert.match(regrasMeuMbb, /match \/meuMbb\/\{uid\}\/registros\/\{conteudoId\}/);
+});
+
 test('navegação pública mantém suas páginas e o script da home independente da conta', () => {
   const inicio = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
   const git = fs.readFileSync(path.resolve(__dirname, '../pages/git.html'), 'utf8');

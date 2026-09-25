@@ -4,8 +4,8 @@
 
 - Piloto: 12 etapas da seção Git em `pages/git.html`. Não representa progresso dos demais módulos.
 - O site público, a home e a pesquisa não precisam de login ou Firebase. Falhas pessoais devem ser tratadas sem afetar o estudo.
-- A autenticação usa o mesmo projeto Firebase da Academia. O Meu MbB mantém sua própria cópia da configuração Web pública em `meu-mbb/firebase-config.js` para evitar depender de arquivos da Academia. Se o projeto Firebase for alterado, atualizar ambas as configurações. **Nenhum script, ID de aula, progresso, coleção ou pontuação da Academia é reutilizado.**
-- Dados pessoais do Meu MbB: `meuMbb/{uid}/registros/{conteudo_id}`; Academia: `users/{uid}/courses/...`. As regras de acesso são independentes.
+- O projeto público fica com `meu-mbb/firebase-config.js` desativado até ser aprovada uma configuração de produção própria do Meu MbB. A prévia temporária foi configurada separadamente para usar apenas `meu-mbb-piloto-teste`. **Nenhum script, ID de aula, progresso, coleção ou pontuação da Academia é reutilizado.**
+- Dados pessoais do Meu MbB: `meuMbb/{uid}/registros/{conteudo_id}` no projeto isolado. A Academia mantém seus dados e suas regras em seu próprio projeto, sem alteração neste piloto.
 
 ## Catálogo pedagógico único
 
@@ -26,12 +26,12 @@
 
 ## Dados privados e falhas
 
-Cada registro contém `conteudoId`, `versaoVista`, `atualizadoEm` e, conforme o uso, `ultimoAcesso`, `ancora`, `concluido`, `favorito`, `anotacao`. A anotação tem limite de 2.000 caracteres. As regras de `firestore.rules` dão leitura e escrita apenas ao próprio `uid`, validam ID, versão, tipos e tamanho. Não armazenar URL como chave de progresso. Firestore indisponível impede salvar dados pessoais no momento, mas não impede usar páginas ou pesquisa.
+Cada registro contém `conteudoId`, `versaoVista`, `atualizadoEm` e, conforme o uso, `ultimoAcesso`, `ancora`, `concluido`, `favorito`, `anotacao`. A anotação tem limite de 2.000 caracteres. As regras exclusivas de `meu-mbb/firestore.rules` dão leitura e escrita apenas ao próprio `uid`, validam ID, versão, tipos e tamanho. `firestore.rules` na raiz continua exclusivo da Academia. Não armazenar URL como chave de progresso. Firestore indisponível impede salvar dados pessoais no momento, mas não impede usar páginas ou pesquisa.
 
 ## Verificação e publicação
 
 1. `node --test meu-mbb/*.test.cjs academia/tests/academia-core.test.js` e `node meu-mbb/atualizar-pesquisa.cjs --check`.
-2. Com emulador Firebase e dependências, executar `firebase emulators:exec --only firestore --project demo-mbb "node academia/tests/firestore-rules.test.cjs"` para conferir também que as regras da Academia continuam válidas.
-   Para testar cadastro, login, persistência e privacidade usando contas descartáveis locais: `firebase emulators:exec --only auth,firestore --project demo-mbb "node meu-mbb/integracao-emuladores.cjs"`.
+2. Com emulador Firebase e dependências, executar `firebase emulators:exec --only firestore --project demo-academia "node academia/tests/firestore-rules.test.cjs"` para conferir as regras da Academia sem mudança.
+   Para testar cadastro, login, persistência e privacidade do Meu MbB com contas descartáveis locais: `firebase emulators:exec --config firebase.meu-mbb.json --only auth,firestore --project demo-mbb "node meu-mbb/integracao-emuladores.cjs"`.
 3. Conferir home, Git e pesquisa sem login, no computador e no celular; bloquear SDK/rede Firebase e repetir. Depois validar entrada, saída, progresso, favoritos e anotações em conta técnica de teste.
-4. Publicar o site e as regras Firestore correspondentes no mesmo lançamento, após revisão. Antes de ativar a interface em produção, testar as regras com emulador; sem as novas regras, a gravação privada será recusada, mas o site público continuará funcionando.
+4. Antes de ativar a interface em produção, aprovar um projeto Firebase próprio do Meu MbB, publicar nele `meu-mbb/firestore.rules` e configurar o app Web daquele projeto. Não publicar as regras do Meu MbB no projeto da Academia. A configuração padrão permanece desativada até essa decisão; o site e a pesquisa públicos continuam funcionando.
