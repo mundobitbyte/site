@@ -76,6 +76,7 @@
 (() => {
   const CSS_ID = 'reactnative-mbb-20260925-css';
   const SCRIPT_ID = 'reactnative-mbb-20260925-js';
+  const FIX_ID = 'reactnative-mbb-20260925-fix';
 
   if (!document.getElementById(CSS_ID)) {
     const link = document.createElement('link');
@@ -90,6 +91,14 @@
     script.id = SCRIPT_ID;
     script.src = '../js/reactnative-mbb-20260925.js?v=20260925-1';
     script.async = false;
+    script.onload = () => {
+      if (document.getElementById(FIX_ID)) return;
+      const fix = document.createElement('script');
+      fix.id = FIX_ID;
+      fix.src = '../js/reactnative-mbb-20260925-correcao.js?v=20260925-1';
+      fix.async = false;
+      document.body.appendChild(fix);
+    };
     document.body.appendChild(script);
   }
 })();
