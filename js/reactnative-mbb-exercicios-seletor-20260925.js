@@ -24,6 +24,73 @@
   let novos = html.slice(0, classicIndex).trim();
   let classicos = html.slice(classicIndex).trim();
 
+  // Nos cinco exercícios clássicos, usa a própria imagem do link tanto
+  // ao lado do botão "Copiar link" quanto dentro da tela-modelo.
+  const classicTemplate = document.createElement('template');
+  classicTemplate.innerHTML = classicos;
+  const classicRoot = classicTemplate.content.querySelector('#mbb-fullscreens-retained');
+
+  if (classicRoot) {
+    classicRoot.querySelectorAll('.exercise-clean-section').forEach(section => {
+      const copyButton = section.querySelector('button[onclick*="copyImageLink("]');
+      if (!copyButton) return;
+
+      const onclickText = copyButton.getAttribute('onclick') || '';
+      const urlMatch = onclickText.match(/copyImageLink\('([^']+)'/);
+      const imageUrl = urlMatch?.[1];
+      if (!imageUrl) return;
+
+      const infoBox = copyButton.parentElement;
+      if (infoBox && !infoBox.querySelector('.mbb-classic-real-image')) {
+        infoBox.style.display = 'flex';
+        infoBox.style.alignItems = 'center';
+        infoBox.style.gap = '10px';
+        infoBox.style.flexWrap = 'wrap';
+
+        const image = document.createElement('img');
+        image.className = 'mbb-classic-real-image';
+        image.src = imageUrl;
+        image.alt = 'Imagem que será usada neste aplicativo';
+        image.loading = 'lazy';
+        image.decoding = 'async';
+        image.style.width = '58px';
+        image.style.height = '58px';
+        image.style.objectFit = 'contain';
+        image.style.background = '#ffffff';
+        image.style.border = '1px solid #dbe3ef';
+        image.style.borderRadius = '10px';
+        image.style.padding = '5px';
+        image.style.boxSizing = 'border-box';
+        image.style.flex = '0 0 auto';
+        infoBox.insertBefore(image, infoBox.firstChild);
+
+        const label = infoBox.querySelector('strong');
+        if (label) label.textContent = 'Imagem (Image):';
+      }
+
+      const mockImageBox = section.querySelector('.photo-box');
+      if (mockImageBox) {
+        mockImageBox.textContent = '';
+        mockImageBox.style.overflow = 'hidden';
+
+        const mockImage = document.createElement('img');
+        mockImage.className = 'mbb-classic-mock-image';
+        mockImage.src = imageUrl;
+        mockImage.alt = 'Imagem usada na tela deste aplicativo';
+        mockImage.loading = 'lazy';
+        mockImage.decoding = 'async';
+        mockImage.style.width = '88%';
+        mockImage.style.height = '88%';
+        mockImage.style.objectFit = 'contain';
+        mockImage.style.display = 'block';
+        mockImage.style.margin = 'auto';
+        mockImageBox.appendChild(mockImage);
+      }
+    });
+
+    classicos = classicRoot.outerHTML;
+  }
+
   // Retorna o cabeçalho do bloco clássico ao texto que existia no site antigo.
   classicos = classicos.replace(
 `<div id="mbb-fullscreens-retained" class="exercise-clean" style="margin-top:30px;">
