@@ -1,4 +1,4 @@
-// Mundo bit Byte — seletor simples entre os desafios progressivos e os aplicativos completos.
+// Mundo bit Byte — navegação por abas entre desafios progressivos e aplicativos completos.
 // Mantém os desafios 1 a 9 e os cinco exercícios completos já aprovados.
 (function () {
   if (typeof modules === 'undefined' || !modules.interfaceBasica) return;
@@ -114,50 +114,85 @@
 
   exercise.html = `
 <style>
-  #mbb-exercise-switcher{margin:0 0 18px}
-  #mbb-exercise-switcher .mbb-switch-title{font-size:1.05rem;font-weight:900;color:#0f3f86;margin:0 0 10px}
-  #mbb-exercise-switcher .mbb-switch-cards{display:grid;grid-template-columns:repeat(2,minmax(0,300px));gap:14px;align-items:stretch;max-width:640px}
-  #mbb-exercise-switcher .mbb-switch-card{appearance:none;border:1px solid #d7e2f0;background:#fff;border-radius:14px;padding:15px 16px;text-align:left;cursor:pointer;box-shadow:0 3px 10px rgba(15,23,42,.05);transition:.16s ease;min-height:138px;display:flex;flex-direction:column}
-  #mbb-exercise-switcher .mbb-switch-card:hover{border-color:#93c5fd;transform:translateY(-1px);box-shadow:0 5px 14px rgba(15,23,42,.08)}
-  #mbb-exercise-switcher .mbb-switch-card.active{border-color:#1967d2;background:#f4f8ff;box-shadow:0 0 0 1px #1967d2 inset}
-  #mbb-exercise-switcher .mbb-switch-card strong{display:block;color:#0f3f86;font-size:1rem;margin-bottom:6px}
-  #mbb-exercise-switcher .mbb-switch-card .mbb-switch-description{display:block;color:#475569;font-size:.88rem;line-height:1.42}
-  #mbb-exercise-switcher .mbb-switch-card .mbb-switch-action{display:block;margin-top:auto;padding-top:10px;color:#1967d2;font-size:.86rem;font-weight:900}
+  #mbb-exercise-switcher{
+    position:sticky;
+    top:0;
+    z-index:20;
+    margin:0 0 14px;
+    padding:8px 0 0;
+    background:linear-gradient(180deg,#fff 0%,#fff 82%,rgba(255,255,255,.94) 100%);
+  }
+  #mbb-exercise-switcher .mbb-exercise-tabs{
+    display:flex;
+    gap:4px;
+    border-bottom:1px solid #cbd5e1;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  #mbb-exercise-switcher .mbb-exercise-tabs::-webkit-scrollbar{display:none}
+  #mbb-exercise-switcher .mbb-exercise-tab{
+    appearance:none;
+    border:0;
+    border-bottom:3px solid transparent;
+    background:transparent;
+    color:#526174;
+    padding:11px 16px 10px;
+    font-size:.93rem;
+    font-weight:800;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:.15s ease;
+  }
+  #mbb-exercise-switcher .mbb-exercise-tab:hover{color:#0f3f86;background:#f8fbff}
+  #mbb-exercise-switcher .mbb-exercise-tab.active{
+    color:#0f3f86;
+    border-bottom-color:#1967d2;
+    background:#f4f8ff;
+  }
+  #mbb-exercise-switcher .mbb-exercise-tab:focus-visible{
+    outline:3px solid rgba(25,103,210,.24);
+    outline-offset:-3px;
+  }
   .mbb-exercise-group[hidden]{display:none !important}
-  .mbb-exercise-group{margin-top:14px}
-  .mbb-exercise-back{appearance:none;border:0;background:transparent;color:#1967d2;font-weight:800;font-size:.9rem;cursor:pointer;padding:6px 0;margin:0 0 10px;display:inline-flex;align-items:center;gap:5px}
-  .mbb-exercise-back:hover{text-decoration:underline}
+  .mbb-exercise-group{margin-top:0}
   .mbb-exercise-group > .mbb-challenge-page,
   .mbb-exercise-group > .exercise-clean{margin-top:0 !important}
   @media(max-width:620px){
-    #mbb-exercise-switcher .mbb-switch-cards{grid-template-columns:1fr;max-width:none}
-    #mbb-exercise-switcher .mbb-switch-card{min-height:0}
+    #mbb-exercise-switcher{margin-bottom:10px}
+    #mbb-exercise-switcher .mbb-exercise-tab{flex:1 0 auto;padding:10px 12px 9px;font-size:.88rem}
   }
 </style>
 
 <div id="mbb-exercise-switcher">
-  <div class="mbb-switch-title">Escolha como praticar</div>
-  <div class="mbb-switch-cards">
-    <button type="button" class="mbb-switch-card" data-mbb-group="novos" onclick="mbbTrocarGrupoExercicios('novos', this)">
-      <strong>Desafios progressivos · 1 a 9</strong>
-      <span class="mbb-switch-description">Comece com atividades mais guiadas e avance até situações em que você precisa decidir como organizar a interface.</span>
-      <span class="mbb-switch-action">Abrir exercícios →</span>
-    </button>
-    <button type="button" class="mbb-switch-card" data-mbb-group="classicos" onclick="mbbTrocarGrupoExercicios('classicos', this)">
-      <strong>Aplicativos completos</strong>
-      <span class="mbb-switch-description">Pratique reconstruindo cinco interfaces completas: Tarefas, Produtos, Gastos, Atendimento e Biblioteca.</span>
-      <span class="mbb-switch-action">Abrir aplicativos →</span>
-    </button>
+  <div class="mbb-exercise-tabs" role="tablist" aria-label="Tipos de exercícios">
+    <button
+      type="button"
+      id="mbb-tab-novos"
+      class="mbb-exercise-tab active"
+      role="tab"
+      aria-selected="true"
+      aria-controls="mbb-exercise-group-novos"
+      data-mbb-group="novos"
+      onclick="mbbTrocarGrupoExercicios('novos')"
+    >Desafios progressivos</button>
+    <button
+      type="button"
+      id="mbb-tab-classicos"
+      class="mbb-exercise-tab"
+      role="tab"
+      aria-selected="false"
+      aria-controls="mbb-exercise-group-classicos"
+      data-mbb-group="classicos"
+      onclick="mbbTrocarGrupoExercicios('classicos')"
+    >Aplicativos completos</button>
   </div>
 </div>
 
-<section id="mbb-exercise-group-novos" class="mbb-exercise-group" hidden>
-  <button type="button" class="mbb-exercise-back" onclick="mbbVoltarEscolhaExercicios()">← Escolher outro conjunto</button>
+<section id="mbb-exercise-group-novos" class="mbb-exercise-group" role="tabpanel" aria-labelledby="mbb-tab-novos">
 ${novos}
 </section>
 
-<section id="mbb-exercise-group-classicos" class="mbb-exercise-group" hidden>
-  <button type="button" class="mbb-exercise-back" onclick="mbbVoltarEscolhaExercicios()">← Escolher outro conjunto</button>
+<section id="mbb-exercise-group-classicos" class="mbb-exercise-group" role="tabpanel" aria-labelledby="mbb-tab-classicos" hidden>
 ${classicos}
 </section>`;
 
@@ -173,27 +208,16 @@ ${classicos}
     novosEl.hidden = mostrarClassicos;
     classicosEl.hidden = !mostrarClassicos;
 
-    seletor.querySelectorAll('.mbb-switch-card').forEach(card => {
-      card.classList.toggle('active', card.dataset.mbbGroup === grupo);
+    seletor.querySelectorAll('.mbb-exercise-tab').forEach(tab => {
+      const ativa = tab.dataset.mbbGroup === grupo;
+      tab.classList.toggle('active', ativa);
+      tab.setAttribute('aria-selected', ativa ? 'true' : 'false');
     });
 
     if (mostrarClassicos && typeof window.showExerciseInterface === 'function') {
       window.showExerciseInterface(1);
     }
 
-    const destino = mostrarClassicos ? classicosEl : novosEl;
-    window.setTimeout(() => destino.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
-  };
-
-  window.mbbVoltarEscolhaExercicios = function () {
-    const seletor = document.getElementById('mbb-exercise-switcher');
-    const novosEl = document.getElementById('mbb-exercise-group-novos');
-    const classicosEl = document.getElementById('mbb-exercise-group-classicos');
-    if (!seletor || !novosEl || !classicosEl) return;
-
-    novosEl.hidden = true;
-    classicosEl.hidden = true;
-    seletor.querySelectorAll('.mbb-switch-card').forEach(card => card.classList.remove('active'));
     window.setTimeout(() => seletor.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
   };
 
