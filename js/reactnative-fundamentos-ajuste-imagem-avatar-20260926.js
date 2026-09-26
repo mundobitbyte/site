@@ -1,4 +1,4 @@
-// Ajuste cirúrgico: usa no tópico Salvar a captura original do Capítulo 1 do livro.
+// Ajuste cirúrgico: usa no tópico Salvar a captura nítida original do Capítulo 1 do livro.
 (function () {
   if (typeof modules === 'undefined' || !modules.fundamentosMobile) return;
 
@@ -10,6 +10,6 @@
 
   salvar.html = salvar.html.replace(
     '../img/reactnative/fundamentos/snack-menu-avatar-nitido.webp',
-    '../img/reactnative/fundamentos/snack-menu-avatar-livro-cap1.jpg?v=20260926-1'
+    '../img/reactnative/fundamentos/snack-menu-avatar-livro-cap1.webp?v=20260926-2'
   );
 })();
