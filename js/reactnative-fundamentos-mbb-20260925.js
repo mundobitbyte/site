@@ -89,13 +89,13 @@ export default function App() {
         kicker: 'Antes de programar',
         titulo: 'Primeiro vamos nos localizar — depois fazemos o código responder',
         lead: 'Antes da primeira alteração, conheça o ambiente que será usado e veja onde o código e o resultado aparecem.',
-        destaque: 'Ao terminar esta etapa, você conseguirá abrir o Snack, reconhecer suas áreas, alterar um código simples, salvar o projeto e entender por que o JavaScript será o próximo passo.',
+        destaque: 'No primeiro experimento, uma pequena alteração no <b>App.js</b> mostrará imediatamente a relação entre código e interface.',
         corpo: `${cards([
           ['O que vamos fazer', 'Construir aplicativos com React Native.'],
           ['Onde vamos começar', 'No Snack, diretamente pelo navegador.'],
           ['Primeira alteração', 'Você mudará uma linha e verá o resultado aparecer.'],
           ['Próximo passo', 'Vamos estudar o JavaScript necessário para avançar.']
-        ])}${evidencia('Ao final, você deverá reconhecer o ambiente, fazer uma alteração e saber onde encontrar o projeto salvo.')}`
+        ])}${evidencia('Explique com suas palavras: o que é React Native, onde o Snack entra e por que JavaScript aparece no código.')}`
       })
     },
     {
@@ -122,7 +122,7 @@ export default function App() {
             ['Nativo', 'Usa diretamente as tecnologias específicas de uma plataforma.'],
             ['Cross-platform', 'Permite compartilhar grande parte da base de desenvolvimento entre plataformas.']
           ])}
-          <p class="mbb-fund-small">Para começar, basta distinguir o papel de JavaScript, React e React Native.</p>
+          <p class="mbb-fund-small">JavaScript, React e React Native têm papéis diferentes; você verá essa combinação diretamente no código.</p>
           ${evidencia('Qual deles é a linguagem: JavaScript, React ou React Native?')}`
       })
     },
@@ -140,7 +140,7 @@ export default function App() {
           ['Snack', 'Permite experimentar React Native diretamente no navegador.'],
           ['Expo', 'É o ecossistema maior ao qual o Snack pertence.'],
           ['Código e resultado', 'Você escreve, observa o preview e compara o que mudou.'],
-          ['Ambiente local', 'Será apresentado quando passar a ser necessário.']
+          ['Ambiente local', 'Não é necessário para este primeiro contato no navegador.']
         ])}${evidencia('Complete: Expo é o ecossistema; Snack é ______.')}`
       })
     },
@@ -173,12 +173,12 @@ export default function App() {
       html: pagina({
         kicker: 'Primeiro experimento',
         titulo: 'Abra o App.js e faça a primeira alteração',
-        lead: 'O Snack pode abrir com exemplos diferentes. Use a tela abaixo como referência para reconhecer o estado inicial antes da primeira alteração.',
-        destaque: 'Abra <b>App.js</b>. Em seguida, substitua o conteúdo atual pelo código-base abaixo para partir do mesmo ponto.',
+        lead: 'Abra o Snack. A tela abaixo mostra o estado inicial desta atividade: <b>App.js</b> aberto no editor e o preview à direita.',
+        destaque: 'Abra <b>App.js</b> e substitua o conteúdo atual pelo código-base abaixo.',
         corpo: `
           <figure class="mbb-fund-figure mbb-fund-figure--inicio">
             <img src="../img/reactnative/fundamentos/snack-inicial-livro.webp" alt="Ambiente inicial do Snack antes do login, com App.js aberto e preview à direita" loading="lazy" decoding="async">
-            <figcaption>Tela inicial do Snack usada como referência antes da primeira alteração.</figcaption>
+            <figcaption>Tela inicial do Snack com <b>App.js</b> aberto no editor e o preview à direita.</figcaption>
           </figure>
           <pre class="mbb-fund-code">${codigoBase.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
           <div class="mbb-fund-action"><strong>Agora altere uma única linha</strong>
@@ -250,8 +250,7 @@ export default function App() {
             ['JSX', 'É a forma usada aqui para descrever a estrutura visual dentro do código.'],
             ['View', 'Agrupa partes da interface.'],
             ['Text', 'Mostra texto na interface.'],
-            ['App.js', 'É o arquivo em que começamos a ler e modificar o exemplo.'],
-            ['Nesta etapa', 'Basta reconhecer esses elementos no código.']
+            ['App.js', 'É o arquivo em que começamos a ler e modificar o exemplo.']
           ])}
           ${evidencia('No código acima, qual componente mostra o texto? E qual funciona como container?')}`
       })
@@ -265,7 +264,7 @@ export default function App() {
         kicker: 'Fechamento',
         titulo: 'Agora existe uma razão para estudar JavaScript',
         lead: 'Você já conseguiu produzir uma mudança visível. O próximo passo é sair de textos fixos e começar a trabalhar com valores, expressões, decisões e funções.',
-        destaque: 'Você ainda não precisa dominar React Native. Para avançar, basta reconhecer o ambiente, fazer uma alteração, salvar o projeto e identificar os elementos básicos do código.',
+        destaque: 'O próximo passo é <b>JavaScript Essencial</b>: valores, expressões, decisões e funções passam a ser necessários para deixar o aplicativo dinâmico.',
         corpo: `
           <ul class="mbb-fund-check">
             <li>Consigo explicar a diferença entre JavaScript, React e React Native.</li>
