@@ -1,3 +1,9 @@
+// Teste reversível: restaura o zoom nativo por pinça no celular sem alterar a estrutura do módulo.
+const appInventorViewport=document.querySelector('meta[name="viewport"]');
+if(appInventorViewport){
+  appInventorViewport.setAttribute('content','width=device-width, initial-scale=1.0');
+}
+
 document.addEventListener("DOMContentLoaded",()=>{
   const layout=document.getElementById("appInventorLayout");
   const content=document.querySelector(".content");
