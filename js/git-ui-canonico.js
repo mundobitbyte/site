@@ -43,11 +43,12 @@
     }
   });
 
-  // Padrão MbB — Etapa 1: Git local.
+  // Padrão MbB — Etapas 1 e 2: Git local + GitHub.
   // Destaca somente ações práticas do aluno. Comandos, conteúdo e imagens permanecem intactos.
-  // Setas/círculos só entram quando houver alvo visual inequívoco; nesta etapa não há.
+  // Setas/círculos só entram quando houver alvo visual inequívoco; nestas etapas não há.
   const ACTION_STYLE_ID = 'mbb-git-acoes-praticas-style';
-  const ACTION_RE = /\b(Não\s+(?:execute|faça|altere|apague|use|force)|Acesse|Escolha|Conclua|Mantenha|Abra|Procure|Confirme|Identifique|Confira|Entre|Substitua|Crie|Execute|Tente|Copie|Troque|Volte|Digite|Salve|Adicione|Registre|Veja|Use|Remova|Restaure|Compare|Altere|Liste|Investigue|Observe|Explique|Faça)\b/i;
+  const GIT_ACTION_RE = /\b(Não\s+(?:execute|faça|altere|apague|use|force)|Acesse|Escolha|Conclua|Mantenha|Abra|Procure|Confirme|Identifique|Confira|Entre|Substitua|Crie|Execute|Tente|Copie|Troque|Volte|Digite|Salve|Adicione|Registre|Veja|Use|Remova|Restaure|Compare|Altere|Liste|Investigue|Observe|Explique|Faça)\b/i;
+  const GITHUB_ACTION_RE = /\b(Não\s+(?:execute|faça|altere|apague|use|force)|Entre|Escolha|Crie|Confirme|Copie|Registre|Descubra|Guarde|Faça|Substitua|Confira|Atualize|Clone|Volte|Observe|Busque|Incorpore|Publique|Integre|Envie|Remova|Teste|Diagnostique|Use)\b/i;
 
   if (!document.getElementById(ACTION_STYLE_ID)) {
     const style = document.createElement('style');
@@ -56,7 +57,7 @@
     document.head.appendChild(style);
   }
 
-  function emphasizeFirstAction(root) {
+  function emphasizeFirstAction(root, actionRegex) {
     if (!root || root.querySelector?.('.mbb-git-action-key')) return;
 
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
@@ -70,7 +71,7 @@
       }
 
       const text = node.nodeValue || '';
-      const match = text.match(ACTION_RE);
+      const match = text.match(actionRegex);
       if (match && typeof match.index === 'number') {
         const before = text.slice(0, match.index);
         const action = match[0];
@@ -92,19 +93,27 @@
     }
   }
 
-  function applyGitActionEmphasis() {
-    if (typeof activeModule === 'undefined' || activeModule !== 'git') return;
+  function applyActionEmphasis() {
+    if (typeof activeModule === 'undefined') return;
+
+    const actionRegex = activeModule === 'git'
+      ? GIT_ACTION_RE
+      : activeModule === 'github'
+        ? GITHUB_ACTION_RE
+        : null;
+
+    if (!actionRegex) return;
 
     lessonEl.querySelectorAll(
       'h3, p, .note-box, .concept-box, .danger-box, .example-box, figcaption'
-    ).forEach(emphasizeFirstAction);
+    ).forEach(root => emphasizeFirstAction(root, actionRegex));
   }
 
   // O renderer troca apenas o conteúdo de #lesson a cada etapa. Assim o destaque
   // reaparece ao navegar, sem alterar os dados canônicos do módulo.
-  const lessonObserver = new MutationObserver(() => window.requestAnimationFrame(applyGitActionEmphasis));
+  const lessonObserver = new MutationObserver(() => window.requestAnimationFrame(applyActionEmphasis));
   lessonObserver.observe(lessonEl, {childList:true, subtree:false});
-  window.requestAnimationFrame(applyGitActionEmphasis);
+  window.requestAnimationFrame(applyActionEmphasis);
 
   window.__MBB_GIT_CANONICAL_SNAPSHOT__ = {
     gitSteps: JSON.parse(JSON.stringify(gitSteps)),
