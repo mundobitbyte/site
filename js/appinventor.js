@@ -158,11 +158,11 @@ document.addEventListener("DOMContentLoaded",()=>{
   });
 });
 
-// Padrão MbB — Etapas 1 e 2: Fundamentos, Interface, execução e Lógica em Blocos.
+// Padrão MbB — Etapas 1, 2 e 3: Fundamentos, Interface, execução, Lógica em Blocos e Recursos do Smartphone.
 // Destaca somente a ação que o aluno precisa executar; conteúdo conceitual, blocos e imagens permanecem intactos.
 document.addEventListener("DOMContentLoaded",()=>{
   const STYLE_ID="mbb-appinventor-acoes-praticas-style";
-  const ACTION_RE=/\b(Não\s+(?:feche|execute|altere|apague|use)|Escolha|Selecione|Altere|Ajuste|Arraste|Renomeie|Insira|Abra|Procure|Toque|Aguarde|Clique|Leia|Aponte|Preencha|Verifique|Observe|Prepare|Realize|Confirme|Teste|Volte|Troque|Personalize|Faça|Acrescente|Adicione|Explique|Peça|Anote|Tente|Centralize|Mantenha|Conecte|Diga|Digite|Retorne|Reinicie|Compare|Monte|Programe|Crie)\b/i;
+  const ACTION_RE=/\b(Não\s+(?:feche|execute|altere|apague|use)|Escolha|Selecione|Altere|Ajuste|Arraste|Renomeie|Insira|Abra|Procure|Toque|Aguarde|Clique|Leia|Aponte|Preencha|Verifique|Observe|Prepare|Realize|Confirme|Teste|Volte|Troque|Personalize|Faça|Acrescente|Adicione|Explique|Peça|Anote|Tente|Centralize|Mantenha|Conecte|Diga|Digite|Retorne|Reinicie|Compare|Monte|Programe|Crie|Use|Confira)\b/i;
 
   if(!document.getElementById(STYLE_ID)){
     const style=document.createElement("style");
@@ -231,6 +231,9 @@ document.addEventListener("DOMContentLoaded",()=>{
     "#exercicio-adivinhacao .howto li",
     "#exercicio-adivinhacao .properties li",
     "#exercicio-adivinhacao .challenge",
-    "#exercicio-adivinhacao .activity-box li"
+    "#exercicio-adivinhacao .activity-box li",
+    "#lab-voz .exercise-group > p",
+    "#lab-voz .exercise-group > ol > li",
+    "#lab-voz .challenge"
   ].join(",")).forEach(emphasizeFirstAction);
 });
