@@ -2,7 +2,7 @@
 // Carrega a reconstrução do módulo 0. Fundamentos no padrão MbB e a integra ao renderer existente.
 (function () {
   const script = document.createElement('script');
-  script.src = '../js/reactnative-fundamentos-mbb-20260925.js?v=20260926-6';
+  script.src = '../js/reactnative-fundamentos-mbb-20260925.js?v=20260926-7';
   script.async = false;
   script.onload = () => {
     if (typeof modules === 'undefined' || !modules.fundamentosMobile) return;
@@ -19,13 +19,19 @@
     ajuste.src = '../js/reactnative-fundamentos-ajuste-primeira-alteracao-20260926.js?v=20260926-1';
     ajuste.async = false;
     ajuste.onload = () => {
-      // As etapas usam HTML didático próprio e entram no fluxo customPage já suportado pelo módulo.
-      modules.fundamentosMobile.steps.forEach(step => {
-        step.customPage = true;
-      });
+      const ajusteImagem = document.createElement('script');
+      ajusteImagem.src = '../js/reactnative-fundamentos-ajuste-imagem-avatar-20260926.js?v=20260926-1';
+      ajusteImagem.async = false;
+      ajusteImagem.onload = () => {
+        // As etapas usam HTML didático próprio e entram no fluxo customPage já suportado pelo módulo.
+        modules.fundamentosMobile.steps.forEach(step => {
+          step.customPage = true;
+        });
 
-      const botao = document.getElementById('module-fundamentosMobile');
-      if (botao && botao.classList.contains('active')) botao.click();
+        const botao = document.getElementById('module-fundamentosMobile');
+        if (botao && botao.classList.contains('active')) botao.click();
+      };
+      document.head.appendChild(ajusteImagem);
     };
     document.head.appendChild(ajuste);
   };
