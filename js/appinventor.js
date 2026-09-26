@@ -158,11 +158,11 @@ document.addEventListener("DOMContentLoaded",()=>{
   });
 });
 
-// Padrão MbB — Etapas 1, 2 e 3: Fundamentos, Interface, execução, Lógica em Blocos e Recursos do Smartphone.
+// Padrão MbB — Etapas 1 a 4: Fundamentos, Interface, Lógica, Recursos, Internet, APIs e Publicação.
 // Destaca somente a ação que o aluno precisa executar; conteúdo conceitual, blocos e imagens permanecem intactos.
 document.addEventListener("DOMContentLoaded",()=>{
   const STYLE_ID="mbb-appinventor-acoes-praticas-style";
-  const ACTION_RE=/\b(Não\s+(?:feche|execute|altere|apague|use)|Escolha|Selecione|Altere|Ajuste|Arraste|Renomeie|Insira|Abra|Procure|Toque|Aguarde|Clique|Leia|Aponte|Preencha|Verifique|Observe|Prepare|Realize|Confirme|Teste|Volte|Troque|Personalize|Faça|Acrescente|Adicione|Explique|Peça|Anote|Tente|Centralize|Mantenha|Conecte|Diga|Digite|Retorne|Reinicie|Compare|Monte|Programe|Crie|Use|Confira)\b/i;
+  const ACTION_RE=/\b(Não\s+(?:feche|execute|altere|apague|use)|Escolha|Selecione|Altere|Ajuste|Arraste|Renomeie|Insira|Abra|Procure|Toque|Aguarde|Clique|Leia|Aponte|Preencha|Verifique|Observe|Prepare|Realize|Confirme|Teste|Volte|Troque|Personalize|Faça|Acrescente|Adicione|Explique|Peça|Anote|Tente|Centralize|Mantenha|Conecte|Diga|Digite|Retorne|Reinicie|Compare|Monte|Programe|Crie|Use|Confira|Aproveite|Construa|Continuar|Mostrar|Manter|Acrescentar|Ter|Consultar|Exiba|Inclua|Receba|Receber|Reaproveite|Investigue|Localize|Identifique|Pesquise|Substitua|Revise)\b/i;
 
   if(!document.getElementById(STYLE_ID)){
     const style=document.createElement("style");
@@ -234,6 +234,14 @@ document.addEventListener("DOMContentLoaded",()=>{
     "#exercicio-adivinhacao .activity-box li",
     "#lab-voz .exercise-group > p",
     "#lab-voz .exercise-group > ol > li",
-    "#lab-voz .challenge"
+    "#lab-voz .challenge",
+    "#usando-api .lampada-layout .exercise-text > p",
+    "#usando-api .exercise-group .checklist li",
+    "#usando-api .challenge li",
+    "#exercicios-api-appinventor .api-exercise-copy > p",
+    "#exercicios-api-appinventor .api-requirements li",
+    "#exercicios-api-appinventor .api-hints span",
+    "#exercicios-api-appinventor .challenge",
+    "#publicacao-app .concept-grid article p"
   ].join(",")).forEach(emphasizeFirstAction);
 });
