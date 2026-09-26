@@ -4,6 +4,23 @@ if(appInventorViewport){
   appInventorViewport.setAttribute('content','width=device-width, initial-scale=1.0');
 }
 
+// Tabelas MbB: tenta acomodar termos técnicos antes de recorrer à rolagem horizontal.
+const appInventorTableStyle=document.createElement("style");
+appInventorTableStyle.id="mbb-appinventor-table-fit-style";
+appInventorTableStyle.textContent=`
+#appInventorLayout .table-wrap{max-width:100%;overflow-x:auto}
+#appInventorLayout .content-table{width:100%;max-width:100%;table-layout:auto}
+#appInventorLayout .content-table th,
+#appInventorLayout .content-table td{white-space:normal;overflow-wrap:anywhere;word-break:normal;hyphens:auto}
+#appInventorLayout .content-table code,
+#appInventorLayout .content-table a{overflow-wrap:anywhere;word-break:break-word}
+@media(max-width:560px){
+  #appInventorLayout .content-table th,
+  #appInventorLayout .content-table td{padding:8px 7px;font-size:15px;line-height:1.4}
+}
+`;
+document.head.appendChild(appInventorTableStyle);
+
 document.addEventListener("DOMContentLoaded",()=>{
   const layout=document.getElementById("appInventorLayout");
   const content=document.querySelector(".content");
