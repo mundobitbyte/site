@@ -49,6 +49,7 @@
       .mbb-fund-flow .box strong{display:block;color:#0f3f86;margin-bottom:4px}.mbb-fund-flow .arrow{display:flex;align-items:center;font-weight:900;color:#64748b;font-size:1.2rem}
       .mbb-fund-figure{margin:16px auto;background:#fff;border:1px solid #dbe3ef;border-radius:12px;padding:10px;max-width:980px}
       .mbb-fund-figure img{display:block;width:100%;height:auto;border-radius:8px}.mbb-fund-figure figcaption{font-size:.82rem;color:#64748b;margin-top:8px;text-align:center}
+      .mbb-fund-figure--inicio{max-width:560px}
       .mbb-fund-twofig{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
       .mbb-fund-twofig .mbb-fund-figure{margin:0;max-width:none}
       .mbb-fund-action{border:1px solid #cfe7d4;background:#f2fbf4;border-radius:12px;padding:14px 16px;margin:14px 0}
@@ -83,25 +84,25 @@ export default function App() {
       id: 'fund-intro-mbb',
       menu: 'Intro',
       title: 'Antes do primeiro código',
-      objective: 'Entender o percurso sem carregar teoria antes da hora.',
+      objective: 'Conhecer o caminho inicial: React Native, Snack, primeira alteração e salvamento.',
       html: pagina({
         kicker: 'Antes de programar',
         titulo: 'Primeiro vamos nos localizar — depois fazemos o código responder',
-        lead: 'Fundamentos existe para evitar dois problemas comuns de quem começa: decorar nomes sem contexto e mexer em um ambiente sem saber o que está fazendo.',
-        destaque: 'Ao terminar esta etapa, você deverá conseguir abrir o Snack, reconhecer suas áreas, alterar um código simples, salvar o projeto e entender por que o JavaScript será o próximo passo.',
+        lead: 'Antes da primeira alteração, conheça o ambiente que será usado e veja onde o código e o resultado aparecem.',
+        destaque: 'Ao terminar esta etapa, você conseguirá abrir o Snack, reconhecer suas áreas, alterar um código simples, salvar o projeto e entender por que o JavaScript será o próximo passo.',
         corpo: `${cards([
           ['O que vamos fazer', 'Construir aplicativos com React Native.'],
           ['Onde vamos começar', 'No Snack, diretamente pelo navegador.'],
-          ['Primeira evidência', 'Você fará uma alteração pequena e verá o resultado aparecer.'],
-          ['Depois', 'Vamos estudar o JavaScript necessário para avançar.']
-        ])}${evidencia('Você consegue explicar, em uma frase, por que Fundamentos vem antes do JS Essencial?')}`
+          ['Primeira alteração', 'Você mudará uma linha e verá o resultado aparecer.'],
+          ['Próximo passo', 'Vamos estudar o JavaScript necessário para avançar.']
+        ])}${evidencia('Ao final, você deverá reconhecer o ambiente, fazer uma alteração e saber onde encontrar o projeto salvo.')}`
       })
     },
     {
       id: 'fund-reactnative-mbb',
       menu: '1. React Native',
       title: '1 — Onde o React Native entra?',
-      objective: 'Distinguir JavaScript, React e React Native sem antecipar conceitos que ainda não são necessários.',
+      objective: 'Distinguir JavaScript, React e React Native.',
       html: pagina({
         kicker: 'Um mapa simples',
         titulo: 'JavaScript, React e React Native trabalham juntos — mas não são a mesma coisa',
@@ -121,8 +122,8 @@ export default function App() {
             ['Nativo', 'Usa diretamente as tecnologias específicas de uma plataforma.'],
             ['Cross-platform', 'Permite compartilhar grande parte da base de desenvolvimento entre plataformas.']
           ])}
-          <p class="mbb-fund-small">Android, iOS e estratégias nativas serão aprofundados quando algum problema do percurso exigir isso.</p>
-          ${evidencia('Qual deles é a linguagem: JavaScript, React ou React Native? Se a resposta é JavaScript, a ideia principal desta página fechou.')}`
+          <p class="mbb-fund-small">Para começar, basta distinguir o papel de JavaScript, React e React Native.</p>
+          ${evidencia('Qual deles é a linguagem: JavaScript, React ou React Native?')}`
       })
     },
     {
@@ -131,16 +132,16 @@ export default function App() {
       title: '2 — Nosso primeiro laboratório: Snack',
       objective: 'Entender por que começaremos no navegador e onde o Expo entra.',
       html: pagina({
-        kicker: 'Uma necessidade concreta',
-        titulo: 'Queremos programar agora — sem transformar instalação em primeira aula',
-        lead: 'Para o primeiro contato, precisamos de um ambiente que permita escrever código e observar o resultado sem exigir uma configuração local extensa.',
+        kicker: 'Começando pelo navegador',
+        titulo: 'Um laboratório React Native no navegador',
+        lead: 'O Snack permite escrever código React Native e observar o resultado sem instalar um ambiente local completo.',
         destaque: 'Usaremos o Snack, uma ferramenta online do ecossistema Expo. Expo é o ecossistema de ferramentas e serviços; Snack é o laboratório online que utilizaremos agora.',
         corpo: `${cards([
           ['Snack', 'Permite experimentar React Native diretamente no navegador.'],
           ['Expo', 'É o ecossistema maior ao qual o Snack pertence.'],
-          ['Agora', 'O foco fica no código, no resultado e nos conceitos.'],
-          ['Depois', 'Ferramentas locais entram quando houver uma necessidade real para elas.']
-        ])}${evidencia('Se você consegue completar “Expo é o ecossistema; Snack é...”, já sabe o suficiente para seguir.')}`
+          ['Código e resultado', 'Você escreve, observa o preview e compara o que mudou.'],
+          ['Ambiente local', 'Será apresentado quando passar a ser necessário.']
+        ])}${evidencia('Complete: Expo é o ecossistema; Snack é ______.')}`
       })
     },
     {
@@ -149,10 +150,10 @@ export default function App() {
       title: '3 — Conhecendo o ambiente do Snack',
       objective: 'Reconhecer as regiões principais antes de modificar qualquer código.',
       html: pagina({
-        kicker: 'Observe antes de mexer',
+        kicker: 'Conheça o ambiente',
         titulo: 'Estrutura do projeto, editor e preview',
-        lead: 'Acesse snack.expo.dev. Não tente compreender todos os arquivos ou comandos. Primeiro localize onde cada tipo de coisa acontece.',
-        destaque: 'A aparência do Snack pode sofrer pequenos ajustes ao longo do tempo. O que importa é reconhecer a estrutura do projeto, o editor de código e a área de execução.',
+        lead: 'Acesse snack.expo.dev e localize três áreas: estrutura do projeto, editor de código e preview.',
+        destaque: 'A interface pode mudar um pouco ao longo do tempo, mas essas três referências continuam guiando o trabalho.',
         corpo: `
           ${figura('../img/reactnative/tela_do_snack_expo_8803449d.webp', 'Tela do Snack com estrutura do projeto, editor e preview', 'Ambiente do Snack: estrutura do projeto, editor de código e preview.')}
           ${cards([
@@ -160,8 +161,8 @@ export default function App() {
             ['2. Editor', 'É onde abrimos um arquivo e modificamos seu código.'],
             ['3. Preview', 'É onde observamos a execução e verificamos o efeito das alterações.']
           ])}
-          <div class="mbb-fund-action"><strong>Faça agora</strong>Abra o Snack e localize as três regiões. Não altere nada ainda.</div>
-          ${evidencia('Se eu disser “mude o App.js e observe o resultado”, você já sabe onde clicar e para onde olhar?')}`
+          <div class="mbb-fund-action"><strong>Faça agora</strong>Abra o Snack e localize as três regiões.</div>
+          ${evidencia('Localize App.js no projeto e identifique onde o resultado aparece no preview.')}`
       })
     },
     {
@@ -171,10 +172,14 @@ export default function App() {
       objective: 'Realizar uma alteração pequena, previsível e verificável no App.js.',
       html: pagina({
         kicker: 'Primeiro experimento',
-        titulo: 'Antes de estudar sintaxe, prove que uma mudança no código altera a interface',
-        lead: 'O conteúdo inicial de um Snack pode mudar com o tempo. Para que todos partam do mesmo ponto, vamos usar um código-base mínimo apenas neste primeiro experimento.',
-        destaque: 'Abra <b>App.js</b>. Substitua o conteúdo atual pelo código-base abaixo. Neste momento, não tente memorizar nem explicar todas as linhas.',
+        titulo: 'Abra o App.js e faça a primeira alteração',
+        lead: 'O Snack pode abrir com exemplos diferentes. Use a tela abaixo como referência para reconhecer o estado inicial antes da primeira alteração.',
+        destaque: 'Abra <b>App.js</b>. Em seguida, substitua o conteúdo atual pelo código-base abaixo para partir do mesmo ponto.',
         corpo: `
+          <figure class="mbb-fund-figure mbb-fund-figure--inicio">
+            <img src="../img/reactnative/fundamentos/snack-inicial-livro.webp" alt="Ambiente inicial do Snack antes do login, com App.js aberto e preview à direita" loading="lazy" decoding="async">
+            <figcaption>Tela inicial do Snack usada como referência antes da primeira alteração.</figcaption>
+          </figure>
           <pre class="mbb-fund-code">${codigoBase.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
           <div class="mbb-fund-action"><strong>Agora altere uma única linha</strong>
             <ol>
@@ -188,22 +193,22 @@ export default function App() {
             <div><strong>Antes</strong><code>&lt;Text&gt;Olá, Snack!&lt;/Text&gt;</code></div>
             <div><strong>Depois</strong><code>&lt;Text&gt;Meu primeiro aplicativo&lt;/Text&gt;</code></div>
           </div>
-          ${evidencia('O preview passou a mostrar “Meu primeiro aplicativo”? Se sim, você acabou de comprovar a relação código → execução → interface.')}`
+          ${evidencia('O preview passou a mostrar “Meu primeiro aplicativo”? Isso confirma que a alteração no código foi refletida na interface.')}`
       })
     },
     {
       id: 'fund-salvar-retomar-mbb',
       menu: '5. Salvar',
-      title: '5 — Agora existe algo que vale a pena guardar',
+      title: '5 — Salve o projeto para continuar depois',
       objective: 'Entrar na conta, salvar o projeto e confirmar que ele pode ser retomado.',
       html: pagina({
-        kicker: 'A necessidade surgiu',
-        titulo: 'Você modificou o projeto. Como não perder o que fez?',
-        lead: 'Agora login e salvamento fazem sentido: existe um trabalho concreto que você quer preservar e reencontrar depois.',
+        kicker: 'Salvando o trabalho',
+        titulo: 'Você modificou o projeto. Agora vamos guardá-lo',
+        lead: 'Depois da primeira alteração, entre na conta e salve o projeto para poder retomá-lo depois.',
         destaque: '<strong>Login e Save não são a mesma coisa.</strong> O login identifica sua conta; Save registra o projeto para que ele possa ser retomado.',
         corpo: `
           <div class="mbb-fund-twofig">
-            ${figura('../img/reactnative/fundamentos/snack-menu-avatar.webp', 'Menu do avatar do Snack com acesso a My Snacks', 'Depois do login, o menu do avatar permite acessar My Snacks.')}
+            ${figura('../img/reactnative/fundamentos/snack-menu-avatar-nitido.webp', 'Menu do avatar do Snack com acesso a My Snacks', 'Depois do login, o menu do avatar permite acessar My Snacks.')}
             ${figura('../img/reactnative/fundamentos/snack-save-modal.webp', 'Janela de salvamento de um projeto no Snack', 'Ao salvar, dê ao projeto um nome simples e reconhecível.')}
           </div>
           <div class="mbb-fund-action"><strong>Faça agora</strong>
@@ -216,18 +221,18 @@ export default function App() {
             </ol>
           </div>
           ${figura('../img/reactnative/fundamentos/snack-my-snacks-vazio.webp', 'Área My Snacks em uma conta sem projetos anteriores', 'Em uma conta nova, My Snacks pode aparecer vazio antes do primeiro salvamento.')}
-          ${evidencia('Você consegue fechar o projeto, voltar a My Snacks e saber onde procurá-lo? Então o ciclo abrir → alterar → salvar → retomar está completo.')}`
+          ${evidencia('Feche o projeto, volte a My Snacks e localize o projeto salvo.')}`
       })
     },
     {
       id: 'fund-o-que-apareceu-mbb',
       menu: '6. O que apareceu?',
-      title: '6 — Dê nome ao que você já usou',
+      title: '6 — O que são JavaScript, JSX, View e Text?',
       objective: 'Reconhecer JavaScript, JSX, View e Text depois de já ter visto o código funcionar.',
       html: pagina({
-        kicker: 'Conceito depois da experiência',
-        titulo: 'Agora os nomes técnicos têm onde se encaixar',
-        lead: 'Você já abriu App.js, usou um código-base e mudou algo que apareceu no preview. Só agora vamos nomear as peças principais daquele exemplo.',
+        kicker: 'Lendo o código',
+        titulo: 'Identifique as peças que já apareceram',
+        lead: 'No exemplo que funcionou, cada parte tem um papel. Agora identifique os nomes que aparecerão ao longo do módulo.',
         destaque: 'JSX é uma sintaxe usada com JavaScript para descrever a interface. No React Native, <b>View</b> funciona como container e <b>Text</b> exibe texto.',
         corpo: `
           <pre class="mbb-fund-code">import React from 'react';
@@ -246,21 +251,21 @@ export default function App() {
             ['View', 'Agrupa partes da interface.'],
             ['Text', 'Mostra texto na interface.'],
             ['App.js', 'É o arquivo em que começamos a ler e modificar o exemplo.'],
-            ['Por enquanto', 'Reconhecer é suficiente. O aprofundamento entra quando houver necessidade.']
+            ['Nesta etapa', 'Basta reconhecer esses elementos no código.']
           ])}
-          ${evidencia('No código acima, qual componente mostra o texto? E qual funciona como container? Se você respondeu Text e View, a leitura básica já começou.')}`
+          ${evidencia('No código acima, qual componente mostra o texto? E qual funciona como container?')}`
       })
     },
     {
       id: 'fund-fechamento-mbb',
       menu: '7. Confira',
-      title: '7 — Confira antes de seguir',
-      objective: 'Consolidar somente o necessário para avançar ao JavaScript Essencial.',
+      title: '7 — Próximo passo: JavaScript Essencial',
+      objective: 'Confirmar os conhecimentos necessários antes do JS Essencial.',
       html: pagina({
         kicker: 'Fechamento',
         titulo: 'Agora existe uma razão para estudar JavaScript',
-        lead: 'Você já conseguiu produzir uma mudança visível. O próximo passo é sair de textos fixos e começar a trabalhar com valores, expressões, decisões e funções. É por isso que o JS Essencial vem agora.',
-        destaque: 'Fundamentos não termina porque você “aprendeu React Native”. Ele termina porque você já sabe onde está, consegue experimentar e entende o que precisa aprender em seguida.',
+        lead: 'Você já conseguiu produzir uma mudança visível. O próximo passo é sair de textos fixos e começar a trabalhar com valores, expressões, decisões e funções.',
+        destaque: 'Você ainda não precisa dominar React Native. Para avançar, basta reconhecer o ambiente, fazer uma alteração, salvar o projeto e identificar os elementos básicos do código.',
         corpo: `
           <ul class="mbb-fund-check">
             <li>Consigo explicar a diferença entre JavaScript, React e React Native.</li>
@@ -269,10 +274,10 @@ export default function App() {
             <li>Consigo abrir App.js, usar o código-base e fazer uma alteração visível.</li>
             <li>Entendi que login e salvamento são ações diferentes.</li>
             <li>Consigo localizar novamente um projeto em My Snacks.</li>
-            <li>Reconheço JSX, View e Text sem precisar dominá-los ainda.</li>
+            <li>Reconheço JSX, View e Text.</li>
             <li>Entendo por que o próximo passo é JS Essencial.</li>
           </ul>
-          ${evidencia('Se algum item ainda não estiver claro, volte somente à etapa correspondente. Não é necessário repetir o módulo inteiro.')}`
+          ${evidencia('Se algum item ainda não estiver claro, volte à etapa correspondente.')}`
       })
     }
   ];
