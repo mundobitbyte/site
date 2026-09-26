@@ -2,7 +2,7 @@
 // Carrega a reconstrução do módulo 0. Fundamentos no padrão MbB e a integra ao renderer existente.
 (function () {
   const script = document.createElement('script');
-  script.src = '../js/reactnative-fundamentos-mbb-20260925.js?v=20260925-2';
+  script.src = '../js/reactnative-fundamentos-mbb-20260925.js?v=20260926-3';
   script.async = false;
   script.onload = () => {
     if (typeof modules === 'undefined' || !modules.fundamentosMobile) return;
