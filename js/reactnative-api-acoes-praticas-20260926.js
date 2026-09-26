@@ -114,3 +114,13 @@
 
   apply();
 })();
+
+// Encadeia a Etapa 5 sem alterar a estrutura principal da página.
+(() => {
+  if (document.querySelector('script[data-mbb-nav-actions]')) return;
+  const script = document.createElement('script');
+  script.src = '../js/reactnative-navegacao-acoes-praticas-20260926.js?v=20260926-1';
+  script.dataset.mbbNavActions = 'true';
+  script.async = false;
+  document.body.appendChild(script);
+})();
