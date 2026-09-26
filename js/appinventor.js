@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 // Destaca somente a ação que o aluno precisa executar; conteúdo conceitual, blocos e imagens permanecem intactos.
 document.addEventListener("DOMContentLoaded",()=>{
   const STYLE_ID="mbb-appinventor-acoes-praticas-style";
-  const ACTION_RE=/\b(Não\s+(?:feche|execute|altere|apague|use)|Escolha|Selecione|Altere|Ajuste|Arraste|Renomeie|Insira|Abra|Procure|Toque|Aguarde|Clique|Leia|Aponte|Preencha|Verifique|Observe|Prepare|Realize|Confirme|Teste|Volte|Troque|Personalize|Faça|Acrescente|Adicione|Explique|Peça|Anote|Tente|Centralize|Mantenha|Conecte|Diga|Digite|Retorne|Reinicie|Compare|Monte|Programe|Crie|Use|Confira|Aproveite|Construa|Continuar|Mostrar|Manter|Acrescentar|Ter|Consultar|Exiba|Inclua|Receba|Receber|Reaproveite|Investigue|Localize|Identifique|Pesquise|Substitua|Revise)\b/i;
+  const ACTION_RE=/\b(Não\s+(?:feche|execute|altere|apague|use)|Escolha|Selecione|Altere|Ajuste|Arraste|Renomeie|Insira|Abra|Procure|Toque|Aguarde|Clique|Leia|Aponte|Preencha|Verifique|Observe|Prepare|Realize|Confirme|Teste|Volte|Troque|Personalize|Faça|Acrescente|Adicione|Explique|Peça|Anote|Tente|Centralize|Mantenha|Conecte|Diga|Digite|Retorne|Reinicie|Compare|Monte|Programe|Crie|Use|Confira|Aproveite|Construa|Continuar|Mostrar|Manter|Acrescentar|Ter|Consultar|Exiba|Inclua|Receba|Receber|Reaproveite|Investigue|Localize|Identifique|Pesquise|Substitua|Revise|Escreva|Desenhe|Deixe)\b/i;
 
   if(!document.getElementById(STYLE_ID)){
     const style=document.createElement("style");
@@ -216,6 +216,10 @@ document.addEventListener("DOMContentLoaded",()=>{
     "#blocos .properties li",
     "#blocos .challenge",
     "#blocos .activity-box li",
+    "#exercicios > .exercise-detail .exercise-text > p",
+    "#exercicios > .exercise-detail .challenge",
+    "#exercicios > .exercise-group > ol > li",
+    "#mini-projetos-appinventor .lampada-layout .exercise-text > p:first-of-type",
     "#exercicio-lampada .howto li",
     "#exercicio-lampada .properties li",
     "#exercicio-lampada .challenge",
