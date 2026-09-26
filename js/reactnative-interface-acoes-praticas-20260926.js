@@ -4,7 +4,7 @@
 // capturas do ambiente que justifiquem novas setas/círculos.
 (() => {
   const STYLE_ID = 'mbb-interface-acoes-praticas-style';
-  const MAX_TRIES = 100;
+  const MAX_TRIES = 240;
   let tries = 0;
 
   const actionBox = (acao, contexto = '') => `
