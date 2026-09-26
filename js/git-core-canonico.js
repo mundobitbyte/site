@@ -56,6 +56,7 @@ function showStep(id, updateHash = true){
   lesson.scrollTop = 0;
   window.scrollTo({top:0, behavior:'auto'});
   if(updateHash) history.replaceState(null, '', `#${activeModule}-${step.id}`);
+  window.dispatchEvent(new CustomEvent('mbb:git-etapa', { detail: { modulo: activeModule, etapa: step.id } }));
 }
 
 function lessonFooter(id){

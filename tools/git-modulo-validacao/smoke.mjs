@@ -26,6 +26,12 @@ const canonicalScripts = [
   'git-core-canonico.js',
   'git-ui-canonico.js'
 ];
+const optionalPilotScripts = [
+  'firebase-config.js',
+  'catalogo-core.js',
+  'conta.js',
+  'piloto-git.js'
+];
 
 const failures = [];
 const assert = (condition, message) => {
@@ -67,7 +73,10 @@ try {
   const scripts = await page.$$eval('script[src]', elements =>
     elements.map(element => new URL(element.src).pathname.split('/').pop())
   );
-  assert(JSON.stringify(scripts) === JSON.stringify(canonicalScripts), `Scripts carregados divergem da arquitetura canônica: ${scripts.join(', ')}`);
+  assert(JSON.stringify(scripts) === JSON.stringify([...canonicalScripts, ...optionalPilotScripts]),
+    `Scripts carregados divergem da arquitetura canônica e do piloto: ${scripts.join(', ')}`);
+  await fs.mkdir('artifacts/meu-mbb', {recursive: true});
+  await page.screenshot({path: 'artifacts/meu-mbb/git-desktop.png', fullPage: true});
 
   const snapshotCounts = await page.evaluate(() => ({
     git: window.__MBB_GIT_CANONICAL_SNAPSHOT__.gitSteps.length,
@@ -153,6 +162,53 @@ try {
   assert(mobile.scrollWidth <= mobile.innerWidth + 2, `Layout móvel criou rolagem horizontal: ${mobile.scrollWidth}px para ${mobile.innerWidth}px.`);
   assert(mobile.buttons === 4, `Layout móvel perdeu botões de módulo: ${mobile.buttons}.`);
   assert(Boolean(mobile.title), 'Layout móvel não renderizou o título da etapa.');
+  await page.screenshot({path: 'artifacts/meu-mbb/git-celular.png', fullPage: true});
+
+  await page.setViewport({width: 1366, height: 900});
+  await page.goto(`${base}/meu-mbb/pesquisar.html`, {waitUntil: 'networkidle0'});
+  await page.type('#consulta', 'git status');
+  await page.waitForFunction(() => document.querySelectorAll('.mbb-resultado').length > 0);
+  const resultados = await page.$$eval('.mbb-resultado a', links => links.map(link => link.getAttribute('href')));
+  assert(resultados[0]?.includes('pages/git.html#git-5'), 'Pesquisa não priorizou a etapa principal de git status.');
+  assert(resultados.some(href => href.includes('pages/git.html#git-5')), 'Pesquisa não encontrou a etapa de git status.');
+  await page.screenshot({path: 'artifacts/meu-mbb/pesquisa-desktop.png', fullPage: true});
+  await page.setViewport({width: 390, height: 844, deviceScaleFactor: 1});
+  const larguraBusca = await page.evaluate(() => ({tela: innerWidth, pagina: document.documentElement.scrollWidth}));
+  assert(larguraBusca.pagina <= larguraBusca.tela + 2, 'Pesquisa criou rolagem horizontal no celular.');
+  await page.screenshot({path: 'artifacts/meu-mbb/pesquisa-celular.png', fullPage: true});
+  await page.goto(`${base}/meu-mbb/entrar.html`, {waitUntil: 'networkidle0'});
+  assert(await page.$('#form-entrar') !== null && await page.$('#form-criar') !== null, 'Formulários de conta ausentes.');
+  await page.screenshot({path: 'artifacts/meu-mbb/entrar-celular.png', fullPage: true});
+  await page.setViewport({width: 1366, height: 900});
+  await page.screenshot({path: 'artifacts/meu-mbb/entrar-desktop.png', fullPage: true});
+  await page.setViewport({width: 390, height: 844, deviceScaleFactor: 1});
+
+  // Interrompe a camada Firebase e repete o acesso público sem fazer login.
+  await page.setRequestInterception(true);
+  page.on('request', request => {
+    if (request.url().includes('gstatic.com/firebasejs')) request.abort();
+    else request.continue();
+  });
+  await page.goto(`${base}/index.html`, {waitUntil: 'networkidle0'});
+  assert(await page.$('#areas') !== null, 'Home falhou com Firebase indisponível.');
+  assert(await page.$('a[href="meu-mbb/pesquisar.html"]') !== null, 'Home perdeu a pesquisa pública.');
+  const larguraHome = await page.evaluate(() => ({tela: innerWidth, pagina: document.documentElement.scrollWidth}));
+  assert(larguraHome.pagina <= larguraHome.tela + 2, 'Home criou rolagem horizontal no celular.');
+  await page.screenshot({path: 'artifacts/meu-mbb/home-celular-firebase-indisponivel.png', fullPage: true});
+  await page.click('[data-area-link="programacao-desenvolvimento"]');
+  assert(await page.$eval('#programacao-desenvolvimento', element => !element.hidden), 'Home não abriu área de Programação.');
+  assert(await page.$('#programacao-desenvolvimento a[href="pages/reactnative.html"]') !== null,
+    'Home perdeu módulo React Native.');
+  await page.click('#programacao-desenvolvimento [data-back]');
+  await page.waitForFunction(() => !document.getElementById('areas').hidden);
+  await page.goto(`${base}/pages/git.html#git-3`, {waitUntil: 'networkidle0'});
+  assert((await page.$eval('#lesson', element => element.textContent)).includes('safe.directory'), 'Git não abriu sem Firebase.');
+  await page.goto(`${base}/meu-mbb/pesquisar.html`, {waitUntil: 'networkidle0'});
+  await page.type('#consulta', 'pasta de rede');
+  await page.waitForFunction(() => document.querySelectorAll('.mbb-resultado').length > 0);
+  assert((await page.$$eval('.mbb-resultado a', links => links.map(link => link.href))).some(href => href.includes('#git-3')),
+    'Pesquisa pública falhou com Firebase indisponível.');
+  await page.setRequestInterception(false);
 
   assert(pageErrors.length === 0, `Erros JavaScript no navegador: ${pageErrors.join(' | ')}`);
 
