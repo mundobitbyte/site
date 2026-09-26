@@ -158,11 +158,11 @@ document.addEventListener("DOMContentLoaded",()=>{
   });
 });
 
-// Padrão MbB — Etapa 1: Fundamentos, construção da Interface e execução no Companion.
-// Destaca somente a ação que o aluno precisa executar; conteúdo conceitual e imagens permanecem intactos.
+// Padrão MbB — Etapas 1 e 2: Fundamentos, Interface, execução e Lógica em Blocos.
+// Destaca somente a ação que o aluno precisa executar; conteúdo conceitual, blocos e imagens permanecem intactos.
 document.addEventListener("DOMContentLoaded",()=>{
   const STYLE_ID="mbb-appinventor-acoes-praticas-style";
-  const ACTION_RE=/\b(Não\s+(?:feche|execute|altere|apague|use)|Escolha|Selecione|Altere|Ajuste|Arraste|Renomeie|Insira|Abra|Procure|Toque|Aguarde|Clique|Leia|Aponte|Preencha|Verifique|Observe|Prepare|Realize|Confirme|Teste|Volte)\b/i;
+  const ACTION_RE=/\b(Não\s+(?:feche|execute|altere|apague|use)|Escolha|Selecione|Altere|Ajuste|Arraste|Renomeie|Insira|Abra|Procure|Toque|Aguarde|Clique|Leia|Aponte|Preencha|Verifique|Observe|Prepare|Realize|Confirme|Teste|Volte|Troque|Personalize|Faça|Acrescente|Adicione|Explique|Peça|Anote|Tente|Centralize|Mantenha|Conecte|Diga|Digite|Retorne|Reinicie|Compare|Monte|Programe|Crie)\b/i;
 
   if(!document.getElementById(STYLE_ID)){
     const style=document.createElement("style");
@@ -211,6 +211,26 @@ document.addEventListener("DOMContentLoaded",()=>{
     "#fundamentos .activity-box p",
     "#interface .howto li",
     "#execucao .howto li",
-    "#execucao .properties li"
+    "#execucao .properties li",
+    "#blocos .howto li",
+    "#blocos .properties li",
+    "#blocos .challenge",
+    "#blocos .activity-box li",
+    "#exercicio-lampada .howto li",
+    "#exercicio-lampada .properties li",
+    "#exercicio-lampada .challenge",
+    "#exercicio-lampada .activity-box li",
+    "#exercicio-login .howto li",
+    "#exercicio-login .properties li",
+    "#exercicio-login .challenge",
+    "#exercicio-login .activity-box li",
+    "#exercicio-imc .howto li",
+    "#exercicio-imc .properties li",
+    "#exercicio-imc .challenge",
+    "#exercicio-imc .activity-box li",
+    "#exercicio-adivinhacao .howto li",
+    "#exercicio-adivinhacao .properties li",
+    "#exercicio-adivinhacao .challenge",
+    "#exercicio-adivinhacao .activity-box li"
   ].join(",")).forEach(emphasizeFirstAction);
 });
