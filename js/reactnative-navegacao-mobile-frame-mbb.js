@@ -122,7 +122,7 @@
       }
       const fix = document.createElement('script');
       fix.id = FIX_ID;
-      fix.src = '../js/reactnative-mbb-20260925-correcao.js?v=20260926-1';
+      fix.src = '../js/reactnative-mbb-20260925-correcao.js?v=20260926-2';
       fix.async = false;
       fix.onload = loadFullExercises;
       document.body.appendChild(fix);
