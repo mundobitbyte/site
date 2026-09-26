@@ -20,7 +20,7 @@
     ajuste.async = false;
     ajuste.onload = () => {
       const ajusteImagem = document.createElement('script');
-      ajusteImagem.src = '../js/reactnative-fundamentos-ajuste-imagem-avatar-20260926.js?v=20260926-1';
+      ajusteImagem.src = '../js/reactnative-fundamentos-ajuste-imagem-avatar-20260926.js?v=20260926-3';
       ajusteImagem.async = false;
       ajusteImagem.onload = () => {
         // As etapas usam HTML didático próprio e entram no fluxo customPage já suportado pelo módulo.
