@@ -155,5 +155,48 @@ agora usamos os mesmos dados para tomar uma decisão.`;
     decisao.note = 'O operador ternário ficará para quando uma escolha curta fizer sentido dentro da interface; aqui o if/else deixa a regra mais clara para o iniciante.';
   }
 
+  // Padrão MbB: ações práticas ficam visualmente destacadas.
+  const porId = id => js.steps?.find(step => step.id === id);
+  const acrescentarAcao = (id, acao) => {
+    const step = porId(id);
+    if (!step) return;
+    const notaOriginal = typeof step.note === 'string' ? step.note : '';
+    if (notaOriginal.includes('mbb-js-action')) return;
+    step.note = `
+      <div class="mbb-js-action">
+        <strong>Faça agora</strong>
+        <span>${acao}</span>
+      </div>
+      ${notaOriginal ? `<div class="mbb-js-note-context"><strong>Observe:</strong> ${notaOriginal}</div>` : ''}
+    `;
+  };
+
+  acrescentarAcao('js-dados-mbb', '<b>Altere</b> o valor inicial de <code>quantidadeContatos</code> de <code>1</code> para <code>2</code> e <b>observe o preview</b>: o total passa a <code>3</code>.');
+  acrescentarAcao('js-expressoes-mbb', '<b>Altere</b> <code>quantidade</code> de <code>8</code> para <code>9</code> e <b>observe</b> <code>vagas</code> passar a <code>1</code>.');
+  acrescentarAcao('js-if-mbb', '<b>Altere</b> <code>quantidade</code> para <code>10</code> e <b>observe o preview</b>: a mensagem passa para <code>Limite atingido</code>.');
+  acrescentarAcao('js-funcoes-mbb', '<b>Altere</b> o nome enviado para a função <code>identificarContato</code> e <b>observe</b> o resultado no preview.');
+  acrescentarAcao('js-arrow-template-mbb', '<b>Altere</b> o nome usado no exemplo e <b>observe</b> a frase produzida pela arrow function e pelo template literal.');
+  acrescentarAcao('js-objeto-mbb', '<b>Altere</b> o valor da propriedade <code>nome</code> do objeto e <b>observe</b> a mudança no preview.');
+  acrescentarAcao('js-array-mbb', '<b>Adicione</b> <code>Diego</code> ao array de nomes e <b>observe</b> o total passar de <code>3</code> para <code>4</code>.');
+  acrescentarAcao('js-array-objetos-mbb', '<b>Altere</b> o nome ou o telefone do primeiro contato do array e <b>observe</b> a informação atualizada no preview.');
+  acrescentarAcao('js-map-mbb', '<b>Altere</b> o nome de um contato na lista de origem e <b>observe</b> o resultado produzido por <code>map()</code>.');
+  acrescentarAcao('js-desestruturacao-mbb', '<b>Altere</b> uma propriedade do objeto de origem e <b>observe</b> o valor usado após a desestruturação.');
+  acrescentarAcao('js-spread-mbb', '<b>Altere</b> o valor atualizado na cópia do objeto e <b>observe</b> o novo objeto criado com spread.');
+
+  if (!document.getElementById('mbb-js-acoes-praticas-style')) {
+    const style = document.createElement('style');
+    style.id = 'mbb-js-acoes-praticas-style';
+    style.textContent = `
+      .note:has(.mbb-js-action)>strong:first-child{display:none}
+      .mbb-js-action{display:grid;gap:5px;margin:0 0 10px;padding:11px 12px;border:1px solid #cfe7d4;border-radius:10px;background:#f2fbf4;color:#24422c}
+      .mbb-js-action>strong{color:#176b34}
+      .mbb-js-action b{font-weight:800;color:#123b73}
+      .mbb-js-action code{font-weight:700}
+      .mbb-js-note-context{margin-top:6px;color:#475569}
+      .mbb-js-note-context>strong{color:#475569}
+    `;
+    document.head.appendChild(style);
+  }
+
   if (typeof renderStepMenu === 'function') renderStepMenu();
 })();
