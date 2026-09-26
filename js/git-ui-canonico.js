@@ -43,12 +43,14 @@
     }
   });
 
-  // Padrão MbB — Etapas 1 e 2: Git local + GitHub.
-  // Destaca somente ações práticas do aluno. Comandos, conteúdo e imagens permanecem intactos.
-  // Setas/círculos só entram quando houver alvo visual inequívoco; nestas etapas não há.
+  // Padrão MbB — Git local + GitHub + Exercícios + Comandos/Checkpoint.
+  // Destaca somente ações práticas do aluno. Comandos, conteúdo, respostas e imagens permanecem intactos.
+  // Setas/círculos só entram quando houver alvo visual inequívoco; não há capturas adequadas nestas etapas.
   const ACTION_STYLE_ID = 'mbb-git-acoes-praticas-style';
   const GIT_ACTION_RE = /\b(Não\s+(?:execute|faça|altere|apague|use|force)|Acesse|Escolha|Conclua|Mantenha|Abra|Procure|Confirme|Identifique|Confira|Entre|Substitua|Crie|Execute|Tente|Copie|Troque|Volte|Digite|Salve|Adicione|Registre|Veja|Use|Remova|Restaure|Compare|Altere|Liste|Investigue|Observe|Explique|Faça)\b/i;
   const GITHUB_ACTION_RE = /\b(Não\s+(?:execute|faça|altere|apague|use|force)|Entre|Escolha|Crie|Confirme|Copie|Registre|Descubra|Guarde|Faça|Substitua|Confira|Atualize|Clone|Volte|Observe|Busque|Incorpore|Publique|Integre|Envie|Remova|Teste|Diagnostique|Use)\b/i;
+  const EXERCISE_ACTION_RE = /\b(Não\s+(?:execute|faça|altere|apague|use|force)|Use|Crie|Entre|Confirme|Transforme|Confira|Prepare|Registre|Acrescente|Descubra|Consulte|Veja|Faça|Corrija|Descarte|Retire|Localize|Recupere|Volte|Envie|Receba|Clone|Sincronize|Publique|Integre|Teste|Compare|Escolha|Explique|Pressione|Copie|Troque|Preserve|Execute|Substitua|Anote|Busque|Incorpore)\b/i;
+  const COMMAND_ACTION_RE = /\b(Não\s+(?:execute|faça|altere|apague|use|force)|Use|Abra|Leia|Copie|Cole|Siga|Confira|Substitua|Pare|Vá|Escolha|Troque|Execute|Adapte|Informe|Digite|Confirme|Compare|Remova)\b/i;
 
   if (!document.getElementById(ACTION_STYLE_ID)) {
     const style = document.createElement('style');
@@ -96,17 +98,30 @@
   function applyActionEmphasis() {
     if (typeof activeModule === 'undefined') return;
 
-    const actionRegex = activeModule === 'git'
-      ? GIT_ACTION_RE
-      : activeModule === 'github'
-        ? GITHUB_ACTION_RE
-        : null;
+    const configs = {
+      git: {
+        regex: GIT_ACTION_RE,
+        selector: 'h3, p, .note-box, .concept-box, .danger-box, .example-box, figcaption'
+      },
+      github: {
+        regex: GITHUB_ACTION_RE,
+        selector: 'h3, p, .note-box, .concept-box, .danger-box, .example-box, figcaption'
+      },
+      exercicios: {
+        regex: EXERCISE_ACTION_RE,
+        selector: '.task-box p, .note-box, .concept-box'
+      },
+      comandos: {
+        regex: COMMAND_ACTION_RE,
+        selector: '.commands-hero p, .command-ref-tip, .command-ref-body p, .command-ref-warning, .note-box, .concept-box'
+      }
+    };
 
-    if (!actionRegex) return;
+    const config = configs[activeModule];
+    if (!config) return;
 
-    lessonEl.querySelectorAll(
-      'h3, p, .note-box, .concept-box, .danger-box, .example-box, figcaption'
-    ).forEach(root => emphasizeFirstAction(root, actionRegex));
+    lessonEl.querySelectorAll(config.selector)
+      .forEach(root => emphasizeFirstAction(root, config.regex));
   }
 
   // O renderer troca apenas o conteúdo de #lesson a cada etapa. Assim o destaque
