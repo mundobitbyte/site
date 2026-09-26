@@ -157,3 +157,60 @@ document.addEventListener("DOMContentLoaded",()=>{
     });
   });
 });
+
+// Padrão MbB — Etapa 1: Fundamentos, construção da Interface e execução no Companion.
+// Destaca somente a ação que o aluno precisa executar; conteúdo conceitual e imagens permanecem intactos.
+document.addEventListener("DOMContentLoaded",()=>{
+  const STYLE_ID="mbb-appinventor-acoes-praticas-style";
+  const ACTION_RE=/\b(Não\s+(?:feche|execute|altere|apague|use)|Escolha|Selecione|Altere|Ajuste|Arraste|Renomeie|Insira|Abra|Procure|Toque|Aguarde|Clique|Leia|Aponte|Preencha|Verifique|Observe|Prepare|Realize|Confirme|Teste|Volte)\b/i;
+
+  if(!document.getElementById(STYLE_ID)){
+    const style=document.createElement("style");
+    style.id=STYLE_ID;
+    style.textContent="#appInventorLayout .mbb-appinventor-action-key{font-weight:800!important;color:#123b73}";
+    document.head.appendChild(style);
+  }
+
+  function emphasizeFirstAction(root){
+    if(!root || root.querySelector?.(".mbb-appinventor-action-key")) return;
+
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    let node=walker.nextNode();
+
+    while(node){
+      const parent=node.parentElement;
+      if(!parent || parent.closest("strong,b,code,pre,script,style,button,kbd,samp")){
+        node=walker.nextNode();
+        continue;
+      }
+
+      const text=node.nodeValue||"";
+      const match=text.match(ACTION_RE);
+      if(match && typeof match.index==="number"){
+        const before=text.slice(0,match.index);
+        const action=match[0];
+        const after=text.slice(match.index+action.length);
+        const fragment=document.createDocumentFragment();
+
+        if(before) fragment.appendChild(document.createTextNode(before));
+        const strong=document.createElement("strong");
+        strong.className="mbb-appinventor-action-key";
+        strong.textContent=action;
+        fragment.appendChild(strong);
+        if(after) fragment.appendChild(document.createTextNode(after));
+
+        node.replaceWith(fragment);
+        return;
+      }
+
+      node=walker.nextNode();
+    }
+  }
+
+  document.querySelectorAll([
+    "#fundamentos .activity-box p",
+    "#interface .howto li",
+    "#execucao .howto li",
+    "#execucao .properties li"
+  ].join(",")).forEach(emphasizeFirstAction);
+});
