@@ -109,3 +109,13 @@
 
   apply();
 })();
+
+// Encadeia a Etapa 4 sem alterar a estrutura principal da página.
+(() => {
+  if (document.querySelector('script[data-mbb-api-actions]')) return;
+  const script = document.createElement('script');
+  script.src = '../js/reactnative-api-acoes-praticas-20260926.js?v=20260926-1';
+  script.dataset.mbbApiActions = 'true';
+  script.async = false;
+  document.body.appendChild(script);
+})();
