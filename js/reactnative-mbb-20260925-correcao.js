@@ -174,7 +174,7 @@ agora usamos os mesmos dados para tomar uma decisão.`;
   acrescentarAcao('js-dados-mbb', '<b>Altere</b> o valor inicial de <code>quantidadeContatos</code> de <code>1</code> para <code>2</code> e <b>observe o preview</b>: o total passa a <code>3</code>.');
   acrescentarAcao('js-expressoes-mbb', '<b>Altere</b> <code>quantidade</code> de <code>8</code> para <code>9</code> e <b>observe</b> <code>vagas</code> passar a <code>1</code>.');
   acrescentarAcao('js-if-mbb', '<b>Altere</b> <code>quantidade</code> para <code>10</code> e <b>observe o preview</b>: a mensagem passa para <code>Limite atingido</code>.');
-  acrescentarAcao('js-funcoes-mbb', '<b>Altere</b> o nome enviado para a função <code>identificarContato</code> e <b>observe</b> o resultado no preview.');
+  acrescentarAcao('js-funcoes-mbb', '<b>Altere</b> o nome usado na chamada da função e <b>observe</b> o resultado no preview.');
   acrescentarAcao('js-arrow-template-mbb', '<b>Altere</b> o nome usado no exemplo e <b>observe</b> a frase produzida pela arrow function e pelo template literal.');
   acrescentarAcao('js-objeto-mbb', '<b>Altere</b> o valor da propriedade <code>nome</code> do objeto e <b>observe</b> a mudança no preview.');
   acrescentarAcao('js-array-mbb', '<b>Adicione</b> <code>Diego</code> ao array de nomes e <b>observe</b> o total passar de <code>3</code> para <code>4</code>.');
