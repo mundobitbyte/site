@@ -52,3 +52,61 @@ document.addEventListener('click', function(e){
     setTimeout(function(){ btn.innerText = old; btn.classList.remove('copied'); }, 1600);
   });
 });
+
+// Padrão MbB — revisão cirúrgica de destaques de ações.
+(() => {
+  'use strict';
+
+  const STYLE_ID='mbb-bancodedados-acoes-style';
+  const ACTION_CLASS='mbb-bancodedados-action-key';
+  const ACTION_RE=/\b(Não\s+(?:altere|apague|confunda|execute|ignore|use)|Agora\s+(?:analise|compare|execute|responda|teste)|Abra|Acesse|Adicione|Analise|Anote|Associe|Atualize|Calcule|Classifique|Compare|Complete|Configure|Consulte|Copie|Cole|Crie|Defina|Descreva|Diferencie|Digite|Escolha|Execute|Explique|Faça|Identifique|Implemente|Indique|Insira|Interprete|Justifique|Leia|Liste|Modele|Observe|Organize|Pesquise|Preencha|Relacione|Remova|Responda|Revise|Selecione|Teste|Use|Valide|Verifique)\b/i;
+
+  function garantirEstilo(){
+    if(document.getElementById(STYLE_ID)) return;
+    const style=document.createElement('style');
+    style.id=STYLE_ID;
+    style.textContent=`.${ACTION_CLASS}{font-weight:800!important;color:#123b73}`;
+    document.head.appendChild(style);
+  }
+
+  function destacarPrimeiraAcao(root){
+    if(!root || root.querySelector?.(`.${ACTION_CLASS}`)) return;
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    let node=walker.nextNode();
+    while(node){
+      const parent=node.parentElement;
+      if(!parent || parent.closest('strong,b,code,pre,script,style,button,input,select,option,textarea,label,kbd,samp,a,svg,figure,table')){
+        node=walker.nextNode();
+        continue;
+      }
+      const text=node.nodeValue||'';
+      const match=text.match(ACTION_RE);
+      if(match && typeof match.index==='number'){
+        const fragment=document.createDocumentFragment();
+        const before=text.slice(0,match.index);
+        const action=match[0];
+        const after=text.slice(match.index+action.length);
+        if(before) fragment.appendChild(document.createTextNode(before));
+        const strong=document.createElement('strong');
+        strong.className=ACTION_CLASS;
+        strong.textContent=action;
+        fragment.appendChild(strong);
+        if(after) fragment.appendChild(document.createTextNode(after));
+        node.replaceWith(fragment);
+        return;
+      }
+      node=walker.nextNode();
+    }
+  }
+
+  function aplicarDestaques(){
+    garantirEstilo();
+    document.querySelectorAll([
+      'main .module p',
+      'main .module li',
+      'main .module details summary'
+    ].join(',')).forEach(destacarPrimeiraAcao);
+  }
+
+  aplicarDestaques();
+})();
