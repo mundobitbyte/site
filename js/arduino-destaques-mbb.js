@@ -5,7 +5,7 @@
 (() => {
   const STYLE_ID = 'mbb-arduino-acoes-praticas-style';
   const ACTION_CLASS = 'mbb-arduino-action-key';
-  const ACTION_RE = /\b(Não\s+(?:altere|apague|conecte|execute|feche|force|ligue|mude|use)|Nunca\s+(?:conecte|ligue|use)|Acesse|Abra|Afaste|Aguarde|Ajuste|Altere|Anote|Aponte|Aproxime|Arraste|Carregue|Clique|Cole|Compare|Conecte|Confirme|Confira|Copie|Crie|Cubra|Digite|Envie|Escolha|Execute|Gire|Ilumine|Inicie|Insira|Instale|Ligue|Localize|Mantenha|Meça|Monte|Mude|Observe|Passe|Pressione|Preencha|Procure|Realize|Reinicie|Remova|Renomeie|Repita|Reutilize|Salve|Selecione|Solte|Substitua|Teste|Toque|Troque|Verifique|Volte)\b/;
+  const ACTION_RE = /\b(Não\s+(?:altere|apague|conecte|execute|feche|force|ligue|mude|use)|Nunca\s+(?:conecte|ligue|use)|Acesse|Abra|Adicione|Afaste|Aguarde|Ajuste|Altere|Anote|Aponte|Aproxime|Arraste|Carregue|Clique|Cole|Compare|Conecte|Configure|Confirme|Confira|Continue|Copie|Crie|Cubra|Defina|Deixe|Desligue|Digite|Envie|Escolha|Execute|Faça|Feche|Gire|Grave|Ilumine|Inicie|Insira|Instale|Ligue|Localize|Mantenha|Meça|Monte|Mude|Observe|Passe|Posicione|Pressione|Preencha|Procure|Realize|Reinicie|Remova|Renomeie|Repita|Retire|Reutilize|Salve|Selecione|Solte|Substitua|Teste|Toque|Troque|Use|Verifique|Volte)\b/i;
 
   function garantirEstilo(){
     if(document.getElementById(STYLE_ID)) return;
@@ -58,6 +58,7 @@
 
     document.querySelectorAll([
       '#arduinoLayout main ol > li',
+      '#arduinoLayout main .project .card > p',
       '#arduinoLayout main .card.exercise p',
       '#arduinoLayout main .card.errors p',
       '#arduinoLayout main .circuitFigure figcaption',
