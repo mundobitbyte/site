@@ -33,7 +33,7 @@ As 15 etapas possuem IDs permanentes, independentes de URL, título e posição:
 - `analise-sistemas-13`
 - `analise-sistemas-14`
 
-Todos começam com `versao_conteudo = 1`.
+A versão inicial foi `versao_conteudo = 1`. A revisão visual/pedagógica dos modelos elevou para `versao_conteudo = 2` as etapas **03, 04, 05, 07 e 08**, porque houve correção ou ampliação material dos diagramas apresentados ao aluno. As demais permanecem na versão 1 enquanto não houver mudança pedagógica equivalente.
 
 A versão é editorial/pedagógica. Nunca usar SHA de Git como versão do conteúdo.
 
