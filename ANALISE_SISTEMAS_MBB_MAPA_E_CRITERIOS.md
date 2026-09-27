@@ -2,7 +2,7 @@
 
 ## Status
 
-Arquitetura pedagógica aprovada para implementação em branch própria.
+Arquitetura pedagógica implementada e validada em branch própria.
 
 Projeto condutor: **Assistência Técnica Conecta**.
 
@@ -35,12 +35,14 @@ O aluno deve sentir esse encadeamento. Não usar linguagem de bastidor como “a
 - `css/analise-sistemas.css`
 - `js/analise-sistemas.js`
 - `img/analise-sistemas/` — ativos visuais externos quando necessários.
+- `tools/analise-sistemas-validacao/smoke.mjs` — validação permanente em Chromium real.
+- `.github/workflows/analise-sistemas-validacao.yml` — CI do módulo.
 
 ## Card principal
 
-O módulo pertence a **Programação e Desenvolvimento**.
+O módulo pertence a **Programação e Desenvolvimento** e está configurado como primeiro módulo da área.
 
-Ordem pedagógica planejada dentro do card:
+Ordem pedagógica:
 
 1. Análise de Sistemas
 2. Programação de Computadores
@@ -50,8 +52,6 @@ Ordem pedagógica planejada dentro do card:
 6. App Inventor
 7. React Native
 8. Git e GitHub
-
-O card da home só deve ser alterado quando o módulo estiver validado na branch.
 
 ## As 15 etapas
 
@@ -168,7 +168,7 @@ Scrum, BPMN, UML, APIs, UX, segurança, IA, arquitetura e Banco de Dados só ent
 - Conteúdo em uma coluna no celular.
 - Tabelas com rolagem horizontal.
 - Diagramas simples responsivos; complexos com área rolável.
-- Testes mínimos: 360 px, 390×844, 768 px, 1024 px e 1366 px.
+- Testes permanentes: 360 px, 390×844, 768 px, 1024 px e 1366 px em Chromium real.
 - Navegação consistente: anterior, todas as etapas e próxima.
 - A etapa seguinte deve ser provocada por uma lacuna pedagógica, não apenas por ordem numérica.
 
@@ -183,6 +183,14 @@ Scrum, BPMN, UML, APIs, UX, segurança, IA, arquitetura e Banco de Dados só ent
 7. Validação — após Etapa 10.
 8. Visão profissional — após Etapa 12.
 9. Final — cenário novo: o que descobrir e qual técnica usar?
+
+## Meu MbB
+
+O módulo nasce compatível com o contrato futuro do Meu MbB: IDs pedagógicos estáveis, versão editorial e slot neutro de interface, sem ativar Firebase ou login nesta entrega. Ver `ANALISE_SISTEMAS_MEU_MBB_CONTRATO.md`.
+
+## Validação pré-merge
+
+A validação automatizada abre a home, o índice e todas as 15 etapas, verifica navegação, metadados do Meu MbB, Caderno da Análise, ausência de erros JavaScript, menu móvel e responsividade nos cinco tamanhos definidos.
 
 ## Critério final de sucesso
 
