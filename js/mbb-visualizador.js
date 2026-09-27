@@ -68,8 +68,15 @@
       }
       if (action === 'fit') {
         if (mode === 'tabela') {
-          const available = Math.max(180, canvas.clientWidth - 36);
-          zoom = Math.max(.5, Math.min(1, available / Math.max(sourceW, 1)));
+          const rect = canvas.getBoundingClientRect();
+          const rotated = rotation === 90;
+          const availableW = Math.max(180, rect.width - 36);
+          const availableH = Math.max(180, rect.height - 36);
+          const fitScale = Math.min(
+            availableW / (rotated ? sourceH : sourceW),
+            availableH / (rotated ? sourceW : sourceH)
+          );
+          zoom = Math.max(.5, Math.min(1, fitScale));
         } else {
           zoom = 1;
         }
@@ -83,9 +90,13 @@
         canvas.scrollTo({left: 0, top: 0, behavior: 'smooth'});
         return;
       }
-      if (action === 'rotate' && mode === 'grafico') {
-        rotation = (rotation + 90) % 360;
-        zoom = 1;
+      if (action === 'rotate') {
+        if (mode === 'tabela') {
+          rotation = rotation === 90 ? 0 : 90;
+        } else {
+          rotation = (rotation + 90) % 360;
+          zoom = 1;
+        }
         render();
         canvas.scrollTo({left: 0, top: 0});
       }
@@ -137,11 +148,14 @@
 
   const renderTable = () => {
     if (!content) return;
+    const rotated = rotation === 90;
     const drawW = sourceW * zoom;
     const drawH = sourceH * zoom;
-    stage.style.width = `${Math.max(1, drawW)}px`;
-    stage.style.height = `${Math.max(1, drawH)}px`;
-    content.style.transform = `scale(${zoom})`;
+    stage.style.width = `${Math.max(1, rotated ? drawH : drawW)}px`;
+    stage.style.height = `${Math.max(1, rotated ? drawW : drawH)}px`;
+    content.style.transform = rotated
+      ? `translateX(${drawH}px) rotate(90deg) scale(${zoom})`
+      : `scale(${zoom})`;
     zoomEl.textContent = `${Math.round(zoom * 100)}%`;
   };
 
@@ -158,6 +172,8 @@
     stage.innerHTML = '';
     stage.removeAttribute('style');
     content = null;
+    zoom = 1;
+    rotation = 0;
     if (previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus();
     previousFocus = null;
   }
@@ -207,7 +223,7 @@
     const ok = mode === 'tabela' ? openTable(target) : openGraphic(target);
     if (!ok) return;
     titleEl.textContent = target.dataset.mbbTitulo || (mode === 'tabela' ? 'Tabela completa' : 'Conteúdo ampliado');
-    viewer.querySelector('[data-mbb-view-action="rotate"]').hidden = mode === 'tabela';
+    viewer.querySelector('[data-mbb-view-action="rotate"]').hidden = false;
     viewer.querySelector('[data-mbb-view-action="readable"]').hidden = mode !== 'tabela';
     viewer.hidden = false;
     document.body.classList.add('mbb-visualizador-aberto');
