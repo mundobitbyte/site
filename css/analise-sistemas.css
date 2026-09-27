@@ -17,9 +17,10 @@ html{scroll-behavior:smooth}
 body{margin:0;min-height:100vh;font-family:"Segoe UI",Arial,sans-serif;background:var(--as-bg);color:var(--as-text)}
 a{color:var(--as-primary-dark)}
 .course-header{min-height:64px;background:var(--as-primary);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 18px;box-shadow:0 2px 10px rgba(0,0,0,.18);position:sticky;top:0;z-index:30}
-.header-left,.header-right{display:flex;align-items:center;gap:12px;min-width:0}
+.header-left,.header-right{display:flex;align-items:center;gap:12px;min-width:0}.header-right{justify-content:flex-end}
 .portal-link{color:#fff;text-decoration:none;background:#0f3f86;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:7px 13px;font-weight:800;font-size:13px;white-space:nowrap}
 .course-title{font-weight:900;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.brand{font-size:12px;font-weight:800;white-space:nowrap}
+.meu-mbb-hook:empty{display:none}.meu-mbb-hook{display:flex;align-items:center;gap:8px;min-width:0}
 .menu-toggle{display:none;border:1px solid rgba(255,255,255,.4);background:#0f3f86;color:#fff;border-radius:10px;padding:8px 11px;font:inherit;font-weight:800;cursor:pointer}
 .course-shell{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:calc(100vh - 64px)}
 .course-nav{background:#fff;border-right:1px solid var(--as-line);padding:16px 12px;position:sticky;top:64px;height:calc(100vh - 64px);overflow:auto}
@@ -54,11 +55,11 @@ a{color:var(--as-primary-dark)}
   .course-shell{display:block}.course-nav{position:fixed;top:64px;left:0;bottom:0;width:min(88vw,340px);height:auto;transform:translateX(-105%);transition:.2s;z-index:25;box-shadow:10px 0 30px rgba(15,23,42,.18)}body.nav-open .course-nav{transform:translateX(0)}body.nav-open:after{content:"";position:fixed;inset:64px 0 0 0;background:rgba(15,23,42,.34);z-index:20}
   .course-main{padding:14px}.grid,.grid2,.stage-index{grid-template-columns:1fr}.chapter{padding:19px}.hero{padding:22px}.hero p{font-size:16px}
   .stage-footer{grid-template-columns:1fr 1fr}.stage-footer .all{grid-column:1/-1;grid-row:2}.stage-footer .next{text-align:right}
-  .visual-scroll svg{min-width:700px}
+  .visual-scroll svg{min-width:700px}.meu-mbb-hook{max-width:44vw}
 }
 @media(max-width:480px){
   .course-header{padding:9px 10px}.portal-link{padding:7px 10px}.course-title{font-size:14px}.menu-toggle{padding:7px 9px;font-size:12px}
   .course-main{padding:10px}.hero{border-radius:16px;padding:18px}.hero h1,.hero h2{font-size:clamp(26px,9vw,36px)}.chapter{border-radius:15px;padding:16px}.chapter h2{font-size:22px}.chapter h3{font-size:18px}
-  .stage-progress{font-size:12px}.table-wrap{margin-left:-4px;margin-right:-4px}.stage-footer{gap:8px}.stage-footer a{font-size:13px;padding:10px}
+  .stage-progress{font-size:12px}.table-wrap{margin-left:-4px;margin-right:-4px}.stage-footer{gap:8px}.stage-footer a{font-size:13px;padding:10px}.meu-mbb-hook{max-width:38vw}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.stage-card,.course-nav{transition:none}}
