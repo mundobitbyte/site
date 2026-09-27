@@ -79,4 +79,11 @@
   }
 
   window.dispatchEvent(new CustomEvent('mbb:visuais-autocritica-prontos',{detail:{stage}}));
+
+  if(!window.__MBB_VISUALIZADOR_SITE__ && !document.querySelector('script[data-mbb-visualizador-site]')){
+    const script=document.createElement('script');
+    script.src='/js/mbb-visualizador-site.js?v=20260927-1';
+    script.dataset.mbbVisualizadorSite='1';
+    document.body.appendChild(script);
+  }
 })();
