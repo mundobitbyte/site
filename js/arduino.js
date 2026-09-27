@@ -190,7 +190,8 @@ document.addEventListener('DOMContentLoaded', function(){
   const scripts = [
     '../js/arduino-fundamentos-mbb.js?v=20260911-2',
     '../js/arduino-fechamento-mbb.js?v=20260911-1',
-    '../js/arduino-contextualizacao-mbb.js?v=20260911-1'
+    '../js/arduino-contextualizacao-mbb.js?v=20260911-1',
+    '../js/arduino-destaques-mbb.js?v=20260926-1'
   ];
 
   function carregar(indice){
@@ -198,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if(window.MbbArduinoFundamentos) window.MbbArduinoFundamentos.preparar();
       if(window.MbbArduinoFechamento) window.MbbArduinoFechamento.aplicar();
       if(window.MbbArduinoContexto) window.MbbArduinoContexto.aplicar();
+      if(window.MbbArduinoDestaques) window.MbbArduinoDestaques.aplicar();
       montarMenuEtapas();
       acrescentarModulos5a10();
       iniciarNavegacaoArduino();
