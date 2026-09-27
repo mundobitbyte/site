@@ -140,24 +140,63 @@ async function testTable(page, label) {
     cloneHeaders: document.querySelectorAll('#mbbVisualizador .mbb-visualizador-table-clone th').length,
     rotateHidden: document.querySelector('[data-mbb-view-action="rotate"]')?.hidden,
     readableHidden: document.querySelector('[data-mbb-view-action="readable"]')?.hidden,
-    zoom: document.getElementById('mbbVisualizadorZoom')?.textContent
+    zoom: document.getElementById('mbbVisualizadorZoom')?.textContent,
+    transform: document.querySelector('.mbb-visualizador-table-clone')?.style.transform || ''
   }));
   assert(opened.hidden === false, `${label}: visualizador não abriu.`);
   assert(opened.cloneTag === 'TABLE', `${label}: tabela ampliada deixou de ser HTML TABLE.`);
   assert(opened.cloneHeaders === 9, `${label}: clone da tabela perdeu colunas.`);
-  assert(opened.rotateHidden === true, `${label}: tabela não deveria oferecer Girar.`);
+  assert(opened.rotateHidden === false, `${label}: tabela deveria oferecer Girar.`);
   assert(opened.readableHidden === false, `${label}: tabela deveria oferecer Tamanho legível.`);
   assert(opened.zoom === '100%', `${label}: tamanho legível inicial deveria ser 100%.`);
+  assert(!opened.transform.includes('rotate(90deg)'), `${label}: tabela deveria abrir na orientação normal.`);
 
   await page.click('[data-mbb-view-action="minus"]');
   const smaller = await page.$eval('#mbbVisualizadorZoom', el => el.textContent);
   assert(smaller === '85%', `${label}: reduzir tabela deveria resultar em 85%; encontrou ${smaller}.`);
+
+  await page.click('[data-mbb-view-action="rotate"]');
+  const rotated = await page.evaluate(() => ({
+    zoom: document.getElementById('mbbVisualizadorZoom')?.textContent,
+    transform: document.querySelector('.mbb-visualizador-table-clone')?.style.transform || '',
+    cloneTag: document.querySelector('#mbbVisualizador .mbb-visualizador-table-clone')?.tagName,
+    cloneHeaders: document.querySelectorAll('#mbbVisualizador .mbb-visualizador-table-clone th').length,
+    stageWidth: document.querySelector('.mbb-visualizador-stage')?.getBoundingClientRect().width || 0,
+    stageHeight: document.querySelector('.mbb-visualizador-stage')?.getBoundingClientRect().height || 0
+  }));
+  assert(rotated.zoom === '85%', `${label}: Girar deveria preservar o zoom de 85%; encontrou ${rotated.zoom}.`);
+  assert(rotated.transform.includes('rotate(90deg)'), `${label}: Girar não colocou a tabela a 90 graus.`);
+  assert(rotated.cloneTag === 'TABLE' && rotated.cloneHeaders === 9, `${label}: rotação alterou a estrutura HTML da tabela.`);
+  assert(rotated.stageWidth > 0 && rotated.stageHeight > 0, `${label}: área girada ficou inválida.`);
+
+  await page.click('[data-mbb-view-action="plus"]');
+  const enlargedRotated = await page.$eval('#mbbVisualizadorZoom', el => el.textContent);
+  assert(enlargedRotated === '100%', `${label}: ampliar tabela girada deveria voltar a 100%; encontrou ${enlargedRotated}.`);
+
   await page.click('[data-mbb-view-action="readable"]');
-  const readable = await page.$eval('#mbbVisualizadorZoom', el => el.textContent);
-  assert(readable === '100%', `${label}: Tamanho legível não voltou a 100%.`);
+  const readable = await page.evaluate(() => ({
+    zoom: document.getElementById('mbbVisualizadorZoom')?.textContent,
+    transform: document.querySelector('.mbb-visualizador-table-clone')?.style.transform || ''
+  }));
+  assert(readable.zoom === '100%', `${label}: Tamanho legível não voltou a 100%.`);
+  assert(readable.transform.includes('rotate(90deg)'), `${label}: Tamanho legível não deveria desfazer a rotação.`);
+
   await page.click('[data-mbb-view-action="fit"]');
-  const fit = await page.$eval('#mbbVisualizadorZoom', el => Number(el.textContent.replace('%','')));
-  assert(fit >= 50 && fit <= 100, `${label}: Ajustar retornou zoom inesperado (${fit}%).`);
+  const fit = await page.evaluate(() => ({
+    zoom: Number(document.getElementById('mbbVisualizadorZoom')?.textContent.replace('%','')),
+    transform: document.querySelector('.mbb-visualizador-table-clone')?.style.transform || ''
+  }));
+  assert(fit.zoom >= 50 && fit.zoom <= 100, `${label}: Ajustar girado retornou zoom inesperado (${fit.zoom}%).`);
+  assert(fit.transform.includes('rotate(90deg)'), `${label}: Ajustar não deveria desfazer a rotação.`);
+
+  await page.click('[data-mbb-view-action="rotate"]');
+  const normalAgain = await page.evaluate(() => ({
+    transform: document.querySelector('.mbb-visualizador-table-clone')?.style.transform || '',
+    cloneTag: document.querySelector('#mbbVisualizador .mbb-visualizador-table-clone')?.tagName,
+    cloneHeaders: document.querySelectorAll('#mbbVisualizador .mbb-visualizador-table-clone th').length
+  }));
+  assert(!normalAgain.transform.includes('rotate(90deg)'), `${label}: segundo toque em Girar deveria voltar à orientação normal.`);
+  assert(normalAgain.cloneTag === 'TABLE' && normalAgain.cloneHeaders === 9, `${label}: retorno à orientação normal alterou a tabela.`);
 
   await page.keyboard.press('Escape');
   const after = await page.evaluate(() => ({
@@ -168,10 +207,23 @@ async function testTable(page, label) {
   assert(after.hidden === true, `${label}: ESC não fechou tabela.`);
   assert(after.originalHeaders === 9, `${label}: tabela original foi afetada pelo clone.`);
   assert(!after.bodyLocked, `${label}: body permaneceu bloqueado após tabela.`);
+
+  await page.click('[data-mbb-visualizador-trigger]');
+  await wait(80);
+  const reopened = await page.evaluate(() => ({
+    zoom: document.getElementById('mbbVisualizadorZoom')?.textContent,
+    transform: document.querySelector('.mbb-visualizador-table-clone')?.style.transform || '',
+    cloneHeaders: document.querySelectorAll('#mbbVisualizador .mbb-visualizador-table-clone th').length
+  }));
+  assert(reopened.zoom === '100%', `${label}: reabrir deveria iniciar em 100%; encontrou ${reopened.zoom}.`);
+  assert(!reopened.transform.includes('rotate(90deg)'), `${label}: reabrir deveria iniciar na orientação normal.`);
+  assert(reopened.cloneHeaders === 9, `${label}: reabrir perdeu colunas da tabela.`);
+  await page.keyboard.press('Escape');
 }
 
 try {
   for (const viewport of [
+    {name:'mobile-360', width:360, height:800},
     {name:'mobile-390', width:390, height:844},
     {name:'desktop-1366', width:1366, height:900}
   ]) {
@@ -201,4 +253,4 @@ if (failures.length) {
   failures.forEach(item => console.error(`- ${item}`));
   process.exit(1);
 }
-console.log('Piloto visual MbB validado em gráfico SVG, imagem técnica e tabela HTML — mobile e desktop.');
+console.log('Visualizador MbB validado com rotação de tabela HTML em 360, 390 e 1366 px.');
