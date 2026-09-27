@@ -4,7 +4,7 @@
   window.__MBB_VISUALIZADOR_PILOTO__ = true;
 
   const path = location.pathname.toLowerCase();
-  const VERSION = '20260927-1';
+  const VERSION = '20260927-2';
 
   const mark = (element, mode, title) => {
     if (!element) return false;
@@ -17,9 +17,11 @@
   const markProgramacao = () => {
     let changed = false;
     document.querySelectorAll('.flowchart-panel-v3').forEach(panel => {
-      const heading = panel.querySelector('.flowchart-panel-heading strong')?.textContent.trim();
-      if (heading === 'Fluxograma 4 — atendimento completo') {
-        changed = mark(panel, 'grafico', heading) || changed;
+      const heading = panel.querySelector('.flowchart-panel-heading strong')?.textContent.trim() || '';
+      const aria = panel.querySelector('svg')?.getAttribute('aria-label') || '';
+      const isIntegrated = heading.startsWith('Fluxograma 4') || aria.includes('Fluxograma completo da cantina');
+      if (isIntegrated) {
+        changed = mark(panel, 'grafico', 'Fluxograma 4 — atendimento completo') || changed;
       }
     });
     return changed;
