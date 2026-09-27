@@ -5,7 +5,7 @@
 (() => {
   const STYLE_ID = 'mbb-arduino-acoes-praticas-style';
   const ACTION_CLASS = 'mbb-arduino-action-key';
-  const ACTION_RE = /\b(Não\s+(?:altere|apague|conecte|execute|feche|force|ligue|mude|use)|Nunca\s+(?:conecte|ligue|use)|Acesse|Abra|Adicione|Afaste|Aguarde|Ajuste|Altere|Analise|Anote|Aponte|Aproxime|Arraste|Associe|Calcule|Carregue|Cite|Classifique|Clique|Cole|Compare|Complete|Conecte|Configure|Confirme|Confira|Continue|Copie|Crie|Cubra|Defina|Deixe|Descreva|Desenhe|Desligue|Determine|Diferencie|Digite|Envie|Escolha|Escreva|Execute|Explique|Faça|Feche|Gire|Grave|Identifique|Ilumine|Indique|Inicie|Insira|Instale|Justifique|Leia|Ligue|Liste|Localize|Mantenha|Marque|Meça|Monte|Mude|Observe|Ordene|Organize|Passe|Pesquise|Posicione|Pressione|Preencha|Procure|Realize|Reinicie|Relacione|Remova|Renomeie|Repita|Responda|Retire|Retome|Reutilize|Revise|Salve|Selecione|Solte|Substitua|Sugira|Teste|Toque|Troque|Use|Verifique|Volte)\b/i;
+  const ACTION_RE = /\b(Não\s+(?:altere|apague|conecte|execute|feche|force|ligue|mude|use)|Nunca\s+(?:conecte|ligue|use)|Acesse|Abra|Adicione|Afaste|Aguarde|Ajuste|Altere|Analise|Anote|Aponte|Aproxime|Arraste|Associe|Calcule|Carregue|Cite|Classifique|Clique|Cole|Compare|Complete|Conecte|Configure|Confirme|Confira|Continue|Copie|Crie|Cubra|Defina|Deixe|Descreva|Desenhe|Desligue|Determine|Diferencie|Digite|Entre|Envie|Escolha|Escreva|Execute|Explique|Faça|Feche|Gire|Grave|Identifique|Ilumine|Indique|Inicie|Insira|Instale|Justifique|Leia|Ligue|Liste|Localize|Mantenha|Marque|Meça|Monte|Mude|Observe|Ordene|Organize|Passe|Pesquise|Posicione|Pressione|Preencha|Procure|Realize|Reinicie|Relacione|Remova|Renomeie|Repita|Responda|Retire|Retome|Reutilize|Revise|Salve|Selecione|Solte|Substitua|Sugira|Teste|Toque|Troque|Use|Verifique|Volte)\b/i;
 
   function garantirEstilo(){
     if(document.getElementById(STYLE_ID)) return;
@@ -73,7 +73,8 @@
       '#arduinoLayout main .review-head p',
       '#arduinoLayout main .review-question p',
       '#arduinoLayout main .assessment-note',
-      '#arduinoLayout main .concept-question p'
+      '#arduinoLayout main .concept-question p',
+      '#arduinoLayout main .hub-head p'
     ].join(',')).forEach(destacarPrimeiraAcao);
   }
 
