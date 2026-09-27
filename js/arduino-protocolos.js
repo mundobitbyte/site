@@ -189,3 +189,23 @@ function carregarContextualizacaoMbb(){
 }
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', carregarContextualizacaoMbb);
 else carregarContextualizacaoMbb();
+
+function carregarDestaquesMbb(){
+  if(document.querySelector('script[data-mbb-arduino-destaques-loader]')) return;
+  const script = document.createElement('script');
+  script.src = '../js/arduino-destaques-mbb.js?v=20260926-2';
+  script.dataset.mbbArduinoDestaquesLoader = '1';
+  document.head.appendChild(script);
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', carregarDestaquesMbb);
+else carregarDestaquesMbb();
+
+function carregarVisualizadorPilotoMbb(){
+  if(document.querySelector('script[data-mbb-visualizador-piloto-loader]')) return;
+  const script = document.createElement('script');
+  script.src = '../js/mbb-visualizador-piloto.js?v=20260927-1';
+  script.dataset.mbbVisualizadorPilotoLoader = '1';
+  document.head.appendChild(script);
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', carregarVisualizadorPilotoMbb);
+else carregarVisualizadorPilotoMbb();

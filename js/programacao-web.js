@@ -448,3 +448,70 @@
   setupJavaScriptDemos();
   showChapter(chapterFromHash());
 }());
+
+(() => {
+  'use strict';
+
+  const STYLE_ID = 'mbb-programacao-web-acoes-style';
+  const ACTION_CLASS = 'mbb-programacao-web-action-key';
+  const ACTION_RE = /\b(Não\s+(?:altere|apague|confunda|copie|execute|ignore|instale|publique|use)|Agora\s+(?:analise|compare|execute|teste)|Abra|Acesse|Adicione|Altere|Analise|Anote|Atualize|Clique|Compare|Confira|Configure|Copie|Cole|Crie|Defina|Descreva|Digite|Escolha|Execute|Explique|Faça|Identifique|Inspecione|Instale|Leia|Localize|Observe|Organize|Procure|Publique|Recarregue|Registre|Renomeie|Salve|Selecione|Teste|Troque|Use|Valide|Verifique)\b/i;
+
+  function garantirEstilo() {
+    if (document.getElementById(STYLE_ID)) return;
+    const style = document.createElement('style');
+    style.id = STYLE_ID;
+    style.textContent = `.${ACTION_CLASS}{font-weight:800!important;color:#123b73}`;
+    document.head.appendChild(style);
+  }
+
+  function destacarPrimeiraAcao(root) {
+    if (!root || root.querySelector?.(`.${ACTION_CLASS}`)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node = walker.nextNode();
+
+    while (node) {
+      const parent = node.parentElement;
+      if (!parent || parent.closest([
+        'strong','b','code','pre','script','style','button','input','select','option','textarea','label','kbd','samp','a','svg','figure','table','form',
+        '.code-block-wrap','[data-js-demo-filter]','[data-js-demo-counter]','[data-js-demo-order]','[data-js-demo-fetch]','[data-js-demo-storage]','[data-js-demo-release]','[data-demo-form]'
+      ].join(','))) {
+        node = walker.nextNode();
+        continue;
+      }
+
+      const text = node.nodeValue || '';
+      const match = text.match(ACTION_RE);
+      if (match && typeof match.index === 'number') {
+        const fragment = document.createDocumentFragment();
+        const before = text.slice(0, match.index);
+        const action = match[0];
+        const after = text.slice(match.index + action.length);
+        if (before) fragment.appendChild(document.createTextNode(before));
+        const strong = document.createElement('strong');
+        strong.className = ACTION_CLASS;
+        strong.textContent = action;
+        fragment.appendChild(strong);
+        if (after) fragment.appendChild(document.createTextNode(after));
+        node.replaceWith(fragment);
+        return;
+      }
+
+      node = walker.nextNode();
+    }
+  }
+
+  function aplicarDestaques() {
+    garantirEstilo();
+    document.querySelectorAll([
+      '.web-content .task-box p',
+      '.web-content .task-box li',
+      '.web-content .checkpoint-box p',
+      '.web-content .checkpoint-box li',
+      '.web-content .chapter section > ol > li',
+      '.web-content .chapter section > p',
+      '.web-content .chapter details summary'
+    ].join(',')).forEach(destacarPrimeiraAcao);
+  }
+
+  aplicarDestaques();
+})();

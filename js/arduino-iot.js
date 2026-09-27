@@ -126,3 +126,13 @@ function carregarContextualizacaoMbb(){
 }
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', carregarContextualizacaoMbb);
 else carregarContextualizacaoMbb();
+
+function carregarDestaquesMbb(){
+  if(document.querySelector('script[data-mbb-arduino-destaques-loader]')) return;
+  const script = document.createElement('script');
+  script.src = '../js/arduino-destaques-mbb.js?v=20260926-2';
+  script.dataset.mbbArduinoDestaquesLoader = '1';
+  document.head.appendChild(script);
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', carregarDestaquesMbb);
+else carregarDestaquesMbb();

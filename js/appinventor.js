@@ -1,3 +1,25 @@
+// Teste reversível: restaura o zoom nativo por pinça no celular sem alterar a estrutura do módulo.
+const appInventorViewport=document.querySelector('meta[name="viewport"]');
+if(appInventorViewport){
+  appInventorViewport.setAttribute('content','width=device-width, initial-scale=1.0');
+}
+
+// Tabelas MbB: teste reversível para aproveitar melhor a largura no celular sem cortar palavras.
+const appInventorTableStyle=document.createElement("style");
+appInventorTableStyle.id="mbb-appinventor-table-fit-style";
+appInventorTableStyle.textContent=`
+#appInventorLayout .table-wrap{max-width:100%;overflow-x:auto}
+#appInventorLayout .content-table{width:100%;max-width:100%;table-layout:auto}
+#appInventorLayout .content-table th,
+#appInventorLayout .content-table td{white-space:normal;overflow-wrap:normal;word-break:normal;hyphens:none}
+@media(max-width:560px){
+  #appInventorLayout .table-wrap{width:calc(100% + 12px);max-width:none;margin-left:-6px;margin-right:-6px}
+  #appInventorLayout .content-table th,
+  #appInventorLayout .content-table td{padding:4px;font-size:12px;line-height:1.3}
+}
+`;
+document.head.appendChild(appInventorTableStyle);
+
 document.addEventListener("DOMContentLoaded",()=>{
   const layout=document.getElementById("appInventorLayout");
   const content=document.querySelector(".content");
@@ -156,4 +178,96 @@ document.addEventListener("DOMContentLoaded",()=>{
       details.forEach(detail=>detail.classList.toggle("active",detail.id===id));
     });
   });
+});
+
+// Padrão MbB — Etapas 1 a 4: Fundamentos, Interface, Lógica, Recursos, Internet, APIs e Publicação.
+// Destaca somente a ação que o aluno precisa executar; conteúdo conceitual, blocos e imagens permanecem intactos.
+document.addEventListener("DOMContentLoaded",()=>{
+  const STYLE_ID="mbb-appinventor-acoes-praticas-style";
+  const ACTION_RE=/\b(Não\s+(?:feche|execute|altere|apague|use)|Escolha|Selecione|Altere|Ajuste|Arraste|Renomeie|Insira|Abra|Procure|Toque|Aguarde|Clique|Leia|Aponte|Preencha|Verifique|Observe|Prepare|Realize|Confirme|Teste|Volte|Troque|Personalize|Faça|Acrescente|Adicione|Explique|Peça|Anote|Tente|Centralize|Mantenha|Conecte|Diga|Digite|Retorne|Reinicie|Compare|Monte|Programe|Crie|Use|Confira|Aproveite|Construa|Continuar|Mostrar|Manter|Acrescentar|Ter|Consultar|Exiba|Inclua|Receba|Receber|Reaproveite|Investigue|Localize|Identifique|Pesquise|Substitua|Revise|Escreva|Desenhe|Deixe)\b/i;
+
+  if(!document.getElementById(STYLE_ID)){
+    const style=document.createElement("style");
+    style.id=STYLE_ID;
+    style.textContent="#appInventorLayout .mbb-appinventor-action-key{font-weight:800!important;color:#123b73}";
+    document.head.appendChild(style);
+  }
+
+  function emphasizeFirstAction(root){
+    if(!root || root.querySelector?.(".mbb-appinventor-action-key")) return;
+
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    let node=walker.nextNode();
+
+    while(node){
+      const parent=node.parentElement;
+      if(!parent || parent.closest("strong,b,code,pre,script,style,button,kbd,samp")){
+        node=walker.nextNode();
+        continue;
+      }
+
+      const text=node.nodeValue||"";
+      const match=text.match(ACTION_RE);
+      if(match && typeof match.index==="number"){
+        const before=text.slice(0,match.index);
+        const action=match[0];
+        const after=text.slice(match.index+action.length);
+        const fragment=document.createDocumentFragment();
+
+        if(before) fragment.appendChild(document.createTextNode(before));
+        const strong=document.createElement("strong");
+        strong.className="mbb-appinventor-action-key";
+        strong.textContent=action;
+        fragment.appendChild(strong);
+        if(after) fragment.appendChild(document.createTextNode(after));
+
+        node.replaceWith(fragment);
+        return;
+      }
+
+      node=walker.nextNode();
+    }
+  }
+
+  document.querySelectorAll([
+    "#fundamentos .activity-box p",
+    "#interface .howto li",
+    "#execucao .howto li",
+    "#execucao .properties li",
+    "#blocos .howto li",
+    "#blocos .properties li",
+    "#blocos .challenge",
+    "#blocos .activity-box li",
+    "#exercicios > .exercise-detail .exercise-text > p",
+    "#exercicios > .exercise-detail .challenge",
+    "#exercicios > .exercise-group > ol > li",
+    "#mini-projetos-appinventor .lampada-layout .exercise-text > p:first-of-type",
+    "#exercicio-lampada .howto li",
+    "#exercicio-lampada .properties li",
+    "#exercicio-lampada .challenge",
+    "#exercicio-lampada .activity-box li",
+    "#exercicio-login .howto li",
+    "#exercicio-login .properties li",
+    "#exercicio-login .challenge",
+    "#exercicio-login .activity-box li",
+    "#exercicio-imc .howto li",
+    "#exercicio-imc .properties li",
+    "#exercicio-imc .challenge",
+    "#exercicio-imc .activity-box li",
+    "#exercicio-adivinhacao .howto li",
+    "#exercicio-adivinhacao .properties li",
+    "#exercicio-adivinhacao .challenge",
+    "#exercicio-adivinhacao .activity-box li",
+    "#lab-voz .exercise-group > p",
+    "#lab-voz .exercise-group > ol > li",
+    "#lab-voz .challenge",
+    "#usando-api .lampada-layout .exercise-text > p",
+    "#usando-api .exercise-group .checklist li",
+    "#usando-api .challenge li",
+    "#exercicios-api-appinventor .api-exercise-copy > p",
+    "#exercicios-api-appinventor .api-requirements li",
+    "#exercicios-api-appinventor .api-hints span",
+    "#exercicios-api-appinventor .challenge",
+    "#publicacao-app .concept-grid article p"
+  ].join(",")).forEach(emphasizeFirstAction);
 });

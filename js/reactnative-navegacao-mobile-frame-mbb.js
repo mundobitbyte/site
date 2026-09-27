@@ -69,3 +69,66 @@
 
   document.head.appendChild(style);
 })();
+
+// Carrega por último a lapidação pedagógica MbB de 25/09/2026.
+// Mantém o HTML-base intacto e garante que as correções consolidadas anteriores
+// sejam preservadas antes da nova camada de conteúdo e exercícios.
+(() => {
+  const CSS_ID = 'reactnative-mbb-20260925-css';
+  const SCRIPT_ID = 'reactnative-mbb-20260925-js';
+  const FIX_ID = 'reactnative-mbb-20260925-fix';
+  const FULL_EXERCISES_ID = 'reactnative-mbb-20260925-full-exercises-v5';
+  const SELECTOR_ID = 'reactnative-mbb-20260925-exercise-selector-v5';
+
+  const loadSelector = () => {
+    if (document.getElementById(SELECTOR_ID)) return;
+    const selector = document.createElement('script');
+    selector.id = SELECTOR_ID;
+    selector.src = '../js/reactnative-mbb-exercicios-seletor-20260925.js?v=20260925-5';
+    selector.async = false;
+    document.body.appendChild(selector);
+  };
+
+  const loadFullExercises = () => {
+    if (document.getElementById(FULL_EXERCISES_ID)) {
+      loadSelector();
+      return;
+    }
+    const extra = document.createElement('script');
+    extra.id = FULL_EXERCISES_ID;
+    extra.src = '../js/reactnative-mbb-exercicios-completos-20260925.js?v=20260925-5';
+    extra.async = false;
+    extra.onload = loadSelector;
+    document.body.appendChild(extra);
+  };
+
+  if (!document.getElementById(CSS_ID)) {
+    const link = document.createElement('link');
+    link.id = CSS_ID;
+    link.rel = 'stylesheet';
+    link.href = '../css/reactnative-mbb-20260925.css?v=20260925-2';
+    document.head.appendChild(link);
+  }
+
+  if (!document.getElementById(SCRIPT_ID)) {
+    const script = document.createElement('script');
+    script.id = SCRIPT_ID;
+    script.src = '../js/reactnative-mbb-20260925.js?v=20260925-2';
+    script.async = false;
+    script.onload = () => {
+      if (document.getElementById(FIX_ID)) {
+        loadFullExercises();
+        return;
+      }
+      const fix = document.createElement('script');
+      fix.id = FIX_ID;
+      fix.src = '../js/reactnative-mbb-20260925-correcao.js?v=20260926-2';
+      fix.async = false;
+      fix.onload = loadFullExercises;
+      document.body.appendChild(fix);
+    };
+    document.body.appendChild(script);
+  } else if (document.getElementById(FIX_ID)) {
+    loadFullExercises();
+  }
+})();

@@ -267,3 +267,12 @@ Explique brevemente por que cada trecho recebeu essa classificação.`;
 
   configurarModo();
 });
+
+(() => {
+  if (document.querySelector('script[data-ia-destaques-mbb]')) return;
+  const script = document.createElement('script');
+  script.src = '../../js/ia-destaques-mbb.js?v=20260927-1';
+  script.defer = true;
+  script.dataset.iaDestaquesMbb = '1';
+  document.head.appendChild(script);
+})();
