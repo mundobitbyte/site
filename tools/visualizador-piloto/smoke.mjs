@@ -28,14 +28,26 @@ async function prepareProgramacao(page) {
   await page.goto(`${base}/pages/programacao.html`, {waitUntil:'networkidle0'});
   await page.evaluate(() => document.querySelector('button[data-module="pensar"]')?.click());
   await wait(100);
-  const clicked = await page.evaluate(() => {
-    const button = [...document.querySelectorAll('#menu button')].find(el => el.textContent.includes('10 Tudo junto'));
-    if (!button) return false;
-    button.click();
-    return true;
-  });
-  assert(clicked, 'Programação: etapa "10 Tudo junto" não encontrada.');
-  await page.waitForSelector('[data-mbb-ampliavel="grafico"][data-mbb-titulo="Fluxograma 4 — atendimento completo"]', {timeout:5000});
+
+  const count = await page.$$eval('#menu button', buttons => buttons.length);
+  let found = false;
+  for (let index = 0; index < count; index++) {
+    const buttons = await page.$$('#menu button');
+    if (!buttons[index]) continue;
+    await buttons[index].click();
+    await wait(80);
+    found = await page.evaluate(() => [...document.querySelectorAll('.flowchart-panel-v3')].some(panel => {
+      const heading = panel.querySelector('.flowchart-panel-heading strong')?.textContent.trim() || '';
+      const aria = panel.querySelector('svg')?.getAttribute('aria-label') || '';
+      return heading.startsWith('Fluxograma 4') || aria.includes('Fluxograma completo da cantina');
+    }));
+    if (found) break;
+  }
+
+  assert(found, 'Programação: Fluxograma 4 não foi localizado ao percorrer as etapas de Pensar.');
+  if (found) {
+    await page.waitForSelector('[data-mbb-ampliavel="grafico"][data-mbb-titulo="Fluxograma 4 — atendimento completo"]', {timeout:5000});
+  }
 }
 
 async function prepareArduino(page) {
