@@ -4,19 +4,17 @@ if(appInventorViewport){
   appInventorViewport.setAttribute('content','width=device-width, initial-scale=1.0');
 }
 
-// Tabelas MbB: tenta acomodar termos técnicos antes de recorrer à rolagem horizontal.
+// Tabelas MbB: preserva palavras inteiras e compacta discretamente apenas no celular.
 const appInventorTableStyle=document.createElement("style");
 appInventorTableStyle.id="mbb-appinventor-table-fit-style";
 appInventorTableStyle.textContent=`
 #appInventorLayout .table-wrap{max-width:100%;overflow-x:auto}
 #appInventorLayout .content-table{width:100%;max-width:100%;table-layout:auto}
 #appInventorLayout .content-table th,
-#appInventorLayout .content-table td{white-space:normal;overflow-wrap:anywhere;word-break:normal;hyphens:auto}
-#appInventorLayout .content-table code,
-#appInventorLayout .content-table a{overflow-wrap:anywhere;word-break:break-word}
+#appInventorLayout .content-table td{white-space:normal;overflow-wrap:normal;word-break:normal;hyphens:none}
 @media(max-width:560px){
   #appInventorLayout .content-table th,
-  #appInventorLayout .content-table td{padding:8px 7px;font-size:15px;line-height:1.4}
+  #appInventorLayout .content-table td{padding:7px 6px;font-size:14px;line-height:1.35}
 }
 `;
 document.head.appendChild(appInventorTableStyle);
