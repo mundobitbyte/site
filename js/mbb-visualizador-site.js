@@ -4,7 +4,7 @@
   window.__MBB_VISUALIZADOR_SITE__ = true;
 
   const VERSION = '20260927-1';
-  const TECH_RE = /(fluxograma|diagrama|\bder\b|entidade.?relacionamento|\buml\b|\bbpmn\b|circuit|esquema|topologia|wireframe|mapa (?:conceitual|de entrada|de rede)|mapa-entrada|bloco.{0,24}app inventor|app inventor.{0,24}bloco|captura de tela|screenshot|\bsnack\b|preview|interface.{0,24}react native|react native.{0,24}interface|\bgpio\b|\bi2c\b|\bspi\b|\buart\b|gr[aá]fico|part[ií]culas|modelo de dom[ií]nio)/i;
+  const TECH_RE = /(fluxograma|diagrama|\bder\b|entidade.?relacionamento|\buml\b|\bbpmn\b|circuit|esquema|topologia|wireframe|mapa (?:conceitual|de entrada|de rede)|mapa-entrada|bloco.{0,24}app ?inventor|app ?inventor.{0,24}bloco|captura de tela|screenshot|\bsnack\b|preview|interface.{0,24}react ?native|react ?native.{0,24}interface|\bgpio\b|\bi2c\b|\bspi\b|\buart\b|gr[aá]fico|part[ií]culas|modelo de dom[ií]nio)/i;
   const EXCLUDE_RE = /(logo|[ií]cone|avatar|capa|banner|retrato|fotografia|foto de |obra de arte|pintura)/i;
   const TABLE_HOST = '.table-wrap,.table-responsive,.responsive-table,.table-container,[class*="table-wrap"],[class*="table-responsive"]';
   let scanTimer = 0;
