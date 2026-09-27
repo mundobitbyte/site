@@ -95,6 +95,7 @@ try{
   await page.setViewport({width:390,height:844});
   await page.goto(`${base}/pages/analise-sistemas/06-requisitos.html`,{waitUntil:'networkidle0'});
   await page.click('#menuToggle');
+  await new Promise(resolve=>setTimeout(resolve,300));
   const mobileMenu=await page.evaluate(()=>({
     open:document.body.classList.contains('nav-open'),
     navLeft:document.getElementById('courseNav').getBoundingClientRect().left,
@@ -102,7 +103,7 @@ try{
     expanded:document.getElementById('menuToggle').getAttribute('aria-expanded')
   }));
   assert(mobileMenu.open,'Menu móvel não abriu.');
-  assert(mobileMenu.navLeft>=-1,'Menu móvel permaneceu fora da tela.');
+  assert(mobileMenu.navLeft>=-1,'Menu móvel permaneceu fora da tela após a transição.');
   assert(mobileMenu.navWidth<=390,'Menu móvel ultrapassou a largura da tela.');
   assert(mobileMenu.expanded==='true','aria-expanded não acompanha menu móvel.');
 
