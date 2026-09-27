@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function(){
     '../js/arduino-fundamentos-mbb.js?v=20260911-2',
     '../js/arduino-fechamento-mbb.js?v=20260911-1',
     '../js/arduino-contextualizacao-mbb.js?v=20260911-1',
-    '../js/arduino-destaques-mbb.js?v=20260926-1'
+    '../js/arduino-destaques-mbb.js?v=20260926-2'
   ];
 
   function carregar(indice){
