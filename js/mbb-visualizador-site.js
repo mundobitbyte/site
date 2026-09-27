@@ -154,7 +154,9 @@
   }
 
   async function scan(root = document) {
-    const changed = scanTables(root) || scanGraphics(root);
+    const tableChanged = scanTables(root);
+    const graphicChanged = scanGraphics(root);
+    const changed = tableChanged || graphicChanged;
     await loadCore();
     if (changed || window.MBBVisualizador) window.MBBVisualizador?.rescan(document);
   }
