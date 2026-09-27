@@ -4,7 +4,7 @@ if(appInventorViewport){
   appInventorViewport.setAttribute('content','width=device-width, initial-scale=1.0');
 }
 
-// Tabelas MbB: preserva palavras inteiras e compacta discretamente apenas no celular.
+// Tabelas MbB: teste reversível para aproveitar melhor a largura no celular sem cortar palavras.
 const appInventorTableStyle=document.createElement("style");
 appInventorTableStyle.id="mbb-appinventor-table-fit-style";
 appInventorTableStyle.textContent=`
@@ -13,8 +13,9 @@ appInventorTableStyle.textContent=`
 #appInventorLayout .content-table th,
 #appInventorLayout .content-table td{white-space:normal;overflow-wrap:normal;word-break:normal;hyphens:none}
 @media(max-width:560px){
+  #appInventorLayout .table-wrap{width:calc(100% + 12px);max-width:none;margin-left:-6px;margin-right:-6px}
   #appInventorLayout .content-table th,
-  #appInventorLayout .content-table td{padding:7px 6px;font-size:14px;line-height:1.35}
+  #appInventorLayout .content-table td{padding:4px;font-size:12px;line-height:1.3}
 }
 `;
 document.head.appendChild(appInventorTableStyle);
