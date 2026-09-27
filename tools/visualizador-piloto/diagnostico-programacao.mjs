@@ -28,7 +28,6 @@ try {
     pathname: location.pathname,
     pilotFlag: Boolean(window.__MBB_VISUALIZADOR_PILOTO__),
     globalReady: Boolean(window.MBBVisualizador),
-    clicked,
     stepTitle: document.querySelector('#stepTitle')?.textContent?.trim() || '',
     menu: [...document.querySelectorAll('#menu button')].map(el => el.textContent.trim()),
     panelCount: document.querySelectorAll('.flowchart-panel-v3').length,
@@ -36,11 +35,9 @@ try {
     svgLabels: [...document.querySelectorAll('.flowchart-panel-v3 svg')].map(el => ({viewBox:el.getAttribute('viewBox'), aria:el.getAttribute('aria-label')})),
     markers: [...document.querySelectorAll('[data-mbb-ampliavel]')].map(el => ({mode:el.dataset.mbbAmpliavel,title:el.dataset.mbbTitulo,tag:el.tagName,className:el.className})),
     triggers: [...document.querySelectorAll('[data-mbb-visualizador-trigger]')].map(el => el.textContent.trim()),
-    visualizerScripts: [...document.scripts].map(s => s.src).filter(src => src.includes('mbb-visualizador')),
-    pageErrors: []
+    visualizerScripts: [...document.scripts].map(s => s.src).filter(src => src.includes('mbb-visualizador'))
   }));
-  snapshot.pageErrors = errors;
-  console.log('DIAGNOSTICO_PROGRAMACAO=' + JSON.stringify({menuBefore, ...snapshot}, null, 2));
+  console.log('DIAGNOSTICO_PROGRAMACAO=' + JSON.stringify({menuBefore, clicked, ...snapshot, pageErrors:errors}, null, 2));
 } finally {
   await browser.close();
 }
