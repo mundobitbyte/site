@@ -106,6 +106,6 @@ Antes de integrar o Meu MbB ao módulo, verificar:
 
 ## Estado atual
 
-**Compatibilidade preparada; autenticação não implementada nesta branch.**
+**Compatibilidade preparada; autenticação não implementada nesta entrega.**
 
 A integração real com cadastro/login deve acontecer somente quando o piloto do Meu MbB for validado e atualizado sobre a `main` atual.
