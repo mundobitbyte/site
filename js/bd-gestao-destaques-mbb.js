@@ -4,7 +4,7 @@
 
   const STYLE_ID='mbb-bd-gestao-acoes-style';
   const ACTION_CLASS='mbb-bd-gestao-action-key';
-  const ACTION_RE=/\b(Não\s+(?:altere|apague|ignore|invente|use)|Agora\s+(?:analise|compare|observe|responda)|Analise|Anote|Associe|Avalie|Calcule|Classifique|Compare|Complete|Considere|Defina|Descreva|Diferencie|Escolha|Explique|Faça|Identifique|Indique|Interprete|Justifique|Leia|Liste|Observe|Organize|Pesquise|Preencha|Produza|Registre|Relacione|Responda|Revise|Selecione|Sugira|Use|Verifique)\b/i;
+  const ACTION_RE=/\b(Não\s+(?:altere|apague|ignore|invente|use)|Agora\s+(?:analise|compare|observe|responda)|Analise|Anote|Associe|Avalie|Calcule|Classifique|Compare|Complete|Considere|Defina|Descreva|Diferencie|Escolha|Escreva|Explique|Faça|Identifique|Indique|Interprete|Justifique|Leia|Liste|Observe|Organize|Pesquise|Preencha|Produza|Registre|Relacione|Responda|Revise|Selecione|Sugira|Use|Verifique)\b/i;
 
   function garantirEstilo(){
     if(document.getElementById(STYLE_ID)) return;
