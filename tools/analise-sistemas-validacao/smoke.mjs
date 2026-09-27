@@ -8,6 +8,8 @@ const stages = [
   '08-uml-essencial.html','09-agile-backlog-mvp.html','10-ux-prototipo.html','11-qualidade-integracoes.html',
   '12-viabilidade-riscos-rastreabilidade.html','13-documentacao-ia.html','14-integracao-final.html'
 ];
+const expectedVersions=[1,1,1,2,2,2,1,2,2,1,1,1,1,1,1];
+const expectedDiagrams={3:1,4:2,5:1,7:1,8:4};
 const viewports = [
   {name:'mobile-360',width:360,height:800},
   {name:'mobile-390',width:390,height:844},
@@ -21,7 +23,7 @@ const assert=(condition,message)=>{if(!condition) failures.push(message);};
 for(const file of stages){
   try{ await fs.access(`pages/analise-sistemas/${file}`); }catch{ failures.push(`Etapa ausente: ${file}`); }
 }
-for(const file of ['pages/analise-sistemas/index.html','css/analise-sistemas.css','js/analise-sistemas.js','ANALISE_SISTEMAS_MBB_MAPA_E_CRITERIOS.md','ANALISE_SISTEMAS_MEU_MBB_CONTRATO.md']){
+for(const file of ['pages/analise-sistemas/index.html','css/analise-sistemas.css','js/analise-sistemas.js','js/analise-sistemas-visuais.js','ANALISE_SISTEMAS_MBB_MAPA_E_CRITERIOS.md','ANALISE_SISTEMAS_MEU_MBB_CONTRATO.md']){
   try{ await fs.access(file); }catch{ failures.push(`Arquivo obrigatório ausente: ${file}`); }
 }
 
@@ -80,32 +82,39 @@ try{
       nav:document.querySelectorAll('.stage-link').length,
       active:document.querySelectorAll('.stage-link.active').length,
       footer:document.querySelectorAll('.stage-footer a').length,
-      notebook:Boolean(document.querySelector('.notebook'))
+      notebook:Boolean(document.querySelector('.notebook')),
+      diagrams:document.querySelectorAll('.visual[data-zoomable="true"]').length
     }));
     assert(Boolean(snap.h1),`${stages[i]} sem H1.`);
     assert(Number(snap.current)===i,`${stages[i]} com data-stage incorreto: ${snap.current}.`);
     assert(snap.id===`analise-sistemas-${String(i).padStart(2,'0')}`,`${stages[i]} com conteudo_id incorreto: ${snap.id}.`);
-    assert(snap.version==='1',`${stages[i]} com versão pedagógica diferente de 1.`);
+    assert(snap.version===String(expectedVersions[i]),`${stages[i]} deveria estar na versão pedagógica ${expectedVersions[i]}; encontrou ${snap.version}.`);
     assert(snap.nav===15,`${stages[i]} perdeu etapas no menu.`);
     assert(snap.active===1,`${stages[i]} deveria ter exatamente uma etapa ativa.`);
     assert(snap.footer>=2,`${stages[i]} perdeu navegação de rodapé.`);
     assert(snap.notebook,`${stages[i]} não possui evidência no Caderno da Análise.`);
+    if(expectedDiagrams[i]) assert(snap.diagrams===expectedDiagrams[i],`${stages[i]} deveria ter ${expectedDiagrams[i]} diagrama(s) ampliável(is); encontrou ${snap.diagrams}.`);
   }
 
   for(const viewport of viewports){
     await page.setViewport({width:viewport.width,height:viewport.height,deviceScaleFactor:1});
-    for(const target of ['index.html','04-analise-estruturada.html','06-requisitos.html','10-ux-prototipo.html','14-integracao-final.html']){
+    for(const target of ['index.html','03-processo-as-is.html','04-analise-estruturada.html','05-processo-to-be-bpmn.html','07-casos-de-uso.html','08-uml-essencial.html','10-ux-prototipo.html','14-integracao-final.html']){
       await page.goto(`${base}/pages/analise-sistemas/${target}`,{waitUntil:'networkidle0'});
       const layout=await page.evaluate(()=>({
         innerWidth:window.innerWidth,
         scrollWidth:document.documentElement.scrollWidth,
         h1Visible:Boolean(document.querySelector('h1')?.getBoundingClientRect().height),
         toggleDisplay:getComputedStyle(document.getElementById('menuToggle')).display,
-        headerHeight:document.querySelector('.course-header')?.getBoundingClientRect().height||0
+        headerHeight:document.querySelector('.course-header')?.getBoundingClientRect().height||0,
+        diagramOverflow:[...document.querySelectorAll('.visual[data-zoomable="true"]')].some(v=>{
+          const svg=v.querySelector('svg'); if(!svg) return false;
+          return svg.getBoundingClientRect().width>v.getBoundingClientRect().width+2;
+        })
       }));
       assert(layout.scrollWidth<=layout.innerWidth+2,`${viewport.name}/${target}: rolagem horizontal global ${layout.scrollWidth}px > ${layout.innerWidth}px.`);
       assert(layout.h1Visible,`${viewport.name}/${target}: H1 não visível.`);
       assert(layout.headerHeight<110,`${viewport.name}/${target}: cabeçalho alto demais (${layout.headerHeight}px).`);
+      assert(!layout.diagramOverflow,`${viewport.name}/${target}: prévia de diagrama ultrapassa o próprio quadro.`);
       if(viewport.width<=820) assert(layout.toggleDisplay!=='none',`${viewport.name}/${target}: botão Etapas deveria aparecer.`);
       if(viewport.width>820) assert(layout.toggleDisplay==='none',`${viewport.name}/${target}: botão Etapas não deveria aparecer no desktop.`);
     }
@@ -116,7 +125,36 @@ try{
     assert(homeLayout.firstTitle==='Análise de Sistemas',`${viewport.name}/home: card de Análise deixou de ser o primeiro.`);
   }
 
+  await page.setViewport({width:1366,height:900});
+  await page.goto(`${base}/pages/analise-sistemas/04-analise-estruturada.html`,{waitUntil:'networkidle0'});
+  const beforeCollapse=await page.evaluate(()=>document.querySelector('.course-main').getBoundingClientRect().width);
+  await page.click('#desktopNavCollapse');
+  await new Promise(resolve=>setTimeout(resolve,220));
+  const collapsed=await page.evaluate(()=>({active:document.body.classList.contains('nav-collapsed'),mainWidth:document.querySelector('.course-main').getBoundingClientRect().width,label:document.getElementById('desktopNavCollapse').textContent.trim()}));
+  assert(collapsed.active,'Menu lateral desktop não recolheu.');
+  assert(collapsed.mainWidth>beforeCollapse+100,`Recolher menu deveria liberar área útil; antes ${beforeCollapse}, depois ${collapsed.mainWidth}.`);
+  assert(collapsed.label==='☰','Botão recolhido deveria mostrar ☰.');
+
   await page.setViewport({width:390,height:844});
+  await page.goto(`${base}/pages/analise-sistemas/04-analise-estruturada.html`,{waitUntil:'networkidle0'});
+  const diagramBefore=await page.evaluate(()=>({count:document.querySelectorAll('.diagram-preview').length,buttons:document.querySelectorAll('.diagram-expand').length,scrollWidth:document.documentElement.scrollWidth,innerWidth:window.innerWidth}));
+  assert(diagramBefore.count===2,'Etapa 4 deveria exibir Contexto e DFD corrigidos.');
+  assert(diagramBefore.buttons===2,'Etapa 4 deveria oferecer botão Ampliar em ambos os diagramas.');
+  assert(diagramBefore.scrollWidth<=diagramBefore.innerWidth+2,'Etapa 4 criou rolagem horizontal global no celular.');
+  await page.click('.diagram-preview:nth-of-type(2) .diagram-expand').catch(async()=>{ await page.evaluate(()=>document.querySelectorAll('.diagram-expand')[1]?.click()); });
+  await new Promise(resolve=>setTimeout(resolve,80));
+  const viewerOpen=await page.evaluate(()=>({hidden:document.getElementById('diagramViewer').hidden,svg:Boolean(document.querySelector('#diagramViewer .diagram-viewer-svg')),label:document.getElementById('diagramZoomLabel').textContent}));
+  assert(!viewerOpen.hidden,'Visualizador de diagrama não abriu no celular.');
+  assert(viewerOpen.svg,'Visualizador não clonou o SVG.');
+  await page.click('[data-diagram-action="plus"]');
+  const zoomed=await page.evaluate(()=>document.getElementById('diagramZoomLabel').textContent);
+  assert(zoomed==='125%',`Zoom + deveria ir a 125%; encontrou ${zoomed}.`);
+  await page.click('[data-diagram-action="rotate"]');
+  const rotated=await page.evaluate(()=>getComputedStyle(document.querySelector('.diagram-viewer-svg')).transform!=='none');
+  assert(rotated,'Controle Girar não aplicou transformação ao diagrama.');
+  await page.click('[data-diagram-action="close"]');
+  assert(await page.evaluate(()=>document.getElementById('diagramViewer').hidden),'Visualizador não fechou.');
+
   await page.goto(`${base}/pages/analise-sistemas/06-requisitos.html`,{waitUntil:'networkidle0'});
   await page.click('#menuToggle');
   await new Promise(resolve=>setTimeout(resolve,300));
@@ -139,7 +177,7 @@ try{
     process.exit(1);
   }
   console.log('VALIDAÇÃO ANÁLISE DE SISTEMAS: OK');
-  console.log(JSON.stringify({etapas:stages.length,viewports,homeSnapshot,indexSnapshot,mobileMenu},null,2));
+  console.log(JSON.stringify({etapas:stages.length,viewports,homeSnapshot,indexSnapshot,collapsed,viewerOpen,mobileMenu},null,2));
 }finally{
   await browser.close();
 }
