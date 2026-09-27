@@ -238,7 +238,13 @@
     const script = document.createElement('script');
     script.src = '../../js/analise-sistemas-visuais.js';
     script.dataset.analiseVisuais = 'true';
-    script.addEventListener('load', prepareDiagramViewer);
+    script.addEventListener('load', () => {
+      const auditScript = document.createElement('script');
+      auditScript.src = '../../js/analise-sistemas-visuais-autocritica.js';
+      auditScript.dataset.analiseVisuaisAutocritica = 'true';
+      auditScript.addEventListener('load', prepareDiagramViewer);
+      document.body.appendChild(auditScript);
+    });
     document.body.appendChild(script);
   }
 
@@ -256,6 +262,7 @@
   });
   document.addEventListener('keydown', e => { if(e.key === 'Escape') closeNav(); });
   window.addEventListener('mbb:visuais-prontos', prepareDiagramViewer);
+  window.addEventListener('mbb:visuais-autocritica-prontos', prepareDiagramViewer);
 
   buildNav();
   buildProgress();
