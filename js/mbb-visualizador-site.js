@@ -5,6 +5,7 @@
 
   const VERSION = '20260927-1';
   const TECH_RE = /(fluxograma|diagrama|\bder\b|entidade.?relacionamento|\buml\b|\bbpmn\b|circuit|esquema|topologia|wireframe|mapa (?:conceitual|de entrada|de rede)|mapa-entrada|bloco.{0,24}app ?inventor|app ?inventor.{0,24}bloco|captura de tela|screenshot|\bsnack\b|preview|interface.{0,24}react ?native|react ?native.{0,24}interface|\bgpio\b|\bi2c\b|\bspi\b|\buart\b|gr[aá]fico|part[ií]culas|modelo de dom[ií]nio)/i;
+  const STRONG_TECH_RE = /(bloco.{0,40}app ?inventor|app ?inventor.{0,40}bloco)/i;
   const EXCLUDE_RE = /(logo|[ií]cone|avatar|capa|banner|retrato|fotografia|foto de |obra de arte|pintura)/i;
   const TABLE_HOST = '.table-wrap,.table-responsive,.responsive-table,.table-container,[class*="table-wrap"],[class*="table-responsive"]';
   let scanTimer = 0;
@@ -134,7 +135,7 @@
     if (explicit) return explicit;
     const meta = graphicMeta(el);
     if (!TECH_RE.test(meta) || EXCLUDE_RE.test(meta)) return false;
-    if (!graphicSizeIsUseful(el)) return false;
+    if (!STRONG_TECH_RE.test(meta) && !graphicSizeIsUseful(el)) return false;
     return el.closest('figure,.visual,.diagram,.diagram-preview,.image-wrap,.img-wrap,.screenshot,.figure') || el;
   }
 
