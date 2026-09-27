@@ -75,17 +75,15 @@
     const hostRect = host.getBoundingClientRect();
     if (hostRect.width < 1) return false;
 
-    const columns = Math.max(
-      table.querySelectorAll('thead tr:first-child > th, thead tr:first-child > td').length,
-      table.querySelectorAll('tr:first-child > th, tr:first-child > td').length
-    );
+    const firstRow = table.rows?.[0];
+    const columns = firstRow?.cells?.length || 0;
     if (columns < 3) return false;
 
     const overflow = host.scrollWidth > host.clientWidth + 12 || table.scrollWidth > host.clientWidth + 12 || rect.width > hostRect.width + 12;
     if (overflow) return true;
 
-    if (window.innerWidth <= 620 && columns >= 3) {
-      const heads = [...table.querySelectorAll('thead th')];
+    if (window.innerWidth <= 620) {
+      const heads = [...(table.tHead?.rows?.[0]?.cells || [])];
       const compressed = heads.some(cell => {
         const cellRect = cell.getBoundingClientRect();
         return cellRect.width > 0 && (cellRect.width < 108 || cell.scrollWidth > cell.clientWidth + 8);
@@ -122,10 +120,10 @@
 
   function graphicSizeIsUseful(el) {
     const rect = el.getBoundingClientRect();
-    if (rect.width < 220 || rect.height < 110) return false;
-    if (el.tagName === 'IMG') return Math.max(el.naturalWidth || 0, rect.width) >= 480 || Math.max(el.naturalHeight || 0, rect.height) >= 320;
+    if (rect.width < 180 || rect.height < 90) return false;
+    if (el.tagName === 'IMG') return Math.max(el.naturalWidth || 0, rect.width) >= 320 || Math.max(el.naturalHeight || 0, rect.height) >= 220;
     const vb = el.viewBox?.baseVal;
-    return Math.max(vb?.width || 0, rect.width) >= 480 || Math.max(vb?.height || 0, rect.height) >= 260;
+    return Math.max(vb?.width || 0, rect.width) >= 360 || Math.max(vb?.height || 0, rect.height) >= 220;
   }
 
   function technicalGraphic(el) {
@@ -170,10 +168,13 @@
     await loadCore();
     await scan(document);
     const observer = new MutationObserver(records => {
-      const hasElements = records.some(record => [...record.addedNodes].some(node => node.nodeType === 1));
-      if (hasElements) scheduleScan(document);
+      const relevant = records.some(record => {
+        if (record.type === 'attributes') return true;
+        return [...record.addedNodes].some(node => node.nodeType === 1);
+      });
+      if (relevant) scheduleScan(document);
     });
-    observer.observe(document.body, {childList:true, subtree:true});
+    observer.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['class','hidden']});
     window.addEventListener('resize', () => scheduleScan(document), {passive:true});
     window.addEventListener('mbb:conteudo-pronto', () => scheduleScan(document));
     window.addEventListener('mbb:visuais-autocritica-prontos', () => scheduleScan(document));
