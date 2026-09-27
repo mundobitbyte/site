@@ -37,6 +37,25 @@ try{
   page.on('pageerror',error=>pageErrors.push(String(error?.message||error)));
 
   await page.setViewport({width:1366,height:900});
+  await page.goto(`${base}/index.html#programacao-desenvolvimento`,{waitUntil:'networkidle0'});
+  const homeSnapshot=await page.evaluate(()=>{
+    const section=document.getElementById('programacao-desenvolvimento');
+    const cards=[...section.querySelectorAll('.module-card')];
+    const first=cards[0];
+    return {
+      areaText:section.querySelector('.view-heading p')?.textContent||'',
+      firstTitle:first?.querySelector('h3')?.textContent?.trim()||'',
+      firstHref:first?.getAttribute('href')||'',
+      moduleCount:cards.length,
+      scrollWidth:document.documentElement.scrollWidth,
+      innerWidth:window.innerWidth
+    };
+  });
+  assert(homeSnapshot.areaText.includes('Análise'),'Descrição de Programação e Desenvolvimento não menciona Análise.');
+  assert(homeSnapshot.firstTitle==='Análise de Sistemas',`Primeiro módulo deveria ser Análise de Sistemas; encontrou ${homeSnapshot.firstTitle}.`);
+  assert(homeSnapshot.firstHref==='pages/analise-sistemas/index.html',`Link do card de Análise de Sistemas incorreto: ${homeSnapshot.firstHref}.`);
+  assert(homeSnapshot.scrollWidth<=homeSnapshot.innerWidth+2,'Home criou rolagem horizontal no desktop.');
+
   await page.goto(`${base}/pages/analise-sistemas/index.html`,{waitUntil:'networkidle0'});
   const indexSnapshot=await page.evaluate(()=>({
     cards:document.querySelectorAll('.stage-card').length,
@@ -90,6 +109,11 @@ try{
       if(viewport.width<=820) assert(layout.toggleDisplay!=='none',`${viewport.name}/${target}: botão Etapas deveria aparecer.`);
       if(viewport.width>820) assert(layout.toggleDisplay==='none',`${viewport.name}/${target}: botão Etapas não deveria aparecer no desktop.`);
     }
+
+    await page.goto(`${base}/index.html#programacao-desenvolvimento`,{waitUntil:'networkidle0'});
+    const homeLayout=await page.evaluate(()=>({innerWidth:window.innerWidth,scrollWidth:document.documentElement.scrollWidth,firstTitle:document.querySelector('#programacao-desenvolvimento .module-card h3')?.textContent?.trim()||''}));
+    assert(homeLayout.scrollWidth<=homeLayout.innerWidth+2,`${viewport.name}/home: rolagem horizontal ${homeLayout.scrollWidth}px > ${homeLayout.innerWidth}px.`);
+    assert(homeLayout.firstTitle==='Análise de Sistemas',`${viewport.name}/home: card de Análise deixou de ser o primeiro.`);
   }
 
   await page.setViewport({width:390,height:844});
@@ -115,7 +139,7 @@ try{
     process.exit(1);
   }
   console.log('VALIDAÇÃO ANÁLISE DE SISTEMAS: OK');
-  console.log(JSON.stringify({etapas:stages.length,viewports,indexSnapshot,mobileMenu},null,2));
+  console.log(JSON.stringify({etapas:stages.length,viewports,homeSnapshot,indexSnapshot,mobileMenu},null,2));
 }finally{
   await browser.close();
 }
