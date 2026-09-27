@@ -4,7 +4,7 @@
   window.__MBB_VISUALIZADOR_PILOTO__ = true;
 
   const path = location.pathname.toLowerCase();
-  const VERSION = '20260927-2';
+  const VERSION = '20260927-3';
 
   const mark = (element, mode, title) => {
     if (!element) return false;
