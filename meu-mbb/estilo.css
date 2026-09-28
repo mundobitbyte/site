@@ -10,6 +10,7 @@
 .mbb-resultado a, .mbb-bloco a { color: #114b9e; font-weight: 800; }
 .mbb-resultado p { color: #506078; font-size: 13px; margin: 5px 0 0; }
 .mbb-formulario { margin-top: 12px; }
+.mbb-form-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 18px; }
 .mbb-formulario[hidden], .mbb-abas[hidden], #painel[hidden] { display: none; }
 .mbb-abas, .mbb-titulo { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .mbb-abas { justify-content: flex-start; margin-top: 18px; }

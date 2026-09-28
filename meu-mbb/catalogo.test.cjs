@@ -5,21 +5,57 @@ const path = require('node:path');
 const core = require('./catalogo-core.js');
 const catalogo = require('./catalogo.json');
 
-test('catálogo do piloto tem 12 etapas, IDs únicos e destinos existentes', () => {
+test('catálogo único preserva as 12 etapas do piloto e alcança os módulos públicos', () => {
   core.validar(catalogo);
-  assert.equal(core.atuais(catalogo).length, 12);
+  assert.equal(core.atuais(catalogo).filter(unidade => unidade.obrigatorio !== false).length, 12);
+  assert.ok(core.atuais(catalogo).length > 100);
   for (const unidade of catalogo.unidades) {
     const [pagina, ancora] = unidade.localizacao_atual.split('#');
     assert.ok(fs.existsSync(path.resolve(__dirname, '..', pagina)));
-    assert.match(ancora, /^git-(?:[1-9]|1[0-2])$/);
+    if (unidade.conteudo_id.startsWith('git-local-')) assert.match(ancora, /^git-(?:[1-9]|1[0-2])$/);
   }
+  assert.equal(core.progresso(catalogo, {}).total, 12);
 });
 
 test('pesquisa pública encontra comando e pasta de rede pelo catálogo', () => {
   assert.equal(core.pesquisar(catalogo, 'git status')[0].conteudo_id, 'git-local-05');
   assert.ok(core.pesquisar(catalogo, 'git status').some(item => item.conteudo_id === 'git-local-05'));
   assert.ok(core.pesquisar(catalogo, 'pasta de rede').some(item => item.conteudo_id === 'git-local-03'));
+  assert.ok(core.pesquisar(catalogo, 'useState').some(item => item.localizacao_atual === 'pages/reactnative.html'));
+  assert.ok(core.pesquisar(catalogo, 'metodologia ágil').some(item => item.localizacao_atual === 'pages/analise-sistemas/09-agile-backlog-mvp.html'));
+  assert.ok(core.pesquisar(catalogo, 'sensor LDR').some(item => item.localizacao_atual === 'pages/arduino.html'));
   assert.equal(core.pesquisar(catalogo, 'xyzconteudoinexistente').length, 0);
+});
+
+test('atalho público de pesquisa está presente em todas as páginas HTML do portal', () => {
+  const raiz = path.resolve(__dirname, '..');
+  function percorrer(dir) {
+    for (const entrada of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entrada.isDirectory()) {
+        if (!['.git', 'assets', 'downloads'].includes(entrada.name)) percorrer(path.join(dir, entrada.name));
+      } else if (entrada.name.endsWith('.html')) {
+        const pagina = path.join(dir, entrada.name);
+        assert.match(fs.readFileSync(pagina, 'utf8'), /mbb-busca-global\.js/, path.relative(raiz, pagina));
+      }
+    }
+  }
+  percorrer(raiz);
+  assert.doesNotMatch(fs.readFileSync(path.join(raiz, 'js/mbb-busca-global.js'), 'utf8'), /firebase-config\.js|MBBMeuConta/);
+});
+
+test('atalho abre a pesquisa na raiz mesmo em página aninhada e sem autenticação', () => {
+  const elementos = [];
+  const documento = {
+    currentScript: { src: 'https://www.mundobitbyte.com.br/js/mbb-busca-global.js?v=mbb-busca-1' },
+    querySelectorAll: () => [],
+    createElement: tag => ({ tag, setAttribute(chave, valor) { this[chave] = valor; } }),
+    head: { appendChild: elemento => elementos.push(elemento) },
+    body: { appendChild: elemento => elementos.push(elemento) }
+  };
+  require('node:vm').runInNewContext(fs.readFileSync(path.resolve(__dirname, '../js/mbb-busca-global.js'), 'utf8'),
+    { document: documento, location: { pathname: '/pages/analise-sistemas/09-agile-backlog-mvp.html' }, URL });
+  assert.equal(elementos.at(-1).href, 'https://www.mundobitbyte.com.br/meu-mbb/pesquisar.html');
+  assert.equal(elementos.at(-1).textContent, 'Pesquisar');
 });
 
 test('mover mantém ID, progresso e encaminha para URL nova', () => {

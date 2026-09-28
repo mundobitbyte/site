@@ -94,5 +94,6 @@
 (function(){function manter(){const menu=document.getElementById('arduinoModuleMenu'),ativo=menu&&menu.querySelector('.module-btn.active');if(!menu||!ativo)return;requestAnimationFrame(()=>{const mr=menu.getBoundingClientRect(),ir=ativo.getBoundingClientRect(),alvo=menu.scrollLeft+(ir.left-mr.left)-((menu.clientWidth-ir.width)/2),max=Math.max(0,menu.scrollWidth-menu.clientWidth);menu.scrollLeft=Math.min(max,Math.max(0,alvo));});}document.addEventListener('DOMContentLoaded',manter);window.addEventListener('pageshow',manter);window.addEventListener('resize',manter);})();
 </script>
 <script src="../js/arduino-destaques-mbb.js?v=20260926-3"></script>
+<script src="../js/mbb-busca-global.js?v=mbb-busca-1"></script>
 </body>
 </html>
