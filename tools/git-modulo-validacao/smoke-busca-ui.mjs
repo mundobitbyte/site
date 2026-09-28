@@ -99,6 +99,33 @@ try {
   if (!analise.antesDaAssinatura) throw new Error('Pesquisa não ficou imediatamente antes da assinatura no cabeçalho de Análise de Sistemas.');
   if (analise.largura > analise.tela + 2) throw new Error('Pesquisa no cabeçalho criou rolagem horizontal em Análise de Sistemas.');
 
+  await page.setViewport({width: 390, height: 844, deviceScaleFactor: 1});
+  await page.reload({waitUntil: 'networkidle0'});
+  await page.waitForSelector('.course-header .mbb-busca-global');
+  const analiseMobile = await page.evaluate(() => {
+    const busca = document.querySelector('.course-header .mbb-busca-global');
+    const box = busca.getBoundingClientRect();
+    return {
+      width: box.width,
+      height: box.height,
+      position: getComputedStyle(busca).position,
+      menuVisivel: (() => {
+        const menu = document.querySelector('.course-header .menu-toggle');
+        if (!menu) return false;
+        const css = getComputedStyle(menu);
+        const rect = menu.getBoundingClientRect();
+        return css.display !== 'none' && rect.width > 0 && rect.height > 0;
+      })(),
+      largura: document.documentElement.scrollWidth,
+      tela: innerWidth
+    };
+  });
+  if (analiseMobile.width > 40 || analiseMobile.height > 40) throw new Error('Pesquisa não ficou compacta no mobile de Análise de Sistemas.');
+  if (analiseMobile.position === 'fixed') throw new Error('Pesquisa mobile de Análise de Sistemas voltou a flutuar sobre a navegação.');
+  if (!analiseMobile.menuVisivel) throw new Error('Menu mobile de Análise de Sistemas deixou de ficar visível.');
+  if (analiseMobile.largura > analiseMobile.tela + 2) throw new Error('Cabeçalho mobile de Análise de Sistemas criou rolagem horizontal.');
+
+  await page.setViewport({width: 1366, height: 768, deviceScaleFactor: 1});
   await page.goto(`${base}/pages/reactnative.html`, {waitUntil: 'networkidle0'});
   await page.waitForSelector('header .mbb-busca-global');
   const reactNative = await page.evaluate(() => ({
@@ -110,6 +137,26 @@ try {
   if (reactNative.academia) throw new Error('React Native ainda exibe o botão de prévia da Academia no título.');
   if (!reactNative.buscaAntesDaAssinatura) throw new Error('Pesquisa não ficou antes da assinatura no cabeçalho do React Native.');
   if (reactNative.largura > reactNative.tela + 2) throw new Error('Cabeçalho do React Native criou rolagem horizontal.');
+
+  await page.setViewport({width: 390, height: 844, deviceScaleFactor: 1});
+  await page.reload({waitUntil: 'networkidle0'});
+  await page.waitForSelector('header .mbb-busca-global');
+  const reactNativeMobile = await page.evaluate(() => {
+    const busca = document.querySelector('header .mbb-busca-global');
+    const box = busca.getBoundingClientRect();
+    return {
+      academia: Boolean(document.getElementById('mbb-academia-react-native-preview')),
+      width: box.width,
+      height: box.height,
+      position: getComputedStyle(busca).position,
+      largura: document.documentElement.scrollWidth,
+      tela: innerWidth
+    };
+  });
+  if (reactNativeMobile.academia) throw new Error('Atalho da Academia reapareceu no React Native mobile.');
+  if (reactNativeMobile.width > 40 || reactNativeMobile.height > 40) throw new Error('Pesquisa não ficou compacta no React Native mobile.');
+  if (reactNativeMobile.position === 'fixed') throw new Error('Pesquisa do React Native mobile voltou a flutuar.');
+  if (reactNativeMobile.largura > reactNativeMobile.tela + 2) throw new Error('Cabeçalho do React Native mobile criou rolagem horizontal.');
 
   await page.goto(`${base}/meu-mbb/pesquisar.html`, {waitUntil: 'networkidle0'});
   const placeholder = await page.$eval('#consulta', elemento => elemento.getAttribute('placeholder') || '');
