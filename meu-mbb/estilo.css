@@ -9,6 +9,8 @@
 .mbb-resultado, .mbb-bloco, .mbb-formulario { border: 1px solid #d6e0ee; border-radius: 12px; padding: 17px; background: #fff; }
 .mbb-resultado a, .mbb-bloco a { color: #114b9e; font-weight: 800; }
 .mbb-resultado p { color: #506078; font-size: 13px; margin: 5px 0 0; }
+.mbb-resultado .mbb-resultado-trecho { color: #33445d; font-size: 14px; line-height: 1.5; margin-top: 9px; }
+.mbb-resultado mark { background: #fff1a8; color: inherit; border-radius: 3px; padding: 0 2px; }
 .mbb-formulario { margin-top: 12px; }
 .mbb-form-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 18px; }
 .mbb-formulario[hidden], .mbb-abas[hidden], #painel[hidden] { display: none; }
