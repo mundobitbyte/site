@@ -9,6 +9,7 @@ on:
       - 'pages/analise-sistemas/**'
       - 'js/analise-sistemas.js'
       - 'css/analise-sistemas.css'
+      - 'css/analise-sistemas-final.css'
       - 'ANALISE_SISTEMAS_MBB_MAPA_E_CRITERIOS.md'
       - 'ANALISE_SISTEMAS_MEU_MBB_CONTRATO.md'
       - 'tools/analise-sistemas-validacao/**'
@@ -21,6 +22,7 @@ on:
       - 'pages/analise-sistemas/**'
       - 'js/analise-sistemas.js'
       - 'css/analise-sistemas.css'
+      - 'css/analise-sistemas-final.css'
       - 'ANALISE_SISTEMAS_MBB_MAPA_E_CRITERIOS.md'
       - 'ANALISE_SISTEMAS_MEU_MBB_CONTRATO.md'
       - 'tools/analise-sistemas-validacao/**'
@@ -51,3 +53,4 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID || true' EXIT
           node tools/analise-sistemas-validacao/smoke.mjs
+          node tools/analise-sistemas-validacao/smoke-finalizacao.mjs
