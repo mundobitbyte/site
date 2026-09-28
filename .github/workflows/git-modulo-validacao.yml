@@ -10,6 +10,15 @@ on:
       - 'js/git*.js'
       - 'css/git*.css'
       - 'assets/git-github-checkpoint-comandos.txt'
+      - 'index.html'
+      - 'css/home.css'
+      - 'js/mbb-busca-global.js'
+      - 'meu-mbb/catalogo-core.js'
+      - 'meu-mbb/catalogo.json'
+      - 'meu-mbb/catalogo.test.cjs'
+      - 'meu-mbb/pesquisar.html'
+      - 'meu-mbb/pesquisar.js'
+      - 'meu-mbb/estilo.css'
       - 'tools/git-modulo-validacao/**'
       - '.github/workflows/git-modulo-validacao.yml'
   pull_request:
@@ -20,6 +29,15 @@ on:
       - 'js/git*.js'
       - 'css/git*.css'
       - 'assets/git-github-checkpoint-comandos.txt'
+      - 'index.html'
+      - 'css/home.css'
+      - 'js/mbb-busca-global.js'
+      - 'meu-mbb/catalogo-core.js'
+      - 'meu-mbb/catalogo.json'
+      - 'meu-mbb/catalogo.test.cjs'
+      - 'meu-mbb/pesquisar.html'
+      - 'meu-mbb/pesquisar.js'
+      - 'meu-mbb/estilo.css'
       - 'tools/git-modulo-validacao/**'
       - '.github/workflows/git-modulo-validacao.yml'
 
@@ -37,6 +55,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+
+      - name: Validate catalog and public search
+        run: node --test meu-mbb/catalogo.test.cjs
 
       - name: Install browser validation tool
         run: npm install --no-save --no-package-lock puppeteer-core@24
