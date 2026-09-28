@@ -163,6 +163,23 @@ try {
   if (/git status|pasta de rede/i.test(placeholder)) throw new Error('Campo de pesquisa ainda cita o exemplo do piloto Git.');
   if (!/frações/i.test(placeholder) || !/Python/i.test(placeholder) || !/sensores/i.test(placeholder)) throw new Error('Campo de pesquisa perdeu o exemplo geral aprovado.');
 
+  await page.goto(`${base}/pages/bancodedados.html#bd-subconsultas`, {waitUntil: 'networkidle0'});
+  const banco = await page.evaluate(() => ({
+    capitulo: document.querySelector('#mod-avancado')?.classList.contains('active'),
+    destino: document.getElementById('bd-subconsultas')?.getBoundingClientRect().top,
+    largura: document.documentElement.scrollWidth,
+    tela: innerWidth
+  }));
+  if (!banco.capitulo || banco.destino == null || banco.destino < -100 || banco.destino > 844) throw new Error('Subconsultas não abriu no capítulo e tópico corretos.');
+  if (banco.largura > banco.tela + 2) throw new Error('O destino de Banco de Dados criou rolagem horizontal no celular.');
+
+  await page.goto(`${base}/pages/arduino.html#p6`, {waitUntil: 'networkidle0'});
+  const arduino = await page.evaluate(() => ({
+    sensores: document.querySelector('#arduinoModuleMenu .module-btn[data-module="sensores"]')?.classList.contains('active'),
+    destino: document.getElementById('p6')?.getBoundingClientRect().top
+  }));
+  if (!arduino.sensores || arduino.destino == null || arduino.destino < -100 || arduino.destino > 844) throw new Error('Sensor LDR não abriu na seção correta.');
+
   console.log('VALIDAÇÃO VISUAL DA BUSCA E CABEÇALHO: OK');
 } finally {
   await browser.close();
