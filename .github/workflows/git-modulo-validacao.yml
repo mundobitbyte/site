@@ -68,6 +68,7 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID || true' EXIT
           node tools/git-modulo-validacao/smoke.mjs
+          node tools/git-modulo-validacao/smoke-busca-ui.mjs
 
       - name: Preserve pilot screenshots
         if: always()
