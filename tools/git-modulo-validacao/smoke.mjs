@@ -73,7 +73,7 @@ try {
   const scripts = await page.$$eval('script[src]', elements =>
     elements.map(element => new URL(element.src).pathname.split('/').pop())
   );
-  assert(JSON.stringify(scripts) === JSON.stringify([...canonicalScripts, ...optionalPilotScripts]),
+  assert(JSON.stringify(scripts) === JSON.stringify([...canonicalScripts, ...optionalPilotScripts, 'mbb-busca-global.js']),
     `Scripts carregados divergem da arquitetura canônica e do piloto: ${scripts.join(', ')}`);
   await fs.mkdir('artifacts/meu-mbb', {recursive: true});
   await page.screenshot({path: 'artifacts/meu-mbb/git-desktop.png', fullPage: true});

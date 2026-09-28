@@ -10,7 +10,7 @@
   const estilo = document.createElement('style');
   estilo.textContent = `
     .mbb-busca-global {
-      position: fixed; right: 16px; bottom: max(16px, env(safe-area-inset-bottom));
+      position: fixed; left: 16px; bottom: max(16px, env(safe-area-inset-bottom));
       z-index: 90; display: inline-flex; align-items: center; justify-content: center;
       min-height: 44px; padding: 9px 16px; border: 2px solid #fff;
       border-radius: 999px; background: #1967d2; color: #fff !important;
