@@ -17,13 +17,14 @@ test('catálogo único preserva as 12 etapas do piloto e alcança os módulos p�
   assert.equal(core.progresso(catalogo, {}).total, 12);
 });
 
-test('pesquisa pública encontra comando e pasta de rede pelo catálogo', () => {
+test('pesquisa pública encontra termos reais em módulos diferentes', () => {
   assert.equal(core.pesquisar(catalogo, 'git status')[0].conteudo_id, 'git-local-05');
   assert.ok(core.pesquisar(catalogo, 'git status').some(item => item.conteudo_id === 'git-local-05'));
   assert.ok(core.pesquisar(catalogo, 'pasta de rede').some(item => item.conteudo_id === 'git-local-03'));
   assert.ok(core.pesquisar(catalogo, 'useState').some(item => item.localizacao_atual === 'pages/reactnative.html'));
   assert.ok(core.pesquisar(catalogo, 'metodologia ágil').some(item => item.localizacao_atual === 'pages/analise-sistemas/09-agile-backlog-mvp.html'));
   assert.ok(core.pesquisar(catalogo, 'sensor LDR').some(item => item.localizacao_atual === 'pages/arduino.html'));
+  assert.ok(core.pesquisar(catalogo, 'subconsulta').some(item => item.localizacao_atual === 'pages/bancodedados.html'));
   assert.equal(core.pesquisar(catalogo, 'xyzconteudoinexistente').length, 0);
 });
 
