@@ -10,6 +10,15 @@ on:
       - 'js/git*.js'
       - 'css/git*.css'
       - 'assets/git-github-checkpoint-comandos.txt'
+      - 'index.html'
+      - 'css/home.css'
+      - 'js/mbb-busca-global.js'
+      - 'meu-mbb/catalogo-core.js'
+      - 'meu-mbb/catalogo.json'
+      - 'meu-mbb/catalogo.test.cjs'
+      - 'meu-mbb/pesquisar.html'
+      - 'meu-mbb/pesquisar.js'
+      - 'meu-mbb/estilo.css'
       - 'tools/git-modulo-validacao/**'
       - '.github/workflows/git-modulo-validacao.yml'
   pull_request:
@@ -20,6 +29,15 @@ on:
       - 'js/git*.js'
       - 'css/git*.css'
       - 'assets/git-github-checkpoint-comandos.txt'
+      - 'index.html'
+      - 'css/home.css'
+      - 'js/mbb-busca-global.js'
+      - 'meu-mbb/catalogo-core.js'
+      - 'meu-mbb/catalogo.json'
+      - 'meu-mbb/catalogo.test.cjs'
+      - 'meu-mbb/pesquisar.html'
+      - 'meu-mbb/pesquisar.js'
+      - 'meu-mbb/estilo.css'
       - 'tools/git-modulo-validacao/**'
       - '.github/workflows/git-modulo-validacao.yml'
 
@@ -38,6 +56,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Validate catalog and public search
+        run: node --test meu-mbb/catalogo.test.cjs
+
       - name: Install browser validation tool
         run: npm install --no-save --no-package-lock puppeteer-core@24
 
@@ -47,6 +68,7 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID || true' EXIT
           node tools/git-modulo-validacao/smoke.mjs
+          node tools/git-modulo-validacao/smoke-busca-ui.mjs
 
       - name: Preserve pilot screenshots
         if: always()
