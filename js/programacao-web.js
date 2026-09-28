@@ -361,8 +361,23 @@
   }
 
   function chapterFromHash() {
-    const id = decodeURIComponent(window.location.hash.slice(1));
-    return chapterIds.has(id) ? id : chapters[0].id;
+    let id;
+    try { id = decodeURIComponent(window.location.hash.slice(1)); } catch { return chapters[0].id; }
+    const alvo = document.getElementById(id);
+    return alvo?.closest('[data-chapter]')?.id || (chapterIds.has(id) ? id : chapters[0].id);
+  }
+
+  function abrirDestinoDaUrl() {
+    const capitulo = chapterFromHash();
+    showChapter(capitulo);
+    let id;
+    try { id = decodeURIComponent(window.location.hash.slice(1)); } catch { return; }
+    if (id && id !== capitulo) {
+      const alvo = document.getElementById(id);
+      if (alvo?.closest('[data-chapter]')?.id === capitulo) {
+        requestAnimationFrame(() => alvo.scrollIntoView({ block: 'start' }));
+      }
+    }
   }
 
   function prefersReducedMotion() {
@@ -438,15 +453,15 @@
     });
   });
 
-  window.addEventListener("popstate", () => showChapter(chapterFromHash()));
-  window.addEventListener("hashchange", () => showChapter(chapterFromHash()));
+  window.addEventListener("popstate", abrirDestinoDaUrl);
+  window.addEventListener("hashchange", abrirDestinoDaUrl);
 
   page.classList.add("js-ready");
   setupCopyButtons();
   setupDemoForms();
   setupChapter10CheckpointNote();
   setupJavaScriptDemos();
-  showChapter(chapterFromHash());
+  abrirDestinoDaUrl();
 }());
 
 (() => {

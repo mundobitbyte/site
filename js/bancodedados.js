@@ -36,6 +36,23 @@ function showModule(id){
   }
 }
 document.querySelectorAll('.nav-link[data-target]').forEach(btn=>btn.addEventListener('click',()=>showModule(btn.dataset.target)));
+// Cada título de seção é um destino da pesquisa. Os IDs da unidade e o progresso
+// continuam no catálogo; estes identificam apenas um ponto de leitura.
+function slugTitulo(texto){
+  return texto.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,65);
+}
+document.querySelectorAll('section.module:not(#mod-inicio):not(#mod-exercicios)').forEach(modulo=>{
+  const repetidos=new Map();
+  modulo.querySelectorAll('h2').forEach(titulo=>{
+    const texto=titulo.textContent.replace(/\s+/g,' ').trim();
+    if(!texto || texto.length>125) return;
+    const base=`bd-topico-${modulo.id.slice(4)}-${slugTitulo(texto)}`;
+    const vezes=(repetidos.get(base)||0)+1;
+    repetidos.set(base,vezes);
+    if(!titulo.id) titulo.id=base+(vezes>1?`-${vezes}`:'');
+  });
+});
 // Uma âncora de tópico pode abrir diretamente o capítulo que a contém.
 function abrirTopicoDaUrl(){
   let id;
