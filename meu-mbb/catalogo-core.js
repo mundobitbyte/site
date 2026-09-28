@@ -6,9 +6,13 @@
   'use strict';
 
   const ativos = new Set(['ativo', 'atualizado', 'movido']);
+  const buscaCache = new WeakMap();
+  const comuns = new Set(['a', 'as', 'o', 'os', 'de', 'da', 'das', 'do', 'dos', 'e', 'em', 'na', 'nas', 'no', 'nos', 'para', 'um', 'uma']);
+  const normalizar = valor => (valor || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
 
   function validar(catalogo) {
     if (!catalogo || !Array.isArray(catalogo.unidades)) throw new Error('Catálogo inválido');
+    buscaCache.delete(catalogo);
     const mapa = new Map();
     for (const unidade of catalogo.unidades) {
       if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(unidade.conteudo_id) || mapa.has(unidade.conteudo_id)) throw new Error('ID duplicado ou inválido');
@@ -60,14 +64,24 @@
   }
 
   function pesquisar(catalogo, termo) {
-    const tokens = (termo || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').trim().split(/\s+/).filter(Boolean);
+    const todos = normalizar(termo).trim().split(/\s+/).filter(Boolean);
+    const tokens = todos.filter(token => !comuns.has(token));
+    if (!tokens.length) tokens.push(...todos);
     if (!tokens.length) return [];
     const contar = (texto, trecho) => texto.split(trecho).length - 1;
-    return atuais(catalogo).map(unidade => {
-      const titulo = unidade.titulo.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
-      const texto = `${unidade.area} ${unidade.modulo} ${unidade.texto_busca || ''}`.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
-      const pontos = tokens.every(token => titulo.includes(token) || texto.includes(token))
-        ? tokens.reduce((soma, token) => soma + (titulo.includes(token) ? 20 : 0) + Math.min(contar(texto, token), 10), 0)
+    let indice = buscaCache.get(catalogo);
+    if (!indice) {
+      indice = atuais(catalogo).map(unidade => ({
+        unidade,
+        titulo: normalizar(unidade.titulo),
+        termos: normalizar(unidade.termos_busca),
+        texto: normalizar(`${unidade.area} ${unidade.modulo} ${unidade.texto_busca || ''}`)
+      }));
+      buscaCache.set(catalogo, indice);
+    }
+    return indice.map(({ unidade, titulo, termos, texto }) => {
+      const pontos = tokens.every(token => titulo.includes(token) || termos.includes(token) || texto.includes(token))
+        ? tokens.reduce((soma, token) => soma + (titulo.includes(token) ? 20 : 0) + (termos.includes(token) ? 15 : 0) + Math.min(contar(texto, token), 10), 0)
           + 3 * Math.min(contar(texto, tokens.join(' ')), 10) : 0;
       return { unidade, pontos };
     }).filter(item => item.pontos).sort((a, b) => b.pontos - a.pontos || a.unidade.ordem - b.unidade.ordem).map(item => item.unidade);

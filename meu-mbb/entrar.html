@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Entrar — Meu MbB</title>
-  <link rel="stylesheet" href="../css/home.css"><link rel="stylesheet" href="estilo.css">
+  <link rel="stylesheet" href="../css/home.css?v=mbb-busca-1"><link rel="stylesheet" href="estilo.css?v=mbb-busca-1">
 </head>
 <body>
   <header><h1>Mundo bit Byte</h1><a class="mbb-header-link" href="../index.html">← Início</a></header>
@@ -14,7 +14,7 @@
     <form id="form-entrar" class="mbb-formulario">
       <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
       <label>Senha<input type="password" name="senha" autocomplete="current-password" required></label>
-      <button type="submit">Entrar</button><button type="button" id="recuperar" class="mbb-secundario">Esqueci minha senha</button>
+      <div class="mbb-form-actions"><button type="submit">Entrar</button><button type="button" id="recuperar" class="mbb-secundario">Esqueci minha senha</button></div>
     </form>
     <form id="form-criar" class="mbb-formulario" hidden>
       <label>Nome<input type="text" name="nome" minlength="2" maxlength="80" autocomplete="name" required></label>
@@ -25,5 +25,6 @@
     <p id="mensagem" role="status" aria-live="polite"></p>
   </main>
   <script src="firebase-config.js?v=mbb-prod-1"></script><script src="conta.js"></script><script src="entrar.js"></script>
+<script src="../js/mbb-busca-global.js?v=mbb-busca-1"></script>
 </body>
 </html>
