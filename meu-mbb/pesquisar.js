@@ -41,7 +41,7 @@
   }
 
   try {
-    const resposta = await fetch('catalogo.json?v=mbb-busca-2');
+    const resposta = await fetch('catalogo.json?v=mbb-busca-3');
     if (!resposta.ok) throw new Error('Catálogo indisponível');
     const catalogo = window.MBBCatalogo.validar(await resposta.json());
     function renderizar() {
