@@ -27,6 +27,15 @@ test('pesquisa pública encontra comando e pasta de rede pelo catálogo', () => 
   assert.equal(core.pesquisar(catalogo, 'xyzconteudoinexistente').length, 0);
 });
 
+test('campo de pesquisa usa exemplo geral do portal, não o exemplo do piloto Git', () => {
+  const html = fs.readFileSync(path.resolve(__dirname, 'pesquisar.html'), 'utf8');
+  const placeholder = html.match(/placeholder="([^"]+)"/)?.[1] || '';
+  assert.match(placeholder, /frações/i);
+  assert.match(placeholder, /Python/i);
+  assert.match(placeholder, /sensores/i);
+  assert.doesNotMatch(placeholder, /git status|pasta de rede/i);
+});
+
 test('atalho público de pesquisa está presente em todas as páginas HTML do portal', () => {
   const raiz = path.resolve(__dirname, '..');
   function percorrer(dir) {
