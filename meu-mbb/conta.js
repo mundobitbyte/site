@@ -46,7 +46,11 @@
     avisar();
     return usuario;
   }
-  async function recuperar(email) { await iniciar(); return sdk.authSdk.sendPasswordResetEmail(sdk.auth, email); }
+  async function recuperar(email) {
+    await iniciar();
+    sdk.auth.languageCode = 'pt-BR';
+    return sdk.authSdk.sendPasswordResetEmail(sdk.auth, email);
+  }
   async function sair() { await iniciar(); await sdk.authSdk.signOut(sdk.auth); }
 
   function ref(id) { return sdk.dbSdk.doc(sdk.db, 'meuMbb', usuario.uid, 'registros', id); }

@@ -36,7 +36,20 @@ function showModule(id){
   }
 }
 document.querySelectorAll('.nav-link[data-target]').forEach(btn=>btn.addEventListener('click',()=>showModule(btn.dataset.target)));
+// Uma âncora de tópico pode abrir diretamente o capítulo que a contém.
+function abrirTopicoDaUrl(){
+  let id;
+  try { id = decodeURIComponent(location.hash.slice(1)); }
+  catch { return; }
+  const topico = id && document.getElementById(id);
+  const modulo = topico && topico.closest('.module');
+  if (!modulo || !modulo.id.startsWith('mod-')) return;
+  showModule(modulo.id.slice(4));
+  requestAnimationFrame(() => topico.scrollIntoView({block:'start'}));
+}
 showModule('inicio');
+if (location.hash) abrirTopicoDaUrl();
+window.addEventListener('hashchange', abrirTopicoDaUrl);
 
 
 document.addEventListener('click', function(e){

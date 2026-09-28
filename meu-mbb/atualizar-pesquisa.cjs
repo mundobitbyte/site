@@ -52,11 +52,31 @@ function textoPagina(localizacao) {
     .filter(Boolean).join(' ');
 }
 
+// Tópicos são destinos dentro da unidade existente; não recebem IDs de progresso.
+// O vocabulário vem do trecho real entre títulos/seções, sem lista manual de palavras.
+function textoTopico(html, ancora) {
+  const marcador = new RegExp(`<((?:h2)|(?:section))\\b[^>]*\\bid=["']${ancora}["'][^>]*>`, 'i');
+  const inicio = marcador.exec(html);
+  if (!inicio) throw new Error(`Âncora de tópico ausente: ${ancora}`);
+  const restante = html.slice(inicio.index + inicio[0].length);
+  const fim = inicio[1].toLowerCase() === 'h2'
+    ? /<h2\b/i.exec(restante)
+    : /<section\s+class=["']project["']\s+id=/i.exec(restante);
+  return limpar(inicio[0] + restante.slice(0, fim?.index ?? restante.length), 12000);
+}
+
 let diferencas = 0;
 for (const unidade of catalogo.unidades) {
   if (!unidade.localizacao_atual) continue;
   const texto = textoGit.get(unidade.localizacao_atual) || textoPagina(unidade.localizacao_atual);
   if (texto !== unidade.texto_busca) { diferencas++; unidade.texto_busca = texto; }
+  if (unidade.topicos_busca) {
+    const html = fs.readFileSync(path.join(raiz, unidade.localizacao_atual.split('#')[0]), 'utf8');
+    for (const topico of unidade.topicos_busca) {
+      const indexado = textoTopico(html, topico.ancora);
+      if (topico.texto_busca !== indexado) { diferencas++; topico.texto_busca = indexado; }
+    }
+  }
 }
 if (process.argv.includes('--check')) {
   if (diferencas) { console.error(`${diferencas} unidade(s) com índice desatualizado.`); process.exitCode = 1; }

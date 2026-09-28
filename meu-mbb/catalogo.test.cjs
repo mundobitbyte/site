@@ -28,6 +28,20 @@ test('pesquisa pública encontra termos reais em módulos diferentes', () => {
   assert.equal(core.pesquisar(catalogo, 'xyzconteudoinexistente').length, 0);
 });
 
+test('tópicos de pesquisa levam ao conteúdo sem mudar a identidade pedagógica', () => {
+  for (const [termo, destino] of [
+    ['subconsulta', 'pages/bancodedados.html#bd-subconsultas'],
+    ['sensor LDR', 'pages/arduino.html#p6']
+  ]) {
+    const encontrado = core.pesquisar(catalogo, termo)[0];
+    assert.equal(encontrado.localizacao_pesquisa, destino);
+    const original = catalogo.unidades.find(unidade => unidade.conteudo_id === encontrado.conteudo_id);
+    assert.equal(encontrado.localizacao_atual, original.localizacao_atual);
+    assert.equal(encontrado.versao_conteudo, original.versao_conteudo);
+    assert.ok(fs.readFileSync(path.resolve(__dirname, '..', destino.split('#')[0]), 'utf8').includes(`id="${destino.split('#')[1]}"`));
+  }
+});
+
 test('campo de pesquisa usa exemplo geral do portal, não o exemplo do piloto Git', () => {
   const html = fs.readFileSync(path.resolve(__dirname, 'pesquisar.html'), 'utf8');
   const placeholder = html.match(/placeholder="([^"]+)"/)?.[1] || '';

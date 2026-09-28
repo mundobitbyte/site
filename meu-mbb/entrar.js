@@ -21,14 +21,14 @@
   async function executar(formulario, operacao) {
     const botao = formulario.querySelector('[type="submit"]'); botao.disabled = true; mensagem.textContent = 'Aguarde…';
     try { await operacao(new FormData(formulario)); location.href = 'index.html'; }
-    catch (erro) { mensagem.textContent = erros[erro.code] || erro.message || 'Não foi possível entrar.'; botao.disabled = false; }
+    catch (erro) { mensagem.textContent = erros[erro.code] || 'Não foi possível concluir a operação. Tente novamente.'; botao.disabled = false; }
   }
   login.addEventListener('submit', evento => { evento.preventDefault(); executar(login, dados => conta.entrar(dados.get('email'), dados.get('senha'))); });
   cadastro.addEventListener('submit', evento => { evento.preventDefault(); executar(cadastro, dados => conta.cadastrar(dados.get('nome'), dados.get('email'), dados.get('senha'))); });
   document.getElementById('recuperar').addEventListener('click', async () => {
     const email = login.elements.email.value.trim();
     if (!email) { mensagem.textContent = 'Informe seu e-mail no campo acima.'; return; }
-    try { await conta.recuperar(email); mensagem.textContent = 'Se a conta existir, você receberá instruções por e-mail.'; }
+    try { await conta.recuperar(email); mensagem.textContent = 'Se houver uma conta associada a esse e-mail, enviaremos instruções para redefinir a senha. Verifique também a pasta de spam ou lixo eletrônico.'; }
     catch (erro) { mensagem.textContent = erros[erro.code] || 'Não foi possível enviar as instruções.'; }
   });
 }());
