@@ -3,7 +3,9 @@
   'use strict';
 
   /* O antigo atalho de prévia da Academia não pertence ao cabeçalho do React Native. */
-  const academiaPreview = document.getElementById('mbb-academia-react-native-preview');
+  const academiaPreview = typeof document.getElementById === 'function'
+    ? document.getElementById('mbb-academia-react-native-preview')
+    : null;
   if (academiaPreview) academiaPreview.remove();
 
   const script = document.currentScript;
