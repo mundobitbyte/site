@@ -3,8 +3,45 @@
   const campo = document.getElementById('consulta');
   const resumo = document.getElementById('resumo');
   const resultados = document.getElementById('resultados');
+  const normalizar = valor => (valor || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
+  const escaparRegExp = valor => valor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  function palavras(termo) {
+    return termo.trim().split(/\s+/).filter(Boolean).sort((a, b) => b.length - a.length);
+  }
+
+  function adicionarComGrifo(elemento, texto, termo) {
+    const termos = palavras(termo);
+    if (!termos.length) { elemento.textContent = texto; return; }
+    const re = new RegExp(`(${termos.map(escaparRegExp).join('|')})`, 'giu');
+    let inicio = 0;
+    for (const match of texto.matchAll(re)) {
+      if (match.index > inicio) elemento.append(document.createTextNode(texto.slice(inicio, match.index)));
+      const mark = document.createElement('mark');
+      mark.textContent = match[0];
+      elemento.append(mark);
+      inicio = match.index + match[0].length;
+    }
+    if (inicio < texto.length) elemento.append(document.createTextNode(texto.slice(inicio)));
+  }
+
+  function trechoRelevante(texto, termo, limite = 230) {
+    const fonte = (texto || '').replace(/\s+/g, ' ').trim();
+    if (!fonte) return '';
+    const alvo = normalizar(termo).split(/\s+/).filter(Boolean).sort((a, b) => b.length - a.length)[0] || '';
+    const normalizado = normalizar(fonte);
+    const posicao = alvo ? normalizado.indexOf(alvo) : -1;
+    if (fonte.length <= limite) return fonte;
+    const centro = posicao >= 0 ? posicao : 0;
+    let inicio = Math.max(0, centro - Math.floor(limite * 0.35));
+    let fim = Math.min(fonte.length, inicio + limite);
+    if (fim - inicio < limite) inicio = Math.max(0, fim - limite);
+    const recorte = fonte.slice(inicio, fim).trim();
+    return `${inicio ? '…' : ''}${recorte}${fim < fonte.length ? '…' : ''}`;
+  }
+
   try {
-    const resposta = await fetch('catalogo.json?v=mbb-busca-1');
+    const resposta = await fetch('catalogo.json?v=mbb-busca-2');
     if (!resposta.ok) throw new Error('Catálogo indisponível');
     const catalogo = window.MBBCatalogo.validar(await resposta.json());
     function renderizar() {
@@ -18,10 +55,18 @@
         artigo.className = 'mbb-resultado';
         const link = document.createElement('a');
         link.href = new URL(`../${unidade.localizacao_atual}`, location.href).href;
-        link.textContent = unidade.titulo;
+        adicionarComGrifo(link, unidade.titulo, termo);
         const contexto = document.createElement('p');
-        contexto.textContent = [unidade.area, unidade.modulo, unidade.trilha].filter(Boolean).join(' › ');
+        contexto.className = 'mbb-resultado-contexto';
+        adicionarComGrifo(contexto, [unidade.area, unidade.modulo, unidade.trilha].filter(Boolean).join(' › '), termo);
         artigo.append(link, contexto);
+        const trecho = trechoRelevante(unidade.texto_busca, termo);
+        if (trecho) {
+          const excerto = document.createElement('p');
+          excerto.className = 'mbb-resultado-trecho';
+          adicionarComGrifo(excerto, trecho, termo);
+          artigo.appendChild(excerto);
+        }
         resultados.appendChild(artigo);
       });
       if (achados.length > 50) resumo.textContent += ' Exibindo os 50 mais relevantes.';

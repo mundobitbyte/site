@@ -27,9 +27,10 @@ const conjuntosGit = {
 const textoGit = new Map(Object.entries(conjuntosGit).flatMap(([grupo, etapas]) =>
   etapas.map(etapa => [`pages/git.html#${grupo}-${etapa.id}`, limpar(`${etapa.objective} ${etapa.content}`)])));
 
-function vocabulario(texto, limite) {
+function vocabulario(texto, limite = Infinity) {
   const palavras = texto.match(/[\p{L}\p{N}_+#.-]{3,}/gu) || [];
-  return Array.from(new Set(palavras)).join(' ').slice(0, limite);
+  const vocabularioCompleto = Array.from(new Set(palavras)).join(' ');
+  return Number.isFinite(limite) ? vocabularioCompleto.slice(0, limite) : vocabularioCompleto;
 }
 
 function textoPagina(localizacao) {
@@ -45,7 +46,9 @@ function textoPagina(localizacao) {
     .filter(src => src.startsWith(path.join(raiz, 'js') + path.sep) && fs.existsSync(src))
     .filter(src => !/visualizador|destaques|ajustes|navegacao|limpeza-editorial|integracao|mbb-busca-global/i.test(path.basename(src)));
   const fonte = scripts.map(src => fs.readFileSync(src, 'utf8')).join(' ');
-  return [texto.slice(0, 40000), vocabulario(texto.slice(40000), 20000), vocabulario(fonte, 40000)]
+  // Mantém texto corrido no início para relevância e inclui todo o vocabulário único
+  // do restante da página e dos scripts. Assim páginas grandes não criam pontos cegos.
+  return [texto.slice(0, 40000), vocabulario(texto.slice(40000)), vocabulario(fonte)]
     .filter(Boolean).join(' ');
 }
 
