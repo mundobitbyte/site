@@ -42,6 +42,19 @@ test('tópicos de pesquisa levam ao conteúdo sem mudar a identidade pedagógica
   }
 });
 
+test('destinos de seções reais cobrem Banco de Dados, React Native e Análise', () => {
+  const casos = [
+    ['CTE', 'pages/bancodedados.html#bd-topico-avancado-bloco-6-cte-dando-nome-a-uma-etapa-da-consulta'],
+    ['useState', 'pages/reactnative.html#rn-state-state-7-state'],
+    ['BPMN', 'pages/analise-sistemas/05-processo-to-be-bpmn.html#:~:text=BPMN%20%E2%80%94%20subconjunto%20essencial']
+  ];
+  for (const [termo, destino] of casos) {
+    const encontrado = core.pesquisar(catalogo, termo)[0];
+    assert.equal(encontrado.localizacao_pesquisa, destino);
+    assert.equal(encontrado.conteudo_id, catalogo.unidades.find(item => item.localizacao_atual === destino.split('#')[0]).conteudo_id);
+  }
+});
+
 test('campo de pesquisa usa exemplo geral do portal, não o exemplo do piloto Git', () => {
   const html = fs.readFileSync(path.resolve(__dirname, 'pesquisar.html'), 'utf8');
   const placeholder = html.match(/placeholder="([^"]+)"/)?.[1] || '';

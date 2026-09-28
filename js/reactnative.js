@@ -4991,3 +4991,22 @@ const styles = StyleSheet.create({
     renderModuleMenu();
     renderStepMenu();
     showStep(modules[currentModuleKey].steps[0].id);
+
+    // A pesquisa usa as etapas já existentes, sem criar unidades de progresso.
+    function abrirEtapaDaUrl() {
+      let destino;
+      try { destino = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+      if (!destino.startsWith('rn-')) return;
+      const encontrado = Object.entries(modules).find(([chave, modulo]) =>
+        modulo.steps.some(etapa => destino === `rn-${chave}-${etapa.id}`));
+      if (!encontrado) return;
+      const [chave, modulo] = encontrado;
+      const etapa = modulo.steps.find(item => destino === `rn-${chave}-${item.id}`);
+      currentModuleKey = chave;
+      renderModuleMenu();
+      renderStepMenu();
+      showStep(etapa.id);
+      document.getElementById('stepTitle').scrollIntoView({ block: 'start' });
+    }
+    abrirEtapaDaUrl();
+    window.addEventListener('hashchange', abrirEtapaDaUrl);

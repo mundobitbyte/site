@@ -68,7 +68,13 @@
     const tokens = todos.filter(token => !comuns.has(token));
     if (!tokens.length) tokens.push(...todos);
     if (!tokens.length) return [];
-    const contar = (texto, trecho) => texto.split(trecho).length - 1;
+    const escapar = valor => valor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Siglas curtas como CTE, SQL e LDR não são pedaços de outras palavras.
+    const ocorrencias = (texto, trecho) => trecho.length <= 3
+      ? [...texto.matchAll(new RegExp(`(^|[^a-z0-9_])${escapar(trecho)}(?=$|[^a-z0-9_])`, 'g'))].length
+      : texto.split(trecho).length - 1;
+    const contem = (texto, trecho) => ocorrencias(texto, trecho) > 0;
+    const contar = ocorrencias;
     let indice = buscaCache.get(catalogo);
     if (!indice) {
       indice = atuais(catalogo).map(unidade => ({
@@ -80,14 +86,14 @@
       buscaCache.set(catalogo, indice);
     }
     return indice.map(({ unidade, titulo, termos, texto }) => {
-      const pontos = tokens.every(token => titulo.includes(token) || termos.includes(token) || texto.includes(token))
-        ? tokens.reduce((soma, token) => soma + (titulo.includes(token) ? 20 : 0) + (termos.includes(token) ? 15 : 0) + Math.min(contar(texto, token), 10), 0)
+      const pontos = tokens.every(token => contem(titulo, token) || contem(termos, token) || contem(texto, token))
+        ? tokens.reduce((soma, token) => soma + (contem(titulo, token) ? 20 : 0) + (contem(termos, token) ? 15 : 0) + Math.min(contar(texto, token), 10), 0)
           + 3 * Math.min(contar(texto, tokens.join(' ')), 10) : 0;
       const topicos = (unidade.topicos_busca || []).map(topico => {
         const nome = normalizar(topico.titulo);
         const corpo = normalizar(topico.texto_busca);
-        const nota = tokens.every(token => nome.includes(token) || corpo.includes(token))
-          ? tokens.reduce((soma, token) => soma + (nome.includes(token) ? 30 : 0) + Math.min(contar(corpo, token), 10), 0) : 0;
+        const nota = tokens.every(token => contem(nome, token) || contem(corpo, token))
+          ? tokens.reduce((soma, token) => soma + (contem(nome, token) ? 30 : 0) + Math.min(contar(corpo, token), 10), 0) : 0;
         return { topico, nota };
       }).sort((a, b) => b.nota - a.nota);
       const melhor = topicos[0];
