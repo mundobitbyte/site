@@ -54,13 +54,13 @@
         const artigo = document.createElement('article');
         artigo.className = 'mbb-resultado';
         const link = document.createElement('a');
-        link.href = new URL(`../${unidade.localizacao_atual}`, location.href).href;
-        adicionarComGrifo(link, unidade.titulo, termo);
+        link.href = new URL(`../${unidade.localizacao_pesquisa || unidade.localizacao_atual}`, location.href).href;
+        adicionarComGrifo(link, unidade.titulo_pesquisa || unidade.titulo, termo);
         const contexto = document.createElement('p');
         contexto.className = 'mbb-resultado-contexto';
         adicionarComGrifo(contexto, [unidade.area, unidade.modulo, unidade.trilha].filter(Boolean).join(' › '), termo);
         artigo.append(link, contexto);
-        const trecho = trechoRelevante(unidade.texto_busca, termo);
+        const trecho = trechoRelevante(unidade.texto_pesquisa || unidade.texto_busca, termo);
         if (trecho) {
           const excerto = document.createElement('p');
           excerto.className = 'mbb-resultado-trecho';

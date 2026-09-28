@@ -83,7 +83,20 @@
       const pontos = tokens.every(token => titulo.includes(token) || termos.includes(token) || texto.includes(token))
         ? tokens.reduce((soma, token) => soma + (titulo.includes(token) ? 20 : 0) + (termos.includes(token) ? 15 : 0) + Math.min(contar(texto, token), 10), 0)
           + 3 * Math.min(contar(texto, tokens.join(' ')), 10) : 0;
-      return { unidade, pontos };
+      const topicos = (unidade.topicos_busca || []).map(topico => {
+        const nome = normalizar(topico.titulo);
+        const corpo = normalizar(topico.texto_busca);
+        const nota = tokens.every(token => nome.includes(token) || corpo.includes(token))
+          ? tokens.reduce((soma, token) => soma + (nome.includes(token) ? 30 : 0) + Math.min(contar(corpo, token), 10), 0) : 0;
+        return { topico, nota };
+      }).sort((a, b) => b.nota - a.nota);
+      const melhor = topicos[0];
+      const resultado = melhor?.nota > 0
+        ? { ...unidade, titulo_pesquisa: melhor.topico.titulo,
+            localizacao_pesquisa: `${unidade.localizacao_atual.split('#')[0]}#${melhor.topico.ancora}`,
+            texto_pesquisa: melhor.topico.texto_busca }
+        : unidade;
+      return { unidade: resultado, pontos: Math.max(pontos, melhor?.nota || 0) };
     }).filter(item => item.pontos).sort((a, b) => b.pontos - a.pontos || a.unidade.ordem - b.unidade.ordem).map(item => item.unidade);
   }
 
