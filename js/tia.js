@@ -1,4 +1,53 @@
 document.addEventListener("DOMContentLoaded",()=>{
+  // Cirurgia MbB — integra o tópico 7.1 ao percurso já aprovado do TIA.
+  // O conteúdo principal continua intacto: ERP → controle de versões → SCM.
+  const erpSection=document.querySelector("#erp");
+  const scmSection=document.querySelector("#scm");
+  const sideNav=document.querySelector(".side-nav");
+
+  if(erpSection && scmSection && !document.querySelector("#controle-versoes")){
+    const section=document.createElement("section");
+    section.id="controle-versoes";
+    section.className="section-card";
+    section.innerHTML=`
+      <div class="section-head">
+        <span class="badge">7.1</span>
+        <div>
+          <h2>Controle de versões em documentos administrativos</h2>
+          <p>Use tecnologia para manter histórico, rastreabilidade e recuperação de mudanças em um processo real de compras.</p>
+        </div>
+      </div>
+      <div class="example-box">
+        <h3>Depois de integrar processos, surge outra necessidade</h3>
+        <p>
+          Um ERP pode integrar compras, estoque e financeiro, mas os próprios procedimentos administrativos também mudam com o tempo.
+          Se uma regra de compras for alterada, a organização precisa saber <strong>o que mudou, quando mudou e qual era a versão anterior</strong>.
+        </p>
+        <p>
+          Na prática a seguir, você vai controlar as versões de um <strong>Procedimento de Solicitação de Compras</strong>, usando Git e GitHub
+          apenas como ferramentas de gestão do histórico — sem programação.
+        </p>
+        <a class="call-link" href="tia-controle-versoes.html">Abrir prática guiada →</a>
+      </div>
+      <div class="notice">
+        <strong>Conexão com o próximo assunto:</strong>
+        ao controlar as regras de solicitação, cotação e aprovação de compras, você prepara o terreno para estudar como fornecedores,
+        materiais, estoques e entregas se relacionam na gestão da cadeia de suprimentos.
+      </div>`;
+    erpSection.insertAdjacentElement("afterend",section);
+  }
+
+  if(sideNav && !sideNav.querySelector('a[href="#controle-versoes"]')){
+    const erpLink=sideNav.querySelector('a[href="#erp"]');
+    if(erpLink){
+      const link=document.createElement("a");
+      link.className="nav-btn";
+      link.href="#controle-versoes";
+      link.textContent="7.1 - Controle de versões";
+      erpLink.insertAdjacentElement("afterend",link);
+    }
+  }
+
   const links=document.querySelectorAll(".nav-btn");
   const sections=[...document.querySelectorAll("main section[id]")];
   const scroller=document.querySelector(".content") || document;
