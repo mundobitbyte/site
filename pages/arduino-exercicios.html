@@ -55,6 +55,6 @@
 (function(){const layout=document.getElementById('arduinoLayout'),toggle=document.getElementById('stageToggle'),close=document.getElementById('stageClose'),backdrop=document.getElementById('stageBackdrop');function closeDrawer(){layout.classList.remove('drawer-open');if(backdrop)backdrop.hidden=true;if(toggle)toggle.setAttribute('aria-expanded','false')}function openDrawer(){layout.classList.add('drawer-open');if(backdrop)backdrop.hidden=false;if(toggle)toggle.setAttribute('aria-expanded','true')}if(toggle)toggle.addEventListener('click',openDrawer);if(close)close.addEventListener('click',closeDrawer);if(backdrop)backdrop.addEventListener('click',closeDrawer);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});function manter(){const menu=document.getElementById('arduinoModuleMenu'),ativo=menu&&menu.querySelector('.module-btn.active');if(!menu||!ativo)return;requestAnimationFrame(()=>{const mr=menu.getBoundingClientRect(),ir=ativo.getBoundingClientRect(),alvo=menu.scrollLeft+(ir.left-mr.left)-((menu.clientWidth-ir.width)/2),max=Math.max(0,menu.scrollWidth-menu.clientWidth);menu.scrollLeft=Math.min(max,Math.max(0,alvo));});}manter();window.addEventListener('pageshow',manter);window.addEventListener('resize',manter);})();
 </script>
 <script src="../js/arduino-destaques-mbb.js?v=20260927-1"></script>
-<script src="../js/mbb-busca-global.js?v=mbb-busca-1"></script>
+<script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body>
 </html>
