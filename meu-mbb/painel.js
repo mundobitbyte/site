@@ -43,14 +43,32 @@
     const vistos = itens.filter(item => item.registro.ultimoAcesso).sort((a, b) => momento(b.registro.ultimoAcesso) - momento(a.registro.ultimoAcesso));
     preencher('continuar', vistos.slice(0, 1), 'Abra um conteúdo do site para começar.');
     preencher('recentes', vistos.slice(0, 5), 'Nenhum conteúdo visitado ainda.');
-    preencher('favoritos', itens.filter(item => item.registro.favorito), 'Nenhum favorito ainda.');
+    elemento('limpar-recentes').hidden = vistos.length === 0;
+    const favoritos = itens.filter(item => item.registro.favorito);
+    preencher('favoritos', favoritos, 'Marque um conteúdo como favorito para encontrá-lo aqui.');
+    elemento('limpar-favoritos').hidden = favoritos.length === 0;
     const notas = elemento('anotacoes'); notas.replaceChildren();
     const comNotas = itens.filter(item => item.registro.anotacao?.trim());
-    if (!comNotas.length) notas.textContent = 'Nenhuma anotação ainda.';
+    elemento('limpar-anotacoes').hidden = comNotas.length === 0;
+    if (!comNotas.length) notas.textContent = 'Suas anotações salvas aparecerão aqui.';
     comNotas.forEach(item => { const bloco = document.createElement('div'); bloco.className = 'mbb-nota'; bloco.append(linha(item));
       const texto = document.createElement('p'); texto.textContent = item.registro.anotacao; bloco.append(texto); notas.append(bloco); });
-    const p = core.progresso(catalogo, registros);
-    elemento('progresso').textContent = `${p.concluidas} de ${p.total} etapas de Git concluídas (${p.percentual}%). O progresso das demais áreas ainda não faz parte deste piloto.`;
+    const concluidos = [...new Map(itens.filter(item => item.registro.concluido && item.destino)
+      .map(item => [item.destino.conteudo_id, item])).values()];
+    elemento('limpar-progresso').hidden = !itens.some(item => item.registro.concluido);
+    const progresso = elemento('progresso'); progresso.replaceChildren();
+    const resumo = document.createElement('p');
+    resumo.textContent = concluidos.length
+      ? `${concluidos.length} ${concluidos.length === 1 ? 'conteúdo marcado como concluído' : 'conteúdos marcados como concluídos'}. Abrir uma página não conclui o estudo.`
+      : 'Nenhum conteúdo concluído ainda. Marque a conclusão quando terminar de estudar.';
+    progresso.append(resumo);
+    if (concluidos.length) {
+      const lista = document.createElement('details');
+      const titulo = document.createElement('summary'); titulo.textContent = 'Ver conteúdos concluídos';
+      lista.append(titulo);
+      concluidos.forEach(item => lista.append(linha(item)));
+      progresso.append(lista);
+    }
   }
   try {
     await conta.iniciar();
@@ -63,4 +81,24 @@
   } catch (_) { mensagem.textContent = 'Seus dados estão temporariamente indisponíveis. Os conteúdos públicos continuam acessíveis.'; }
   sair.addEventListener('click', async () => { try { await conta.sair(); location.href = '../index.html'; }
     catch (_) { mensagem.textContent = 'Não foi possível sair agora. Tente novamente.'; } });
+  const avisos = {
+    recentes: 'Limpar a lista de recentes? Favoritos, anotações e conclusões serão mantidos.',
+    favoritos: 'Remover todos os favoritos? Visitas, anotações e conclusões serão mantidas.',
+    anotacoes: 'Apagar todas as suas anotações? Esta ação não pode ser desfeita. Os demais dados serão mantidos.',
+    progresso: 'Zerar todas as conclusões que você marcou? Visitas, favoritos e anotações serão mantidos.'
+  };
+  for (const [secao, aviso] of Object.entries(avisos)) {
+    const botao = elemento(`limpar-${secao}`);
+    botao.addEventListener('click', async () => {
+      if (!confirm(aviso)) return;
+      botao.disabled = true;
+      try {
+        await conta.limparSecao(secao);
+        registros = await conta.listar();
+        renderizar();
+        mensagem.textContent = 'Área limpa.';
+      } catch (_) { mensagem.textContent = 'Não foi possível limpar agora. Tente novamente.'; }
+      finally { botao.disabled = false; }
+    });
+  }
 }());

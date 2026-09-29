@@ -38,9 +38,9 @@
     li.atualizar = async unidade => {
       aviso.textContent = '';
       try {
-        const registros = await conta.listar();
+        const registro = await conta.obter(unidade);
         if (atual !== unidade) return;
-        const estado = registros[unidade.conteudo_id] || {};
+        const estado = registro;
         favoritoAtivo = Boolean(estado.favorito); concluidoAtivo = Boolean(estado.concluido);
         favorito.textContent = favoritoAtivo ? '★ Favorito' : '☆ Favorito';
         concluir.textContent = concluidoAtivo ? 'Concluído ✓' : 'Marcar como concluído';

@@ -12,6 +12,7 @@ for (const unidade of catalogo.unidades) {
   if (paginas[pagina]) throw new Error(`Mais de uma unidade para ${pagina}`);
   paginas[pagina] = {
     conteudo_id: unidade.conteudo_id,
+    titulo: unidade.titulo,
     versao_conteudo: unidade.versao_conteudo,
     localizacao_atual: unidade.localizacao_atual,
     ancoras: [...new Set((unidade.topicos_busca || []).map(topico => topico.ancora))]

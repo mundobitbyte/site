@@ -1,60 +1,70 @@
 {
   "ds-arte/index.html": {
     "conteudo_id": "mod-ds-arte-index",
+    "titulo": "Arte — 1ª Série",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-arte/index.html",
     "ancoras": []
   },
   "ds-biologia/index.html": {
     "conteudo_id": "mod-ds-biologia-index",
+    "titulo": "Biologia — 1ª Série",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-biologia/index.html",
     "ancoras": []
   },
   "ds-educacao-fisica/index.html": {
     "conteudo_id": "mod-ds-educacao-fisica-index",
+    "titulo": "Educação Física — 1ª Série",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-educacao-fisica/index.html",
     "ancoras": []
   },
   "ds-filosofia/index.html": {
     "conteudo_id": "mod-ds-filosofia-index",
+    "titulo": "Filosofia",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-filosofia/index.html",
     "ancoras": []
   },
   "ds-fisica/index.html": {
     "conteudo_id": "mod-ds-fisica-index",
+    "titulo": "Física — 1ª Série",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-fisica/index.html",
     "ancoras": []
   },
   "ds-geografia/index.html": {
     "conteudo_id": "mod-ds-geografia-index",
+    "titulo": "Geografia — 1ª Série",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-geografia/index.html",
     "ancoras": []
   },
   "ds-historia/index.html": {
     "conteudo_id": "mod-ds-historia-index",
+    "titulo": "História — 1ª Série",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-historia/index.html",
     "ancoras": []
   },
   "ds-ingles/index.html": {
     "conteudo_id": "mod-ds-ingles-index",
+    "titulo": "Língua Inglesa — 1ª Série",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-ingles/index.html",
     "ancoras": []
   },
   "ds-matematica/2-serie.html": {
     "conteudo_id": "mod-ds-matematica-2-serie",
+    "titulo": "DS Matemática — 2ª Série",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-matematica/2-serie.html",
     "ancoras": []
   },
   "ds-matematica/experimentos/funcoes-exponenciais-logaritmicas.html": {
     "conteudo_id": "mod-ds-matematica-experimentos-funcoes-exponenciais-logaritmicas",
+    "titulo": "Funções exponenciais e logarítmicas | Experimento MbB",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-matematica/experimentos/funcoes-exponenciais-logaritmicas.html",
     "ancoras": [
@@ -73,36 +83,42 @@
   },
   "ds-matematica/index.html": {
     "conteudo_id": "mod-ds-matematica-index",
+    "titulo": "DS Matemática",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-matematica/index.html",
     "ancoras": []
   },
   "ds-portugues/index.html": {
     "conteudo_id": "mod-ds-portugues-index",
+    "titulo": "Língua Portuguesa — 1ª Série",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-portugues/index.html",
     "ancoras": []
   },
   "ds-quimica/index.html": {
     "conteudo_id": "mod-ds-quimica-index",
+    "titulo": "Química — 1ª Série",
     "versao_conteudo": 1,
     "localizacao_atual": "ds-quimica/index.html",
     "ancoras": []
   },
   "dsei01.html": {
     "conteudo_id": "mod-dsei01",
+    "titulo": "Sistemas Embarcados e IoT — Irrigação Automática",
     "versao_conteudo": 1,
     "localizacao_atual": "dsei01.html",
     "ancoras": []
   },
   "fundamentos-informatica/index.html": {
     "conteudo_id": "mod-fundamentos-informatica-index",
+    "titulo": "Fundamentos da Informática",
     "versao_conteudo": 1,
     "localizacao_atual": "fundamentos-informatica/index.html",
     "ancoras": []
   },
   "pages/analise-sistemas/00-antes-do-sistema.html": {
     "conteudo_id": "mod-pages-analise-sistemas-00-antes-do-sistema",
+    "titulo": "0 — Antes do sistema",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/00-antes-do-sistema.html",
     "ancoras": [
@@ -125,6 +141,7 @@
   },
   "pages/analise-sistemas/01-stakeholders-escopo.html": {
     "conteudo_id": "mod-pages-analise-sistemas-01-stakeholders-escopo",
+    "titulo": "1 — Stakeholders e escopo",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/01-stakeholders-escopo.html",
     "ancoras": [
@@ -150,6 +167,7 @@
   },
   "pages/analise-sistemas/02-levantamento.html": {
     "conteudo_id": "mod-pages-analise-sistemas-02-levantamento",
+    "titulo": "2 — Levantamento",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/02-levantamento.html",
     "ancoras": [
@@ -177,6 +195,7 @@
   },
   "pages/analise-sistemas/03-processo-as-is.html": {
     "conteudo_id": "mod-pages-analise-sistemas-03-processo-as-is",
+    "titulo": "3 — Processo AS-IS",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/03-processo-as-is.html",
     "ancoras": [
@@ -201,6 +220,7 @@
   },
   "pages/analise-sistemas/04-analise-estruturada.html": {
     "conteudo_id": "mod-pages-analise-sistemas-04-analise-estruturada",
+    "titulo": "4 — Análise Estruturada",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/04-analise-estruturada.html",
     "ancoras": [
@@ -227,6 +247,7 @@
   },
   "pages/analise-sistemas/05-processo-to-be-bpmn.html": {
     "conteudo_id": "mod-pages-analise-sistemas-05-processo-to-be-bpmn",
+    "titulo": "5 — TO-BE e BPMN",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/05-processo-to-be-bpmn.html",
     "ancoras": [
@@ -246,6 +267,7 @@
   },
   "pages/analise-sistemas/06-requisitos.html": {
     "conteudo_id": "mod-pages-analise-sistemas-06-requisitos",
+    "titulo": "6 — Engenharia de Requisitos",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/06-requisitos.html",
     "ancoras": [
@@ -280,6 +302,7 @@
   },
   "pages/analise-sistemas/07-casos-de-uso.html": {
     "conteudo_id": "mod-pages-analise-sistemas-07-casos-de-uso",
+    "titulo": "7 — Casos de Uso",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/07-casos-de-uso.html",
     "ancoras": [
@@ -302,6 +325,7 @@
   },
   "pages/analise-sistemas/08-uml-essencial.html": {
     "conteudo_id": "mod-pages-analise-sistemas-08-uml-essencial",
+    "titulo": "8 — UML essencial",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/08-uml-essencial.html",
     "ancoras": [
@@ -323,6 +347,7 @@
   },
   "pages/analise-sistemas/09-agile-backlog-mvp.html": {
     "conteudo_id": "mod-pages-analise-sistemas-09-agile-backlog-mvp",
+    "titulo": "9 — Backlog e MVP",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/09-agile-backlog-mvp.html",
     "ancoras": [
@@ -347,6 +372,7 @@
   },
   "pages/analise-sistemas/10-ux-prototipo.html": {
     "conteudo_id": "mod-pages-analise-sistemas-10-ux-prototipo",
+    "titulo": "10 — Jornada e protótipo",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/10-ux-prototipo.html",
     "ancoras": [
@@ -372,6 +398,7 @@
   },
   "pages/analise-sistemas/11-qualidade-integracoes.html": {
     "conteudo_id": "mod-pages-analise-sistemas-11-qualidade-integracoes",
+    "titulo": "11 — Qualidade e integrações",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/11-qualidade-integracoes.html",
     "ancoras": [
@@ -406,6 +433,7 @@
   },
   "pages/analise-sistemas/12-viabilidade-riscos-rastreabilidade.html": {
     "conteudo_id": "mod-pages-analise-sistemas-12-viabilidade-riscos-rastreabilidade",
+    "titulo": "12 — Viabilidade, riscos e rastreabilidade",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/12-viabilidade-riscos-rastreabilidade.html",
     "ancoras": [
@@ -437,6 +465,7 @@
   },
   "pages/analise-sistemas/13-documentacao-ia.html": {
     "conteudo_id": "mod-pages-analise-sistemas-13-documentacao-ia",
+    "titulo": "13 — Documentação viva e IA",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/13-documentacao-ia.html",
     "ancoras": [
@@ -471,6 +500,7 @@
   },
   "pages/analise-sistemas/14-integracao-final.html": {
     "conteudo_id": "mod-pages-analise-sistemas-14-integracao-final",
+    "titulo": "14 — Integração final",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/14-integracao-final.html",
     "ancoras": [
@@ -501,6 +531,7 @@
   },
   "pages/analise-sistemas/index.html": {
     "conteudo_id": "mod-pages-analise-sistemas-index",
+    "titulo": "Análise de Sistemas",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/index.html",
     "ancoras": [
@@ -515,6 +546,7 @@
   },
   "pages/appinventor.html": {
     "conteudo_id": "mod-pages-appinventor",
+    "titulo": "Programação Mobile com App Inventor",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/appinventor.html",
     "ancoras": [
@@ -535,6 +567,7 @@
   },
   "pages/arduino-avaliacao-conceitual.html": {
     "conteudo_id": "mod-pages-arduino-avaliacao-conceitual",
+    "titulo": "Avaliação Conceitual — Arduino e IoT",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-avaliacao-conceitual.html",
     "ancoras": [
@@ -563,12 +596,14 @@
   },
   "pages/arduino-avaliacoes-bimestrais.html": {
     "conteudo_id": "mod-pages-arduino-avaliacoes-bimestrais",
+    "titulo": "Avaliações Bimestrais — Arduino e IoT",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-avaliacoes-bimestrais.html",
     "ancoras": []
   },
   "pages/arduino-conectividade.html": {
     "conteudo_id": "mod-pages-arduino-conectividade",
+    "titulo": "6 — Conectividade | Sistemas Embarcados e IoT",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-conectividade.html",
     "ancoras": [
@@ -582,6 +617,7 @@
   },
   "pages/arduino-exercicios.html": {
     "conteudo_id": "mod-pages-arduino-exercicios",
+    "titulo": "99 — Exercícios | Arduino",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-exercicios.html",
     "ancoras": [
@@ -592,6 +628,7 @@
   },
   "pages/arduino-iot.html": {
     "conteudo_id": "mod-pages-arduino-iot",
+    "titulo": "7 — Internet das Coisas | Sistemas Embarcados e IoT",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-iot.html",
     "ancoras": [
@@ -603,6 +640,7 @@
   },
   "pages/arduino-programacao-aplicada.html": {
     "conteudo_id": "mod-pages-arduino-programacao-aplicada",
+    "titulo": "5 — Programação Aplicada | Sistemas Embarcados e IoT",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-programacao-aplicada.html",
     "ancoras": [
@@ -614,6 +652,7 @@
   },
   "pages/arduino-projeto-iot.html": {
     "conteudo_id": "mod-pages-arduino-projeto-iot",
+    "titulo": "10 — Projeto IoT | Sistemas Embarcados e IoT",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-projeto-iot.html",
     "ancoras": [
@@ -628,6 +667,7 @@
   },
   "pages/arduino-protocolos.html": {
     "conteudo_id": "mod-pages-arduino-protocolos",
+    "titulo": "8 — RTOS e Protocolos | Sistemas Embarcados e IoT",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-protocolos.html",
     "ancoras": [
@@ -643,6 +683,7 @@
   },
   "pages/arduino-revisao-modulos.html": {
     "conteudo_id": "mod-pages-arduino-revisao-modulos",
+    "titulo": "Revisão por conteúdo — Arduino e IoT",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-revisao-modulos.html",
     "ancoras": [
@@ -655,6 +696,7 @@
   },
   "pages/arduino-seguranca.html": {
     "conteudo_id": "mod-pages-arduino-seguranca",
+    "titulo": "9 — Proteção e Segurança em IoT | Sistemas Embarcados e IoT",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-seguranca.html",
     "ancoras": [
@@ -665,6 +707,7 @@
   },
   "pages/arduino.html": {
     "conteudo_id": "mod-pages-arduino",
+    "titulo": "Arduino: Projetos Iniciais com Circuitos Reais",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino.html",
     "ancoras": [
@@ -685,12 +728,14 @@
   },
   "pages/backend-fastapi.html": {
     "conteudo_id": "mod-pages-backend-fastapi",
+    "titulo": "Backend e APIs com Python e FastAPI",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/backend-fastapi.html",
     "ancoras": []
   },
   "pages/bancodedados.html": {
     "conteudo_id": "mod-pages-bancodedados",
+    "titulo": "Banco de Dados",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/bancodedados.html",
     "ancoras": [
@@ -884,6 +929,7 @@
   },
   "pages/bd_gestao.html": {
     "conteudo_id": "mod-pages-bd-gestao",
+    "titulo": "Gestão de Dados Comerciais",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/bd_gestao.html",
     "ancoras": [
@@ -895,18 +941,21 @@
   },
   "pages/ia/comunicacao.html": {
     "conteudo_id": "mod-pages-ia-comunicacao",
+    "titulo": "Comunicação com IA",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/ia/comunicacao.html",
     "ancoras": []
   },
   "pages/ia/etica-sociedade.html": {
     "conteudo_id": "mod-pages-ia-etica-sociedade",
+    "titulo": "IA, Ética e Sociedade",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/ia/etica-sociedade.html",
     "ancoras": []
   },
   "pages/ia/fundamentos.html": {
     "conteudo_id": "mod-pages-ia-fundamentos",
+    "titulo": "Fundamentos de Inteligência Artificial",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/ia/fundamentos.html",
     "ancoras": [
@@ -942,30 +991,35 @@
   },
   "pages/ia/index.html": {
     "conteudo_id": "mod-pages-ia-index",
+    "titulo": "Inteligência Artificial",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/ia/index.html",
     "ancoras": []
   },
   "pages/ia/panorama-2026.html": {
     "conteudo_id": "mod-pages-ia-panorama-2026",
+    "titulo": "Panorama de IA · Setembro de 2026",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/ia/panorama-2026.html",
     "ancoras": []
   },
   "pages/ia/produtividade.html": {
     "conteudo_id": "mod-pages-ia-produtividade",
+    "titulo": "IA e Produtividade",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/ia/produtividade.html",
     "ancoras": []
   },
   "pages/ia/programacao.html": {
     "conteudo_id": "mod-pages-ia-programacao",
+    "titulo": "IA e Programação",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/ia/programacao.html",
     "ancoras": []
   },
   "pages/ia/vida-real.html": {
     "conteudo_id": "mod-pages-ia-vida-real",
+    "titulo": "IA na Vida Real",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/ia/vida-real.html",
     "ancoras": [
@@ -1022,18 +1076,21 @@
   },
   "pages/informatica-produtividade.html": {
     "conteudo_id": "mod-pages-informatica-produtividade",
+    "titulo": "Informática e Produtividade",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/informatica-produtividade.html",
     "ancoras": []
   },
   "pages/infraestrutura.html": {
     "conteudo_id": "mod-pages-infraestrutura",
+    "titulo": "Infraestrutura e Sistemas",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/infraestrutura.html",
     "ancoras": []
   },
   "pages/programacao-web/web1.html": {
     "conteudo_id": "mod-pages-programacao-web-web1",
+    "titulo": "Web I — Capítulo 1",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/programacao-web/web1.html",
     "ancoras": [
@@ -1161,6 +1218,7 @@
   },
   "pages/programacao-web/web2.html": {
     "conteudo_id": "mod-pages-programacao-web-web2",
+    "titulo": "Web II — Sistemas",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/programacao-web/web2.html",
     "ancoras": [
@@ -1288,6 +1346,7 @@
   },
   "pages/programacao-web.html": {
     "conteudo_id": "mod-pages-programacao-web",
+    "titulo": "Programação Web",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/programacao-web.html",
     "ancoras": [
@@ -1300,18 +1359,21 @@
   },
   "pages/programacao.html": {
     "conteudo_id": "mod-pages-programacao",
+    "titulo": "Programação de Computadores",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/programacao.html",
     "ancoras": []
   },
   "pages/python.html": {
     "conteudo_id": "mod-pages-python",
+    "titulo": "Python — Aprender, construir e consultar",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/python.html",
     "ancoras": []
   },
   "pages/reactnative.html": {
     "conteudo_id": "mod-pages-reactnative",
+    "titulo": "React Native com Snack",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/reactnative.html",
     "ancoras": [
@@ -1393,6 +1455,7 @@
   },
   "pages/tia.html": {
     "conteudo_id": "mod-pages-tia",
+    "titulo": "Tecnologia da Informação em Administração",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/tia.html",
     "ancoras": [
@@ -1418,18 +1481,21 @@
   },
   "pages/visualg.html": {
     "conteudo_id": "mod-pages-visualg",
+    "titulo": "Lógica de Programação com VisuAlg",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/visualg.html",
     "ancoras": []
   },
   "python-do-zero/download/index.html": {
     "conteudo_id": "mod-python-do-zero-download-index",
+    "titulo": "Material complementar — Python do Zero",
     "versao_conteudo": 1,
     "localizacao_atual": "python-do-zero/download/index.html",
     "ancoras": []
   },
   "python-do-zero/index.html": {
     "conteudo_id": "mod-python-do-zero-index",
+    "titulo": "Python do Zero — Portal oficial",
     "versao_conteudo": 1,
     "localizacao_atual": "python-do-zero/index.html",
     "ancoras": [
@@ -1468,6 +1534,7 @@
   },
   "pages/analise-sistemas/dossie-final-assistencia-tecnica-conecta.html": {
     "conteudo_id": "mod-pages-analise-sistemas-dossie-final",
+    "titulo": "Dossiê Final — Assistência Técnica Conecta",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/dossie-final-assistencia-tecnica-conecta.html",
     "ancoras": [

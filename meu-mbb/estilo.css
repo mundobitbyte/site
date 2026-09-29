@@ -22,6 +22,8 @@
 .mbb-bloco { margin: 16px 0; }
 .mbb-bloco h3 { color: #114b9e; margin: 0 0 10px; }
 .mbb-bloco p { margin: 8px 0; line-height: 1.45; }
+.mbb-bloco .mbb-explicacao { color: #506078; font-size: 13px; }
+.mbb-bloco > button { margin-top: 10px; }
 .mbb-nota { border-top: 1px solid #d6e0ee; padding: 9px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 .mbb-piloto { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; padding: 10px; border: 1px solid #d6e0ee; border-radius: 9px; background: #f8fbff; }
 .mbb-piloto button { padding: 7px 9px; border: 1px solid #b9d3f6; border-radius: 7px; background: #fff; color: #114b9e; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; }
