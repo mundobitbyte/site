@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Meu MbB — Mundo bit Byte</title>
-  <link rel="stylesheet" href="../css/home.css"><link rel="stylesheet" href="estilo.css">
+  <link rel="stylesheet" href="../css/home.css"><link rel="stylesheet" href="estilo.css?v=mbb-recursos-1">
 </head>
 <body>
   <header><h1>Mundo bit Byte</h1><a class="mbb-header-link" href="../index.html">← Estudar</a></header>
   <main class="mbb-pagina">
-    <div class="mbb-titulo"><div><h2>Meu MbB</h2><p>Visitas pela pesquisa em Recentes; progresso piloto em Git.</p></div><button id="sair" class="mbb-secundario" hidden>Sair</button></div>
+    <div class="mbb-titulo"><div><h2>Meu MbB</h2><p>Seu espaço para retomar estudos e guardar o que importa.</p></div><button id="sair" class="mbb-secundario" hidden>Sair</button></div>
     <p id="mensagem" role="status" aria-live="polite">Carregando sua conta…</p>
     <div id="painel" hidden>
       <section class="mbb-bloco"><h3>Continuar de onde parei</h3><div id="continuar"></div></section>
-      <section class="mbb-bloco"><h3>Meu progresso</h3><div id="progresso"></div></section>
-      <section class="mbb-bloco"><h3>Recentes</h3><div id="recentes"></div></section>
-      <section class="mbb-bloco"><h3>Favoritos</h3><div id="favoritos"></div></section>
-      <section class="mbb-bloco"><h3>Minhas anotações</h3><div id="anotacoes"></div></section>
+      <section class="mbb-bloco"><h3>Meu progresso</h3><p class="mbb-explicacao">Suas conclusões ficam salvas até você desmarcar ou zerar.</p><div id="progresso"></div><button id="limpar-progresso" class="mbb-secundario" type="button" hidden>Zerar progresso</button></section>
+      <section class="mbb-bloco"><h3>Recentes</h3><p class="mbb-explicacao">Os cinco últimos conteúdos acessados. A última visita a cada conteúdo fica salva até você limpar esta lista.</p><div id="recentes"></div><button id="limpar-recentes" class="mbb-secundario" type="button" hidden>Limpar recentes</button></section>
+      <section class="mbb-bloco"><h3>Favoritos</h3><p class="mbb-explicacao">Ficam salvos até você remover ou limpar.</p><div id="favoritos"></div><button id="limpar-favoritos" class="mbb-secundario" type="button" hidden>Limpar favoritos</button></section>
+      <section class="mbb-bloco"><h3>Minhas anotações</h3><p class="mbb-explicacao">Ficam salvas até você apagar ou limpar.</p><div id="anotacoes"></div><button id="limpar-anotacoes" class="mbb-secundario" type="button" hidden>Limpar anotações</button></section>
     </div>
   </main>
-  <script src="firebase-config.js?v=mbb-prod-1"></script><script src="catalogo-core.js"></script><script src="conta.js"></script><script src="painel.js?v=mbb-visitas-1"></script>
+  <script src="firebase-config.js?v=mbb-prod-1"></script><script src="catalogo-core.js"></script><script src="conta.js?v=mbb-recursos-1"></script><script src="painel.js?v=mbb-recursos-1"></script>
 <script src="../js/mbb-busca-global.js?v=mbb-busca-1"></script>
 </body>
 </html>

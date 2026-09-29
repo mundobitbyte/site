@@ -10,26 +10,38 @@ const pagina = 'pages/bancodedados.html';
 const ancora = indice[pagina].ancoras.find(item => item.includes('cte-'));
 
 async function abrir(usuario, url) {
-  const visitas = [], scripts = [], ouvintes = {};
+  const visitas = [], scripts = [], ouvintes = {}, salvos = [], elementos = [];
   const location = new URL(url);
   const conta = {
     iniciar: async () => {}, atual: () => usuario,
-    visitar: async (unidade, hash) => { visitas.push([unidade, hash]); }
+    visitar: async (unidade, hash) => { visitas.push([unidade, hash]); },
+    obter: async () => ({}),
+    salvar: async (unidade, campos) => { salvos.push([unidade, campos]); }
   };
   const janela = { addEventListener: (tipo, handler) => { ouvintes[tipo] = handler; } };
+  function elemento(tag) {
+    return {
+      tag, listeners: {}, filhos: [], hidden: false, value: '', textContent: '',
+      setAttribute(chave, valor) { this[chave] = valor; },
+      append(...filhos) { this.filhos.push(...filhos); },
+      addEventListener(tipo, handler) { this.listeners[tipo] = handler; }
+    };
+  }
   const document = {
     currentScript: { src: 'https://www.mundobitbyte.com.br/meu-mbb/visitas-diretas.js?v=mbb-visitas-1' },
-    createElement: () => ({}),
+    createElement: elemento,
     head: { appendChild(script) {
+      if (script.tag === 'link') return;
       scripts.push(script.src);
       if (script.src.includes('/conta.js')) janela.MBBMeuConta = conta;
-      queueMicrotask(() => script.onload());
-    } }
+      if (script.onload) queueMicrotask(() => script.onload());
+    } },
+    body: { append(...novos) { elementos.push(...novos); } }
   };
   vm.runInNewContext(codigo, { document, window: janela, location,
     fetch: async () => ({ ok: true, json: async () => indice }), URL });
   await new Promise(setImmediate);
-  return { visitas, scripts, ouvintes, location };
+  return { visitas, scripts, ouvintes, location, salvos, elementos };
 }
 
 test('visita direta com login registra página e tópico para retomar', async () => {
@@ -37,6 +49,17 @@ test('visita direta com login registra página e tópico para retomar', async ()
   assert.equal(paginaAberta.visitas.length, 1);
   assert.equal(paginaAberta.visitas[0][0].conteudo_id, indice[pagina].conteudo_id);
   assert.equal(paginaAberta.visitas[0][1], ancora);
+  assert.equal(paginaAberta.elementos[0].textContent, 'Meu estudo');
+  const painel = paginaAberta.elementos[1];
+  const favorito = painel.filhos[2], concluir = painel.filhos[3];
+  const anotacao = painel.filhos[5], salvar = painel.filhos[6];
+  await favorito.listeners.click();
+  await concluir.listeners.click();
+  anotacao.value = 'Rever o exemplo antes da aula.';
+  await salvar.listeners.click();
+  assert.deepEqual(paginaAberta.salvos.map(item => Object.keys(item[1])[0]), ['favorito', 'concluido', 'anotacao']);
+  assert.equal(paginaAberta.salvos[2][1].anotacao, anotacao.value);
+  assert.equal(paginaAberta.salvos[0][0].conteudo_id, indice[pagina].conteudo_id);
   paginaAberta.location.hash = '';
   paginaAberta.ouvintes.hashchange();
   await new Promise(setImmediate);

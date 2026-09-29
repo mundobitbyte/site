@@ -59,6 +59,11 @@
     const fotos = await sdk.dbSdk.getDocs(sdk.dbSdk.collection(sdk.db, 'meuMbb', usuario.uid, 'registros'));
     return Object.fromEntries(fotos.docs.map(documento => [documento.id, documento.data()]));
   }
+  async function obter(unidade) {
+    await exigirConta();
+    const documento = await sdk.dbSdk.getDoc(ref(unidade.conteudo_id));
+    return documento.exists() ? documento.data() : {};
+  }
   async function salvar(unidade, campos) {
     await exigirConta();
     const { serverTimestamp, setDoc } = sdk.dbSdk;
@@ -73,6 +78,35 @@
     await exigirConta();
     await salvar(unidade, { ultimoAcesso: sdk.dbSdk.serverTimestamp(), ancora: ancora.slice(0, 100) });
   }
+  async function limparSecao(secao) {
+    const permitidas = {
+      recentes: ['ultimoAcesso', 'ancora'],
+      favoritos: ['favorito'],
+      anotacoes: ['anotacao'],
+      progresso: ['concluido']
+    };
+    const campos = permitidas[secao];
+    if (!campos) throw new Error('Área inválida.');
+    await exigirConta();
+    const fotos = await sdk.dbSdk.getDocs(sdk.dbSdk.collection(sdk.db, 'meuMbb', usuario.uid, 'registros'));
+    const selecionados = fotos.docs.filter(documento => {
+      const dados = documento.data();
+      return secao === 'recentes' ? dados.ultimoAcesso
+        : secao === 'favoritos' ? dados.favorito
+          : secao === 'anotacoes' ? dados.anotacao?.trim() : dados.concluido;
+    });
+    for (let inicio = 0; inicio < selecionados.length; inicio += 400) {
+      const lote = sdk.dbSdk.writeBatch(sdk.db);
+      selecionados.slice(inicio, inicio + 400).forEach(documento => {
+        const mudancas = { atualizadoEm: sdk.dbSdk.serverTimestamp() };
+        campos.forEach(campo => { mudancas[campo] = campo === 'favorito' || campo === 'concluido'
+          ? false : sdk.dbSdk.deleteField(); });
+        lote.update(documento.ref, mudancas);
+      });
+      await lote.commit();
+    }
+  }
+  function limparRecentes() { return limparSecao('recentes'); }
   function atual() { return usuario; }
-  window.MBBMeuConta = { iniciar, observar, atual, entrar, cadastrar, recuperar, sair, listar, salvar, visitar };
+  window.MBBMeuConta = { iniciar, observar, atual, entrar, cadastrar, recuperar, sair, listar, obter, salvar, visitar, limparSecao, limparRecentes };
 }());

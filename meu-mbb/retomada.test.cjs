@@ -17,7 +17,8 @@ test('painel retoma o tópico visitado sem contar visita como conclusão', async
     };
   }
   for (const id of ['mensagem', 'painel', 'sair', 'continuar', 'recentes',
-    'favoritos', 'anotacoes', 'progresso']) elementos.set(id, criarElemento());
+    'favoritos', 'anotacoes', 'progresso', 'limpar-recentes',
+    'limpar-favoritos', 'limpar-anotacoes', 'limpar-progresso']) elementos.set(id, criarElemento());
   const unidade = core.pesquisar(catalogo, 'CTE')[0];
   const ancora = new URL(`https://www.mundobitbyte.com.br/${unidade.localizacao_pesquisa}`).hash.slice(1);
   const registros = {
@@ -45,5 +46,7 @@ test('painel retoma o tópico visitado sem contar visita como conclusão', async
   assert.equal(continuar.href, destino);
   assert.equal(recente.href, destino);
   assert.match(continuar.textContent, /CTE/);
-  assert.match(elementos.get('progresso').textContent, /0 de 12 etapas de Git concluídas/);
+  assert.match(elementos.get('progresso').filhos[0].textContent, /Nenhum conteúdo concluído ainda/);
+  assert.equal(elementos.get('limpar-recentes').hidden, false);
+  assert.equal(elementos.get('limpar-favoritos').hidden, true);
 });

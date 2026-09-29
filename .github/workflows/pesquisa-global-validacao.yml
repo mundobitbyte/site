@@ -26,6 +26,10 @@ on:
       - 'meu-mbb/visitas-diretas.json'
       - 'meu-mbb/gerar-visitas.cjs'
       - 'meu-mbb/visitas-diretas.test.cjs'
+      - 'meu-mbb/acoes-estudo.css'
+      - 'meu-mbb/limpeza.test.cjs'
+      - 'meu-mbb/index.html'
+      - 'meu-mbb/estilo.css'
       - '.github/workflows/pesquisa-global-validacao.yml'
 
 permissions:
@@ -51,4 +55,4 @@ jobs:
         run: node meu-mbb/gerar-visitas.cjs --check
 
       - name: Testar pesquisa global
-        run: node --test meu-mbb/catalogo.test.cjs meu-mbb/falha-firebase.test.cjs meu-mbb/visitas-pesquisa.test.cjs meu-mbb/retomada.test.cjs meu-mbb/visitas-diretas.test.cjs
+        run: node --test meu-mbb/catalogo.test.cjs meu-mbb/falha-firebase.test.cjs meu-mbb/visitas-pesquisa.test.cjs meu-mbb/retomada.test.cjs meu-mbb/visitas-diretas.test.cjs meu-mbb/limpeza.test.cjs
