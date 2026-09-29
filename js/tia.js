@@ -27,6 +27,23 @@ document.addEventListener("DOMContentLoaded",()=>{
           Na prática a seguir, você vai controlar as versões de um <strong>Procedimento de Solicitação de Compras</strong>, usando Git e GitHub
           apenas como ferramentas de gestão do histórico — sem programação.
         </p>
+      </div>
+      <div class="activity-box">
+        <h3>Antes da prática: confirme o Git</h3>
+        <p>Abra o Prompt de Comando e execute:</p>
+        <pre>git --version</pre>
+        <p>Se aparecer o número da versão do Git, está correto.</p>
+        <p>Se for a primeira vez que você usa Git nesse computador, configure seu nome e o e-mail que identifica seus registros:</p>
+        <pre>git config --global user.name "SEU NOME"
+git config --global user.email "SEU EMAIL"</pre>
+        <p>Confira:</p>
+        <pre>git config --global user.name
+git config --global user.email</pre>
+        <p>Se o comando <strong>git</strong> não for reconhecido, use somente a etapa de instalação do módulo <a href="git.html">Git e GitHub</a> e depois volte para cá.</p>
+      </div>
+      <div class="example-box">
+        <h3>Pronto para acompanhar um documento de verdade?</h3>
+        <p>A atividade começa pelo problema das várias “versões finais” e avança somente quando cada nova necessidade administrativa aparece.</p>
         <a class="call-link" href="tia-controle-versoes.html">Abrir prática guiada →</a>
       </div>
       <div class="notice">
