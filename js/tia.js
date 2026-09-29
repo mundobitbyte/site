@@ -12,50 +12,33 @@ document.addEventListener("DOMContentLoaded",()=>{
         <span class="badge">7.1</span>
         <div>
           <h2>Controle de versões em documentos administrativos</h2>
-          <p>Use tecnologia para manter histórico, rastreabilidade e recuperação de mudanças em um processo real de compras.</p>
+          <p>Entenda como manter histórico e rastreabilidade quando um procedimento administrativo muda.</p>
         </div>
       </div>
       <div class="example-box">
-        <h3>Do processo integrado ao controle das regras</h3>
+        <h3>Do ERP aos documentos que orientam o trabalho</h3>
         <p>
-          Um ERP pode integrar compras, estoque e financeiro e, dependendo da solução, também registrar aprovações, usuários, datas e alterações realizadas dentro do próprio sistema.
-          Mas a organização também trabalha com documentos que descrevem como os processos devem funcionar: procedimentos, instruções, normas e manuais.
+          Um ERP pode integrar compras, estoque e financeiro e também registrar aprovações, usuários, datas e operações.
+          A organização, porém, também utiliza procedimentos, instruções, normas e manuais que explicam como o trabalho deve ser realizado.
         </p>
         <p>
-          Quando uma regra de compras muda, o documento que a descreve também pode precisar de revisão. Nesse caso, é importante identificar
-          <strong>o que mudou, quando mudou, quem registrou a alteração e qual era a versão anterior</strong>.
-        </p>
-        <p>
-          Na atividade a seguir, você vai controlar as versões de um <strong>Procedimento de Solicitação de Compras</strong> com Git e GitHub,
-          observando na prática como funciona o versionamento de um documento — sem programação.
+          Quando uma regra muda, esses documentos podem precisar de revisão. Nesse momento, torna-se importante saber
+          <strong>o que mudou, quando mudou e qual era a versão anterior</strong>.
         </p>
       </div>
       <div class="notice">
         <strong>Importante:</strong>
-        na prática profissional, um ERP, um sistema de gestão documental ou outra plataforma corporativa pode oferecer recursos próprios de histórico,
-        aprovação, permissões e controle de documentos. O Git será usado aqui para tornar visíveis as alterações entre versões e permitir recuperar estados anteriores.
-      </div>
-      <div class="activity-box">
-        <h3>Antes da atividade: confirme o Git</h3>
-        <p>Abra o Prompt de Comando e execute:</p>
-        <pre>git --version</pre>
-        <p>Se aparecer o número da versão do Git, está correto.</p>
-        <p>Se for a primeira vez que você usa Git nesse computador, configure seu nome e o e-mail que identifica seus registros:</p>
-        <pre>git config --global user.name "SEU NOME"
-git config --global user.email "SEU EMAIL"</pre>
-        <p>Confira:</p>
-        <pre>git config --global user.name
-git config --global user.email</pre>
-        <p>Se o comando <strong>git</strong> não for reconhecido, use somente a etapa de instalação do módulo <a href="git.html">Git e GitHub</a> e depois volte para cá.</p>
+        ERP, sistemas de gestão documental e outras plataformas corporativas podem oferecer recursos próprios de histórico, aprovação e controle.
+        Nesta atividade, o Git será usado para tornar as mudanças entre versões visíveis e praticar rastreabilidade de um documento.
       </div>
       <div class="example-box">
         <h3>Procedimento de Solicitação de Compras</h3>
-        <p>Você acompanhará o mesmo documento enquanto regras de cotação, aprovação e prazo são alteradas, registradas, comparadas e recuperadas.</p>
+        <p>Você acompanhará o mesmo documento enquanto regras de cotação, aprovação e prazo são alteradas, comparadas, registradas e recuperadas.</p>
         <a class="call-link" href="tia-controle-versoes.html">Abrir prática guiada →</a>
       </div>
       <div class="notice">
         <strong>Próximo assunto:</strong>
-        depois de controlar as regras de solicitação, cotação e aprovação, avance para a gestão de fornecedores, materiais, estoques e entregas na cadeia de suprimentos.
+        depois de trabalhar as regras do procedimento de compras, avance para fornecedores, materiais, estoques e entregas na cadeia de suprimentos.
       </div>`;
     erpSection.insertAdjacentElement("afterend",section);
   }
@@ -102,6 +85,8 @@ git config --global user.email</pre>
   setActive();
 });
 
+// Padrão MbB — destaques de ações do módulo Tecnologia e Gestão (TIA).
+// Destaca somente a primeira ação executável em orientações e atividades; o conteúdo permanece intacto.
 document.addEventListener("DOMContentLoaded",()=>{
   const STYLE_ID="mbb-tia-acoes-praticas-style";
   const ACTION_CLASS="mbb-tia-action-key";
