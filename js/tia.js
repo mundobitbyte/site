@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded",()=>{
-  // Cirurgia MbB — integra o tópico 7.1 ao percurso já aprovado do TIA.
-  // O conteúdo principal continua intacto: ERP → controle de versões → SCM.
   const erpSection=document.querySelector("#erp");
   const scmSection=document.querySelector("#scm");
   const sideNav=document.querySelector(".side-nav");
@@ -14,42 +12,33 @@ document.addEventListener("DOMContentLoaded",()=>{
         <span class="badge">7.1</span>
         <div>
           <h2>Controle de versões em documentos administrativos</h2>
-          <p>Use tecnologia para manter histórico, rastreabilidade e recuperação de mudanças em um processo real de compras.</p>
+          <p>Entenda como manter histórico e rastreabilidade quando um procedimento administrativo muda.</p>
         </div>
       </div>
       <div class="example-box">
-        <h3>Depois de integrar processos, surge outra necessidade</h3>
+        <h3>Do ERP aos documentos que orientam o trabalho</h3>
         <p>
-          Um ERP pode integrar compras, estoque e financeiro, mas os próprios procedimentos administrativos também mudam com o tempo.
-          Se uma regra de compras for alterada, a organização precisa saber <strong>o que mudou, quando mudou e qual era a versão anterior</strong>.
+          Um ERP pode integrar compras, estoque e financeiro e também registrar aprovações, usuários, datas e operações.
+          A organização, porém, também utiliza procedimentos, instruções, normas e manuais que explicam como o trabalho deve ser realizado.
         </p>
         <p>
-          Na prática a seguir, você vai controlar as versões de um <strong>Procedimento de Solicitação de Compras</strong>, usando Git e GitHub
-          apenas como ferramentas de gestão do histórico — sem programação.
+          Quando uma regra muda, esses documentos podem precisar de revisão. Nesse momento, torna-se importante saber
+          <strong>o que mudou, quando mudou e qual era a versão anterior</strong>.
         </p>
       </div>
-      <div class="activity-box">
-        <h3>Antes da prática: confirme o Git</h3>
-        <p>Abra o Prompt de Comando e execute:</p>
-        <pre>git --version</pre>
-        <p>Se aparecer o número da versão do Git, está correto.</p>
-        <p>Se for a primeira vez que você usa Git nesse computador, configure seu nome e o e-mail que identifica seus registros:</p>
-        <pre>git config --global user.name "SEU NOME"
-git config --global user.email "SEU EMAIL"</pre>
-        <p>Confira:</p>
-        <pre>git config --global user.name
-git config --global user.email</pre>
-        <p>Se o comando <strong>git</strong> não for reconhecido, use somente a etapa de instalação do módulo <a href="git.html">Git e GitHub</a> e depois volte para cá.</p>
+      <div class="notice">
+        <strong>Importante:</strong>
+        ERP, sistemas de gestão documental e outras plataformas corporativas podem oferecer recursos próprios de histórico, aprovação e controle.
+        Nesta atividade, o Git será usado para tornar as mudanças entre versões visíveis e praticar rastreabilidade de um documento.
       </div>
       <div class="example-box">
-        <h3>Pronto para acompanhar um documento de verdade?</h3>
-        <p>A atividade começa pelo problema das várias “versões finais” e avança somente quando cada nova necessidade administrativa aparece.</p>
+        <h3>Procedimento de Solicitação de Compras</h3>
+        <p>Você acompanhará o mesmo documento enquanto regras de cotação, aprovação e prazo são alteradas, comparadas, registradas e recuperadas.</p>
         <a class="call-link" href="tia-controle-versoes.html">Abrir prática guiada →</a>
       </div>
       <div class="notice">
-        <strong>Conexão com o próximo assunto:</strong>
-        ao controlar as regras de solicitação, cotação e aprovação de compras, você prepara o terreno para estudar como fornecedores,
-        materiais, estoques e entregas se relacionam na gestão da cadeia de suprimentos.
+        <strong>Próximo assunto:</strong>
+        depois de trabalhar as regras do procedimento de compras, avance para fornecedores, materiais, estoques e entregas na cadeia de suprimentos.
       </div>`;
     erpSection.insertAdjacentElement("afterend",section);
   }
