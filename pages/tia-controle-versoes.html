@@ -9,7 +9,7 @@
 <body>
 <header class="topbar">
   <div class="header-left">
-    <a class="portal-link" href="tia.html#erp">← Voltar ao TIA</a>
+    <a class="portal-link" href="tia.html#controle-versoes">← Voltar ao TIA</a>
     <h1>Controle de versões</h1>
   </div>
   <div class="brand">Mundo bit Byte</div>
@@ -144,32 +144,38 @@ git commit -m "Inclui aprovacao da gerencia acima de 5000 reais"</pre>
 </section>
 
 <section id="comparar" class="section-card">
-  <div class="section-head"><span class="badge">6</span><div><h2>O que mudou?</h2><p>Antes de registrar uma alteração, confira exatamente o que foi mexido.</p></div></div>
+  <div class="section-head"><span class="badge">6</span><div><h2>O que mudou?</h2><p>Confira alterações antes de formalizar uma nova versão.</p></div></div>
   <div class="example-box">
     <h3>Uma pequena conferência evita um grande problema</h3>
-    <p>Altere temporariamente uma frase do procedimento, mas <strong>não faça commit ainda</strong>. Agora precisamos responder: o que foi alterado?</p>
+    <p>Altere temporariamente uma frase do procedimento, mas <strong>não faça commit ainda</strong>. Agora precisamos responder: o que foi alterado desde a última versão registrada?</p>
   </div>
   <div class="activity-box">
     <p>Execute:</p>
     <pre>git diff</pre>
     <p>As linhas removidas e adicionadas deverão aparecer no terminal.</p>
     <p>Leia o resultado e localize a frase que você modificou.</p>
+    <p>Depois, desfaça manualmente essa alteração temporária e salve o arquivo.</p>
+    <p>Execute novamente:</p>
+    <pre>git diff</pre>
+    <p>Se nada aparecer, o documento voltou a ser igual à última versão registrada.</p>
   </div>
-  <div class="notice"><strong>Se você consegue apontar a linha alterada, está correto.</strong> Em Administração, isso representa conferência antes de formalizar uma nova versão.</div>
+  <div class="notice"><strong>Se você consegue apontar a linha alterada e depois deixar o documento novamente sem diferenças, está correto.</strong> Em Administração, isso representa conferência antes de formalizar uma nova versão.</div>
 </section>
 
 <section id="historico" class="section-card">
   <div class="section-head"><span class="badge">7</span><div><h2>Quem fez o quê e quando?</h2><p>Agora o histórico responde perguntas que nomes de arquivos não respondem bem.</p></div></div>
   <div class="activity-box">
-    <p>Desfaça a alteração temporária manualmente e salve o arquivo. Depois execute:</p>
+    <p>Execute:</p>
+    <pre>git log</pre>
+    <p>Em cada registro, observe o identificador do commit, o autor, a data e a mensagem que explica a mudança.</p>
+    <p>Se quiser uma visão resumida depois, use:</p>
     <pre>git log --oneline</pre>
-    <p>Você deverá ver uma lista com os registros feitos até aqui.</p>
   </div>
   <div class="example-box">
     <h3>Leia como um profissional de Administração</h3>
-    <p>Cada registro representa uma mudança formalizada no procedimento. A mensagem do commit deve explicar a alteração de maneira objetiva, como um pequeno registro de ocorrência do processo.</p>
+    <p>Cada commit representa uma mudança formalizada no procedimento. A mensagem deve explicar a alteração de maneira objetiva, como um pequeno registro do processo.</p>
   </div>
-  <div class="notice"><strong>Rastreabilidade:</strong> agora existe evidência de que o procedimento evoluiu, em que ordem as mudanças ocorreram e qual era a finalidade de cada alteração.</div>
+  <div class="notice"><strong>Rastreabilidade:</strong> agora existe evidência de quem registrou a mudança, quando ela ocorreu, em que ordem as versões apareceram e qual era a finalidade de cada alteração.</div>
 </section>
 
 <section id="erro" class="section-card">
@@ -196,6 +202,8 @@ git commit -m "Altera limite de aprovacao"</pre>
     <p>Substitua <strong>IDENTIFICADOR</strong> pelo código que você encontrou no histórico:</p>
     <pre>git restore --source=IDENTIFICADOR procedimento-solicitacao-compras.txt</pre>
     <p>Abra o arquivo e verifique se o limite voltou para <strong>R$ 5.000</strong>.</p>
+    <p>Confira o que o Git detectou:</p>
+    <pre>git diff</pre>
     <p>Se estiver correto, registre a correção:</p>
     <pre>git add .
 git commit -m "Corrige limite de aprovacao para 5000 reais"</pre>
@@ -211,15 +219,16 @@ git commit -m "Corrige limite de aprovacao para 5000 reais"</pre>
   </div>
   <div class="activity-box">
     <h3>1. Crie um repositório vazio no GitHub</h3>
-    <p>No GitHub, escolha <strong>New repository</strong>. Use o nome <strong>procedimento-compras</strong> e não adicione arquivos iniciais.</p>
+    <p>No GitHub, escolha <strong>New repository</strong>. Use o nome <strong>procedimento-compras</strong> e não adicione README, licença ou outros arquivos iniciais.</p>
     <h3>2. Conecte a pasta ao repositório</h3>
-    <p>O GitHub exibirá o endereço do novo repositório. No terminal, dentro da pasta do projeto, execute os comandos indicados pelo próprio GitHub para um repositório existente. Em geral, serão equivalentes a:</p>
+    <p>Copie a URL HTTPS do repositório criado e substitua <strong>URL_DO_SEU_REPOSITORIO</strong> abaixo:</p>
     <pre>git branch -M main
 git remote add origin URL_DO_SEU_REPOSITORIO
 git push -u origin main</pre>
+    <p>Na primeira publicação, o Git pode solicitar autenticação no GitHub. Conclua o login pela janela ou método seguro oferecido pelo próprio Git/GitHub; não digite senha pessoal em comandos.</p>
     <h3>3. Verifique</h3>
     <p>Atualize a página do repositório no navegador. O arquivo deverá aparecer.</p>
-    <p>Abra a área de commits para conferir se o histórico também foi enviado.</p>
+    <p>Abra a área de commits e confira se o histórico também foi enviado.</p>
   </div>
   <div class="notice"><strong>Se o arquivo e os commits aparecem no GitHub, está correto.</strong> O mesmo histórico que você construiu localmente agora também pode ser consultado online.</div>
 </section>
@@ -253,5 +262,6 @@ git push -u origin main</pre>
 </section>
 </main>
 </div>
+<script src="../js/mbb-busca-global.js?v=mbb-busca-1"></script>
 </body>
 </html>
