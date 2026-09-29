@@ -1,0 +1,12 @@
+PROCEDIMENTO DE SOLICITAÇÃO DE COMPRAS
+
+Objetivo
+Organizar as solicitações de compras da empresa.
+
+1. O funcionário identifica a necessidade de compra.
+2. A solicitação é encaminhada ao responsável pelo setor.
+3. O setor de compras consulta fornecedores.
+4. A compra é aprovada pelo responsável.
+5. O setor de compras realiza o pedido.
+6. O material recebido é conferido.
+7. A conclusão da compra é registrada.
