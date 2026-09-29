@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded",()=>{
-  // Cirurgia MbB — integra o tópico 7.1 ao percurso já aprovado do TIA.
-  // O conteúdo principal continua intacto: ERP → controle de versões → SCM.
   const erpSection=document.querySelector("#erp");
   const scmSection=document.querySelector("#scm");
   const sideNav=document.querySelector(".side-nav");
@@ -18,18 +16,27 @@ document.addEventListener("DOMContentLoaded",()=>{
         </div>
       </div>
       <div class="example-box">
-        <h3>Depois de integrar processos, surge outra necessidade</h3>
+        <h3>Do processo integrado ao controle das regras</h3>
         <p>
-          Um ERP pode integrar compras, estoque e financeiro, mas os próprios procedimentos administrativos também mudam com o tempo.
-          Se uma regra de compras for alterada, a organização precisa saber <strong>o que mudou, quando mudou e qual era a versão anterior</strong>.
+          Um ERP pode integrar compras, estoque e financeiro e, dependendo da solução, também registrar aprovações, usuários, datas e alterações realizadas dentro do próprio sistema.
+          Mas a organização também trabalha com documentos que descrevem como os processos devem funcionar: procedimentos, instruções, normas e manuais.
         </p>
         <p>
-          Na prática a seguir, você vai controlar as versões de um <strong>Procedimento de Solicitação de Compras</strong>, usando Git e GitHub
-          apenas como ferramentas de gestão do histórico — sem programação.
+          Quando uma regra de compras muda, o documento que a descreve também pode precisar de revisão. Nesse caso, é importante identificar
+          <strong>o que mudou, quando mudou, quem registrou a alteração e qual era a versão anterior</strong>.
+        </p>
+        <p>
+          Na atividade a seguir, você vai controlar as versões de um <strong>Procedimento de Solicitação de Compras</strong> com Git e GitHub,
+          observando na prática como funciona o versionamento de um documento — sem programação.
         </p>
       </div>
+      <div class="notice">
+        <strong>Importante:</strong>
+        na prática profissional, um ERP, um sistema de gestão documental ou outra plataforma corporativa pode oferecer recursos próprios de histórico,
+        aprovação, permissões e controle de documentos. O Git será usado aqui para tornar visíveis as alterações entre versões e permitir recuperar estados anteriores.
+      </div>
       <div class="activity-box">
-        <h3>Antes da prática: confirme o Git</h3>
+        <h3>Antes da atividade: confirme o Git</h3>
         <p>Abra o Prompt de Comando e execute:</p>
         <pre>git --version</pre>
         <p>Se aparecer o número da versão do Git, está correto.</p>
@@ -42,14 +49,13 @@ git config --global user.email</pre>
         <p>Se o comando <strong>git</strong> não for reconhecido, use somente a etapa de instalação do módulo <a href="git.html">Git e GitHub</a> e depois volte para cá.</p>
       </div>
       <div class="example-box">
-        <h3>Pronto para acompanhar um documento de verdade?</h3>
-        <p>A atividade começa pelo problema das várias “versões finais” e avança somente quando cada nova necessidade administrativa aparece.</p>
+        <h3>Procedimento de Solicitação de Compras</h3>
+        <p>Você acompanhará o mesmo documento enquanto regras de cotação, aprovação e prazo são alteradas, registradas, comparadas e recuperadas.</p>
         <a class="call-link" href="tia-controle-versoes.html">Abrir prática guiada →</a>
       </div>
       <div class="notice">
-        <strong>Conexão com o próximo assunto:</strong>
-        ao controlar as regras de solicitação, cotação e aprovação de compras, você prepara o terreno para estudar como fornecedores,
-        materiais, estoques e entregas se relacionam na gestão da cadeia de suprimentos.
+        <strong>Próximo assunto:</strong>
+        depois de controlar as regras de solicitação, cotação e aprovação, avance para a gestão de fornecedores, materiais, estoques e entregas na cadeia de suprimentos.
       </div>`;
     erpSection.insertAdjacentElement("afterend",section);
   }
@@ -96,8 +102,6 @@ git config --global user.email</pre>
   setActive();
 });
 
-// Padrão MbB — destaques de ações do módulo Tecnologia e Gestão (TIA).
-// Destaca somente a primeira ação executável em orientações e atividades; o conteúdo permanece intacto.
 document.addEventListener("DOMContentLoaded",()=>{
   const STYLE_ID="mbb-tia-acoes-praticas-style";
   const ACTION_CLASS="mbb-tia-action-key";
