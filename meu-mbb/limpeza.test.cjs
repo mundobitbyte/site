@@ -6,9 +6,9 @@ const path = require('node:path');
 
 test('limpar uma área conserva visitas, favoritos, notas e conclusões das outras áreas', async () => {
   const dados = {
-    primeiro: { conteudoId: 'primeiro', ultimoAcesso: 'agora', ancora: 'topico',
+    primeiro: { conteudoId: 'primeiro', ultimoAcesso: '2026-09-29T06:00:00Z', ancora: 'topico',
       favorito: true, anotacao: 'Minha nota', concluido: true },
-    segundo: { conteudoId: 'segundo', ultimoAcesso: 'antes', favorito: true }
+    segundo: { conteudoId: 'segundo', ultimoAcesso: '2026-09-28T06:00:00Z', ancora: 'anterior', favorito: true }
   };
   const usuario = { uid: 'aluno-teste' };
   const app = { getApps: () => [], initializeApp: () => ({}) };
@@ -18,7 +18,7 @@ test('limpar uma área conserva visitas, favoritos, notas e conclusões das outr
   const db = {
     getFirestore: () => ({}), collection: () => ({}),
     getDocs: async () => ({ docs: Object.entries(dados).map(([id, valor]) =>
-      ({ ref: id, data: () => valor })) }),
+      ({ id, ref: id, data: () => valor })) }),
     deleteField: () => apagar, serverTimestamp: () => 'agora',
     writeBatch: () => {
       const alteracoes = [];
@@ -48,8 +48,10 @@ test('limpar uma área conserva visitas, favoritos, notas e conclusões das outr
   assert.equal(dados.primeiro.anotacao, 'Minha nota');
   assert.equal(dados.primeiro.concluido, true);
   await conta.limparSecao('recentes');
-  assert.equal('ultimoAcesso' in dados.primeiro, false);
-  assert.equal('ancora' in dados.primeiro, false);
+  assert.equal(dados.primeiro.ultimoAcesso, '2026-09-29T06:00:00Z');
+  assert.equal(dados.primeiro.ancora, 'topico');
+  assert.equal('ultimoAcesso' in dados.segundo, false);
+  assert.equal('ancora' in dados.segundo, false);
   assert.equal(dados.primeiro.anotacao, 'Minha nota');
   await conta.limparSecao('anotacoes');
   assert.equal('anotacao' in dados.primeiro, false);
