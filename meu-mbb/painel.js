@@ -13,16 +13,20 @@
   const elemento = id => document.getElementById(id);
   const momento = valor => valor?.toMillis?.() || (valor ? Date.parse(valor) || 0 : 0);
   const todas = () => Object.entries(registros).map(([id, registro]) => ({ id, registro, destino: core.resolver(catalogo, id).unidade }));
-  const link = (unidade, texto) => {
+  const link = (unidade, texto, registro) => {
     const ancora = document.createElement('a');
-    ancora.href = new URL(`../${unidade.localizacao_atual}`, location.href).href;
-    ancora.textContent = texto || unidade.titulo;
+    const topico = (unidade.topicos_busca || []).find(item => item.ancora === registro?.ancora);
+    const destino = topico
+      ? `${unidade.localizacao_atual.split('#')[0]}#${topico.ancora}`
+      : unidade.localizacao_atual;
+    ancora.href = new URL(`../${destino}`, location.href).href;
+    ancora.textContent = texto || topico?.titulo || unidade.titulo;
     return ancora;
   };
   function linha(item) {
     const p = document.createElement('p');
     const origem = catalogo.unidades.find(unidade => unidade.conteudo_id === item.id);
-    if (item.destino) p.append(link(item.destino));
+    if (item.destino) p.append(link(item.destino, '', item.registro));
     else p.textContent = `Conteúdo removido (${item.id}), sem destino atual.`;
     if (origem?.status === 'removido' && item.destino) p.append(' · conteúdo anterior removido; próximo conteúdo disponível');
     else if (item.id !== item.destino?.conteudo_id && item.destino) p.append(' · conteúdo atualizado');
@@ -37,7 +41,7 @@
   function renderizar() {
     const itens = todas();
     const vistos = itens.filter(item => item.registro.ultimoAcesso).sort((a, b) => momento(b.registro.ultimoAcesso) - momento(a.registro.ultimoAcesso));
-    preencher('continuar', vistos.slice(0, 1), 'Abra uma etapa de Git para começar.');
+    preencher('continuar', vistos.slice(0, 1), 'Abra um conteúdo do site para começar.');
     preencher('recentes', vistos.slice(0, 5), 'Nenhum conteúdo visitado ainda.');
     preencher('favoritos', itens.filter(item => item.registro.favorito), 'Nenhum favorito ainda.');
     const notas = elemento('anotacoes'); notas.replaceChildren();
@@ -46,7 +50,7 @@
     comNotas.forEach(item => { const bloco = document.createElement('div'); bloco.className = 'mbb-nota'; bloco.append(linha(item));
       const texto = document.createElement('p'); texto.textContent = item.registro.anotacao; bloco.append(texto); notas.append(bloco); });
     const p = core.progresso(catalogo, registros);
-    elemento('progresso').textContent = `${p.concluidas} de ${p.total} etapas concluídas (${p.percentual}%). As demais áreas ainda não fazem parte deste piloto.`;
+    elemento('progresso').textContent = `${p.concluidas} de ${p.total} etapas de Git concluídas (${p.percentual}%). O progresso das demais áreas ainda não faz parte deste piloto.`;
   }
   try {
     await conta.iniciar();

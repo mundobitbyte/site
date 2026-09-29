@@ -3,6 +3,10 @@
   const campo = document.getElementById('consulta');
   const resumo = document.getElementById('resumo');
   const resultados = document.getElementById('resultados');
+  // A pesquisa continua pública. A conta é consultada em segundo plano e
+  // uma falha no Firebase nunca impede a abertura do resultado.
+  const conta = window.MBBMeuConta;
+  const contaPronta = conta?.iniciar().catch(() => null);
   const normalizar = valor => (valor || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
   const escaparRegExp = valor => valor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -56,6 +60,23 @@
         const link = document.createElement('a');
         link.href = new URL(`../${unidade.localizacao_pesquisa || unidade.localizacao_atual}`, location.href).href;
         adicionarComGrifo(link, unidade.titulo_pesquisa || unidade.titulo, termo);
+        link.addEventListener('click', async evento => {
+          if (!conta || evento.defaultPrevented || evento.button !== 0 ||
+              evento.ctrlKey || evento.metaKey || evento.shiftKey || evento.altKey) return;
+          evento.preventDefault();
+          const destino = link.href;
+          const ancora = new URL(destino).hash.slice(1);
+          const registrar = async () => {
+            await contaPronta;
+            if (conta.atual()) await conta.visitar(unidade, ancora);
+          };
+          // O estudo público não fica preso a uma conexão lenta ou indisponível.
+          await Promise.race([
+            registrar().catch(() => {}),
+            new Promise(resolve => setTimeout(resolve, 1800))
+          ]);
+          location.assign(destino);
+        });
         const contexto = document.createElement('p');
         contexto.className = 'mbb-resultado-contexto';
         adicionarComGrifo(contexto, [unidade.area, unidade.modulo, unidade.trilha].filter(Boolean).join(' › '), termo);
