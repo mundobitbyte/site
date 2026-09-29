@@ -41,6 +41,9 @@
     window.addEventListener('hashchange', registrar);
     window.addEventListener('popstate', registrar);
     registrar();
+    // Aguarde a gravação da visita antes de ler o registro: a escrita local
+    // pendente pode ocultar temporariamente as notas já salvas.
+    await fila;
     montarAcoes(conta, unidade, origem);
   } catch (_) { /* A página pública continua acessível sem Firebase. */ }
 

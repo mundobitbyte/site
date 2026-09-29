@@ -9,7 +9,7 @@ const indice = require('./visitas-diretas.json');
 const pagina = 'pages/bancodedados.html';
 const ancora = indice[pagina].ancoras.find(item => item.includes('cte-'));
 
-async function abrir(usuario, url) {
+async function abrir(usuario, url, substituicoes = {}) {
   const visitas = [], scripts = [], ouvintes = {}, salvos = [], notasSalvas = [], elementos = [];
   const registro = { notas: [] };
   const location = new URL(url);
@@ -25,6 +25,7 @@ async function abrir(usuario, url) {
       else registro.notas[indice] = texto;
     }
   };
+  Object.assign(conta, substituicoes);
   const janela = { addEventListener: (tipo, handler) => { ouvintes[tipo] = handler; } };
   function elemento(tag) {
     return {
@@ -52,6 +53,24 @@ async function abrir(usuario, url) {
   await new Promise(setImmediate);
   return { visitas, scripts, ouvintes, location, salvos, notasSalvas, elementos };
 }
+
+test('visita pendente termina antes da leitura das anotações existentes', async () => {
+  let concluirVisita;
+  const espera = new Promise(resolve => { concluirVisita = resolve; });
+  let visitaConcluida = false;
+  const paginaAberta = await abrir({ uid: 'teste', emailVerified: true },
+    `https://www.mundobitbyte.com.br/${pagina}#${ancora}`, {
+      visitar: async () => { await espera; visitaConcluida = true; },
+      obter: async () => ({ notas: visitaConcluida ? ['Nota anterior'] : [] })
+    });
+  assert.equal(paginaAberta.elementos.length, 0);
+  concluirVisita();
+  await new Promise(setImmediate);
+  assert.equal(paginaAberta.elementos.length, 2);
+  const painel = paginaAberta.elementos[1];
+  await new Promise(setImmediate);
+  assert.equal(painel.filhos[8].filhos[1].filhos[0].textContent, 'Nota anterior');
+});
 
 test('visita direta com login registra página e tópico para retomar', async () => {
   const paginaAberta = await abrir({ uid: 'teste', emailVerified: true }, `https://www.mundobitbyte.com.br/${pagina}#${ancora}`);
