@@ -10,6 +10,11 @@
 
   const script = document.currentScript;
   if (!script) return;
+  // O registro de visitas roda à parte e nunca bloqueia a pesquisa pública.
+  const visitas = document.createElement('script');
+  visitas.src = new URL('../meu-mbb/visitas-diretas.js?v=mbb-visitas-1', script.src).href;
+  visitas.async = true;
+  document.head.appendChild(visitas);
   const destino = new URL('../meu-mbb/pesquisar.html', script.src);
   if (location.pathname === destino.pathname ||
       Array.from(document.querySelectorAll('a[href]')).some(link => link.href === destino.href)) return;
