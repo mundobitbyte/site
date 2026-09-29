@@ -1,4 +1,70 @@
 document.addEventListener("DOMContentLoaded",()=>{
+  // Cirurgia MbB — integra o tópico 7.1 ao percurso já aprovado do TIA.
+  // O conteúdo principal continua intacto: ERP → controle de versões → SCM.
+  const erpSection=document.querySelector("#erp");
+  const scmSection=document.querySelector("#scm");
+  const sideNav=document.querySelector(".side-nav");
+
+  if(erpSection && scmSection && !document.querySelector("#controle-versoes")){
+    const section=document.createElement("section");
+    section.id="controle-versoes";
+    section.className="section-card";
+    section.innerHTML=`
+      <div class="section-head">
+        <span class="badge">7.1</span>
+        <div>
+          <h2>Controle de versões em documentos administrativos</h2>
+          <p>Use tecnologia para manter histórico, rastreabilidade e recuperação de mudanças em um processo real de compras.</p>
+        </div>
+      </div>
+      <div class="example-box">
+        <h3>Depois de integrar processos, surge outra necessidade</h3>
+        <p>
+          Um ERP pode integrar compras, estoque e financeiro, mas os próprios procedimentos administrativos também mudam com o tempo.
+          Se uma regra de compras for alterada, a organização precisa saber <strong>o que mudou, quando mudou e qual era a versão anterior</strong>.
+        </p>
+        <p>
+          Na prática a seguir, você vai controlar as versões de um <strong>Procedimento de Solicitação de Compras</strong>, usando Git e GitHub
+          apenas como ferramentas de gestão do histórico — sem programação.
+        </p>
+      </div>
+      <div class="activity-box">
+        <h3>Antes da prática: confirme o Git</h3>
+        <p>Abra o Prompt de Comando e execute:</p>
+        <pre>git --version</pre>
+        <p>Se aparecer o número da versão do Git, está correto.</p>
+        <p>Se for a primeira vez que você usa Git nesse computador, configure seu nome e o e-mail que identifica seus registros:</p>
+        <pre>git config --global user.name "SEU NOME"
+git config --global user.email "SEU EMAIL"</pre>
+        <p>Confira:</p>
+        <pre>git config --global user.name
+git config --global user.email</pre>
+        <p>Se o comando <strong>git</strong> não for reconhecido, use somente a etapa de instalação do módulo <a href="git.html">Git e GitHub</a> e depois volte para cá.</p>
+      </div>
+      <div class="example-box">
+        <h3>Pronto para acompanhar um documento de verdade?</h3>
+        <p>A atividade começa pelo problema das várias “versões finais” e avança somente quando cada nova necessidade administrativa aparece.</p>
+        <a class="call-link" href="tia-controle-versoes.html">Abrir prática guiada →</a>
+      </div>
+      <div class="notice">
+        <strong>Conexão com o próximo assunto:</strong>
+        ao controlar as regras de solicitação, cotação e aprovação de compras, você prepara o terreno para estudar como fornecedores,
+        materiais, estoques e entregas se relacionam na gestão da cadeia de suprimentos.
+      </div>`;
+    erpSection.insertAdjacentElement("afterend",section);
+  }
+
+  if(sideNav && !sideNav.querySelector('a[href="#controle-versoes"]')){
+    const erpLink=sideNav.querySelector('a[href="#erp"]');
+    if(erpLink){
+      const link=document.createElement("a");
+      link.className="nav-btn";
+      link.href="#controle-versoes";
+      link.textContent="7.1 - Controle de versões";
+      erpLink.insertAdjacentElement("afterend",link);
+    }
+  }
+
   const links=document.querySelectorAll(".nav-btn");
   const sections=[...document.querySelectorAll("main section[id]")];
   const scroller=document.querySelector(".content") || document;
