@@ -3,10 +3,27 @@
   const campo = document.getElementById('consulta');
   const resumo = document.getElementById('resumo');
   const resultados = document.getElementById('resultados');
-  // A pesquisa continua pública. A conta é consultada em segundo plano e
-  // uma falha no Firebase nunca impede a abertura do resultado.
-  const conta = window.MBBMeuConta;
-  const contaPronta = conta?.iniciar().catch(() => null);
+  // O catálogo e a pesquisa não carregam autenticação. Ela é consultada
+  // somente quando alguém abre um resultado para registrar a visita.
+  let contaPronta;
+  function carregarScript(nome) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = new URL(nome, location.href).href;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+  function prepararConta() {
+    if (!contaPronta) contaPronta = (async () => {
+      await carregarScript('firebase-config.js?v=mbb-prod-1');
+      await carregarScript('conta.js');
+      await window.MBBMeuConta.iniciar();
+      return window.MBBMeuConta;
+    })().catch(() => null);
+    return contaPronta;
+  }
   const normalizar = valor => (valor || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
   const escaparRegExp = valor => valor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -61,19 +78,19 @@
         link.href = new URL(`../${unidade.localizacao_pesquisa || unidade.localizacao_atual}`, location.href).href;
         adicionarComGrifo(link, unidade.titulo_pesquisa || unidade.titulo, termo);
         link.addEventListener('click', async evento => {
-          if (!conta || evento.defaultPrevented || evento.button !== 0 ||
-              evento.ctrlKey || evento.metaKey || evento.shiftKey || evento.altKey) return;
+          if (evento.defaultPrevented || evento.button !== 0 || evento.ctrlKey ||
+              evento.metaKey || evento.shiftKey || evento.altKey) return;
           evento.preventDefault();
           const destino = link.href;
           const ancora = new URL(destino).hash.slice(1);
           const registrar = async () => {
-            await contaPronta;
-            if (conta.atual()) await conta.visitar(unidade, ancora);
+            const conta = await prepararConta();
+            if (conta?.atual()) await conta.visitar(unidade, ancora);
           };
           // O estudo público não fica preso a uma conexão lenta ou indisponível.
           await Promise.race([
             registrar().catch(() => {}),
-            new Promise(resolve => setTimeout(resolve, 1800))
+            new Promise(resolve => setTimeout(resolve, 3000))
           ]);
           location.assign(destino);
         });

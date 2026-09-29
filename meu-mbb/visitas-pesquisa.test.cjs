@@ -27,10 +27,17 @@ async function executar(conta) {
   }
   for (const id of ['consulta', 'resumo', 'resultados']) elementos.set(id, elemento());
   const navegacoes = [];
+  const scripts = [];
+  const janela = { MBBCatalogo: { validar: valor => valor, pesquisar: () => [unidade] } };
   const contexto = {
     document: { getElementById: id => elementos.get(id), createElement: elemento,
-      createTextNode: texto => ({ textContent: texto }) },
-    window: { MBBMeuConta: conta, MBBCatalogo: { validar: valor => valor, pesquisar: () => [unidade] } },
+      createTextNode: texto => ({ textContent: texto }),
+      head: { appendChild(script) {
+        scripts.push(script.src);
+        if (script.src.includes('/conta.js')) janela.MBBMeuConta = conta;
+        queueMicrotask(() => script.onload());
+      } } },
+    window: janela,
     location: { href: 'https://www.mundobitbyte.com.br/meu-mbb/pesquisar.html', search: '',
       assign: url => navegacoes.push(url) },
     fetch: async () => ({ ok: true, json: async () => ({ unidades: [unidade] }) }),
@@ -42,13 +49,16 @@ async function executar(conta) {
   campo.value = 'CTE';
   campo.listeners.input();
   const link = elementos.get('resultados').filhos[0].filhos[0];
-  return { link, navegacoes };
+  return { link, navegacoes, scripts };
 }
 
 test('pesquisa sem conta continua abrindo o resultado público', async () => {
-  const { link } = await executar(null);
+  const { link, scripts, navegacoes } = await executar(null);
+  assert.equal(scripts.length, 0);
   assert.equal(link.href, 'https://www.mundobitbyte.com.br/pages/bancodedados.html#bd-cte');
-  await link.listeners.click({ button: 0, defaultPrevented: false });
+  await link.listeners.click({ button: 0, defaultPrevented: false, preventDefault() {} });
+  assert.equal(scripts.length, 2);
+  assert.equal(navegacoes[0], link.href);
 });
 
 test('visita autenticada guarda unidade e tópico antes de navegar', async () => {
