@@ -8,7 +8,8 @@ test('limpar uma área conserva visitas, favoritos, notas e conclusões das outr
   const dados = {
     primeiro: { conteudoId: 'primeiro', ultimoAcesso: '2026-09-29T06:00:00Z', ancora: 'topico',
       favorito: true, anotacao: 'Minha nota', concluido: true },
-    segundo: { conteudoId: 'segundo', ultimoAcesso: '2026-09-28T06:00:00Z', ancora: 'anterior', favorito: true }
+    segundo: { conteudoId: 'segundo', ultimoAcesso: '2026-09-28T06:00:00Z', ancora: 'anterior', favorito: true,
+      notas: ['Uma anotação', 'Outra anotação'] }
   };
   const usuario = { uid: 'aluno-teste' };
   const app = { getApps: () => [], initializeApp: () => ({}) };
@@ -55,6 +56,7 @@ test('limpar uma área conserva visitas, favoritos, notas e conclusões das outr
   assert.equal(dados.primeiro.anotacao, 'Minha nota');
   await conta.limparSecao('anotacoes');
   assert.equal('anotacao' in dados.primeiro, false);
+  assert.equal('notas' in dados.segundo, false);
   assert.equal(dados.primeiro.concluido, true);
   await conta.limparSecao('progresso');
   assert.equal(dados.primeiro.concluido, false);

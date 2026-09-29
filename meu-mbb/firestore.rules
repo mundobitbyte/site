@@ -5,13 +5,28 @@ service cloud.firestore {
     function isOwner(uid) {
       return request.auth != null && request.auth.uid == uid;
     }
+    function validNoteAt(index) {
+      return request.resource.data.notas.size() <= index
+        || (request.resource.data.notas[index] is string
+          && request.resource.data.notas[index].size() >= 1
+          && request.resource.data.notas[index].size() <= 2000);
+    }
+    function validNotes() {
+      return !('notas' in request.resource.data)
+        || (request.resource.data.notas is list
+          && request.resource.data.notas.size() <= 10
+          && validNoteAt(0) && validNoteAt(1) && validNoteAt(2)
+          && validNoteAt(3) && validNoteAt(4) && validNoteAt(5)
+          && validNoteAt(6) && validNoteAt(7) && validNoteAt(8)
+          && validNoteAt(9));
+    }
 
     match /meuMbb/{uid}/registros/{conteudoId} {
       allow read, delete: if isOwner(uid);
-      allow create, update: if isOwner(uid)
+      allow create, update: if isOwner(uid) && request.auth.token.email_verified == true
         && request.resource.data.keys().hasOnly([
           'conteudoId', 'versaoVista', 'atualizadoEm', 'ultimoAcesso',
-          'ancora', 'concluido', 'favorito', 'anotacao'
+          'ancora', 'concluido', 'favorito', 'anotacao', 'notas'
         ])
         && request.resource.data.keys().hasAll(['conteudoId', 'versaoVista', 'atualizadoEm'])
         && request.resource.data.conteudoId == conteudoId
@@ -24,7 +39,8 @@ service cloud.firestore {
         && (!('ancora' in request.resource.data) || (request.resource.data.ancora is string && request.resource.data.ancora.size() <= 100))
         && (!('concluido' in request.resource.data) || request.resource.data.concluido is bool)
         && (!('favorito' in request.resource.data) || request.resource.data.favorito is bool)
-        && (!('anotacao' in request.resource.data) || (request.resource.data.anotacao is string && request.resource.data.anotacao.size() <= 2000));
+        && (!('anotacao' in request.resource.data) || (request.resource.data.anotacao is string && request.resource.data.anotacao.size() <= 2000))
+        && validNotes();
     }
 
     match /{document=**} {

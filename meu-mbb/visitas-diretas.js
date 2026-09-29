@@ -23,10 +23,10 @@
   }
   try {
     await carregar('firebase-config.js?v=mbb-prod-1');
-    await carregar('conta.js?v=mbb-recursos-1');
+    await carregar('conta.js?v=mbb-notas-1');
     const conta = window.MBBMeuConta;
     await conta.iniciar();
-    if (!conta.atual()) return;
+    if (!conta.atual()?.emailVerified) return;
     let ultima = null;
     let fila = Promise.resolve();
     function registrar() {
@@ -47,7 +47,7 @@
   function montarAcoes(conta, unidade, origem) {
     const estilo = document.createElement('link');
     estilo.rel = 'stylesheet';
-    estilo.href = new URL('acoes-estudo.css?v=mbb-recursos-1', origem).href;
+    estilo.href = new URL('acoes-estudo.css?v=mbb-notas-1', origem).href;
     document.head.appendChild(estilo);
 
     const abrir = document.createElement('button');
@@ -73,19 +73,23 @@
     explicacao.className = 'mbb-estudo-ajuda';
     explicacao.textContent = 'Marque como concluído quando terminar todo este conteúdo. A visita não conclui o estudo.';
     const anotacao = document.createElement('textarea');
-    anotacao.placeholder = 'Sua anotação privada (até 2.000 caracteres)';
+    anotacao.placeholder = 'Nova anotação privada (até 2.000 caracteres)';
     anotacao.setAttribute('aria-label', 'Sua anotação privada');
     anotacao.maxLength = 2000;
     anotacao.rows = 3;
     const salvar = document.createElement('button');
     salvar.type = 'button';
-    salvar.textContent = 'Salvar anotação';
+    salvar.textContent = 'Adicionar anotação';
+    const cancelar = document.createElement('button');
+    cancelar.type = 'button'; cancelar.textContent = 'Cancelar edição'; cancelar.hidden = true;
+    const listaNotas = document.createElement('div');
+    listaNotas.className = 'mbb-lista-notas';
     const aviso = document.createElement('span');
     aviso.setAttribute('role', 'status');
     const contaLink = document.createElement('a');
     contaLink.href = new URL('index.html', origem).href;
     contaLink.textContent = 'Ver Meu MbB';
-    painel.append(titulo, contexto, favorito, concluir, explicacao, anotacao, salvar, aviso, contaLink);
+    painel.append(titulo, contexto, favorito, concluir, explicacao, anotacao, salvar, cancelar, listaNotas, aviso, contaLink);
     document.body.append(abrir, painel);
 
     abrir.addEventListener('click', () => {
@@ -98,13 +102,37 @@
       concluir.textContent = estado.concluido ? 'Concluído ✓ · Desmarcar' : 'Marcar conteúdo como concluído';
     }
     const botoes = [favorito, concluir, salvar];
+    let edicao = null;
+    function mostrarNotas() {
+      listaNotas.replaceChildren();
+      const notas = conta.notasDoRegistro(estado);
+      const resumo = document.createElement('p');
+      resumo.textContent = `${notas.length} de 10 anotações neste conteúdo.`;
+      listaNotas.append(resumo);
+      notas.forEach((texto, indice) => {
+        const linha = document.createElement('div'); linha.className = 'mbb-nota';
+        const corpo = document.createElement('p'); corpo.textContent = texto;
+        const editar = document.createElement('button'); editar.type = 'button'; editar.textContent = 'Editar';
+        editar.addEventListener('click', () => {
+          edicao = indice; anotacao.value = texto; salvar.textContent = 'Salvar alteração'; cancelar.hidden = false;
+        });
+        const remover = document.createElement('button'); remover.type = 'button'; remover.textContent = 'Apagar';
+        remover.addEventListener('click', async () => {
+          if (!confirm('Apagar esta anotação?')) return;
+          try { await conta.removerNota(unidade, indice); estado = await conta.obter(unidade); cancelar.click(); mostrarNotas(); aviso.textContent = 'Anotação apagada.'; }
+          catch (_) { aviso.textContent = 'Não foi possível apagar esta anotação.'; }
+        });
+        linha.append(corpo, editar, remover); listaNotas.append(linha);
+      });
+      salvar.disabled = edicao === null && notas.length >= 10;
+    }
     botoes.forEach(botao => { botao.disabled = true; });
     atualizar();
     conta.obter(unidade).then(registro => {
       estado = registro;
-      anotacao.value = estado.anotacao || '';
       atualizar();
       botoes.forEach(botao => { botao.disabled = false; });
+      mostrarNotas();
     }).catch(() => { aviso.textContent = 'Seus dados não estão disponíveis agora.'; });
     async function gravar(campos) {
       botoes.forEach(botao => { botao.disabled = true; });
@@ -115,10 +143,17 @@
         atualizar();
         aviso.textContent = 'Salvo no Meu MbB.';
       } catch (_) { aviso.textContent = 'Não foi possível salvar agora.'; }
-      finally { botoes.forEach(botao => { botao.disabled = false; }); }
+      finally { botoes.forEach(botao => { botao.disabled = false; }); mostrarNotas(); }
     }
     favorito.addEventListener('click', () => gravar({ favorito: !estado.favorito }));
     concluir.addEventListener('click', () => gravar({ concluido: !estado.concluido }));
-    salvar.addEventListener('click', () => gravar({ anotacao: anotacao.value }));
+    cancelar.addEventListener('click', () => { edicao = null; anotacao.value = ''; salvar.textContent = 'Adicionar anotação'; cancelar.hidden = true; mostrarNotas(); });
+    salvar.addEventListener('click', async () => {
+      try {
+        await conta.alterarNota(unidade, anotacao.value, edicao);
+        estado = await conta.obter(unidade);
+        cancelar.click(); mostrarNotas(); aviso.textContent = 'Anotação salva no Meu MbB.';
+      } catch (erro) { aviso.textContent = erro.message || 'Não foi possível salvar esta anotação.'; }
+    });
   }
 }());

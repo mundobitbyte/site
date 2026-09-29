@@ -14,6 +14,8 @@
 .mbb-formulario { margin-top: 12px; }
 .mbb-form-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 18px; }
 .mbb-formulario[hidden], .mbb-abas[hidden], #painel[hidden] { display: none; }
+.mbb-formulario .mbb-confirmacao { display: flex; align-items: center; gap: 8px; font-weight: 400; }
+.mbb-formulario .mbb-confirmacao input { width: auto; }
 .mbb-abas, .mbb-titulo { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .mbb-abas { justify-content: flex-start; margin-top: 18px; }
 .mbb-pagina button { border: 1px solid #1967d2; border-radius: 7px; background: #1967d2; color: #fff; padding: 9px 13px; cursor: pointer; font: inherit; font-weight: 700; }
@@ -28,6 +30,8 @@
 .mbb-piloto { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; padding: 10px; border: 1px solid #d6e0ee; border-radius: 9px; background: #f8fbff; }
 .mbb-piloto button { padding: 7px 9px; border: 1px solid #b9d3f6; border-radius: 7px; background: #fff; color: #114b9e; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; }
 .mbb-piloto textarea { flex-basis: 100%; resize: vertical; font-size: 13px; }
+.mbb-piloto .mbb-lista-notas { flex-basis: 100%; }
+.mbb-piloto .mbb-lista-notas .mbb-nota button { margin-right: 8px; }
 .mbb-piloto span { font-size: 12px; color: #506078; }
 @media (max-width: 640px) {
   .mbb-pagina { padding: 18px 0; }
