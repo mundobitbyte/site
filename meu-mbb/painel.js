@@ -42,8 +42,8 @@
     const itens = todas();
     const vistos = itens.filter(item => item.registro.ultimoAcesso).sort((a, b) => momento(b.registro.ultimoAcesso) - momento(a.registro.ultimoAcesso));
     preencher('continuar', vistos.slice(0, 1), 'Abra um conteúdo do site para começar.');
-    preencher('recentes', vistos.slice(0, 5), 'Nenhum conteúdo visitado ainda.');
-    elemento('limpar-recentes').hidden = vistos.length === 0;
+    preencher('recentes', vistos.slice(1, 6), 'Nenhum conteúdo anterior por aqui.');
+    elemento('limpar-recentes').hidden = vistos.length <= 1;
     const favoritos = itens.filter(item => item.registro.favorito);
     preencher('favoritos', favoritos, 'Marque um conteúdo como favorito para encontrá-lo aqui.');
     elemento('limpar-favoritos').hidden = favoritos.length === 0;
@@ -82,7 +82,7 @@
   sair.addEventListener('click', async () => { try { await conta.sair(); location.href = '../index.html'; }
     catch (_) { mensagem.textContent = 'Não foi possível sair agora. Tente novamente.'; } });
   const avisos = {
-    recentes: 'Limpar a lista de recentes? Favoritos, anotações e conclusões serão mantidos.',
+    recentes: 'Limpar as visitas anteriores? O conteúdo em “Continuar de onde parei”, favoritos, anotações e conclusões serão mantidos.',
     favoritos: 'Remover todos os favoritos? Visitas, anotações e conclusões serão mantidas.',
     anotacoes: 'Apagar todas as suas anotações? Esta ação não pode ser desfeita. Os demais dados serão mantidos.',
     progresso: 'Zerar todas as conclusões que você marcou? Visitas, favoritos e anotações serão mantidos.'

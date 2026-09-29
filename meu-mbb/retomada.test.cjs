@@ -20,12 +20,17 @@ test('painel retoma o tópico visitado sem contar visita como conclusão', async
     'favoritos', 'anotacoes', 'progresso', 'limpar-recentes',
     'limpar-favoritos', 'limpar-anotacoes', 'limpar-progresso']) elementos.set(id, criarElemento());
   const unidade = core.pesquisar(catalogo, 'CTE')[0];
+  const anterior = core.pesquisar(catalogo, 'BPMN')[0];
   const ancora = new URL(`https://www.mundobitbyte.com.br/${unidade.localizacao_pesquisa}`).hash.slice(1);
   const registros = {
     [unidade.conteudo_id]: {
       ultimoAcesso: '2026-09-29T05:00:00Z',
       versaoVista: unidade.versao_conteudo,
       ancora
+    },
+    [anterior.conteudo_id]: {
+      ultimoAcesso: '2026-09-28T05:00:00Z',
+      versaoVista: anterior.versao_conteudo
     }
   };
   const conta = { iniciar: async () => {}, atual: () => ({ uid: 'teste' }),
@@ -44,7 +49,7 @@ test('painel retoma o tópico visitado sem contar visita como conclusão', async
   const recente = elementos.get('recentes').filhos[0].filhos[0];
   const destino = `https://www.mundobitbyte.com.br/${unidade.localizacao_pesquisa}`;
   assert.equal(continuar.href, destino);
-  assert.equal(recente.href, destino);
+  assert.equal(recente.href, new URL(`../${anterior.localizacao_atual}`, contexto.location.href).href);
   assert.match(continuar.textContent, /CTE/);
   assert.match(elementos.get('progresso').filhos[0].textContent, /Nenhum conteúdo concluído ainda/);
   assert.equal(elementos.get('limpar-recentes').hidden, false);

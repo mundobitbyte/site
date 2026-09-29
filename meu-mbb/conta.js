@@ -89,9 +89,13 @@
     if (!campos) throw new Error('Área inválida.');
     await exigirConta();
     const fotos = await sdk.dbSdk.getDocs(sdk.dbSdk.collection(sdk.db, 'meuMbb', usuario.uid, 'registros'));
+    const momento = valor => valor?.toMillis?.() || (valor ? Date.parse(valor) || 0 : 0);
+    const ultimo = secao === 'recentes' ? fotos.docs.filter(documento => documento.data().ultimoAcesso)
+      .reduce((maisRecente, documento) => !maisRecente || momento(documento.data().ultimoAcesso) > momento(maisRecente.data().ultimoAcesso)
+        ? documento : maisRecente, null) : null;
     const selecionados = fotos.docs.filter(documento => {
       const dados = documento.data();
-      return secao === 'recentes' ? dados.ultimoAcesso
+      return secao === 'recentes' ? dados.ultimoAcesso && documento.id !== ultimo.id
         : secao === 'favoritos' ? dados.favorito
           : secao === 'anotacoes' ? dados.anotacao?.trim() : dados.concluido;
     });
