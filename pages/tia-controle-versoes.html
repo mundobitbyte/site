@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Controle de versões em documentos administrativos | TIA</title>
+<link rel="stylesheet" href="../css/tia.css"/>
+</head>
+<body>
+<header class="topbar">
+  <div class="header-left">
+    <a class="portal-link" href="tia.html#erp">← Voltar ao TIA</a>
+    <h1>Controle de versões</h1>
+  </div>
+  <div class="brand">Mundo bit Byte</div>
+</header>
+
+<div class="layout">
+<nav class="side-nav" aria-label="Etapas do tópico Controle de versões">
+  <h3>Etapas</h3>
+  <a class="nav-btn" href="#problema">1 - Qual é a versão certa?</a>
+  <a class="nav-btn" href="#documento">2 - Criar o procedimento</a>
+  <a class="nav-btn" href="#primeira-versao">3 - Guardar a primeira versão</a>
+  <a class="nav-btn" href="#alteracao-1">4 - Primeira mudança</a>
+  <a class="nav-btn" href="#alteracao-2">5 - Segunda mudança</a>
+  <a class="nav-btn" href="#comparar">6 - O que mudou?</a>
+  <a class="nav-btn" href="#historico">7 - Quem fez o quê?</a>
+  <a class="nav-btn" href="#erro">8 - Algo deu errado</a>
+  <a class="nav-btn" href="#recuperar">9 - Recuperar sem apagar a história</a>
+  <a class="nav-btn" href="#github">10 - Levar para o GitHub</a>
+  <a class="nav-btn" href="#checkpoint">11 - Agora é com você</a>
+</nav>
+
+<main class="content">
+<section id="problema" class="hero-card">
+  <span class="eyebrow">Tecnologia • Gestão • Processos • Rastreabilidade</span>
+  <h2>7.1 Controle de versões em documentos administrativos</h2>
+  <div class="example-box">
+    <h3>Qual é a versão certa?</h3>
+    <p>Imagine que o setor de compras encontra estes arquivos em uma pasta:</p>
+    <pre>procedimento-compras.txt
+procedimento-compras-novo.txt
+procedimento-compras-final.txt
+procedimento-compras-final-certo.txt
+procedimento-compras-agora-vai.txt</pre>
+    <p>Todos parecem importantes. Mas qual contém a regra atual? Quem alterou? Quando? O que mudou? E se uma regra correta tiver sido substituída por engano?</p>
+  </div>
+  <div class="activity-box">
+    <h3>Antes de usar tecnologia</h3>
+    <ol>
+      <li>Que risco administrativo existe quando ninguém sabe qual é a versão vigente?</li>
+      <li>Que tipo de problema isso pode causar em compras, aprovações e auditorias?</li>
+      <li>Renomear arquivos manualmente resolve o problema por completo?</li>
+    </ol>
+  </div>
+  <div class="notice"><strong>Ligação com Tecnologia e Gestão:</strong> tecnologia só faz sentido quando ajuda a organizar um processo real. Aqui, o problema não é “aprender Git”; é manter regras administrativas com histórico, evidência e possibilidade de recuperação.</div>
+</section>
+
+<section id="documento" class="section-card">
+  <div class="section-head"><span class="badge">2</span><div><h2>Crie o procedimento</h2><p>Comece pelo processo administrativo. A ferramenta entra depois.</p></div></div>
+  <div class="activity-box">
+    <h3>1. Crie a pasta de trabalho</h3>
+    <p>Crie uma pasta chamada <strong>procedimento-compras</strong>.</p>
+    <p>Dentro dela, crie o arquivo <strong>procedimento-solicitacao-compras.txt</strong>.</p>
+  </div>
+  <div class="example-box">
+    <h3>2. Digite a primeira versão</h3>
+    <pre>PROCEDIMENTO DE SOLICITAÇÃO DE COMPRAS
+
+Objetivo
+Organizar as solicitações de compras da empresa.
+
+1. O funcionário identifica a necessidade de compra.
+2. A solicitação é encaminhada ao responsável pelo setor.
+3. O setor de compras consulta fornecedores.
+4. A compra é aprovada pelo responsável.
+5. O setor de compras realiza o pedido.
+6. O material recebido é conferido.
+7. A conclusão da compra é registrada.</pre>
+    <p>Salve o arquivo.</p>
+  </div>
+  <div class="notice"><strong>Se o arquivo abrir novamente com esse conteúdo, está correto.</strong> Você já tem um procedimento administrativo funcional. Agora surge outra necessidade: guardar esta versão de forma confiável antes de alterá-la.</div>
+</section>
+
+<section id="primeira-versao" class="section-card">
+  <div class="section-head"><span class="badge">3</span><div><h2>Guarde a primeira versão</h2><p>Transforme a pasta em um histórico controlado.</p></div></div>
+  <div class="example-box">
+    <h3>Por que precisamos de outra solução?</h3>
+    <p>Poderíamos duplicar o arquivo e escrever “versão 1” no nome. Isso funciona por pouco tempo, mas não registra automaticamente o histórico nem mostra com clareza o que mudou. É aqui que o Git passa a ter utilidade.</p>
+  </div>
+  <div class="activity-box">
+    <h3>Abra o terminal na pasta</h3>
+    <p>No Explorador de Arquivos, abra a pasta <strong>procedimento-compras</strong>. Clique na barra de endereço, digite <strong>cmd</strong> e pressione <strong>Enter</strong>.</p>
+    <p>Execute:</p>
+    <pre>git init</pre>
+    <p>Depois:</p>
+    <pre>git status</pre>
+    <p>O Git deverá indicar que existe um arquivo ainda não registrado.</p>
+    <p>Agora execute:</p>
+    <pre>git add .
+git commit -m "Cria procedimento inicial de compras"</pre>
+  </div>
+  <div class="notice"><strong>Se o commit foi criado, está correto.</strong> A primeira versão do procedimento agora faz parte do histórico.</div>
+</section>
+
+<section id="alteracao-1" class="section-card">
+  <div class="section-head"><span class="badge">4</span><div><h2>Primeira mudança administrativa</h2><p>Uma nova regra cria a necessidade de uma nova versão.</p></div></div>
+  <div class="example-box">
+    <h3>A empresa mudou a política de compras</h3>
+    <p>A partir de agora, antes de realizar uma compra, o setor deve obter <strong>três cotações</strong>.</p>
+  </div>
+  <div class="activity-box">
+    <h3>Altere o documento</h3>
+    <p>Troque a etapa 3 por:</p>
+    <pre>3. O setor de compras obtém três cotações de fornecedores.</pre>
+    <p>Salve. No terminal, execute:</p>
+    <pre>git status</pre>
+    <p>O Git deverá indicar que o arquivo foi modificado.</p>
+    <p>Registre a nova versão:</p>
+    <pre>git add .
+git commit -m "Exige tres cotacoes antes da compra"</pre>
+  </div>
+  <div class="notice"><strong>Encadeamento:</strong> uma regra do processo mudou → o documento mudou → uma nova versão precisou ser registrada.</div>
+</section>
+
+<section id="alteracao-2" class="section-card">
+  <div class="section-head"><span class="badge">5</span><div><h2>Segunda mudança administrativa</h2><p>O histórico começa a adquirir valor gerencial.</p></div></div>
+  <div class="example-box">
+    <h3>Nova regra de aprovação</h3>
+    <p>Compras acima de <strong>R$ 5.000</strong> agora precisam de aprovação da gerência.</p>
+  </div>
+  <div class="activity-box">
+    <h3>Atualize o procedimento</h3>
+    <p>Depois da etapa das cotações, inclua:</p>
+    <pre>4. Compras acima de R$ 5.000 precisam de aprovação da gerência.</pre>
+    <p>Renumerar as etapas seguintes faz parte da atualização do documento.</p>
+    <p>Antes de registrar, execute:</p>
+    <pre>git status</pre>
+    <p>Depois:</p>
+    <pre>git add .
+git commit -m "Inclui aprovacao da gerencia acima de 5000 reais"</pre>
+  </div>
+  <div class="notice"><strong>Se o novo commit foi criado, está correto.</strong> Já existem pelo menos três momentos diferentes do mesmo procedimento.</div>
+</section>
+
+<section id="comparar" class="section-card">
+  <div class="section-head"><span class="badge">6</span><div><h2>O que mudou?</h2><p>Antes de registrar uma alteração, confira exatamente o que foi mexido.</p></div></div>
+  <div class="example-box">
+    <h3>Uma pequena conferência evita um grande problema</h3>
+    <p>Altere temporariamente uma frase do procedimento, mas <strong>não faça commit ainda</strong>. Agora precisamos responder: o que foi alterado?</p>
+  </div>
+  <div class="activity-box">
+    <p>Execute:</p>
+    <pre>git diff</pre>
+    <p>As linhas removidas e adicionadas deverão aparecer no terminal.</p>
+    <p>Leia o resultado e localize a frase que você modificou.</p>
+  </div>
+  <div class="notice"><strong>Se você consegue apontar a linha alterada, está correto.</strong> Em Administração, isso representa conferência antes de formalizar uma nova versão.</div>
+</section>
+
+<section id="historico" class="section-card">
+  <div class="section-head"><span class="badge">7</span><div><h2>Quem fez o quê e quando?</h2><p>Agora o histórico responde perguntas que nomes de arquivos não respondem bem.</p></div></div>
+  <div class="activity-box">
+    <p>Desfaça a alteração temporária manualmente e salve o arquivo. Depois execute:</p>
+    <pre>git log --oneline</pre>
+    <p>Você deverá ver uma lista com os registros feitos até aqui.</p>
+  </div>
+  <div class="example-box">
+    <h3>Leia como um profissional de Administração</h3>
+    <p>Cada registro representa uma mudança formalizada no procedimento. A mensagem do commit deve explicar a alteração de maneira objetiva, como um pequeno registro de ocorrência do processo.</p>
+  </div>
+  <div class="notice"><strong>Rastreabilidade:</strong> agora existe evidência de que o procedimento evoluiu, em que ordem as mudanças ocorreram e qual era a finalidade de cada alteração.</div>
+</section>
+
+<section id="erro" class="section-card">
+  <div class="section-head"><span class="badge">8</span><div><h2>Algo foi alterado por engano</h2><p>O valor do histórico aparece de verdade quando precisamos corrigir um erro.</p></div></div>
+  <div class="example-box">
+    <h3>Simulação</h3>
+    <p>Alguém altera a regra e escreve que compras acima de <strong>R$ 50.000</strong> precisam de aprovação da gerência, quando o valor correto continua sendo <strong>R$ 5.000</strong>.</p>
+  </div>
+  <div class="activity-box">
+    <p>Faça essa alteração errada, salve e registre:</p>
+    <pre>git add .
+git commit -m "Altera limite de aprovacao"</pre>
+    <p>Agora execute:</p>
+    <pre>git log --oneline</pre>
+    <p>Localize o registro imediatamente anterior ao erro e copie os primeiros caracteres de seu identificador.</p>
+  </div>
+  <div class="notice"><strong>Não apague o histórico.</strong> Em um processo rastreável, até a correção deve ficar registrada.</div>
+</section>
+
+<section id="recuperar" class="section-card">
+  <div class="section-head"><span class="badge">9</span><div><h2>Recupere a versão correta sem apagar a história</h2><p>Use o histórico como fonte confiável para restaurar o documento.</p></div></div>
+  <div class="activity-box">
+    <h3>Recupere o arquivo da versão anterior</h3>
+    <p>Substitua <strong>IDENTIFICADOR</strong> pelo código que você encontrou no histórico:</p>
+    <pre>git restore --source=IDENTIFICADOR procedimento-solicitacao-compras.txt</pre>
+    <p>Abra o arquivo e verifique se o limite voltou para <strong>R$ 5.000</strong>.</p>
+    <p>Se estiver correto, registre a correção:</p>
+    <pre>git add .
+git commit -m "Corrige limite de aprovacao para 5000 reais"</pre>
+  </div>
+  <div class="notice"><strong>Se o valor correto voltou e a correção aparece como um novo commit, está correto.</strong> O erro não foi escondido; ele foi identificado e corrigido com rastreabilidade.</div>
+</section>
+
+<section id="github" class="section-card">
+  <div class="section-head"><span class="badge">10</span><div><h2>Leve o histórico para o GitHub</h2><p>Quando surge a necessidade de manter e consultar o histórico também online, entra o GitHub.</p></div></div>
+  <div class="example-box">
+    <h3>Git e GitHub não são a mesma coisa</h3>
+    <p>Até aqui, todo o histórico ficou no computador. Agora vamos criar uma cópia online para facilitar acesso, compartilhamento e consulta.</p>
+  </div>
+  <div class="activity-box">
+    <h3>1. Crie um repositório vazio no GitHub</h3>
+    <p>No GitHub, escolha <strong>New repository</strong>. Use o nome <strong>procedimento-compras</strong> e não adicione arquivos iniciais.</p>
+    <h3>2. Conecte a pasta ao repositório</h3>
+    <p>O GitHub exibirá o endereço do novo repositório. No terminal, dentro da pasta do projeto, execute os comandos indicados pelo próprio GitHub para um repositório existente. Em geral, serão equivalentes a:</p>
+    <pre>git branch -M main
+git remote add origin URL_DO_SEU_REPOSITORIO
+git push -u origin main</pre>
+    <h3>3. Verifique</h3>
+    <p>Atualize a página do repositório no navegador. O arquivo deverá aparecer.</p>
+    <p>Abra a área de commits para conferir se o histórico também foi enviado.</p>
+  </div>
+  <div class="notice"><strong>Se o arquivo e os commits aparecem no GitHub, está correto.</strong> O mesmo histórico que você construiu localmente agora também pode ser consultado online.</div>
+</section>
+
+<section id="checkpoint" class="section-card">
+  <div class="section-head"><span class="badge">11</span><div><h2>Agora é com você</h2><p>Mostre que compreendeu o processo, não apenas os comandos.</p></div></div>
+  <div class="activity-box">
+    <h3>Nova decisão administrativa</h3>
+    <p>A empresa decidiu que toda solicitação aprovada deve ser concluída em até <strong>dois dias úteis</strong> após a aprovação.</p>
+    <ol>
+      <li>Decida em que ponto do procedimento essa regra deve aparecer.</li>
+      <li>Faça a alteração.</li>
+      <li>Confira o que mudou antes de registrar.</li>
+      <li>Registre uma nova versão com uma mensagem clara.</li>
+      <li>Envie a atualização ao GitHub.</li>
+      <li>Mostre no histórico qual registro corresponde a essa mudança.</li>
+    </ol>
+  </div>
+  <div class="example-box">
+    <h3>Checkpoint final</h3>
+    <ol>
+      <li>Por que guardar apenas arquivos chamados “final”, “novo” e “certo” é frágil?</li>
+      <li>Qual é a diferença prática entre conferir uma alteração e registrar uma versão?</li>
+      <li>Como o histórico ajuda em auditoria, controle interno e gestão de processos?</li>
+      <li>Por que uma correção deve ser registrada em vez de simplesmente esconder o erro anterior?</li>
+      <li>Em quais outros documentos administrativos esse método poderia ser útil?</li>
+    </ol>
+  </div>
+  <div class="notice"><strong>Leve para a Administração:</strong> controle de versões não é assunto exclusivo de programação. É uma forma de manter histórico, responsabilidade, evidência e possibilidade de recuperação em documentos que mudam ao longo do tempo.</div>
+  <p><a class="call-link" href="tia.html#scm">Continuar no TIA: 8 - SCM →</a></p>
+</section>
+</main>
+</div>
+</body>
+</html>
