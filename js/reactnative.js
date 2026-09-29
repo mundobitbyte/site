@@ -5008,5 +5008,7 @@ const styles = StyleSheet.create({
       showStep(etapa.id);
       document.getElementById('stepTitle').scrollIntoView({ block: 'start' });
     }
-    abrirEtapaDaUrl();
+    // Os scripts de complementos adicionam etapas e reinicializam o menu depois
+    // deste arquivo. Abra o destino quando todos terminarem a inicialização.
+    window.addEventListener('load', () => requestAnimationFrame(abrirEtapaDaUrl), { once: true });
     window.addEventListener('hashchange', abrirEtapaDaUrl);
