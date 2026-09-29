@@ -18,7 +18,8 @@ test('painel retoma o tópico visitado sem contar visita como conclusão', async
   }
   for (const id of ['mensagem', 'painel', 'sair', 'continuar', 'recentes',
     'favoritos', 'anotacoes', 'progresso', 'limpar-recentes',
-    'limpar-favoritos', 'limpar-anotacoes', 'limpar-progresso']) elementos.set(id, criarElemento());
+    'limpar-favoritos', 'limpar-anotacoes', 'limpar-progresso', 'excluir-conta', 'verificacao', 'conta-dados',
+    'reenviar-email', 'verificar-email']) elementos.set(id, criarElemento());
   const unidade = core.pesquisar(catalogo, 'CTE')[0];
   const anterior = core.pesquisar(catalogo, 'BPMN')[0];
   const ancora = new URL(`https://www.mundobitbyte.com.br/${unidade.localizacao_pesquisa}`).hash.slice(1);
@@ -26,14 +27,16 @@ test('painel retoma o tópico visitado sem contar visita como conclusão', async
     [unidade.conteudo_id]: {
       ultimoAcesso: '2026-09-29T05:00:00Z',
       versaoVista: unidade.versao_conteudo,
-      ancora
+      ancora,
+      notas: ['Primeira nota', 'Segunda nota']
     },
     [anterior.conteudo_id]: {
       ultimoAcesso: '2026-09-28T05:00:00Z',
       versaoVista: anterior.versao_conteudo
     }
   };
-  const conta = { iniciar: async () => {}, atual: () => ({ uid: 'teste' }),
+  const conta = { iniciar: async () => {}, atual: () => ({ uid: 'teste', emailVerified: true }),
+    notasDoRegistro: registro => registro.notas || (registro.anotacao ? [registro.anotacao] : []),
     listar: async () => registros };
   const contexto = {
     document: { getElementById: id => elementos.get(id), createElement: criarElemento },
@@ -51,6 +54,8 @@ test('painel retoma o tópico visitado sem contar visita como conclusão', async
   assert.equal(continuar.href, destino);
   assert.equal(recente.href, new URL(`../${anterior.localizacao_atual}`, contexto.location.href).href);
   assert.match(continuar.textContent, /CTE/);
+  assert.equal(elementos.get('anotacoes').filhos[0].filhos[1].textContent, 'Primeira nota');
+  assert.equal(elementos.get('anotacoes').filhos[0].filhos[2].textContent, 'Segunda nota');
   assert.match(elementos.get('progresso').filhos[0].textContent, /Nenhum conteúdo concluído ainda/);
   assert.equal(elementos.get('limpar-recentes').hidden, false);
   assert.equal(elementos.get('limpar-favoritos').hidden, true);

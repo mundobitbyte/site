@@ -39,9 +39,19 @@
   }
   async function entrar(email, senha) { await iniciar(); return sdk.authSdk.signInWithEmailAndPassword(sdk.auth, email, senha); }
   async function cadastrar(nome, email, senha) {
+    const dominio = String(email).trim().toLowerCase().split('@').pop();
+    const descartaveis = ['mailinator.com', 'guerrillamail.com', 'yopmail.com', 'tempmail.com',
+      '10minutemail.com', 'sharklasers.com', 'trashmail.com', 'maildrop.cc', 'getnada.com',
+      'dispostable.com', 'moakt.com', 'tempr.email'];
+    if (descartaveis.some(item => dominio === item || dominio.endsWith(`.${item}`))) {
+      throw Object.assign(new Error('Use um e-mail permanente.'), { code: 'mbb/email-temporario' });
+    }
     await iniciar();
     const credencial = await sdk.authSdk.createUserWithEmailAndPassword(sdk.auth, email, senha);
     await sdk.authSdk.updateProfile(credencial.user, { displayName: nome });
+    sdk.auth.languageCode = 'pt-BR';
+    try { await sdk.authSdk.sendEmailVerification(credencial.user); }
+    catch (_) { /* A conta existe; a página permite reenviar a verificação. */ }
     usuario = credencial.user;
     avisar();
     return usuario;
@@ -52,6 +62,35 @@
     return sdk.authSdk.sendPasswordResetEmail(sdk.auth, email);
   }
   async function sair() { await iniciar(); await sdk.authSdk.signOut(sdk.auth); }
+  async function enviarVerificacao() {
+    await iniciar();
+    if (!usuario) throw new Error('Entre na sua conta.');
+    sdk.auth.languageCode = 'pt-BR';
+    return sdk.authSdk.sendEmailVerification(usuario);
+  }
+  async function confirmarVerificacao() {
+    await iniciar();
+    if (!usuario) throw new Error('Entre na sua conta.');
+    await sdk.authSdk.reload(usuario);
+    await usuario.getIdToken(true);
+    return usuario.emailVerified;
+  }
+
+  async function excluirConta(senha) {
+    await exigirConta();
+    const dono = usuario;
+    if (!dono.email || !senha) throw new Error('Informe sua senha para excluir a conta.');
+    await sdk.authSdk.reauthenticateWithCredential(dono,
+      sdk.authSdk.EmailAuthProvider.credential(dono.email, senha));
+    const registros = sdk.dbSdk.collection(sdk.db, 'meuMbb', dono.uid, 'registros');
+    const fotos = await sdk.dbSdk.getDocs(registros);
+    for (let inicio = 0; inicio < fotos.docs.length; inicio += 400) {
+      const lote = sdk.dbSdk.writeBatch(sdk.db);
+      fotos.docs.slice(inicio, inicio + 400).forEach(documento => lote.delete(documento.ref));
+      await lote.commit();
+    }
+    await sdk.authSdk.deleteUser(dono);
+  }
 
   function ref(id) { return sdk.dbSdk.doc(sdk.db, 'meuMbb', usuario.uid, 'registros', id); }
   async function listar() {
@@ -78,11 +117,46 @@
     await exigirConta();
     await salvar(unidade, { ultimoAcesso: sdk.dbSdk.serverTimestamp(), ancora: ancora.slice(0, 100) });
   }
+  function notasDoRegistro(registro) {
+    return Array.isArray(registro?.notas) ? registro.notas : registro?.anotacao?.trim() ? [registro.anotacao] : [];
+  }
+  async function alterarNota(unidade, texto, indice = null) {
+    const conteudo = texto.trim();
+    if (!conteudo || conteudo.length > 2000) throw new Error('Escreva uma anotação de até 2.000 caracteres.');
+    await exigirConta();
+    await sdk.dbSdk.runTransaction(sdk.db, async transacao => {
+      const referencia = ref(unidade.conteudo_id);
+      const foto = await transacao.get(referencia);
+      const notas = [...notasDoRegistro(foto.exists() ? foto.data() : {})];
+      if (indice === null) {
+        if (notas.length >= 10) throw new Error('Limite de 10 anotações neste conteúdo.');
+        notas.push(conteudo);
+      } else {
+        if (!Number.isInteger(indice) || indice < 0 || indice >= notas.length) throw new Error('Anotação não encontrada.');
+        notas[indice] = conteudo;
+      }
+      transacao.set(referencia, { conteudoId: unidade.conteudo_id, versaoVista: unidade.versao_conteudo,
+        atualizadoEm: sdk.dbSdk.serverTimestamp(), notas, anotacao: sdk.dbSdk.deleteField() }, { merge: true });
+    });
+  }
+  async function removerNota(unidade, indice) {
+    await exigirConta();
+    await sdk.dbSdk.runTransaction(sdk.db, async transacao => {
+      const referencia = ref(unidade.conteudo_id);
+      const foto = await transacao.get(referencia);
+      const notas = [...notasDoRegistro(foto.exists() ? foto.data() : {})];
+      if (!Number.isInteger(indice) || indice < 0 || indice >= notas.length) throw new Error('Anotação não encontrada.');
+      notas.splice(indice, 1);
+      transacao.set(referencia, { conteudoId: unidade.conteudo_id, versaoVista: unidade.versao_conteudo,
+        atualizadoEm: sdk.dbSdk.serverTimestamp(), notas: notas.length ? notas : sdk.dbSdk.deleteField(),
+        anotacao: sdk.dbSdk.deleteField() }, { merge: true });
+    });
+  }
   async function limparSecao(secao) {
     const permitidas = {
       recentes: ['ultimoAcesso', 'ancora'],
       favoritos: ['favorito'],
-      anotacoes: ['anotacao'],
+      anotacoes: ['anotacao', 'notas'],
       progresso: ['concluido']
     };
     const campos = permitidas[secao];
@@ -97,7 +171,7 @@
       const dados = documento.data();
       return secao === 'recentes' ? dados.ultimoAcesso && documento.id !== ultimo.id
         : secao === 'favoritos' ? dados.favorito
-          : secao === 'anotacoes' ? dados.anotacao?.trim() : dados.concluido;
+          : secao === 'anotacoes' ? notasDoRegistro(dados).length : dados.concluido;
     });
     for (let inicio = 0; inicio < selecionados.length; inicio += 400) {
       const lote = sdk.dbSdk.writeBatch(sdk.db);
@@ -112,5 +186,5 @@
   }
   function limparRecentes() { return limparSecao('recentes'); }
   function atual() { return usuario; }
-  window.MBBMeuConta = { iniciar, observar, atual, entrar, cadastrar, recuperar, sair, listar, obter, salvar, visitar, limparSecao, limparRecentes };
+  window.MBBMeuConta = { iniciar, observar, atual, entrar, cadastrar, recuperar, sair, enviarVerificacao, confirmarVerificacao, excluirConta, listar, obter, salvar, visitar, notasDoRegistro, alterarNota, removerNota, limparSecao, limparRecentes };
 }());

@@ -48,11 +48,13 @@
     preencher('favoritos', favoritos, 'Marque um conteúdo como favorito para encontrá-lo aqui.');
     elemento('limpar-favoritos').hidden = favoritos.length === 0;
     const notas = elemento('anotacoes'); notas.replaceChildren();
-    const comNotas = itens.filter(item => item.registro.anotacao?.trim());
+    const comNotas = itens.filter(item => conta.notasDoRegistro(item.registro).length);
     elemento('limpar-anotacoes').hidden = comNotas.length === 0;
     if (!comNotas.length) notas.textContent = 'Suas anotações salvas aparecerão aqui.';
     comNotas.forEach(item => { const bloco = document.createElement('div'); bloco.className = 'mbb-nota'; bloco.append(linha(item));
-      const texto = document.createElement('p'); texto.textContent = item.registro.anotacao; bloco.append(texto); notas.append(bloco); });
+      conta.notasDoRegistro(item.registro).forEach(nota => {
+        const texto = document.createElement('p'); texto.textContent = nota; bloco.append(texto);
+      }); notas.append(bloco); });
     const concluidos = [...new Map(itens.filter(item => item.registro.concluido && item.destino)
       .map(item => [item.destino.conteudo_id, item])).values()];
     elemento('limpar-progresso').hidden = !itens.some(item => item.registro.concluido);
@@ -74,13 +76,31 @@
     await conta.iniciar();
     if (!conta.atual()) { location.replace('entrar.html'); return; }
     sair.hidden = false;
-    registros = await conta.listar();
-    painel.hidden = false;
-    mensagem.textContent = '';
-    renderizar();
+    elemento('conta-dados').hidden = false;
+    if (conta.atual().emailVerified) {
+      registros = await conta.listar();
+      painel.hidden = false;
+      mensagem.textContent = '';
+      renderizar();
+    } else {
+      elemento('verificacao').hidden = false;
+      mensagem.textContent = 'Confirme seu e-mail para salvar seus estudos.';
+    }
   } catch (_) { mensagem.textContent = 'Seus dados estão temporariamente indisponíveis. Os conteúdos públicos continuam acessíveis.'; }
   sair.addEventListener('click', async () => { try { await conta.sair(); location.href = '../index.html'; }
     catch (_) { mensagem.textContent = 'Não foi possível sair agora. Tente novamente.'; } });
+  elemento('reenviar-email').addEventListener('click', async evento => {
+    const botao = evento.currentTarget; botao.disabled = true;
+    try { await conta.enviarVerificacao(); mensagem.textContent = 'Link enviado. Verifique também a pasta de spam.'; }
+    catch (_) { mensagem.textContent = 'Não foi possível reenviar agora. Tente novamente mais tarde.'; }
+    finally { botao.disabled = false; }
+  });
+  elemento('verificar-email').addEventListener('click', async () => {
+    try {
+      if (await conta.confirmarVerificacao()) location.reload();
+      else mensagem.textContent = 'O e-mail ainda não foi confirmado. Abra o link recebido e tente novamente.';
+    } catch (_) { mensagem.textContent = 'Não foi possível verificar agora. Tente novamente.'; }
+  });
   const avisos = {
     recentes: 'Limpar as visitas anteriores? O conteúdo em “Continuar de onde parei”, favoritos, anotações e conclusões serão mantidos.',
     favoritos: 'Remover todos os favoritos? Visitas, anotações e conclusões serão mantidas.',
@@ -101,4 +121,21 @@
       finally { botao.disabled = false; }
     });
   }
+  elemento('excluir-conta').addEventListener('submit', async evento => {
+    evento.preventDefault();
+    if (!confirm('Excluir definitivamente sua conta e todos os dados do Meu MbB?')) return;
+    const formulario = evento.currentTarget;
+    const botao = formulario.querySelector('[type="submit"]');
+    botao.disabled = true;
+    mensagem.textContent = 'Excluindo sua conta e seus dados…';
+    try {
+      await conta.excluirConta(formulario.elements.senha.value);
+      location.href = 'entrar.html?excluida=1';
+    } catch (erro) {
+      mensagem.textContent = ['auth/invalid-credential', 'auth/wrong-password'].includes(erro.code)
+        ? 'Senha incorreta. Sua conta foi mantida.'
+        : 'Não foi possível concluir a exclusão. Sua conta ainda existe; entre novamente e tente outra vez.';
+      botao.disabled = false;
+    }
+  });
 }());

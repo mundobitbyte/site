@@ -37,6 +37,10 @@
 .mbb-estudo-acoes p { margin: 6px 0 12px; color: #33445d; }
 .mbb-estudo-acoes .mbb-estudo-ajuda { font-size: 12px; }
 .mbb-estudo-acoes button { display: block; width: 100%; margin: 8px 0; text-align: left; background: #fff; color: #114b9e; }
+.mbb-estudo-acoes button[hidden] { display: none; }
+.mbb-estudo-acoes .mbb-lista-notas { border-top: 1px solid #d6e0ee; margin-top: 12px; }
+.mbb-estudo-acoes .mbb-lista-notas .mbb-nota { border-top: 1px solid #edf1f7; padding: 8px 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.mbb-estudo-acoes .mbb-lista-notas .mbb-nota button { display: inline-block; width: auto; margin: 0 8px 0 0; padding: 5px 8px; }
 .mbb-estudo-acoes button:disabled { opacity: .55; cursor: wait; }
 .mbb-estudo-acoes textarea { display: block; box-sizing: border-box; width: 100%; padding: 8px; border: 1px solid #bacbe1; border-radius: 8px; font: inherit; resize: vertical; }
 .mbb-estudo-acoes [role="status"] { display: block; min-height: 1.5em; color: #33445d; }

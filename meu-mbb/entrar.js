@@ -4,6 +4,7 @@
   const mensagem = document.getElementById('mensagem');
   const login = document.getElementById('form-entrar');
   const cadastro = document.getElementById('form-criar');
+  if (new URLSearchParams(location.search).has('excluida')) mensagem.textContent = 'Sua conta e seus dados do Meu MbB foram excluídos.';
   if (!window.MBB_FIREBASE_CONFIG?.apiKey || !window.MBB_FIREBASE_CONFIG?.projectId) {
     document.querySelector('.mbb-abas').hidden = true;
     login.hidden = true; cadastro.hidden = true;
@@ -15,7 +16,8 @@
     login.hidden = criar; cadastro.hidden = !criar; mensagem.textContent = '';
     document.querySelectorAll('[data-aba]').forEach(item => item.setAttribute('aria-pressed', String(item === botao)));
   }));
-  const erros = { 'auth/email-already-in-use': 'Este e-mail já possui conta.', 'auth/invalid-credential': 'E-mail ou senha incorretos.',
+  const erros = { 'mbb/email-temporario': 'Use um e-mail permanente. Endereços temporários conhecidos não são aceitos.',
+    'auth/email-already-in-use': 'Este e-mail já possui conta.', 'auth/invalid-credential': 'E-mail ou senha incorretos.',
     'auth/invalid-email': 'Informe um e-mail válido.', 'auth/weak-password': 'Use uma senha com pelo menos 6 caracteres.',
     'auth/network-request-failed': 'Sem conexão com o serviço de login. O site público continua acessível.' };
   async function executar(formulario, operacao) {

@@ -17,6 +17,10 @@ on:
       - 'meu-mbb/pesquisar.js'
       - 'meu-mbb/painel.js'
       - 'meu-mbb/conta.js'
+      - 'meu-mbb/entrar.js'
+      - 'meu-mbb/entrar.html'
+      - 'meu-mbb/privacidade.html'
+      - 'meu-mbb/piloto-git.js'
       - 'meu-mbb/firebase-config.js'
       - 'meu-mbb/firestore.rules'
       - 'meu-mbb/falha-firebase.test.cjs'
@@ -28,6 +32,9 @@ on:
       - 'meu-mbb/visitas-diretas.test.cjs'
       - 'meu-mbb/acoes-estudo.css'
       - 'meu-mbb/limpeza.test.cjs'
+      - 'meu-mbb/cadastro.test.cjs'
+      - 'meu-mbb/conta-exclusao.test.cjs'
+      - 'meu-mbb/notas.test.cjs'
       - 'meu-mbb/index.html'
       - 'meu-mbb/estilo.css'
       - '.github/workflows/pesquisa-global-validacao.yml'
@@ -55,4 +62,4 @@ jobs:
         run: node meu-mbb/gerar-visitas.cjs --check
 
       - name: Testar pesquisa global
-        run: node --test meu-mbb/catalogo.test.cjs meu-mbb/falha-firebase.test.cjs meu-mbb/visitas-pesquisa.test.cjs meu-mbb/retomada.test.cjs meu-mbb/visitas-diretas.test.cjs meu-mbb/limpeza.test.cjs
+        run: node --test meu-mbb/*.test.cjs
