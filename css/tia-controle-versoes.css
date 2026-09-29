@@ -27,11 +27,53 @@
   background:#111827;
   color:#f8fafc;
   border:1px solid #273449;
-  white-space:pre;
-  overflow-x:auto;
-  overflow-y:hidden;
-  overscroll-behavior-inline:contain;
-  -webkit-overflow-scrolling:touch;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  word-break:normal;
+  overflow-x:hidden;
+}
+
+/* Comandos com botão Copiar. A quebra é apenas visual: o texto copiado permanece intacto. */
+.tia-controle-page .terminal-shell{
+  width:100%;
+  max-width:100%;
+  margin:12px 0;
+  background:#111827;
+  border:1px solid #273449;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.tia-controle-page .terminal-shell pre.terminal{
+  margin:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  padding-top:8px;
+}
+
+.tia-controle-page .terminal-copy{
+  display:block;
+  margin:8px 8px 0 auto;
+  padding:5px 9px;
+  border:1px solid #64748b;
+  border-radius:8px;
+  background:#1e293b;
+  color:#f8fafc;
+  font:700 12px Arial,Helvetica,sans-serif;
+  line-height:1.2;
+  cursor:pointer;
+}
+
+.tia-controle-page .terminal-copy:hover,
+.tia-controle-page .terminal-copy:focus-visible{
+  background:#334155;
+  outline:none;
+}
+
+.tia-controle-page .terminal-copy.copiado{
+  border-color:#86efac;
+  color:#bbf7d0;
 }
 
 /* Conteúdo de arquivos/documentos: pode quebrar linha sem alterar o sentido */
@@ -91,7 +133,9 @@
   }
 
   .tia-controle-page pre.terminal{
-    white-space:pre;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    overflow-x:hidden;
   }
 
   .tia-controle-page pre.documento,
