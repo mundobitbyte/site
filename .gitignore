@@ -6,9 +6,18 @@
 *.key
 *.p12
 *.pfx
-service-account*.json
+*.jks
+*.keystore
+*service-account*.json
+*service_account*.json
+*firebase-adminsdk*.json
 firebase-admin*.json
 credentials*.json
+
+# Firebase e ferramentas locais
+.firebase/
+firebase-debug.log*
+ui-debug.log*
 
 # Dependencias e artefatos locais
 node_modules/
