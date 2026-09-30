@@ -7,6 +7,9 @@ on:
     paths:
       - 'firestore.rules'
       - 'firebase.json'
+      - 'academia/js/academia-storage.js'
+      - 'academia/js/academia-conta.js'
+      - 'academia/tests/cadastro-seguranca.test.cjs'
       - 'academia/tests/firestore-rules.test.cjs'
       - 'meu-mbb/firestore.rules'
       - 'firebase.meu-mbb.json'
@@ -18,6 +21,9 @@ on:
     paths:
       - 'firestore.rules'
       - 'firebase.json'
+      - 'academia/js/academia-storage.js'
+      - 'academia/js/academia-conta.js'
+      - 'academia/tests/cadastro-seguranca.test.cjs'
       - 'academia/tests/firestore-rules.test.cjs'
       - 'meu-mbb/firestore.rules'
       - 'firebase.meu-mbb.json'
@@ -47,6 +53,9 @@ jobs:
 
       - name: Instalar ferramentas de teste
         run: npm install --no-save --no-package-lock firebase@12.19.0 @firebase/rules-unit-testing@5.0.2 firebase-tools@15.30.2
+
+      - name: Validar cadastro preventivo da Academia
+        run: node --test academia/tests/cadastro-seguranca.test.cjs
 
       - name: Validar regras da Academia
         run: npx firebase emulators:exec --config firebase.json --only firestore --project demo-mbb-academia "node --test academia/tests/firestore-rules.test.cjs"
