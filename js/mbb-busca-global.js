@@ -110,7 +110,8 @@
   'use strict';
 
   function instalarDireitosAutorais() {
-    if (!document.body || document.querySelector('.mbb-direitos-autorais')) return;
+    if (!document.body || typeof document.querySelector !== 'function') return;
+    if (document.querySelector('.mbb-direitos-autorais')) return;
 
     const estilo = document.createElement('style');
     estilo.textContent = `
