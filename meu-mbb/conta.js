@@ -13,11 +13,20 @@
     inicializacao = (async () => {
       const config = window.MBB_FIREBASE_CONFIG;
       if (!config?.apiKey || !config?.projectId) throw new Error('Autenticação indisponível. O conteúdo público continua acessível.');
-      const [appSdk, authSdk] = await Promise.all([
+      const [appSdk, authSdk, appCheckSdk] = await Promise.all([
         import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js'),
-        import('https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js')
+        import('https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js'),
+        config.appCheckSiteKey
+          ? import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js')
+          : Promise.resolve(null)
       ]);
       const app = appSdk.getApps().find(item => item.options.projectId === config.projectId) || appSdk.initializeApp(config);
+      if (appCheckSdk) {
+        appCheckSdk.initializeAppCheck(app, {
+          provider: new appCheckSdk.ReCaptchaEnterpriseProvider(config.appCheckSiteKey),
+          isTokenAutoRefreshEnabled: true
+        });
+      }
       const auth = authSdk.getAuth(app);
       sdk = { authSdk, auth, app, dbSdk: null, db: null };
       authSdk.onAuthStateChanged(auth, atual => { usuario = atual; avisar(); });
