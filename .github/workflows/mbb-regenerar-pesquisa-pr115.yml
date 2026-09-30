@@ -1,0 +1,34 @@
+name: Regenerar pesquisa PR 115
+
+on:
+  push:
+    branches:
+      - analise-sistemas-fechamento-espiral-mbb
+
+permissions:
+  contents: write
+
+jobs:
+  regenerar:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analise-sistemas-fechamento-espiral-mbb
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Regenerar catálogo de pesquisa
+        run: node meu-mbb/atualizar-pesquisa.cjs
+      - name: Versionar somente o catálogo atualizado
+        run: |
+          if git diff --quiet -- meu-mbb/catalogo.json; then
+            echo "Catálogo já está atualizado."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add meu-mbb/catalogo.json
+          git commit -m "Meu MbB: atualizar índice de pesquisa da Análise de Sistemas"
+          git push origin HEAD:analise-sistemas-fechamento-espiral-mbb
