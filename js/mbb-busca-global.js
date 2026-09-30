@@ -104,3 +104,44 @@
     document.body.appendChild(link);
   }
 }());
+
+/* Aviso autoral público, discreto e independente do layout de cada módulo. */
+(function () {
+  'use strict';
+
+  function instalarDireitosAutorais() {
+    if (!document.body || typeof document.querySelector !== 'function') return;
+    if (document.querySelector('.mbb-direitos-autorais')) return;
+
+    const estilo = document.createElement('style');
+    estilo.textContent = `
+      .mbb-direitos-autorais {
+        box-sizing: border-box;
+        width: 100%;
+        margin: 24px 0 0;
+        padding: 14px 16px;
+        text-align: center;
+        color: #667085;
+        font: 500 12px/1.5 "Segoe UI", Arial, sans-serif;
+      }
+      @media print {
+        .mbb-direitos-autorais { color: #333; }
+      }
+    `;
+    document.head.appendChild(estilo);
+
+    const aviso = document.createElement('p');
+    aviso.className = 'mbb-direitos-autorais';
+    aviso.textContent = '© 2026 Mundo bit Byte — Ronaldo Lavestein. Todos os direitos reservados.';
+
+    const rodape = document.querySelector('body > footer, footer.footer, .site-footer');
+    if (rodape) rodape.appendChild(aviso);
+    else document.body.appendChild(aviso);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', instalarDireitosAutorais, { once: true });
+  } else {
+    instalarDireitosAutorais();
+  }
+}());

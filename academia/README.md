@@ -22,7 +22,7 @@ URL esperada no domínio atual:
 - A configuração pública do projeto fica em `js/firebase-config.js`.
 - As regras privadas por usuário ficam em `../firestore.rules`.
 
-Consulte `../ADMINISTRACAO_ACADEMIA_MBB.md` para operação e segurança.
+A documentação detalhada de operação e segurança é mantida fora da árvore pública do site.
 
 ## Testes locais
 

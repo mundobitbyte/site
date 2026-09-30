@@ -5,6 +5,11 @@ service cloud.firestore {
     function isOwner(uid) {
       return request.auth != null && request.auth.uid == uid;
     }
+    function hasPermanentEmail() {
+      return 'email' in request.auth.token
+        && request.auth.token.email is string
+        && !request.auth.token.email.lower().matches('.*@([a-z0-9-]+[.])*(mailinator[.]com|guerrillamail[.]com|yopmail[.]com|tempmail[.]com|10minutemail[.]com|sharklasers[.]com|trashmail[.]com|maildrop[.]cc|getnada[.]com|dispostable[.]com|moakt[.]com|tempr[.]email)');
+    }
     function validNoteAt(index) {
       return request.resource.data.notas.size() <= index
         || (request.resource.data.notas[index] is string
@@ -24,6 +29,7 @@ service cloud.firestore {
     match /meuMbb/{uid}/registros/{conteudoId} {
       allow read, delete: if isOwner(uid);
       allow create, update: if isOwner(uid) && request.auth.token.email_verified == true
+        && hasPermanentEmail()
         && request.resource.data.keys().hasOnly([
           'conteudoId', 'versaoVista', 'atualizadoEm', 'ultimoAcesso',
           'ancora', 'concluido', 'favorito', 'anotacao', 'notas'

@@ -3,6 +3,7 @@
   let sdk = null;
   let usuario = null;
   let inicializacao;
+  let appCheckInicializacao;
   const ouvintes = new Set();
 
   function avisar() { ouvintes.forEach(ouvinte => ouvinte(usuario)); }
@@ -29,10 +30,25 @@
     return inicializacao;
   }
 
+  async function iniciarAppCheck() {
+    const config = window.MBB_FIREBASE_CONFIG;
+    if (!config?.appCheckSiteKey) return null;
+    if (appCheckInicializacao) return appCheckInicializacao;
+    appCheckInicializacao = (async () => {
+      const appCheckSdk = await import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js');
+      return appCheckSdk.initializeAppCheck(sdk.app, {
+        provider: new appCheckSdk.ReCaptchaEnterpriseProvider(config.appCheckSiteKey),
+        isTokenAutoRefreshEnabled: true
+      });
+    })().catch(error => { appCheckInicializacao = null; throw error; });
+    return appCheckInicializacao;
+  }
+
   async function exigirConta() {
     await iniciar();
     if (!usuario) throw new Error('Entre para salvar seu estudo.');
     if (!sdk.dbSdk) {
+      await iniciarAppCheck();
       sdk.dbSdk = await import('https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js');
       sdk.db = sdk.dbSdk.getFirestore(sdk.app);
     }

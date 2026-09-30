@@ -1,1 +1,0 @@
-git status && git add . && git commit -m "Atualiza nomes das imagens Executando (estavam invertidos)" && git push

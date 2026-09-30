@@ -1,26 +1,13 @@
-# Mundo bit Byte — site convertido
+# Mundo bit Byte
 
-Conversão estrutural dos tutoriais para HTML, CSS e JS separados.
+Portal educacional com conteúdos práticos de tecnologia, programação, desenvolvimento, banco de dados, sistemas embarcados, infraestrutura e áreas relacionadas.
 
-## Estrutura
+Site oficial: https://www.mundobitbyte.com.br
 
-```txt
-site_convertido/
-├── index.html
-├── pages/
-│   ├── arduino.html
-│   ├── bancodedados.html
-│   ├── python.html
-│   ├── reactnative.html
-│   ├── visualg.html
-│   └── ia/
-│       ├── index.html
-│       ├── fundamentos.html
-│       └── vida-real.html
-├── css/
-└── js/
-```
+O projeto é desenvolvido com foco em aprendizagem progressiva, prática guiada e aplicação dos conceitos em situações concretas.
 
-## Observação
+## Direitos autorais
 
-O conteúdo didático original é preservado. A conversão apenas remove CSS/JS embutidos dos HTMLs e ajusta os caminhos internos.
+© 2026 Mundo bit Byte — Ronaldo Lavestein. Todos os direitos reservados.
+
+Consulte `DIREITOS_AUTORAIS.md` para os termos aplicáveis ao conteúdo deste repositório.
