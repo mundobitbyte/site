@@ -65,6 +65,19 @@ test('usuário não verificado não cria nem altera registro', async () => {
   await assertFails(setDoc(ref, registro('git-local-06')));
 });
 
+test('e-mail temporário conhecido não grava mesmo verificado ou usando subdomínio', async () => {
+  for (const [uid, email, id] of [
+    ['temp-a', 'teste@MAILINATOR.COM', 'git-local-10'],
+    ['temp-b', 'teste@sub.yopmail.com', 'git-local-11']
+  ]) {
+    const db = ambiente.authenticatedContext(uid, {
+      email,
+      email_verified: true
+    }).firestore();
+    await assertFails(setDoc(doc(db, 'meuMbb', uid, 'registros', id), registro(id)));
+  }
+});
+
 test('outra conta não lê nem altera dados do proprietário', async () => {
   const db = ambiente.authenticatedContext('aluno-b', {
     email: 'b@example.test',
