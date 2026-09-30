@@ -3,6 +3,7 @@
   let sdk = null;
   let usuario = null;
   let inicializacao;
+  let appCheckInicializacao;
   const ouvintes = new Set();
 
   function avisar() { ouvintes.forEach(ouvinte => ouvinte(usuario)); }
@@ -13,20 +14,11 @@
     inicializacao = (async () => {
       const config = window.MBB_FIREBASE_CONFIG;
       if (!config?.apiKey || !config?.projectId) throw new Error('Autenticação indisponível. O conteúdo público continua acessível.');
-      const [appSdk, authSdk, appCheckSdk] = await Promise.all([
+      const [appSdk, authSdk] = await Promise.all([
         import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js'),
-        import('https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js'),
-        config.appCheckSiteKey
-          ? import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js')
-          : Promise.resolve(null)
+        import('https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js')
       ]);
       const app = appSdk.getApps().find(item => item.options.projectId === config.projectId) || appSdk.initializeApp(config);
-      if (appCheckSdk) {
-        appCheckSdk.initializeAppCheck(app, {
-          provider: new appCheckSdk.ReCaptchaEnterpriseProvider(config.appCheckSiteKey),
-          isTokenAutoRefreshEnabled: true
-        });
-      }
       const auth = authSdk.getAuth(app);
       sdk = { authSdk, auth, app, dbSdk: null, db: null };
       authSdk.onAuthStateChanged(auth, atual => { usuario = atual; avisar(); });
@@ -38,10 +30,25 @@
     return inicializacao;
   }
 
+  async function iniciarAppCheck() {
+    const config = window.MBB_FIREBASE_CONFIG;
+    if (!config?.appCheckSiteKey) return null;
+    if (appCheckInicializacao) return appCheckInicializacao;
+    appCheckInicializacao = (async () => {
+      const appCheckSdk = await import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js');
+      return appCheckSdk.initializeAppCheck(sdk.app, {
+        provider: new appCheckSdk.ReCaptchaEnterpriseProvider(config.appCheckSiteKey),
+        isTokenAutoRefreshEnabled: true
+      });
+    })().catch(error => { appCheckInicializacao = null; throw error; });
+    return appCheckInicializacao;
+  }
+
   async function exigirConta() {
     await iniciar();
     if (!usuario) throw new Error('Entre para salvar seu estudo.');
     if (!sdk.dbSdk) {
+      await iniciarAppCheck();
       sdk.dbSdk = await import('https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js');
       sdk.db = sdk.dbSdk.getFirestore(sdk.app);
     }
