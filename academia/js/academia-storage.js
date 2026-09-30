@@ -8,23 +8,8 @@
   let modo = 'local';
   let inicializacao = null;
 
-  const DOMINIOS_DESCARTAVEIS = [
-    'mailinator.com', 'guerrillamail.com', 'yopmail.com', 'tempmail.com',
-    '10minutemail.com', 'sharklasers.com', 'trashmail.com', 'maildrop.cc',
-    'getnada.com', 'dispostable.com', 'moakt.com', 'tempr.email'
-  ];
-
   function agora() {
     return new Date().toISOString();
-  }
-
-  function normalizarEmailCadastro(email) {
-    const limpo = String(email || '').trim();
-    const dominio = limpo.toLowerCase().split('@').pop();
-    if (DOMINIOS_DESCARTAVEIS.some(item => dominio === item || dominio.endsWith(`.${item}`))) {
-      throw Object.assign(new Error('Use um e-mail permanente.'), { code: 'mbb/email-temporario' });
-    }
-    return limpo;
   }
 
   function lerLocal() {
@@ -91,10 +76,9 @@
   }
 
   async function criarConta(nome, email, senha) {
-    const emailLimpo = normalizarEmailCadastro(email);
     await iniciar();
     exigirFirebase();
-    const credencial = await firebase.authSdk.createUserWithEmailAndPassword(firebase.auth, emailLimpo, senha);
+    const credencial = await firebase.authSdk.createUserWithEmailAndPassword(firebase.auth, email, senha);
     await firebase.authSdk.updateProfile(credencial.user, { displayName: nome });
     await firebase.dbSdk.setDoc(firebase.dbSdk.doc(firebase.db, 'users', credencial.user.uid), {
       displayName: nome,
