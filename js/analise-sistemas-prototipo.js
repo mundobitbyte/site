@@ -24,14 +24,14 @@ const passosGuia=[
   {id:'consulta-final',titulo:'Passo 7 — feche o ciclo com o cliente',contexto:'O atendimento interno terminou. Falta verificar se a mudança final também aparece corretamente para quem deixou o equipamento na assistência.',acao:'Escolha Visão do cliente e consulte novamente a OS 1042 com Ana Souza.',resultado:'O cliente deve ver que o serviço foi concluído e que o equipamento está liberado para retirada.',motivo:'Por quê? Um processo só está coerente quando o estado final é percebido corretamente por todos os atores envolvidos.'}
 ];
 function passoAtual(){
+  if(guiado.consultaFinal)return 7;
   if(!guiado.bloqueioSemDiagnostico)return 0;
   if(!state.diagnostico)return 1;
   if(!guiado.bloqueioSemAprovacao)return 2;
   if(!guiado.consultaDiagnostico)return 3;
   if(!state.aprovado)return 4;
   if(!state.finalizado)return 5;
-  if(!guiado.consultaFinal)return 6;
-  return 7;
+  return 6;
 }
 function updateGuide(scroll=false){
   const painel=document.getElementById('guia-execucao');if(!painel)return;
