@@ -9,17 +9,37 @@
 <p>Fluxo não significa “uma tela para cada etapa”. A representação serve para discutir o caminho.</p>
 <h2>Wireframe: estrutura antes de acabamento</h2><p>Um wireframe de baixa fidelidade ajuda a discutir organização e tarefa sem gastar tempo com estética final.</p><div class="visual"><div style="max-width:390px;margin:auto;border:2px solid #334155;border-radius:20px;padding:16px;background:#fff"><div style="height:10px;width:70px;background:#cbd5e1;border-radius:999px;margin:0 auto 18px"></div><h3 style="margin:0 0 8px">Consultar minha ordem</h3><p class="small">Acompanhe a situação do equipamento.</p><label style="display:block;font-weight:800;margin:14px 0 5px">Número da ordem</label><div style="height:42px;border:2px solid #94a3b8;border-radius:9px"></div><label style="display:block;font-weight:800;margin:14px 0 5px">Dado de confirmação</label><div style="height:42px;border:2px solid #94a3b8;border-radius:9px"></div><div style="margin-top:16px;background:#1967d2;color:#fff;padding:12px;border-radius:9px;text-align:center;font-weight:900">Consultar</div><div style="margin-top:18px;border-top:1px solid #e2e8f0;padding-top:14px"><strong>Situação</strong><p style="margin:5px 0">Aguardando aprovação do orçamento</p></div></div></div>
 <h2>Protótipo</h2><p>Quando precisamos testar interação, conectamos telas ou estados para simular a tarefa. A ferramenta pode ser Figma ou outra equivalente; <strong>a ferramenta não é o conhecimento</strong>.</p>
-<div class="card tool-card"><h3>Agora a Conecta pode ser testada</h3><p>O protótipo navegável abaixo transforma requisitos e regra de negócio em interações observáveis. Use dados fictícios e percorra tanto a visão interna quanto a visão do cliente.</p><p><a href="prototipo-assistencia-tecnica-conecta.html"><strong>Abrir o protótipo navegável da Assistência Técnica Conecta →</strong></a></p><p class="small">Desafio principal: tente iniciar o reparo antes de o orçamento ser aprovado e observe se a regra RN01 foi respeitada.</p></div>
 <h2>Teste uma tarefa, não uma opinião</h2><div class="grid2"><div class="card problem-card"><h3>Pergunta fraca</h3><p>“Você gostou da tela?”</p></div><div class="card evidence-card"><h3>Tarefa melhor</h3><p>“Imagine que você deixou seu notebook ontem. Descubra em que situação está a ordem.”</p></div></div>
 <p>Durante o teste, evite ensinar o usuário a usar o protótipo. Observe:</p><ul><li>onde hesita;</li><li>o que tenta clicar;</li><li>o que interpreta errado;</li><li>que informação procura;</li><li>se consegue concluir a tarefa.</li></ul>
 <h2>Feedback não vira requisito automaticamente</h2><p>Se uma pessoa diz “coloque um botão vermelho aqui”, registre o problema que motivou a sugestão. Talvez a necessidade seja tornar uma ação visível, não necessariamente usar vermelho.</p>
 <h2>Acessibilidade começa agora</h2><p>Não espere a aplicação ficar pronta para pensar em:</p><ul><li>contraste e legibilidade;</li><li>rótulos claros;</li><li>navegação por teclado;</li><li>elementos interativos com tamanho adequado;</li><li>mensagens compreensíveis;</li><li>informação que não dependa apenas de cor.</li></ul>
 <div class="card question-card"><h3>Exemplo</h3><p>Mostrar apenas uma faixa verde ou vermelha para indicar situação é frágil. Use texto como <strong>Aprovado</strong> / <strong>Recusado</strong> e deixe a cor apenas reforçar a informação.</p></div>
 <h2>Validação pode alterar requisitos</h2><p>Se o teste mostra que o cliente não entende “status operacional”, talvez nosso vocabulário esteja errado. Voltamos ao glossário, ao requisito e ao protótipo. A etapa anterior não é intocável.</p>
-<div class="card practice-card"><h3>Faça agora</h3><ol><li>Escolha uma história prioritária do backlog.</li><li>Descreva a jornada e o fluxo do usuário.</li><li>Crie um wireframe de baixa fidelidade.</li><li>Execute o cenário do protótipo navegável da Conecta e verifique se RF01, RF02, RF03, RF04 e RN01 aparecem de forma coerente.</li><li>Defina uma tarefa realista para teste.</li><li>Registre três observações sem transformar automaticamente sugestões em requisitos.</li><li>Faça uma revisão básica de acessibilidade.</li></ol></div>
+<div class="card practice-card"><h3>Faça agora</h3><ol><li>Escolha uma história prioritária do backlog.</li><li>Descreva a jornada e o fluxo do usuário.</li><li>Crie um wireframe de baixa fidelidade.</li><li>Defina uma tarefa realista para teste.</li><li>Registre três observações sem transformar automaticamente sugestões em requisitos.</li><li>Faça uma revisão básica de acessibilidade.</li></ol></div>
 <div class="notebook"><div class="notebook-label">Caderno da Análise · Evidência 11</div><h3>Jornada + wireframe + registro de validação</h3><p>Registre o que o usuário tentou fazer, onde encontrou dificuldade e qual alteração foi justificada pela evidência.</p></div>
 <div class="checkpoint"><h3>Checkpoint 7 — Validação</h3><p>Você consegue testar uma solução antes de programá-la, observar comportamento sem conduzir o usuário e usar o resultado para revisar requisitos ou fluxo?</p></div>
 <h2>O que o protótipo não prova</h2><p>Um protótipo pode parecer ótimo e ainda esconder problemas de segurança, desempenho, disponibilidade ou integração. Agora que temos uma experiência concreta, essas qualidades deixam de ser abstrações.</p>
 <div class="card next-card"><h3>Nova lacuna</h3><p>A solução parece utilizável. Mas <strong>funcionar não é suficiente</strong>. Precisamos especificar qualidade e compreender como a Conecta conversa com serviços externos.</p></div>
 </article><nav class="stage-footer" id="stageFooter"></nav></div></main></div><script src="../../js/analise-sistemas.js"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+<script>
+(()=>{
+  const titulos=[...document.querySelectorAll('.chapter h2')];
+  const titulo=titulos.find(el=>el.textContent.trim()==='Protótipo');
+  if(titulo){
+    const paragrafo=titulo.nextElementSibling;
+    if(paragrafo){
+      const card=document.createElement('div');
+      card.className='card tool-card';
+      card.innerHTML='<h3>Agora a Conecta pode ser testada</h3><p>O protótipo navegável transforma requisitos e regra de negócio em interações observáveis. Percorra a visão interna e a visão do cliente usando apenas dados fictícios.</p><p><a href="prototipo-assistencia-tecnica-conecta.html"><strong>Abrir o protótipo navegável da Assistência Técnica Conecta →</strong></a></p><p class="small">Desafio: tente iniciar o reparo antes de o orçamento ser aprovado e observe se a RN01 é respeitada.</p>';
+      paragrafo.insertAdjacentElement('afterend',card);
+    }
+  }
+  const lista=document.querySelector('.practice-card ol');
+  if(lista){
+    const item=document.createElement('li');
+    item.textContent='Abra o protótipo navegável da Conecta e verifique se RF01, RF02, RF03, RF04 e RN01 aparecem de forma coerente.';
+    lista.insertBefore(item,lista.children[3]||null);
+  }
+})();
+</script>
 </body></html>
