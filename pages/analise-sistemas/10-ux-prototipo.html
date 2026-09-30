@@ -21,4 +21,25 @@
 <h2>O que o protótipo não prova</h2><p>Um protótipo pode parecer ótimo e ainda esconder problemas de segurança, desempenho, disponibilidade ou integração. Agora que temos uma experiência concreta, essas qualidades deixam de ser abstrações.</p>
 <div class="card next-card"><h3>Nova lacuna</h3><p>A solução parece utilizável. Mas <strong>funcionar não é suficiente</strong>. Precisamos especificar qualidade e compreender como a Conecta conversa com serviços externos.</p></div>
 </article><nav class="stage-footer" id="stageFooter"></nav></div></main></div><script src="../../js/analise-sistemas.js"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+<script>
+(()=>{
+  const titulos=[...document.querySelectorAll('.chapter h2')];
+  const titulo=titulos.find(el=>el.textContent.trim()==='Protótipo');
+  if(titulo){
+    const paragrafo=titulo.nextElementSibling;
+    if(paragrafo){
+      const card=document.createElement('div');
+      card.className='card tool-card';
+      card.innerHTML='<h3>Agora a Conecta pode ser testada</h3><p>O protótipo navegável transforma requisitos e regra de negócio em interações observáveis. Percorra a visão interna e a visão do cliente usando apenas dados fictícios.</p><p><a href="prototipo-assistencia-tecnica-conecta.html"><strong>Abrir o protótipo navegável da Assistência Técnica Conecta →</strong></a></p><p class="small">Desafio: tente iniciar o reparo antes de o orçamento ser aprovado e observe se a RN01 é respeitada.</p>';
+      paragrafo.insertAdjacentElement('afterend',card);
+    }
+  }
+  const lista=document.querySelector('.practice-card ol');
+  if(lista){
+    const item=document.createElement('li');
+    item.textContent='Abra o protótipo navegável da Conecta e verifique se RF01, RF02, RF03, RF04 e RN01 aparecem de forma coerente.';
+    lista.insertBefore(item,lista.children[3]||null);
+  }
+})();
+</script>
 </body></html>
