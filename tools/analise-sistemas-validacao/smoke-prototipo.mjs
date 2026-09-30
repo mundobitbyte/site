@@ -73,7 +73,8 @@ try{
   await page.click('[data-prepare="decision"]');
   await page.click('#aprovar');
   await page.click('[data-role="interno"]');
-  await page.click('[data-go="ordem"]');
+  const orderHidden=await page.evaluate(()=>document.getElementById('ordem').classList.contains('hidden'));
+  if(orderHidden) await page.click('[data-go="ordem"]');
   await page.click('#tentar-reparo');
   assert(await page.evaluate(()=>!document.getElementById('reparo').classList.contains('hidden')),'Reparo aprovado não abriu a etapa de reparo.');
 
