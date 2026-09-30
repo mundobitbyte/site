@@ -10,7 +10,7 @@ on:
       - 'academia/tests/firestore-rules.test.cjs'
       - 'meu-mbb/firestore.rules'
       - 'firebase.meu-mbb.json'
-      - 'meu-mbb/firestore-rules.test.cjs'
+      - 'meu-mbb/tests/firestore-rules.test.cjs'
       - '.github/workflows/firebase-seguranca-validacao.yml'
   push:
     branches:
@@ -21,7 +21,7 @@ on:
       - 'academia/tests/firestore-rules.test.cjs'
       - 'meu-mbb/firestore.rules'
       - 'firebase.meu-mbb.json'
-      - 'meu-mbb/firestore-rules.test.cjs'
+      - 'meu-mbb/tests/firestore-rules.test.cjs'
       - '.github/workflows/firebase-seguranca-validacao.yml'
 
 permissions:
@@ -52,4 +52,4 @@ jobs:
         run: npx firebase emulators:exec --config firebase.json --only firestore --project demo-mbb-academia "node --test academia/tests/firestore-rules.test.cjs"
 
       - name: Validar regras do Meu MbB
-        run: npx firebase emulators:exec --config firebase.meu-mbb.json --only firestore --project demo-mbb-meu "node --test meu-mbb/firestore-rules.test.cjs"
+        run: npx firebase emulators:exec --config firebase.meu-mbb.json --only firestore --project demo-mbb-meu "node --test meu-mbb/tests/firestore-rules.test.cjs"
