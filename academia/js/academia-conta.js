@@ -14,6 +14,7 @@
   function codigoAmigavel(error) {
     const codigo = error?.code || '';
     const mapa = {
+      'mbb/email-temporario': 'Use um e-mail permanente.',
       'auth/email-already-in-use': 'Este e-mail já possui conta.',
       'auth/invalid-email': 'Informe um e-mail válido.',
       'auth/invalid-credential': 'E-mail ou senha incorretos.',
