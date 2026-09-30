@@ -27,7 +27,8 @@ try{
     searchScript:[...document.scripts].some(s=>s.src.includes('mbb-busca-global.js')),
     prototypeScript:[...document.scripts].some(s=>s.src.includes('analise-sistemas-prototipo.js')),
     scrollWidth:document.documentElement.scrollWidth,
-    innerWidth:window.innerWidth
+    innerWidth:window.innerWidth,
+    visibleText:document.body.innerText
   }));
   assert(initial.h1==='Da análise para uma solução que pode ser testada',`H1 inesperado: ${initial.h1}`);
   assert(initial.challenges===3,`Validação guiada deveria ter 3 desafios; encontrou ${initial.challenges}.`);
@@ -37,6 +38,19 @@ try{
   assert(initial.summaryHidden,'Resumo final deveria começar oculto.');
   assert(initial.searchScript&&initial.prototypeScript,'Protótipo perdeu integração de scripts esperada.');
   assert(initial.scrollWidth<=initial.innerWidth+2,'Protótipo criou rolagem horizontal no desktop.');
+  assert(!/2ª volta da espiral|complete uma volta na espiral|Volta concluída\./.test(initial.visibleText),'Protótipo expõe rótulos internos da metodologia.');
+
+  const stage10Page=await browser.newPage();
+  await stage10Page.setViewport({width:1366,height:900});
+  await stage10Page.goto(`${base}/pages/analise-sistemas/10-ux-prototipo.html`,{waitUntil:'networkidle0'});
+  const stage10Link=await stage10Page.evaluate(()=>{
+    const link=[...document.querySelectorAll('a')].find(a=>a.getAttribute('href')?.includes('prototipo-assistencia-tecnica-conecta.html'));
+    const task=[...document.querySelectorAll('.evidence-card p')].find(p=>p.textContent.includes('notebook'));
+    return {href:link?.getAttribute('href')||'',task:task?.textContent?.trim()||''};
+  });
+  assert(stage10Link.href==='prototipo-assistencia-tecnica-conecta.html',`Link do protótipo deve abrir no topo; encontrou ${stage10Link.href}.`);
+  assert(stage10Link.task.includes('Instrução ao participante:'),'A tarefa do notebook precisa explicitar que o texto é dirigido ao participante do teste.');
+  await stage10Page.close();
 
   await page.click('[data-prepare="clarity"]');
   const clarity=await page.evaluate(()=>({
