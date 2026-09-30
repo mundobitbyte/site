@@ -53,4 +53,5 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID || true' EXIT
           node tools/analise-sistemas-validacao/smoke.mjs
+          node tools/analise-sistemas-validacao/smoke-prototipo.mjs
           node tools/analise-sistemas-validacao/smoke-finalizacao.mjs
