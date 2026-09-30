@@ -8,7 +8,9 @@ Descreva de forma curta o que este PR muda e por quê.
 - [ ] Configurações públicas de cliente foram diferenciadas de segredos reais; nenhum segredo foi colocado no navegador.
 - [ ] Dados pessoais, autenticação e permissões foram revistos quando a alteração toca Firebase, Meu MbB ou Academia.
 - [ ] Regras de acesso seguem o menor privilégio possível e impedem leitura/escrita entre usuários.
+- [ ] Mudanças de regras Firebase passaram pelo emulador e por testes negativos de acesso indevido.
 - [ ] Foi avaliado risco de abuso de quota, cadastros automatizados, gravações excessivas ou automação maliciosa.
+- [ ] Se App Check estiver envolvido, o app foi registrado corretamente e as métricas foram observadas antes de qualquer enforcement.
 - [ ] Nenhum mapa, auditoria, relatório, contrato, procedimento administrativo ou documentação interna foi publicado sem necessidade.
 - [ ] Conteúdo autoral e materiais de terceiros permanecem compatíveis com direitos autorais e licenças aplicáveis.
 - [ ] Dependências novas foram evitadas quando desnecessárias e avaliadas quanto a segurança e manutenção.
