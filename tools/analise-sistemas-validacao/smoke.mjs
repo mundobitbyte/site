@@ -10,6 +10,16 @@ const stages = [
 ];
 const expectedVersions=[1,1,1,2,2,2,1,2,2,1,1,1,1,1,1];
 const expectedDiagrams={3:1,4:2,5:1,7:1,8:4};
+const forbiddenBackstage={
+  '05-processo-to-be-bpmn.html':['pedagogicamente pior'],
+  '06-requisitos.html':['Uma volta na espiral','Autocrítica da sequência'],
+  '08-uml-essencial.html':['Crítica circular'],
+  '10-ux-prototipo.html':['validação em espiral'],
+  '11-qualidade-integracoes.html':['Segunda volta dos RNFs','Crítica circular'],
+  '12-viabilidade-riscos-rastreabilidade.html':['A espiral da viabilidade','Crítica circular'],
+  '13-documentacao-ia.html':['Crítica circular'],
+  '14-integracao-final.html':['O módulo já vinha trabalhando','Volta final ao começo']
+};
 const viewports = [
   {name:'mobile-360',width:360,height:800},
   {name:'mobile-390',width:390,height:844},
@@ -83,7 +93,8 @@ try{
       active:document.querySelectorAll('.stage-link.active').length,
       footer:document.querySelectorAll('.stage-footer a').length,
       notebook:Boolean(document.querySelector('.notebook')),
-      diagrams:document.querySelectorAll('.visual[data-zoomable="true"]').length
+      diagrams:document.querySelectorAll('.visual[data-zoomable="true"]').length,
+      text:document.body.innerText
     }));
     assert(Boolean(snap.h1),`${stages[i]} sem H1.`);
     assert(Number(snap.current)===i,`${stages[i]} com data-stage incorreto: ${snap.current}.`);
@@ -94,6 +105,7 @@ try{
     assert(snap.footer>=2,`${stages[i]} perdeu navegação de rodapé.`);
     assert(snap.notebook,`${stages[i]} não possui evidência no Caderno da Análise.`);
     if(expectedDiagrams[i]) assert(snap.diagrams===expectedDiagrams[i],`${stages[i]} deveria ter ${expectedDiagrams[i]} diagrama(s) ampliável(is); encontrou ${snap.diagrams}.`);
+    for(const term of forbiddenBackstage[stages[i]]||[]) assert(!snap.text.includes(term),`${stages[i]} expõe linguagem de bastidor: ${term}`);
   }
 
   for(const viewport of viewports){

@@ -271,7 +271,7 @@
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/06-requisitos.html",
     "ancoras": [
-      ":~:text=Uma%20volta%20na%20espiral",
+      ":~:text=De%20onde%20v%C3%AAm%20os%20requisitos%3F",
       ":~:text=Necessidade%20n%C3%A3o%20%C3%A9%20requisito",
       ":~:text=Necessidade",
       ":~:text=Poss%C3%ADvel%20requisito",
@@ -298,7 +298,7 @@
       ":~:text=Fa%C3%A7a%20agora",
       ":~:text=Cat%C3%A1logo%20inicial%20de%20requisitos",
       ":~:text=Checkpoint%204%20%E2%80%94%20Requisito",
-      ":~:text=Autocr%C3%ADtica%20da%20sequ%C3%AAncia",
+      ":~:text=Confer%C3%AAncia%20com%20as%20evid%C3%AAncias%20anteriores",
       ":~:text=Nova%20lacuna"
     ]
   },
@@ -343,7 +343,7 @@
       ":~:text=Fa%C3%A7a%20agora",
       ":~:text=Conjunto%20m%C3%ADnimo%20de%20modelos%20UML",
       ":~:text=Checkpoint%205%20%E2%80%94%20Escolha%20do%20modelo",
-      ":~:text=Cr%C3%ADtica%20circular",
+      ":~:text=Revise%20os%20modelos%20entre%20si",
       ":~:text=Nova%20lacuna"
     ]
   },
@@ -404,7 +404,7 @@
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/11-qualidade-integracoes.html",
     "ancoras": [
-      ":~:text=Segunda%20volta%20dos%20RNFs",
+      ":~:text=Agora%20os%20RNFs%20t%C3%AAm%20contexto",
       ":~:text=%E2%80%9CR%C3%A1pido%2C%20seguro%20e%20f%C3%A1cil%E2%80%9D%20n%C3%A3o%20basta",
       ":~:text=N%C3%A3o%20invente%20n%C3%BAmeros",
       ":~:text=Categorias%20importantes",
@@ -429,7 +429,7 @@
       ":~:text=RNF%20e%20integra%C3%A7%C3%A3o%20se%20encontram",
       ":~:text=Fa%C3%A7a%20agora",
       ":~:text=Cat%C3%A1logo%20amadurecido%20de%20RNFs%20%2B%20uma%20integra%C3%A7%C3%A3o",
-      ":~:text=Cr%C3%ADtica%20circular",
+      ":~:text=Revise%20os%20requisitos%20anteriores",
       ":~:text=Nova%20lacuna"
     ]
   },
@@ -439,7 +439,7 @@
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/12-viabilidade-riscos-rastreabilidade.html",
     "ancoras": [
-      ":~:text=A%20espiral%20da%20viabilidade",
+      ":~:text=A%20mesma%20pergunta%2C%20agora%20com%20mais%20informa%C3%A7%C3%A3o",
       ":~:text=Viabilidade%20em%20v%C3%A1rias%20dimens%C3%B5es",
       ":~:text=T%C3%A9cnica",
       ":~:text=Econ%C3%B4mica",
@@ -461,7 +461,7 @@
       ":~:text=Fa%C3%A7a%20agora",
       ":~:text=Viabilidade%20%2B%20registro%20de%20riscos%20%2B%20matriz%20de%20rastreabilidade",
       ":~:text=Checkpoint%208%20%E2%80%94%20Vis%C3%A3o%20profissional",
-      ":~:text=Cr%C3%ADtica%20circular",
+      ":~:text=Reavalie%20decis%C3%B5es%20quando%20os%20riscos%20mudam",
       ":~:text=Nova%20lacuna"
     ]
   },
@@ -496,7 +496,7 @@
       ":~:text=Human-in-the-loop%20e%20fallback",
       ":~:text=Fa%C3%A7a%20agora",
       ":~:text=Estrutura%20documental%20%2B%20gloss%C3%A1rio%20%2B%20decis%C3%A3o%20registrada",
-      ":~:text=Cr%C3%ADtica%20circular",
+      ":~:text=Documentar%20tamb%C3%A9m%20revela%20inconsist%C3%AAncias",
       ":~:text=Nova%20necessidade"
     ]
   },
@@ -527,7 +527,7 @@
       ":~:text=Integre%20e%20defenda",
       ":~:text=Dossi%C3%AA%20da%20Assist%C3%AAncia%20T%C3%A9cnica%20Conecta",
       ":~:text=Checkpoint%20Final%20%E2%80%94%20Voc%C3%AA%20sabe%20analisar%3F",
-      ":~:text=Volta%20final%20ao%20come%C3%A7o",
+      ":~:text=Retorne%20ao%20problema%20inicial",
       ":~:text=Chegada"
     ]
   },
