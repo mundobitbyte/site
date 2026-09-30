@@ -27,6 +27,10 @@ test.before(async () => {
   });
 });
 
+test.beforeEach(async () => {
+  await ambiente.clearFirestore();
+});
+
 test.after(async () => {
   await ambiente.cleanup();
 });
