@@ -4,6 +4,7 @@ import puppeteer from 'puppeteer-core';
 const base=process.env.MBB_BASE_URL||'http://127.0.0.1:4173';
 const failures=[];
 const assert=(condition,message)=>{if(!condition)failures.push(message);};
+const settle=()=>new Promise(resolve=>setTimeout(resolve,700));
 const candidates=['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium','/usr/bin/chromium-browser'];
 let executablePath=null;
 for(const candidate of candidates){try{await fs.access(candidate);executablePath=candidate;break;}catch{}}
@@ -43,60 +44,60 @@ try{
     result:document.getElementById('guia-resultado')?.textContent?.trim()||''
   }));
 
-  // Passo 1: provocar bloqueio sem diagnóstico.
   await page.click('#reset');
   await page.click('[data-role="tecnico"]');
   await page.evaluate(()=>{const b=[...document.querySelectorAll('[data-go="ordem"]')].find(el=>el.offsetParent!==null);b?.click();});
   await page.click('#tentar-reparo');
+  await settle();
   let g=await guide();
   assert(g.progress==='2 de 7'&&/registre o diagnóstico/.test(g.title),'Após bloquear reparo sem diagnóstico, guia deve avançar ao passo 2.');
   assert(/Registrar diagnóstico/.test(g.action)&&/Aguardando aprovação/.test(g.result),'Passo 2 deve dizer ação e resultado esperado.');
 
-  // Passo 2: diagnóstico.
   await page.click('[data-go="diagnostico"]');
   await page.click('#salvar-diag');
+  await settle();
   g=await guide();
   assert(g.progress==='3 de 7'&&/regra antes da decisão/.test(g.title),'Após diagnóstico, guia deve avançar ao teste da RN01.');
 
-  // Passo 3: bloqueio por aprovação pendente.
   await page.click('#tentar-reparo');
+  await settle();
   g=await guide();
   assert(g.progress==='4 de 7'&&/perspectiva do cliente/.test(g.title),'Após RN01 bloquear orçamento pendente, guia deve levar à visão do cliente.');
 
-  // Passo 4: cliente consulta diagnóstico/orçamento.
   await page.click('[data-role="cliente"]');
   await page.evaluate(()=>{document.getElementById('cliente-os').value='1042';document.getElementById('cliente-confirmacao').value='Ana Souza';});
   await page.click('#consultar');
+  await settle();
   g=await guide();
   assert(g.progress==='5 de 7'&&/decisão do cliente/.test(g.title),'Após consulta do cliente, guia deve levar ao registro da decisão.');
 
-  // Passo 5: atendente registra aprovação.
   await page.click('[data-role="atendente"]');
   const decisionVisible=await page.$eval('#registrar-decisao',el=>el.offsetParent!==null&&!el.classList.contains('hidden'));
   if(!decisionVisible)await page.evaluate(()=>{const b=[...document.querySelectorAll('[data-go="ordem"]')].find(el=>el.offsetParent!==null);b?.click();});
   await page.click('#registrar-decisao');
   await page.click('#aprovar');
+  await settle();
   g=await guide();
   assert(g.progress==='6 de 7'&&/reparo autorizado/.test(g.title),'Após aprovação, guia deve levar ao reparo.');
 
-  // Passo 6: técnico conclui reparo.
   await page.click('[data-role="tecnico"]');
   await page.click('#tentar-reparo');
   await page.click('#concluir-reparo');
+  await settle();
   g=await guide();
   assert(g.progress==='7 de 7'&&/feche o ciclo/.test(g.title),'Após concluir reparo, guia deve pedir conferência final do cliente.');
 
-  // Passo 7: cliente confirma retirada.
   await page.click('[data-role="cliente"]');
+  await settle();
   const resultVisible=await page.$eval('#cliente-resultado',el=>!el.classList.contains('hidden'));
   if(resultVisible)await page.click('#nova-consulta');
   await page.evaluate(()=>{document.getElementById('cliente-os').value='1042';document.getElementById('cliente-confirmacao').value='Ana Souza';});
   await page.click('#consultar');
+  await settle();
   g=await guide();
   assert(g.progress==='7 de 7'&&g.title==='Fluxo principal concluído','Guia deve fechar explicitamente o fluxo principal.');
   assert(/Caminhos complementares/.test(g.action),'Após fluxo principal, guia deve indicar a próxima seção cronológica.');
 
-  // Reiniciar para caminhos complementares não deve apagar a conclusão pedagógica do fluxo principal.
   await page.click('#reset');
   g=await guide();
   assert(g.title==='Fluxo principal concluído','Reinício após conclusão deve preparar novos cenários sem fazer o aluno perder o marco do fluxo principal.');
