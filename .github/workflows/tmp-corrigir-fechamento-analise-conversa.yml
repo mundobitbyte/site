@@ -1,0 +1,45 @@
+name: Corrigir fechamento temporariamente — Análise conversa iniciante
+
+on:
+  push:
+    branches:
+      - analise-sistemas-contexto-vivo-iniciante
+    paths:
+      - '.github/workflows/tmp-corrigir-fechamento-analise-conversa.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  corrigir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analise-sistemas-contexto-vivo-iniciante
+          fetch-depth: 0
+      - name: Recuperar fechamento técnico sem perder a nova voz
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('pages/analise-sistemas/14-integracao-final.html')
+          s = p.read_text()
+          old_h1 = '<h1>Olhe para trás: você consegue contar como chegamos até aqui?</h1>'
+          new_h1 = '<h1>Integração final: você consegue contar como chegamos até aqui?</h1>'
+          assert old_h1 in s
+          s = s.replace(old_h1, new_h1, 1)
+
+          old_end = '''</svg></div></section>\n</div>\n\n<h2>Volte ao problema inicial</h2>'''
+          new_end = '''</svg></div><p class="spiral-note"><strong>Ciclo:</strong> planejar → analisar riscos → construir/prototipar → avaliar → revisar → avançar.</p></section>\n<section class="approach-card"><h3>Abordagem Ágil</h3><div class="approach-flow"><span>Backlog</span><b>→</b><span>entrega pequena</span><b>→</b><span>feedback</span><b>↺</b></div><p>Na <strong>Abordagem Ágil</strong>, o trabalho avança em pequenas entregas, com conversa frequente e possibilidade de rever prioridades conforme aparecem novas evidências. Isso não significa “não analisar”: significa analisar o necessário para tomar bem a próxima decisão.</p></section>\n</div>\n<div class="card return-card"><h3>Onde isso já apareceu na Conecta?</h3><p>Quando o protótipo mostrou uma dúvida, voltamos aos requisitos. Quando as integrações ficaram concretas, revimos qualidade e riscos. Quando o risco mudou, o backlog também pôde ser questionado. Ou seja: o projeto já nos mostrou, na prática, que aprender pode fazer uma decisão anterior ser revisada.</p></div>\n\n<h2>Volte ao problema inicial</h2>'''
+          assert old_end in s
+          s = s.replace(old_end, new_end, 1)
+          p.write_text(s)
+          PY
+      - name: Commitar ajuste
+        run: |
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add pages/analise-sistemas/14-integracao-final.html
+          git commit -m "Análise de Sistemas: restaurar fechamento completo em linguagem conversada"
+          git push origin HEAD:analise-sistemas-contexto-vivo-iniciante
