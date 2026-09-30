@@ -1,0 +1,54 @@
+name: Ajustar pontes temporariamente — Análise conversa iniciante
+
+on:
+  push:
+    branches:
+      - analise-sistemas-contexto-vivo-iniciante
+    paths:
+      - '.github/workflows/tmp-ajustar-pontes-analise-conversa.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  ajustar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analise-sistemas-contexto-vivo-iniciante
+          fetch-depth: 0
+      - name: Aplicar ajustes cirúrgicos
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('pages/analise-sistemas/index.html')
+          s = p.read_text()
+          old = '''          <p><strong>Primeiro a situação e a dúvida. Depois a ferramenta.</strong></p>\n          <p>Você não precisa chegar sabendo DFD, BPMN, UML, MVP ou qualquer outra sigla. Quando um nome aparecer, ele vai nascer de algo que você já acabou de entender no caso.</p>'''
+          new = '''          <p><strong>Primeiro a situação e a dúvida. Depois a ferramenta.</strong></p>\n          <p><strong>A pergunta que guia tudo:</strong> O que precisamos descobrir agora e qual técnica realmente ajuda a descobrir isso?</p>\n          <p>Você não precisa chegar sabendo DFD, BPMN, UML, MVP ou qualquer outra sigla. Quando um nome aparecer, ele vai nascer de algo que você já acabou de entender no caso.</p>'''
+          assert old in s
+          p.write_text(s.replace(old, new, 1))
+
+          p = Path('pages/analise-sistemas/05-processo-to-be-bpmn.html')
+          s = p.read_text()
+          old = '''<div class="table-wrap"><table><thead><tr><th>O que incomodava no processo atual</th><th>Como queremos que funcione</th></tr></thead><tbody><tr><td>A situação da ordem ficava espalhada.</td><td>A ordem passa a ser a referência comum.</td></tr><tr><td>A aprovação podia ficar numa mensagem solta.</td><td>A decisão fica vinculada à ordem.</td></tr><tr><td>Peças usadas podiam ficar em anotação separada.</td><td>O uso de peça fica ligado ao reparo.</td></tr></tbody></table></div>'''
+          new = '''<div class="table-wrap"><table><thead><tr><th>Problema observado</th><th>Como queremos que funcione</th><th>Por que isso ajuda</th></tr></thead><tbody><tr><td>A situação da ordem ficava espalhada.</td><td>A ordem passa a ser a referência comum.</td><td>Atendimento e Técnico consultam a mesma situação.</td></tr><tr><td>A aprovação podia ficar numa mensagem solta.</td><td>A decisão fica vinculada à ordem.</td><td>Ninguém precisa procurar uma conversa antiga para saber se pode reparar.</td></tr><tr><td>Peças usadas podiam ficar em anotação separada.</td><td>O uso de peça fica ligado ao reparo.</td><td>O histórico da ordem consegue explicar o que foi utilizado.</td></tr></tbody></table></div>'''
+          assert old in s
+          p.write_text(s.replace(old, new, 1))
+
+          p = Path('pages/analise-sistemas/08-uml-essencial.html')
+          s = p.read_text()
+          old = '''<p>Quando essa pergunta aparece, o Modelo de Domínio ajuda a enxergar <strong>quais conceitos existem e como se relacionam</strong>.</p>'''
+          new = '''<p>Quando essa pergunta aparece, o Modelo de Domínio ajuda a enxergar <strong>quais conceitos existem e como se relacionam</strong>.</p><div class="table-wrap"><table><thead><tr><th>Conceito</th><th>Como ele aparece na história</th></tr></thead><tbody><tr><td>Cliente</td><td>É a pessoa responsável pelo atendimento e pode ter várias ordens.</td></tr><tr><td>Equipamento</td><td>É o objeto que o cliente entrega para análise e reparo.</td></tr><tr><td>Ordem de Serviço</td><td>É o registro que acompanha aquele atendimento do começo ao fim.</td></tr><tr><td>Orçamento</td><td>Nasce da ordem e recebe a decisão do cliente.</td></tr></tbody></table></div><p>Com essas relações pequenas compreendidas, agora podemos olhar o modelo completo sem transformar caixas e linhas em símbolos soltos.</p>'''
+          assert old in s
+          p.write_text(s.replace(old, new, 1))
+          PY
+      - name: Commitar ajustes
+        run: |
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add pages/analise-sistemas/index.html pages/analise-sistemas/05-processo-to-be-bpmn.html pages/analise-sistemas/08-uml-essencial.html
+          git commit -m "Análise de Sistemas: reforçar pontes antes dos modelos completos"
+          git push origin HEAD:analise-sistemas-contexto-vivo-iniciante
