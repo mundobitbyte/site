@@ -1,6 +1,6 @@
 # Direitos autorais — Mundo bit Byte
 
-© 2026 Ronaldo Lavestein — Mundo bit Byte. Todos os direitos reservados.
+© 2026 Mundo bit Byte — Ronaldo Lavestein. Todos os direitos reservados.
 
 O conteúdo didático, a organização pedagógica, os textos, exercícios, materiais, identidade visual e demais criações autorais deste repositório não são disponibilizados sob licença open source, salvo indicação expressa em arquivo específico.
 
