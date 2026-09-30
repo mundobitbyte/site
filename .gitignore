@@ -1,0 +1,28 @@
+# Segredos e configuracoes locais
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+service-account*.json
+firebase-admin*.json
+credentials*.json
+
+# Dependencias e artefatos locais
+node_modules/
+coverage/
+dist/
+build/
+
+# Arquivos de sistema/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporarios
+*.tmp
+*.temp
+*.log
