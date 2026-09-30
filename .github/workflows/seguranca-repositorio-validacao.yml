@@ -40,3 +40,24 @@ jobs:
           fi
 
           echo 'Nenhum arquivo sensível proibido está rastreado.'
+
+      - name: Detectar padrões inequívocos de segredo
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t encontrados < <(git grep -I -l -E \
+            -e '-----BEGIN ([A-Z0-9 ]+ )?PRIVATE KEY-----' \
+            -e 'ghp_[A-Za-z0-9]{30,}' \
+            -e 'github_pat_[A-Za-z0-9_]{20,}' \
+            -e 'AKIA[0-9A-Z]{16}' \
+            -e 'xoxb-[0-9A-Za-z-]{20,}' \
+            -e 'sk_live_[0-9A-Za-z]{20,}' \
+            -- . || true)
+
+          if ((${#encontrados[@]})); then
+            echo 'Possível segredo encontrado nos arquivos abaixo. O conteúdo não é exibido nos logs:'
+            printf ' - %s\n' "${encontrados[@]}"
+            exit 1
+          fi
+
+          echo 'Nenhum padrão inequívoco de segredo foi encontrado.'
