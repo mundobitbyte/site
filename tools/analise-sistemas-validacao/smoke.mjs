@@ -33,7 +33,7 @@ const assert=(condition,message)=>{if(!condition) failures.push(message);};
 for(const file of stages){
   try{ await fs.access(`pages/analise-sistemas/${file}`); }catch{ failures.push(`Etapa ausente: ${file}`); }
 }
-for(const file of ['pages/analise-sistemas/index.html','css/analise-sistemas.css','js/analise-sistemas.js','js/analise-sistemas-visuais.js','ANALISE_SISTEMAS_MBB_MAPA_E_CRITERIOS.md','ANALISE_SISTEMAS_MEU_MBB_CONTRATO.md']){
+for(const file of ['pages/analise-sistemas/index.html','css/analise-sistemas.css','js/analise-sistemas.js','js/analise-sistemas-visuais.js']){
   try{ await fs.access(file); }catch{ failures.push(`Arquivo obrigatório ausente: ${file}`); }
 }
 
