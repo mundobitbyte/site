@@ -84,3 +84,7 @@ Nenhuma exclusão deve ser levada à `main` antes de:
 4. executar validações automáticas;
 5. revisar o diff final;
 6. obter autorização explícita para merge.
+
+## Situação desta branch
+
+Até este ponto, **nenhum arquivo interno foi excluído**. Este mapa é apenas a proposta técnica para a próxima etapa segura.
