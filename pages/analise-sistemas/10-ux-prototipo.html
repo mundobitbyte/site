@@ -30,14 +30,14 @@
     if(paragrafo){
       const card=document.createElement('div');
       card.className='card tool-card';
-      card.innerHTML='<h3>Agora a Conecta pode ser testada</h3><p>O protótipo navegável transforma requisitos e regra de negócio em interações observáveis. Percorra a visão interna e a visão do cliente usando apenas dados fictícios.</p><p><a href="prototipo-assistencia-tecnica-conecta.html"><strong>Abrir o protótipo navegável da Assistência Técnica Conecta →</strong></a></p><p class="small">Desafio: tente iniciar o reparo antes de o orçamento ser aprovado e observe se a RN01 é respeitada.</p>';
+      card.innerHTML='<h3>Agora a Conecta pode ser testada</h3><p>O protótipo navegável transforma requisitos e regra de negócio em interações observáveis. Além de percorrer o fluxo, você fará três desafios de validação e usará a evidência para decidir se precisa voltar a requisitos, regras, casos de uso, vocabulário ou qualidade.</p><p><a href="prototipo-assistencia-tecnica-conecta.html#validacao-guiada"><strong>Abrir o protótipo e iniciar a validação guiada →</strong></a></p><p class="small">Não procure “gostar da tela”. Procure evidência observável, volte à origem, ajuste apenas se houver motivo e reteste.</p>';
       paragrafo.insertAdjacentElement('afterend',card);
     }
   }
   const lista=document.querySelector('.practice-card ol');
   if(lista){
     const item=document.createElement('li');
-    item.textContent='Abra o protótipo navegável da Conecta e verifique se RF01, RF02, RF03, RF04 e RN01 aparecem de forma coerente.';
+    item.textContent='Abra o protótipo da Conecta e conclua os três desafios da validação em espiral. Para cada um, registre evidência, artefato de origem, decisão justificada e forma de reteste.';
     lista.insertBefore(item,lista.children[3]||null);
   }
 })();
