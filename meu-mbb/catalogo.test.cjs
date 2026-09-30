@@ -46,7 +46,7 @@ test('destinos de seções reais cobrem Banco de Dados, React Native e Análise'
   const casos = [
     ['CTE', 'pages/bancodedados.html#bd-topico-avancado-bloco-6-cte-dando-nome-a-uma-etapa-da-consulta'],
     ['useState', 'pages/reactnative.html#rn-state-state-7-state'],
-    ['BPMN', 'pages/analise-sistemas/05-processo-to-be-bpmn.html#:~:text=BPMN%20%E2%80%94%20subconjunto%20essencial']
+    ['BPMN', 'pages/analise-sistemas/05-processo-to-be-bpmn.html#:~:text=BPMN%20%E2%80%94%20o%20que%20essas%20letras%20significam%3F']
   ];
   for (const [termo, destino] of casos) {
     const encontrado = core.pesquisar(catalogo, termo)[0];
