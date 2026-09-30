@@ -10,21 +10,72 @@ service cloud.firestore {
       return signedIn() && request.auth.uid == uid;
     }
 
-    function validProfile() {
+    function isKnownCourse(courseId) {
+      return courseId == 'sistemas-embarcados-iot';
+    }
+
+    function isKnownActivityId(activityId) {
+      return activityId.matches('^emb-(00|01|02|03|04|05|06|07|08|09|99)-(0[1-9]|[1-9][0-9]|cp|final|dominio)$');
+    }
+
+    function isKnownAchievement(achievementId) {
+      return achievementId in [
+        'primeiro-circuito',
+        'primeira-entrada',
+        'primeiro-sensor',
+        'primeira-automacao',
+        'sistema-integrado',
+        'dispositivo-conectado',
+        'iot-concluido'
+      ];
+    }
+
+    function achievementRequirementMet(courseId, achievementId) {
+      return (achievementId == 'primeiro-circuito'
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)/courses/$(courseId)/activities/emb-01-03).data.state == 'concluida')
+        || (achievementId == 'primeira-entrada'
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)/courses/$(courseId)/activities/emb-02-01).data.state == 'concluida')
+        || (achievementId == 'primeiro-sensor'
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)/courses/$(courseId)/activities/emb-03-01).data.state == 'concluida')
+        || (achievementId == 'primeira-automacao'
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)/courses/$(courseId)/activities/emb-04-04).data.state == 'concluida')
+        || (achievementId == 'sistema-integrado'
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)/courses/$(courseId)/activities/emb-04-cp).data.state == 'concluida')
+        || (achievementId == 'dispositivo-conectado'
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)/courses/$(courseId)/activities/emb-06-cp).data.state == 'concluida')
+        || (achievementId == 'iot-concluido'
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)/courses/$(courseId)/activities/emb-09-final).data.state == 'concluida');
+    }
+
+    function validProfileCreate() {
       return request.resource.data.keys().hasOnly(['displayName', 'email', 'createdAt', 'updatedAt'])
         && request.resource.data.displayName is string
         && request.resource.data.displayName.size() >= 2
         && request.resource.data.displayName.size() <= 80
         && request.resource.data.email is string
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+    }
+
+    function validProfileUpdate() {
+      return request.resource.data.keys().hasOnly(['displayName', 'email', 'createdAt', 'updatedAt'])
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() >= 2
+        && request.resource.data.displayName.size() <= 80
+        && request.resource.data.email == resource.data.email
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.createdAt == resource.data.createdAt
         && request.resource.data.updatedAt == request.time;
     }
 
     function validCourse(courseId) {
-      return request.resource.data.keys().hasOnly(['courseId', 'courseVersion', 'lastLessonId', 'updatedAt'])
+      return isKnownCourse(courseId)
+        && request.resource.data.keys().hasOnly(['courseId', 'courseVersion', 'lastLessonId', 'updatedAt'])
         && request.resource.data.courseId == courseId
-        && request.resource.data.courseVersion is int
-        && request.resource.data.courseVersion >= 1
+        && request.resource.data.courseVersion == 1
         && request.resource.data.lastLessonId is string
+        && isKnownActivityId(request.resource.data.lastLessonId)
         && request.resource.data.updatedAt == request.time;
     }
 
@@ -38,33 +89,41 @@ service cloud.firestore {
     }
 
     function validActivity(courseId, activityId) {
-      return request.resource.data.keys().hasOnly([
+      return isKnownCourse(courseId)
+        && isKnownActivityId(activityId)
+        && request.resource.data.keys().hasOnly([
           'activityId', 'courseId', 'courseVersion', 'state', 'type',
           'points', 'updatedAt', 'completedAt'
         ])
         && request.resource.data.activityId == activityId
         && request.resource.data.courseId == courseId
-        && request.resource.data.courseVersion is int
-        && request.resource.data.courseVersion >= 1
+        && request.resource.data.courseVersion == 1
         && request.resource.data.state in ['em-andamento', 'concluida']
         && request.resource.data.type in ['aula', 'pratica', 'checkpoint', 'desafio', 'miniprojeto', 'projeto-final']
         && validPoints(request.resource.data.type, request.resource.data.points)
         && request.resource.data.updatedAt == request.time
-        && (request.resource.data.state != 'concluida' || request.resource.data.completedAt == request.time)
+        && ((request.resource.data.state == 'concluida'
+            && request.resource.data.completedAt == request.time)
+          || (request.resource.data.state == 'em-andamento'
+            && !('completedAt' in request.resource.data)))
         && (!exists(/databases/$(database)/documents/users/$(request.auth.uid)/courses/$(courseId)/activities/$(activityId))
           || resource.data.state != 'concluida'
           || request.resource.data.state == 'concluida');
     }
 
-    function validAchievement(achievementId) {
-      return request.resource.data.keys().hasOnly(['achievementId', 'unlockedAt'])
+    function validAchievement(courseId, achievementId) {
+      return isKnownCourse(courseId)
+        && isKnownAchievement(achievementId)
+        && request.resource.data.keys().hasOnly(['achievementId', 'unlockedAt'])
         && request.resource.data.achievementId == achievementId
-        && request.resource.data.unlockedAt == request.time;
+        && request.resource.data.unlockedAt == request.time
+        && achievementRequirementMet(courseId, achievementId);
     }
 
     match /users/{uid} {
       allow read, delete: if isOwner(uid);
-      allow create, update: if isOwner(uid) && validProfile();
+      allow create: if isOwner(uid) && validProfileCreate();
+      allow update: if isOwner(uid) && validProfileUpdate();
 
       match /courses/{courseId} {
         allow read, delete: if isOwner(uid);
@@ -77,7 +136,7 @@ service cloud.firestore {
 
         match /achievements/{achievementId} {
           allow read, delete: if isOwner(uid);
-          allow create, update: if isOwner(uid) && validAchievement(achievementId);
+          allow create, update: if isOwner(uid) && validAchievement(courseId, achievementId);
         }
       }
     }
