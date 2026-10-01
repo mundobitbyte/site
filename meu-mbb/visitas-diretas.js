@@ -7,8 +7,15 @@
   let unidade;
   try {
     const resposta = await fetch(new URL('visitas-diretas.json?v=mbb-recursos-1', origem));
-    if (!resposta.ok) return;
-    unidade = (await resposta.json())[pagina];
+    if (resposta.ok) unidade = (await resposta.json())[pagina];
+    if (!unidade && pagina.startsWith('pages/seguranca-dados/')) {
+      const extraResposta = await fetch(new URL('catalogo-seguranca-dados.json?v=mbb-sdi-1', origem));
+      if (extraResposta.ok) {
+        const extra = await extraResposta.json();
+        const encontrada = (extra.unidades || []).find(item => item.localizacao_atual.split('#')[0] === pagina);
+        if (encontrada) unidade = { ...encontrada, ancoras: [...new Set((encontrada.topicos_busca || []).map(topico => topico.ancora))] };
+      }
+    }
   } catch (_) { return; }
   if (!unidade) return;
 
@@ -36,13 +43,11 @@
       fila = fila.then(async () => {
         await conta.visitar(unidade, ancora);
         ultima = ancora;
-      }).catch(() => {}); // Dados indisponíveis não interrompem a página pública.
+      }).catch(() => {});
     }
     window.addEventListener('hashchange', registrar);
     window.addEventListener('popstate', registrar);
     registrar();
-    // Aguarde a gravação da visita antes de ler o registro: a escrita local
-    // pendente pode ocultar temporariamente as notas já salvas.
     await fila;
     montarAcoes(conta, unidade, origem);
   } catch (_) { /* A página pública continua acessível sem Firebase. */ }
