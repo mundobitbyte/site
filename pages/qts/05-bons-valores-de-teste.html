@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Etapa 5 de Qualidade e Teste de Software: aprenda a escolher bons dados de teste com particionamento de equivalência e análise de valores-limite.">
+<title>5 — Bons valores de teste | Qualidade e Teste de Software</title>
+<link rel="stylesheet" href="../../css/qts.css">
+</head>
+<body data-stage="5">
+<header class="course-header">
+  <div class="header-left"><a class="portal-link" href="../../index.html">← Mundo bit Byte</a><span class="course-title">Qualidade e Teste de Software</span></div>
+  <div class="header-right"><span class="brand">Professor Ronaldo Lavestein</span><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="courseNav">☰ Etapas</button></div>
+</header>
+<div class="course-shell">
+  <aside class="course-nav" id="courseNav" aria-label="Etapas do módulo"></aside>
+  <main class="course-main">
+    <div class="content-wrap">
+      <div class="stage-progress"><span id="progressText"></span><span>Escolher com método</span></div>
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
+      <section class="hero">
+        <span class="kicker">Etapa 5</span>
+        <h1>Bons valores de teste</h1>
+        <p>Agora que conhecemos a regra de quantidade e já revisamos o código, chegou a hora de executar. Mas surge um problema prático: <strong>quais valores realmente vale a pena testar?</strong></p>
+      </section>
+
+      <article class="chapter">
+        <div class="card context-card">
+          <h3>“Testei 5 e funcionou”</h3>
+          <p>Um colega abre a Cantina Horizonte, informa quantidade <strong>5</strong>, adiciona o produto e conclui:</p>
+          <p><strong>“A quantidade está funcionando.”</strong></p>
+        </div>
+        <p>O teste mostrou que 5 funciona. Isso é útil.</p>
+        <p>Mas a regra é:</p>
+        <div class="card evidence-card"><p><strong>A quantidade deve ser um número inteiro entre 1 e 10, inclusive.</strong></p></div>
+        <p>Testar apenas 5 não diz o que acontece com 0, 1, 10, 11, -3 ou 100.</p>
+
+        <h2>Testar tudo parece seguro — até olharmos os números</h2>
+        <p>Se o campo aceitar números inteiros, existem muitos valores possíveis. E, em outros campos, podemos ter textos, datas, combinações e diferentes estados.</p>
+        <p>Não precisamos experimentar cada valor existente. Precisamos escolher valores que representem comportamentos diferentes.</p>
+        <div class="card question-card"><p><strong>Quais entradas têm chance de receber o mesmo tratamento pelo sistema?</strong></p></div>
+
+        <h2>Primeiro agrupamos comportamentos parecidos</h2>
+        <p>Para a regra de 1 a 10, podemos separar as quantidades em três grupos:</p>
+        <div class="path" aria-label="Partições de quantidade">
+          <span>Menor que 1 · inválido</span><b>→</b><span>De 1 a 10 · válido</span><b>→</b><span>Maior que 10 · inválido</span>
+        </div>
+        <p>Se a regra trata todos os valores de um grupo da mesma maneira, não precisamos começar testando cada um deles.</p>
+        <div class="card tool-card">
+          <h3>Particionamento de equivalência</h3>
+          <p><strong>Particionamento de equivalência</strong> é uma técnica que divide os dados de entrada em grupos — chamados de partições — que deveriam receber comportamento equivalente.</p>
+          <p>Escolhemos representantes desses grupos para testar.</p>
+        </div>
+
+        <h2>Um representante de cada grupo</h2>
+        <p>Podemos começar assim:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Partição</th><th>Exemplo escolhido</th><th>Esperado</th></tr></thead>
+            <tbody>
+              <tr><td>Quantidade menor que 1</td><td>0</td><td>Rejeitar</td></tr>
+              <tr><td>Quantidade de 1 a 10</td><td>5</td><td>Aceitar, se houver estoque</td></tr>
+              <tr><td>Quantidade maior que 10</td><td>11</td><td>Rejeitar</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Com três testes já cobrimos três comportamentos diferentes de forma mais inteligente do que testar 3, 4, 5, 6 e 7.</p>
+
+        <h2>Mas existe um lugar onde defeitos aparecem com frequência</h2>
+        <p>Considere a passagem entre “inválido” e “válido”.</p>
+        <div class="path" aria-label="Limite inferior">
+          <span>0 · rejeitar</span><b>→</b><span>1 · aceitar</span><b>→</b><span>2 · aceitar</span>
+        </div>
+        <p>E agora o outro extremo:</p>
+        <div class="path" aria-label="Limite superior">
+          <span>9 · aceitar</span><b>→</b><span>10 · aceitar</span><b>→</b><span>11 · rejeitar</span>
+        </div>
+        <p>É justamente perto dessas mudanças que erros como usar <code>&lt;</code> em vez de <code>&lt;=</code> costumam aparecer.</p>
+
+        <h2>Por isso olhamos para as bordas</h2>
+        <div class="card tool-card">
+          <h3>Análise de valores-limite</h3>
+          <p><strong>Análise de valores-limite</strong> é uma técnica que concentra atenção nos valores próximos aos pontos em que o comportamento deveria mudar.</p>
+        </div>
+        <p>Para a regra de 1 a 10, uma seleção simples pode ser:</p>
+        <div class="card evidence-card"><p><strong>0, 1, 2, 9, 10 e 11.</strong></p></div>
+        <p>Esses números não foram escolhidos ao acaso. Eles estão imediatamente abaixo, sobre e acima dos limites importantes.</p>
+
+        <h2>As duas técnicas não competem</h2>
+        <div class="grid2">
+          <div class="card evidence-card"><h3>Particionamento de equivalência</h3><p>Pergunta: <strong>quais grupos de valores deveriam receber o mesmo tratamento?</strong></p></div>
+          <div class="card evidence-card"><h3>Valores-limite</h3><p>Pergunta: <strong>em quais pontos o comportamento muda?</strong></p></div>
+        </div>
+        <p>Em muitos casos usamos as duas técnicas juntas.</p>
+
+        <h2>Vamos aplicar ao estoque</h2>
+        <p>O Sanduíche tem estoque 8.</p>
+        <p>A regra informa que não podemos pedir mais do que existe.</p>
+        <div class="card practice-card">
+          <h3>Escolha antes de executar</h3>
+          <p>Se você quisesse verificar o limite do estoque com poucos testes, quais valores escolheria?</p>
+        </div>
+        <p>Uma boa seleção é:</p>
+        <div class="card evidence-card"><p><strong>7, 8 e 9.</strong></p></div>
+        <p>Com 7 estamos logo abaixo do limite. Com 8 exatamente no estoque. Com 9 logo acima.</p>
+
+        <h2>E o cupom de R$ 30,00?</h2>
+        <p>A regra do MBB10 diz que o desconto vale quando o subtotal for <strong>maior ou igual a R$ 30,00</strong>.</p>
+        <p>Então o ponto de mudança está em R$ 30,00.</p>
+        <div class="card practice-card"><h3>Valores próximos ao limite</h3><p><strong>R$ 29,99 · R$ 30,00 · R$ 30,01</strong></p></div>
+        <p>Novamente, os valores carregam uma intenção: abaixo, no limite e acima.</p>
+
+        <h2>Um teste pode representar uma boa ideia e ainda faltar algo</h2>
+        <p>Imagine testar apenas:</p>
+        <div class="card quote-card"><p>0, 5 e 11</p></div>
+        <p>Isso cobre bem as três partições principais, mas pode deixar escapar um erro específico no 10.</p>
+        <p>Agora imagine testar apenas:</p>
+        <div class="card quote-card"><p>1 e 10</p></div>
+        <p>Você verifica os dois limites válidos, mas não confirma como o sistema se comporta imediatamente fora deles.</p>
+        <div class="card evidence-card"><p><strong>Boa seleção de testes vem da combinação entre regra, risco e técnica — não de uma quantidade mágica de casos.</strong></p></div>
+
+        <h2>E se o usuário digitar algo que nem deveria caber na regra?</h2>
+        <p>Até agora falamos de números inteiros. Mas podemos perguntar:</p>
+        <ul>
+          <li>o campo aceita <strong>1,5</strong>?</li>
+          <li>aceita campo vazio?</li>
+          <li>aceita texto quando a interface permite digitação livre?</li>
+        </ul>
+        <p>A resposta depende da especificação e da forma como a entrada é construída. O ponto é perceber que <strong>tipos diferentes de entrada também podem formar partições diferentes</strong>.</p>
+
+        <h2>Prática · monte um conjunto pequeno, mas justificável</h2>
+        <div class="card practice-card">
+          <p>Para cada regra abaixo, escolha valores de teste e explique por que escolheu cada um:</p>
+          <ol>
+            <li>Quantidade permitida: 1 a 10.</li>
+            <li>Estoque disponível: 8 unidades.</li>
+            <li>Cupom válido a partir de R$ 30,00.</li>
+            <li>Uma futura regra permite nota de 0 a 100.</li>
+          </ol>
+        </div>
+        <p>A resposta vale mais quando contém a justificativa do que quando contém muitos números.</p>
+
+        <h2>O número de testes não mede sozinho a qualidade dos testes</h2>
+        <p>Uma pessoa pode executar 30 valores escolhidos quase iguais e ainda deixar de verificar os pontos importantes.</p>
+        <p>Outra pode escolher 6 valores bem pensados e revelar um defeito rapidamente.</p>
+        <div class="card question-card"><p><strong>O objetivo não é “testar muito”. É testar com intenção.</strong></p></div>
+
+        <h2>Agora as regras começam a ficar mais interessantes</h2>
+        <p>Quantidade e estoque têm limites relativamente simples.</p>
+        <p>Mas o cupom MBB10 possui mais de uma condição:</p>
+        <ul>
+          <li>subtotal mínimo;</li>
+          <li>data de validade;</li>
+          <li>uso anterior do cupom.</li>
+        </ul>
+        <p>Quando condições começam a se combinar, escolher casos apenas por limite já não organiza tudo tão bem.</p>
+        <div class="card question-card"><p><strong>Como testar uma regra quando o resultado depende de várias condições ao mesmo tempo?</strong></p></div>
+
+        <div class="card next-card">
+          <h3>Próxima etapa</h3>
+          <p>Vamos organizar combinações com <strong>tabelas de decisão</strong> e, depois, testar comportamentos que dependem de uma sequência de estados.</p>
+        </div>
+
+        <div class="checkpoint">
+          <h3>Antes de seguir</h3>
+          <p>Você deve conseguir explicar:</p>
+          <ul>
+            <li>por que não é necessário testar todos os valores possíveis;</li>
+            <li>o que é uma partição de equivalência;</li>
+            <li>por que valores próximos aos limites merecem atenção especial;</li>
+            <li>a diferença entre escolher um representante de um grupo e testar uma borda.</li>
+          </ul>
+        </div>
+      </article>
+
+      <nav class="stage-footer" aria-label="Navegação entre etapas">
+        <a href="04-antes-de-executar.html">← Etapa 4</a>
+        <a class="all" href="index.html">Todas as etapas</a>
+        <span class="disabled">Próxima etapa</span>
+      </nav>
+    </div>
+  </main>
+</div>
+<script src="../../js/qts.js"></script>
+<script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body>
+</html>
