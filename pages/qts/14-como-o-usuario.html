@@ -59,6 +59,7 @@
         <p>Aqui usaremos JavaScript apenas para descrever a interação com a página. O conceito de teste E2E não depende dessa linguagem.</p>
 
         <h2>Preparando o ambiente</h2>
+        <p>Para executar o Playwright, o projeto usa <strong>Node.js</strong>, um ambiente que permite executar JavaScript fora do navegador e disponibiliza as ferramentas necessárias para instalar e rodar os testes.</p>
         <p>Na pasta <code>qts/cantina-horizonte-v1</code>, instale as dependências do projeto:</p>
         <div class="code-block"><pre><code>npm install</code></pre></div>
         <p><strong>npm</strong> é o gerenciador de pacotes usado pelo ecossistema do Node.js. Neste momento ele serve apenas para instalar o Playwright definido no projeto.</p>
@@ -70,7 +71,7 @@
         <p>O arquivo <code>e2e/pedido-valido.spec.js</code> contém:</p>
         <div class="code-block"><pre><code>const { test, expect } = require('@playwright/test');
 
-test('cliente consegue adicionar dois salgados e finalizar o pedido', async ({ page }) => {
+test('cliente consegue adicionar dois salgados e finalizar o pedido', async ({ page }) =&gt; {
   await page.goto('/');
 
   const salgado = page.locator('.produto-card').filter({ hasText: 'Salgado' });
