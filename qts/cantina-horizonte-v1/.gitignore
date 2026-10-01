@@ -3,3 +3,6 @@ __pycache__/
 .pytest_cache/
 *.pyc
 cantina.db
+node_modules/
+playwright-report/
+test-results/
