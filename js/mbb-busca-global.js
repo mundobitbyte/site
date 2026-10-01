@@ -110,6 +110,7 @@
   'use strict';
 
   function instalar() {
+    if (typeof document.querySelector !== 'function') return;
     const home = document.querySelector('#areas .areas-grid');
     if (!home) return;
 
@@ -123,7 +124,9 @@
       if (titulo) titulo.textContent = 'Tecnologia aplicada à Gestão';
     }
 
-    const secaoGestao = document.getElementById('tecnologia-gestao');
+    const secaoGestao = typeof document.getElementById === 'function'
+      ? document.getElementById('tecnologia-gestao')
+      : null;
     if (secaoGestao) {
       secaoGestao.dataset.title = 'Tecnologia aplicada à Gestão';
       const tituloSecao = secaoGestao.querySelector('#gestao-title');
