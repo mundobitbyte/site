@@ -8,6 +8,7 @@ const moeda = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL
 
 async function carregarProdutos() {
   const resposta = await fetch("/api/produtos");
+  if (!resposta.ok) throw new Error("Falha ao carregar produtos.");
   estado.produtos = await resposta.json();
   renderizarProdutos();
 }
@@ -101,27 +102,32 @@ async function finalizarPedido() {
     cupom: estado.cupom || null,
   };
 
-  const resposta = await fetch("/api/pedidos", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  const dados = await resposta.json();
+  try {
+    const resposta = await fetch("/api/pedidos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const dados = await resposta.json();
 
-  if (!resposta.ok) {
-    mensagem.textContent = dados.detail || "Não foi possível finalizar o pedido.";
+    if (!resposta.ok) {
+      mensagem.textContent = dados.detail || "Não foi possível finalizar o pedido.";
+      mensagem.classList.add("erro");
+      return;
+    }
+
+    mensagem.textContent = `Pedido #${dados.id} realizado com sucesso. Total: ${moeda.format(dados.total)}`;
+    mensagem.classList.add("ok");
+    estado.carrinho = [];
+    estado.cupom = "";
+    document.querySelector("#cupom").value = "";
+    document.querySelector("#cupomMsg").textContent = "";
+    renderizarCarrinho();
+    await carregarProdutos();
+  } catch {
+    mensagem.textContent = "Não foi possível conversar com o servidor. Tente novamente.";
     mensagem.classList.add("erro");
-    return;
   }
-
-  mensagem.textContent = `Pedido #${dados.id} realizado com sucesso. Total: ${moeda.format(dados.total)}`;
-  mensagem.classList.add("ok");
-  estado.carrinho = [];
-  estado.cupom = "";
-  document.querySelector("#cupom").value = "";
-  document.querySelector("#cupomMsg").textContent = "";
-  renderizarCarrinho();
-  await carregarProdutos();
 }
 
 document.querySelector("#aplicarCupom").addEventListener("click", aplicarCupom);
