@@ -14,8 +14,8 @@
     ['11', 'Automatizando repetições', '11-automatizando-repeticoes.html', true],
     ['12', 'Teste antes do código', '12-teste-antes-do-codigo.html', true],
     ['13', 'Interface, servidor e banco', '13-interface-servidor-banco.html', true],
-    ['14', 'Como o usuário', '#', false],
-    ['15', 'Testes executando sozinhos', '#', false],
+    ['14', 'Como o usuário', '14-como-o-usuario.html', true],
+    ['15', 'Testes executando sozinhos', '15-testes-executando-sozinhos.html', true],
     ['16', 'Está pronto para entrega?', '#', false],
   ];
 
