@@ -9,7 +9,7 @@
   };
 
   const stages = [
-    { path:'00-antes-do-sistema.html', title:'Antes do sistema', group:'Descobrir', conteudo_id:'analise-sistemas-00', versao_conteudo:1 },
+    { path:'00-antes-do-sistema.html', title:'Antes do sistema', group:'Descobrir', conteudo_id:'analise-sistemas-00', versao_conteudo:2 },
     { path:'01-stakeholders-escopo.html', title:'Stakeholders e escopo', group:'Descobrir', conteudo_id:'analise-sistemas-01', versao_conteudo:1 },
     { path:'02-levantamento.html', title:'Levantamento', group:'Descobrir', conteudo_id:'analise-sistemas-02', versao_conteudo:1 },
     { path:'03-processo-as-is.html', title:'Processo AS-IS', group:'Compreender e modelar', conteudo_id:'analise-sistemas-03', versao_conteudo:2 },

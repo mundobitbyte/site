@@ -8,7 +8,7 @@ const stages = [
   '08-uml-essencial.html','09-agile-backlog-mvp.html','10-ux-prototipo.html','11-qualidade-integracoes.html',
   '12-viabilidade-riscos-rastreabilidade.html','13-documentacao-ia.html','14-integracao-final.html'
 ];
-const expectedVersions=[1,1,1,2,2,2,1,2,2,1,1,1,1,1,1];
+const expectedVersions=[2,1,1,2,2,2,1,2,2,1,1,1,1,1,1];
 const expectedDiagrams={3:1,4:2,5:1,7:1,8:4};
 const forbiddenBackstage={
   '05-processo-to-be-bpmn.html':['pedagogicamente pior'],
