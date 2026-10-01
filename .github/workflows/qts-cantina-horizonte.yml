@@ -3,6 +3,7 @@ name: QTS - Cantina Horizonte
 on:
   push:
     branches:
+      - main
       - qts-cantina-horizonte-v1
     paths:
       - 'qts/cantina-horizonte-v1/**'
