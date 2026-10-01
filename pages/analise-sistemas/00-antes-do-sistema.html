@@ -14,11 +14,18 @@
 <div class="card question-card"><h3>Em uma frase</h3><p><strong>Análise de Sistemas é investigar um problema, entender como o trabalho acontece e organizar o que precisa mudar antes de decidir como construir a solução.</strong></p></div>
 
 <h2>Mas por que isso virou uma área?</h2>
-<p>No começo da computação, os sistemas eram menores e atendiam tarefas bem específicas. Conforme empresas passaram a depender cada vez mais de computadores, os programas cresceram, começaram a conversar com vários setores e passaram a representar regras importantes do negócio.</p>
+<p>Nos primeiros anos da computação comercial, muitos programas cuidavam de tarefas mais isoladas: cálculos, registros, folhas de pagamento, estoques e outros trabalhos bem definidos.</p>
+<p>Com o tempo, os sistemas cresceram, passaram a envolver vários setores e começaram a representar decisões importantes das empresas.</p>
 <p>Aí ficou evidente uma coisa: <strong>programar certo não adiantava se estivéssemos programando a coisa errada.</strong></p>
-<p>Ao longo do tempo surgiram maneiras mais organizadas de estudar processos, dados, regras e necessidades. Vieram técnicas de análise estruturada, diagramas de fluxo de dados, modelagem de processos, orientação a objetos, UML, métodos ágeis, prototipação e muitas outras ferramentas.</p>
-<p>Os nomes mudaram, as técnicas evoluíram e hoje usamos recursos bem diferentes dos usados décadas atrás. Mas a pergunta central continua muito parecida:</p>
+<p>Foram surgindo maneiras mais organizadas de estudar processos, dados, regras e necessidades. Vieram técnicas de análise estruturada, diagramas de fluxo de dados, modelagem de processos, orientação a objetos, linguagens de modelagem como a <strong>UML — Linguagem de Modelagem Unificada</strong>, métodos ágeis e prototipação.</p>
+<p>As ferramentas mudaram bastante. A pergunta principal, nem tanto:</p>
 <div class="card question-card"><h3>O que precisamos entender antes de construir?</h3><p>Essa pergunta vai acompanhar você pelo módulo inteiro.</p></div>
+
+<h2>Isso não vira burocracia?</h2>
+<p>Pode virar, se a equipe produzir documentos e desenhos só porque “o método manda”.</p>
+<p>Mas uma boa análise faz o contrário: ela tenta evitar retrabalho.</p>
+<p>Se uma conversa de dez minutos revela que entendemos errado uma regra, ótimo. É muito mais barato descobrir isso antes de programar dezenas de telas.</p>
+<p>Por isso, neste módulo, uma ferramenta só aparece quando existe uma pergunta que justifique usá-la.</p>
 
 <h2>Vamos trazer isso para uma situação real</h2>
 <div class="card context-card"><h3>Segunda-feira, 9h20</h3><p>Um cliente telefona para a Assistência Técnica Conecta e pergunta: <strong>“Meu notebook já ficou pronto?”</strong></p><p>O atendente procura uma ficha de papel, abre mensagens no celular e chama o técnico. Cinco minutos depois, ainda não consegue responder com segurança.</p></div>
@@ -38,17 +45,17 @@
 <div class="card tool-card"><h3>Vamos investigar juntos</h3><ol><li>Por que o cliente liga? Porque não sabe o andamento.</li><li>Por que não sabe? Porque não existe um acompanhamento confiável.</li><li>Por que o atendente demora? Porque procura em papel, mensagens e pessoas.</li><li>Por que a informação está espalhada? Porque cada etapa registra de um jeito.</li><li>Por que isso importa? Porque gera espera, retrabalho e risco de informação errada.</li></ol></div>
 <p>Esse jeito de aprofundar uma pergunta é conhecido como <strong>5 Porquês</strong>. O número cinco não é uma obrigação. A ideia é simples: <strong>não parar no primeiro sintoma</strong>.</p>
 
-<h2>Antes das ferramentas, entenda o caminho que vamos percorrer</h2>
-<p>Ao longo deste módulo, você não vai receber uma coleção de diagramas para decorar. Vamos acompanhar a Conecta e usar cada técnica quando uma dúvida real fizer aquela técnica ser útil.</p>
+<h2>Antes das ferramentas, veja o caminho que vamos percorrer</h2>
+<p>Você não precisa decorar os nomes abaixo. Eles aparecem aqui apenas para você enxergar o mapa da viagem. Mais adiante, cada um voltará quando realmente fizer falta.</p>
 <div class="grid2">
-<div class="card context-card"><h3>Primeiro: entender o cenário</h3><p>Quem participa? Quem conhece o problema? Até onde vai o que estamos estudando?</p><p>Aqui aparecem <strong>stakeholders</strong>, <strong>escopo</strong> e <strong>levantamento</strong>.</p></div>
-<div class="card context-card"><h3>Depois: enxergar como o trabalho acontece</h3><p>O que acontece hoje? Onde há espera, decisão, retrabalho ou informação perdida?</p><p>Aqui entram o processo <strong>AS-IS</strong>, fluxogramas, dados e a análise estruturada.</p></div>
-<div class="card context-card"><h3>Em seguida: pensar numa forma melhor de trabalhar</h3><p>Quem deveria fazer cada parte? Onde uma decisão precisa ficar registrada?</p><p>Aparecem o processo <strong>TO-BE</strong> e, quando fizer sentido, <strong>BPMN</strong>.</p></div>
-<div class="card context-card"><h3>Então: dizer claramente o que a solução precisa fazer</h3><p>O sistema deve fazer o quê? Que regra não pode ser quebrada? Como saberemos se funcionou?</p><p>Entram <strong>requisitos</strong>, <strong>regras de negócio</strong> e critérios de aceitação.</p></div>
-<div class="card context-card"><h3>Depois: olhar por outros ângulos</h3><p>Quem usa o sistema? Para quê? Como uma ação acontece? Quais conceitos se relacionam?</p><p>É aí que aparecem <strong>Casos de Uso</strong> e os diagramas <strong>UML</strong> que realmente forem necessários.</p></div>
-<div class="card context-card"><h3>E antes de programar tudo: testar ideias</h3><p>O que precisa entrar primeiro? A pessoa consegue usar? Há risco, custo ou integração complicada?</p><p>Entram <strong>backlog</strong>, <strong>MVP</strong>, protótipo, qualidade, viabilidade, riscos e rastreabilidade.</p></div>
+<div class="card context-card"><h3>1. Entender o cenário</h3><p>Quem participa? Quem conhece o problema? Até onde vai o que estamos estudando?</p><p>Aqui aparecem <strong>stakeholders</strong> — as partes interessadas —, <strong>escopo</strong> e <strong>levantamento</strong>.</p></div>
+<div class="card context-card"><h3>2. Enxergar como o trabalho acontece hoje</h3><p>Onde há espera, decisão, retrabalho ou informação perdida?</p><p>Aparece o <strong>AS-IS</strong>, expressão que significa <strong>“como está”</strong>, além de fluxogramas e formas de acompanhar processos e dados.</p></div>
+<div class="card context-card"><h3>3. Pensar numa forma melhor de trabalhar</h3><p>Quem deveria fazer cada parte? Onde uma decisão precisa ficar registrada?</p><p>Aqui surge o <strong>TO-BE</strong>, <strong>“como será”</strong>, e pode aparecer a <strong>BPMN</strong>, uma notação padronizada para representar processos de negócio.</p></div>
+<div class="card context-card"><h3>4. Dizer claramente o que a solução precisa fazer</h3><p>O sistema deve fazer o quê? Que regra não pode ser quebrada? Como saberemos se funcionou?</p><p>Entram <strong>requisitos</strong>, <strong>regras de negócio</strong> e critérios de aceitação.</p></div>
+<div class="card context-card"><h3>5. Olhar o sistema por outros ângulos</h3><p>Quem usa? Para quê? Como uma ação acontece? Quais conceitos se relacionam?</p><p>É aí que aparecem <strong>Casos de Uso</strong> e diagramas da <strong>UML — Linguagem de Modelagem Unificada</strong> quando realmente ajudarem a responder uma pergunta.</p></div>
+<div class="card context-card"><h3>6. Testar ideias antes de construir tudo</h3><p>O que precisa entrar primeiro? A pessoa consegue usar? Há risco, custo ou integração complicada?</p><p>Entram o <strong>backlog</strong> — a lista organizada do que pode ser feito —, o <strong>MVP — Produto Mínimo Viável</strong>, protótipo, qualidade, viabilidade, riscos e rastreabilidade.</p></div>
 </div>
-<p>Você não precisa memorizar esses nomes agora. Eles aparecerão novamente quando houver uma situação concreta que justifique cada um.</p>
+<p>Não se preocupe se alguns nomes ainda parecem estranhos. Eles deixarão de parecer quando nascerem de uma situação que você já entendeu.</p>
 
 <h2>Agora sim: acompanhe o notebook desde que ele chega</h2>
 <div class="card context-card"><p>A cliente Ana chega à Conecta, entrega o notebook e conta que ele não liga depois de uma queda de energia. O atendente recebe o equipamento, anota os dados e registra o problema. Depois o notebook segue para diagnóstico, orçamento, possível reparo, teste e devolução.</p></div>
@@ -66,7 +73,7 @@
 <p>O atendente registra. O técnico diagnostica. A empresa prepara um orçamento. Ana decide se aprova. Se aprovar, o reparo pode continuar. Depois o equipamento é testado e entregue.</p>
 <p>Quando os dados são usados para produzir alguma coisa nova — uma situação da ordem, um diagnóstico, um orçamento ou uma decisão registrada — existe algum tipo de <strong>processamento</strong>.</p>
 <p>E quando o trabalho produz um resultado que pode ser consultado ou entregue, temos uma <strong>saída</strong>. Por exemplo: “orçamento aguardando decisão”, “equipamento pronto para retirada” ou o próprio equipamento devolvido ao cliente.</p>
-<p>Mais adiante vamos trabalhar esses conceitos com muito mais precisão. Por enquanto basta enxergar a diferença entre <strong>o equipamento chegando</strong>, <strong>as informações entrando</strong>, <strong>o trabalho acontecendo</strong> e <strong>um resultado sendo produzido</strong>.</p>
+<p>Por enquanto basta enxergar a diferença entre <strong>o equipamento chegando</strong>, <strong>as informações entrando</strong>, <strong>o trabalho acontecendo</strong> e <strong>um resultado sendo produzido</strong>.</p>
 
 <h2>E se alguma coisa fizer o caminho voltar?</h2>
 <p>Imagine que o teste final falhou. O notebook não pode simplesmente ser entregue. Ele volta para o reparo.</p>
