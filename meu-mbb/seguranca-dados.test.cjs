@@ -32,10 +32,12 @@ test('pesquisa encontra certificado digital e SQL Injection no novo módulo', ()
   assert.equal(sql.some(item => item.conteudo_id === 'seg-dados-09'), true);
 });
 
-test('área de Infraestrutura injeta acesso público ao módulo de Segurança', () => {
+test('Home apresenta Segurança da Informação como área própria', () => {
   const global = fs.readFileSync(path.join(raiz, 'js/mbb-busca-global.js'), 'utf8');
   assert.match(global, /seguranca-dados\/index\.html/);
-  assert.match(global, /5\. Segurança de Dados e Informação/);
+  assert.match(global, /Segurança da Informação/);
+  assert.match(global, /Tecnologia aplicada à Gestão/);
+  assert.doesNotMatch(global, /5\. Segurança de Dados e Informação/);
 });
 
 test('projeto final contém a atividade visual encontre os riscos', () => {
