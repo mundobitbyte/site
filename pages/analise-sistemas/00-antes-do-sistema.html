@@ -1,22 +1,58 @@
 <!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>0 — Antes do sistema | Análise de Sistemas</title><link rel="stylesheet" href="../../css/analise-sistemas.css"></head>
 <body data-stage="0"><header class="course-header"><div class="header-left"><a class="portal-link" href="../../index.html">← Mundo bit Byte</a><span class="course-title">Análise de Sistemas</span></div><div class="header-right"><span class="brand">Professor Ronaldo Lavestein</span><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="courseNav">☰ Etapas</button></div></header>
 <div class="course-shell"><aside class="course-nav" id="courseNav" aria-label="Etapas do módulo"></aside><main class="course-main"><div class="content-wrap"><div class="stage-progress"><span id="progressText"></span><span>Descobrir</span></div><div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
-<section class="hero"><span class="kicker">Etapa 0</span><h1>Antes do sistema</h1><p>Antes de escolher tela, linguagem ou banco de dados, precisamos saber <strong>qual problema realmente merece ser resolvido</strong>.</p></section>
+<section class="hero"><span class="kicker">Etapa 0</span><h1>Antes de pensar no sistema</h1><p>Vamos começar como um analista começaria: observando uma situação real antes de pensar em tela, aplicativo ou tecnologia.</p></section>
 <article class="chapter">
-<div class="card context-card"><h3>Segunda-feira, 9h20</h3><p>Um cliente telefona: “Meu notebook já ficou pronto?”. O atendente procura uma ficha de papel, abre mensagens no celular e pergunta ao técnico. Cinco minutos depois ainda não consegue responder com segurança.</p></div>
-<h2>Antes de continuar: o que faz um analista?</h2><p>Neste módulo, <strong>analista</strong> é quem investiga uma situação antes de sair construindo uma solução. Ele observa o trabalho, conversa com as pessoas, procura fatos, organiza dúvidas e transforma o que descobriu em informações que ajudem a decidir <strong>o que realmente precisa ser feito</strong>.</p><div class="card question-card"><h3>Pense como iniciante</h3><p>Se alguém disser “faça um aplicativo”, o analista não começa escolhendo botões e telas. Primeiro pergunta: <strong>qual problema esse aplicativo deveria resolver?</strong></p></div>
-<h2>O pedido parece óbvio</h2><p>O proprietário diz: <strong>“Precisamos de um sistema.”</strong></p><p>Essa frase já contém uma solução. O analista precisa voltar uma casa:</p>
-<div class="card question-card"><h3>Qual é o problema?</h3><p>Se construirmos exatamente o que foi pedido sem compreender a situação, podemos apenas digitalizar a confusão existente.</p></div>
-<h2>Sintoma, causa e solução</h2><div class="grid"><div class="card problem-card"><h3>Sintoma</h3><p>É o que conseguimos perceber acontecendo. Aqui: o cliente liga repetidamente para perguntar o andamento.</p></div><div class="card warning-card"><h3>Possível causa</h3><p>É uma explicação que ainda precisa ser confirmada. Aqui: as informações do atendimento estão dispersas e não possuem uma situação confiável.</p></div><div class="card tool-card"><h3>Possível solução</h3><p>É uma maneira de enfrentar a causa. Aqui: centralizar o acompanhamento — mas ainda é cedo para definir como.</p></div></div>
-<p>Confundir essas três coisas produz requisitos frágeis. A primeira competência do analista é <strong>não se apaixonar pela primeira solução</strong>.</p>
-<h2>Os 5 Porquês aparecem porque precisamos aprofundar</h2><div class="card tool-card"><h3>Ferramenta — 5 Porquês</h3><p>A ideia é perguntar “por quê?” várias vezes para não parar no primeiro sintoma.</p><ol><li>Por que o cliente liga? Porque não sabe o andamento.</li><li>Por que não sabe? Porque não existe um canal confiável de acompanhamento.</li><li>Por que o atendente demora? Porque consulta papel, mensagens e pessoas.</li><li>Por que a informação está espalhada? Porque cada etapa registra de um jeito.</li><li>Por que isso é um problema? Porque aumenta espera, retrabalho e risco de informação incorreta.</li></ol></div>
-<p>Não é obrigatório chegar exatamente a cinco perguntas. O valor está em <strong>não parar no primeiro sintoma</strong>.</p>
-<h2>Olhar como sistema</h2><p>Antes de falar em software, podemos observar o trabalho como um sistema. Leia da esquerda para a direita:</p><div class="flow"><span class="node">Entrada</span><span class="arrow">→</span><span class="node">Processamento</span><span class="arrow">→</span><span class="node">Saída</span><span class="arrow">→</span><span class="node">Feedback</span></div>
-<ul><li><strong>Entrada:</strong> o que chega para que o trabalho possa começar — equipamento, dados do cliente e relato do defeito.</li><li><strong>Processamento:</strong> o trabalho realizado — atendimento, diagnóstico, orçamento, reparo e teste.</li><li><strong>Saída:</strong> o resultado produzido — equipamento entregue e atendimento encerrado.</li><li><strong>Feedback:</strong> palavra inglesa que significa <strong>retorno</strong>. É a informação que volta e ajuda a decidir o próximo passo — aprovação, recusa, retorno do cliente e resultado do teste.</li></ul>
-<h2>Primeira semente de viabilidade</h2><p><strong>Viabilidade</strong> significa perguntar se uma ideia pode ser realizada de maneira que faça sentido. Ainda não faremos contas detalhadas; por enquanto basta investigar:</p><ul><li>o problema é real e recorrente?</li><li>resolvê-lo produz valor?</li><li>há alguma barreira óbvia que torne a ideia impossível?</li></ul><p>Mais adiante voltaremos a essas perguntas com muito mais profundidade.</p>
-<div class="card practice-card"><h3>Faça agora</h3><ol><li>Separe cinco afirmações do cenário em <strong>sintoma, causa ou solução proposta</strong>.</li><li>Faça pelo menos três “porquês” para o problema da falta de informação sobre a ordem.</li><li>Escreva o problema sem usar as palavras “site”, “app”, “banco de dados” ou “sistema”.</li></ol></div>
-<div class="notebook"><div class="notebook-label">Caderno da Análise · Evidência 01</div><h3>Declaração inicial do problema</h3><p>Registre em 3 a 5 linhas: situação atual, consequência observável e por que vale investigar. Não proponha tecnologia.</p></div>
-<h2>O que descobrimos?</h2><p>Já sabemos que o problema não é simplesmente “falta de um sistema”. Existe um trabalho real com entradas, decisões, pessoas e informações dispersas.</p>
-<div class="card next-card"><h3>Nova lacuna</h3><p>Quem vive esse problema? Quem executa o trabalho? Quem decide regras? Quem será afetado por uma mudança?</p><p>Na próxima etapa daremos nome a essas pessoas e grupos: <strong>stakeholders</strong>, isto é, <strong>partes interessadas</strong>. Também aprenderemos a definir até onde vai nossa investigação.</p></div>
+<div class="card context-card"><h3>Segunda-feira, 9h20</h3><p>Um cliente telefona para a Conecta e pergunta: <strong>“Meu notebook já ficou pronto?”</strong></p><p>O atendente procura uma ficha de papel, abre mensagens no celular e chama o técnico. Cinco minutos depois, ainda não consegue responder com segurança.</p></div>
+
+<h2>O que aconteceu aqui?</h2>
+<p>Antes de pensar em solução, observe a cena. O cliente não reclamou de “falta de software”. Ele só queria uma informação simples e a empresa teve dificuldade para responder.</p>
+<div class="card question-card"><h3>Primeira pergunta</h3><p><strong>Qual é o problema de verdade?</strong></p></div>
+<p>Talvez exista falta de organização. Talvez a informação esteja espalhada. Talvez o processo não deixe claro quem atualiza cada etapa. Ainda não sabemos.</p>
+<p>E é exatamente por isso que não devemos começar desenhando telas.</p>
+
+<h2>Então o que faz um analista?</h2>
+<p>Pense no analista como a pessoa que <strong>investiga antes de construir</strong>.</p>
+<p>Ele observa o trabalho, conversa com quem participa, procura fatos, organiza dúvidas e tenta entender <strong>o que realmente precisa melhorar</strong>.</p>
+<p>Se alguém disser “faça um aplicativo”, o analista não começa escolhendo botões. Primeiro pergunta: <strong>“que problema esse aplicativo deveria resolver?”</strong></p>
+
+<h2>O dono da empresa já trouxe uma solução pronta</h2>
+<div class="card context-card"><p>O proprietário diz: <strong>“Precisamos de um sistema.”</strong></p></div>
+<p>Pode ser que sim. Mas repare: “sistema” já é uma solução. Antes disso precisamos entender o problema.</p>
+<p>Se digitalizarmos um processo confuso sem compreendê-lo, podemos apenas criar uma <strong>confusão digital</strong>.</p>
+
+<h2>Vamos separar três coisas</h2>
+<div class="grid"><div class="card problem-card"><h3>O que estamos vendo</h3><p>O cliente liga várias vezes para saber o andamento.</p><p>Isso é um <strong>sintoma</strong>: algo que conseguimos observar.</p></div><div class="card warning-card"><h3>O que talvez esteja causando</h3><p>As informações podem estar espalhadas e sem uma situação confiável.</p><p>Isso é uma <strong>possível causa</strong>. Ainda precisa ser confirmada.</p></div><div class="card tool-card"><h3>O que talvez ajude</h3><p>Centralizar o acompanhamento pode ser uma solução.</p><p>Mas ainda é cedo para decidir como.</p></div></div>
+
+<h2>Por que perguntar “por quê?” mais de uma vez?</h2>
+<p>Porque o primeiro problema que aparece nem sempre é a causa principal.</p>
+<div class="card tool-card"><h3>Vamos perguntar juntos</h3><ol><li>Por que o cliente liga? Porque não sabe o andamento.</li><li>Por que não sabe? Porque não existe um acompanhamento confiável.</li><li>Por que o atendente demora? Porque procura em papel, mensagens e pessoas.</li><li>Por que a informação está espalhada? Porque cada etapa registra de um jeito.</li><li>Por que isso importa? Porque gera espera, retrabalho e risco de informação errada.</li></ol></div>
+<p>Essa forma de aprofundar a pergunta é conhecida como <strong>5 Porquês</strong>. O número cinco não é uma regra rígida. A ideia é não parar no primeiro sintoma.</p>
+
+<h2>Agora acompanhe o trabalho como uma história</h2>
+<div class="card context-card"><p>O cliente chega com o notebook, informa seus dados e conta o defeito. A empresa recebe o equipamento, registra, diagnostica, prepara orçamento, repara, testa e devolve.</p></div>
+<p>Veja como podemos separar essa história:</p>
+<div class="flow"><span class="node">Cliente traz notebook + informações</span><span class="arrow">→</span><span class="node">Empresa atende, diagnostica e repara</span><span class="arrow">→</span><span class="node">Notebook é entregue com resultado</span></div>
+<p>Agora sim podemos dar nomes a essas partes:</p>
+<ul><li><strong>Entrada:</strong> o que chega para o trabalho começar — aqui, o notebook, os dados do cliente e o relato do defeito;</li><li><strong>Processamento:</strong> o que a empresa faz com aquilo — atendimento, diagnóstico, orçamento, reparo e teste;</li><li><strong>Saída:</strong> o resultado produzido — o equipamento pronto, entregue ou encerrado sem reparo.</li></ul>
+<p>E ainda existe algo que pode voltar e mudar o caminho. Por exemplo, o cliente aprova ou recusa o orçamento. O teste pode falhar e mandar o equipamento de volta ao reparo.</p>
+<p>Esse retorno de informação é chamado de <strong>feedback</strong>, palavra inglesa que significa <strong>retorno</strong>.</p>
+
+<h2>Veja a conexão</h2>
+<div class="flow"><span class="node">Entrada</span><span class="arrow">→</span><span class="node">Processamento</span><span class="arrow">→</span><span class="node">Saída</span></div>
+<p>Agora essas palavras não são caixas abstratas: elas representam partes do atendimento que acabamos de acompanhar.</p>
+
+<h2>Antes de seguir, uma pergunta de viabilidade</h2>
+<p><strong>Viabilidade</strong> significa perguntar se uma ideia pode ser realizada de uma forma que faça sentido.</p>
+<p>Por enquanto, pense apenas:</p>
+<ul><li>esse problema acontece de verdade?</li><li>acontece com frequência suficiente para valer a investigação?</li><li>melhorar isso traria algum benefício para clientes e equipe?</li></ul>
+<p>Mais adiante vamos aprofundar custo, risco, prazo e outras questões.</p>
+
+<div class="card practice-card"><h3>Faça agora</h3><ol><li>Conte com suas palavras o que aconteceu quando o cliente ligou.</li><li>Diga qual parte é sintoma, qual pode ser causa e qual já seria uma possível solução.</li><li>Faça pelo menos três perguntas “por quê?” sem propor tecnologia.</li><li>No atendimento do notebook, diga o que entra, o que a empresa faz e o que sai.</li></ol></div>
+<div class="notebook"><div class="notebook-label">Caderno da Análise · Evidência 01</div><h3>Qual problema estamos tentando entender?</h3><p>Registre a situação atual e a consequência observada. Evite escrever a solução antes de terminar a investigação.</p></div>
+
+<h2>Já apareceu uma nova dúvida</h2>
+<p>Sabemos que existe um problema. Mas quem vive esse problema no dia a dia? Quem recebe o equipamento? Quem diagnostica? Quem decide regras? Quem será afetado se mudarmos o processo?</p>
+<div class="card next-card"><h3>Próximo passo</h3><p>Vamos descobrir <strong>quem precisa participar da análise</strong> e até onde vai o problema que estamos estudando.</p></div>
 </article><nav class="stage-footer" id="stageFooter" aria-label="Navegação entre etapas"></nav></div></main></div><script src="../../js/analise-sistemas.js"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body></html>

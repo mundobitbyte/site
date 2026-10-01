@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Análise de Sistemas no Mundo bit Byte: do problema aos requisitos, processos, modelos, backlog, protótipo, riscos e rastreabilidade em um projeto completo.">
+<meta name="description" content="Análise de Sistemas no Mundo bit Byte: do problema real às decisões, modelos, protótipo, riscos e documentação em um projeto completo.">
 <title>Análise de Sistemas — Mundo bit Byte</title>
 <link rel="stylesheet" href="../../css/analise-sistemas.css">
 </head>
@@ -19,59 +19,63 @@
       <section class="hero">
         <span class="kicker">Análise e modelagem</span>
         <h1>Análise de Sistemas</h1>
-        <p>Você acompanhará uma única análise completa: a <strong>Assistência Técnica Conecta</strong>. O sistema vai nascer do problema real, não de uma lista de tecnologias.</p>
+        <p>Você vai acompanhar um único caso do começo ao fim: a <strong>Assistência Técnica Conecta</strong>. As ferramentas vão aparecer quando o problema realmente pedir por elas.</p>
       </section>
 
       <section class="chapter">
-        <h2>O desafio</h2>
+        <h2>Vamos começar por uma situação bem simples</h2>
         <div class="card context-card">
           <h3>Assistência Técnica Conecta</h3>
-          <p>Uma pequena assistência técnica recebe celulares e notebooks para diagnóstico e reparo. Hoje, informações ficam espalhadas entre papel, mensagens e planilhas. Clientes telefonam para saber o andamento, decisões de orçamento nem sempre ficam registradas e o histórico é difícil de reconstruir.</p>
+          <p>Um cliente liga para perguntar se o notebook está pronto. O atendente procura uma ficha, abre mensagens no celular e chama o técnico. Mesmo assim demora para responder com segurança.</p>
         </div>
-        <p>Em vez de começar desenhando telas ou escolhendo banco de dados, vamos descobrir <strong>qual problema existe, como o trabalho acontece e o que realmente precisa ser resolvido</strong>.</p>
+        <p>Daí nasce a primeira pergunta: <strong>por que uma informação tão simples é tão difícil de encontrar?</strong></p>
+        <p>A partir dessa situação, vamos conversar com as pessoas, observar o trabalho, desenhar o que acontece, descobrir o que precisa mudar, testar uma solução e revisar as decisões.</p>
         <div class="project-path" aria-label="Jornada do módulo">
-          <span>Problema</span><b>→</b><span>Pessoas</span><b>→</b><span>Processos</span><b>→</b><span>Requisitos</span><b>→</b><span>Modelos</span><b>→</b><span>Validação</span><b>→</b><span>Riscos</span><b>→</b><span>Evolução</span>
+          <span>Problema</span><b>→</b><span>Pessoas</span><b>→</b><span>Como funciona hoje</span><b>→</b><span>O que precisa mudar</span><b>→</b><span>O que o sistema deve fazer</span><b>→</b><span>Protótipo</span><b>→</b><span>Riscos e evolução</span>
         </div>
         <div class="card question-card">
-          <h3>A pergunta que guia tudo</h3>
-          <p><strong>O que precisamos descobrir agora e qual técnica realmente ajuda a descobrir isso?</strong></p>
+          <h3>A regra do módulo inteiro</h3>
+          <p><strong>Primeiro a situação e a dúvida. Depois a ferramenta.</strong></p>
+          <p><strong>A pergunta que guia tudo:</strong> O que precisamos descobrir agora e qual técnica realmente ajuda a descobrir isso?</p>
+          <p>Você não precisa chegar sabendo DFD, BPMN, UML, MVP ou qualquer outra sigla. Quando um nome aparecer, ele vai nascer de algo que você já acabou de entender no caso.</p>
         </div>
         <div class="card evidence-card">
-          <h3>Você não precisa chegar sabendo as ferramentas</h3>
-          <p>Quando surgir uma sigla, expressão estrangeira, conceito ou símbolo novo, ele será apresentado <strong>antes de ser necessário</strong>. Nos diagramas, você aprenderá primeiro a ler os elementos essenciais, acompanhará a construção em partes e só depois verá o modelo completo.</p>
+          <h3>Como vamos conversar com você</h3>
+          <p>Quando aparecer um desenho, não vamos começar pela legenda dos símbolos. Primeiro veremos <strong>o que está acontecendo na Conecta</strong>. Depois apontaremos o que aquele pedaço do desenho representa. Só então daremos o nome técnico.</p>
+          <p>Assim, o símbolo não precisa ser decorado: ele passa a representar uma situação que você já compreendeu.</p>
         </div>
       </section>
 
       <section class="chapter">
         <h2>As 15 etapas</h2>
-        <p>As técnicas aparecem quando o projeto cria necessidade delas. Você não precisa decorar uma coleção de diagramas: precisa aprender <strong>o que cada termo significa, que pergunta a ferramenta responde e como interpretar o que está vendo</strong>.</p>
+        <p>Leia os cartões como capítulos de uma mesma história. Cada etapa continua exatamente de onde a anterior parou.</p>
         <div class="stage-index">
-          <a class="stage-card" href="00-antes-do-sistema.html"><strong>0 · Antes do sistema</strong><p>Problema, sintomas, causas e primeira pergunta de viabilidade.</p></a>
-          <a class="stage-card" href="01-stakeholders-escopo.html"><strong>1 · Stakeholders e escopo</strong><p>Stakeholders significa partes interessadas: quem participa, decide ou é afetado.</p></a>
-          <a class="stage-card" href="02-levantamento.html"><strong>2 · Levantamento</strong><p>Entrevista, observação, documentos, evidências e elicitação explicada em contexto.</p></a>
-          <a class="stage-card" href="03-processo-as-is.html"><strong>3 · Processo AS-IS</strong><p>AS-IS significa “como está”: aprender a ler e representar o processo atual.</p></a>
-          <a class="stage-card" href="04-analise-estruturada.html"><strong>4 · Análise Estruturada</strong><p>Diagrama de Contexto, DFD — Diagrama de Fluxo de Dados — e decisões, construídos por partes.</p></a>
-          <a class="stage-card" href="05-processo-to-be-bpmn.html"><strong>5 · TO-BE e BPMN</strong><p>TO-BE significa “como será”; BPMN representa processos e responsabilidades de forma padronizada.</p></a>
-          <a class="stage-card" href="06-requisitos.html"><strong>6 · Engenharia de Requisitos</strong><p>RF, RNF e RN deixam de ser códigos misteriosos e viram especificações claras e verificáveis.</p></a>
-          <a class="stage-card" href="07-casos-de-uso.html"><strong>7 · Casos de Uso</strong><p>Aprender a ler ator, elipse, fronteira e associação antes de montar o diagrama.</p></a>
-          <a class="stage-card" href="08-uml-essencial.html"><strong>8 · UML essencial</strong><p>UML significa Linguagem de Modelagem Unificada: atividades, sequência, domínio e estados quando ajudam.</p></a>
-          <a class="stage-card" href="09-agile-backlog-mvp.html"><strong>9 · Backlog e MVP</strong><p>MVP significa Produto Mínimo Viável; backlog, histórias e prioridades aparecem pela necessidade do projeto.</p></a>
-          <a class="stage-card" href="10-ux-prototipo.html"><strong>10 · Jornada e protótipo</strong><p>Jornada, fluxo, wireframe e protótipo para validar a solução antes de programar.</p></a>
-          <a class="stage-card" href="11-qualidade-integracoes.html"><strong>11 · Qualidade e integrações</strong><p>Requisitos Não Funcionais, API e comunicação com sistemas externos explicados desde o significado.</p></a>
-          <a class="stage-card" href="12-viabilidade-riscos-rastreabilidade.html"><strong>12 · Viabilidade e riscos</strong><p>Decidir, reduzir incerteza, compreender PoC e seguir o impacto das mudanças pela rastreabilidade.</p></a>
-          <a class="stage-card" href="13-documentacao-ia.html"><strong>13 · Documentação viva e IA</strong><p>IA significa Inteligência Artificial: preservar conhecimento e usar apoio automatizado sem transformar hipótese em fato.</p></a>
-          <a class="stage-card" href="14-integracao-final.html"><strong>14 · Integração final</strong><p>Reunir evidências, revisar significados e justificar as técnicas escolhidas.</p></a>
+          <a class="stage-card" href="00-antes-do-sistema.html"><strong>0 · Antes do sistema</strong><p>O cliente liga e a empresa não consegue responder. Primeiro entendemos o problema.</p></a>
+          <a class="stage-card" href="01-stakeholders-escopo.html"><strong>1 · Quem precisa participar?</strong><p>Descobrimos quem conhece o problema e até onde vale investigar agora.</p></a>
+          <a class="stage-card" href="02-levantamento.html"><strong>2 · Como descobrir o que acontece?</strong><p>Seguimos o notebook de Ana por entrevistas, observação e documentos.</p></a>
+          <a class="stage-card" href="03-processo-as-is.html"><strong>3 · Como funciona hoje?</strong><p>Quando a história começa a se dividir, o fluxograma passa a ser útil.</p></a>
+          <a class="stage-card" href="04-analise-estruturada.html"><strong>4 · Por onde a informação passa?</strong><p>A aprovação de Ana precisa chegar, ser usada e continuar registrada.</p></a>
+          <a class="stage-card" href="05-processo-to-be-bpmn.html"><strong>5 · Como queremos que funcione?</strong><p>Usamos o que descobrimos para propor um processo melhor e responsabilidades mais claras.</p></a>
+          <a class="stage-card" href="06-requisitos.html"><strong>6 · O que o sistema precisa garantir?</strong><p>As necessidades viram requisitos, regras e formas de conferir se funcionaram.</p></a>
+          <a class="stage-card" href="07-casos-de-uso.html"><strong>7 · Quem usa e para quê?</strong><p>O desenho nasce dos objetivos reais do Atendente, Técnico e Cliente.</p></a>
+          <a class="stage-card" href="08-uml-essencial.html"><strong>8 · Que outra pergunta ainda ficou escondida?</strong><p>Escolhemos um diagrama somente quando ele ajuda a enxergar algo novo.</p></a>
+          <a class="stage-card" href="09-agile-backlog-mvp.html"><strong>9 · O que entra primeiro?</strong><p>Priorizamos o trabalho e encontramos uma primeira versão que já entrega valor.</p></a>
+          <a class="stage-card" href="10-ux-prototipo.html"><strong>10 · A pessoa consegue usar?</strong><p>Antes de programar tudo, colocamos a ideia diante de alguém e observamos.</p></a>
+          <a class="stage-card" href="11-qualidade-integracoes.html"><strong>11 · Funcionar é suficiente?</strong><p>Entram qualidade, segurança, privacidade e conversas com outros sistemas.</p></a>
+          <a class="stage-card" href="12-viabilidade-riscos-rastreabilidade.html"><strong>12 · Vale a pena e o que pode dar errado?</strong><p>Avaliamos decisões, riscos e o impacto de mudanças.</p></a>
+          <a class="stage-card" href="13-documentacao-ia.html"><strong>13 · Como não perder o que aprendemos?</strong><p>Organizamos decisões e usamos IA como apoio sem confundir sugestão com fato.</p></a>
+          <a class="stage-card" href="14-integracao-final.html"><strong>14 · Você consegue contar a história inteira?</strong><p>Reunimos o raciocínio do problema inicial até a base para desenvolvimento.</p></a>
         </div>
       </section>
 
       <section class="chapter">
-        <h2>Um projeto que cresce com você</h2>
+        <h2>Um trabalho que cresce sem precisar ser refeito no fim</h2>
         <div class="notebook">
           <div class="notebook-label">Caderno da Análise</div>
-          <h3>Não haverá um trabalho enorme para refazer no fim</h3>
-          <p>Em cada etapa você produzirá uma evidência pequena e útil. Problema, partes interessadas, processo atual, requisitos, modelos, backlog, protótipo, riscos e rastreabilidade serão acumulados. Na última etapa, você apenas revisa, integra e defende suas decisões.</p>
+          <h3>Guarde pequenas evidências ao longo do caminho</h3>
+          <p>Em cada etapa você registra apenas o que realmente aprendeu: problema, pessoas, processo, requisitos, modelos, protótipo, riscos e decisões. No final, você integra o que já foi construído.</p>
         </div>
-        <div class="card next-card"><h3>Comece sem pensar em tecnologia</h3><p>A primeira etapa pergunta algo aparentemente simples: <strong>qual é realmente o problema?</strong></p><p><a class="action" href="00-antes-do-sistema.html">Ir para a Etapa 0 →</a></p></div>
+        <div class="card next-card"><h3>Vamos começar?</h3><p>Primeiro, nada de tecnologia. Apenas observe o cliente tentando descobrir se o notebook está pronto.</p><p><a class="action" href="00-antes-do-sistema.html">Ir para a Etapa 0 →</a></p></div>
       </section>
     </div>
   </main>
