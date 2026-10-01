@@ -91,13 +91,13 @@ npm install
 npx playwright install chromium
 ```
 
-Depois execute:
+Antes do teste E2E, encerre com `Ctrl+C` qualquer servidor da Cantina que esteja aberto manualmente. Depois execute:
 
 ```bash
 npm run test:e2e
 ```
 
-O arquivo `playwright.config.js` restaura os dados iniciais e inicia o servidor automaticamente quando necessário.
+O arquivo `playwright.config.js` restaura os dados iniciais e inicia um servidor próprio para a execução do teste.
 
 ## Integração Contínua
 
