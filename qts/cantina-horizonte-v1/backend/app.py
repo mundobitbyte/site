@@ -98,7 +98,7 @@ def preparar_banco() -> None:
         )
         cur.execute(
             "INSERT INTO cupons (codigo, percentual, valor_minimo, validade, utilizado) VALUES (?, ?, ?, ?, ?)",
-            ("MBB10", 10.0, 30.0, "2026-12-31", 0),
+            ("MBB10", 10.0, 30.0, "2099-12-31", 0),
         )
     conn.commit()
     conn.close()

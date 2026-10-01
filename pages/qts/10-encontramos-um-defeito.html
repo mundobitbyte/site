@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Etapa 10 de Qualidade e Teste de Software: registre defeitos de forma reproduzível, acompanhe a correção e diferencie confirmação de regressão.">
-<title>10 — Encontramos um defeito | Qualidade e Teste de Software</title>
-<link rel="stylesheet" href="../../css/qts.css">
+<title>10 — Encontramos um defeito | Qualidade e Teste de Software</title><link rel="stylesheet" href="../../css/qts.css">
 </head>
 <body data-stage="10">
 <header class="course-header"><div class="header-left"><a class="portal-link" href="../../index.html">← Mundo bit Byte</a><span class="course-title">Qualidade e Teste de Software</span></div><div class="header-right"><span class="brand">Professor Ronaldo Lavestein</span><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="courseNav">☰ Etapas</button></div></header>
@@ -28,6 +26,7 @@
 <div class="card tool-card"><h3>Git, GitHub e repositório</h3><p><strong>Git</strong> é uma ferramenta de controle de versões: registra alterações e permite acompanhar o histórico do projeto. <strong>GitHub</strong> é um serviço que hospeda projetos controlados por Git e oferece recursos de colaboração.</p><p>Um <strong>repositório</strong> é o espaço em que ficam os arquivos do projeto e seu histórico de versões.</p></div>
 <p>Como a Cantina Horizonte está em um repositório no GitHub, podemos usar um recurso do próprio serviço para acompanhar o defeito.</p>
 <div class="card tool-card"><h3>GitHub Issues</h3><p><strong>Issue</strong> significa questão, item ou ocorrência a acompanhar. No GitHub, uma Issue pode registrar defeitos, melhorias, tarefas e outras necessidades do projeto.</p><p>Em QTS vamos usá-la principalmente para registrar defeitos de forma rastreável.</p></div>
+<div class="card practice-card"><h3>Faça a prática no repositório de exercício</h3><p>Não abra Issues de aula no repositório oficial do Mundo bit Byte. Use o repositório da sua própria cópia do projeto ou o repositório indicado pelo professor.</p><ol><li>Abra a aba <strong>Issues</strong> desse repositório.</li><li>Clique em <strong>New issue</strong>.</li><li>Use um título curto e específico.</li><li>No texto da Issue, registre ambiente, pré-condição, passos, esperado, obtido e evidência.</li><li>Crie a Issue e guarde o número dela para relacioná-la aos testes e à correção.</li></ol></div>
 <p>Um registro pode receber etiquetas como <strong>bug</strong>, <strong>alta prioridade</strong> ou <strong>estoque</strong>. As etiquetas ajudam a organizar, mas não substituem uma descrição clara.</p>
 <h2>O defeito foi corrigido. Terminou?</h2><p>Suponha que alguém altere a validação para respeitar a regra:</p>
 <div class="code-block"><pre><code>def validar_quantidade(qtd):
