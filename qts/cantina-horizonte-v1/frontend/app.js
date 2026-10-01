@@ -5,9 +5,10 @@ const estado = {
 };
 
 const moeda = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+const apiFetch = window.cantinaApiFetch ?? ((...args) => fetch(...args));
 
 async function carregarProdutos() {
-  const resposta = await fetch("/api/produtos");
+  const resposta = await apiFetch("/api/produtos");
   if (!resposta.ok) throw new Error("Falha ao carregar produtos.");
   estado.produtos = await resposta.json();
   renderizarProdutos();
@@ -103,7 +104,7 @@ async function finalizarPedido() {
   };
 
   try {
-    const resposta = await fetch("/api/pedidos", {
+    const resposta = await apiFetch("/api/pedidos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
