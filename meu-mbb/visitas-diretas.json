@@ -591,14 +591,14 @@
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/index.html",
     "ancoras": [
-      ":~:text=Vamos%20come%C3%A7ar%20por%20uma%20situa%C3%A7%C3%A3o%20bem%20simples",
+      ":~:text=Descobrir%20se%20o%20notebook%20est%C3%A1%20pronto%20virou%20um%20problema",
       ":~:text=Assist%C3%AAncia%20T%C3%A9cnica%20Conecta",
-      ":~:text=A%20regra%20do%20m%C3%B3dulo%20inteiro",
-      ":~:text=Como%20vamos%20conversar%20com%20voc%C3%AA",
-      ":~:text=As%2015%20etapas",
-      ":~:text=Um%20trabalho%20que%20cresce%20sem%20precisar%20ser%20refeito%20no%20fim",
+      ":~:text=Primeiro%20o%20problema%2C%20depois%20a%20ferramenta",
+      ":~:text=Entenda%20a%20situa%C3%A7%C3%A3o%20antes%20de%20nomear%20a%20t%C3%A9cnica",
+      ":~:text=Do%20problema%20real%20%C3%A0%20defini%C3%A7%C3%A3o%20do%20sistema",
+      ":~:text=O%20Caderno%20da%20An%C3%A1lise%20cresce%20etapa%20por%20etapa",
       ":~:text=Guarde%20pequenas%20evid%C3%AAncias%20ao%20longo%20do%20caminho",
-      ":~:text=Vamos%20come%C3%A7ar%3F"
+      ":~:text=Comece%20observando%20o%20problema%20da%20Conecta"
     ]
   },
   "pages/appinventor.html": {
@@ -1630,14 +1630,14 @@
     "versao_conteudo": 1,
     "localizacao_atual": "pages/qts/index.html",
     "ancoras": [
-      ":~:text=Come%C3%A7amos%20por%20um%20sistema%20que%20parece%20pronto",
+      ":~:text=A%20Cantina%20Horizonte%20parece%20pronta%20%E2%80%94%20mas%20ser%C3%A1%3F",
       ":~:text=Cantina%20Horizonte",
-      ":~:text=A%20pergunta%20que%20volta%20o%20m%C3%B3dulo%20inteiro",
-      ":~:text=As%2017%20etapas",
-      ":~:text=Um%20projeto%20que%20cresce%20junto%20com%20voc%C3%AA",
+      ":~:text=A%20pergunta%20central%3A%20esta%20vers%C3%A3o%20est%C3%A1%20pronta%3F",
+      ":~:text=Do%20problema%20%C3%A0%20valida%C3%A7%C3%A3o%20do%20software",
+      ":~:text=A%20Cantina%20Horizonte%20evolui%20junto%20com%20os%20testes",
       ":~:text=Voc%C3%AA%20guarda%20evid%C3%AAncias",
-      ":~:text=As%20ferramentas%20entram%20na%20hora%20certa",
-      ":~:text=Vamos%20come%C3%A7ar%3F"
+      ":~:text=As%20ferramentas%20entram%20quando%20o%20teste%20precisa%20delas",
+      ":~:text=Comece%20usando%20a%20Cantina%20Horizonte%20como%20cliente"
     ]
   },
   "pages/qts/00-sera-que-esta-pronto.html": {
@@ -1665,7 +1665,7 @@
       ":~:text=Ent%C3%A3o%20o%20sistema%20funciona%20ou%20n%C3%A3o%3F",
       ":~:text=Primeira%20descoberta",
       ":~:text=Mas%20o%20que%20significa%20%E2%80%9Cter%20qualidade%E2%80%9D%3F",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20o%20que%20significa%20qualidade%3F",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -1699,7 +1699,7 @@
       ":~:text=MPS.BR",
       ":~:text=Vamos%20voltar%20%C3%A0%20Cantina%20Horizonte",
       ":~:text=Agora%20aparece%20uma%20pergunta%20que%20n%C3%A3o%20d%C3%A1%20para%20evitar",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20erro%2C%20defeito%2C%20falha%20e%20teste",
       ":~:text=Antes%20de%20seguir",
       ":~:text=Refer%C3%AAncias%20desta%20etapa"
     ]
@@ -1735,7 +1735,7 @@
       ":~:text=Valida%C3%A7%C3%A3o",
       ":~:text=Agora%20voc%C3%AA%20consegue%20falar%20com%20mais%20precis%C3%A3o",
       ":~:text=Mas%20de%20onde%20veio%20o%20%E2%80%9Cesperado%E2%80%9D%3F",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20o%20que%20deveria%20acontecer%3F",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -1773,7 +1773,7 @@
       ":~:text=Mas%20existe%20uma%20surpresa",
       ":~:text=Documento%20A",
       ":~:text=Documento%20B",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20encontrar%20problemas%20antes%20de%20executar",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -1805,7 +1805,7 @@
       ":~:text=Nem%20tudo%20que%20parece%20estranho%20%C3%A9%20um%20defeito",
       ":~:text=Pr%C3%A1tica%20%C2%B7%20est%C3%A1tico%20ou%20din%C3%A2mico%3F",
       ":~:text=Agora%20o%20problema%20muda%20novamente",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20escolher%20bons%20valores%20de%20teste",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -1831,7 +1831,7 @@
       ":~:text=Pr%C3%A1tica%20%C2%B7%20monte%20um%20conjunto%20pequeno%2C%20mas%20justific%C3%A1vel",
       ":~:text=O%20n%C3%BAmero%20de%20testes%20n%C3%A3o%20mede%20sozinho%20a%20qualidade%20dos%20testes",
       ":~:text=Agora%20as%20regras%20come%C3%A7am%20a%20ficar%20mais%20interessantes",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20testar%20regras%20com%20v%C3%A1rias%20condi%C3%A7%C3%B5es",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -1860,7 +1860,7 @@
       ":~:text=Uma%20t%C3%A9cnica%20n%C3%A3o%20substitui%20a%20outra",
       ":~:text=Pr%C3%A1tica%20%C2%B7%20escolha%20a%20t%C3%A9cnica%20pelo%20problema",
       ":~:text=Mas%20ainda%20falta%20uma%20pergunta",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20n%C3%ADveis%20e%20tipos%20de%20teste",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -1894,7 +1894,7 @@
       ":~:text=Um%20teste%20pode%20combinar%20n%C3%ADvel%20e%20tipo",
       ":~:text=Pr%C3%A1tica%20%C2%B7%20diga%20qual%20pergunta%20est%C3%A1%20sendo%20feita",
       ":~:text=Agora%20nosso%20conjunto%20de%20testes%20cresceu%20bastante",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20decidir%20o%20que%20testar%20primeiro",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -1922,7 +1922,7 @@
       ":~:text=Testar%20com%20base%20em%20risco%20n%C3%A3o%20significa%20ignorar%20o%20resto",
       ":~:text=Pr%C3%A1tica%20%C2%B7%20voc%C3%AA%20tem%2030%20minutos",
       ":~:text=Agora%20surgiu%20outro%20problema",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20planejar%20e%20documentar%20os%20testes",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -1958,7 +1958,7 @@
       ":~:text=Documento%20de%20apoio",
       ":~:text=Pr%C3%A1tica%20%C2%B7%20planeje%20uma%20pequena%20rodada",
       ":~:text=Um%20caso%20falhou.%20Agora%20precisamos%20contar%20a%20hist%C3%B3ria%20do%20problema",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20registrar%20e%20tratar%20um%20defeito",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -1989,7 +1989,7 @@
       ":~:text=Documento%20de%20apoio",
       ":~:text=Pr%C3%A1tica%20%C2%B7%20transforme%20uma%20falha%20em%20informa%C3%A7%C3%A3o%20%C3%BAtil",
       ":~:text=Agora%20aparece%20outro%20problema",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20automatizar%20verifica%C3%A7%C3%B5es%20repetitivas",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -2019,7 +2019,7 @@
       ":~:text=E%20em%20outras%20linguagens%3F",
       ":~:text=Pr%C3%A1tica%20%C2%B7%20construa%20uma%20pequena%20su%C3%ADte",
       ":~:text=Agora%20podemos%20inverter%20a%20ordem",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20escrever%20o%20teste%20antes%20do%20c%C3%B3digo",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -2042,7 +2042,7 @@
       ":~:text=TDD%20tamb%C3%A9m%20n%C3%A3o%20garante%20tudo",
       ":~:text=Pr%C3%A1tica%20%C2%B7%20uma%20nova%20regra%20antes%20do%20c%C3%B3digo",
       ":~:text=O%20teste%20passou.%20O%20sistema%20inteiro%20est%C3%A1%20protegido%3F",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20testar%20interface%2C%20servidor%20e%20banco%20juntos",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -2074,7 +2074,7 @@
       ":~:text=Roteiro%20de%20API",
       ":~:text=Pr%C3%A1tica%20%C2%B7%20n%C3%A3o%20olhe%20apenas%20para%20a%20resposta",
       ":~:text=Mas%20ainda%20existe%20uma%20parte%20que%20n%C3%A3o%20testamos",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20testar%20o%20fluxo%20completo%20como%20o%20usu%C3%A1rio",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -2098,7 +2098,7 @@
       ":~:text=Escolha%20bem%20o%20que%20automatizar",
       ":~:text=Testes%20de%20interface%20tamb%C3%A9m%20precisam%20ser%20mantidos",
       ":~:text=Agora%20temos%20outro%20problema%20de%20processo",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20executar%20testes%20automaticamente%20a%20cada%20mudan%C3%A7a",
       ":~:text=Antes%20de%20seguir"
     ]
   },
@@ -2123,7 +2123,7 @@
       ":~:text=Nem%20todo%20teste%20precisa%20rodar%20da%20mesma%20forma%20em%20todo%20projeto",
       ":~:text=A%20espiral%20volta%20ao%20processo",
       ":~:text=Agora%20voltamos%20%C3%A0%20pergunta%20inicial",
-      ":~:text=Pr%C3%B3xima%20etapa",
+      ":~:text=A%20seguir%3A%20decidir%20se%20a%20vers%C3%A3o%20est%C3%A1%20pronta%20para%20entrega",
       ":~:text=Antes%20de%20seguir"
     ]
   },
