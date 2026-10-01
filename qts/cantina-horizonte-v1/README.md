@@ -40,6 +40,10 @@ http://127.0.0.1:8000
 
 O banco de dados SQLite `cantina.db` é criado automaticamente.
 
+## Modo de demonstração
+
+As primeiras etapas do módulo podem abrir a interface em modo de demonstração. Assim, o aluno consegue experimentar a Cantina Horizonte antes de precisar configurar Python, FastAPI ou SQLite. Esses recursos entram somente quando passarem a ser necessários para o conteúdo.
+
 ## Restaurar os dados iniciais
 
 Durante as atividades, os pedidos alteram o estoque. Para recomeçar a experiência com os dados originais, encerre o servidor e execute:
@@ -49,6 +53,10 @@ python resetar_dados.py
 ```
 
 No Windows também é possível dar dois cliques em `resetar_dados_windows.bat`.
+
+## Materiais usados nas etapas
+
+A pasta `docs/` contém artefatos que fazem parte das atividades do módulo, como os requisitos-base da Cantina Horizonte e os materiais de revisão estática. Eles aparecem quando o problema pedagógico exige documentação real, e não como burocracia separada da prática.
 
 ## Teste rápido do projeto
 
