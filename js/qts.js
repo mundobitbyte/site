@@ -2,7 +2,7 @@
   const stages = [
     ['0', 'Será que está pronto?', '00-sera-que-esta-pronto.html', true],
     ['1', 'O que significa qualidade?', '01-o-que-significa-qualidade.html', true],
-    ['2', 'Erro, defeito, falha e teste', '#', false],
+    ['2', 'Erro, defeito, falha e teste', '02-erro-defeito-falha-teste.html', true],
     ['3', 'O que deveria acontecer?', '#', false],
     ['4', 'Antes de executar', '#', false],
     ['5', 'Bons valores de teste', '#', false],
