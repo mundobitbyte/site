@@ -25,7 +25,6 @@
     </div>
     <figcaption class="mbb-comic-takeaway">
       <strong>Na proporcionalidade direta, se uma grandeza dobra, a outra também dobra.</strong> Uma taxa fixa inicial quebra essa relação.
-      <br><small><strong>* Curiosidade de linguagem:</strong> para algumas gerações e regiões, “ser dobrado” também aparecia coloquialmente com a ideia de alguém ter sido vencido, levado na conversa ou passado para trás. Por isso, a palavra “dobro” nesta situação pode lembrar um pequeno trocadilho.</small>
     </figcaption>
   `;
 
