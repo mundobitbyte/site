@@ -62,9 +62,17 @@
   }
 
   try {
-    const resposta = await fetch('catalogo.json?v=mbb-busca-4');
-    if (!resposta.ok) throw new Error('Catálogo indisponível');
-    const catalogo = window.MBBCatalogo.validar(await resposta.json());
+    const [principalResposta, segurancaResposta] = await Promise.all([
+      fetch('catalogo.json?v=mbb-busca-4'),
+      fetch('catalogo-seguranca-dados.json?v=mbb-sdi-1').catch(() => null)
+    ]);
+    if (!principalResposta.ok) throw new Error('Catálogo indisponível');
+    const bruto = await principalResposta.json();
+    if (segurancaResposta?.ok) {
+      const extra = await segurancaResposta.json();
+      bruto.unidades.push(...(extra.unidades || []));
+    }
+    const catalogo = window.MBBCatalogo.validar(bruto);
     function renderizar() {
       const termo = campo.value.trim();
       resultados.replaceChildren();
@@ -87,7 +95,6 @@
             const conta = await prepararConta();
             if (conta?.atual()) await conta.visitar(unidade, ancora);
           };
-          // O estudo público não fica preso a uma conexão lenta ou indisponível.
           await Promise.race([
             registrar().catch(() => {}),
             new Promise(resolve => setTimeout(resolve, 3000))
