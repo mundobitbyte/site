@@ -4,10 +4,20 @@
   const mensagem = document.getElementById('mensagem');
   const painel = document.getElementById('painel');
   const sair = document.getElementById('sair');
-  const resposta = await fetch('catalogo.json').catch(() => null);
+  const [resposta, segurancaResposta] = await Promise.all([
+    fetch('catalogo.json').catch(() => null),
+    fetch('catalogo-seguranca-dados.json?v=mbb-sdi-1').catch(() => null)
+  ]);
   if (!resposta?.ok) { mensagem.textContent = 'Catálogo indisponível. Volte ao site público para estudar.'; return; }
   let catalogo;
-  try { catalogo = core.validar(await resposta.json()); }
+  try {
+    const bruto = await resposta.json();
+    if (segurancaResposta?.ok) {
+      const extra = await segurancaResposta.json();
+      bruto.unidades.push(...(extra.unidades || []));
+    }
+    catalogo = core.validar(bruto);
+  }
   catch (_) { mensagem.textContent = 'Catálogo indisponível. Volte ao site público para estudar.'; return; }
   let registros = {};
   const elemento = id => document.getElementById(id);
