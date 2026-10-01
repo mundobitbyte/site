@@ -105,6 +105,24 @@
   }
 }());
 
+/* Integração pública do módulo de Segurança na área de Infraestrutura sem alterar o conteúdo canônico indexado. */
+(function () {
+  'use strict';
+  function instalar() {
+    if (!/\/pages\/infraestrutura\.html$/.test(location.pathname)) return;
+    const grade = document.querySelector('#portalView .module-grid');
+    if (!grade || grade.querySelector('a[href="seguranca-dados/index.html"]')) return;
+    const cartao = document.createElement('a');
+    cartao.className = 'module-card available';
+    cartao.href = 'seguranca-dados/index.html';
+    cartao.innerHTML = '<span class="status ready">Disponível</span><h2>5. Segurança de Dados e Informação</h2><p>Parta do valor da informação para entender CID, riscos, engenharia social, autenticação, hash, criptografia, HTTPS, SQL Injection, backup, logs, incidentes e políticas.</p><span class="card-action">Começar módulo →</span>';
+    const integrador = grade.querySelector('a[href="#integrador-final"]');
+    grade.insertBefore(cartao, integrador || null);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', instalar, { once: true });
+  else instalar();
+}());
+
 /* Aviso autoral público, discreto e independente do layout de cada módulo. */
 (function () {
   'use strict';
