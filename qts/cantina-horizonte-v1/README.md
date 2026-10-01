@@ -56,12 +56,37 @@ No Windows também é possível dar dois cliques em `resetar_dados_windows.bat`.
 
 ## Materiais usados nas etapas
 
-A pasta `docs/` contém artefatos que fazem parte das atividades do módulo, como os requisitos-base da Cantina Horizonte e os materiais de revisão estática. Eles aparecem quando o problema pedagógico exige documentação real, e não como burocracia separada da prática.
+A pasta `docs/` contém artefatos que fazem parte das atividades do módulo, como os requisitos-base da Cantina Horizonte, os materiais de revisão estática, o modelo de plano e casos de teste, o registro de defeito e o roteiro de API com Bruno. Eles aparecem quando o problema pedagógico exige documentação real, e não como burocracia separada da prática.
 
-## Teste rápido do projeto
+## Testes Python
 
 ```bash
 pytest
 ```
 
-Os testes atuais verificam apenas o fluxo básico necessário para manter o protótipo utilizável. A suíte será ampliada gradualmente ao longo do próprio módulo de QTS.
+Para executar também a cobertura:
+
+```bash
+pytest --cov=backend --cov-report=term-missing
+```
+
+## Teste de ponta a ponta com Playwright
+
+Instale as dependências JavaScript e o Chromium:
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+Depois execute:
+
+```bash
+npm run test:e2e
+```
+
+O arquivo `playwright.config.js` restaura os dados iniciais e inicia o servidor automaticamente quando necessário.
+
+## Integração Contínua
+
+O workflow `.github/workflows/qts-cantina-horizonte.yml` executa os testes Python com cobertura e o teste E2E da Cantina Horizonte no GitHub Actions. Esse arquivo faz parte da Etapa 15 e existe para que a automação seja estudada a partir de um processo real do próprio projeto.
