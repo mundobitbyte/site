@@ -16,7 +16,7 @@
     ['13', 'Interface, servidor e banco', '13-interface-servidor-banco.html', true],
     ['14', 'Como o usuário', '14-como-o-usuario.html', true],
     ['15', 'Testes executando sozinhos', '15-testes-executando-sozinhos.html', true],
-    ['16', 'Está pronto para entrega?', '#', false],
+    ['16', 'Está pronto para entrega?', '16-esta-pronto-para-entrega.html', true],
   ];
 
   const nav = document.querySelector('#courseNav');
