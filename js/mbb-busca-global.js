@@ -105,22 +105,59 @@
   }
 }());
 
-/* Integração pública do módulo de Segurança na área de Infraestrutura sem alterar o conteúdo canônico indexado. */
+/* Organização da Home: Segurança como área própria e nome mais claro para Gestão. */
 (function () {
   'use strict';
+
   function instalar() {
-    if (!/\/pages\/infraestrutura\.html$/.test(location.pathname)) return;
-    const grade = document.querySelector('#portalView .module-grid');
-    if (!grade || grade.querySelector('a[href="seguranca-dados/index.html"]')) return;
-    const cartao = document.createElement('a');
-    cartao.className = 'module-card available';
-    cartao.href = 'seguranca-dados/index.html';
-    cartao.innerHTML = '<span class="status ready">Disponível</span><h2>5. Segurança de Dados e Informação</h2><p>Parta do valor da informação para entender CID, riscos, engenharia social, autenticação, hash, criptografia, HTTPS, SQL Injection, backup, logs, incidentes e políticas.</p><span class="card-action">Começar módulo →</span>';
-    const integrador = grade.querySelector('a[href="#integrador-final"]');
-    grade.insertBefore(cartao, integrador || null);
+    const home = document.querySelector('#areas .areas-grid');
+    if (!home) return;
+
+    const cartoes = Array.from(home.querySelectorAll('a.area-card'));
+    const cartaoGestao = cartoes.find(cartao =>
+      cartao.querySelector('h3')?.textContent.trim() === 'Tecnologia e Gestão'
+    );
+
+    if (cartaoGestao) {
+      const titulo = cartaoGestao.querySelector('h3');
+      if (titulo) titulo.textContent = 'Tecnologia aplicada à Gestão';
+    }
+
+    const secaoGestao = document.getElementById('tecnologia-gestao');
+    if (secaoGestao) {
+      secaoGestao.dataset.title = 'Tecnologia aplicada à Gestão';
+      const tituloSecao = secaoGestao.querySelector('#gestao-title');
+      if (tituloSecao) tituloSecao.textContent = 'Tecnologia aplicada à Gestão';
+    }
+
+    const segurancaJaExiste = cartoes.some(cartao =>
+      /seguranca-dados\/index\.html$/.test(cartao.getAttribute('href') || '')
+    );
+
+    if (!segurancaJaExiste) {
+      const cartaoSeguranca = document.createElement('a');
+      cartaoSeguranca.className = 'area-card';
+      cartaoSeguranca.href = 'pages/seguranca-dados/index.html';
+      cartaoSeguranca.innerHTML = `
+        <div class="area-card-body">
+          <h3>Segurança da Informação</h3>
+          <p>Proteja dados, pessoas, sistemas e serviços com prevenção, autenticação, criptografia, backup, monitoramento e resposta a incidentes.</p>
+          <span class="area-action">Acessar área</span>
+        </div>`;
+
+      const cartaoDados = cartoes.find(cartao =>
+        cartao.querySelector('h3')?.textContent.trim() === 'Dados e Banco de Dados'
+      );
+      if (cartaoDados) cartaoDados.insertAdjacentElement('afterend', cartaoSeguranca);
+      else home.appendChild(cartaoSeguranca);
+    }
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', instalar, { once: true });
-  else instalar();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', instalar, { once: true });
+  } else {
+    instalar();
+  }
 }());
 
 /* Aviso autoral público, discreto e independente do layout de cada módulo. */
