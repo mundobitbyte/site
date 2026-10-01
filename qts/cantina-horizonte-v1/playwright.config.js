@@ -16,7 +16,7 @@ module.exports = defineConfig({
   webServer: {
     command: 'python resetar_dados.py && python -m uvicorn backend.app:app --host 127.0.0.1 --port 8000',
     url: 'http://127.0.0.1:8000',
-    reuseExistingServer: true,
+    reuseExistingServer: false,
     timeout: 120000
   }
 });
