@@ -651,7 +651,7 @@ Produto
 <p>Relacionamento é a associação entre entidades.</p>
 <h3>Antes de desenhar: descubra a regra de negócio</h3>
 <p>Relacionamentos e cardinalidades não devem ser escolhidos por aparência. Eles nascem das <strong>regras de negócio</strong>: frases que explicam como o sistema realmente funciona.</p>
-<div class="card idea"><div class="card-body"><h3>Exemplo</h3><p>“Um cliente pode realizar vários pedidos, mas cada pedido pertence a um único cliente.” Essa frase já indica o relacionamento Cliente–Pedido e prepara a cardinalidade 1:N.</p></div></div>
+<div class="card idea"><div class="card-body"><h3>Exemplo: cliente e pedidos</h3><p>“Um cliente pode realizar vários pedidos, mas cada pedido pertence a um único cliente.” Essa frase já indica o relacionamento Cliente–Pedido e prepara a cardinalidade 1:N.</p></div></div>
 <p>Antes de traçar uma linha no DER, pergunte: <strong>quem se relaciona com quem, isso é obrigatório e quantas ocorrências podem participar?</strong></p>
 <table class="sql-table">
 <tr><th>Mundo real</th><th>Modelagem</th></tr>
@@ -2516,7 +2516,7 @@ COMMIT  ou  ROLLBACK</pre></div>
 <p>No MySQL, o mecanismo <strong>InnoDB</strong> oferece transações ACID, bloqueios em nível de linha e controle de concorrência. É o mecanismo padrão nas instalações atuais do MySQL.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar verificação</button><pre><code>SHOW TABLE STATUS FROM comercio;</code></pre></div>
 <p>Na coluna <strong>Engine</strong>, as tabelas do nosso laboratório devem aparecer como InnoDB.</p>
-<div class="card note"><div class="card-body"><h3>Por que isso importa?</h3><p>Nem todo mecanismo de armazenamento possui exatamente o mesmo comportamento transacional. Neste capítulo, nossas experiências e explicações consideram tabelas InnoDB.</p></div></div>
+<div class="card note"><div class="card-body"><h3>Por que o mecanismo de armazenamento importa?</h3><p>Nem todo mecanismo de armazenamento possui exatamente o mesmo comportamento transacional. Neste capítulo, nossas experiências e explicações consideram tabelas InnoDB.</p></div></div>
 
 <h2>BLOCO 4 — AUTOCOMMIT: existe uma transação mesmo quando você não percebe</h2>
 <p>Por padrão, uma nova conexão do MySQL inicia com <strong>autocommit ligado</strong>. Nesse modo, cada comando SQL bem-sucedido é tratado como uma pequena transação e confirmado automaticamente.</p>
