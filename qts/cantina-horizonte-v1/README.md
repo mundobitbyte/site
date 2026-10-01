@@ -4,6 +4,16 @@ Protótipo isolado que servirá como sistema-fio-condutor do módulo **QTS — Q
 
 A aplicação foi mantida pequena de propósito: produtos, pedido, cupom, estoque e total. Assim, o foco do aluno permanece em qualidade e testes, e não na construção de um sistema grande.
 
+## Antes dos comandos: o que são essas tecnologias?
+
+- **Python** é a linguagem usada no servidor da Cantina Horizonte.
+- **FastAPI** é o framework em Python usado para criar a parte do servidor que recebe e responde às requisições da aplicação. Um *framework* é uma estrutura pronta que ajuda a organizar o desenvolvimento.
+- **SQLite** é o sistema de banco de dados usado neste projeto. Ele guarda os dados em um arquivo local e não exige a instalação de um servidor de banco separado.
+- **Uvicorn** é o servidor que executa a aplicação FastAPI durante as práticas.
+- **Ambiente virtual** é uma pasta isolada onde instalamos as dependências Python do projeto sem misturá-las com outros projetos do computador.
+
+Você não precisa dominar essas tecnologias para começar QTS. Elas entram apenas como suporte ao sistema que será testado.
+
 ## Caminho mais simples no Windows
 
 1. Dê dois cliques em `iniciar_windows.bat`.
@@ -71,6 +81,8 @@ pytest --cov=backend --cov-report=term-missing
 ```
 
 ## Teste de ponta a ponta com Playwright
+
+Nesta parte do módulo entra também o **Node.js**, ambiente usado para executar as ferramentas JavaScript do Playwright fora do navegador. O **npm** instala os pacotes do projeto, e o **npx** executa ferramentas instaladas nele.
 
 Instale as dependências JavaScript e o Chromium:
 
