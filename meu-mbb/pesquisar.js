@@ -70,7 +70,9 @@
     const bruto = await principalResposta.json();
     if (segurancaResposta?.ok) {
       const extra = await segurancaResposta.json();
-      bruto.unidades.push(...(extra.unidades || []));
+      const unidadesExtras = Array.isArray(extra.unidades)
+        ? extra.unidades.filter(item => /^seg-dados-\d+$/.test(item.conteudo_id || '')) : [];
+      bruto.unidades.push(...unidadesExtras);
     }
     const catalogo = window.MBBCatalogo.validar(bruto);
     function renderizar() {
