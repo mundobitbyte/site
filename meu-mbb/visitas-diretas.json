@@ -591,14 +591,14 @@
     "versao_conteudo": 1,
     "localizacao_atual": "pages/analise-sistemas/index.html",
     "ancoras": [
-      ":~:text=Vamos%20come%C3%A7ar%20por%20uma%20situa%C3%A7%C3%A3o%20bem%20simples",
+      ":~:text=Descobrir%20se%20o%20notebook%20est%C3%A1%20pronto%20virou%20um%20problema",
       ":~:text=Assist%C3%AAncia%20T%C3%A9cnica%20Conecta",
-      ":~:text=A%20regra%20do%20m%C3%B3dulo%20inteiro",
-      ":~:text=Como%20vamos%20conversar%20com%20voc%C3%AA",
-      ":~:text=As%2015%20etapas",
-      ":~:text=Um%20trabalho%20que%20cresce%20sem%20precisar%20ser%20refeito%20no%20fim",
+      ":~:text=Primeiro%20o%20problema%2C%20depois%20a%20ferramenta",
+      ":~:text=Entenda%20a%20situa%C3%A7%C3%A3o%20antes%20de%20nomear%20a%20t%C3%A9cnica",
+      ":~:text=Do%20problema%20real%20%C3%A0%20defini%C3%A7%C3%A3o%20do%20sistema",
+      ":~:text=O%20Caderno%20da%20An%C3%A1lise%20cresce%20etapa%20por%20etapa",
       ":~:text=Guarde%20pequenas%20evid%C3%AAncias%20ao%20longo%20do%20caminho",
-      ":~:text=Vamos%20come%C3%A7ar%3F"
+      ":~:text=Comece%20observando%20o%20problema%20da%20Conecta"
     ]
   },
   "pages/appinventor.html": {
@@ -1630,14 +1630,14 @@
     "versao_conteudo": 1,
     "localizacao_atual": "pages/qts/index.html",
     "ancoras": [
-      ":~:text=Come%C3%A7amos%20por%20um%20sistema%20que%20parece%20pronto",
+      ":~:text=A%20Cantina%20Horizonte%20parece%20pronta%20%E2%80%94%20mas%20ser%C3%A1%3F",
       ":~:text=Cantina%20Horizonte",
-      ":~:text=A%20pergunta%20que%20volta%20o%20m%C3%B3dulo%20inteiro",
-      ":~:text=As%2017%20etapas",
-      ":~:text=Um%20projeto%20que%20cresce%20junto%20com%20voc%C3%AA",
+      ":~:text=A%20pergunta%20central%3A%20esta%20vers%C3%A3o%20est%C3%A1%20pronta%3F",
+      ":~:text=Do%20problema%20%C3%A0%20valida%C3%A7%C3%A3o%20do%20software",
+      ":~:text=A%20Cantina%20Horizonte%20evolui%20junto%20com%20os%20testes",
       ":~:text=Voc%C3%AA%20guarda%20evid%C3%AAncias",
-      ":~:text=As%20ferramentas%20entram%20na%20hora%20certa",
-      ":~:text=Vamos%20come%C3%A7ar%3F"
+      ":~:text=As%20ferramentas%20entram%20quando%20o%20teste%20precisa%20delas",
+      ":~:text=Comece%20usando%20a%20Cantina%20Horizonte%20como%20cliente"
     ]
   },
   "pages/qts/00-sera-que-esta-pronto.html": {
