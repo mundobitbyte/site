@@ -4,8 +4,8 @@
     ['1', 'O que significa qualidade?', '01-o-que-significa-qualidade.html', true],
     ['2', 'Erro, defeito, falha e teste', '02-erro-defeito-falha-teste.html', true],
     ['3', 'O que deveria acontecer?', '03-o-que-deveria-acontecer.html', true],
-    ['4', 'Antes de executar', '#', false],
-    ['5', 'Bons valores de teste', '#', false],
+    ['4', 'Antes de executar', '04-antes-de-executar.html', true],
+    ['5', 'Bons valores de teste', '05-bons-valores-de-teste.html', true],
     ['6', 'Regras mais complicadas', '#', false],
     ['7', 'O que estamos testando?', '#', false],
     ['8', 'Não dá para testar tudo', '#', false],
@@ -60,6 +60,17 @@
     const bar = document.querySelector('#progressBar');
     if (text) text.textContent = `Etapa ${current} de ${total - 1}`;
     if (bar) bar.style.width = `${(position / total) * 100}%`;
+
+    const currentIndex = stages.findIndex(([number]) => number === current);
+    const nextStage = stages[currentIndex + 1];
+    const nextSlot = document.querySelector('.stage-footer .disabled');
+    if (nextSlot && nextStage?.[3]) {
+      const link = document.createElement('a');
+      link.className = 'next';
+      link.href = nextStage[2];
+      link.textContent = `Etapa ${nextStage[0]} →`;
+      nextSlot.replaceWith(link);
+    }
   }
 
   const toggle = document.querySelector('#menuToggle');
