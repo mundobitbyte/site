@@ -2,6 +2,10 @@
 
 Este documento reúne regras confirmadas pela Cantina Horizonte e será usado como referência nas atividades de Qualidade e Teste de Software.
 
+Neste arquivo:
+- **RF** significa **Requisito Funcional**;
+- **RQ** significa **Requisito de Qualidade**.
+
 ## Requisitos funcionais
 
 ### RF-01 — Produtos
