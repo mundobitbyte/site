@@ -88,8 +88,9 @@ test('cliente consegue adicionar dois salgados e finalizar o pedido', async ({ p
         <p>Não é necessário memorizar cada comando. Leia o teste como uma história: abrir, localizar, preencher, clicar e comparar o resultado.</p>
 
         <h2>Executando</h2>
+        <p>Se a Cantina Horizonte estiver aberta por um servidor iniciado manualmente, encerre esse servidor com <code>Ctrl+C</code> antes de continuar. Assim o Playwright consegue restaurar os dados e iniciar um ambiente limpo para o teste.</p>
         <div class="code-block"><pre><code>npm run test:e2e</code></pre></div>
-        <p>A configuração do projeto restaura os dados iniciais, inicia o servidor e abre o Chromium para o teste.</p>
+        <p>A configuração do projeto restaura os dados iniciais, inicia um servidor exclusivo para o teste e executa o fluxo no Chromium.</p>
         <div class="card evidence-card"><p>Se o fluxo terminar como esperado, o teste passa. Se algum ponto da cadeia produzir um resultado diferente, o teste falha e nos dá uma pista sobre onde investigar.</p></div>
 
         <h2>Por que não fazer tudo apenas com E2E?</h2>
