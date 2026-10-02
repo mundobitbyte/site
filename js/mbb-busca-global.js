@@ -10,6 +10,16 @@
 
   const script = document.currentScript;
   if (!script) return;
+
+  /* Regra transversal MbB: toda página pública usa a camada seletiva de legibilidade visual. */
+  if (!window.__MBB_VISUALIZADOR_SITE__ && !document.querySelector('script[data-mbb-visualizador-site]')) {
+    const visualizador = document.createElement('script');
+    visualizador.src = new URL('mbb-visualizador-site.js?v=20261001-3', script.src).href;
+    visualizador.dataset.mbbVisualizadorSite = '1';
+    visualizador.async = true;
+    document.head.appendChild(visualizador);
+  }
+
   // O registro de visitas roda à parte e nunca bloqueia a pesquisa pública.
   if (location.pathname !== new URL('../pages/git.html', script.src).pathname) {
     const visitas = document.createElement('script');
