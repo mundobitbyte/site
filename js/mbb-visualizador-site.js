@@ -129,7 +129,7 @@
 
   function technicalGraphic(el) {
     if (!el || el.closest('#mbbVisualizador')) return false;
-    if (el.closest('.visual[data-zoomable="true"],#diagramViewer,.diagram-viewer')) return false;
+    if (el.closest('.visual[data-zoomable="true"],.visual.visual-scroll,.visual[data-diagram-title],#diagramViewer,.diagram-viewer')) return false;
     if (el.closest('[data-mbb-ampliavel]')) return false;
     const explicit = el.closest('.flowchart-panel-v3,.circuitFigure,.circuitPhoto,.risk-scene-wrap');
     if (explicit) return explicit;
