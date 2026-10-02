@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import puppeteer from 'puppeteer-core';
 
+// Auditoria integral permanente de legibilidade visual dos módulos SDI e QTS.
 const base = process.env.MBB_BASE_URL || 'http://127.0.0.1:4173';
 const failures = [];
 const assert = (condition, message) => { if (!condition) failures.push(message); };
