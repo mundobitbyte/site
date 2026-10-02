@@ -4,6 +4,15 @@
   if (!script) return;
   const origem = new URL(script.src);
   const pagina = decodeURIComponent(location.pathname.replace(/^\//, ''));
+
+  if ((pagina.startsWith('pages/qts/') || pagina.startsWith('pages/seguranca-dados/')) &&
+      !window.__MBB_VISUALIZADOR_SITE__ && !document.querySelector('script[data-mbb-visualizador-site]')) {
+    const visualizador = document.createElement('script');
+    visualizador.src = new URL('../js/mbb-visualizador-site.js?v=20261001-2', origem).href;
+    visualizador.dataset.mbbVisualizadorSite = '1';
+    document.body.appendChild(visualizador);
+  }
+
   let unidade;
   try {
     const resposta = await fetch(new URL('visitas-diretas.json?v=mbb-recursos-1', origem));
