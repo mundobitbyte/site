@@ -40,3 +40,11 @@
     nav.addEventListener('click',event=>{if(event.target.closest('a')&&window.innerWidth<=820){document.body.classList.remove('nav-open'); toggle.setAttribute('aria-expanded','false');}});
   }
 })();
+
+(() => {
+  if (window.__MBB_VISUALIZADOR_SITE__ || document.querySelector('script[data-mbb-visualizador-site]')) return;
+  const script = document.createElement('script');
+  script.src = '/js/mbb-visualizador-site.js?v=20261001-1';
+  script.dataset.mbbVisualizadorSite = '1';
+  document.body.appendChild(script);
+})();
