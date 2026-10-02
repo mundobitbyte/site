@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import path from 'node:path';
 import puppeteer from 'puppeteer-core';
 
 const base = process.env.MBB_BASE_URL || 'http://127.0.0.1:4173';
@@ -27,47 +28,82 @@ for (const candidate of candidates) {
 if (!executablePath) throw new Error('Nenhum Chromium/Chrome encontrado no runner.');
 
 const browser = await puppeteer.launch({ executablePath, headless:true, args:['--no-sandbox','--disable-dev-shm-usage'] });
+const report = [];
 
-async function testarPagina(path, label) {
+async function paginasDoModulo(dir) {
+  const nomes = await fs.readdir(dir);
+  return nomes.filter(nome => nome.endsWith('.html')).sort().map(nome => path.posix.join(dir, nome));
+}
+
+async function testarPagina(pagePath, label) {
   const page = await browser.newPage();
   const errors = [];
   page.on('pageerror', error => errors.push(String(error?.message || error)));
   await page.setViewport({ width: 360, height: 800, deviceScaleFactor:1 });
-  await page.goto(`${base}/${path}`, { waitUntil:'networkidle0' });
-  await wait(300);
+  await page.goto(`${base}/${pagePath}`, { waitUntil:'networkidle0' });
+  await wait(260);
 
-  const state = await page.evaluate(() => {
-    const tables = [...document.querySelectorAll('table')].filter(table => (table.rows?.[0]?.cells?.length || 0) >= 3);
-    const marked = tables.map(table => table.closest('.table-wrap,.table-responsive,.responsive-table,.table-container,[class*="table-wrap"],[class*="table-responsive"]') || table)
-      .find(host => host?.dataset?.mbbAmpliavel === 'tabela');
+  const state = await page.evaluate(async () => {
+    await window.MBBVisualizadorSite?.scan(document);
+    await new Promise(resolve => setTimeout(resolve, 80));
+    const hostFor = table => table.closest('.table-wrap,.table-responsive,.responsive-table,.table-container,[class*="table-wrap"],[class*="table-responsive"]') || table;
+    const tables = [...document.querySelectorAll('table')];
+    const needed = tables.filter(table => window.MBBVisualizadorSite?.tableNeedsViewer(table));
+    const missed = needed.filter(table => {
+      const host = hostFor(table);
+      return host?.dataset?.mbbAmpliavel !== 'tabela' || !host?.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]');
+    });
+    const marked = [...document.querySelectorAll('[data-mbb-ampliavel]')];
+    const orphanTriggers = marked.filter(host => !host.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]'));
     return {
       siteLoaded: window.__MBB_VISUALIZADOR_SITE__ === true,
-      tableCount: tables.length,
-      marked: Boolean(marked),
-      trigger: Boolean(marked?.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]')),
+      tables: tables.length,
+      needed: needed.length,
+      missed: missed.length,
+      marked: marked.length,
+      orphanTriggers: orphanTriggers.length,
       overflow: document.documentElement.scrollWidth - window.innerWidth
     };
   });
 
   assert(state.siteLoaded, `${label}: camada global de visualização não carregou.`);
-  assert(state.tableCount > 0, `${label}: nenhuma tabela elegível encontrada para o teste.`);
-  assert(state.marked && state.trigger, `${label}: tabela larga não recebeu recurso de ampliar.`);
+  assert(state.missed === 0, `${label}: ${state.missed} tabela(s) que precisam ampliar ficaram sem botão.`);
+  assert(state.orphanTriggers === 0, `${label}: ${state.orphanTriggers} visual(is) marcado(s) ficaram sem botão de ampliar.`);
   assert(state.overflow <= 2, `${label}: criou overflow horizontal global (${state.overflow}px).`);
   assert(errors.length === 0, `${label}: erros JavaScript: ${errors.join(' | ')}`);
+  report.push({ pagina: pagePath, ...state });
   await page.close();
 }
 
 try {
-  await testarPagina('pages/seguranca-dados/02-o-que-pode-dar-errado.html', 'Segurança');
-  await testarPagina('pages/qts/06-regras-mais-complicadas.html', 'QTS');
+  const modulos = [
+    ['pages/seguranca-dados', 'SDI'],
+    ['pages/qts', 'QTS']
+  ];
+  for (const [dir, nome] of modulos) {
+    for (const pagina of await paginasDoModulo(dir)) {
+      await testarPagina(pagina, `${nome} · ${path.basename(pagina)}`);
+    }
+  }
 } finally {
   await browser.close();
 }
 
 if (failures.length) {
-  console.error('\nFalhas da regra transversal MbB de legibilidade visual:');
+  console.error('\nFalhas da varredura visual MbB em SDI/QTS:');
   failures.forEach(item => console.error(`- ${item}`));
+  console.error('\nRelatório parcial:');
+  report.forEach(item => console.error(JSON.stringify(item)));
   process.exit(1);
 }
 
-console.log('Regra transversal MbB validada: documentação, bootstrap global, seletividade e ampliação em Segurança e QTS.');
+const totais = report.reduce((acc, item) => {
+  acc.paginas += 1;
+  acc.tabelas += item.tables;
+  acc.precisamAmpliar += item.needed;
+  acc.visuaisMarcados += item.marked;
+  return acc;
+}, { paginas:0, tabelas:0, precisamAmpliar:0, visuaisMarcados:0 });
+
+console.log('Varredura visual MbB integral de SDI e QTS: OK');
+console.log(JSON.stringify(totais, null, 2));
