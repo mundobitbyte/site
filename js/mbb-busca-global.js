@@ -17,7 +17,7 @@
     && document.querySelector('script[data-mbb-visualizador-site]');
   if (!visualizadorAtivo && !visualizadorCarregando) {
     const visualizador = document.createElement('script');
-    visualizador.src = new URL('mbb-visualizador-site.js?v=20261001-3', script.src).href;
+    visualizador.src = new URL('mbb-visualizador-site.js?v=20261002-1', script.src).href;
     visualizador.setAttribute('data-mbb-visualizador-site', '1');
     visualizador.async = true;
     document.head.appendChild(visualizador);
