@@ -19,6 +19,7 @@ assert(busca.includes('mbb-visualizador-site.js'), 'mbb-busca-global.js: visuali
 assert(busca.includes('data-mbb-visualizador-site') || busca.includes('mbbVisualizadorSite'), 'mbb-busca-global.js: proteção contra carregamento duplicado ausente.');
 assert(!visitas.includes("pagina.startsWith('pages/qts/') || pagina.startsWith('pages/seguranca-dados/')"), 'visitas-diretas.js: ainda existe exceção específica de QTS/Segurança para o visualizador.');
 assert(seletor.includes('if (!changed && !window.MBBVisualizador) return;'), 'mbb-visualizador-site.js: núcleo não está em carregamento seletivo/lazy.');
+assert(seletor.includes('.risk-scene-wrap'), 'mbb-visualizador-site.js: cena de riscos de SDI não está contemplada entre os visuais técnicos explícitos.');
 
 async function paginasDoModulo(dir) {
   return (await fs.readdir(dir, { withFileTypes:true }))
@@ -74,10 +75,17 @@ async function auditarPagina(page, arquivo, modulo) {
       titulo: host.dataset.mbbTitulo || host.querySelector('img,svg')?.getAttribute('alt') || `Visual ${indice + 1}`
     }));
 
+    const riskHost = document.querySelector('.risk-scene')?.closest('.risk-scene-wrap');
+    const riskScene = riskHost ? {
+      marcado: riskHost.dataset.mbbAmpliavel === 'grafico',
+      trigger: Boolean(riskHost.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]'))
+    } : null;
+
     return {
       siteLoaded: window.__MBB_VISUALIZADOR_SITE__ === true,
       tabelas: detalhes,
       graficos: ampliaveisGraficos,
+      riskScene,
       imagens: document.querySelectorAll('img').length,
       svgs: document.querySelectorAll('svg').length,
       overflow: document.documentElement.scrollWidth - window.innerWidth
@@ -97,6 +105,12 @@ async function auditarPagina(page, arquivo, modulo) {
   for (const grafico of state.graficos) {
     assert(grafico.trigger,
       `${modulo} · ${arquivo} · visual ${grafico.indice} (${grafico.titulo}): foi marcado como ampliável, mas ficou sem botão.`);
+  }
+
+  if (modulo === 'SDI' && arquivo.endsWith('/16-projeto-final.html')) {
+    assert(state.riskScene, 'SDI · projeto final: cena “encontre os riscos” não foi encontrada.');
+    assert(state.riskScene?.marcado && state.riskScene?.trigger,
+      'SDI · projeto final: cena “encontre os riscos” deveria receber o botão de ampliar.');
   }
 
   resumo.push({
@@ -138,4 +152,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('Varredura visual MbB concluída em todas as páginas de SDI e QTS: nenhuma tabela elegível ou visual já marcado ficou sem ampliar.');
+console.log('Varredura visual MbB concluída em todas as páginas de SDI e QTS: tabelas elegíveis e visuais técnicos relevantes possuem ampliação.');
