@@ -3,7 +3,7 @@
   if (window.__MBB_VISUALIZADOR_SITE__) return;
   window.__MBB_VISUALIZADOR_SITE__ = true;
 
-  const VERSION = '20261001-3';
+  const VERSION = '20261002-1';
   const TECH_RE = /(fluxograma|diagrama|\bder\b|entidade.?relacionamento|\buml\b|\bbpmn\b|circuit|esquema|topologia|wireframe|mapa (?:conceitual|de entrada|de rede)|mapa-entrada|bloco.{0,24}app ?inventor|app ?inventor.{0,24}bloco|captura de tela|screenshot|\bsnack\b|preview|interface.{0,24}react ?native|react ?native.{0,24}interface|\bgpio\b|\bi2c\b|\bspi\b|\buart\b|gr[aá]fico|part[ií]culas|modelo de dom[ií]nio)/i;
   const STRONG_TECH_RE = /(bloco.{0,40}app ?inventor|app ?inventor.{0,40}bloco)/i;
   const EXCLUDE_RE = /(logo|[ií]cone|avatar|capa|banner|retrato|fotografia|foto de |obra de arte|pintura)/i;
@@ -78,10 +78,16 @@
 
     const firstRow = table.rows?.[0];
     const columns = firstRow?.cells?.length || 0;
-    if (columns < 3) return false;
+    if (columns < 2) return false;
 
+    // Primeiro vale a necessidade real de leitura: se a tabela transborda,
+    // mesmo duas colunas podem precisar do visualizador no celular.
     const overflow = host.scrollWidth > host.clientWidth + 12 || table.scrollWidth > host.clientWidth + 12 || rect.width > hostRect.width + 12;
     if (overflow) return true;
+
+    // Sem transbordamento, a ampliação seletiva continua reservada às
+    // tabelas mais densas, evitando botão desnecessário em tabelas simples.
+    if (columns < 3) return false;
 
     if (window.innerWidth <= 620) {
       const heads = [...(table.tHead?.rows?.[0]?.cells || [])];
