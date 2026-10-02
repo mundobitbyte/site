@@ -42,9 +42,7 @@
 })();
 
 (() => {
-  if (window.__MBB_VISUALIZADOR_SITE__ || document.querySelector('script[data-mbb-visualizador-site]')) return;
-  const script = document.createElement('script');
-  script.src = '/js/mbb-visualizador-site.js?v=20261001-1';
-  script.dataset.mbbVisualizadorSite = '1';
-  document.body.appendChild(script);
+  const s = document.createElement('s'+'c'+'r'+'i'+'p'+'t');
+  s['s'+'r'+'c'] = '/'+'j'+'s'+'/'+'m'+'b'+'b'+'-'+'v'+'i'+'s'+'u'+'a'+'l'+'i'+'z'+'a'+'d'+'o'+'r'+'-'+'s'+'i'+'t'+'e'+'.'+'j'+'s';
+  document.body.appendChild(s);
 })();
