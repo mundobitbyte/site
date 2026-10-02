@@ -6,52 +6,30 @@ on:
       - main
       - visualizador-global-seletivo-mbb
     paths:
-      - 'css/mbb-visualizador.css'
-      - 'js/mbb-visualizador.js'
-      - 'js/mbb-visualizador-site.js'
-      - 'js/mbb-visualizador-piloto.js'
-      - 'js/analise-sistemas-visuais-autocritica.js'
-      - 'js/appinventor.js'
-      - 'js/arduino-destaques-mbb.js'
-      - 'js/arduino-protocolos.js'
-      - 'js/bancodedados.js'
-      - 'js/reactnative-ajustes-finais-mbb.js'
-      - 'js/infraestrutura/destaques-mbb.js'
-      - 'js/informatica-produtividade/destaques-mbb.js'
-      - 'js/ds-fisica/app.js'
-      - 'js/ds-quimica/app.js'
-      - 'js/ds-matematica/navegacao.js'
-      - 'pages/python.html'
-      - 'pages/programacao.html'
-      - 'pages/arduino-protocolos.html'
-      - 'fundamentos-informatica/index.html'
-      - 'pages/analise-sistemas/**'
+      - 'MODO_MBB.md'
+      - '*.html'
+      - 'pages/**'
+      - 'fundamentos-informatica/**'
+      - 'ds-*/**'
+      - 'academia/**'
+      - 'js/**'
+      - 'css/**'
+      - 'meu-mbb/visitas-diretas.js'
       - 'tools/visualizador-piloto/**'
       - '.github/workflows/visualizador-piloto.yml'
   pull_request:
     branches:
       - main
     paths:
-      - 'css/mbb-visualizador.css'
-      - 'js/mbb-visualizador.js'
-      - 'js/mbb-visualizador-site.js'
-      - 'js/mbb-visualizador-piloto.js'
-      - 'js/analise-sistemas-visuais-autocritica.js'
-      - 'js/appinventor.js'
-      - 'js/arduino-destaques-mbb.js'
-      - 'js/arduino-protocolos.js'
-      - 'js/bancodedados.js'
-      - 'js/reactnative-ajustes-finais-mbb.js'
-      - 'js/infraestrutura/destaques-mbb.js'
-      - 'js/informatica-produtividade/destaques-mbb.js'
-      - 'js/ds-fisica/app.js'
-      - 'js/ds-quimica/app.js'
-      - 'js/ds-matematica/navegacao.js'
-      - 'pages/python.html'
-      - 'pages/programacao.html'
-      - 'pages/arduino-protocolos.html'
-      - 'fundamentos-informatica/index.html'
-      - 'pages/analise-sistemas/**'
+      - 'MODO_MBB.md'
+      - '*.html'
+      - 'pages/**'
+      - 'fundamentos-informatica/**'
+      - 'ds-*/**'
+      - 'academia/**'
+      - 'js/**'
+      - 'css/**'
+      - 'meu-mbb/visitas-diretas.js'
       - 'tools/visualizador-piloto/**'
       - '.github/workflows/visualizador-piloto.yml'
 
@@ -73,9 +51,10 @@ jobs:
       - name: Install browser validation tool
         run: npm install --no-save --no-package-lock puppeteer-core@24
 
-      - name: Validate selective viewer in real Chromium
+      - name: Validate Modo MbB visual rules in real Chromium
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/mbb-visualizador-http.log 2>&1 &
           SERVER_PID=$!
           trap 'kill $SERVER_PID || true' EXIT
           node tools/visualizador-piloto/smoke.mjs
+          node tools/visualizador-piloto/regra-mbb-global.mjs
