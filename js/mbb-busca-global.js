@@ -12,10 +12,13 @@
   if (!script) return;
 
   /* Regra transversal MbB: toda página pública usa a camada seletiva de legibilidade visual. */
-  if (!window.__MBB_VISUALIZADOR_SITE__ && !document.querySelector('script[data-mbb-visualizador-site]')) {
+  const visualizadorAtivo = typeof window !== 'undefined' && window.__MBB_VISUALIZADOR_SITE__;
+  const visualizadorCarregando = typeof document.querySelector === 'function'
+    && document.querySelector('script[data-mbb-visualizador-site]');
+  if (!visualizadorAtivo && !visualizadorCarregando) {
     const visualizador = document.createElement('script');
     visualizador.src = new URL('mbb-visualizador-site.js?v=20261001-3', script.src).href;
-    visualizador.dataset.mbbVisualizadorSite = '1';
+    visualizador.setAttribute('data-mbb-visualizador-site', '1');
     visualizador.async = true;
     document.head.appendChild(visualizador);
   }
