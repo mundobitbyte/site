@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import path from 'node:path';
 import puppeteer from 'puppeteer-core';
 
 const base = process.env.MBB_BASE_URL || 'http://127.0.0.1:4173';
@@ -18,6 +19,19 @@ assert(busca.includes('mbb-visualizador-site.js'), 'mbb-busca-global.js: visuali
 assert(busca.includes('data-mbb-visualizador-site') || busca.includes('mbbVisualizadorSite'), 'mbb-busca-global.js: proteção contra carregamento duplicado ausente.');
 assert(!visitas.includes("pagina.startsWith('pages/qts/') || pagina.startsWith('pages/seguranca-dados/')"), 'visitas-diretas.js: ainda existe exceção específica de QTS/Segurança para o visualizador.');
 assert(seletor.includes('if (!changed && !window.MBBVisualizador) return;'), 'mbb-visualizador-site.js: núcleo não está em carregamento seletivo/lazy.');
+assert(seletor.includes('.risk-scene-wrap'), 'mbb-visualizador-site.js: cena de riscos de SDI não está contemplada entre os visuais técnicos explícitos.');
+
+async function paginasDoModulo(dir) {
+  return (await fs.readdir(dir, { withFileTypes:true }))
+    .filter(entrada => entrada.isFile() && entrada.name.endsWith('.html'))
+    .map(entrada => path.posix.join(dir.replaceAll('\\', '/'), entrada.name))
+    .sort();
+}
+
+const modulos = [
+  { nome:'SDI', dir:'pages/seguranca-dados', paginas:await paginasDoModulo('pages/seguranca-dados') },
+  { nome:'QTS', dir:'pages/qts', paginas:await paginasDoModulo('pages/qts') }
+];
 
 const candidates = ['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium','/usr/bin/chromium-browser'];
 let executablePath = null;
@@ -27,47 +41,115 @@ for (const candidate of candidates) {
 if (!executablePath) throw new Error('Nenhum Chromium/Chrome encontrado no runner.');
 
 const browser = await puppeteer.launch({ executablePath, headless:true, args:['--no-sandbox','--disable-dev-shm-usage'] });
+const resumo = [];
 
-async function testarPagina(path, label) {
-  const page = await browser.newPage();
+async function auditarPagina(page, arquivo, modulo) {
   const errors = [];
-  page.on('pageerror', error => errors.push(String(error?.message || error)));
-  await page.setViewport({ width: 360, height: 800, deviceScaleFactor:1 });
-  await page.goto(`${base}/${path}`, { waitUntil:'networkidle0' });
-  await wait(300);
+  const onError = error => errors.push(String(error?.message || error));
+  page.on('pageerror', onError);
+  await page.setViewport({ width:360, height:800, deviceScaleFactor:1 });
+  await page.goto(`${base}/${arquivo}`, { waitUntil:'networkidle0' });
+  await wait(280);
 
   const state = await page.evaluate(() => {
-    const tables = [...document.querySelectorAll('table')].filter(table => (table.rows?.[0]?.cells?.length || 0) >= 3);
-    const marked = tables.map(table => table.closest('.table-wrap,.table-responsive,.responsive-table,.table-container,[class*="table-wrap"],[class*="table-responsive"]') || table)
-      .find(host => host?.dataset?.mbbAmpliavel === 'tabela');
+    const hostDaTabela = table => table.closest('.table-wrap,.table-responsive,.responsive-table,.table-container,[class*="table-wrap"],[class*="table-responsive"]') || table;
+    const tabelas = [...document.querySelectorAll('table')];
+    const detalhes = tabelas.map((table, indice) => {
+      const host = hostDaTabela(table);
+      const elegivel = Boolean(window.MBBVisualizadorSite?.tableNeedsViewer?.(table));
+      const marcado = host?.dataset?.mbbAmpliavel === 'tabela';
+      const trigger = Boolean(host?.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]'));
+      return {
+        indice: indice + 1,
+        colunas: table.rows?.[0]?.cells?.length || 0,
+        elegivel,
+        marcado,
+        trigger,
+        titulo: table.querySelector('caption')?.textContent?.trim() || table.closest('section,article')?.querySelector('h2,h3')?.textContent?.trim() || `Tabela ${indice + 1}`
+      };
+    });
+
+    const ampliaveisGraficos = [...document.querySelectorAll('[data-mbb-ampliavel="grafico"]')].map((host, indice) => ({
+      indice: indice + 1,
+      trigger: Boolean(host.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]')),
+      titulo: host.dataset.mbbTitulo || host.querySelector('img,svg')?.getAttribute('alt') || `Visual ${indice + 1}`
+    }));
+
+    const riskHost = document.querySelector('.risk-scene')?.closest('.risk-scene-wrap');
+    const riskScene = riskHost ? {
+      marcado: riskHost.dataset.mbbAmpliavel === 'grafico',
+      trigger: Boolean(riskHost.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]'))
+    } : null;
+
     return {
       siteLoaded: window.__MBB_VISUALIZADOR_SITE__ === true,
-      tableCount: tables.length,
-      marked: Boolean(marked),
-      trigger: Boolean(marked?.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]')),
+      tabelas: detalhes,
+      graficos: ampliaveisGraficos,
+      riskScene,
+      imagens: document.querySelectorAll('img').length,
+      svgs: document.querySelectorAll('svg').length,
       overflow: document.documentElement.scrollWidth - window.innerWidth
     };
   });
 
-  assert(state.siteLoaded, `${label}: camada global de visualização não carregou.`);
-  assert(state.tableCount > 0, `${label}: nenhuma tabela elegível encontrada para o teste.`);
-  assert(state.marked && state.trigger, `${label}: tabela larga não recebeu recurso de ampliar.`);
-  assert(state.overflow <= 2, `${label}: criou overflow horizontal global (${state.overflow}px).`);
-  assert(errors.length === 0, `${label}: erros JavaScript: ${errors.join(' | ')}`);
-  await page.close();
+  assert(state.siteLoaded, `${modulo} · ${arquivo}: camada global de visualização não carregou.`);
+  assert(state.overflow <= 2, `${modulo} · ${arquivo}: criou overflow horizontal global (${state.overflow}px).`);
+  assert(errors.length === 0, `${modulo} · ${arquivo}: erros JavaScript: ${errors.join(' | ')}`);
+
+  for (const tabela of state.tabelas) {
+    if (tabela.elegivel) {
+      assert(tabela.marcado && tabela.trigger,
+        `${modulo} · ${arquivo} · tabela ${tabela.indice} (${tabela.titulo}): deveria ampliar, mas não recebeu o botão.`);
+    }
+  }
+  for (const grafico of state.graficos) {
+    assert(grafico.trigger,
+      `${modulo} · ${arquivo} · visual ${grafico.indice} (${grafico.titulo}): foi marcado como ampliável, mas ficou sem botão.`);
+  }
+
+  if (modulo === 'SDI' && arquivo.endsWith('/16-projeto-final.html')) {
+    assert(state.riskScene, 'SDI · projeto final: cena “encontre os riscos” não foi encontrada.');
+    assert(state.riskScene?.marcado && state.riskScene?.trigger,
+      'SDI · projeto final: cena “encontre os riscos” deveria receber o botão de ampliar.');
+  }
+
+  resumo.push({
+    modulo,
+    arquivo,
+    tabelas: state.tabelas.length,
+    elegiveis: state.tabelas.filter(item => item.elegivel).length,
+    ampliadas: state.tabelas.filter(item => item.marcado && item.trigger).length,
+    graficos: state.graficos.length,
+    imagens: state.imagens,
+    svgs: state.svgs
+  });
+  page.off('pageerror', onError);
 }
 
 try {
-  await testarPagina('pages/seguranca-dados/02-o-que-pode-dar-errado.html', 'Segurança');
-  await testarPagina('pages/qts/06-regras-mais-complicadas.html', 'QTS');
+  const page = await browser.newPage();
+  for (const modulo of modulos) {
+    assert(modulo.paginas.length > 0, `${modulo.nome}: nenhuma página HTML encontrada.`);
+    for (const arquivo of modulo.paginas) await auditarPagina(page, arquivo, modulo.nome);
+  }
+  await page.close();
 } finally {
   await browser.close();
 }
 
+const total = (campo, modulo = null) => resumo
+  .filter(item => !modulo || item.modulo === modulo)
+  .reduce((soma, item) => soma + item[campo], 0);
+
+for (const modulo of modulos) {
+  const paginas = resumo.filter(item => item.modulo === modulo.nome);
+  console.log(`${modulo.nome}: ${paginas.length} páginas, ${total('tabelas', modulo.nome)} tabelas, ${total('elegiveis', modulo.nome)} tabelas que pedem ampliação, ${total('ampliadas', modulo.nome)} com botão, ${total('graficos', modulo.nome)} visuais técnicos ampliáveis.`);
+}
+
 if (failures.length) {
-  console.error('\nFalhas da regra transversal MbB de legibilidade visual:');
+  console.error('\nFalhas da varredura visual MbB em SDI e QTS:');
   failures.forEach(item => console.error(`- ${item}`));
   process.exit(1);
 }
 
-console.log('Regra transversal MbB validada: documentação, bootstrap global, seletividade e ampliação em Segurança e QTS.');
+console.log('Varredura visual MbB concluída em todas as páginas de SDI e QTS: tabelas elegíveis e visuais técnicos relevantes possuem ampliação.');
