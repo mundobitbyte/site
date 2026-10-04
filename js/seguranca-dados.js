@@ -8,7 +8,7 @@
     ['5','Como saber se um arquivo foi alterado?','05-hash-integridade.html',true],
     ['6','Como impedir que outra pessoa leia nossos dados?','06-criptografia.html',true],
     ['7','Como proteger uma informação enquanto ela viaja pela Internet?','07-https-certificados.html',true],
-    ['8','Como esconder que uma informação existe?','08-esteganografia.html',true],
+    ['8','Como esconder que uma informação existe? · Aprofundamento','08-esteganografia.html',true],
     ['9','Quando aquilo que digitamos vira parte de um comando','09-sql-injection.html',true],
     ['10','Se os dados forem perdidos, conseguimos recuperá-los?','10-backup-recuperacao.html',true],
     ['11','E se o servidor parar?','11-redundancia-disponibilidade.html',true],
