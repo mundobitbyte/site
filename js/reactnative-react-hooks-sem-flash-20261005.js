@@ -168,3 +168,23 @@
   hideEmptyCodeCard();
   syncPreviewVisibility();
 })();
+
+// Carrega por último apenas o aprofundamento pedagógico do módulo React e Hooks.
+// São arquivos de dados/texto; não instalam CSS nem substituem showStep.
+(() => {
+  const files = [
+    '../js/reactnative-react-hooks-explicacoes-mbb-parte1-20261005.js?v=20261005-1',
+    '../js/reactnative-react-hooks-explicacoes-mbb-parte2-20261005.js?v=20261005-1'
+  ];
+
+  files.forEach((src, index) => {
+    const marker = `mbb-react-hooks-explicacoes-${index + 1}`;
+    if (document.querySelector(`script[data-${marker}]`)) return;
+
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = false;
+    script.setAttribute(`data-${marker}`, 'true');
+    document.body.appendChild(script);
+  });
+})();
