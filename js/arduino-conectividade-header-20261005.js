@@ -33,12 +33,16 @@
       white-space: nowrap;
     }
 
+    body > header .mbb-busca-global.mbb-busca-global,
     body > header .brand {
       flex: 0 0 auto;
+    }
+
+    body > header .brand {
       white-space: nowrap;
     }
 
-    @media (min-width: 981px) and (max-width: 1180px) {
+    @media (max-width: 1180px) {
       body > header .mbb-busca-global.mbb-busca-global {
         width: 36px;
         height: 36px;
