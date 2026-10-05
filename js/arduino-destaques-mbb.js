@@ -109,3 +109,14 @@
   script.dataset.mbbConectividadeWokwi = '1';
   document.body.appendChild(script);
 })();
+
+(() => {
+  const caminho = location.pathname || '';
+  if(!caminho.endsWith('/arduino-conectividade.html')) return;
+  if(document.querySelector('script[data-mbb-conectividade-header-fix]')) return;
+
+  const script = document.createElement('script');
+  script.src = '../js/arduino-conectividade-header-20261005.js?v=20261005-1';
+  script.dataset.mbbConectividadeHeaderFix = '1';
+  document.body.appendChild(script);
+})();
