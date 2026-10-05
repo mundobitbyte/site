@@ -185,9 +185,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 /*
  * Bluetooth no Wokwi x placa física.
- * O Wokwi não emula o rádio Bluetooth do ESP32. Por isso a prática virtual
- * usa o Monitor Serial somente para testar a mesma lógica de comandos L/D.
- * O código BluetoothSerial existente permanece como prática real em ESP32 físico compatível.
+ * Bluetooth real continua sendo o conteúdo principal.
+ * O Wokwi entra depois, apenas para testar a lógica L/D via Monitor Serial.
  */
 document.addEventListener('DOMContentLoaded', function(){
   const secao = document.getElementById('b6-1');
@@ -195,28 +194,37 @@ document.addEventListener('DOMContentLoaded', function(){
 
   const codigoFisico = document.getElementById('b6-1-code')?.closest('article');
   const cards = Array.from(secao.querySelectorAll('.card'));
+  const explicacaoBluetooth = cards.find(card => /^5\.\s*Entendendo as novidades/.test(card.querySelector('h3')?.textContent.trim() || ''));
   const testeFisico = cards.find(card => /^6\.\s*Testando/.test(card.querySelector('h3')?.textContent.trim() || ''));
   const resultadoFisico = cards.find(card => /^7\.\s*Resultado esperado/.test(card.querySelector('h3')?.textContent.trim() || ''));
 
-  if(!codigoFisico) return;
+  if(!codigoFisico || !testeFisico) return;
+
+  const tituloCodigoFisico = codigoFisico.querySelector('h3');
+  if(tituloCodigoFisico){
+    const botao = tituloCodigoFisico.querySelector('button');
+    Array.from(tituloCodigoFisico.childNodes).forEach(node => {
+      if(node.nodeType === Node.TEXT_NODE) node.textContent = '';
+    });
+    tituloCodigoFisico.insertBefore(document.createTextNode('4. Código completo — Bluetooth real na placa física '), botao || null);
+  }
 
   const aviso = document.createElement('article');
   aviso.className = 'card wide';
   aviso.setAttribute('data-mbb-wokwi-bluetooth', 'aviso');
   aviso.innerHTML = `
-    <h3>Antes de testar — Wokwi × placa física</h3>
-    <p class="mbb6-warning"><strong>No Wokwi:</strong> o Bluetooth do ESP32 não é simulado. O celular não encontrará <code>MBB-ESP32</code>. Para praticar no simulador, vamos testar a mesma lógica de comandos pelo <strong>Monitor Serial</strong>.</p>
+    <h3>6A. E no Wokwi?</h3>
+    <p class="mbb6-warning"><strong>O Wokwi não simula o rádio Bluetooth do ESP32.</strong> Portanto, o celular não encontrará <code>MBB-ESP32</code> e não existe pareamento Bluetooth real dentro do simulador.</p>
+    <p>Isso não invalida o tópico. O código acima é o código Bluetooth real para um ESP32 físico compatível. No Wokwi podemos testar apenas a <strong>lógica de receber L ou D e controlar o LED</strong>, substituindo temporariamente a origem Bluetooth pelo Monitor Serial.</p>
     <div class="mbb6-route"><span>Wokwi: Monitor Serial</span><b>→</b><span>Serial</span><b>→</b><span>ESP32</span><b>→</b><span>LED</span></div>
     <div class="mbb6-route"><span>Placa física: celular Android</span><b>→</b><span>Bluetooth clássico/SPP</span><b>→</b><span>ESP32</span><b>→</b><span>LED</span></div>
-    <p class="mbb6-note"><strong>Ideia importante:</strong> a lógica do programa é a mesma — receber <code>L</code> ou <code>D</code>, interpretar e agir. O que muda é o meio por onde o comando chega.</p>
   `;
-  codigoFisico.parentNode.insertBefore(aviso, codigoFisico);
 
   const wokwi = document.createElement('article');
   wokwi.className = 'card code wide';
   wokwi.setAttribute('data-mbb-wokwi-bluetooth', 'codigo');
   wokwi.innerHTML = `
-    <h3>Prática no Wokwi — simule a entrada pelo Monitor Serial <button type="button" onclick="copyCode('b6-1-wokwi-code',this)">Copiar</button></h3>
+    <h3>6A. Código alternativo somente para o Wokwi <button type="button" onclick="copyCode('b6-1-wokwi-code',this)">Copiar</button></h3>
     <pre id="b6-1-wokwi-code">const int LED = 23;
 
 void setup() {
@@ -246,37 +254,36 @@ void loop() {
   }
 }</pre>
     <div class="explain" style="margin-top:12px">
-      <p><strong>Como testar:</strong> execute a simulação, abra o Monitor Serial em 115200 e envie somente <code>L</code> ou <code>D</code>.</p>
-      <p><code>Serial.available()</code> verifica se chegou algo pelo terminal. <code>Serial.read()</code> lê o caractere. Na placa física, a mesma posição é ocupada por <code>SerialBT.available()</code> e <code>SerialBT.read()</code>.</p>
-      <p><strong>Não estamos simulando Bluetooth:</strong> estamos simulando apenas a chegada do comando para validar a lógica do programa.</p>
+      <p><strong>Como testar:</strong> execute a simulação, abra o Monitor Serial em 115200 e envie <code>L</code> ou <code>D</code>.</p>
+      <p><strong>O que estamos simulando:</strong> somente a chegada do comando. Não existe Bluetooth nesse teste.</p>
+      <p>No Bluetooth real, <code>SerialBT.available()</code> e <code>SerialBT.read()</code> recebem o comando pelo rádio. No Wokwi, <code>Serial.available()</code> e <code>Serial.read()</code> recebem o mesmo comando pelo terminal.</p>
     </div>
   `;
-  codigoFisico.parentNode.insertBefore(wokwi, codigoFisico);
 
-  const tituloCodigoFisico = codigoFisico.querySelector('h3');
-  if(tituloCodigoFisico){
-    const botao = tituloCodigoFisico.querySelector('button');
-    tituloCodigoFisico.childNodes.forEach(node => {
-      if(node.nodeType === Node.TEXT_NODE) node.textContent = '';
-    });
-    tituloCodigoFisico.insertBefore(document.createTextNode('4. Código para placa física — Bluetooth real '), botao || null);
-  }
+  testeFisico.parentNode.insertBefore(aviso, testeFisico);
+  testeFisico.parentNode.insertBefore(wokwi, testeFisico);
 
-  if(testeFisico){
-    const titulo = testeFisico.querySelector('h3');
-    if(titulo) titulo.textContent = '6. Testando na placa física — Bluetooth real';
-    const lista = testeFisico.querySelector('ol');
-    if(lista && !lista.querySelector('[data-mbb-pareamento]')){
-      const item = document.createElement('li');
-      item.setAttribute('data-mbb-pareamento', '1');
-      item.innerHTML = 'Se necessário, faça o <strong>pareamento</strong> do Android com <strong>MBB-ESP32</strong> nas configurações de Bluetooth e autorize as permissões solicitadas pelo aplicativo.';
-      lista.insertBefore(item, lista.children[3] || null);
-    }
+  const tituloTeste = testeFisico.querySelector('h3');
+  if(tituloTeste) tituloTeste.textContent = '6B. Testando Bluetooth real na placa física';
+
+  const lista = testeFisico.querySelector('ol');
+  if(lista && !lista.querySelector('[data-mbb-pareamento]')){
+    const item = document.createElement('li');
+    item.setAttribute('data-mbb-pareamento', '1');
+    item.innerHTML = 'Se necessário, faça o <strong>pareamento</strong> do Android com <strong>MBB-ESP32</strong> nas configurações de Bluetooth e autorize as permissões solicitadas pelo aplicativo.';
+    lista.insertBefore(item, lista.children[3] || null);
   }
 
   if(resultadoFisico){
     const titulo = resultadoFisico.querySelector('h3');
-    if(titulo) titulo.textContent = '7. Resultado esperado — placa física';
+    if(titulo) titulo.textContent = '7. Resultado esperado — Bluetooth real';
+  }
+
+  if(explicacaoBluetooth){
+    const nota = document.createElement('p');
+    nota.className = 'mbb6-note';
+    nota.innerHTML = '<strong>Até aqui estamos falando de Bluetooth real.</strong> O caminho Wokwi vem a seguir apenas porque o simulador não implementa o rádio Bluetooth.';
+    explicacaoBluetooth.appendChild(nota);
   }
 });
 
