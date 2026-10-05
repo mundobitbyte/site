@@ -287,6 +287,188 @@ void loop() {
   }
 });
 
+/*
+ * Revisão operacional MbB do Bloco 6.
+ * Deixa explícito o que é executável no Wokwi padrão e o que depende de placa física
+ * ou do Private Wokwi IoT Gateway. Não substitui os códigos físicos já aprovados.
+ */
+document.addEventListener('DOMContentLoaded', function(){
+  const marcar = (elemento, nome) => {
+    if(!elemento || elemento.dataset[nome] === '1') return false;
+    elemento.dataset[nome] = '1';
+    return true;
+  };
+
+  const cardsDe = id => {
+    const secao = document.getElementById(id);
+    if(!secao) return [];
+    return Array.from(secao.querySelectorAll('.cards > .card'));
+  };
+
+  const acharCard = (id, inicioTitulo) => cardsDe(id).find(card => {
+    const h3 = card.querySelector('h3');
+    return h3 && h3.textContent.trim().startsWith(inicioTitulo);
+  });
+
+  // Preparação: apresenta os dois ambientes antes de qualquer prática.
+  const prep = document.getElementById('b6-prep');
+  if(prep && !prep.querySelector('[data-mbb6-ambientes]')){
+    const cards = prep.querySelector('.cards');
+    if(cards){
+      const guia = document.createElement('article');
+      guia.className = 'card wide';
+      guia.dataset.mbb6Ambientes = '1';
+      guia.innerHTML = `
+        <h3>Antes de começar — escolha o ambiente de prática</h3>
+        <p>Neste bloco existem dois caminhos legítimos. O conteúdo conceitual é o mesmo, mas alguns testes dependem do ambiente.</p>
+        <div class="mbb6-route"><span>Wokwi</span><b>→</b><span>simulação no navegador</span><b>→</b><span>sem placa física</span></div>
+        <div class="mbb6-route"><span>ESP32 físico</span><b>→</b><span>Arduino IDE</span><b>→</b><span>rede e rádio reais</span></div>
+        <p class="mbb6-note"><strong>Regra MbB:</strong> quando uma etapa não puder produzir no Wokwi a mesma evidência da placa física, isso será informado antes do teste. Não trate uma limitação do simulador como erro do seu código.</p>
+      `;
+      cards.insertBefore(guia, cards.firstElementChild);
+    }
+  }
+
+  const prepararIde = acharCard('b6-prep', '4. Preparando a Arduino IDE');
+  if(prepararIde && marcar(prepararIde, 'mbb6PrepWokwi')){
+    const p = document.createElement('p');
+    p.className = 'mbb6-note';
+    p.innerHTML = '<strong>Se você está no Wokwi:</strong> não precisa instalar driver, escolher porta USB nem conectar cabo. Use uma placa ESP32 DevKit compatível no projeto e mantenha o LED no GPIO 23. Estas etapas da Arduino IDE valem para a placa física.';
+    prepararIde.appendChild(p);
+  }
+
+  // 6.2 Wi-Fi: prática completa em ambos os ambientes e código Wokwi explícito.
+  const wifi = document.getElementById('b6-2');
+  if(wifi && !wifi.querySelector('[data-mbb6-wifi-wokwi]')){
+    const cardWokwiOriginal = acharCard('b6-2', '9. E no Wokwi?');
+    if(cardWokwiOriginal){
+      cardWokwiOriginal.dataset.mbb6WifiWokwi = '1';
+      cardWokwiOriginal.innerHTML = `
+        <h3>9. Wokwi — Wi-Fi funciona de verdade na simulação</h3>
+        <p>No Wokwi, conecte o ESP32 à rede virtual aberta <code>Wokwi-GUEST</code>. Ela não usa senha. O canal 6 pode ser informado para evitar a etapa de varredura e acelerar a conexão.</p>
+        <p class="mbb6-note"><strong>Atenção:</strong> o endereço IP virtual prova que o ESP32 entrou na rede simulada. Isso ainda não significa que o navegador do seu computador consiga entrar em um servidor criado dentro do ESP32; essa diferença aparece no próximo tópico.</p>
+      `;
+
+      const codigo = document.createElement('article');
+      codigo.className = 'card code wide';
+      codigo.dataset.mbb6WifiWokwi = 'codigo';
+      codigo.innerHTML = `
+        <h3>Código para o Wokwi <button type="button" onclick="copyCode('b6-2-wokwi-code',this)">Copiar</button></h3>
+        <pre id="b6-2-wokwi-code">#include &lt;WiFi.h&gt;
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+
+  Serial.print("Conectando ao Wokwi-GUEST");
+  WiFi.begin("Wokwi-GUEST", "", 6);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(100);
+    Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.println("Wi-Fi conectado.");
+  Serial.print("IP: ");
+  Serial.println(WiFi.localIP());
+}
+
+void loop() {
+}</pre>
+        <div class="explain" style="margin-top:12px">
+          <p><strong>Faça:</strong> execute a simulação e abra o Monitor Serial em 115200.</p>
+          <p><strong>Evidência:</strong> você deve ver a mensagem de conexão e um endereço IP virtual. Nesta etapa, isso basta para comprovar a conexão Wi-Fi.</p>
+        </div>
+      `;
+      cardWokwiOriginal.parentNode.insertBefore(codigo, cardWokwiOriginal.nextSibling);
+    }
+  }
+
+  // 6.3 HTTP: separa servidor físico, Wokwi padrão e Private Gateway.
+  const http = document.getElementById('b6-3');
+  if(http && !http.querySelector('[data-mbb6-http-ambientes]')){
+    const cards = http.querySelector('.cards');
+    if(cards){
+      const guia = document.createElement('article');
+      guia.className = 'card wide';
+      guia.dataset.mbb6HttpAmbientes = '1';
+      guia.innerHTML = `
+        <h3>Antes de testar o servidor — o resultado depende do ambiente</h3>
+        <div class="mbb6-connections">
+          <div><strong>ESP32 físico</strong><span>Prática completa. Celular/computador e ESP32 ficam na mesma rede. Abra <code>http://IP_DO_ESP32</code>.</span></div>
+          <div><strong>Wokwi padrão</strong><span>O código pode conectar à Internet e fazer conexões de saída, mas o gateway público não aceita conexão de entrada do seu navegador para o servidor simulado.</span></div>
+          <div><strong>Wokwi + Private IoT Gateway</strong><span>Prática completa para assinantes compatíveis. Com o gateway privado ativo, o servidor HTTP na porta 80 pode ser acessado pelo navegador em <code>http://localhost:9080/</code>.</span></div>
+          <div><strong>Sem Private Gateway?</strong><span>Não tente “consertar” o código para fazer o navegador entrar. No Wokwi padrão, a limitação é do caminho de rede, não do <code>WebServer</code>.</span></div>
+        </div>
+        <p class="mbb6-note"><strong>Regra de evidência:</strong> placa física ou Private Gateway permitem testar os botões pelo navegador. No Wokwi padrão, use esta etapa para estudar/compilar o servidor e reconhecer a limitação de conexão de entrada; o controle pelo navegador não é uma evidência disponível nesse ambiente.</p>
+      `;
+      cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
+    }
+  }
+
+  const testeHttp = acharCard('b6-3', '5. Testando o servidor');
+  if(testeHttp && marcar(testeHttp, 'mbb6HttpTeste')){
+    const titulo = testeHttp.querySelector('h3');
+    if(titulo) titulo.textContent = '5. Testando o servidor — placa física';
+    const nota = document.createElement('p');
+    nota.className = 'mbb6-note';
+    nota.innerHTML = '<strong>No Wokwi:</strong> só siga exatamente este teste pelo navegador se estiver usando o Private IoT Gateway. Nesse caso, use <code>http://localhost:9080/</code> em vez do IP virtual mostrado pelo ESP32.';
+    testeHttp.appendChild(nota);
+  }
+
+  // 6.4 mDNS: prática principal física; no Wokwi não promete .local.
+  const mdns = document.getElementById('b6-4');
+  if(mdns && !mdns.querySelector('[data-mbb6-mdns-ambientes]')){
+    const cards = mdns.querySelector('.cards');
+    if(cards){
+      const guia = document.createElement('article');
+      guia.className = 'card wide';
+      guia.dataset.mbb6MdnsAmbientes = '1';
+      guia.innerHTML = `
+        <h3>Onde esta prática faz sentido?</h3>
+        <p><strong>Placa física:</strong> é o caminho principal. Primeiro confirme que o servidor abre pelo IP e só depois teste <code>http://ambiente-mbb.local</code> na mesma rede.</p>
+        <p><strong>Wokwi padrão:</strong> não use <code>.local</code> como teste obrigatório. O navegador não está na mesma rede local do ESP32 simulado e o gateway público não oferece a mesma descoberta mDNS da sua LAN.</p>
+        <p class="mbb6-note"><strong>Mesmo na placa física:</strong> se o acesso por IP funcionar e <code>.local</code> não, o servidor pode estar correto. A resolução mDNS depende também do sistema operacional, do navegador e da rede permitirem esse tipo de descoberta.</p>
+      `;
+      cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
+    }
+  }
+
+  const testeMdns = acharCard('b6-4', '6. Testando');
+  if(testeMdns && marcar(testeMdns, 'mbb6MdnsTeste')){
+    const titulo = testeMdns.querySelector('h3');
+    if(titulo) titulo.textContent = '6. Testando — rede local com ESP32 físico';
+  }
+
+  // 6.5 Tunelamento: não promete execução no Wokwi padrão e antecipa a segurança.
+  const tunel = document.getElementById('b6-5');
+  if(tunel && !tunel.querySelector('[data-mbb6-tunel-ambientes]')){
+    const cards = tunel.querySelector('.cards');
+    if(cards){
+      const guia = document.createElement('article');
+      guia.className = 'card wide';
+      guia.dataset.mbb6TunelAmbientes = '1';
+      guia.innerHTML = `
+        <h3>Antes do túnel — confirme de onde você está partindo</h3>
+        <p><strong>ESP32 físico:</strong> este é o caminho principal do exemplo. O computador precisa conseguir abrir o servidor do ESP32 pela rede local antes de criar o túnel.</p>
+        <p><strong>Wokwi padrão:</strong> não execute o comando esperando alcançar o IP virtual do ESP32. O computador não possui uma rota de entrada até o servidor do simulador pelo gateway público.</p>
+        <p><strong>Wokwi com Private Gateway:</strong> é tecnicamente possível construir outros encaminhamentos, mas isso acrescenta uma camada paga e não é requisito deste curso. O objetivo didático continua sendo compreender que o túnel nasce no computador e expõe temporariamente um serviço que já funciona localmente.</p>
+        <p class="mbb6-warning"><strong>Segurança:</strong> ao criar um endereço público, alguém que obtiver esse endereço poderá tentar acessar o serviço exposto. Faça o teste apenas com o protótipo didático, sem dados reais, sem credenciais reutilizadas e encerre o túnel ao terminar.</p>
+      `;
+      cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
+    }
+  }
+
+  const ferramentaTunel = acharCard('b6-5', '4. Ferramenta escolhida');
+  if(ferramentaTunel && marcar(ferramentaTunel, 'mbb6TunelFerramenta')){
+    const nota = document.createElement('p');
+    nota.className = 'mbb6-note';
+    nota.innerHTML = '<strong>Checkpoint antes de continuar:</strong> no computador que criará o túnel, abra primeiro <code>http://IP_DO_ESP32</code>. Se esse acesso local não funcionar, o túnel também não terá para onde encaminhar a requisição.';
+    ferramentaTunel.appendChild(nota);
+  }
+});
+
 function carregarContextualizacaoMbb(){
   if(document.querySelector('script[data-mbb-contextualizacao-loader]')) return;
   const script = document.createElement('script');
