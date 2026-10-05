@@ -1,10 +1,13 @@
 // React Native — proteções visuais pós-renderização.
 // 1) evita o flash do quadro preto vazio;
 // 2) impede que o painel "Explicação da etapa" corte as últimas linhas;
-// 3) evita que a moldura de saída seja pintada enquanto o preview está vazio.
+// 3) evita que a moldura de saída seja pintada enquanto o preview está vazio ou ainda sendo montado.
 // Não altera conteúdo, código, preview, ordem ou navegação dos módulos.
 
 (() => {
+  let previewRenderPending = false;
+  let previewRenderToken = 0;
+
   function getStep(id) {
     if (typeof modules === 'undefined' || typeof currentModuleKey === 'undefined') return null;
 
@@ -38,6 +41,11 @@
     const preview = document.getElementById('preview');
     if (!resultCard || !preview) return;
 
+    if (previewRenderPending) {
+      resultCard.style.setProperty('visibility', 'hidden', 'important');
+      return;
+    }
+
     const hasPreview = preview.innerHTML.trim() !== '';
     const isDisplayed = getComputedStyle(resultCard).display !== 'none';
 
@@ -48,9 +56,22 @@
     );
   }
 
-  function hidePreviewDuringRender() {
+  function beginPreviewRender() {
+    previewRenderPending = true;
+    previewRenderToken += 1;
+
     const resultCard = document.getElementById('resultCard');
     if (resultCard) resultCard.style.setProperty('visibility', 'hidden', 'important');
+
+    return previewRenderToken;
+  }
+
+  function finishPreviewRender(token, id) {
+    if (token !== previewRenderToken) return;
+
+    previewRenderPending = false;
+    hideEmptyCodeCard(id);
+    syncPreviewVisibility();
   }
 
   function protectExplanationPanel() {
@@ -126,16 +147,17 @@
   if (typeof showStep === 'function') {
     const previousShowStep = showStep;
     showStep = function mbbReactNativeVisualGuards(id) {
-      hidePreviewDuringRender();
+      const token = beginPreviewRender();
 
       const result = previousShowStep.apply(this, arguments);
 
       hideEmptyCodeCard(id);
-      syncPreviewVisibility();
 
+      // Algumas extensões da navegação ainda fazem pequenos ajustes no próximo frame.
+      // Mantemos a saída invisível por dois frames para ela só aparecer já pronta.
       window.requestAnimationFrame(() => {
         hideEmptyCodeCard(id);
-        syncPreviewVisibility();
+        window.requestAnimationFrame(() => finishPreviewRender(token, id));
       });
 
       return result;
