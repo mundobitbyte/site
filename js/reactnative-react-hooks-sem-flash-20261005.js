@@ -1,6 +1,7 @@
 // React Native — proteções visuais pós-renderização.
-// 1) evita o flash do quadro preto vazio na primeira abertura;
-// 2) impede que o painel "Explicação da etapa" corte as últimas linhas.
+// 1) evita o flash do quadro preto vazio;
+// 2) impede que o painel "Explicação da etapa" corte as últimas linhas;
+// 3) evita que a moldura de saída seja pintada enquanto o preview está vazio.
 // Não altera conteúdo, código, preview, ordem ou navegação dos módulos.
 
 (() => {
@@ -30,6 +31,26 @@
 
     const newCodeCard = document.getElementById('newCodeCard');
     if (newCodeCard) newCodeCard.style.setProperty('display', 'none', 'important');
+  }
+
+  function syncPreviewVisibility() {
+    const resultCard = document.getElementById('resultCard');
+    const preview = document.getElementById('preview');
+    if (!resultCard || !preview) return;
+
+    const hasPreview = preview.innerHTML.trim() !== '';
+    const isDisplayed = getComputedStyle(resultCard).display !== 'none';
+
+    resultCard.style.setProperty(
+      'visibility',
+      hasPreview && isDisplayed ? 'visible' : 'hidden',
+      'important'
+    );
+  }
+
+  function hidePreviewDuringRender() {
+    const resultCard = document.getElementById('resultCard');
+    if (resultCard) resultCard.style.setProperty('visibility', 'hidden', 'important');
   }
 
   function protectExplanationPanel() {
@@ -87,18 +108,41 @@
     document.head.appendChild(style);
   }
 
+  function observePreview() {
+    const preview = document.getElementById('preview');
+    if (!preview || typeof MutationObserver === 'undefined') return;
+
+    const observer = new MutationObserver(() => syncPreviewVisibility());
+    observer.observe(preview, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+  }
+
   protectExplanationPanel();
+  observePreview();
 
   if (typeof showStep === 'function') {
     const previousShowStep = showStep;
     showStep = function mbbReactNativeVisualGuards(id) {
+      hidePreviewDuringRender();
+
       const result = previousShowStep.apply(this, arguments);
+
       hideEmptyCodeCard(id);
-      window.requestAnimationFrame(() => hideEmptyCodeCard(id));
+      syncPreviewVisibility();
+
+      window.requestAnimationFrame(() => {
+        hideEmptyCodeCard(id);
+        syncPreviewVisibility();
+      });
+
       return result;
     };
   }
 
-  // Também protege a primeira pintura da página, antes de qualquer clique do usuário.
+  // Protege o estado atual sem interferir no conteúdo já renderizado.
   hideEmptyCodeCard();
+  syncPreviewVisibility();
 })();
