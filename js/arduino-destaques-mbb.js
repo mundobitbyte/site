@@ -98,3 +98,14 @@
   script.dataset.mbbVisualizadorSite='1';
   document.body.appendChild(script);
 })();
+
+(() => {
+  const caminho = location.pathname || '';
+  if(!caminho.endsWith('/arduino-conectividade.html')) return;
+  if(document.querySelector('script[data-mbb-conectividade-wokwi]')) return;
+
+  const script = document.createElement('script');
+  script.src = '../js/arduino-conectividade-mbb-wokwi-20261005.js?v=20261005-1';
+  script.dataset.mbbConectividadeWokwi = '1';
+  document.body.appendChild(script);
+})();
