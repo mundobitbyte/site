@@ -25,9 +25,56 @@
 
     const react = modules.state;
 
+    // Evolução pedagógica: primeiro o componente no App.js; depois, separado em arquivo próprio.
+    const componentStep = react.steps.find(step => step?.id === 'mbb-react-componente-titulo');
+    if (componentStep) {
+      componentStep.addedTitle = 'Evolução: componente em arquivo separado';
+      componentStep.added = `Até aqui, Titulo foi criado dentro do App.js.
+Isso está correto e ajuda a entender primeiro o que é um componente.
+
+Agora vamos organizar o projeto como acontece em aplicações maiores.
+
+1. Crie uma pasta chamada components.
+
+2. Dentro dela, crie o arquivo components/Titulo.js:
+
+import React from 'react';
+import { Text, StyleSheet } from 'react-native';
+
+export default function Titulo() {
+  return (
+    <Text style={styles.titulo}>
+      Clima das Cidades
+    </Text>
+  );
+}
+
+const styles = StyleSheet.create({
+  titulo: {
+    fontSize: 21,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#0F172A',
+    marginBottom: 14,
+  },
+});
+
+3. No App.js, remova a função Titulo que estava no próprio arquivo e importe o componente:
+
+import Titulo from './components/Titulo';
+
+4. Continue usando normalmente no JSX:
+
+<Titulo />
+
+A saída visual permanece a mesma.
+O que mudou foi a organização: o componente agora possui seu próprio arquivo e pode ser reutilizado por outras telas.`;
+      componentStep.note = 'Começamos com o componente no App.js para entender a ideia sem criar complexidade desnecessária. Depois o separamos em components/Titulo.js para introduzir organização, reutilização e separação de responsabilidades.';
+    }
+
     const actions = new Map([
       ['mbb-react-jsx', '<b>Altere</b> os valores de <code>nome</code> e <code>pontos</code> e <b>confira no preview</b> onde essas mudanças aparecem no JSX.'],
-      ['mbb-react-componente-titulo', '<b>Altere</b> o texto retornado por <code>Titulo</code> e <b>confira no preview</b> que o componente personalizado foi atualizado.'],
+      ['mbb-react-componente-titulo', '<b>Crie</b> <code>components/Titulo.js</code>, mova o componente para esse arquivo, <b>importe-o no App.js</b> e confira que a saída visual continua igual.'],
       ['mbb-react-cartao-fixo', '<b>Altere</b> a cidade e a temperatura fixas dentro de <code>CartaoClima</code> e <b>observe o preview</b>.'],
       ['mbb-react-props', '<b>Altere</b> as props de uma das chamadas de <code>CartaoClima</code> e <b>compare no preview</b> os dois cartões reutilizando o mesmo componente.'],
       ['state-7-state', '<b>Digite valores diferentes</b> nos campos e <b>observe</b> como o conteúdo controlado acompanha o state.'],
