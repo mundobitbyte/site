@@ -108,7 +108,7 @@ else carregarContextualizacaoMbb();
 function carregarDestaquesMbb(){
   if(document.querySelector('script[data-mbb-arduino-destaques-loader]')) return;
   const script = document.createElement('script');
-  script.src = '../js/arduino-destaques-mbb.js?v=20260926-2';
+  script.src = '../js/arduino-destaques-mbb.js?v=20261005-1';
   script.dataset.mbbArduinoDestaquesLoader = '1';
   document.head.appendChild(script);
 }
