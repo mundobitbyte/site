@@ -112,11 +112,19 @@
 
 (() => {
   const caminho = location.pathname || '';
-  if(!caminho.endsWith('/arduino-conectividade.html')) return;
-  if(document.querySelector('script[data-mbb-conectividade-header-fix]')) return;
+  const paginas5a10 = [
+    '/arduino-programacao-aplicada.html',
+    '/arduino-conectividade.html',
+    '/arduino-iot.html',
+    '/arduino-protocolos.html',
+    '/arduino-seguranca.html',
+    '/arduino-projeto-iot.html'
+  ];
+  if(!paginas5a10.some(final => caminho.endsWith(final))) return;
+  if(document.querySelector('script[data-mbb-arduino-5a10-header-fix]')) return;
 
   const script = document.createElement('script');
-  script.src = '../js/arduino-conectividade-header-20261005.js?v=20261005-1';
-  script.dataset.mbbConectividadeHeaderFix = '1';
+  script.src = '../js/arduino-conectividade-header-20261005.js?v=20261005-2';
+  script.dataset.mbbArduino5a10HeaderFix = '1';
   document.body.appendChild(script);
 })();
