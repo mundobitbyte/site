@@ -124,7 +124,7 @@
   if(document.querySelector('script[data-mbb-arduino-5a10-header-fix]')) return;
 
   const script = document.createElement('script');
-  script.src = '../js/arduino-conectividade-header-20261005.js?v=20261005-3';
+  script.src = '../js/arduino-conectividade-header-20261005.js?v=20261005-4';
   script.dataset.mbbArduino5a10HeaderFix = '1';
   document.body.appendChild(script);
 })();
