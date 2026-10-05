@@ -11,15 +11,6 @@
   const script = document.currentScript;
   if (!script) return;
 
-  const paginasArduino5a10 = [
-    '/arduino-programacao-aplicada.html',
-    '/arduino-conectividade.html',
-    '/arduino-iot.html',
-    '/arduino-protocolos.html',
-    '/arduino-seguranca.html',
-    '/arduino-projeto-iot.html'
-  ];
-  const paginaArduino5a10 = paginasArduino5a10.some(final => location.pathname.endsWith(final));
 
   /* Regra transversal MbB: toda página pública usa a camada seletiva de legibilidade visual. */
   const visualizadorAtivo = typeof window !== 'undefined' && window.__MBB_VISUALIZADOR_SITE__;
@@ -88,21 +79,6 @@
       }
       .mbb-busca-global::before { width: 18px; height: 18px; flex-basis: 18px; }
     }
-    .mbb-busca-global.mbb-busca-compacta {
-      width: 36px !important;
-      height: 36px !important;
-      min-width: 36px !important;
-      min-height: 36px !important;
-      flex: 0 0 36px !important;
-      padding: 0 !important;
-      border-radius: 50% !important;
-      font-size: 0 !important;
-    }
-    .mbb-busca-global.mbb-busca-compacta::before {
-      width: 18px;
-      height: 18px;
-      flex-basis: 18px;
-    }
     @media print { .mbb-busca-global { display: none !important; } }
   `;
 
@@ -142,35 +118,6 @@
     document.body.appendChild(link);
   }
 
-  if (paginaArduino5a10) {
-    const menu = document.getElementById('arduinoModuleMenu');
-    if (menu) {
-      menu.style.setProperty('top', '46px', 'important');
-      menu.style.setProperty('background', '#ffffff', 'important');
-      menu.style.setProperty('backdrop-filter', 'none', 'important');
-      menu.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
-      menu.style.setProperty('opacity', '1', 'important');
-      menu.style.setProperty('z-index', '950', 'important');
-    }
-
-    const ajustarPesquisaArduino = () => {
-      if (!cabecalho) return;
-      const larguraViewport = window.visualViewport?.width || window.innerWidth || 0;
-      const telaToque = navigator.maxTouchPoints > 0;
-      const menorLado = Math.min(screen.width || 9999, screen.height || 9999);
-      const celularModoPc = telaToque && menorLado <= 900;
-      const semEspaco = cabecalho.scrollWidth > cabecalho.clientWidth + 1;
-      link.classList.toggle(
-        'mbb-busca-compacta',
-        larguraViewport <= 1180 || celularModoPc || semEspaco
-      );
-    };
-
-    ajustarPesquisaArduino();
-    requestAnimationFrame(ajustarPesquisaArduino);
-    window.addEventListener('resize', ajustarPesquisaArduino, { passive: true });
-    window.visualViewport?.addEventListener('resize', ajustarPesquisaArduino, { passive: true });
-  }
 }());
 
 /* Organização da Home: Segurança como área própria e nome mais claro para Gestão. */
