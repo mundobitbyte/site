@@ -1,12 +1,10 @@
-// React e Hooks — evita o flash do quadro preto vazio na primeira abertura.
-// Atua somente no módulo 2 (state). Não altera Interfaces nem etapas que possuem código.
+// React Native — evita o flash do quadro preto vazio na primeira abertura.
+// Atua em todos os módulos, mas somente quando a etapa não possui código real.
+// Etapas com código continuam usando exatamente o comportamento existente.
 
 (() => {
-  const MODULE_KEY = 'state';
-
   function getStep(id) {
     if (typeof modules === 'undefined' || typeof currentModuleKey === 'undefined') return null;
-    if (currentModuleKey !== MODULE_KEY) return null;
 
     const activeModule = modules[currentModuleKey];
     if (!activeModule || !Array.isArray(activeModule.steps)) return null;
@@ -22,19 +20,20 @@
   }
 
   function hideEmptyCodeCard(id) {
-    if (typeof currentModuleKey === 'undefined' || currentModuleKey !== MODULE_KEY) return;
-
     const step = getStep(id);
     const hasCode = Boolean(step && typeof step.code === 'string' && step.code.trim().length > 0);
     if (hasCode) return;
 
     const codeCard = document.getElementById('codeCard');
     if (codeCard) codeCard.style.setProperty('display', 'none', 'important');
+
+    const newCodeCard = document.getElementById('newCodeCard');
+    if (newCodeCard) newCodeCard.style.setProperty('display', 'none', 'important');
   }
 
   if (typeof showStep === 'function') {
     const previousShowStep = showStep;
-    showStep = function mbbReactHooksNoEmptyCodeFlash(id) {
+    showStep = function mbbReactNativeNoEmptyCodeFlash(id) {
       const result = previousShowStep.apply(this, arguments);
       hideEmptyCodeCard(id);
       window.requestAnimationFrame(() => hideEmptyCodeCard(id));
@@ -42,5 +41,6 @@
     };
   }
 
+  // Também protege a primeira pintura da página, antes de qualquer clique do usuário.
   hideEmptyCodeCard();
 })();
