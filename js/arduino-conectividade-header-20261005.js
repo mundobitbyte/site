@@ -1,10 +1,22 @@
-// Ajuste local do cabeçalho de 6 — Conectividade.
-// Não altera o componente global de pesquisa nem outros módulos.
+// Ajuste de cabeçalho dos módulos 5 a 10 de Sistemas Embarcados e IoT.
+// Atua somente nessa família de páginas; módulos 1 a 4, exercícios e demais cursos ficam fora.
 (() => {
-  if (!location.pathname.endsWith('/arduino-conectividade.html')) return;
+  const paginasPermitidas = new Set([
+    '/arduino-programacao-aplicada.html',
+    '/arduino-conectividade.html',
+    '/arduino-iot.html',
+    '/arduino-protocolos.html',
+    '/arduino-seguranca.html',
+    '/arduino-projeto-iot.html'
+  ]);
+
+  const caminho = location.pathname || '';
+  const paginaAtual = Array.from(paginasPermitidas).find(final => caminho.endsWith(final));
+  if (!paginaAtual) return;
+  if (document.getElementById('mbb-arduino-5a10-header-fix')) return;
 
   const style = document.createElement('style');
-  style.id = 'mbb-conectividade-header-fix';
+  style.id = 'mbb-arduino-5a10-header-fix';
   style.textContent = `
     body > header .header-left {
       display: flex;
@@ -23,9 +35,10 @@
 
     body > header .brand {
       flex: 0 0 auto;
+      white-space: nowrap;
     }
 
-    @media (max-width: 1180px) {
+    @media (min-width: 981px) and (max-width: 1180px) {
       body > header .mbb-busca-global.mbb-busca-global {
         width: 36px;
         height: 36px;
