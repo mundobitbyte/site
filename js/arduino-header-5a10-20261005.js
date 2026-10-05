@@ -1,5 +1,5 @@
-// Correção única e estável do cabeçalho/menu dos módulos 5 a 10 de Sistemas Embarcados e IoT.
-// Não atua nos módulos 1 a 4, no exercício 99 nem em outros cursos.
+// Cabeçalho dos módulos 5 a 10 seguindo o mesmo padrão estável usado nos módulos 1 a 4.
+// A única adaptação extra é reconhecer celular em modo PC pelo ponteiro de toque.
 (() => {
   const paginasPermitidas = [
     '/arduino-programacao-aplicada.html',
@@ -11,66 +11,75 @@
   ];
 
   if (!paginasPermitidas.some(final => (location.pathname || '').endsWith(final))) return;
-  if (document.getElementById('mbb-arduino-header-5a10-style')) return;
 
   const style = document.createElement('style');
   style.id = 'mbb-arduino-header-5a10-style';
   style.textContent = `
-    body > header {
-      background: var(--primary, #1967d2) !important;
-      opacity: 1 !important;
-      z-index: 1000 !important;
+    body > header{
+      height:46px!important;
+      min-height:46px!important;
+      max-height:46px!important;
+      padding:0 16px!important;
+      display:flex!important;
+      flex-direction:row!important;
+      align-items:center!important;
+      justify-content:space-between!important;
+      gap:12px!important;
+      text-align:left!important;
     }
 
-    body > header .header-left {
-      display: flex !important;
-      align-items: center !important;
-      gap: 10px !important;
-      min-width: 0 !important;
-      flex: 1 1 auto !important;
+    body > header .header-left{
+      display:flex!important;
+      flex-direction:row!important;
+      align-items:center!important;
+      justify-content:flex-start!important;
+      gap:12px!important;
+      min-width:0!important;
+      flex:1 1 auto!important;
+      text-align:left!important;
     }
 
-    body > header .header-left h1 {
-      min-width: 0 !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      white-space: nowrap !important;
+    body > header h1{
+      margin:0!important;
+      text-align:left!important;
+      min-width:0!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+      white-space:nowrap!important;
     }
 
-    body > header .brand {
-      flex: 0 0 auto !important;
-      white-space: nowrap !important;
+    body > header .brand{
+      margin-left:auto!important;
+      text-align:right!important;
+      flex:0 0 auto!important;
     }
 
-    #arduinoModuleMenu.module-menu {
-      top: 46px !important;
-      z-index: 950 !important;
-      background: #ffffff !important;
-      opacity: 1 !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      isolation: isolate;
+    #arduinoModuleMenu .module-btn{
+      font-family:inherit!important;
     }
 
-    @media (max-width: 1180px), (pointer: coarse) {
-      body > header .mbb-busca-global.mbb-busca-global {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-        flex: 0 0 36px !important;
-        padding: 0 !important;
-        border-radius: 50% !important;
-        font-size: 0 !important;
+    #arduinoModuleMenu.module-menu{
+      top:46px!important;
+      background:#fff!important;
+      opacity:1!important;
+      backdrop-filter:none!important;
+      -webkit-backdrop-filter:none!important;
+    }
+
+    @media(max-width:760px), (pointer:coarse){
+      body > header{
+        padding:0 10px!important;
+        gap:8px!important;
       }
 
-      body > header .mbb-busca-global::before {
-        width: 18px !important;
-        height: 18px !important;
-        flex-basis: 18px !important;
+      body > header .header-left{
+        gap:8px!important;
+      }
+
+      body > header .brand{
+        display:none!important;
       }
     }
   `;
-
   document.head.appendChild(style);
 })();
