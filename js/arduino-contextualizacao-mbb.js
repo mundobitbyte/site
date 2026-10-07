@@ -136,6 +136,7 @@
       }
     },
     'arduino-conectividade.html': {
+      integrado: true,
       hero: '.mbb6-intro',
       modulo: {titulo:'6. Conectividade — quando o projeto precisa sair da bancada', dia:'Controlar um equipamento pelo celular, acompanhar um sensor no notebook ou acessar uma interface sem ficar preso ao cabo USB são necessidades comuns.', problema:'Um sistema local pode funcionar perfeitamente e ainda assim estar isolado de pessoas, aplicativos e outros dispositivos.', uso:'Bluetooth, Wi‑Fi, HTTP, mDNS e tunelamento aparecem como respostas diferentes para necessidades reais de comunicação.'},
       itens: {
@@ -223,6 +224,7 @@
     }
     const pagina = paginas[arquivo];
     if(!pagina) return;
+    if(pagina.integrado) return;
     inserirModuloNoHero(pagina.hero, pagina.modulo);
     Object.entries(pagina.itens).forEach(([id,dados]) => inserirContextoProjeto(id,dados));
   }
