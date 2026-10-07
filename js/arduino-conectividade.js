@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   const initialHash = location.hash && document.querySelector(location.hash)
     ? location.hash
-    : '#b6-prep';
+    : '#b6-0';
 
   showPanel(initialHash, false);
 });
