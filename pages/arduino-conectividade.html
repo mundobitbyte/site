@@ -92,65 +92,77 @@
 </section>
 
 <section class="project mbb6-panel active-panel" id="b6-0">
-  <div class="projectHead"><span class="badge">0</span><div><h2>Conhecendo o ESP32 antes da conectividade</h2><p>Antes de usar Bluetooth e Wi-Fi, vale reconhecer a placa que fará esse trabalho.</p></div></div>
+  <div class="projectHead"><span class="badge">0</span><div><h2>Conhecendo o ESP32 antes da conectividade</h2><p>O Arduino Uno já nos ensinou a base. Agora vamos observar apenas o que muda ao trabalhar com o ESP32.</p></div></div>
   <div class="cards">
-    <article class="card wide"><h3>1. O que já sabemos continua valendo</h3><p>O Arduino Uno e a placa ESP32 DevKit são placas de desenvolvimento com um microcontrolador. Nos dois casos, o programa lê entradas, toma decisões e controla saídas. Funções como <code>pinMode()</code> e <code>digitalWrite()</code> continuam familiares.</p><p class="mbb6-note"><strong>A diferença:</strong> o ESP32 reúne mais recursos no próprio sistema, incluindo comunicação sem fio e vários periféricos internos.</p></article>
 
-    <article class="card wide mbb6-visual-card">
-      <h3>2. Placa não é a mesma coisa que microcontrolador</h3>
-      <figure class="mbb6-lesson-figure">
-        <img src="../img/arduino/fundamentos/placa-microcontrolador.svg" alt="Diagrama de uma placa Arduino Uno mostrando microcontrolador, USB, alimentação e pinos." loading="lazy" decoding="async">
-        <figcaption>No Arduino Uno, o ATmega328P é o microcontrolador; a placa acrescenta USB, alimentação, conectores e componentes de apoio. No ESP32 DevKit ocorre a mesma ideia: a placa reúne o módulo ESP32 e os componentes necessários para usá-lo com facilidade.</figcaption>
-      </figure>
-    </article>
-
-    <article class="card"><h3>3. Arduino Uno × ESP32</h3>
+    <article class="card wide">
+      <h3>1. O que muda em relação ao Arduino Uno?</h3>
       <table>
         <tr><th>Arduino Uno</th><th>ESP32 DevKit</th></tr>
-        <tr><td>Estrutura mais simples para iniciar</td><td>Mais recursos e funções por pino</td></tr>
         <tr><td>Lógica digital de 5 V</td><td>Lógica digital de 3,3 V</td></tr>
         <tr><td>Sem Wi-Fi e Bluetooth integrados</td><td>Wi-Fi e Bluetooth integrados</td></tr>
-        <tr><td>Pinos visualmente mais agrupados</td><td>GPIOs distribuídos conforme o projeto da placa</td></tr>
+        <tr><td>Pinos mais simples de reconhecer no início</td><td>GPIOs com várias funções possíveis</td></tr>
+        <tr><td>Recursos mais enxutos</td><td>Mais recursos internos e possibilidades de comunicação</td></tr>
       </table>
+      <p class="mbb6-note"><strong>O que continua igual:</strong> ainda teremos entradas, saídas, <code>pinMode()</code>, <code>digitalWrite()</code>, sensores, atuadores e lógica de programação.</p>
     </article>
 
-    <article class="card"><h3>4. Por que os números dos pinos parecem fora de ordem?</h3><p><strong>GPIO 23</strong>, <strong>GPIO 18</strong> ou <strong>GPIO 4</strong> são nomes das entradas e saídas internas do microcontrolador. Eles não representam a posição física do pino na placa.</p><p>O fabricante organiza os conectores de acordo com o circuito, as trilhas e os recursos do chip. Por isso a sequência impressa ao lado dos pinos não precisa ser 1, 2, 3, 4...</p></article>
+    <article class="card">
+      <h3>2. Entendendo os GPIOs</h3>
+      <p>Nomes como <strong>GPIO 23</strong>, <strong>GPIO 18</strong> e <strong>GPIO 4</strong> identificam sinais internos do ESP32. Eles não indicam a posição física do pino na placa.</p>
+      <p>Por isso, os números impressos ao lado dos conectores não aparecem necessariamente em sequência.</p>
+      <p>Além disso, um mesmo GPIO pode assumir funções diferentes, como entrada/saída digital, leitura analógica, PWM ou comunicação.</p>
+    </article>
 
-    <article class="card"><h3>5. Um GPIO pode ter mais de uma função</h3><p>No ESP32, um mesmo pino pode participar de funções diferentes, como entrada/saída digital, leitura analógica, PWM ou interfaces de comunicação.</p><p class="mbb6-note"><strong>Não é preciso decorar tudo.</strong> Em cada prática indicaremos os GPIOs adequados. Alguns pinos possuem funções especiais e não são igualmente indicados para qualquer circuito.</p></article>
+    <article class="card">
+      <h3>3. Por que existem vários GND?</h3>
+      <p>Os pinos <strong>GND</strong> pertencem ao mesmo terra elétrico da placa. Existem vários para facilitar as conexões durante a montagem.</p>
+      <p>Nas práticas deste bloco, escolha o GND que deixar o circuito mais simples e organizado.</p>
+    </article>
 
-    <article class="card"><h3>6. Por que há vários GND?</h3><p>Os pinos marcados como <strong>GND</strong> pertencem ao mesmo terra elétrico da placa. Ter mais de um ponto facilita a montagem de circuitos e reduz a necessidade de concentrar todas as conexões em um único terminal.</p><p>Para nossos circuitos básicos, você pode usar um dos GND disponíveis conforme a posição mais conveniente.</p></article>
-
-    <article class="card wide"><h3>7. 5 V para alimentar não significa 5 V nos GPIOs</h3>
+    <article class="card wide">
+      <h3>4. 3,3 V × 5 V: a diferença que exige atenção</h3>
       <div class="mbb6-power-grid">
-        <div><strong>USB / 5V / VIN</strong><span>A placa pode receber alimentação de 5 V pelo caminho previsto pelo fabricante.</span></div>
-        <div><strong>Regulador da placa</strong><span>Reduz a tensão para alimentar o ESP32 em 3,3 V.</span></div>
-        <div><strong>GPIOs</strong><span>Os sinais do ESP32 trabalham em 3,3 V. Não aplique 5 V diretamente a um GPIO.</span></div>
+        <div><strong>USB / 5V / VIN</strong><span>A placa pode ser alimentada com 5 V pelo caminho previsto pelo fabricante.</span></div>
+        <div><strong>3V3</strong><span>É a tensão lógica principal usada pelo ESP32.</span></div>
+        <div><strong>GPIOs</strong><span>Trabalham com sinais de 3,3 V. Não aplique 5 V diretamente a um GPIO.</span></div>
       </div>
-      <p class="mbb6-warning"><strong>Regra de segurança:</strong> um módulo ou sensor alimentado com 5 V pode produzir um sinal de 5 V. Antes de ligá-lo a um GPIO do ESP32, confira se é necessária adaptação de nível.</p>
+      <p class="mbb6-warning"><strong>Atenção:</strong> um sensor alimentado com 5 V pode entregar um sinal de 5 V. Antes de ligar sua saída ao ESP32, confira se é necessária adaptação de nível.</p>
     </article>
 
-    <article class="card"><h3>8. Onde ficam Wi-Fi e Bluetooth?</h3><p>Eles fazem parte do sistema ESP32; não são módulos externos ligados a um GPIO específico. No módulo ESP32-WROOM-32, a comunicação sem fio usa a antena integrada localizada em uma extremidade do módulo.</p><p>O programa ativa esses recursos por software. Os GPIOs continuam disponíveis para sensores, LEDs e outros componentes.</p></article>
+    <article class="card">
+      <h3>5. Wi-Fi, Bluetooth e antena</h3>
+      <p>Wi-Fi e Bluetooth já fazem parte do ESP32. Eles não ocupam um GPIO específico e não precisam de um módulo externo para funcionar.</p>
+      <p>No módulo <strong>ESP32-WROOM-32</strong>, a antena integrada fica em uma das extremidades do módulo e é responsável pela comunicação sem fio.</p>
+    </article>
 
-    <article class="card"><h3>9. EN e BOOT</h3><p>Muitas placas ESP32 DevKit possuem dois botões importantes:</p><ul><li><strong>EN</strong>: reinicia o ESP32.</li><li><strong>BOOT</strong>: participa do processo de gravação em algumas situações.</li></ul><p>No uso normal, a Arduino IDE e o circuito USB da placa costumam cuidar da gravação automaticamente.</p></article>
+    <article class="card">
+      <h3>6. EN, BOOT e pinos especiais</h3>
+      <ul>
+        <li><strong>EN</strong>: reinicia o ESP32.</li>
+        <li><strong>BOOT</strong>: pode ser usado durante o processo de gravação em algumas situações.</li>
+        <li><strong>Pinos especiais</strong>: alguns GPIOs participam da inicialização, memória ou outras funções internas.</li>
+      </ul>
+      <p class="mbb6-note"><strong>Não é preciso decorar o pinout.</strong> Em cada prática indicaremos os GPIOs apropriados.</p>
+    </article>
 
     <article class="card wide mbb6-visual-card">
-      <h3>10. A placa que usaremos no circuito-base</h3>
+      <h3>7. Reconhecendo a placa que vamos usar</h3>
       <figure class="mbb6-lesson-figure mbb6-esp32-photo">
-        <img src="../img/arduino/esp32-led-gpio23.webp" alt="ESP32 no Wokwi com LED ligado ao GPIO 23 e resistor conectado ao GND." loading="lazy" decoding="async">
-        <figcaption>Observe a disposição dos pinos na placa. Para este bloco, o importante é localizar <strong>GPIO 23</strong>, <strong>GND</strong> e a alimentação correta. Não precisamos memorizar todo o pinout.</figcaption>
+        <img src="../img/arduino/esp32-led-gpio23.webp" alt="ESP32 DevKit no Wokwi com LED ligado ao GPIO 23 e resistor ligado ao GND." loading="lazy" decoding="async">
+        <figcaption>Na placa, localize os nomes impressos ao lado dos pinos. Para começar, basta reconhecer <strong>GPIO 23</strong>, <strong>GND</strong>, <strong>3V3</strong>, <strong>VIN/5V</strong>, <strong>EN</strong> e <strong>BOOT</strong>. Os demais aparecem quando forem necessários.</figcaption>
       </figure>
+      <div class="mbb6-check-grid">
+        <span>✓ GPIO é o número do sinal, não a posição física.</span>
+        <span>✓ Vários GND facilitam a montagem.</span>
+        <span>✓ A placa pode receber 5 V, mas os GPIOs trabalham em 3,3 V.</span>
+        <span>✓ Wi-Fi e Bluetooth já estão integrados.</span>
+        <span>✓ Alguns GPIOs possuem funções especiais.</span>
+        <span>✓ Não precisamos memorizar todo o pinout.</span>
+      </div>
     </article>
 
-    <article class="card worked wide"><h3>11. O essencial antes de avançar</h3><div class="mbb6-check-grid">
-      <span>✓ A placa contém o microcontrolador e componentes de apoio.</span>
-      <span>✓ GPIO é o número do sinal, não a posição física.</span>
-      <span>✓ Vários GND facilitam as conexões.</span>
-      <span>✓ A placa pode receber 5 V, mas os GPIOs trabalham em 3,3 V.</span>
-      <span>✓ Wi-Fi e Bluetooth já estão integrados ao ESP32.</span>
-      <span>✓ Nem todo GPIO deve ser usado indiscriminadamente.</span>
-    </div></article>
-
-    <article class="card wide mbb6-bridge"><h3>12. Próximo passo</h3><p>Agora já sabemos o que muda ao sair do Arduino Uno e chegar ao ESP32. Vamos montar um circuito simples e comprovar que a programação básica continua familiar antes de usar a conectividade.</p></article>
+    <article class="card wide mbb6-bridge"><h3>Próximo passo</h3><p>Agora que reconhecemos as diferenças essenciais do ESP32, vamos montar um LED no GPIO 23 e confirmar o funcionamento da placa antes de iniciar a comunicação sem fio.</p></article>
   </div>
 </section>
 
@@ -161,7 +173,7 @@
     <article class="card"><h3>2. O que continua igual</h3><ul><li><code>pinMode()</code> configura o pino.</li><li><code>digitalWrite()</code> altera uma saída digital.</li><li><code>HIGH</code> e <code>LOW</code> continuam representando os estados digitais.</li><li><code>delay()</code> ainda pode ser usado em testes simples.</li></ul></article>
     <article class="card"><h3>3. O que vem depois</h3><p>Com o LED funcionando, o próximo passo será deixar de controlar a saída apenas pelo próprio programa e começar a receber comandos por Bluetooth e pela rede Wi-Fi.</p></article>
     <article class="card wide"><h3>4. Preparando a Arduino IDE</h3><ol><li>Abra a Arduino IDE.</li><li>Instale o suporte de placas <strong>esp32 by Espressif Systems</strong> pelo Gerenciador de Placas, caso ainda não esteja instalado.</li><li>Conecte o ESP32 ao computador com um cabo USB de dados.</li><li>Selecione uma placa compatível com <strong>DOIT ESP32 DEVKIT V1</strong> e escolha a porta serial correspondente.</li></ol><p class="mbb6-note"><strong>Se a porta não aparecer:</strong> confira primeiro o cabo USB, a conexão física e o driver USB-serial utilizado pela sua placa.</p></article>
-    <article class="card wide"><h3>5. Circuito-base</h3><div class="mbb6-connections"><div><strong>GPIO 23</strong><span>liga-se ao resistor de 220 Ω.</span></div><div><strong>Resistor 220 Ω</strong><span>liga-se ao ânodo do LED.</span></div><div><strong>Cátodo do LED</strong><span>liga-se ao GND do ESP32.</span></div><div><strong>Montagem</strong><span>este circuito será reutilizado nas próximas experiências de comunicação.</span></div></div></article>
+    <article class="card wide"><h3>5. Circuito-base</h3><div class="mbb6-connections"><div><strong>GPIO 23</strong><span>liga-se ao ânodo do LED.</span></div><div><strong>Cátodo do LED</strong><span>liga-se ao resistor de 220 Ω.</span></div><div><strong>Resistor 220 Ω</strong><span>liga-se ao GND do ESP32.</span></div><div><strong>Montagem</strong><span>este circuito será reutilizado nas próximas experiências de comunicação.</span></div></div></article>
     <article class="card code wide"><h3>6. Primeiro teste <button type="button" onclick="copyCode('b6-prep-code',this)">Copiar</button></h3><pre id="b6-prep-code">const int LED = 23;
 
 void setup() {
@@ -533,7 +545,7 @@ void loop() {
 </main>
 </div>
 </div>
-<script src="../js/arduino-conectividade.js?v=20261007-4"></script>
+<script src="../js/arduino-conectividade.js?v=20261007-5"></script>
 <script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>\n<script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body>
 </html>
