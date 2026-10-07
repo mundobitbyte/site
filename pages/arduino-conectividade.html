@@ -109,21 +109,21 @@
 
     <article class="card">
       <h3>2. Entendendo os GPIOs</h3>
-      <p>Nomes como <strong>GPIO 23</strong>, <strong>GPIO 18</strong> e <strong>GPIO 4</strong> identificam sinais internos do ESP32. Eles não indicam a posição física do pino na placa.</p>
-      <p>Por isso, os números impressos ao lado dos conectores não aparecem necessariamente em sequência.</p>
+      <p><strong>GPIO</strong> vem de <em>General Purpose Input/Output</em>, ou <strong>entrada/saída de uso geral</strong>. É o nome dado aos pinos do microcontrolador que podem receber ou enviar sinais.</p>
+      <p>Nomes como <strong>GPIO 23</strong>, <strong>GPIO 18</strong> e <strong>GPIO 4</strong> identificam esses sinais internos. O número do GPIO não indica a posição física do pino na placa; por isso, os números impressos ao lado dos conectores não aparecem necessariamente em sequência.</p>
       <p>Além disso, um mesmo GPIO pode assumir funções diferentes, como entrada/saída digital, leitura analógica, PWM ou comunicação.</p>
     </article>
 
     <article class="card">
       <h3>3. Por que existem vários GND?</h3>
-      <p>Os pinos <strong>GND</strong> pertencem ao mesmo terra elétrico da placa. Existem vários para facilitar as conexões durante a montagem.</p>
+      <p><strong>GND</strong> vem de <em>ground</em> (terra). É a referência elétrica comum do circuito e o caminho de retorno da corrente. Os vários pinos GND da placa pertencem ao mesmo terra elétrico e existem para facilitar as conexões durante a montagem.</p>
       <p>Nas práticas deste bloco, escolha o GND que deixar o circuito mais simples e organizado.</p>
     </article>
 
     <article class="card wide">
       <h3>4. 3,3 V × 5 V: a diferença que exige atenção</h3>
       <div class="mbb6-power-grid">
-        <div><strong>USB / 5V / VIN</strong><span>A placa pode ser alimentada com 5 V pelo caminho previsto pelo fabricante.</span></div>
+        <div><strong>USB / 5V / VIN</strong><span>A placa pode ser alimentada com 5 V pelo caminho previsto pelo fabricante. VIN indica a entrada de alimentação da placa.</span></div>
         <div><strong>3V3</strong><span>É a tensão lógica principal usada pelo ESP32.</span></div>
         <div><strong>GPIOs</strong><span>Trabalham com sinais de 3,3 V. Não aplique 5 V diretamente a um GPIO.</span></div>
       </div>
@@ -197,8 +197,8 @@ void loop() {
   <div class="projectHead"><span class="badge">6.1</span><div><h2>Bluetooth: controlar um dispositivo próximo</h2><p>O celular envia um comando, o ESP32 interpreta e o circuito reage.</p></div></div>
   <div class="cards">
     <article class="card wide"><h3>1. Situação</h3><p>Queremos ligar e desligar o LED sem alterar o programa e sem depender de uma rede Wi-Fi. O dispositivo que envia a ordem está perto do ESP32. Essa necessidade combina com uma comunicação Bluetooth direta.</p></article>
-    <article class="card"><h3>2. Ideia central</h3><div class="mbb6-route"><span>Celular</span><b>→</b><span>Bluetooth</span><b>→</b><span>ESP32</span><b>→</b><span>LED</span></div><p>Usaremos Bluetooth clássico no modo serial. Para o programa, a experiência se parece com receber caracteres por uma porta serial sem fio.</p></article>
-    <article class="card"><h3>3. Circuito</h3><p><strong>Use exatamente o mesmo circuito da etapa Preparação — ESP32 (Blink).</strong> Não há nova montagem: o LED continua no <strong>GPIO 23</strong>, em série com o resistor de 220 Ω até o GND.</p><p class="mbb6-note"><strong>Comparação:</strong> em um Arduino Uno é comum acrescentar um HC-05 ou HC-06 para obter Bluetooth serial. No ESP32 utilizado aqui, o Bluetooth já está integrado.</p></article>
+    <article class="card"><h3>2. Como o Bluetooth será usado</h3><p>Bluetooth permite comunicação sem fio a curta distância. Aqui usaremos <strong>Bluetooth Classic</strong> com <strong>SPP</strong> (<em>Serial Port Profile</em>, perfil de porta serial), que cria um canal parecido com uma comunicação serial.</p><div class="mbb6-route"><span>Celular</span><b>→</b><span>Bluetooth Classic / SPP</span><b>→</b><span>ESP32</span><b>→</b><span>LED</span></div><p>O celular envia um caractere, o ESP32 lê esse caractere e decide o que fazer. Não é necessário roteador, endereço IP ou rede Wi-Fi para essa comunicação direta.</p></article>
+    <article class="card"><h3>3. Circuito</h3><p><strong>Use o circuito da etapa Preparação — Circuito.</strong> Não há nova montagem: o LED e o resistor de 220 Ω continuam em série entre o <strong>GPIO 23</strong> e o <strong>GND</strong>.</p><p class="mbb6-note"><strong>Comparação:</strong> em um Arduino Uno é comum acrescentar um HC-05 ou HC-06 para obter Bluetooth serial. No ESP32 utilizado aqui, o Bluetooth já está integrado.</p></article>
     <article class="card code wide"><h3>4. Código completo <button type="button" onclick="copyCode('b6-1-code',this)">Copiar</button></h3><pre id="b6-1-code">#include "BluetoothSerial.h"
 
 BluetoothSerial SerialBT;
@@ -245,7 +245,7 @@ void loop() {
   <div class="projectHead"><span class="badge">6.2</span><div><h2>Wi-Fi: colocando o sistema em uma rede</h2><p>O dispositivo deixa de depender apenas de uma conexão direta e passa a ter um endereço dentro da rede.</p></div></div>
   <div class="cards">
     <article class="card wide"><h3>1. Situação</h3><p>O Bluetooth permite conversar com um dispositivo próximo. Agora queremos que o ESP32 entre em uma rede Wi-Fi existente. Para participar dessa rede, ele precisa se conectar e receber um endereço IP.</p></article>
-    <article class="card"><h3>2. O que precisamos descobrir</h3><ul><li>qual é o nome da rede (SSID);</li><li>qual é a senha;</li><li>se o ESP32 conseguiu se conectar;</li><li>qual endereço IP recebeu.</li></ul></article>
+    <article class="card"><h3>2. Como a conexão Wi-Fi funciona</h3><p>O ESP32 entrará na rede como uma <strong>estação</strong>, isto é, como mais um dispositivo conectado ao ponto de acesso ou roteador.</p><div class="mbb6-route"><span>ESP32</span><b>→</b><span>ponto de acesso / roteador</span><b>→</b><span>endereço IP</span></div><ul><li><strong>SSID</strong> (<em>Service Set Identifier</em>) é o nome da rede Wi-Fi;</li><li>a senha autoriza a entrada na rede quando ela é protegida;</li><li><strong>IP</strong> (<em>Internet Protocol</em>) é o endereço usado para identificar o ESP32 naquela rede.</li></ul><p>Em uma rede comum, o roteador normalmente fornece esse endereço IP automaticamente quando o ESP32 se conecta.</p></article>
     <article class="card"><h3>3. Circuito</h3><p>O circuito continua igual. O LED permanece no GPIO 23, mas nesta etapa ele não é o foco. O resultado observável será a conexão mostrada no Monitor Serial.</p><p class="mbb6-warning"><strong>Atenção:</strong> o ESP32-WROOM-32 trabalha com Wi-Fi de 2,4 GHz. Use uma rede compatível e evite, neste primeiro teste, redes que exigem login por página Web.</p></article>
     <article class="card code wide"><h3>4. Código completo <button type="button" onclick="copyCode('b6-2-code',this)">Copiar</button></h3><pre id="b6-2-code">#include &lt;WiFi.h&gt;
 
@@ -278,7 +278,7 @@ void setup() {
 
 void loop() {
 }</pre></article>
-    <article class="card wide"><h3>5. Entendendo as novidades</h3><div class="explain"><p><code>WiFi.mode(WIFI_STA)</code> coloca o ESP32 no papel de dispositivo que entra em uma rede existente.</p><p><code>WiFi.begin(ssid, senha)</code> inicia a tentativa de conexão.</p><p><code>WiFi.status()</code> permite verificar o estado da conexão.</p><p><code>WiFi.localIP()</code> mostra o endereço que o ESP32 recebeu dentro daquela rede.</p></div></article>
+    <article class="card wide"><h3>5. Entendendo as novidades</h3><div class="explain"><p><code>WiFi.mode(WIFI_STA)</code> coloca o ESP32 em modo <em>station</em> (estação), para entrar em uma rede existente.</p><p><code>WiFi.begin(ssid, senha)</code> inicia a tentativa de conexão usando o nome e a senha da rede.</p><p><code>WiFi.status()</code> permite verificar se a conexão já foi estabelecida.</p><p><code>WiFi.localIP()</code> mostra o endereço IP recebido pelo ESP32 dentro daquela rede.</p></div></article>
     <article class="card"><h3>6. Testando</h3><ol><li>Substitua <code>NOME_DA_REDE</code> e <code>SENHA_DA_REDE</code>.</li><li>Carregue o programa.</li><li>Abra o Monitor Serial em 115200.</li><li>Aguarde a mensagem de conexão.</li><li>Anote o endereço IP mostrado.</li></ol></article>
     <article class="card worked"><h3>7. Resultado esperado</h3><pre>Conectando ao Wi-Fi....
 Wi-Fi conectado.
@@ -290,10 +290,10 @@ Endereco IP: 192.168.1.37</pre><p>O endereço será diferente em cada rede.</p><
 </section>
 
 <section class="project mbb6-panel" id="b6-3">
-  <div class="projectHead"><span class="badge">6.3</span><div><h2>HTTP: cliente e servidor embarcados</h2><p>O mesmo ESP32 pode responder a pedidos e também fazer pedidos a outros servidores.</p></div></div>
+  <div class="projectHead"><span class="badge">6.3</span><div><h2>HTTP: pedidos e respostas na Web</h2><p><strong>HTTP</strong> significa <em>Hypertext Transfer Protocol</em>. É um protocolo de aplicação usado para organizar pedidos e respostas entre clientes e servidores.</p></div></div>
   <div class="cards">
     <article class="card wide"><h3>1. Situação</h3><p>O ESP32 já entrou na rede e recebeu um IP. Primeiro queremos usar esse endereço para controlar o LED pelo navegador. Depois inverteremos o papel: o próprio ESP32 fará uma requisição a outro servidor.</p></article>
-    <article class="card wide"><h3>2. Cliente e servidor são papéis</h3><table><tr><th>Situação</th><th>Cliente</th><th>Servidor</th></tr><tr><td>Celular abre a página do ESP32</td><td>Celular</td><td>ESP32</td></tr><tr><td>ESP32 consulta uma página na Web</td><td>ESP32</td><td>Servidor Web</td></tr></table></article>
+    <article class="card wide"><h3>2. Cliente e servidor são papéis</h3><p>O <strong>cliente</strong> inicia um pedido (<em>request</em>). O <strong>servidor</strong> recebe esse pedido e devolve uma resposta (<em>response</em>). O papel depende da situação:</p><table><tr><th>Situação</th><th>Cliente</th><th>Servidor</th></tr><tr><td>Celular abre a página do ESP32</td><td>Celular</td><td>ESP32</td></tr><tr><td>ESP32 consulta uma página na Web</td><td>ESP32</td><td>Servidor Web</td></tr></table><p class="mbb6-note"><strong>Importante:</strong> HTTP não exige que a comunicação atravesse a Internet. Ele também pode funcionar somente dentro da rede local, como no servidor criado pelo ESP32.</p></article>
 
     <article class="card wide"><h3 class="mbb6-subtitle">Parte A — ESP32 como servidor HTTP</h3><div class="explain"><p><strong>Problema:</strong> pelo Bluetooth enviávamos L e D. Agora queremos abrir uma página no navegador e tocar em links para controlar o mesmo LED.</p><div class="mbb6-route"><span>Navegador</span><b>→ pedido HTTP →</b><span>ESP32</span><b>→</b><span>LED</span></div></div></article>
     <article class="card code wide"><h3>3. Código — servidor HTTP <button type="button" onclick="copyCode('b6-3-server-code',this)">Copiar</button></h3><pre id="b6-3-server-code">#include &lt;WiFi.h&gt;
@@ -374,7 +374,7 @@ void setup() {
 void loop() {
   servidor.handleClient();
 }</pre></article>
-    <article class="card"><h3>4. O que é novo no servidor</h3><div class="explain"><p><code>WebServer servidor(80)</code> cria o servidor HTTP na porta 80.</p><p><code>servidor.on()</code> associa um endereço a uma função do programa.</p><p><code>servidor.send()</code> envia a resposta HTTP.</p><p><code>servidor.handleClient()</code> atende as requisições que chegam.</p></div></article>
+    <article class="card"><h3>4. Como o servidor funciona</h3><div class="explain"><p><code>WebServer servidor(80)</code> cria o servidor HTTP na <strong>porta 80</strong>, porta padrão usada por HTTP sem criptografia.</p><p><code>servidor.on("/", ...)</code>, <code>servidor.on("/ligar", ...)</code> e <code>servidor.on("/desligar", ...)</code> associam caminhos do endereço a funções do programa.</p><p>Quando o navegador pede <code>/ligar</code>, a função correspondente acende o LED e devolve a página atualizada.</p><p><code>servidor.send(200, "text/html", ...)</code> envia a resposta: <code>200</code> indica sucesso e <code>text/html</code> informa que o conteúdo é uma página HTML.</p><p><code>servidor.handleClient()</code> verifica continuamente se chegaram novos pedidos.</p></div></article>
     <article class="card"><h3>5. Testando o servidor</h3><ol><li>Use celular e ESP32 na mesma rede.</li><li>Carregue o programa e copie o IP mostrado.</li><li>No navegador, abra <code>http://IP_DO_ESP32</code>.</li><li>Use os links para ligar e desligar o LED.</li></ol></article>
     <article class="card worked wide"><h3>6. Resultado esperado</h3><p>A página mostra o estado do LED. Ao tocar em <strong>Ligar LED</strong> ou <strong>Desligar LED</strong>, o navegador faz um pedido ao ESP32, que executa a ação e devolve uma nova página.</p></article>
 
@@ -401,7 +401,7 @@ void setup() {
   Serial.println("Wi-Fi conectado.");
 
   HTTPClient http;
-  http.begin("http://example.com/index.html");
+  http.begin("http://example.com/");
 
   int codigo = http.GET();
 
@@ -419,19 +419,19 @@ void setup() {
 
 void loop() {
 }</pre></article>
-    <article class="card"><h3>8. O que é novo no cliente</h3><div class="explain"><p><code>HTTPClient http</code> cria o cliente.</p><p><code>http.begin()</code> informa o endereço que será consultado.</p><p><code>http.GET()</code> faz uma requisição GET.</p><p><code>http.getString()</code> lê o conteúdo recebido.</p><p><code>http.end()</code> encerra a conexão usada pela requisição.</p></div></article>
-    <article class="card"><h3>9. Testando o cliente</h3><ol><li>Configure a rede.</li><li>Carregue o programa.</li><li>Abra o Monitor Serial em 115200.</li><li>Observe o código HTTP e o conteúdo recebido.</li></ol><p class="mbb6-note">O endereço <code>example.com</code> é usado aqui apenas como destino simples de teste. O objetivo é compreender a requisição e a resposta, não estudar APIs ainda.</p></article>
+    <article class="card"><h3>8. Como o cliente funciona</h3><div class="explain"><p><code>HTTPClient http</code> cria o cliente HTTP.</p><p><code>http.begin()</code> informa a <strong>URL</strong> (endereço do recurso) que será consultada.</p><p><code>http.GET()</code> envia um pedido do tipo <strong>GET</strong>, usado para solicitar um recurso.</p><p>O valor retornado por <code>GET()</code> permite observar o código de resposta HTTP; <code>200</code>, por exemplo, indica uma resposta bem-sucedida.</p><p><code>http.getString()</code> lê o conteúdo recebido e <code>http.end()</code> libera os recursos usados pela conexão.</p></div></article>
+    <article class="card"><h3>9. Testando o cliente</h3><ol><li>Configure a rede.</li><li>Carregue o programa.</li><li>Abra o Monitor Serial em 115200.</li><li>Observe o código HTTP e o conteúdo recebido.</li></ol><p class="mbb6-note"><strong>No Wokwi padrão, este teste também é possível:</strong> o pedido parte do ESP32 simulado para a Internet. O endereço <code>example.com</code> é usado apenas como destino simples; APIs serão estudadas em outro momento.</p></article>
     <article class="card errors wide"><h3>10. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>A página do ESP32 não abre</td><td>Celular e ESP32 devem estar na mesma rede e o endereço deve usar o IP mostrado no Monitor Serial.</td></tr><tr><td>O servidor abre, mas o LED não muda</td><td>Confira o GPIO 23 e se os caminhos /ligar e /desligar estão corretos.</td></tr><tr><td>A requisição do cliente retorna erro</td><td>Confirme primeiro se o Wi-Fi está conectado e se a rede permite acesso à Internet.</td></tr></table></article>
     <article class="card worked wide mbb6-bridge"><h3>11. Próximo problema</h3><p>O servidor funciona, mas acessar um endereço como <code>192.168.1.37</code> não é confortável — e o IP pode mudar. <strong>Seria possível encontrar o ESP32 por um nome?</strong></p></article>
   </div>
 </section>
 
 <section class="project mbb6-panel" id="b6-4">
-  <div class="projectHead"><span class="badge">6.4</span><div><h2>mDNS: acessando o ESP32 por nome</h2><p>O servidor já funciona. Agora vamos tornar o acesso local mais fácil de reconhecer.</p></div></div>
+  <div class="projectHead"><span class="badge">6.4</span><div><h2>mDNS: encontrando o ESP32 por nome</h2><p><strong>mDNS</strong> significa <em>Multicast DNS</em>. Ele permite descobrir nomes dentro da rede local sem depender de um servidor DNS configurado manualmente.</p></div></div>
   <div class="cards">
     <article class="card wide"><h3>1. Situação</h3><p>Para abrir a página do ESP32, precisamos descobrir e digitar seu IP. Esse endereço pode mudar depois de uma reconexão. Queremos continuar na rede local, mas usar um nome mais fácil de lembrar.</p></article>
-    <article class="card"><h3>2. Antes e depois</h3><table><tr><th>Antes</th><th>Depois</th></tr><tr><td><code>192.168.1.37</code></td><td><code>ambiente-mbb.local</code></td></tr><tr><td>precisa descobrir o IP</td><td>nome reconhecível na rede local</td></tr></table></article>
-    <article class="card"><h3>3. Circuito</h3><p>Nada muda fisicamente. Continuamos com o mesmo servidor HTTP e o mesmo LED. A melhoria acontece apenas na forma de localizar o dispositivo na rede.</p></article>
+    <article class="card"><h3>2. Como o mDNS funciona</h3><p><strong>DNS</strong> (<em>Domain Name System</em>) relaciona nomes a endereços IP. O mDNS leva essa ideia para a própria rede local usando mensagens multicast.</p><div class="mbb6-route"><span>Navegador procura ambiente-mbb.local</span><b>→</b><span>ESP32 responde com seu IP</span><b>→</b><span>HTTP continua normalmente</span></div><p>O nome facilita encontrar o dispositivo; ele não substitui o endereço IP internamente.</p></article>
+    <article class="card"><h3>3. O que muda e o que não muda</h3><table><tr><th>Antes</th><th>Com mDNS</th></tr><tr><td><code>http://192.168.1.37</code></td><td><code>http://ambiente-mbb.local</code></td></tr></table><p>Nada muda no circuito nem no servidor HTTP. O mDNS acrescenta apenas uma forma mais fácil de localizar o ESP32 na rede local.</p><p class="mbb6-note"><strong><code>.local</code> é local:</strong> esse nome não é um endereço público da Internet.</p></article>
     <article class="card code wide"><h3>4. Código completo <button type="button" onclick="copyCode('b6-4-code',this)">Copiar</button></h3><pre id="b6-4-code">#include &lt;WiFi.h&gt;
 #include &lt;WebServer.h&gt;
 #include &lt;ESPmDNS.h&gt;
@@ -516,7 +516,7 @@ void setup() {
 void loop() {
   servidor.handleClient();
 }</pre></article>
-    <article class="card wide"><h3>5. Entendendo as novidades</h3><div class="explain"><p><code>#include &lt;ESPmDNS.h&gt;</code> disponibiliza o mDNS.</p><p><code>MDNS.begin("ambiente-mbb")</code> tenta registrar o nome local.</p><p><code>MDNS.addService("http", "tcp", 80)</code> anuncia que o dispositivo oferece um serviço HTTP na porta 80.</p><p>O sufixo <code>.local</code> identifica esse acesso dentro da rede local.</p></div></article>
+    <article class="card wide"><h3>5. Entendendo as novidades</h3><div class="explain"><p><code>#include &lt;ESPmDNS.h&gt;</code> disponibiliza os recursos de mDNS.</p><p><code>MDNS.begin("ambiente-mbb")</code> registra o nome-base; o acesso será feito como <code>ambiente-mbb.local</code>.</p><p><code>MDNS.addService("http", "tcp", 80)</code> anuncia que o dispositivo oferece HTTP na porta 80. O papel do TCP será aprofundado no módulo de Protocolos.</p></div></article>
     <article class="card"><h3>6. Testando</h3><ol><li>Primeiro confirme que o acesso pelo IP ainda funciona.</li><li>No mesmo dispositivo, abra <code>http://ambiente-mbb.local</code>.</li><li>Ligue e desligue o LED.</li><li>Compare a experiência com o acesso pelo IP.</li></ol></article>
     <article class="card worked"><h3>7. Resultado esperado</h3><p>O mesmo servidor HTTP passa a ser acessado por um nome local legível, sem precisar digitar o endereço IP.</p></article>
     <article class="card errors wide"><h3>8. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>O IP funciona, mas .local não</td><td>O servidor HTTP pode estar correto. O dispositivo, sistema operacional ou rede pode não resolver mDNS da forma esperada.</td></tr><tr><td>Nem IP nem .local funcionam</td><td>Volte ao teste de Wi-Fi e confirme que os dispositivos estão na mesma rede.</td></tr></table></article>
@@ -528,13 +528,13 @@ void loop() {
   <div class="projectHead"><span class="badge">6.5</span><div><h2>Tunelamento: acesso temporário de fora da rede</h2><p>Um serviço local pode ser exposto temporariamente por meio de um túnel criado por um computador da mesma rede.</p></div></div>
   <div class="cards">
     <article class="card wide"><h3>1. Situação</h3><p>O servidor do ESP32 funciona pelo IP e pelo nome <code>.local</code>, mas ambos dependem da rede local. Queremos fazer um teste temporário a partir de outra rede, sem transformar o ESP32 em um servidor público permanente.</p></article>
-    <article class="card wide"><h3>2. O caminho correto</h3><div class="mbb6-route"><span>Internet</span><b>→</b><span>localhost.run</span><b>→ túnel SSH →</b><span>Computador</span><b>→ rede local →</b><span>ESP32</span></div><p class="mbb6-note"><strong>Importante:</strong> o programa de tunelamento não roda dentro do ESP32. O computador da rede local cria o túnel e encaminha as requisições para o servidor HTTP da placa.</p></article>
+    <article class="card wide"><h3>2. Como o túnel funciona</h3><p>Um <strong>túnel</strong> cria um caminho intermediário entre um endereço acessível pela Internet e um serviço que continua dentro da rede local. Neste exemplo, usamos <strong>SSH</strong> (<em>Secure Shell</em>) para manter esse caminho.</p><div class="mbb6-route"><span>Internet</span><b>→</b><span>localhost.run</span><b>→ túnel SSH →</b><span>Computador</span><b>→ rede local →</b><span>ESP32</span></div><p class="mbb6-note"><strong>O ESP32 não fica diretamente na Internet.</strong> O computador da mesma rede cria o túnel e encaminha as requisições recebidas até o servidor HTTP da placa.</p></article>
     <article class="card"><h3>3. Antes de criar o túnel</h3><ol><li>Deixe o servidor HTTP do ESP32 funcionando.</li><li>Anote o IP mostrado no Monitor Serial.</li><li>No computador da mesma rede, abra <code>http://IP_DO_ESP32</code>.</li><li>Somente continue se a página abrir e controlar o LED normalmente.</li></ol></article>
-    <article class="card"><h3>4. Ferramenta escolhida</h3><p>Usaremos <strong>localhost.run</strong> como experiência principal porque trabalha por SSH e permite um túnel temporário com poucos passos. <strong>ngrok</strong> é outra ferramenta da mesma categoria e pode ser apresentada como alternativa, sem duplicar toda a prática.</p></article>
+    <article class="card"><h3>4. Ferramenta para o teste</h3><p>Usaremos <strong>localhost.run</strong>, um serviço que recebe a conexão SSH do computador e fornece um endereço público temporário. Outras ferramentas de tunelamento existem, mas não precisamos trocar de serviço para compreender o caminho dos dados.</p></article>
     <article class="card code wide mbb6-terminal"><h3>5. Conferir o SSH <button type="button" onclick="copyCode('b6-5-ssh-code',this)">Copiar</button></h3><pre id="b6-5-ssh-code">ssh -V</pre></article>
     <article class="card code wide mbb6-terminal"><h3>6. Criar o túnel <button type="button" onclick="copyCode('b6-5-tunnel-code',this)">Copiar</button></h3><pre id="b6-5-tunnel-code">ssh -R 80:192.168.1.37:80 nokey@localhost.run</pre><div class="explain"><p>Troque <code>192.168.1.37</code> pelo IP real do seu ESP32.</p><p><code>-R</code> cria um encaminhamento remoto: o endereço público recebido pelo serviço será encaminhado pelo computador até a porta 80 do ESP32.</p></div></article>
-    <article class="card"><h3>7. Testando de verdade</h3><ol><li>Mantenha o terminal aberto.</li><li>Copie a URL pública exibida pelo serviço.</li><li>No celular, desligue o Wi-Fi e use a Internet móvel.</li><li>Abra a URL pública.</li><li>Ligue e desligue o LED.</li><li>Ao terminar, volte ao terminal e pressione <code>Ctrl+C</code> para encerrar o túnel.</li></ol></article>
-    <article class="card worked"><h3>8. Resultado esperado</h3><p>A página do ESP32 pode ser alcançada temporariamente a partir de outra rede enquanto o túnel estiver ativo.</p></article>
+    <article class="card"><h3>7. Testando fora da rede local</h3><ol><li>Mantenha o terminal aberto.</li><li>Copie a URL pública exibida pelo serviço.</li><li>No celular, desligue o Wi-Fi e use a Internet móvel.</li><li>Abra a URL pública.</li><li>Ligue e desligue o LED.</li><li>Ao terminar, volte ao terminal e pressione <code>Ctrl+C</code> para encerrar o túnel.</li></ol></article>
+    <article class="card worked"><h3>8. Resultado esperado</h3><p>A página do ESP32 pode ser alcançada temporariamente a partir de outra rede enquanto o túnel estiver ativo. Ao encerrar o comando SSH, o caminho público deixa de encaminhar as requisições para o ESP32.</p></article>
     <article class="card errors wide"><h3>9. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>O comando SSH não existe</td><td>Confira se o cliente OpenSSH está disponível no sistema.</td></tr><tr><td>O túnel abre, mas a página não</td><td>Confirme que o computador ainda consegue abrir diretamente o IP do ESP32.</td></tr><tr><td>A URL parou de funcionar</td><td>O túnel depende do terminal aberto e a URL gratuita é temporária.</td></tr><tr><td>A rede bloqueia a conexão SSH</td><td>Teste em outra rede ou use outra ferramenta de tunelamento permitida no ambiente.</td></tr></table></article>
     <article class="card exercise wide"><h3>10. Limite desta experiência</h3><p>Exponha somente o <strong>LED didático</strong>. Não use esta atividade para abrir temporariamente fechaduras, portões, câmeras, relés de potência ou dados pessoais. Tornar um serviço acessível externamente cria também uma nova pergunta: <strong>quem pode acessá-lo?</strong></p></article>
     <article class="card worked wide"><h3>11. O que o Bloco 6 construiu</h3><div class="mbb6-route"><span>Bluetooth</span><b>→</b><span>Wi-Fi</span><b>→</b><span>HTTP</span><b>→</b><span>mDNS</span><b>→</b><span>Túnel</span></div><p>O sistema deixou de ser apenas local. Agora consegue conversar com dispositivos próximos, entrar em uma rede, atender ou fazer requisições Web, ser encontrado por nome e, em uma experiência controlada, ser acessado temporariamente de fora da rede.</p></article>
@@ -545,7 +545,8 @@ void loop() {
 </main>
 </div>
 </div>
-<script src="../js/arduino-conectividade.js?v=20261007-5"></script>
-<script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>\n<script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+<script src="../js/arduino-conectividade.js?v=20261007-6"></script>
+<script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>
+<script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body>
 </html>
