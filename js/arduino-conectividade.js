@@ -273,7 +273,7 @@ public:
       <li>Envie <code>L</code>. O LED deve acender e o terminal deve mostrar <code>LED LIGADO</code>.</li>
       <li>Envie <code>D</code>. O LED deve apagar e o terminal deve mostrar <code>LED DESLIGADO</code>.</li>
     </ol>
-    <p class="mbb6-note"><strong>Evidência correta:</strong> no Wokwi comprovamos a lógica de comandos e o controle do LED. O pareamento e a comunicação Bluetooth reais serão comprovados na ESP32 física.</p>
+    <p class="mbb6-note"><strong>No Wokwi:</strong> este teste verifica a leitura dos comandos e o controle do LED. O pareamento Bluetooth é testado na ESP32 física.</p>
   `;
 
   testeFisico.parentNode.insertBefore(aviso, testeFisico);
@@ -341,11 +341,11 @@ document.addEventListener('DOMContentLoaded', function(){
       guia.className = 'card wide';
       guia.dataset.mbb6Ambientes = '1';
       guia.innerHTML = `
-        <h3>Antes de começar — escolha o ambiente de prática</h3>
-        <p>Neste bloco existem dois caminhos legítimos. O conteúdo conceitual é o mesmo, mas alguns testes dependem do ambiente.</p>
+        <h3>Antes de começar — escolha onde testar</h3>
+        <p>Você pode acompanhar as etapas no Wokwi ou com uma ESP32 física. Alguns testes dependem dos recursos disponíveis em cada ambiente.</p>
         <div class="mbb6-route"><span>Wokwi</span><b>→</b><span>simulação no navegador</span><b>→</b><span>sem placa física</span></div>
         <div class="mbb6-route"><span>ESP32 físico</span><b>→</b><span>Arduino IDE</span><b>→</b><span>rede e rádio reais</span></div>
-        <p class="mbb6-note"><strong>Regra MbB:</strong> quando uma etapa não puder produzir no Wokwi a mesma evidência da placa física, isso será informado antes do teste. Não trate uma limitação do simulador como erro do seu código.</p>
+        <p class="mbb6-note"><strong>Atenção:</strong> quando o Wokwi não reproduzir um recurso da placa física, a própria etapa indicará como realizar o teste e qual resultado deve ser observado.</p>
       `;
       cards.insertBefore(guia, cards.firstElementChild);
     }
