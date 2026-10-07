@@ -207,19 +207,19 @@ document.addEventListener('DOMContentLoaded', function(){
     Array.from(tituloCodigo.childNodes).forEach(node => {
       if(node.nodeType === Node.TEXT_NODE) node.textContent = '';
     });
-    tituloCodigo.insertBefore(document.createTextNode('4. Código completo — o mesmo no Wokwi e na ESP32 física '), botao || null);
+    tituloCodigo.insertBefore(document.createTextNode('4. Código completo '), botao || null);
   }
 
   const aviso = document.createElement('article');
   aviso.className = 'card wide';
   aviso.setAttribute('data-mbb-wokwi-bluetooth', 'aviso');
   aviso.innerHTML = `
-    <h3>6A. Testando no Wokwi sem trocar o programa</h3>
+    <h3>6A. Teste no Wokwi</h3>
     <p class="mbb6-warning"><strong>O Wokwi não simula o rádio Bluetooth do ESP32.</strong> Por isso, um celular real não encontrará <code>MBB-ESP32</code> nessa simulação.</p>
-    <p><strong>Mas o <code>sketch.ino</code> não muda.</strong> Vamos manter exatamente o código Bluetooth acima e acrescentar apenas um arquivo auxiliar chamado <code>BluetoothSerial.h</code>. No Wokwi, esse arquivo fará o Monitor Serial representar temporariamente a entrada e a saída que, na placa física, passam pelo Bluetooth.</p>
+    <p>Para testar a lógica no Wokwi, crie um arquivo auxiliar chamado <code>BluetoothSerial.h</code>. Ele fará o Monitor Serial representar temporariamente a entrada e a saída que, na placa física, passam pelo Bluetooth.</p>
     <p class="mbb6-note"><strong>Circuito:</strong> use exatamente o mesmo circuito da etapa <em>Preparação — ESP32</em>: GPIO 23 → resistor de 220 Ω → LED → GND. Não há nova montagem.</p>
-    <div class="mbb6-route"><span>Wokwi: Monitor Serial</span><b>→</b><span>BluetoothSerial.h auxiliar</span><b>→</b><span>mesmo sketch.ino</span><b>→</b><span>LED</span></div>
-    <div class="mbb6-route"><span>Placa física: celular Android</span><b>→</b><span>Bluetooth Classic/SPP</span><b>→</b><span>mesmo sketch.ino</span><b>→</b><span>LED</span></div>
+    <div class="mbb6-route"><span>Wokwi: Monitor Serial</span><b>→</b><span>BluetoothSerial.h auxiliar</span><b>→</b><span>sketch.ino</span><b>→</b><span>LED</span></div>
+    <div class="mbb6-route"><span>Placa física: celular Android</span><b>→</b><span>Bluetooth Classic/SPP</span><b>→</b><span>sketch.ino</span><b>→</b><span>LED</span></div>
   `;
 
   const arquivo = document.createElement('article');
@@ -256,7 +256,7 @@ public:
 
 #endif</pre>
     <div class="explain" style="margin-top:12px">
-      <p><strong>O que esse arquivo faz:</strong> preserva os mesmos comandos <code>SerialBT.begin()</code>, <code>SerialBT.available()</code>, <code>SerialBT.read()</code> e <code>SerialBT.println()</code> usados no código real, mas os encaminha ao Monitor Serial durante a simulação.</p>
+      <p><strong>O que esse arquivo faz:</strong> disponibiliza no Wokwi os comandos <code>SerialBT.begin()</code>, <code>SerialBT.available()</code>, <code>SerialBT.read()</code> e <code>SerialBT.println()</code>, encaminhando a comunicação ao Monitor Serial durante a simulação.</p>
       <p><strong>Importante:</strong> ele não cria Bluetooth dentro do Wokwi. Ele apenas simula a interface necessária para testar a lógica do programa.</p>
     </div>
   `;
@@ -293,7 +293,7 @@ public:
 
   const descarteAuxiliar = document.createElement('p');
   descarteAuxiliar.className = 'mbb6-warning';
-  descarteAuxiliar.innerHTML = '<strong>Ao passar para a ESP32 física:</strong> não leve o arquivo auxiliar <code>BluetoothSerial.h</code> criado para o Wokwi. Na placa real, a biblioteca verdadeira é fornecida pelo suporte do ESP32. O <code>sketch.ino</code> permanece igual.';
+  descarteAuxiliar.innerHTML = '<strong>Na ESP32 física:</strong> use apenas o <code>sketch.ino</code>. O arquivo auxiliar <code>BluetoothSerial.h</code> do Wokwi não é necessário, pois a biblioteca Bluetooth real é fornecida pelo suporte do ESP32.';
   testeFisico.appendChild(descarteAuxiliar);
 
   if(resultadoFisico){
@@ -304,7 +304,7 @@ public:
   if(explicacaoBluetooth){
     const nota = document.createElement('p');
     nota.className = 'mbb6-note';
-    nota.innerHTML = '<strong>Uma única lógica, dois ambientes.</strong> Primeiro entendemos o Bluetooth real. No Wokwi, preservaremos este mesmo <code>sketch.ino</code> e simularemos apenas a camada que o simulador ainda não oferece.';
+    nota.innerHTML = '<strong>No Wokwi:</strong> o arquivo auxiliar representa a comunicação Bluetooth pelo Monitor Serial. <strong>Na ESP32 física:</strong> a comunicação ocorre pelo Bluetooth real.';
     explicacaoBluetooth.appendChild(nota);
   }
 });
