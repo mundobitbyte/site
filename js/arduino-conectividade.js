@@ -176,8 +176,8 @@ document.addEventListener('DOMContentLoaded', function(){
     <div class="circuitPanel" data-mbb-circuito="b6-prep">
       <h3>Circuito-base do bloco</h3>
       <figure class="circuitFigure">
-        <img class="circuitPhoto" src="../img/arduino/esp32-led-gpio23.webp" alt="Diagrama técnico do ESP32 com GPIO 23 ligado a resistor de 220 ohms, LED e GND." loading="lazy" decoding="async"/>
-        <figcaption>Use este circuito-base durante o Bloco 6: GPIO 23 → resistor de 220 Ω → LED → GND. A comunicação muda; a montagem permanece.</figcaption>
+        <img class="circuitPhoto" src="../img/arduino/esp32-led-gpio23.webp" alt="ESP32 com LED e resistor de 220 ohms em série entre o GPIO 23 e o GND." loading="lazy" decoding="async"/>
+        <figcaption>Use este circuito-base durante o Bloco 6: LED e resistor de 220 Ω em série entre o GPIO 23 e o GND.</figcaption>
       </figure>
     </div>
   `);
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function(){
     <h3>6A. Teste no Wokwi</h3>
     <p class="mbb6-warning"><strong>O Wokwi não simula o rádio Bluetooth do ESP32.</strong> Por isso, um celular real não encontrará <code>MBB-ESP32</code> nessa simulação.</p>
     <p>Para testar a lógica no Wokwi, crie um arquivo auxiliar chamado <code>BluetoothSerial.h</code>. Ele fará o Monitor Serial representar temporariamente a entrada e a saída que, na placa física, passam pelo Bluetooth.</p>
-    <p class="mbb6-note"><strong>Circuito:</strong> use exatamente o mesmo circuito da etapa <em>Preparação — ESP32</em>: GPIO 23 → resistor de 220 Ω → LED → GND. Não há nova montagem.</p>
+    <p class="mbb6-note"><strong>Circuito:</strong> use exatamente o mesmo circuito da etapa <em>Preparação — ESP32</em>: LED e resistor de 220 Ω em série entre o GPIO 23 e o GND. Não há nova montagem.</p>
     <div class="mbb6-route"><span>Wokwi: Monitor Serial</span><b>→</b><span>BluetoothSerial.h auxiliar</span><b>→</b><span>sketch.ino</span><b>→</b><span>LED</span></div>
     <div class="mbb6-route"><span>Placa física: celular Android</span><b>→</b><span>Bluetooth Classic/SPP</span><b>→</b><span>sketch.ino</span><b>→</b><span>LED</span></div>
   `;
