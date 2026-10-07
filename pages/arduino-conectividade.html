@@ -139,7 +139,7 @@
     <article class="card">
       <h3>6. EN, BOOT e pinos especiais</h3>
       <ul>
-        <li><strong>EN</strong>: reinicia o ESP32.</li>
+        <li><strong>EN</strong> (<em>Enable</em>): reinicia o ESP32.</li>
         <li><strong>BOOT</strong>: pode ser usado durante o processo de gravação em algumas situações.</li>
         <li><strong>Pinos especiais</strong>: alguns GPIOs participam da inicialização, memória ou outras funções internas.</li>
       </ul>
@@ -245,7 +245,7 @@ void loop() {
   <div class="projectHead"><span class="badge">6.2</span><div><h2>Wi-Fi: colocando o sistema em uma rede</h2><p>O dispositivo deixa de depender apenas de uma conexão direta e passa a ter um endereço dentro da rede.</p></div></div>
   <div class="cards">
     <article class="card wide"><h3>1. Situação</h3><p>O Bluetooth permite conversar com um dispositivo próximo. Agora queremos que o ESP32 entre em uma rede Wi-Fi existente. Para participar dessa rede, ele precisa se conectar e receber um endereço IP.</p></article>
-    <article class="card"><h3>2. Como a conexão Wi-Fi funciona</h3><p>O ESP32 entrará na rede como uma <strong>estação</strong>, isto é, como mais um dispositivo conectado ao ponto de acesso ou roteador.</p><div class="mbb6-route"><span>ESP32</span><b>→</b><span>ponto de acesso / roteador</span><b>→</b><span>endereço IP</span></div><ul><li><strong>SSID</strong> (<em>Service Set Identifier</em>) é o nome da rede Wi-Fi;</li><li>a senha autoriza a entrada na rede quando ela é protegida;</li><li><strong>IP</strong> (<em>Internet Protocol</em>) é o endereço usado para identificar o ESP32 naquela rede.</li></ul><p>Em uma rede comum, o roteador normalmente fornece esse endereço IP automaticamente quando o ESP32 se conecta.</p></article>
+    <article class="card"><h3>2. Como a conexão Wi-Fi funciona</h3><p>O ESP32 entrará na rede como uma <strong>estação</strong>, isto é, como mais um dispositivo conectado ao ponto de acesso ou roteador.</p><div class="mbb6-route"><span>ESP32</span><b>→</b><span>ponto de acesso / roteador</span><b>→</b><span>endereço IP</span></div><ul><li><strong>SSID</strong> (<em>Service Set Identifier</em>) é o nome da rede Wi-Fi;</li><li>a senha autoriza a entrada na rede quando ela é protegida;</li><li><strong>IP</strong> (<em>Internet Protocol</em>) é o endereço usado para identificar o ESP32 naquela rede.</li></ul><p>Em uma rede comum, o roteador normalmente fornece esse endereço IP automaticamente quando o ESP32 se conecta.</p><p class="mbb6-note"><strong>Rede Wi-Fi não é sinônimo de Internet.</strong> Dois dispositivos podem se comunicar pela mesma rede local mesmo que ela não tenha acesso à Internet.</p></article>
     <article class="card"><h3>3. Circuito</h3><p>O circuito continua igual. O LED permanece no GPIO 23, mas nesta etapa ele não é o foco. O resultado observável será a conexão mostrada no Monitor Serial.</p><p class="mbb6-warning"><strong>Atenção:</strong> o ESP32-WROOM-32 trabalha com Wi-Fi de 2,4 GHz. Use uma rede compatível e evite, neste primeiro teste, redes que exigem login por página Web.</p></article>
     <article class="card code wide"><h3>4. Código completo <button type="button" onclick="copyCode('b6-2-code',this)">Copiar</button></h3><pre id="b6-2-code">#include &lt;WiFi.h&gt;
 
