@@ -25,6 +25,11 @@
      * a altura passa a acompanhar o conteúdo.
      * Se o conjunto superar a viewport, rola a página inteira.
      */
+    .layout.mbb-reactnative-natural-height {
+      height: auto !important;
+      min-height: calc(100vh - 44px) !important;
+    }
+
     #workspace.mbb-visible-explanation-workspace {
       height: auto !important;
       min-height: 0 !important;
@@ -116,6 +121,7 @@
       #workspace.mbb-visible-explanation-workspace #resultCard,
       #workspace.mbb-visible-explanation-workspace #mbbStepExplanation {
         height: auto !important;
+        min-height: 0 !important;
         max-height: none !important;
       }
 
@@ -129,4 +135,24 @@
   `;
 
   document.head.appendChild(style);
+
+  const workspace = document.getElementById('workspace');
+  const layout = document.querySelector('.layout');
+
+  function syncNaturalHeight() {
+    if (!workspace || !layout) return;
+    layout.classList.toggle(
+      'mbb-reactnative-natural-height',
+      workspace.classList.contains('mbb-visible-explanation-workspace')
+    );
+  }
+
+  if (workspace && typeof MutationObserver !== 'undefined') {
+    new MutationObserver(syncNaturalHeight).observe(workspace, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  }
+
+  syncNaturalHeight();
 })();
