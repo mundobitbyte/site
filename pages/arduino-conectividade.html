@@ -110,7 +110,7 @@ void loop() {
   <div class="cards">
     <article class="card wide"><h3>1. Situação</h3><p>Queremos ligar e desligar o LED sem alterar o programa e sem depender de uma rede Wi-Fi. O dispositivo que envia a ordem está perto do ESP32. Essa necessidade combina com uma comunicação Bluetooth direta.</p></article>
     <article class="card"><h3>2. Ideia central</h3><div class="mbb6-route"><span>Celular</span><b>→</b><span>Bluetooth</span><b>→</b><span>ESP32</span><b>→</b><span>LED</span></div><p>Usaremos Bluetooth clássico no modo serial. Para o programa, a experiência se parece com receber caracteres por uma porta serial sem fio.</p></article>
-    <article class="card"><h3>3. Circuito</h3><p>Não há nova montagem. Continue usando o LED no <strong>GPIO 23</strong> com resistor de 220 Ω.</p><p class="mbb6-note"><strong>Comparação:</strong> em um Arduino Uno é comum acrescentar um HC-05 ou HC-06 para obter Bluetooth serial. No ESP32 utilizado aqui, o Bluetooth já está integrado.</p></article>
+    <article class="card"><h3>3. Circuito</h3><p><strong>Use exatamente o mesmo circuito da etapa Preparação — ESP32 (Blink).</strong> Não há nova montagem: o LED continua no <strong>GPIO 23</strong>, em série com o resistor de 220 Ω até o GND.</p><p class="mbb6-note"><strong>Comparação:</strong> em um Arduino Uno é comum acrescentar um HC-05 ou HC-06 para obter Bluetooth serial. No ESP32 utilizado aqui, o Bluetooth já está integrado.</p></article>
     <article class="card code wide"><h3>4. Código completo <button type="button" onclick="copyCode('b6-1-code',this)">Copiar</button></h3><pre id="b6-1-code">#include "BluetoothSerial.h"
 
 BluetoothSerial SerialBT;
@@ -457,7 +457,7 @@ void loop() {
 </main>
 </div>
 </div>
-<script src="../js/arduino-conectividade.js?v=20261005-1"></script>
+<script src="../js/arduino-conectividade.js?v=20261007-1"></script>
 <script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>\n<script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body>
 </html>
