@@ -362,13 +362,13 @@ document.addEventListener('DOMContentLoaded', function(){
   // 6.2 Wi-Fi: prática completa em ambos os ambientes e código Wokwi explícito.
   const wifi = document.getElementById('b6-2');
   if(wifi && !wifi.querySelector('[data-mbb6-wifi-wokwi]')){
-    const cardWokwiOriginal = acharCard('b6-2', '9. E no Wokwi?');
+    const cardWokwiOriginal = acharCard('b6-2', '9. Teste no Wokwi');
     if(cardWokwiOriginal){
       cardWokwiOriginal.dataset.mbb6WifiWokwi = '1';
       cardWokwiOriginal.innerHTML = `
-        <h3>9. Wokwi — Wi-Fi funciona de verdade na simulação</h3>
+        <h3>9. Teste de Wi-Fi no Wokwi</h3>
         <p>No Wokwi, conecte o ESP32 à rede virtual aberta <code>Wokwi-GUEST</code>. Ela não usa senha. O canal 6 pode ser informado para evitar a etapa de varredura e acelerar a conexão.</p>
-        <p class="mbb6-note"><strong>Atenção:</strong> o endereço IP virtual prova que o ESP32 entrou na rede simulada. Isso ainda não significa que o navegador do seu computador consiga entrar em um servidor criado dentro do ESP32; essa diferença aparece no próximo tópico.</p>
+        <p class="mbb6-note"><strong>O que este teste comprova:</strong> o ESP32 entrou na rede virtual e recebeu um endereço IP. No próximo tópico veremos que receber um IP e aceitar conexões vindas do navegador são coisas diferentes.</p>
       `;
 
       const codigo = document.createElement('article');
@@ -400,7 +400,7 @@ void loop() {
 }</pre>
         <div class="explain" style="margin-top:12px">
           <p><strong>Faça:</strong> execute a simulação e abra o Monitor Serial em 115200.</p>
-          <p><strong>Evidência:</strong> você deve ver a mensagem de conexão e um endereço IP virtual. Nesta etapa, isso basta para comprovar a conexão Wi-Fi.</p>
+          <p><strong>O que observar:</strong> a mensagem de conexão e um endereço IP virtual confirmam que o ESP32 entrou na rede Wi-Fi simulada.</p>
         </div>
       `;
       cardWokwiOriginal.parentNode.insertBefore(codigo, cardWokwiOriginal.nextSibling);
@@ -418,12 +418,12 @@ void loop() {
       guia.innerHTML = `
         <h3>Antes de testar o servidor — o resultado depende do ambiente</h3>
         <div class="mbb6-connections">
-          <div><strong>ESP32 físico</strong><span>Prática completa. Celular/computador e ESP32 ficam na mesma rede. Abra <code>http://IP_DO_ESP32</code>.</span></div>
+          <div><strong>ESP32 físico</strong><span>Celular/computador e ESP32 ficam na mesma rede. Abra <code>http://IP_DO_ESP32</code> para testar o servidor.</span></div>
           <div><strong>Wokwi padrão</strong><span>O código pode conectar à Internet e fazer conexões de saída, mas o gateway público não aceita conexão de entrada do seu navegador para o servidor simulado.</span></div>
-          <div><strong>Wokwi + Private IoT Gateway</strong><span>Prática completa para assinantes compatíveis. Com o gateway privado ativo, o servidor HTTP na porta 80 pode ser acessado pelo navegador em <code>http://localhost:9080/</code>.</span></div>
+          <div><strong>Wokwi + Private IoT Gateway</strong><span>Com o gateway privado ativo, o servidor HTTP na porta 80 pode ser acessado pelo navegador em <code>http://localhost:9080/</code>.</span></div>
           <div><strong>Sem Private Gateway?</strong><span>Não tente “consertar” o código para fazer o navegador entrar. No Wokwi padrão, a limitação é do caminho de rede, não do <code>WebServer</code>.</span></div>
         </div>
-        <p class="mbb6-note"><strong>Regra de evidência:</strong> placa física ou Private Gateway permitem testar os botões pelo navegador. No Wokwi padrão, use esta etapa para estudar/compilar o servidor e reconhecer a limitação de conexão de entrada; o controle pelo navegador não é uma evidência disponível nesse ambiente.</p>
+        <p class="mbb6-note"><strong>O que observar:</strong> na placa física ou com Private Gateway, os botões da página devem controlar o LED. No Wokwi padrão, o servidor pode ser estudado e compilado, mas o navegador não consegue iniciar essa conexão de entrada pelo gateway público.</p>
       `;
       cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
     }
@@ -449,7 +449,7 @@ void loop() {
       guia.dataset.mbb6MdnsAmbientes = '1';
       guia.innerHTML = `
         <h3>Onde esta prática faz sentido?</h3>
-        <p><strong>Placa física:</strong> é o caminho principal. Primeiro confirme que o servidor abre pelo IP e só depois teste <code>http://ambiente-mbb.local</code> na mesma rede.</p>
+        <p><strong>Placa física:</strong> primeiro confirme que o servidor abre pelo IP e só depois teste <code>http://ambiente-mbb.local</code> na mesma rede.</p>
         <p><strong>Wokwi padrão:</strong> não use <code>.local</code> como teste obrigatório. O navegador não está na mesma rede local do ESP32 simulado e o gateway público não oferece a mesma descoberta mDNS da sua LAN.</p>
         <p class="mbb6-note"><strong>Mesmo na placa física:</strong> se o acesso por IP funcionar e <code>.local</code> não, o servidor pode estar correto. A resolução mDNS depende também do sistema operacional, do navegador e da rede permitirem esse tipo de descoberta.</p>
       `;
@@ -473,9 +473,9 @@ void loop() {
       guia.dataset.mbb6TunelAmbientes = '1';
       guia.innerHTML = `
         <h3>Antes do túnel — confirme de onde você está partindo</h3>
-        <p><strong>ESP32 físico:</strong> este é o caminho principal do exemplo. O computador precisa conseguir abrir o servidor do ESP32 pela rede local antes de criar o túnel.</p>
+        <p><strong>ESP32 físico:</strong> o computador precisa conseguir abrir o servidor do ESP32 pela rede local antes de criar o túnel.</p>
         <p><strong>Wokwi padrão:</strong> não execute o comando esperando alcançar o IP virtual do ESP32. O computador não possui uma rota de entrada até o servidor do simulador pelo gateway público.</p>
-        <p><strong>Wokwi com Private Gateway:</strong> é tecnicamente possível construir outros encaminhamentos, mas isso acrescenta uma camada paga e não é requisito deste curso. O objetivo didático continua sendo compreender que o túnel nasce no computador e expõe temporariamente um serviço que já funciona localmente.</p>
+        <p><strong>Wokwi com Private Gateway:</strong> outros encaminhamentos são possíveis, mas exigem configuração adicional. Para esta prática, basta compreender que o túnel é criado no computador e encaminha temporariamente um serviço que já funciona na rede local.</p>
         <p class="mbb6-warning"><strong>Segurança:</strong> ao criar um endereço público, alguém que obtiver esse endereço poderá tentar acessar o serviço exposto. Faça o teste apenas com o protótipo didático, sem dados reais, sem credenciais reutilizadas e encerre o túnel ao terminar.</p>
       `;
       cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
@@ -494,7 +494,7 @@ void loop() {
 function carregarContextualizacaoMbb(){
   if(document.querySelector('script[data-mbb-contextualizacao-loader]')) return;
   const script = document.createElement('script');
-  script.src = '../js/arduino-contextualizacao-mbb.js?v=20260911-1';
+  script.src = '../js/arduino-contextualizacao-mbb.js?v=20261007-1';
   script.dataset.mbbContextualizacaoLoader = '1';
   document.head.appendChild(script);
 }
