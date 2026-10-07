@@ -87,14 +87,14 @@
   <div class="mbb6-summary">
     <div><strong>Placa-base</strong><span>ESP32 DOIT DevKit com módulo ESP32-WROOM-32.</span></div>
     <div><strong>Circuito-base</strong><span>Um LED externo com resistor permanece durante todo o bloco.</span></div>
-    <div><strong>Princípio MbB</strong><span>Cada tecnologia aparece somente quando resolve uma limitação percebida na etapa anterior.</span></div>
+    <div><strong>Percurso</strong><span>Cada tecnologia aparece quando resolve uma nova necessidade do projeto.</span></div>
   </div>
 </section>
 
 <section class="project mbb6-panel active-panel" id="b6-0">
   <div class="projectHead"><span class="badge">0</span><div><h2>Conhecendo o ESP32 antes da conectividade</h2><p>Antes de usar Bluetooth e Wi-Fi, vale reconhecer a placa que fará esse trabalho.</p></div></div>
   <div class="cards">
-    <article class="card wide"><h3>1. O que já sabemos continua valendo</h3><p>O Arduino Uno e o ESP32 são placas de desenvolvimento com um microcontrolador. Nos dois casos, o programa lê entradas, toma decisões e controla saídas. Funções como <code>pinMode()</code> e <code>digitalWrite()</code> continuam familiares.</p><p class="mbb6-note"><strong>A diferença:</strong> o ESP32 reúne mais recursos no próprio sistema, incluindo comunicação sem fio e vários periféricos internos.</p></article>
+    <article class="card wide"><h3>1. O que já sabemos continua valendo</h3><p>O Arduino Uno e a placa ESP32 DevKit são placas de desenvolvimento com um microcontrolador. Nos dois casos, o programa lê entradas, toma decisões e controla saídas. Funções como <code>pinMode()</code> e <code>digitalWrite()</code> continuam familiares.</p><p class="mbb6-note"><strong>A diferença:</strong> o ESP32 reúne mais recursos no próprio sistema, incluindo comunicação sem fio e vários periféricos internos.</p></article>
 
     <article class="card wide mbb6-visual-card">
       <h3>2. Placa não é a mesma coisa que microcontrolador</h3>
@@ -155,13 +155,13 @@
 </section>
 
 <section class="project mbb6-panel" id="b6-prep">
-  <div class="projectHead"><span class="badge">Preparação</span><div><h2>Do Arduino Uno ao ESP32</h2><p>A eletrônica básica não recomeça. A nova placa preserva ideias conhecidas e acrescenta conectividade.</p></div></div>
+  <div class="projectHead"><span class="badge">Preparação</span><div><h2>Montando o circuito-base</h2><p>Antes da comunicação sem fio, vamos confirmar o GPIO 23 com um LED.</p></div></div>
   <div class="cards">
-    <article class="card wide"><h3>1. Situação</h3><p>Os projetos anteriores já conseguem ler sensores e controlar saídas. Para continuar, precisamos de uma placa que também consiga se comunicar sem fio. O ESP32 entra porque o problema mudou — não porque tudo o que foi aprendido deixou de servir.</p></article>
+    <article class="card wide"><h3>1. Situação</h3><p>Já reconhecemos as principais diferenças do ESP32. Antes de usar Bluetooth ou Wi-Fi, vamos confirmar a montagem e o controle de uma saída simples: um LED no GPIO 23.</p></article>
     <article class="card"><h3>2. O que continua igual</h3><ul><li><code>pinMode()</code> configura o pino.</li><li><code>digitalWrite()</code> altera uma saída digital.</li><li><code>HIGH</code> e <code>LOW</code> continuam representando os estados digitais.</li><li><code>delay()</code> ainda pode ser usado em testes simples.</li></ul></article>
-    <article class="card"><h3>3. O que muda agora</h3><p>O ESP32-WROOM-32 possui recursos de comunicação sem fio integrados. Neste bloco, usaremos primeiro Bluetooth e depois Wi-Fi, mantendo a mesma lógica de programação já conhecida.</p></article>
+    <article class="card"><h3>3. O que vem depois</h3><p>Com o LED funcionando, o próximo passo será deixar de controlar a saída apenas pelo próprio programa e começar a receber comandos por Bluetooth e pela rede Wi-Fi.</p></article>
     <article class="card wide"><h3>4. Preparando a Arduino IDE</h3><ol><li>Abra a Arduino IDE.</li><li>Instale o suporte de placas <strong>esp32 by Espressif Systems</strong> pelo Gerenciador de Placas, caso ainda não esteja instalado.</li><li>Conecte o ESP32 ao computador com um cabo USB de dados.</li><li>Selecione uma placa compatível com <strong>DOIT ESP32 DEVKIT V1</strong> e escolha a porta serial correspondente.</li></ol><p class="mbb6-note"><strong>Se a porta não aparecer:</strong> confira primeiro o cabo USB, a conexão física e o driver USB-serial utilizado pela sua placa.</p></article>
-    <article class="card wide"><h3>5. Circuito-base</h3><div class="mbb6-connections"><div><strong>GPIO 23</strong><span>liga-se ao resistor de 220 Ω.</span></div><div><strong>Resistor 220 Ω</strong><span>liga-se ao ânodo do LED.</span></div><div><strong>Cátodo do LED</strong><span>liga-se ao GND do ESP32.</span></div><div><strong>Regra do bloco</strong><span>não mudaremos esse circuito quando a novidade for apenas comunicação.</span></div></div></article>
+    <article class="card wide"><h3>5. Circuito-base</h3><div class="mbb6-connections"><div><strong>GPIO 23</strong><span>liga-se ao resistor de 220 Ω.</span></div><div><strong>Resistor 220 Ω</strong><span>liga-se ao ânodo do LED.</span></div><div><strong>Cátodo do LED</strong><span>liga-se ao GND do ESP32.</span></div><div><strong>Montagem</strong><span>este circuito será reutilizado nas próximas experiências de comunicação.</span></div></div></article>
     <article class="card code wide"><h3>6. Primeiro teste <button type="button" onclick="copyCode('b6-prep-code',this)">Copiar</button></h3><pre id="b6-prep-code">const int LED = 23;
 
 void setup() {
