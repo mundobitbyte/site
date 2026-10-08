@@ -166,8 +166,8 @@ document.addEventListener('DOMContentLoaded', function(){
   inserirCircuitoDoBloco8(
     'b8-1',
     'Circuito do experimento RTOS',
-    '../img/arduino/esp32-led-gpio23.webp',
-    'ESP32 DevKit no Wokwi com LED e resistor em série entre o GPIO 23 e o GND para o experimento com tarefas FreeRTOS.',
+    '../img/arduino/esp32-led-gpio23.webp?v=20261008-2',
+    'Diagrama da ESP32 DevKit com LED e resistor em série entre o GPIO 23 e o GND para o experimento com tarefas FreeRTOS.',
     'Reutilize o mesmo circuito-base validado no Bloco 6: LED e resistor em série entre GPIO 23 e GND. A novidade agora está na organização das tarefas pelo RTOS.'
   );
 
