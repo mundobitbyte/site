@@ -1,0 +1,34 @@
+name: Atualizar índices temporário Fechamento IoT
+
+on:
+  push:
+    branches:
+      - fechamento-iot-mbb-20261008
+    paths:
+      - '.github/workflows/temp-atualizar-indices-fechamento-iot.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fechamento-iot-mbb-20261008
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Atualizar pesquisa e visitas
+        run: |
+          node meu-mbb/atualizar-pesquisa.cjs
+          node meu-mbb/gerar-visitas.cjs
+      - name: Salvar índices e remover workflow temporário
+        run: |
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add meu-mbb/catalogo.json meu-mbb/visitas-diretas.json
+          git rm .github/workflows/temp-atualizar-indices-fechamento-iot.yml
+          git commit -m "MbB: sincronizar índices no fechamento IoT"
+          git push origin HEAD:fechamento-iot-mbb-20261008
