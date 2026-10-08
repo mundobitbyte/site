@@ -16,6 +16,14 @@
 .mbb10-summary div{border:1px solid var(--line);border-radius:12px;background:#fff;padding:11px 12px}
 .mbb10-summary strong{display:block;color:var(--dark);font-size:13px;margin-bottom:4px}
 .mbb10-summary span{font-size:13px;line-height:1.4;color:#334155}
+.mbb10-context{margin:0 16px 2px;padding:12px 14px;border:1px solid #bcdde4;border-radius:12px;background:#f7fcfd;line-height:1.55}
+.mbb10-context strong{color:var(--dark)}
+.mbb10-checkpoint{margin:12px 13px;padding:11px 13px;border:1px solid #b9dfe6;border-radius:12px;background:#eef9fb;line-height:1.5}
+.mbb10-lab-map{margin:14px 0 0;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.mbb10-lab-map h3{margin:0 0 6px;color:var(--dark);font-size:16px}
+.mbb10-lab-map p{margin:5px 0;line-height:1.5}
+.mbb10-table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mbb10-lab-map table{min-width:760px}
 .mbb10-flow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:15px}
 .mbb10-flow span{background:#eaf2ff;border:1px solid #bfdbfe;color:var(--dark);border-radius:999px;padding:8px 11px;font-size:13px;font-weight:850}
 .mbb10-flow b{color:var(--dark)}
@@ -89,41 +97,77 @@
     <div><strong>Experimentar e programar</strong><span>Validar sensor e atuador antes de adicionar Wi-Fi e aplicação.</span></div>
     <div><strong>Aplicar</strong><span>Integrar controle, monitoramento, segurança, testes e documentação.</span></div>
   </div>
+  <div class="mbb10-lab-map">
+    <h3>Como executar o projeto</h3>
+    <p>O núcleo é o mesmo, mas a forma de testar a página Web muda conforme o ambiente.</p>
+    <div class="mbb10-table-scroll">
+      <table>
+        <tr><th>Ambiente</th><th>Sensor e LED</th><th>Wi-Fi</th><th>Página Web</th></tr>
+        <tr><td><strong>ESP32 física</strong></td><td>✓ Completo</td><td>✓ Rede 2,4 GHz compatível</td><td>✓ Completo na mesma rede local</td></tr>
+        <tr><td><strong>Wokwi com gateway público</strong></td><td>✓ Completo, usando o módulo de fotoresistor</td><td>✓ <code>Wokwi-GUEST</code></td><td>△ O servidor executa, mas o navegador não consegue iniciar uma conexão de entrada</td></tr>
+        <tr><td><strong>Wokwi com Private IoT Gateway</strong></td><td>✓ Completo</td><td>✓ <code>Wokwi-GUEST</code></td><td>✓ Completo em <code>http://localhost:9080/</code></td></tr>
+      </table>
+    </div>
+  </div>
 </section>
 
 <section class="project mbb10-panel active-panel" id="b10-1">
   <div class="projectHead"><span class="badge">10.1</span><div><h2>Problema e requisitos — O que o sistema precisa resolver?</h2><p>Um projeto começa pela necessidade, não pelo componente.</p></div></div>
+  <div class="mbb10-context"><strong>Agora tudo precisa ter um motivo.</strong> Não vamos adicionar LDR, Wi-Fi e página Web só porque já estudamos essas tecnologias. O problema é reduzir iluminação desnecessária e, ao mesmo tempo, permitir acompanhamento e controle local. Cada parte do projeto deve responder a essa necessidade.</div>
   <div class="cards">
     <article class="card wide"><h3>1. Situação</h3><p>Em uma sala pequena, a iluminação pode permanecer acesa mesmo quando há claridade suficiente. Também pode ser útil acompanhar o nível de luz e, quando necessário, assumir o controle manual pelo celular ou notebook conectado à mesma rede.</p></article>
     <article class="card"><h3>2. Entrada</h3><p>Um <strong>LDR</strong> percebe a luminosidade e gera um valor analógico para o ESP32.</p></article>
     <article class="card"><h3>3. Saída</h3><p>Um <strong>LED</strong> representa a lâmpada do projeto. Não usaremos rede elétrica nesta atividade.</p></article>
     <article class="card"><h3>4. Automação</h3><p>No modo automático, o ESP32 decide o estado da iluminação a partir da leitura do LDR e de um limiar calibrado.</p></article>
     <article class="card"><h3>5. Aplicação</h3><p>Uma página Web mostra a leitura, o modo e o estado da iluminação e permite escolher <strong>Ligar, Desligar ou Automático</strong>.</p></article>
-    <article class="card wide"><h3>6. Critérios de sucesso</h3><div class="mbb10-check"><div><strong>Monitorar</strong><span>A leitura de luminosidade aparece no Monitor Serial e na página.</span></div><div><strong>Controlar</strong><span>O usuário consegue ligar e desligar o LED pela rede local.</span></div><div><strong>Automatizar</strong><span>No modo automático, a iluminação responde à condição de claridade.</span></div><div><strong>Explicar</strong><span>O aluno consegue descrever o caminho sensor → processamento → rede → aplicação → atuador.</span></div></div></article>
-    <article class="card worked wide mbb10-bridge"><h3>7. Regra do projeto</h3><p>Primeiro faremos cada parte funcionar sozinha. <strong>Só depois integraremos tudo.</strong> Se sensor, LED e rede forem testados ao mesmo tempo, fica mais difícil descobrir onde está um erro.</p></article>
+    <article class="card wide"><h3>6. Critérios de sucesso</h3><div class="mbb10-check"><div><strong>Monitorar</strong><span>A leitura de luminosidade aparece no Monitor Serial e na página.</span></div><div><strong>Controlar</strong><span>O usuário consegue ligar e desligar o LED pela rede local.</span></div><div><strong>Automatizar</strong><span>No modo automático, a iluminação responde à condição de claridade.</span></div><div><strong>Explicar</strong><span>Você consegue descrever o caminho sensor → processamento → rede → aplicação → atuador.</span></div></div></article>
+    <article class="card worked wide mbb10-bridge"><h3>7. Estratégia de execução</h3><p>Primeiro faremos cada parte funcionar sozinha. <strong>Só depois integraremos tudo.</strong> Se sensor, LED e rede forem testados ao mesmo tempo, fica mais difícil descobrir onde está um erro.</p></article>
   </div>
 </section>
 
 <section class="project mbb10-panel" id="b10-2">
   <div class="projectHead"><span class="badge">10.2</span><div><h2>Arquitetura e montagem — Antes do código, desenhe o caminho</h2><p>A arquitetura mostra o papel de cada parte do sistema.</p></div></div>
+  <div class="mbb10-context"><strong>Antes de integrar, separe as responsabilidades.</strong> O LDR mede, o ESP32 decide, o LED representa a iluminação e a página Web permite observar e comandar. Quando cada parte tem um papel claro, fica muito mais fácil descobrir onde está um erro.</div>
+  <p class="mbb10-warning"><strong>Placa deste projeto:</strong> continue usando a ESP32 DevKit baseada no ESP32 original / ESP32-WROOM-32 adotada desde o módulo 6. No Wokwi, escolha <strong>ESP32 DevKit v1</strong>. GPIO 34 e as observações de ADC desta etapa se referem a essa família.</p>
+  <div class="circuitPanel" data-mbb-circuito="b10-2">
+    <h3>Circuito físico do projeto integrador</h3>
+    <figure class="circuitFigure">
+      <img class="circuitPhoto" src="../img/arduino/esp32-ldr-led-projeto-iot.svg" alt="Diagrama do projeto físico: divisor de tensão com LDR no GPIO 34 e LED com resistor no GPIO 23, com GND comum." loading="lazy" decoding="async"/>
+      <figcaption>Na montagem física, o LDR e o resistor de 10 kΩ formam o divisor ligado ao GPIO 34. O LED e o resistor de 220 Ω ficam em série entre GPIO 23 e GND.</figcaption>
+    </figure>
+  </div>
   <div class="cards">
     <article class="card wide"><h3>1. Visão do sistema</h3><div class="mbb10-flow"><span>LDR</span><b>→</b><span>GPIO 34</span><b>→</b><span>ESP32</span><b>→</b><span>Wi-Fi</span><b>→</b><span>Página Web</span><b>↔</b><span>Comando</span><b>→</b><span>GPIO 23 + LED</span></div></article>
     <article class="card wide"><h3>2. Componentes do núcleo</h3><table class="mbb10-compare"><thead><tr><th>Componente</th><th>Função</th><th>Ligação-base</th></tr></thead><tbody><tr><td>ESP32</td><td>Processamento, Wi-Fi e servidor HTTP.</td><td>Placa central do projeto.</td></tr><tr><td>LDR</td><td>Perceber a luminosidade.</td><td>Divisor de tensão ligado ao GPIO 34.</td></tr><tr><td>Resistor 10 kΩ</td><td>Completar o divisor de tensão do LDR.</td><td>Entre o ponto de leitura e GND.</td></tr><tr><td>LED + resistor 220 Ω</td><td>Representar a iluminação.</td><td>GPIO 23 → resistor → LED → GND.</td></tr></tbody></table></article>
     <article class="card wide"><h3>3. Divisor do LDR</h3><div class="mbb10-flow"><span>3,3 V</span><b>→</b><span>LDR</span><b>→</b><span>ponto de leitura / GPIO 34</span><b>→</b><span>10 kΩ</span><b>→</b><span>GND</span></div><p>Com essa orientação, a leitura tende a aumentar com mais luz e diminuir no escuro. O valor exato depende do LDR, do resistor e do ambiente; por isso o limiar será <strong>calibrado</strong>, não tratado como número universal.</p></article>
     <article class="card wide mbb10-warning"><strong>Segurança elétrica:</strong> este projeto trabalha somente com baixa tensão do ESP32. O LED representa uma lâmpada. Não conecte relé, tomada ou rede elétrica de 127/220 V nesta atividade.</article>
-    <article class="card"><h3>4. Por que GPIO 34?</h3><p>No ESP32 clássico, o GPIO 34 pode ser usado como entrada analógica. Como ele é somente entrada, combina bem com o LDR e não será usado para acionar componentes.</p></article>
+    <article class="card"><h3>4. Por que GPIO 34?</h3><p>No ESP32 clássico, o GPIO 34 é uma entrada do <strong>ADC1</strong> e é somente entrada. Isso combina com o LDR e traz outra vantagem importante: os canais ADC2 possuem restrições quando o Wi-Fi está em uso, enquanto o ADC1 evita esse conflito neste projeto.</p></article>
     <article class="card"><h3>5. Por que manter GPIO 23?</h3><p>É o mesmo pino do LED usado no percurso com ESP32. Reutilizar a montagem reduz mudanças desnecessárias e facilita a comparação com os blocos anteriores.</p></article>
-    <article class="card worked wide mbb10-bridge"><h3>6. Próximo passo</h3><p>Antes de Wi-Fi, navegador ou página Web, precisamos responder algo mais simples: <strong>o ESP32 consegue medir a luz e controlar o LED corretamente?</strong></p></article>
+    <article class="card wide"><h3>6. Montagem equivalente no Wokwi</h3><p>Abra um projeto <strong>ESP32 DevKit v1</strong> no <a href="https://wokwi.com/projects/new/esp32" target="_blank" rel="noopener noreferrer">Wokwi</a>. O simulador não precisa reproduzir o divisor com componentes passivos discretos: use o componente <strong>Photoresistor (LDR) Sensor</strong>, que já possui LDR e resistor interno.</p><table class="mbb10-compare"><thead><tr><th>Pino do sensor Wokwi</th><th>ESP32</th></tr></thead><tbody><tr><td>VCC</td><td>3V3</td></tr><tr><td>GND</td><td>GND</td></tr><tr><td>AO</td><td>GPIO 34</td></tr></tbody></table><p>O circuito do LED permanece o mesmo. No simulador, altere o controle de luminosidade do fotoresistor para produzir leituras claras e escuras.</p><p class="mbb10-warning"><strong>Uma diferença importante:</strong> no divisor físico desenhado acima, a leitura tende a aumentar com mais luz. No módulo de fotoresistor do Wokwi, a leitura tende a aumentar no escuro. O código abaixo possui uma configuração explícita para lidar com essa diferença sem esconder o que está acontecendo.</p></article>
+    <article class="card worked wide mbb10-bridge"><h3>7. Próximo passo</h3><p>Antes de Wi-Fi, navegador ou página Web, precisamos responder algo mais simples: <strong>o ESP32 consegue medir a luz e controlar o LED corretamente?</strong></p></article>
   </div>
 </section>
 
 <section class="project mbb10-panel" id="b10-3">
   <div class="projectHead"><span class="badge">10.3</span><div><h2>Teste local — Sensor e atuador primeiro</h2><p>Uma etapa pequena produz evidência antes da integração.</p></div></div>
+  <div class="mbb10-context"><strong>Se a automação local não funciona, a rede só esconde o problema.</strong> Nesta etapa você prova duas coisas sem Wi-Fi: a leitura muda quando a luz muda e o LED responde ao critério escolhido.</div>
   <div class="cards">
-    <article class="card wide"><h3>1. Primeiro teste</h3><p>Carregue o código abaixo, abra o Monitor Serial em <strong>115200</strong> e altere a iluminação sobre o LDR. Observe os valores. O número <code>2000</code> é apenas um ponto inicial: ajuste <code>LIMIAR</code> entre um valor claramente escuro e um valor claramente iluminado medidos na sua montagem.</p></article>
+    <article class="card wide"><h3>1. Primeiro teste</h3><p>Carregue o código abaixo e altere a iluminação sobre o sensor. Na ESP32 física, abra o Monitor Serial em <strong>115200</strong>; no Wokwi, o Monitor Serial acompanha automaticamente a velocidade configurada pelo programa. Observe primeiro uma leitura claramente iluminada e outra claramente escura. Depois escolha <code>LIMIAR</code> entre esses dois valores.</p><p><strong>Montagem física do diagrama:</strong> mantenha <code>LEITURA_MAIOR_NO_ESCURO = false</code>. <strong>Wokwi com Photoresistor Sensor:</strong> use <code>LEITURA_MAIOR_NO_ESCURO = true</code>. Assim, o restante da lógica permanece igual nos dois ambientes.</p></article>
     <article class="card wide code"><h3>Código completo — teste local <button type="button" onclick="copyCode('b10-local', this)">Copiar</button></h3><pre id="b10-local">const int LDR = 34;
 const int LED = 23;
-const int LIMIAR = 2000; // ajuste após observar as leituras reais
+const int LIMIAR = 2000; // ajuste depois de observar claro e escuro
+
+// Física do diagrama: false
+// Wokwi Photoresistor Sensor: true
+const bool LEITURA_MAIOR_NO_ESCURO = false;
+
+bool ambienteEscuro(int leitura) {
+  if (LEITURA_MAIOR_NO_ESCURO) {
+    return leitura &gt; LIMIAR;
+  }
+
+  return leitura &lt; LIMIAR;
+}
 
 void setup() {
   Serial.begin(115200);
@@ -133,7 +177,7 @@ void setup() {
 
 void loop() {
   int luminosidade = analogRead(LDR);
-  bool escuro = luminosidade &lt; LIMIAR;
+  bool escuro = ambienteEscuro(luminosidade);
 
   digitalWrite(LED, escuro ? HIGH : LOW);
 
@@ -144,8 +188,8 @@ void loop() {
 
   delay(500);
 }</pre></article>
-    <article class="card"><h3>2. Evidência esperada</h3><p>Ao iluminar o LDR, a leitura deve mudar de forma perceptível. Ao reduzir a luz abaixo do limiar, o LED deve acender.</p></article>
-    <article class="card"><h3>3. Se o comportamento estiver invertido</h3><p>Confira a posição do LDR e do resistor no divisor. Se você montou o divisor ao contrário, a relação entre claridade e leitura também se inverte.</p></article>
+    <article class="card"><h3>2. Evidência esperada</h3><p>Ao mudar a luminosidade, a leitura deve variar de forma perceptível. Quando o código classificar o ambiente como escuro, o LED deve acender; quando classificar como claro, deve apagar.</p></article>
+    <article class="card"><h3>3. Se o comportamento estiver invertido</h3><p>Primeiro confira <code>LEITURA_MAIOR_NO_ESCURO</code>. Na montagem física do diagrama ela deve ser <code>false</code>; no sensor do Wokwi, <code>true</code>. Se a montagem física estiver diferente do diagrama, observe as leituras e ajuste conscientemente essa configuração.</p></article>
     <article class="card wide mbb10-good"><strong>Checkpoint:</strong> não avance enquanto não houver duas evidências simples: o valor do sensor muda com a luz e o LED responde ao limiar. Só então a rede entra no projeto.</article>
     <article class="card worked wide mbb10-bridge"><h3>4. Próxima necessidade</h3><p>Localmente o sistema já percebe e age. Agora queremos <strong>ver o estado e controlar o modo a partir de outro dispositivo da rede</strong>.</p></article>
   </div>
@@ -153,20 +197,23 @@ void loop() {
 
 <section class="project mbb10-panel" id="b10-4">
   <div class="projectHead"><span class="badge">10.4</span><div><h2>Aplicação Web — Monitorar e comandar pela rede local</h2><p>O navegador deixa de ser apenas teste de HTTP e passa a ser a interface do projeto.</p></div></div>
+  <div class="mbb10-context"><strong>Agora a conectividade ganha uma finalidade.</strong> O navegador não serve apenas para provar que HTTP funciona: ele vira a interface pela qual uma pessoa consulta a luminosidade, vê o estado da iluminação e escolhe entre controle manual e automático.</div>
   <div class="cards">
     <article class="card wide"><h3>1. O que já sabemos</h3><p>No Bloco 6, o ESP32 entrou no Wi-Fi e funcionou como servidor HTTP. Aqui reutilizamos esse conhecimento com uma finalidade maior: a página mostra <strong>luminosidade, estado da iluminação e modo de operação</strong>.</p></article>
     <article class="card"><h3>2. Cliente</h3><p>Celular ou notebook abre a página e envia comandos.</p></article>
     <article class="card"><h3>3. Servidor</h3><p>O ESP32 recebe as requisições, monta a página e altera o estado do projeto.</p></article>
     <article class="card wide"><h3>4. Rotas que a aplicação terá</h3><table class="mbb10-compare"><thead><tr><th>Rota</th><th>Ação</th></tr></thead><tbody><tr><td><code>/</code></td><td>Mostra o painel atual.</td></tr><tr><td><code>/ligar</code></td><td>Seleciona modo manual e liga o LED.</td></tr><tr><td><code>/desligar</code></td><td>Seleciona modo manual e desliga o LED.</td></tr><tr><td><code>/auto</code></td><td>Ativa a decisão automática pelo LDR.</td></tr></tbody></table></article>
-    <article class="card wide"><h3>5. Rede local primeiro</h3><p>O núcleo do projeto funciona na mesma rede Wi-Fi. Não precisamos expor o dispositivo à Internet para provar que houve integração IoT. Primeiro valide o sistema no ambiente controlado.</p></article>
-    <article class="card worked wide mbb10-bridge"><h3>6. Agora sim: integrar</h3><p>Sensor, decisão, atuador e HTTP já foram estudados. A próxima etapa junta essas partes em <strong>um único programa cumulativo</strong>.</p></article>
+    <article class="card wide"><h3>5. Rede local primeiro</h3><p>Na ESP32 física, celular/notebook e placa devem estar em uma rede que permita comunicação entre os dispositivos. Não precisamos expor o protótipo à Internet para provar a integração.</p></article>
+    <article class="card wide"><h3>6. E no Wokwi?</h3><table class="mbb10-compare"><thead><tr><th>Ambiente</th><th>Como testar</th></tr></thead><tbody><tr><td>Gateway público</td><td>Use <code>Wokwi-GUEST</code> e senha vazia. Sensor, LED, automação e conexão Wi-Fi funcionam, mas o navegador não consegue entrar no servidor HTTP simulado.</td></tr><tr><td>Private IoT Gateway</td><td>Em conta compatível com esse recurso, use <code>Wokwi-GUEST</code>, ative o gateway privado e abra <code>http://localhost:9080/</code> no Chrome, Firefox ou Edge.</td></tr></tbody></table><p class="mbb10-warning"><strong>Não confunda limitação do simulador com erro no código.</strong> Se o gateway público estiver sendo usado, não conseguir abrir a página é o comportamento esperado.</p></article>
+    <article class="card worked wide mbb10-bridge"><h3>7. Agora sim: integrar</h3><p>Sensor, decisão, atuador e HTTP já foram estudados. A próxima etapa junta essas partes em <strong>um único programa cumulativo</strong>.</p></article>
   </div>
 </section>
 
 <section class="project mbb10-panel" id="b10-5">
   <div class="projectHead"><span class="badge">10.5</span><div><h2>Integração final — Ambiente Inteligente MbB funcionando como sistema</h2><p>O código final não introduz outra tecnologia: ele integra peças já compreendidas.</p></div></div>
+  <div class="mbb10-context"><strong>A integração é onde aparecem conflitos reais.</strong> O modo manual precisa parar de obedecer ao sensor; o modo automático precisa retomar a decisão pelo LDR; e uma falha de Wi-Fi não deve impedir a automação local. O programa final organiza exatamente essas responsabilidades.</div>
   <div class="cards">
-    <article class="card wide"><h3>1. Antes de carregar</h3><p>Troque <code>NOME_DA_REDE</code> e <code>SENHA_DA_REDE</code> pelos dados da rede utilizada. Ajuste também <code>LIMIAR</code> com base nas leituras reais obtidas no teste local.</p></article>
+    <article class="card wide"><h3>1. Antes de carregar</h3><p><strong>ESP32 física:</strong> troque <code>NOME_DA_REDE</code> e <code>SENHA_DA_REDE</code> pela rede de laboratório e mantenha <code>LEITURA_MAIOR_NO_ESCURO = false</code> para a montagem do diagrama. <strong>Wokwi:</strong> use <code>Wokwi-GUEST</code>, senha vazia e <code>LEITURA_MAIOR_NO_ESCURO = true</code>. Nos dois casos, ajuste <code>LIMIAR</code> com base nas leituras obtidas no teste local.</p></article>
     <article class="card wide code"><h3>Código completo — projeto integrado <button type="button" onclick="copyCode('b10-final', this)">Copiar</button></h3><pre id="b10-final">#include &lt;WiFi.h&gt;
 #include &lt;WebServer.h&gt;
 
@@ -175,13 +222,28 @@ const char* senha = "SENHA_DA_REDE";
 
 const int LDR = 34;
 const int LED = 23;
-const int LIMIAR = 2000; // calibre na sua montagem
+const int LIMIAR = 2000; // calibre no teste local
+
+// Física do diagrama: false
+// Wokwi Photoresistor Sensor: true
+const bool LEITURA_MAIOR_NO_ESCURO = false;
+
+const unsigned long TEMPO_MAX_WIFI = 10000;
 
 WebServer servidor(80);
 
 enum Modo { MANUAL, AUTOMATICO };
 Modo modo = AUTOMATICO;
 bool ledLigado = false;
+bool servidorDisponivel = false;
+
+bool ambienteEscuro(int leitura) {
+  if (LEITURA_MAIOR_NO_ESCURO) {
+    return leitura &gt; LIMIAR;
+  }
+
+  return leitura &lt; LIMIAR;
+}
 
 void definirLed(bool estado) {
   ledLigado = estado;
@@ -192,8 +254,7 @@ void atualizarAutomacao() {
   if (modo != AUTOMATICO) return;
 
   int luminosidade = analogRead(LDR);
-  bool escuro = luminosidade &lt; LIMIAR;
-  definirLed(escuro);
+  definirLed(ambienteEscuro(luminosidade));
 }
 
 String montarPagina() {
@@ -225,24 +286,7 @@ void voltarParaInicio() {
   servidor.send(303, "text/plain", "");
 }
 
-void setup() {
-  Serial.begin(115200);
-  pinMode(LED, OUTPUT);
-  definirLed(false);
-
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, senha);
-
-  Serial.print("Conectando ao Wi-Fi");
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println();
-  Serial.print("Abra no navegador: http://");
-  Serial.println(WiFi.localIP());
-
+void configurarServidor() {
   servidor.on("/", []() {
     servidor.send(200, "text/html", montarPagina());
   });
@@ -264,31 +308,69 @@ void setup() {
     atualizarAutomacao();
     voltarParaInicio();
   });
+}
 
-  servidor.begin();
-  Serial.println("Servidor HTTP iniciado.");
+void conectarWiFiSemBloquearParaSempre() {
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, senha);
+
+  Serial.print("Conectando ao Wi-Fi");
+  unsigned long inicio = millis();
+
+  while (WiFi.status() != WL_CONNECTED &&
+         millis() - inicio &lt; TEMPO_MAX_WIFI) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println();
+
+  if (WiFi.status() == WL_CONNECTED) {
+    servidor.begin();
+    servidorDisponivel = true;
+    Serial.print("Abra no navegador: http://");
+    Serial.println(WiFi.localIP());
+  } else {
+    servidorDisponivel = false;
+    Serial.println("Wi-Fi indisponivel.");
+    Serial.println("A automacao local continuara funcionando.");
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(LED, OUTPUT);
+  definirLed(false);
+
+  configurarServidor();
+  conectarWiFiSemBloquearParaSempre();
 }
 
 void loop() {
-  servidor.handleClient();
+  if (servidorDisponivel && WiFi.status() == WL_CONNECTED) {
+    servidor.handleClient();
+  }
+
   atualizarAutomacao();
   delay(20);
 }</pre></article>
-    <article class="card"><h3>2. Teste manual</h3><p>Abra o IP mostrado no Monitor Serial. Use <strong>Ligar</strong> e <strong>Desligar</strong>. O modo deve mudar para MANUAL e o LED deve obedecer ao comando.</p></article>
-    <article class="card"><h3>3. Teste automático</h3><p>Escolha <strong>Automático</strong> e altere a luz sobre o LDR. A página atualiza a leitura e o LED deve acompanhar a regra definida pelo limiar.</p></article>
-    <article class="card wide mbb10-result"><h3>4. O que foi integrado</h3><div class="mbb10-grid"><div><strong>Sensoriamento</strong><span>LDR mede uma condição física.</span></div><div><strong>Processamento</strong><span>ESP32 lê, compara e decide.</span></div><div><strong>Atuação</strong><span>LED representa a iluminação controlada.</span></div><div><strong>Conectividade</strong><span>ESP32 participa da rede Wi-Fi.</span></div><div><strong>Aplicação</strong><span>Navegador monitora e envia comandos HTTP.</span></div><div><strong>Integração</strong><span>Manual e automático convivem no mesmo sistema.</span></div></div></article>
-    <article class="card wide"><h3>5. O que não entrou só para aumentar o projeto</h3><p>RTOS, CAN, RS-232, BLE e LCD I2C foram estudados porque são importantes no percurso, mas <strong>não precisam aparecer obrigatoriamente no projeto final</strong>. Uma integração boa usa apenas o que resolve o problema. O LCD I2C pode ser acrescentado depois como extensão local, após validar eletricamente o módulo disponível.</p></article>
+    <article class="card"><h3>2. Teste manual</h3><p><strong>ESP32 física:</strong> abra o IP mostrado no Monitor Serial a partir de um dispositivo da mesma rede. <strong>Wokwi com Private IoT Gateway:</strong> abra <code>http://localhost:9080/</code>. Use <strong>Ligar</strong> e <strong>Desligar</strong>; o modo deve mudar para MANUAL e o LED deve obedecer ao comando. No gateway público do Wokwi, esta prova pelo navegador não está disponível.</p></article>
+    <article class="card"><h3>3. Teste automático</h3><p>Escolha <strong>Automático</strong> e altere a luminosidade. A página deve atualizar a leitura e o LED deve apagar em condição clara e acender em condição escura, de acordo com o limiar calibrado e com a direção de leitura configurada para o seu ambiente.</p></article>
+    <article class="card wide mbb10-good"><h3>4. Falha de rede não deve congelar a automação</h3><p>O programa espera a conexão Wi-Fi por no máximo 10 segundos. Se a rede estiver indisponível, a página Web não inicia, mas o ESP32 continua lendo o sensor e controlando o LED no modo automático.</p><p>Se a placa iniciar sem rede e a rede aparecer depois, reinicie o protótipo nesta versão do projeto para abrir o servidor. O ponto principal é separar uma <strong>função local</strong> de uma <strong>função de conectividade</strong>.</p><div class="mbb10-checkpoint"><strong>Checkpoint da integração:</strong> retire a rede ou use credenciais inválidas e confirme que, depois da tentativa de conexão, a variação de luz ainda controla o LED no modo automático.</div></article>
+    <article class="card wide mbb10-result"><h3>5. O que foi integrado</h3><div class="mbb10-grid"><div><strong>Sensoriamento</strong><span>LDR mede uma condição física.</span></div><div><strong>Processamento</strong><span>ESP32 lê, compara e decide.</span></div><div><strong>Atuação</strong><span>LED representa a iluminação controlada.</span></div><div><strong>Conectividade</strong><span>ESP32 participa da rede Wi-Fi.</span></div><div><strong>Aplicação</strong><span>Navegador monitora e envia comandos HTTP.</span></div><div><strong>Integração</strong><span>Manual e automático convivem no mesmo sistema.</span></div></div></article>
+    <article class="card wide"><h3>6. O que não entrou só para aumentar o projeto</h3><p>RTOS, CAN, RS-232, BLE e LCD I2C foram estudados porque são importantes no percurso, mas <strong>não precisam aparecer obrigatoriamente no projeto final</strong>. Uma integração boa usa apenas o que resolve o problema. O LCD I2C pode ser acrescentado depois como extensão local, após validar eletricamente o módulo disponível.</p></article>
   </div>
 </section>
 
 <section class="project mbb10-panel" id="b10-6">
   <div class="projectHead"><span class="badge">10.6</span><div><h2>Segurança e dados — Revisar antes de chamar o projeto de concluído</h2><p>O Bloco 9 agora deixa de ser teoria e vira critério de projeto.</p></div></div>
+  <div class="mbb10-context"><strong>Funcionar não basta.</strong> Antes da entrega, vamos perguntar o que está exposto, quais dados existem, onde estão as credenciais e quem consegue comandar o sistema. O objetivo é reconhecer os limites do protótipo, sem tratar um servidor de laboratório como produto pronto para uso real.</div>
   <div class="cards">
     <article class="card wide"><h3>1. Quais dados existem?</h3><p>O núcleo do Ambiente MbB trabalha com <strong>valor de luminosidade, modo de operação e estado do LED</strong>. Ele não precisa de nome, localização de pessoa, biometria ou histórico de usuários para cumprir sua finalidade.</p></article>
     <article class="card"><h3>2. Necessidade</h3><p>Não crie cadastro de pessoas ou logs pessoais se eles não forem necessários para o objetivo do projeto.</p></article>
     <article class="card"><h3>3. Credenciais</h3><p>A senha do Wi-Fi é usada no código apenas como simplificação de laboratório. Não publique o arquivo com uma senha real nem mostre a credencial em capturas de tela.</p></article>
     <article class="card"><h3>4. Exposição</h3><p>Para o projeto-base, mantenha o servidor na rede local. Um túnel público só deve ser usado quando houver uma necessidade definida e controles compatíveis com a exposição.</p></article>
-    <article class="card"><h3>5. Autorização</h3><p>O servidor didático não implementa login. Portanto, qualquer dispositivo autorizado a entrar naquela rede local e alcançar o ESP32 pode tentar acessar as rotas. Isso deve ser reconhecido como limitação do protótipo.</p></article>
+    <article class="card"><h3>5. Autenticação e autorização</h3><p>O servidor deste protótipo não implementa login nem permissões. Portanto, qualquer dispositivo que consiga alcançar o ESP32 pode tentar acessar as rotas. HTTPS/TLS protegeria o transporte, mas ainda seria necessário decidir quem pode comandar o sistema.</p></article>
     <article class="card wide mbb10-warning"><strong>Limite do protótipo:</strong> este código é adequado para aprendizagem em rede controlada. Ele não deve ser tratado como solução pronta para controlar fechaduras, portões, equipamentos críticos ou cargas elétricas reais.</article>
     <article class="card wide"><h3>6. Registro de decisão</h3><p>Antes da entrega, complete esta frase no relatório: <strong>“O projeto coleta apenas __________ porque sua finalidade é __________. Ele fica acessível somente __________. A principal limitação de segurança é __________.”</strong></p></article>
     <article class="card worked wide mbb10-bridge"><h3>7. Última etapa</h3><p>Um projeto não termina quando “funciona uma vez”. Precisamos de <strong>testes reproduzíveis e evidências de que cada requisito foi atendido</strong>.</p></article>
@@ -297,19 +379,21 @@ void loop() {
 
 <section class="project mbb10-panel" id="b10-7">
   <div class="projectHead"><span class="badge">10.7</span><div><h2>Testes e entrega — Provar que o sistema funciona</h2><p>A entrega final é pequena, objetiva e baseada em evidências.</p></div></div>
+  <div class="mbb10-context"><strong>Um projeto não está pronto porque funcionou uma vez.</strong> Agora cada requisito precisa produzir uma evidência repetível: sensor, modo manual, modo automático, rede e comportamento quando a conectividade falha.</div>
   <div class="cards">
-    <article class="card wide"><h3>1. Roteiro de testes</h3><table class="mbb10-compare"><thead><tr><th>Teste</th><th>Ação</th><th>Resultado esperado</th></tr></thead><tbody><tr><td>T1 — Sensor</td><td>Alterar a luz sobre o LDR.</td><td>Leitura muda de forma perceptível.</td></tr><tr><td>T2 — Manual ligar</td><td>Abrir <code>/ligar</code> pelo painel.</td><td>Modo MANUAL e LED ligado.</td></tr><tr><td>T3 — Manual desligar</td><td>Abrir <code>/desligar</code>.</td><td>Modo MANUAL e LED desligado.</td></tr><tr><td>T4 — Automático claro</td><td>Ativar Automático e iluminar o LDR.</td><td>Leitura indica condição clara e o LED responde à regra calibrada.</td></tr><tr><td>T5 — Automático escuro</td><td>Reduzir a luz sobre o LDR.</td><td>Ao cruzar o limiar, o LED acende.</td></tr><tr><td>T6 — Rede</td><td>Acessar o IP por outro dispositivo da mesma rede.</td><td>Painel abre e os comandos chegam ao ESP32.</td></tr></tbody></table></article>
-    <article class="card wide"><h3>2. Entrega mínima</h3><div class="mbb10-step"><b>1</b><p><strong>Diagrama:</strong> mostrar sensor, ESP32, rede, aplicação e atuador.</p></div><div class="mbb10-step"><b>2</b><p><strong>Código:</strong> entregar a versão final sem expor senha real de Wi-Fi.</p></div><div class="mbb10-step"><b>3</b><p><strong>Evidência:</strong> registrar o painel funcionando e pelo menos quatro testes da tabela.</p></div><div class="mbb10-step"><b>4</b><p><strong>Explicação:</strong> descrever em poucas linhas o que é automático, o que é comandado pelo usuário e como os dados percorrem o sistema.</p></div><div class="mbb10-step"><b>5</b><p><strong>Segurança:</strong> registrar a decisão de dados e a principal limitação do protótipo.</p></div></article>
+    <article class="card wide"><h3>1. Roteiro de testes</h3><table class="mbb10-compare"><thead><tr><th>Teste</th><th>Ação</th><th>Resultado esperado</th></tr></thead><tbody><tr><td>T1 — Sensor</td><td>Alterar a luz sobre o LDR.</td><td>Leitura muda de forma perceptível.</td></tr><tr><td>T2 — Manual ligar</td><td>Abrir <code>/ligar</code> pelo painel.</td><td>Modo MANUAL e LED ligado.</td></tr><tr><td>T3 — Manual desligar</td><td>Abrir <code>/desligar</code>.</td><td>Modo MANUAL e LED desligado.</td></tr><tr><td>T4 — Automático claro</td><td>Ativar Automático e aumentar a luminosidade.</td><td>O sistema classifica a condição como clara e o LED fica apagado.</td></tr><tr><td>T5 — Automático escuro</td><td>Reduzir a luz sobre o LDR.</td><td>Ao cruzar o limiar, o LED acende.</td></tr><tr><td>T6 — Rede</td><td>Na placa física, acessar o IP por outro dispositivo da mesma rede. No Wokwi com Private Gateway, abrir <code>http://localhost:9080/</code>.</td><td>Painel abre e os comandos chegam ao ESP32.</td></tr><tr><td>T7 — Falha de rede</td><td>Com o modo automático ativo, interromper a rede e variar a luminosidade.</td><td>A página fica indisponível, mas a decisão local sobre o LED continua funcionando.</td></tr></tbody></table></article>
+    <article class="card wide"><h3>2. Entrega mínima</h3><div class="mbb10-step"><b>1</b><p><strong>Diagrama:</strong> mostrar sensor, ESP32, rede, aplicação e atuador.</p></div><div class="mbb10-step"><b>2</b><p><strong>Código:</strong> entregar a versão final sem expor senha real de Wi-Fi.</p></div><div class="mbb10-step"><b>3</b><p><strong>Evidência:</strong> registrar o painel funcionando e pelo menos quatro testes da tabela, incluindo o T7 de falha de rede.</p></div><div class="mbb10-step"><b>4</b><p><strong>Explicação:</strong> descrever em poucas linhas o que é automático, o que é comandado pelo usuário e como os dados percorrem o sistema.</p></div><div class="mbb10-step"><b>5</b><p><strong>Segurança:</strong> registrar a decisão de dados e a principal limitação do protótipo.</p></div><div class="mbb10-step"><b>6</b><p><strong>Ambiente de execução:</strong> registrar se a camada Web foi validada na ESP32 física ou no Wokwi com Private IoT Gateway. O gateway público do Wokwi não permite comprovar conexões de entrada no servidor.</p></div></article>
     <article class="card wide"><h3>3. Extensões opcionais — Só depois do núcleo</h3><p>Quem concluir o projeto-base pode escolher <strong>uma</strong> evolução que tenha propósito: exibir estado em LCD I2C, acrescentar outro sensor, representar uma abertura com servo ou reorganizar tarefas com RTOS. A extensão deve responder a uma necessidade clara e ser testada separadamente antes de entrar no sistema.</p></article>
-    <article class="card wide mbb10-result"><h3>4. Fechamento do percurso</h3><p>Ao concluir este projeto, o aluno não apenas “montou um circuito”. Ele passou por <strong>entrada e saída, sensores, atuadores, programação, conectividade, IoT, protocolos, proteção e segurança</strong> e usou esse conhecimento para construir e justificar um sistema integrado.</p><div class="mbb10-flow"><span>Entender</span><b>→</b><span>Experimentar</span><b>→</b><span>Programar</span><b>→</b><span>Aplicar</span></div></article>
-    <article class="card wide mbb10-good"><strong>Projeto curricular fechado:</strong> o núcleo cobre monitoramento e controle de iluminação com sistema embarcado integrado a uma aplicação em rede. Abertura automática de portas pode ser trabalhada como evolução com servo, sem transformar um exemplo do PTD em obrigação de usar rede elétrica ou mecanismo real de acesso.</article>
+    <article class="card wide mbb10-result"><h3>4. Fechamento do percurso</h3><p>Ao concluir este projeto, você não apenas “montou um circuito”. Você passou por <strong>entrada e saída, sensores, atuadores, programação, conectividade, IoT, protocolos, proteção e segurança</strong> e usou esse conhecimento para construir e justificar um sistema integrado.</p><div class="mbb10-flow"><span>Entender</span><b>→</b><span>Experimentar</span><b>→</b><span>Programar</span><b>→</b><span>Aplicar</span></div></article>
+    <article class="card wide mbb10-good"><strong>Projeto-base concluído:</strong> o núcleo cobre monitoramento e controle de iluminação com sistema embarcado integrado a uma aplicação em rede. Se houver tempo para evoluir, escolha uma extensão com finalidade clara, como um servo representando uma abertura ou um LCD exibindo o estado localmente.</article>
   </div>
 </section>
 
 </main>
 </div>
 </div>
-<script src="../js/arduino-projeto-iot.js?v=20261005-1"></script>
-<script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>\n<script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+<script src="../js/arduino-projeto-iot.js?v=20261008-1"></script>
+<script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>
+<script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body>
 </html>
