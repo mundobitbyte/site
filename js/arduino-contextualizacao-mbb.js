@@ -175,6 +175,7 @@
       }
     },
     'arduino-seguranca.html': {
+      integrado: true,
       hero: '.mbb9-intro',
       modulo: {titulo:'9. Proteção e Segurança — quando um projeto útil também pode afetar pessoas', dia:'Uma fechadura conectada, um rastreador ou um sensor de saúde pode facilitar a vida, mas também pode expor dados ou permitir comandos indevidos.', problema:'Quanto mais o sistema coleta e se conecta, maior o impacto de uma configuração errada, senha fraca ou dado desnecessário.', uso:'Este bloco coloca privacidade e segurança dentro do projeto, antes da entrega, e não como um remendo depois.'},
       itens: {
