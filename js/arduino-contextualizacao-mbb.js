@@ -160,6 +160,7 @@
       }
     },
     'arduino-protocolos.html': {
+      integrado: true,
       hero: '.mbb8-intro',
       modulo: {titulo:'8. RTOS e Protocolos — quando o sistema cresce e as partes precisam se organizar', dia:'Um equipamento real pode ler sensores, atualizar um display, atender a rede e acionar saídas quase ao mesmo tempo.', problema:'Sem organização de tempo e sem regras de comunicação, uma tarefa pode bloquear outra ou dois dispositivos podem simplesmente não se entender.', uso:'RTOS e protocolos aparecem aqui como ferramentas para coordenar tarefas e permitir comunicação correta entre partes diferentes do sistema.'},
       itens: {
