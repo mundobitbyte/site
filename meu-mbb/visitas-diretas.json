@@ -664,6 +664,7 @@
     "versao_conteudo": 1,
     "localizacao_atual": "pages/arduino-conectividade.html",
     "ancoras": [
+      "b6-0",
       "b6-prep",
       "b6-1",
       "b6-2",
@@ -2151,6 +2152,8 @@
       ":~:text=A%20conclus%C3%A3o%20deve%20ser%20curta%2C%20mas%20sustentada",
       ":~:text=O%20que%20ser%C3%A1%20observado%20no%20projeto%20final",
       ":~:text=Volte%20mentalmente%20%C3%A0%20Etapa%200",
+      ":~:text=Transfer%C3%AAncia%20MbB%20%E2%80%94%20da%20Cantina%20para%20a%20Conecta",
+      ":~:text=Fa%C3%A7a%20a%20transfer%C3%AAncia",
       ":~:text=Fechamento",
       ":~:text=Ao%20concluir%20o%20m%C3%B3dulo"
     ]
