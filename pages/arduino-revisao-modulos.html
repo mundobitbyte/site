@@ -24,8 +24,8 @@
 </style>
 </head>
 <body>
-<header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header>
-<div class="module-menu" id="arduinoModuleMenu" aria-label="Módulos do Arduino">
+<header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Sistemas Embarcados e IoT</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header>
+<div class="module-menu" id="arduinoModuleMenu" aria-label="Módulos de Sistemas Embarcados e IoT">
 <a class="module-btn" href="arduino.html#intro">1. Fundamentos</a><a class="module-btn" href="arduino.html#p2">2. Entrada/Saída</a><a class="module-btn" href="arduino.html#p6">3. Sensores</a><a class="module-btn" href="arduino.html#p8">4. Atuadores/Automação</a><a class="module-btn" href="arduino-programacao-aplicada.html">5. Programação Aplicada</a><a class="module-btn" href="arduino-conectividade.html">6. Conectividade</a><a class="module-btn" href="arduino-iot.html">7. Internet das Coisas</a><a class="module-btn" href="arduino-protocolos.html">8. RTOS e Protocolos</a><a class="module-btn" href="arduino-seguranca.html">9. Proteção e Segurança</a><a class="module-btn" href="arduino-projeto-iot.html">10. Projeto IoT</a><a class="module-btn active" href="arduino-exercicios.html">99. Exercícios</a>
 </div>
 <div class="layout arduino-layout" id="arduinoLayout">
@@ -50,6 +50,7 @@
 <section class="review-panel" id="rev-iot"><div class="review-shell"><div class="review-head"><span class="badge">7</span><h2>Revisão — Internet das Coisas</h2><p>Revise o que diferencia automação local, dispositivo conectado e sistema IoT e como analisar aplicações.</p></div><div class="review-body">
 <article class="review-question"><h4>1. O que torna um sistema IoT?</h4><p>Marque a situação mais completa.</p><div class="choice-line"><span>( ) LED ligado a uma pilha</span><span>( ) LDR acendendo um LED apenas localmente</span><span>( ) Sensor + dispositivo conectado + aplicação para monitorar ou agir</span></div></article>
 <article class="review-question"><h4>2. Aplicações</h4><p>Escolha duas áreas — residencial, industrial, planejamento urbano, monitoramento, saúde, automação ou rastreamento — e dê um exemplo de IoT para cada uma.</p><span class="answer-line tall"></span></article>
+<article class="review-question"><h4>3. A conexão tem propósito?</h4><p>Escolha um projeto local já estudado, como LDR, HC-SR04, servo ou lixeira automática. Explique <strong>que necessidade justificaria conectá-lo</strong> e identifique objeto físico, sensor/atuador, dado ou comando, comunicação e finalidade.</p><span class="answer-line tall"></span></article>
 </div></div></section>
 <section class="review-panel" id="rev-protocolos"><div class="review-shell"><div class="review-head"><span class="badge">8</span><h2>Revisão — RTOS e Protocolos</h2><p>Revise tarefas, barramentos, interfaces e protocolos estudados com foco na arquitetura do sistema.</p></div><div class="review-body">
 <article class="review-question"><h4>1. RTOS</h4><p>Um programa precisa ler sensor, atender a rede e atualizar um atuador. Por que separar trabalhos em tarefas pode ser útil? E por que “tempo real” não significa apenas “muito rápido”?</p><span class="answer-line tall"></span></article>
@@ -59,6 +60,7 @@
 <article class="review-question"><h4>5. TCP/IP por baixo do HTTP</h4><p>Ordene do nível da aplicação em direção ao meio de acesso usado no nosso exemplo:</p><p>Wi‑Fi — IP — HTTP — TCP</p><p><strong>Ordem:</strong> __________________________________________</p></article>
 <article class="review-question"><h4>6. Família IEEE 802.11</h4><p>O ESP32-WROOM-32 usado no percurso trabalha com Wi‑Fi 2,4 GHz e 802.11 b/g/n. O que pode acontecer se a rede disponível aceitar somente 5 GHz?</p><span class="answer-line"></span></article>
 <article class="review-question"><h4>7. Bluetooth Classic e BLE</h4><p>O controle serial estudado anteriormente se aproxima do uso de Bluetooth Classic/SPP. Em poucas palavras, qual é a diferença de proposta em relação ao BLE?</p><span class="answer-line"></span></article>
+<article class="review-question"><h4>8. I2C na placa física</h4><p>Um LCD 16x2 com backpack I2C é alimentado em 5 V e suas linhas SDA/SCL possuem pull-ups para 5 V. Por que isso exige cuidado antes de ligar diretamente ao ESP32 de 3,3 V e qual solução foi apresentada no módulo?</p><span class="answer-line tall"></span></article>
 </div></div></section>
 <section class="review-panel" id="rev-seguranca"><div class="review-shell"><div class="review-head"><span class="badge">9</span><h2>Revisão — Proteção e Segurança</h2><p>Revise proteção de dados pessoais e segurança do dispositivo, das credenciais, da rede, da aplicação e dos dados.</p></div><div class="review-body">
 <article class="review-question"><h4>1. Dado do ambiente ou dado pessoal?</h4><p>Classifique:</p><p>a) Temperatura da sala sem vínculo com uma pessoa: __________________</p><p>b) Registro “Ana entrou às 19:05”: __________________</p><p>c) Batimento cardíaco associado ao usuário: __________________</p></article>
