@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function(){
     <div class="circuitPanel" data-mbb-circuito="b6-prep">
       <h3>Circuito-base do bloco</h3>
       <figure class="circuitFigure">
-        <img class="circuitPhoto" src="../img/arduino/esp32-led-gpio23.webp" alt="ESP32 com LED e resistor de 220 ohms em série entre o GPIO 23 e o GND." loading="lazy" decoding="async"/>
+        <img class="circuitPhoto" src="../img/arduino/esp32-led-gpio23.webp?v=20261008-2" alt="Diagrama da ESP32 com LED e resistor de 220 ohms em série entre o GPIO 23 e o GND." loading="lazy" decoding="async"/>
         <figcaption>Use este circuito-base durante o Bloco 6: LED e resistor de 220 Ω em série entre o GPIO 23 e o GND.</figcaption>
       </figure>
     </div>
