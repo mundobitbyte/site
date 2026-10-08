@@ -427,7 +427,8 @@ void loop() {
           <div><strong>Wokwi + Private IoT Gateway</strong><span>Com o gateway privado ativo, o servidor HTTP na porta 80 pode ser acessado pelo navegador em <code>http://localhost:9080/</code>. É um recurso para contas compatíveis; no navegador, prefira Chrome, Firefox ou Edge.</span></div>
           <div><strong>Sem Private Gateway?</strong><span>Não tente “consertar” o código para fazer o navegador entrar. No Wokwi padrão, a limitação é do caminho de rede, não do <code>WebServer</code>.</span></div>
         </div>
-        <p class="mbb6-note"><strong>O que observar:</strong> na placa física ou com Private Gateway, os botões da página devem controlar o LED. No Wokwi padrão, o servidor pode ser estudado e compilado, mas o navegador não consegue iniciar essa conexão de entrada pelo gateway público.</p>
+        <p class="mbb6-note"><strong>Se estiver no Wokwi:</strong> nos códigos desta etapa, troque <code>NOME_DA_REDE</code> por <code>Wokwi-GUEST</code> e deixe <code>SENHA_DA_REDE</code> vazia. O Wokwi usa essa rede virtual tanto no gateway público quanto no privado.</p>
+        <p class="mbb6-note"><strong>O que observar:</strong> na placa física ou com Private Gateway, os botões da página devem controlar o LED. No Wokwi padrão, o servidor pode ser estudado e compilado, mas o navegador não consegue iniciar essa conexão de entrada pelo gateway público. Já a Parte B, em que o ESP32 é cliente HTTP, pode ser executada normalmente no gateway público.</p>
       `;
       cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
     }
