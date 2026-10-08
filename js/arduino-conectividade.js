@@ -194,10 +194,9 @@ document.addEventListener('DOMContentLoaded', function(){
   if(!secao || secao.querySelector('[data-mbb-wokwi-bluetooth]')) return;
 
   const codigoPrincipal = document.getElementById('b6-1-code')?.closest('article');
-  const cards = Array.from(secao.querySelectorAll('.card'));
-  const explicacaoBluetooth = cards.find(card => /^5\.\s*Entendendo as novidades/.test(card.querySelector('h3')?.textContent.trim() || ''));
-  const testeFisico = cards.find(card => /^6\.\s*Testando/.test(card.querySelector('h3')?.textContent.trim() || ''));
-  const resultadoFisico = cards.find(card => /^7\.\s*Resultado esperado/.test(card.querySelector('h3')?.textContent.trim() || ''));
+  const explicacaoBluetooth = secao.querySelector('[data-mbb6-role="bluetooth-explicacao"]');
+  const testeFisico = secao.querySelector('[data-mbb6-role="bluetooth-teste"]');
+  const resultadoFisico = secao.querySelector('[data-mbb6-role="bluetooth-resultado"]');
 
   if(!codigoPrincipal || !testeFisico) return;
 
@@ -269,7 +268,7 @@ public:
     <ol>
       <li>Mantenha no <code>sketch.ino</code> exatamente o código Bluetooth apresentado no passo 4.</li>
       <li>Confirme que o projeto também contém o arquivo <code>BluetoothSerial.h</code>.</li>
-      <li>Inicie a simulação e abra o Monitor Serial em <strong>115200</strong>.</li>
+      <li>Inicie a simulação e abra o Monitor Serial. O Wokwi detecta automaticamente a velocidade configurada por <code>Serial.begin(115200)</code>.</li>
       <li>Envie <code>L</code>. O LED deve acender e o terminal deve mostrar <code>LED LIGADO</code>.</li>
       <li>Envie <code>D</code>. O LED deve apagar e o terminal deve mostrar <code>LED DESLIGADO</code>.</li>
     </ol>
@@ -332,6 +331,11 @@ document.addEventListener('DOMContentLoaded', function(){
     return h3 && h3.textContent.trim().startsWith(inicioTitulo);
   });
 
+  const acharPapel = (id, papel, inicioTitulo) => {
+    const secao = document.getElementById(id);
+    return secao?.querySelector(`[data-mbb6-role="${papel}"]`) || acharCard(id, inicioTitulo);
+  };
+
   // Preparação: apresenta os dois ambientes antes de qualquer prática.
   const prep = document.getElementById('b6-prep');
   if(prep && !prep.querySelector('[data-mbb6-ambientes]')){
@@ -351,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
-  const prepararIde = acharCard('b6-prep', '4. Preparando a Arduino IDE');
+  const prepararIde = acharPapel('b6-prep', 'prep-ide', '4. Preparando a Arduino IDE');
   if(prepararIde && marcar(prepararIde, 'mbb6PrepWokwi')){
     const p = document.createElement('p');
     p.className = 'mbb6-note';
@@ -362,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function(){
   // 6.2 Wi-Fi: prática completa em ambos os ambientes e código Wokwi explícito.
   const wifi = document.getElementById('b6-2');
   if(wifi && !wifi.querySelector('[data-mbb6-wifi-wokwi]')){
-    const cardWokwiOriginal = acharCard('b6-2', '9. Teste no Wokwi');
+    const cardWokwiOriginal = acharPapel('b6-2', 'wifi-wokwi', '9. Teste no Wokwi');
     if(cardWokwiOriginal){
       cardWokwiOriginal.dataset.mbb6WifiWokwi = '1';
       cardWokwiOriginal.innerHTML = `
@@ -399,7 +403,7 @@ void setup() {
 void loop() {
 }</pre>
         <div class="explain" style="margin-top:12px">
-          <p><strong>Faça:</strong> execute a simulação e abra o Monitor Serial em 115200.</p>
+          <p><strong>Faça:</strong> execute a simulação e abra o Monitor Serial. O Wokwi detecta automaticamente a velocidade serial.</p>
           <p><strong>O que observar:</strong> a mensagem de conexão e um endereço IP virtual confirmam que o ESP32 entrou na rede Wi-Fi simulada.</p>
         </div>
       `;
@@ -420,7 +424,7 @@ void loop() {
         <div class="mbb6-connections">
           <div><strong>ESP32 físico</strong><span>Celular/computador e ESP32 ficam na mesma rede. Abra <code>http://IP_DO_ESP32</code> para testar o servidor.</span></div>
           <div><strong>Wokwi padrão</strong><span>O código pode conectar à Internet e fazer conexões de saída, mas o gateway público não aceita conexão de entrada do seu navegador para o servidor simulado.</span></div>
-          <div><strong>Wokwi + Private IoT Gateway</strong><span>Com o gateway privado ativo, o servidor HTTP na porta 80 pode ser acessado pelo navegador em <code>http://localhost:9080/</code>.</span></div>
+          <div><strong>Wokwi + Private IoT Gateway</strong><span>Com o gateway privado ativo, o servidor HTTP na porta 80 pode ser acessado pelo navegador em <code>http://localhost:9080/</code>. É um recurso para contas compatíveis; no navegador, prefira Chrome, Firefox ou Edge.</span></div>
           <div><strong>Sem Private Gateway?</strong><span>Não tente “consertar” o código para fazer o navegador entrar. No Wokwi padrão, a limitação é do caminho de rede, não do <code>WebServer</code>.</span></div>
         </div>
         <p class="mbb6-note"><strong>O que observar:</strong> na placa física ou com Private Gateway, os botões da página devem controlar o LED. No Wokwi padrão, o servidor pode ser estudado e compilado, mas o navegador não consegue iniciar essa conexão de entrada pelo gateway público.</p>
@@ -429,7 +433,7 @@ void loop() {
     }
   }
 
-  const testeHttp = acharCard('b6-3', '5. Testando o servidor');
+  const testeHttp = acharPapel('b6-3', 'http-servidor-teste', '5. Testando o servidor');
   if(testeHttp && marcar(testeHttp, 'mbb6HttpTeste')){
     const titulo = testeHttp.querySelector('h3');
     if(titulo) titulo.textContent = '5. Testando o servidor — placa física';
@@ -457,7 +461,7 @@ void loop() {
     }
   }
 
-  const testeMdns = acharCard('b6-4', '6. Testando');
+  const testeMdns = acharPapel('b6-4', 'mdns-teste', '6. Testando');
   if(testeMdns && marcar(testeMdns, 'mbb6MdnsTeste')){
     const titulo = testeMdns.querySelector('h3');
     if(titulo) titulo.textContent = '6. Testando — rede local com ESP32 físico';
@@ -482,11 +486,11 @@ void loop() {
     }
   }
 
-  const ferramentaTunel = acharCard('b6-5', '4. Ferramenta escolhida');
+  const ferramentaTunel = acharPapel('b6-5', 'tunel-ferramenta', '4. Ferramenta para o teste');
   if(ferramentaTunel && marcar(ferramentaTunel, 'mbb6TunelFerramenta')){
     const nota = document.createElement('p');
     nota.className = 'mbb6-note';
-    nota.innerHTML = '<strong>Checkpoint antes de continuar:</strong> no computador que criará o túnel, abra primeiro <code>http://IP_DO_ESP32</code>. Se esse acesso local não funcionar, o túnel também não terá para onde encaminhar a requisição.';
+    nota.innerHTML = '<strong>Checkpoint antes de continuar:</strong> no computador que criará o túnel, abra primeiro <code>http://IP_DO_ESP32</code>. Se esse acesso local não funcionar, o túnel também não terá para onde encaminhar a requisição. Use o comando documentado pelo serviço: <code>ssh -R 80:IP_DO_ESP32:80 localhost.run</code>.';
     ferramentaTunel.appendChild(nota);
   }
 });
