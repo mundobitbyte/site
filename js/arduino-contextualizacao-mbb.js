@@ -185,6 +185,7 @@
       }
     },
     'arduino-projeto-iot.html': {
+      integrado: true,
       hero: '.mbb10-intro',
       modulo: {titulo:'10. Projeto IoT — por que juntar tudo agora?', dia:'Até aqui cada ideia foi estudada em partes: sensor, decisão, atuador, rede, aplicação e segurança.', problema:'Um produto ou solução real não entrega partes isoladas; elas precisam funcionar juntas e continuar compreensíveis quando algo falha.', uso:'O projeto final transforma o percurso em um sistema único, com problema, requisitos, montagem, software, testes e critérios de entrega.'},
       itens: {
