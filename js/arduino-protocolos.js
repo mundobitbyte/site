@@ -166,29 +166,19 @@ document.addEventListener('DOMContentLoaded', function(){
   inserirCircuitoDoBloco8(
     'b8-1',
     'Circuito do experimento RTOS',
-    '../img/arduino/esp32-led-gpio23.svg',
-    'Diagrama técnico do ESP32 com GPIO 23 ligado a resistor de 220 ohms, LED e GND para o experimento com tarefas FreeRTOS.',
-    'Reutilize o mesmo circuito-base do Bloco 6. Nesta etapa, a novidade está na organização das tarefas pelo RTOS, não na eletrônica.'
+    '../img/arduino/esp32-led-gpio23.webp',
+    'ESP32 DevKit no Wokwi com LED e resistor em série entre o GPIO 23 e o GND para o experimento com tarefas FreeRTOS.',
+    'Reutilize o mesmo circuito-base validado no Bloco 6: LED e resistor em série entre GPIO 23 e GND. A novidade agora está na organização das tarefas pelo RTOS.'
   );
 
   inserirCircuitoDoBloco8(
     'b8-2',
-    'Referência de ligação I2C',
+    'Referência lógica dos sinais I2C',
     '../img/arduino/esp32-lcd-i2c-sinais.svg',
-    'Diagrama técnico dos sinais I2C entre ESP32 e LCD 16x2 com backpack: SDA no GPIO 21, SCL no GPIO 22 e GND comum; VCC depende da verificação do módulo.',
-    'SDA → GPIO 21, SCL → GPIO 22 e GND comum. Confirme a alimentação e os pull-ups do backpack antes da ligação. Se SDA/SCL forem puxados a 5 V, use adaptação de nível.'
+    'Diagrama lógico dos sinais I2C entre ESP32 e LCD 16x2 com backpack: SDA no GPIO 21, SCL no GPIO 22 e GND comum; a ligação física depende dos níveis elétricos do módulo.',
+    'Use este desenho para reconhecer SDA, SCL e GND. No Wokwi, a ligação é direta. No hardware físico, siga o caminho seguro descrito na página e use adaptação de nível quando o backpack puxar SDA/SCL para 5 V.'
   );
 });
-
-function carregarContextualizacaoMbb(){
-  if(document.querySelector('script[data-mbb-contextualizacao-loader]')) return;
-  const script = document.createElement('script');
-  script.src = '../js/arduino-contextualizacao-mbb.js?v=20260911-1';
-  script.dataset.mbbContextualizacaoLoader = '1';
-  document.head.appendChild(script);
-}
-if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', carregarContextualizacaoMbb);
-else carregarContextualizacaoMbb();
 
 function carregarDestaquesMbb(){
   if(document.querySelector('script[data-mbb-arduino-destaques-loader]')) return;
