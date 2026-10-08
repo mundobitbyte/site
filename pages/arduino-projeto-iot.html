@@ -128,6 +128,7 @@
 <section class="project mbb10-panel" id="b10-2">
   <div class="projectHead"><span class="badge">10.2</span><div><h2>Arquitetura e montagem — Antes do código, desenhe o caminho</h2><p>A arquitetura mostra o papel de cada parte do sistema.</p></div></div>
   <div class="mbb10-context"><strong>Antes de integrar, separe as responsabilidades.</strong> O LDR mede, o ESP32 decide, o LED representa a iluminação e a página Web permite observar e comandar. Quando cada parte tem um papel claro, fica muito mais fácil descobrir onde está um erro.</div>
+  <p class="mbb10-warning"><strong>Placa deste projeto:</strong> continue usando a ESP32 DevKit baseada no ESP32 original / ESP32-WROOM-32 adotada desde o módulo 6. No Wokwi, escolha <strong>ESP32 DevKit v1</strong>. GPIO 34 e as observações de ADC desta etapa se referem a essa família.</p>
   <div class="circuitPanel" data-mbb-circuito="b10-2">
     <h3>Circuito físico do projeto integrador</h3>
     <figure class="circuitFigure">
@@ -151,7 +152,7 @@
   <div class="projectHead"><span class="badge">10.3</span><div><h2>Teste local — Sensor e atuador primeiro</h2><p>Uma etapa pequena produz evidência antes da integração.</p></div></div>
   <div class="mbb10-context"><strong>Se a automação local não funciona, a rede só esconde o problema.</strong> Nesta etapa você prova duas coisas sem Wi-Fi: a leitura muda quando a luz muda e o LED responde ao critério escolhido.</div>
   <div class="cards">
-    <article class="card wide"><h3>1. Primeiro teste</h3><p>Carregue o código abaixo e altere a iluminação sobre o sensor. Observe primeiro uma leitura claramente iluminada e outra claramente escura. Depois escolha <code>LIMIAR</code> entre esses dois valores.</p><p><strong>Montagem física do diagrama:</strong> mantenha <code>LEITURA_MAIOR_NO_ESCURO = false</code>. <strong>Wokwi com Photoresistor Sensor:</strong> use <code>LEITURA_MAIOR_NO_ESCURO = true</code>. Assim, o restante da lógica permanece igual nos dois ambientes.</p></article>
+    <article class="card wide"><h3>1. Primeiro teste</h3><p>Carregue o código abaixo e altere a iluminação sobre o sensor. Na ESP32 física, abra o Monitor Serial em <strong>115200</strong>; no Wokwi, o Monitor Serial acompanha automaticamente a velocidade configurada pelo programa. Observe primeiro uma leitura claramente iluminada e outra claramente escura. Depois escolha <code>LIMIAR</code> entre esses dois valores.</p><p><strong>Montagem física do diagrama:</strong> mantenha <code>LEITURA_MAIOR_NO_ESCURO = false</code>. <strong>Wokwi com Photoresistor Sensor:</strong> use <code>LEITURA_MAIOR_NO_ESCURO = true</code>. Assim, o restante da lógica permanece igual nos dois ambientes.</p></article>
     <article class="card wide code"><h3>Código completo — teste local <button type="button" onclick="copyCode('b10-local', this)">Copiar</button></h3><pre id="b10-local">const int LDR = 34;
 const int LED = 23;
 const int LIMIAR = 2000; // ajuste depois de observar claro e escuro
