@@ -1,1 +1,0 @@
-gatilho final de validação da nova figura ESP32
