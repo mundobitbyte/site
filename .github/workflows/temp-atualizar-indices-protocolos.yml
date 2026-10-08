@@ -1,0 +1,34 @@
+name: Atualizar índices temporário Protocolos
+
+on:
+  push:
+    branches:
+      - auditoria-protocolos-mbb-20261008
+    paths:
+      - '.github/workflows/temp-atualizar-indices-protocolos.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: auditoria-protocolos-mbb-20261008
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Atualizar pesquisa e visitas
+        run: |
+          node meu-mbb/atualizar-pesquisa.cjs
+          node meu-mbb/gerar-visitas.cjs
+      - name: Salvar índices e remover workflow temporário
+        run: |
+          git config user.name "Mundo bit Byte"
+          git config user.email "mundobitbyte@gmail.com"
+          git add meu-mbb/catalogo.json meu-mbb/visitas-diretas.json
+          git rm .github/workflows/temp-atualizar-indices-protocolos.yml
+          git commit -m "MbB: sincronizar índices após auditoria do módulo 8"
+          git push origin HEAD:auditoria-protocolos-mbb-20261008
