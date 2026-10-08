@@ -149,6 +149,7 @@
       }
     },
     'arduino-iot.html': {
+      integrado: true,
       hero: '.mbb7-intro',
       modulo: {titulo:'7. Internet das Coisas — por que conectar objetos?', dia:'Relógios acompanham atividade, cidades monitoram trânsito, indústrias observam máquinas e casas controlam equipamentos à distância.', problema:'Ter Wi‑Fi em um objeto não explica sozinho por que ele está conectado nem que valor os dados e comandos produzem.', uso:'Este bloco ajuda a enxergar o sistema inteiro: objeto físico, sensor ou atuador, rede, aplicação, pessoas e finalidade.'},
       itens: {
