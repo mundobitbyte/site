@@ -19,6 +19,14 @@
     ['16', 'Está pronto para entrega?', '16-esta-pronto-para-entrega.html', true],
   ];
 
+  // Recurso comum de copia dos exemplos, carregado apenas neste modulo.
+  const scriptAtual = document.currentScript;
+  if (scriptAtual?.src) {
+    const copiar = document.createElement('script');
+    copiar.src = new URL('mbb-copiar-blocos.js', scriptAtual.src).href;
+    document.head.appendChild(copiar);
+  }
+
   const nav = document.querySelector('#courseNav');
   const current = document.body.dataset.stage ?? '';
 
