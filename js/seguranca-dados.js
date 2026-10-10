@@ -18,14 +18,6 @@
     ['15','Como transformar todos esses cuidados em regras da empresa?','15-politica-seguranca.html',true],
     ['16','Projeto final — Protegendo a empresa','16-projeto-final.html',true]
   ];
-  // Recurso comum de copia dos exemplos, carregado apenas neste modulo.
-  const scriptAtual = document.currentScript;
-  if (scriptAtual?.src) {
-    const copiar = document.createElement('script');
-    copiar.src = new URL('mbb-copiar-blocos.js', scriptAtual.src).href;
-    document.head.appendChild(copiar);
-  }
-
   const nav=document.querySelector('#courseNav');
   const current=document.body.dataset.stage??'';
   if(nav){
