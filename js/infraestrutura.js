@@ -138,6 +138,43 @@
       });
     });
 
+    // MbB: botao de copia para blocos de terminal inseridos a cada aula.
+    root.querySelectorAll('.terminal-card > pre').forEach((pre) => {
+      if (pre.previousElementSibling?.classList.contains('terminal-copy-tools')) return;
+      const tools = document.createElement('div');
+      tools.className = 'terminal-copy-tools';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'terminal-copy-btn';
+      button.textContent = 'Copiar';
+      button.setAttribute('aria-label', 'Copiar texto original do terminal');
+      tools.appendChild(button);
+      pre.before(tools);
+      button.addEventListener('click', async () => {
+        const text = pre.textContent;
+        let copied = false;
+        try {
+          if (navigator.clipboard?.writeText && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            copied = true;
+          }
+        } catch (_) { /* Tenta metodo alternativo. */ }
+        if (!copied) {
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.readOnly = true;
+          area.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+          document.body.appendChild(area);
+          area.select();
+          try { copied = document.execCommand('copy'); }
+          catch (_) { copied = false; }
+          finally { area.remove(); }
+        }
+        button.textContent = copied ? 'Copiado!' : 'Nao foi possivel copiar';
+        button.classList.toggle('terminal-copy-error', !copied);
+      });
+    });
+
     root.querySelectorAll('[data-evidence-switcher]').forEach((switcher) => {
       const buttons = [...switcher.querySelectorAll('[data-evidence-view]')];
       const panels = [...switcher.querySelectorAll('[data-evidence-panel]')];
