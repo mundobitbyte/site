@@ -188,3 +188,11 @@ pre { margin: 0; padding: 15px; overflow: auto; color: #f8fafc; font-size: 13px;
   .content { padding: 0; }
   .hero, .step-card, .reference-card, .module-card { box-shadow: none; break-inside: avoid; }
 }
+
+/* MbB: blocos de codigo e sintaxe adaptados a telas estreitas. */
+@media(max-width:820px){
+  .code-wrap pre,.code-wrap pre code,.reference-card .syntax{
+    white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;min-width:0;max-width:100%;
+  }
+  .code-wrap pre{overflow-x:hidden;}
+}
