@@ -13,7 +13,7 @@
 
 
   /* Exibição e cópia de comandos: somente QTS e Segurança de Dados, sem interferir na pesquisa. */
-  if (/\\/pages\\/(?:qts|seguranca-dados)\\//.test(location.pathname)
+  if (/\/pages\/(?:qts|seguranca-dados)\//.test(location.pathname)
       && document.querySelector('.chapter .code-block > pre')
       && !document.querySelector('script[data-mbb-copiar-blocos]')) {
     const copiarComandos = document.createElement('script');
