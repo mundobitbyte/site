@@ -64,3 +64,19 @@
 .chapter > .card.question-card p,
 .chapter > .card.evidence-card p,
 .chapter > .card.next-card p{margin:4px 0 0;}
+
+/* MbB: alinhamento dos paragrafos didaticos em telas largas.
+   Textos curtos em uma linha permanecem a esquerda; listas e telas estreitas nao mudam. */
+@media (min-width: 821px) {
+  .chapter p {
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+  .chapter li p {
+    text-align: left;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+  }
+}
