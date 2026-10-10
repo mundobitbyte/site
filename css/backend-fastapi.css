@@ -139,3 +139,8 @@ button{font:inherit;touch-action:manipulation}
   .content-area{padding-left:7px;padding-right:7px}
   .lesson-content{padding-left:11px;padding-right:11px}
 }
+
+/* MbB: codigo responsivo sem alterar o conteudo enviado pelo botao Copiar. */
+@media(max-width:820px){
+  .code-block{white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;min-width:0;max-width:100%;overflow-x:hidden;}
+}
