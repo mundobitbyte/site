@@ -313,3 +313,9 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
     display:none !important;
   }
 }
+
+/* MbB: SQL legivel no celular sem alterar o texto copiado. */
+@media(max-width:720px){
+  .codebox pre,.codebox pre code{white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;min-width:0;max-width:100%;}
+  .codebox pre{overflow-x:hidden;}
+}
