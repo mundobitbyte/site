@@ -12,6 +12,16 @@
   if (!script) return;
 
 
+  /* Exibição e cópia de comandos: somente QTS e Segurança de Dados, sem interferir na pesquisa. */
+  if (/\/pages\/(?:qts|seguranca-dados)\//.test(location.pathname)
+      && document.querySelector('.chapter .code-block > pre')
+      && !document.querySelector('script[data-mbb-copiar-blocos]')) {
+    const copiarComandos = document.createElement('script');
+    copiarComandos.src = new URL('mbb-copiar-blocos.js?v=20261010-1', script.src).href;
+    copiarComandos.setAttribute('data-mbb-copiar-blocos', '1');
+    document.head.appendChild(copiarComandos);
+  }
+
   /* Regra transversal MbB: toda página pública usa a camada seletiva de legibilidade visual. */
   const visualizadorAtivo = typeof window !== 'undefined' && window.__MBB_VISUALIZADOR_SITE__;
   const visualizadorCarregando = typeof document.querySelector === 'function'

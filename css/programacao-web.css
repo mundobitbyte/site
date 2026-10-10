@@ -1918,3 +1918,11 @@ code.inline-code {
     transition: none !important;
   }
 }
+
+/* MbB: quebrar visualmente linhas longas de comandos, preservando o codigo ao copiar. */
+@media(max-width:820px){
+  .module-page pre.code-block,.module-page pre.code-block > code{
+    white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;min-width:0;max-width:100%;
+  }
+  .module-page pre.code-block{overflow-x:hidden;}
+}

@@ -1495,3 +1495,9 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
   -webkit-backdrop-filter:none !important;
   isolation:isolate !important;
 }
+
+/* MbB: linhas longas dos exemplos de codigo no celular. Diagramas nao mudam. */
+@media(max-width:720px){
+  .card.code pre,.card.code pre code{white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;min-width:0;max-width:100%;}
+  .card.code pre{overflow-x:hidden;}
+}
