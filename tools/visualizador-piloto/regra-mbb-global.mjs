@@ -75,7 +75,7 @@ async function auditarPagina(page, arquivo, modulo) {
       titulo: host.dataset.mbbTitulo || host.querySelector('img,svg')?.getAttribute('alt') || `Visual ${indice + 1}`
     }));
 
-    const riskHost = document.querySelector('.risk-scene')?.closest('.risk-scene-wrap');
+    const riskHost = document.querySelector('.risk-photo')?.closest('.risk-scene-wrap');
     const riskScene = riskHost ? {
       marcado: riskHost.dataset.mbbAmpliavel === 'grafico',
       trigger: Boolean(riskHost.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]'))

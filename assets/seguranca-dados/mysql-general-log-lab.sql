@@ -1,27 +1,32 @@
--- LABORATÓRIO LOCAL — MYSQL GENERAL QUERY LOG
--- Use apenas em ambiente de laboratório e com uma conta que possa alterar variáveis globais.
--- O general query log pode registrar conteúdo de consultas e gerar volume significativo.
+-- MBB: exercício de log (APENAS MySQL de laboratório isolado).
+-- Altera variáveis globais e requer permissão; NÃO execute em produção.
+-- Execute na mesma conexão; em caso de erro, rode a restauração final.
 
--- 1) Confira o estado atual.
-SHOW VARIABLES LIKE 'general_log';
-SHOW VARIABLES LIKE 'log_output';
+-- Salve o estado inicial no MySQL ISOLADO de laboratório (mesma conexão).
+SET @mbb_general_original = @@GLOBAL.general_log;
+SET @mbb_saida_original = @@GLOBAL.log_output;
+SELECT @mbb_general_original AS log_anterior,
+       @mbb_saida_original AS saida_anterior;
 
--- 2) Registre temporariamente em tabela para facilitar a observação.
+-- Somente em laboratório isolado e com autorização:
+SET GLOBAL general_log = 'OFF';
 SET GLOBAL log_output = 'TABLE';
 SET GLOBAL general_log = 'ON';
 
--- 3) Gere algumas consultas conhecidas.
 SELECT NOW();
 SELECT 'Mundo bit Byte' AS origem;
 
--- 4) Observe registros recentes.
 SELECT event_time, user_host, command_type, argument
 FROM mysql.general_log
 ORDER BY event_time DESC
 LIMIT 20;
 
--- 5) ENCERRAMENTO OBRIGATÓRIO DO LABORATÓRIO.
+-- RESTAURAÇÃO OBRIGATÓRIA: execute na mesma conexão,
+-- inclusive se algum comando de observação falhar.
 SET GLOBAL general_log = 'OFF';
+SET GLOBAL log_output = @mbb_saida_original;
+SET GLOBAL general_log = @mbb_general_original;
 
--- 6) Confirme que foi desligado.
+-- Confira os valores com os do primeiro SELECT.
 SHOW VARIABLES LIKE 'general_log';
+SHOW VARIABLES LIKE 'log_output';
