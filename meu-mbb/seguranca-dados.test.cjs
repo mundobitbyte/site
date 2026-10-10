@@ -43,7 +43,7 @@ test('Home apresenta Segurança da Informação como área própria', () => {
 test('projeto final contém a atividade visual encontre os riscos', () => {
   const html = fs.readFileSync(path.join(raiz, 'pages/seguranca-dados/16-projeto-final.html'), 'utf8');
   assert.match(html, /Atividade visual — encontre os riscos de segurança/);
-  assert.match(html, /pessoa do lado de fora/i);
-  assert.match(html, /crachá virado/i);
-  assert.match(html, /senha escrita e colada no monitor/i);
+  assert.match(html, /Visitante na sala de servidores/i);
+  assert.match(html, /crachá de visitante/i);
+  assert.match(html, /Senha no post-it/i);
 });
