@@ -1666,6 +1666,45 @@ function renderStep() {
       <button type="button" id="nextStep" ${nextDisabled ? 'disabled' : ''}>Próxima →</button>
     </div>`;
 
+  // Copia o texto original dos exemplos, mesmo quando quebrado visualmente no celular.
+  lesson.querySelectorAll('pre.command').forEach(pre => {
+    if (pre.parentElement?.classList.contains('command-copy-wrap')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'command-copy-wrap';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'command-copy-button';
+    button.textContent = 'Copiar';
+    button.setAttribute('aria-label', 'Copiar conteúdo do bloco');
+    wrap.insertBefore(button, pre);
+    button.addEventListener('click', async () => {
+      const original = pre.textContent;
+      let ok = false;
+      try {
+        if (navigator.clipboard?.writeText && window.isSecureContext) {
+          await navigator.clipboard.writeText(original);
+          ok = true;
+        } else {
+          const temp = document.createElement('textarea');
+          temp.value = original;
+          temp.style.cssText = 'position:fixed;left:-9999px;opacity:0';
+          document.body.appendChild(temp);
+          temp.select();
+          ok = document.execCommand('copy');
+          temp.remove();
+        }
+      } catch (_) { ok = false; }
+      button.textContent = ok ? 'Copiado!' : 'Não foi possível copiar';
+      button.classList.toggle('copy-error', !ok);
+      setTimeout(() => { if (button.isConnected) {
+        button.textContent = 'Copiar';
+        button.classList.remove('copy-error');
+      } }, 2000);
+    });
+  });
+
   lesson.scrollTop = 0;
 
   const prev = document.getElementById('prevStep');
