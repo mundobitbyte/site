@@ -75,7 +75,7 @@ document.addEventListener('click', function(e){
   const box = btn.closest('.codebox');
   const code = box ? box.querySelector('code') : null;
   if(!code) return;
-  navigator.clipboard.writeText(code.textContent).then(function(){
+  navigator.clipboard.writeText(code.innerText).then(function(){
     const old = btn.innerText;
     btn.innerText = 'Copiado!';
     btn.classList.add('copied');
