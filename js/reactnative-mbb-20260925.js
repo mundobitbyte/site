@@ -93,11 +93,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    gap: 8,
+    gap: 8
   },
   titulo: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
 });`,
         addedTitle: 'Por que isso existe?',
@@ -142,11 +142,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    gap: 8,
+    gap: 8
   },
   titulo: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
 });`,
         addedTitle: 'A expressão responde a uma necessidade',
@@ -189,12 +189,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: 24
   },
   titulo: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
 });`,
         addedTitle: 'Primeiro a pergunta, depois o comando',
@@ -237,12 +237,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: 24
   },
   titulo: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
 });`,
         addedTitle: 'Função = tarefa com nome',
@@ -283,12 +283,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: 24
   },
   titulo: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
 });`,
         addedTitle: 'Duas escritas que você verá muitas vezes',
@@ -331,11 +331,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    gap: 8,
+    gap: 8
   },
   titulo: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
 });`,
         addedTitle: 'Por que objeto?',
@@ -374,11 +374,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    gap: 8,
+    gap: 8
   },
   titulo: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
 });`,
         addedTitle: 'Coleção em uma única estrutura',
@@ -423,11 +423,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    gap: 8,
+    gap: 8
   },
   titulo: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
 });`,
         addedTitle: 'Estrutura que aparece em aplicativos reais',
@@ -469,12 +469,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: 24
   },
   titulo: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
 });`,
         addedTitle: 'O map() percorre e devolve',
@@ -518,12 +518,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: 24
   },
   titulo: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
 });`,
         addedTitle: 'A estrutura já existe; só estamos lendo melhor',
@@ -564,11 +564,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    gap: 8,
+    gap: 8
   },
   titulo: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
 });`,
         addedTitle: 'Copiar e alterar em vez de destruir',
