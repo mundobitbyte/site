@@ -36,11 +36,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    gap: 8,
+    gap: 8
   },
   titulo: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
 });`;
     dados.added = `A Agenda precisa lembrar informações.
@@ -93,11 +93,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    gap: 8,
+    gap: 8
   },
   titulo: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
 });`;
     expressoes.addedTitle = 'A conta aparece porque existe uma pergunta';
@@ -150,12 +150,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: 24
   },
   titulo: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
 });`;
     decisao.addedTitle = 'Agora a comparação é necessária';
