@@ -90,8 +90,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, gap: 8 },
-  titulo: { fontSize: 22, fontWeight: 'bold' },
+  container: {
+    flex: 1,
+    padding: 24,
+    gap: 8,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
 });`,
         addedTitle: 'Por que isso existe?',
         added: `A Agenda precisa lembrar informações.
@@ -132,8 +139,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, gap: 8 },
-  titulo: { fontSize: 22, fontWeight: 'bold' },
+  container: {
+    flex: 1,
+    padding: 24,
+    gap: 8,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
 });`,
         addedTitle: 'A expressão responde a uma necessidade',
         added: `limite - quantidade
@@ -173,8 +187,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24 },
-  titulo: { fontSize: 22, fontWeight: 'bold', marginBottom: 8 },
+  container: {
+    flex: 1,
+    padding: 24,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
 });`,
         addedTitle: 'Primeiro a pergunta, depois o comando',
         added: `Problema:
@@ -214,8 +235,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24 },
-  titulo: { fontSize: 22, fontWeight: 'bold', marginBottom: 8 },
+  container: {
+    flex: 1,
+    padding: 24,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
 });`,
         addedTitle: 'Função = tarefa com nome',
         added: `montarResumo(...)
@@ -253,8 +281,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24 },
-  titulo: { fontSize: 22, fontWeight: 'bold', marginBottom: 8 },
+  container: {
+    flex: 1,
+    padding: 24,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
 });`,
         addedTitle: 'Duas escritas que você verá muitas vezes',
         added: `nomeContato => ...
@@ -293,8 +328,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, gap: 8 },
-  titulo: { fontSize: 22, fontWeight: 'bold' },
+  container: {
+    flex: 1,
+    padding: 24,
+    gap: 8,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
 });`,
         addedTitle: 'Por que objeto?',
         added: `Antes, nome e telefone estavam soltos.
@@ -329,8 +371,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, gap: 8 },
-  titulo: { fontSize: 22, fontWeight: 'bold' },
+  container: {
+    flex: 1,
+    padding: 24,
+    gap: 8,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
 });`,
         addedTitle: 'Coleção em uma única estrutura',
         added: `['Ana', 'Bruno', 'Carla']
@@ -371,8 +420,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, gap: 8 },
-  titulo: { fontSize: 22, fontWeight: 'bold' },
+  container: {
+    flex: 1,
+    padding: 24,
+    gap: 8,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
 });`,
         addedTitle: 'Estrutura que aparece em aplicativos reais',
         added: `contatos
@@ -411,8 +467,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24 },
-  titulo: { fontSize: 22, fontWeight: 'bold', marginBottom: 8 },
+  container: {
+    flex: 1,
+    padding: 24,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
 });`,
         addedTitle: 'O map() percorre e devolve',
         added: `contatos.map(...)
@@ -453,8 +516,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24 },
-  titulo: { fontSize: 22, fontWeight: 'bold', marginBottom: 8 },
+  container: {
+    flex: 1,
+    padding: 24,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
 });`,
         addedTitle: 'A estrutura já existe; só estamos lendo melhor',
         added: `const { nome, telefone } = contato;
@@ -491,8 +561,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, gap: 8 },
-  titulo: { fontSize: 22, fontWeight: 'bold' },
+  container: {
+    flex: 1,
+    padding: 24,
+    gap: 8,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
 });`,
         addedTitle: 'Copiar e alterar em vez de destruir',
         added: `{ ...contato, favorito: true }
