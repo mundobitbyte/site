@@ -228,12 +228,12 @@ agora usamos os mesmos dados para tomar uma decisão.`;
   const montarCodigoVisual = (logica, render, usaLinha = true, usaDestaque = false) => {
     const estilos = [
       "const styles = StyleSheet.create({",
-      "  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 18, backgroundColor: '#f3f7fc' },",
-      "  card: { width: '88%', maxWidth: 290, backgroundColor: '#ffffff', borderWidth: 1, borderColor: '#cbd5e1', borderRadius: 16, padding: 18, shadowColor: '#0f172a', shadowOpacity: 0.10, shadowRadius: 12, shadowOffset: { width: 0, height: 8 }, elevation: 4 },",
-      "  titulo: { fontSize: 20, fontWeight: '900', color: '#0f3f86', marginBottom: 12 },",
+      "  container: {\n    flex: 1,\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 18,\n    backgroundColor: '#f3f7fc'\n  },",
+      "  card: {\n    width: '88%',\n    maxWidth: 290,\n    backgroundColor: '#ffffff',\n    borderWidth: 1,\n    borderColor: '#cbd5e1',\n    borderRadius: 16,\n    padding: 18,\n    shadowColor: '#0f172a',\n    shadowOpacity: 0.10,\n    shadowRadius: 12,\n    shadowOffset: { width: 0,\n    height: 8 },\n    elevation: 4\n  },",
+      "  titulo: {\n    fontSize: 20,\n    fontWeight: '900',\n    color: '#0f3f86',\n    marginBottom: 12\n  },",
     ];
-    if (usaLinha) estilos.push("  linha: { fontSize: 14, color: '#334155', lineHeight: 21, marginVertical: 3 },");
-    if (usaDestaque) estilos.push("  destaque: { alignSelf: 'stretch', marginTop: 12, paddingVertical: 8, paddingHorizontal: 10, borderRadius: 9, backgroundColor: '#eff6ff', color: '#0f4a9c', fontSize: 13, fontWeight: '800' },");
+    if (usaLinha) estilos.push("  linha: {\n    fontSize: 14,\n    color: '#334155',\n    lineHeight: 21,\n    marginVertical: 3\n  },");
+    if (usaDestaque) estilos.push("  destaque: {\n    alignSelf: 'stretch',\n    marginTop: 12,\n    paddingVertical: 8,\n    paddingHorizontal: 10,\n    borderRadius: 9,\n    backgroundColor: '#eff6ff',\n    color: '#0f4a9c',\n    fontSize: 13,\n    fontWeight: '800'\n  },");
     estilos.push("});");
 
     return [
