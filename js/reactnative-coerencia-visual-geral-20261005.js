@@ -93,7 +93,10 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 18, lineHeight: 32 },
+  linha: {
+    fontSize: 18,
+    lineHeight: 32
+  },
   rotulo: { fontWeight: 'bold' },
 });`);
 
@@ -122,7 +125,10 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 18, lineHeight: 32 },
+  linha: {
+    fontSize: 18,
+    lineHeight: 32
+  },
   destaque: { fontWeight: 'bold' },
 });`);
 
@@ -154,7 +160,10 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 17, lineHeight: 34 },
+  linha: {
+    fontSize: 17,
+    lineHeight: 34
+  },
 });`);
 
   setCode('javascriptEssencial', 'js-filter-find', `import React from 'react';
@@ -185,7 +194,10 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 18, lineHeight: 32 },
+  linha: {
+    fontSize: 18,
+    lineHeight: 32
+  },
   rotulo: { fontWeight: 'bold' },
 });`);
 
@@ -213,7 +225,10 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 18, lineHeight: 32 },
+  linha: {
+    fontSize: 18,
+    lineHeight: 32
+  },
   destaque: { fontWeight: 'bold' },
 });`);
 
@@ -245,7 +260,10 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 17, lineHeight: 32 },
+  linha: {
+    fontSize: 17,
+    lineHeight: 32
+  },
 });`);
 
   setCode('javascriptEssencial', 'js-async', `import React, { useState } from 'react';
@@ -287,7 +305,10 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  area: { width: 220, alignItems: 'stretch' },
+  area: {
+    width: 220,
+    alignItems: 'stretch'
+  },
   botao: {
     padding: 10,
     borderRadius: 5,
