@@ -26,7 +26,7 @@
 <section class="code-card card" id="codeCard" style="display:none !important;">
 <div class="panel-title">
 <span>Código completo — App.js</span>
-<button class="btn-copy" onclick="copyText('fullCode')">Copiar</button>
+<button class="btn-copy" onclick="copyText('fullCode'); const botao = this; clearTimeout(botao._mbbCopiarTimer); botao.textContent = 'Copiado!'; botao._mbbCopiarTimer = setTimeout(() => { botao.textContent = 'Copiar'; }, 1500)">Copiar</button>
 </div>
 <pre id="fullCode"></pre>
 </section>
@@ -55,7 +55,7 @@
 <aside class="side-bottom" id="noteWrap" style="display:grid !important;"><div class="note" id="note"><strong>Observação:</strong> Nesta introdução, o foco é entender a lógica estrutural das interfaces: componentes, containers, estilos e caixas dentro de caixas.</div></aside>
 </section>
 <section class="new-code card" id="newCodeCard" style="display:none !important;">
-<div class="panel-title"><span>O que foi adicionado</span><button class="btn-copy" onclick="copyText('newCode')">Copiar</button></div>
+<div class="panel-title"><span>O que foi adicionado</span><button class="btn-copy" onclick="copyText('newCode'); const botao = this; clearTimeout(botao._mbbCopiarTimer); botao.textContent = 'Copiado!'; botao._mbbCopiarTimer = setTimeout(() => { botao.textContent = 'Copiar'; }, 1500)">Copiar</button></div>
 <pre id="newCode"></pre>
 </section>
 <section class="intro-view" id="introView">
