@@ -93,6 +93,10 @@
         display: block !important;
         min-height: 0 !important;
         height: auto !important;
+        /* O roteiro também é exibido como grid por uma camada anterior.
+         * Nesse caso, a linha precisa acompanhar todo o conteúdo. */
+        grid-template-rows: max-content !important;
+        align-content: start !important;
         overflow: visible !important;
       }
 
@@ -100,6 +104,9 @@
         position: relative;
         min-height: 0 !important;
         height: auto !important;
+        /* Sobrescreve o max-height da .note genérica (74/110/140px).
+         * Sem isso, os cartões longos vazam sobre os próximos painéis. */
+        max-height: none !important;
         overflow: visible !important;
         padding: 44px 16px 18px !important;
       }
