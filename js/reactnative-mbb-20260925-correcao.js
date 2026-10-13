@@ -229,7 +229,7 @@ agora usamos os mesmos dados para tomar uma decisão.`;
     const estilos = [
       "const styles = StyleSheet.create({",
       "  container: {\n    flex: 1,\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 18,\n    backgroundColor: '#f3f7fc'\n  },",
-      "  card: {\n    width: '88%',\n    maxWidth: 290,\n    backgroundColor: '#ffffff',\n    borderWidth: 1,\n    borderColor: '#cbd5e1',\n    borderRadius: 16,\n    padding: 18,\n    shadowColor: '#0f172a',\n    shadowOpacity: 0.10,\n    shadowRadius: 12,\n    shadowOffset: { width: 0,\n    height: 8 },\n    elevation: 4\n  },",
+      "  card: {\n    width: '88%',\n    maxWidth: 290,\n    backgroundColor: '#ffffff',\n    borderWidth: 1,\n    borderColor: '#cbd5e1',\n    borderRadius: 16,\n    padding: 18,\n    shadowColor: '#0f172a',\n    shadowOpacity: 0.10,\n    shadowRadius: 12,\n    shadowOffset: {\n      width: 0,\n      height: 8\n    },\n    elevation: 4\n  },",
       "  titulo: {\n    fontSize: 20,\n    fontWeight: '900',\n    color: '#0f3f86',\n    marginBottom: 12\n  },",
     ];
     if (usaLinha) estilos.push("  linha: {\n    fontSize: 14,\n    color: '#334155',\n    lineHeight: 21,\n    marginVertical: 3\n  },");
