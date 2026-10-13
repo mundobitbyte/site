@@ -62,7 +62,9 @@ const styles = StyleSheet.create({
     lineHeight: 29,
     color: '#1E293B',
   },
-  rotulo: { fontWeight: 'bold' },
+  rotulo: {
+    fontWeight: 'bold',
+  },
 });`);
 
   setCode('javascriptEssencial', 'js-condicoes', `import React from 'react';
@@ -93,8 +95,13 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 18, lineHeight: 32 },
-  rotulo: { fontWeight: 'bold' },
+  linha: {
+    fontSize: 18,
+    lineHeight: 32,
+  },
+  rotulo: {
+    fontWeight: 'bold',
+  },
 });`);
 
   setCode('javascriptEssencial', 'js-funcoes', `import React from 'react';
@@ -122,8 +129,13 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 18, lineHeight: 32 },
-  destaque: { fontWeight: 'bold' },
+  linha: {
+    fontSize: 18,
+    lineHeight: 32,
+  },
+  destaque: {
+    fontWeight: 'bold',
+  },
 });`);
 
   setCode('javascriptEssencial', 'js-arrays', `import React from 'react';
@@ -154,7 +166,10 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 17, lineHeight: 34 },
+  linha: {
+    fontSize: 17,
+    lineHeight: 34,
+  },
 });`);
 
   setCode('javascriptEssencial', 'js-filter-find', `import React from 'react';
@@ -185,8 +200,13 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 18, lineHeight: 32 },
-  rotulo: { fontWeight: 'bold' },
+  linha: {
+    fontSize: 18,
+    lineHeight: 32,
+  },
+  rotulo: {
+    fontWeight: 'bold',
+  },
 });`);
 
   setCode('javascriptEssencial', 'js-destructuring', `import React from 'react';
@@ -213,8 +233,13 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 18, lineHeight: 32 },
-  destaque: { fontWeight: 'bold' },
+  linha: {
+    fontSize: 18,
+    lineHeight: 32,
+  },
+  destaque: {
+    fontWeight: 'bold',
+  },
 });`);
 
   setCode('javascriptEssencial', 'js-operadores', `import React from 'react';
@@ -245,7 +270,10 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  linha: { fontSize: 17, lineHeight: 32 },
+  linha: {
+    fontSize: 17,
+    lineHeight: 32,
+  },
 });`);
 
   setCode('javascriptEssencial', 'js-async', `import React, { useState } from 'react';
@@ -287,7 +315,10 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#FFFFFF',
   },
-  area: { width: 220, alignItems: 'stretch' },
+  area: {
+    width: 220,
+    alignItems: 'stretch',
+  },
   botao: {
     padding: 10,
     borderRadius: 5,
