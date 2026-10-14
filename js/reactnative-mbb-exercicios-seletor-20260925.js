@@ -123,7 +123,7 @@
     padding:8px 0 12px;
     background:#ffffff;
     border-bottom:1px solid #cbd5e1;
-    box-shadow:0 5px 10px rgba(15,23,42,.07);
+    box-shadow:0 -32px 0 0 #ffffff, 0 5px 10px rgba(15,23,42,.07);
   }
   #mbb-exercise-switcher .mbb-exercise-tabs{
     display:flex;
