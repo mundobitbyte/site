@@ -67,6 +67,27 @@
     }
   `;
 
+  /* Correção de ordem, não de aparência: usa o preview original da etapa.
+     No celular, a prévia aparece imediatamente após o código completo. */
+  style.textContent += `
+    @media (max-width: 720px) {
+      body.nav-mbb-navigation-responsive #workspace.nav-mbb-readable-workspace #codeCard {
+        order: 1 !important;
+      }
+      body.nav-mbb-navigation-responsive #workspace.nav-mbb-readable-workspace #resultCard {
+        order: 2 !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      body.nav-mbb-navigation-responsive #workspace.nav-mbb-readable-workspace #newCodeCard {
+        order: 3 !important;
+      }
+      body.nav-mbb-navigation-responsive #workspace.nav-mbb-readable-workspace #noteWrap {
+        order: 4 !important;
+      }
+    }
+  `;
+
   document.head.appendChild(style);
 })();
 
