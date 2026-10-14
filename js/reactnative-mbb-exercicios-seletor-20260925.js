@@ -115,12 +115,15 @@
   exercise.html = `
 <style>
   #mbb-exercise-switcher{
-    position:relative;
-    top:auto;
-    z-index:auto;
+    position:sticky;
+    top:0;
+    z-index:100;
+    isolation:isolate;
     margin:0 0 14px;
-    padding:8px 0 0;
-    background:linear-gradient(180deg,#fff 0%,#fff 82%,rgba(255,255,255,.94) 100%);
+    padding:8px 0 12px;
+    background:#ffffff;
+    border-bottom:1px solid #cbd5e1;
+    box-shadow:0 5px 10px rgba(15,23,42,.07);
   }
   #mbb-exercise-switcher .mbb-exercise-tabs{
     display:flex;
