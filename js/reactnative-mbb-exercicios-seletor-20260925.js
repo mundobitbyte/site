@@ -115,9 +115,9 @@
   exercise.html = `
 <style>
   #mbb-exercise-switcher{
-    position:sticky;
-    top:0;
-    z-index:20;
+    position:relative;
+    top:auto;
+    z-index:auto;
     margin:0 0 14px;
     padding:8px 0 0;
     background:linear-gradient(180deg,#fff 0%,#fff 82%,rgba(255,255,255,.94) 100%);
