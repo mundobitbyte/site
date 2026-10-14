@@ -463,7 +463,7 @@
 
     panel.addEventListener('click',event=>{
       const routeButton=event.target.closest('[data-go]');
-      if(routeButton && panel.contains(routeButton)){
+      if(routeButton){
         // O listener da navegação, registrado antes deste, já tratou a troca.
         enableActions();
         return;
