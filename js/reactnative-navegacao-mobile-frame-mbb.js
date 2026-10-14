@@ -105,7 +105,7 @@
     if (document.getElementById(SELECTOR_ID)) return;
     const selector = document.createElement('script');
     selector.id = SELECTOR_ID;
-    selector.src = '../js/reactnative-mbb-exercicios-seletor-20260925.js?v=20261014-abas-sem-sobreposicao';
+    selector.src = '../js/reactnative-mbb-exercicios-seletor-20260925.js?v=20261014-abas-fixas-opacas';
     selector.async = false;
     document.body.appendChild(selector);
   };
