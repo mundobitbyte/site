@@ -316,3 +316,194 @@
   const initial = currentStep();
   if (initial) sync(initial.id);
 })();
+
+
+/* MbB — respostas ilustrativas dentro das prévias existentes (CEP, Dólar e Clima).
+   Extensão estritamente visual. Não modifica step.code, step.preview, API ou CSS global.
+   Mantém a moldura, as cores e os controles que o aluno já conhece.
+*/
+(() => {
+  'use strict';
+  const STYLE_ID = 'mbb-nav-demo-respostas-css';
+  const DEMO_STEP = 'nav-cep-completo';
+  const SPECIAL_STEPS = new Set(['nav-dolar', 'nav-clima', 'nav-projeto-final']);
+  const DATA = {
+    cep: { rows: ['Cidade: São Paulo', 'Estado: SP'], caption: 'Exemplo ilustrativo: CEP 01001-000.' },
+    dolar: { rows: ['Atual: R$ 5,20', 'Máxima: R$ 5,25', 'Mínima: R$ 5,16'], caption: 'Exemplo ilustrativo: valores fictícios, não cotação atual.' },
+    clima: { rows: ['Temperatura: 24 °C', 'Vento: 11 km/h'], caption: 'Exemplo ilustrativo: valores fictícios para São Paulo.' }
+  };
+  if (document.getElementById(STYLE_ID)) return;
+
+  const css=document.createElement('style');
+  css.id=STYLE_ID;
+  css.textContent = [
+    '.mbb-nav-fiel-result{margin-top:20px;padding:16px;border-radius:12px;color:#0f172a}',
+    '.mbb-nav-fiel-result.is-cep{background:#E0F2FE}',
+    '.mbb-nav-fiel-result.is-dolar{background:#DCFCE7}',
+    '.mbb-nav-fiel-result.is-clima{background:#FEF3C7}',
+    '.mbb-nav-fiel-result-line{margin:0 0 6px;font:normal 18px/1.42 Arial,sans-serif;color:#0f172a}',
+    '.mbb-nav-fiel-demo-caption{margin:9px 0 0;font:12px/1.45 Arial,sans-serif;color:#475569}',
+    '#preview .mbb-nav-cep-result{margin-top:20px;padding:16px;border-radius:12px;background:#E0F2FE;color:#0f172a}',
+    '#preview .mbb-nav-cep-result-line{margin:0 0 6px;font:normal 18px/1.42 Arial,sans-serif;color:#0f172a}',
+    '#preview .mbb-nav-cep-caption{margin:9px 0 0;font:12px/1.45 Arial,sans-serif;color:#475569}',
+    '#preview [data-mbb-cep-demo]{cursor:pointer;touch-action:manipulation}',
+    '.mbb-nav-fiel [data-mbb-demo-action]{cursor:pointer;touch-action:manipulation}'
+  ].join('\n');
+  document.head.appendChild(css);
+
+  function activeStepId(){
+    if (typeof currentModuleKey === 'undefined' || currentModuleKey !== 'navegacao') return null;
+    const active=document.querySelector('#menu .nav-btn.active');
+    const prefix='btn-navegacao-';
+    return active?.id?.startsWith(prefix) ? active.id.slice(prefix.length) : null;
+  }
+
+  function part(tag,cls,text){
+    const el=document.createElement(tag);
+    if(cls) el.className=cls;
+    if(text!==undefined) el.textContent=text;
+    return el;
+  }
+
+  function resultBlock(kind,compact){
+    const data=DATA[kind];
+    const box=part('div',compact ? 'mbb-nav-cep-result' : 'mbb-nav-fiel-result is-'+kind);
+    box.setAttribute('aria-label','Exemplo ilustrativo do resultado');
+    box.setAttribute('role','status');
+    data.rows.forEach(row=>{
+      box.appendChild(part('p',compact ? 'mbb-nav-cep-result-line' : 'mbb-nav-fiel-result-line',row));
+    });
+    const caption=part('p',compact ? 'mbb-nav-cep-caption' : 'mbb-nav-fiel-demo-caption',data.caption);
+    box.appendChild(caption);
+    return box;
+  }
+
+  // Etapa 7 — mantém a visualização do Snack já existente, em vez de desenhar outra.
+  function setupCep(){
+    if(activeStepId()!==DEMO_STEP) return;
+    const preview=document.getElementById('preview');
+    if(!preview) return;
+    const all=Array.from(preview.querySelectorAll('div'));
+    const exact=t=>all.find(el=>el.textContent.trim()===t && el.children.length===0);
+    const search=exact('Pesquisar');
+    const clear=exact('Limpar');
+    const placeholder=exact('Digite o CEP');
+    if(!search || !clear || !placeholder || search.parentElement!==clear.parentElement) return;
+    search.dataset.mbbCepDemo='pesquisar';
+    clear.dataset.mbbCepDemo='limpar';
+    placeholder.dataset.mbbCepField='1';
+    [search,clear].forEach(el=>{
+      el.setAttribute('role','button');
+      el.setAttribute('tabindex','0');
+      el.setAttribute('aria-label',el.textContent.trim()+' (demonstração ilustrativa)');
+    });
+    if(preview.dataset.mbbCepDemoBound==='1') return;
+    preview.dataset.mbbCepDemoBound='1';
+
+    function respond(action){
+      if(activeStepId()!==DEMO_STEP) return;
+      const actions=preview.querySelector('[data-mbb-cep-demo="pesquisar"]')?.parentElement;
+      const field=preview.querySelector('[data-mbb-cep-field]');
+      if(!actions || !field) return;
+      const old=preview.querySelector('.mbb-nav-cep-result');
+      if(old) old.remove();
+      if(action==='limpar'){
+        field.textContent='Digite o CEP';
+        field.style.color='#94a3b8';
+        return;
+      }
+      field.textContent='01001-000';
+      field.style.color='#0f172a';
+      actions.insertAdjacentElement('afterend',resultBlock('cep',true));
+    }
+
+    preview.addEventListener('click',event=>{
+      const t=event.target.closest('[data-mbb-cep-demo]');
+      if(t && preview.contains(t)) respond(t.dataset.mbbCepDemo);
+    });
+    preview.addEventListener('keydown',event=>{
+      if(event.key!=='Enter' && event.key!==' ') return;
+      const t=event.target.closest('[data-mbb-cep-demo]');
+      if(t && preview.contains(t)){
+        event.preventDefault();
+        respond(t.dataset.mbbCepDemo);
+      }
+    });
+  }
+
+  // Etapas 8–10 — utiliza a moldura e os componentes já existentes no site.
+  function setupSpecial(){
+    if(!SPECIAL_STEPS.has(activeStepId())) return;
+    const panel=document.querySelector('#introView .mbb-nav-fiel');
+    if(!panel) return;
+
+    function enableActions(){
+      const actions=panel.querySelector('.mbb-nav-fiel-actions');
+      if(!actions) return;
+      const buttons=Array.from(actions.querySelectorAll('button'));
+      if(buttons.length!==2) return;
+      const [consult,clear]=buttons;
+      consult.disabled=false;
+      clear.disabled=false;
+      consult.dataset.mbbDemoAction='consultar';
+      clear.dataset.mbbDemoAction='limpar';
+      consult.title='Mostrar exemplo ilustrativo; consultas reais são feitas no Snack';
+      clear.title='Limpar a demonstração';
+    }
+
+    // Ao trocar de serviço, a função original já recria sua tela.
+    // Nossa rotina só habilita os dois botões recém-criados.
+    enableActions();
+    const foot=panel.querySelector('.mbb-nav-fiel-foot');
+    if(foot){
+      foot.textContent='Resultados de exemplo nesta prévia. Para dados reais, execute as consultas no Snack.';
+    }
+    if(panel.dataset.mbbDemoBound==='1') return;
+    panel.dataset.mbbDemoBound='1';
+
+    panel.addEventListener('click',event=>{
+      const routeButton=event.target.closest('[data-go]');
+      if(routeButton && panel.contains(routeButton)){
+        // O listener da navegação, registrado antes deste, já tratou a troca.
+        enableActions();
+        return;
+      }
+      const target=event.target.closest('[data-mbb-demo-action]');
+      if(!target || !panel.contains(target)) return;
+      const body=panel.querySelector('.mbb-nav-fiel-body');
+      if(!body) return;
+      const heading=body.querySelector('.mbb-nav-fiel-h2')?.textContent?.trim();
+      const kind=heading==='Busca CEP'?'cep'
+        :heading==='Cotação do Dólar'?'dolar'
+        :heading==='Clima Atual'?'clima':null;
+      if(!kind) return;
+      body.querySelector('.mbb-nav-fiel-result')?.remove();
+      if(kind==='cep'){
+        const field=body.querySelector('.mbb-nav-fiel-input');
+        if(field){
+          field.textContent=target.dataset.mbbDemoAction==='limpar'?'Digite o CEP':'01001-000';
+          field.style.color=target.dataset.mbbDemoAction==='limpar'?'#94a3b8':'#0f172a';
+        }
+      }
+      if(target.dataset.mbbDemoAction==='consultar'){
+        body.appendChild(resultBlock(kind,false));
+      }
+    });
+  }
+
+  function sync(){
+    const id=activeStepId();
+    if(id===DEMO_STEP) setupCep();
+    else if(SPECIAL_STEPS.has(id)) setupSpecial();
+  }
+
+  if(typeof showStep==='function'){
+    const previous=showStep;
+    showStep=function mbbNavDemoDeResultados(id){
+      const result=previous.apply(this,arguments);
+      sync();
+      return result;
+    };
+  }
+  sync();
+})();
