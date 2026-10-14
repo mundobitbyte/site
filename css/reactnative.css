@@ -4382,3 +4382,15 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
     display:none !important;
   }
 }
+
+
+/* JS Essencial, etapas práticas 1–11: posicionar o celular no topo da coluna
+   somente no desktop. Preserva a centralização horizontal e todos os outros módulos. */
+@media (min-width: 1051px) {
+  body:has(#module-javascriptEssencial.active):has(
+    #menu .nav-btn.active[id^="btn-javascriptEssencial-js-"]:not(#btn-javascriptEssencial-js-intro-mbb):not(#btn-javascriptEssencial-js-ponte-react-mbb):not(#btn-javascriptEssencial-js-exercicios-mbb)
+  ) #workspace #resultCard .preview-area {
+    align-items: flex-start !important;
+    padding-top: 16px !important;
+  }
+}
