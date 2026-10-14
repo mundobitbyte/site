@@ -27,7 +27,14 @@
   function hideEmptyCodeCard(id) {
     const step = getStep(id);
     const hasCode = Boolean(step && typeof step.code === 'string' && step.code.trim().length > 0);
-    if (hasCode) return;
+    // Flexbox Visual guarda os códigos em choices, não em step.code.
+    // Não esconder os quadros Antes/Depois preenchidos por renderFlexChoice().
+    const hasFlexLabCode = Boolean(
+      step?.flexLab &&
+      Array.isArray(step.choices) &&
+      step.choices.some(choice => typeof choice.code === 'string' && choice.code.trim().length > 0)
+    );
+    if (hasCode || hasFlexLabCode) return;
 
     const codeCard = document.getElementById('codeCard');
     if (codeCard) codeCard.style.setProperty('display', 'none', 'important');
