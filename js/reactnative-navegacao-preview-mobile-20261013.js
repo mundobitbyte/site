@@ -165,3 +165,156 @@
   if(active && active.id.startsWith('btn-navegacao-'))
     refresh(active.id.slice('btn-navegacao-'.length));
 })();
+
+
+/* MbB — restauração efetiva das prévias de navegação 1–7 em celulares.
+   O painel legado é substituído no telefone por uma área independente:
+   isso evita as regras sobrepostas de display/visibility do resultCard.
+   As prévias aproveitam step.preview, sem modificar o código das aulas.
+*/
+(() => {
+  'use strict';
+
+  const STYLE_ID = 'mbb-nav-operational-mobile-preview-20261013';
+  const PREVIEW_CLASS = 'mbb-nav-operational-mobile-preview';
+  const previewSteps = new Set([
+    'nav-dependencias',
+    'nav-primeiro-app',
+    'nav-criar-inicio',
+    'nav-criar-cep-base',
+    'nav-organizar-app',
+    'nav-cep-completo'
+  ]);
+
+  const labels = {
+    'nav-dependencias': 'Esquema da preparação no Snack',
+    'nav-primeiro-app': 'Tela do aplicativo no Snack',
+    'nav-criar-inicio': 'Esquema da etapa — Inicio.js preparado',
+    'nav-criar-cep-base': 'Esquema da etapa — BuscaCep.js preparado',
+    'nav-organizar-app': 'Tela após organizar os arquivos',
+    'nav-cep-completo': 'Tela após abrir Busca CEP',
+    'nav-modelo-mental': 'Exemplo visual — primeira navegação'
+  };
+
+  const style = document.createElement('style');
+  style.id = STYLE_ID;
+  style.textContent = [
+    '@media (max-width: 720px) {',
+    '.' + PREVIEW_CLASS + ' {order:2!important;flex:0 0 auto!important;display:block!important;position:relative!important;visibility:visible!important;opacity:1!important;box-sizing:border-box!important;width:100%!important;min-width:0!important;height:auto!important;margin:0 0 12px!important;padding:12px 8px 16px!important;overflow:visible!important;background:#f4f8ff!important;border:1px solid #c7d8ed!important;border-radius:12px!important;color:#132033!important}',
+    '.' + PREVIEW_CLASS + ' * {box-sizing:border-box}',
+    '.' + PREVIEW_CLASS + ' .mbb-nav-operational-title{font:800 17px/1.3 "Segoe UI",Arial,sans-serif!important;color:#114b9e!important;margin:0 4px 5px!important}',
+    '.' + PREVIEW_CLASS + ' .mbb-nav-operational-help{font:13px/1.45 "Segoe UI",Arial,sans-serif!important;color:#475569!important;margin:0 4px 12px!important}',
+    '.' + PREVIEW_CLASS + ' .mbb-nav-operational-frame{width:min(306px,100%)!important;height:520px!important;min-width:0!important;padding:14px 10px!important;margin:0 auto!important;overflow:hidden!important;background:#111827!important;border-radius:30px!important;box-shadow:0 8px 20px rgba(15,23,42,.18)!important}',
+    '.' + PREVIEW_CLASS + ' .mbb-nav-operational-screen{width:100%!important;height:100%!important;min-height:0!important;overflow:hidden!important;background:#fff!important;border:2px solid #dbeafe!important;border-radius:20px!important}',
+    '#workspace.nav-mbb-readable-workspace > .' + PREVIEW_CLASS + '{grid-column:1!important;grid-row:auto!important}',
+    '}',
+    '@media (max-width:380px){.' + PREVIEW_CLASS + ' .mbb-nav-operational-frame{height:485px!important;width:min(286px,100%)!important}}'
+  ].join('\n');
+  if(!document.getElementById(STYLE_ID)) document.head.appendChild(style);
+
+  function currentStepId() {
+    if(typeof currentModuleKey==='undefined' || currentModuleKey!=='navegacao') return null;
+    const active=document.querySelector('#menu .nav-btn.active');
+    const prefix='btn-navegacao-';
+    return active?.id?.startsWith(prefix) ? active.id.slice(prefix.length) : null;
+  }
+
+  function removeFallback() {
+    document.querySelectorAll('.'+PREVIEW_CLASS).forEach(node=>node.remove());
+  }
+
+  function makeFallback(stepId, html) {
+    const section=document.createElement('section');
+    section.className=PREVIEW_CLASS;
+    section.setAttribute('aria-label','Resultado visual desta etapa');
+    const title=document.createElement('h3');
+    title.className='mbb-nav-operational-title';
+    title.textContent=labels[stepId]||'Resultado visual';
+    const help=document.createElement('p');
+    help.className='mbb-nav-operational-help';
+    help.textContent=
+      stepId==='nav-dependencias' || stepId==='nav-criar-inicio' || stepId==='nav-criar-cep-base'
+        ? 'Esquema ilustrativo desta etapa. A tela executável é conferida no Snack.'
+        : 'Prévia visual do resultado esperado. Execute o código no Snack para testar as ações.';
+    const frame=document.createElement('div');
+    frame.className='mbb-nav-operational-frame';
+    const screen=document.createElement('div');
+    screen.className='mbb-nav-operational-screen';
+    screen.innerHTML=html;
+    frame.appendChild(screen);
+    section.append(title,help,frame);
+    return section;
+  }
+
+  function syncFallback() {
+    removeFallback();
+
+    const resultCard=document.getElementById('resultCard');
+    const previouslyHidden=resultCard?.dataset?.mbbNavOperationalFallback==='1';
+    const isMobile=window.matchMedia('(max-width:720px)').matches;
+    const id=currentStepId();
+    const step=id && typeof modules!=='undefined'
+      ? modules.navegacao?.steps?.find(item=>String(item.id)===id)
+      : null;
+
+    if(previouslyHidden){
+      delete resultCard.dataset.mbbNavOperationalFallback;
+      // Só restaura o painel se a etapa atual realmente o utiliza.
+      // Em páginas especiais, a rotina normal já definiu display:none.
+      if(!isMobile && step && previewSteps.has(id)){
+        resultCard.style.setProperty('display','flex','important');
+        if(document.getElementById('preview')?.innerHTML.trim()){
+          resultCard.style.setProperty('visibility','visible','important');
+        }
+      }
+    }
+
+    if(!isMobile || !step) return;
+
+    if(id==='nav-modelo-mental'){
+      // A etapa conceitual originalmente não possuía painel de resultado.
+      const source=modules.navegacao.steps.find(item=>item.id==='nav-primeiro-app');
+      const intro=document.getElementById('introView');
+      if(!source?.preview || !intro) return;
+      const fallback=makeFallback(id,source.preview);
+      const highlight=intro.querySelector('.intro-highlight');
+      if(highlight) highlight.insertAdjacentElement('afterend',fallback);
+      else intro.appendChild(fallback);
+      return;
+    }
+
+    if(!previewSteps.has(id) || !step.preview) return;
+    const workspace=document.getElementById('workspace');
+    if(!workspace) return;
+
+    const fallback=makeFallback(id,step.preview);
+    const noteWrap=document.getElementById('noteWrap');
+    // O quadro fica depois do código e antes do roteiro no celular.
+    if(noteWrap?.parentElement===workspace) workspace.insertBefore(fallback,noteWrap);
+    else workspace.appendChild(fallback);
+
+    if(resultCard){
+      resultCard.dataset.mbbNavOperationalFallback='1';
+      resultCard.style.setProperty('display','none','important');
+    }
+  }
+
+  if(typeof showStep==='function'){
+    const previous=showStep;
+    showStep=function mbbNavOperationalMobileResult(id){
+      const output=previous.apply(this,arguments);
+      syncFallback();
+      return output;
+    };
+  }
+
+  let wasMobile=window.matchMedia('(max-width:720px)').matches;
+  window.addEventListener('resize',()=>{
+    const nowMobile=window.matchMedia('(max-width:720px)').matches;
+    if(nowMobile!==wasMobile){
+      wasMobile=nowMobile;
+      syncFallback();
+    }
+  });
+  syncFallback();
+})();
