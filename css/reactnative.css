@@ -4399,3 +4399,23 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
     margin-bottom: 0 !important;
   }
 }
+
+/* React Native: demais módulos, apenas telas comuns de código + preview
+   no desktop. Não modifica JS Essencial, introduções ou laboratórios especiais. */
+@media (min-width: 1051px) {
+  body:has(:is(#module-fundamentosMobile, #module-interfaceBasica, #module-state, #module-apiCep, #module-navegacao).active):has(#codeCard[style*="display: flex"])
+  #workspace:not(.flex-lab-separated) #resultCard:not(.snack-result-mode) > .preview-area {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    padding-top: 16px !important;
+  }
+
+  body:has(:is(#module-fundamentosMobile, #module-interfaceBasica, #module-state, #module-apiCep, #module-navegacao).active):has(#codeCard[style*="display: flex"])
+  #workspace:not(.flex-lab-separated) #resultCard:not(.snack-result-mode) > .preview-area > .device {
+    flex-shrink: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
