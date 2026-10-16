@@ -5,7 +5,17 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Apostila Interativa — React Native com Snack</title>
-<link href="../css/reactnative.css?v=20261014-preview-topo-demais-modulos" rel="stylesheet"/></head>
+<link href="../css/reactnative.css?v=20261014-preview-topo-demais-modulos" rel="stylesheet"/>
+<!-- MbB: ocultar o preview legado enquanto uma página introdutória está aberta. -->
+<style>
+  /* O HTML/alguns scripts podem aplicar display:flex !important durante o bootstrap.
+     Opacity aqui prevalece mesmo com display e visibility inline, sem tocar nos previews. */
+  #workspace:has(> #introView) > #resultCard {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+</style>
+</head>
 <body>
 <header>
 <div class="header-left">
