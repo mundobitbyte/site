@@ -6,11 +6,9 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Apostila Interativa — React Native com Snack</title>
 <link href="../css/reactnative.css?v=20261014-preview-topo-demais-modulos" rel="stylesheet"/>
-<!-- MbB: ocultar o preview legado enquanto uma página introdutória está aberta. -->
+<!-- MbB: a moldura só é liberada depois que a etapa e a prévia estão prontas. -->
 <style>
-  /* O HTML/alguns scripts podem aplicar display:flex !important durante o bootstrap.
-     Opacity aqui prevalece mesmo com display e visibility inline, sem tocar nos previews. */
-  #workspace:has(> #introView) > #resultCard {
+  #workspace > #resultCard:not([data-mbb-preview-ready="1"]) {
     opacity: 0 !important;
     pointer-events: none !important;
   }
@@ -113,5 +111,6 @@
 <script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 <script src="../js/reactnative-layout-seguro-20261007.js?v=20261007-1"></script>
 <script src="../js/reactnative-navegacao-resultado-fiel-20261014.js?v=20261014-3"></script>
+<script src="../js/reactnative-preview-ready-20261016.js?v=20261016-1"></script>
 </body>
 </html>
