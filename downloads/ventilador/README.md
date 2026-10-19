@@ -1,52 +1,74 @@
-# Controle de Ventilador por Bluetooth — revisão experimental 0.3
+# Ventilador MbB — aprenda com comandos e LEDs
 
-Os programas deste pacote controlam somente LEDs. Não conectar as saídas a relés, motores ou circuitos de 220 V.
+Neste projeto, três LEDs representam as velocidades de um ventilador. Você vai entender como uma escolha no celular pode chegar ao Arduino, conferir a resposta e observar o que acontece quando as mensagens param.
 
-## Arquivos e sequência
+**Os programas são somente para LEDs. Não conecte suas saídas a relés, motores ou à rede elétrica.** A etapa do ventilador real depende de um projeto elétrico específico e da avaliação do profissional responsável.
 
-1. `01_serial_leds/01_serial_leds.ino`: teste de três LEDs pelo Monitor Serial USB, 9600 bit/s. Envia e recebe caracteres de texto `0`, `1`, `2` e `3`. Um caractere inválido apaga os LEDs e confirma `0`; CR e LF são ignorados.
-2. `02_bluetooth_leds/02_bluetooth_leds.ino`: a mesma seleção por SoftwareSerial, com D2 como RX e D3 como TX do Uno. Exige HC-05 identificado e configurado para 9600 no modo de dados. A variante, sua alimentação e a adaptação de níveis ainda precisam ser verificadas. Não supervisiona perda de mensagens.
-3. `03_bancada_supervisionada/03_bancada_supervisionada.ino`: acrescenta supervisão interna. O aplicativo envia `?` a cada 500 ms; após 2000 ms sem mensagem, o programa apaga os LEDs. `?` sozinho nunca religa. Tempos de demonstração, não dimensionamento de segurança para motores.
-4. `VentiladorMBB.aia`: projeto editável experimental. Designer e blocos também estão disponíveis em `appinventor/`. A importação real no MIT e a conclusão da compilação APK foram verificadas em 19/10/2026. O professor baixou o APK no MIT e forneceu o arquivo: `VentiladorMBB03.apk` está disponível, com versão e assinaturas verificadas. Veja `APK_VERIFICADO.md`. Instalação, Companion e testes com Android/HC-05 continuam pendentes.
+## Comece pelo arquivo certo
 
-Os três sketches são independentes; abra a pasta correspondente na IDE Arduino e selecione Uno. O programa exibido no site é gerado a partir do arquivo entregue. Não misture trechos dos checkpoints.
-
-## Montagem de LEDs
-
-Alimente o Uno por USB. Com tudo desconectado, monte:
-
-| Saída | Caminho |
+| Arquivo | Para que serve |
 | --- | --- |
-| D5 | Resistor 330 Ω → ânodo LED 1 → cátodo → GND |
-| D6 | Resistor 330 Ω → ânodo LED 2 → cátodo → GND |
-| D7 | Resistor 330 Ω → ânodo LED 3 → cátodo → GND |
+| `01_serial_leds/01_serial_leds.ino` | Testar Uno e LEDs pelo Monitor Serial USB, a 9600 bit/s. |
+| `02_bluetooth_leds/02_bluetooth_leds.ino` | Estudar mensagens simples pelo HC-05, depois de conferir sua ligação. Mantém a última escolha recebida. |
+| `03_bancada_supervisionada/03_bancada_supervisionada.ino` | Usar com o aplicativo Ventilador MbB. Também verifica se continuam chegando mensagens. |
+| `VentiladorMBB03.apk` | Instalar o aplicativo no Android. Versão 0.3-experimental, código 3. |
+| `VentiladorMBB.aia` | Abrir e editar a tela e os blocos no MIT App Inventor. |
+| `appinventor/` | Consultar os arquivos da tela, dos blocos e da configuração do projeto. |
+| `VALIDACAO_MANUAL.md` | Fazer os testes em ordem e registrar o resultado esperado e o observado. |
+| `APK_VERIFICADO.md` | Conferir a identificação e a integridade do APK disponibilizado. |
 
-Cada LED tem seu resistor. Confira curto, polaridade e continuidade antes de alimentar. Essas ligações não descrevem a alimentação do HC-05 nem um módulo relé.
+Os três programas Arduino são completos e independentes. Abra a pasta da versão desejada na IDE Arduino, selecione a placa Uno e grave o programa inteiro. Não misture trechos entre versões.
 
-## App Inventor
+## Por que o aplicativo não libera os botões sem Arduino?
 
-Importe `VentiladorMBB.aia` em um projeto de teste. Confira os dez componentes e os dez eventos do XML. As cinco variáveis globais são `recebido` (texto vazio), `conectadoAntes` (falso), `aguardando` (falso), `esperado` (texto vazio) e `prazoConfirmacao` (zero). O app lista aparelhos já pareados; não faz descoberta contínua.
+O aplicativo não é um simulador: precisa conversar com um HC-05 conectado ao Uno e ao programa 3. Na conexão, ele envia o texto `0` e aguarda a resposta `0`. Só depois libera as velocidades.
 
-A edição 0.3 preserva a espera pela confirmação inicial `0` antes de habilitar velocidades. Cada espera nova prepara um prazo `Clock1.SystemTime() + 2000` antes de usar `SendText`. Durante a espera, as velocidades ficam bloqueadas. O primeiro Desligar pode antecipar 1/2/3 e iniciar a espera por `0`. Se já aguardava `0`, reenviar não renova o prazo: vencido, encerra; ainda válido, reenvia somente o texto `0`. Só a resposta esperada libera as velocidades. A expiração é conferida antes da leitura no próximo Timer executado e encerra o enlace sem reiniciar velocidade. Isso não garante reação Android em exatamente dois segundos; SystemTime acompanha ajustes do relógio do aparelho. O Clock envia `?` a cada 500 ms e lê um byte quando disponível. O heartbeat `?` não recebe eco nos sketches atuais. Sem comando pendente, uma falha exclusiva do caminho Arduino → app não é detectada por um prazo de respostas. O protocolo sem identificador não autentica mensagens nem distingue respostas antigas iguais. O retorno confirma o estado lógico; não mede movimento. Permissão negada, erro ou resposta inválida encerram o enlace e desabilitam os comandos. A perda observada pelo Clock desabilita os comandos e atualiza o estado; a variável `conectadoAntes` impede apagar a mensagem específica de erro no ciclo seguinte.
+Sem o Arduino respondendo, pode haver uma tentativa de conexão seguida de encerramento, e os botões permanecem bloqueados. Esse bloqueio é intencional. Para experimentar os botões sem equipamento, use o simulador da etapa 5 no site.
 
-A geração segue o esquema de blocos consultado em `mit-cml/appinventor-sources`, commit `a760b517c436dd49c941c2ad946eb4d80f910fe4`. A revisão atual foi importada e reexportada no MIT com 224 blocos/IDs e Designer preservados. A referência histórica 0.2 tinha 572 blocos e metadados 1.0/code 1; o aplicativo atual é 0.3-experimental/code 3. As figuras distinguem mapas conceituais de duas capturas reais do editor MIT; nenhuma representa execução Android.
+O app lista dispositivos previamente pareados no Android. Parear significa guardar a associação com um aparelho; conectar significa abrir a comunicação. Receber a resposta do Uno é uma terceira verificação. Fones, caixas de som e outros dispositivos Bluetooth não substituem o HC-05 deste exercício.
 
-## Revisão 0.3 e pré-requisito obrigatório
+## Prepare os LEDs
 
-**Este aplicativo com heartbeat exige `03_bancada_supervisionada.ino`.** O checkpoint 2 considera `?` inválido e apaga os LEDs; mantenha-o no exercício Bluetooth sem heartbeat. Nenhum sketch foi alterado.
+Retire toda a alimentação antes de montar ou mudar fios. Peça ao professor que confira o circuito antes de conectar o USB.
 
-O título de Screen1, AppName e a legenda Titulo são “Ventilador MbB”. Versão Android: `0.3-experimental`, código `3`, confirmados na reexportação MIT. O projeto gerado e reexportado possui dez componentes, dez eventos, cinco globais, cinco procedimentos e 224 blocos. As referências 0.2 e correção mínima ficam em `tools/ventilador/referencias/` no fonte.
+| Saída do Uno | Caminho até o GND |
+| --- | --- |
+| D5 | Resistor de 330 Ω → ânodo do LED 1 → cátodo → GND. |
+| D6 | Resistor de 330 Ω → ânodo do LED 2 → cátodo → GND. |
+| D7 | Resistor de 330 Ω → ânodo do LED 3 → cátodo → GND. |
 
-Em 19/10/2026, importação, reexportação e compilação foram concluídas no MIT no novo projeto VentiladorMBB03. O APK foi posteriormente recebido do professor e passou na inspeção de integridade, manifesto e assinaturas. Não há teste Companion, Android ou hardware.
+Cada LED tem seu próprio resistor. Ω é o símbolo de ohm, a unidade de resistência. Confira os terminais do LED e se há fios unidos por engano. Essas instruções não definem a alimentação do HC-05 nem de uma placa de relés.
 
-## Testes a registrar na bancada
+## Acrescente o Bluetooth só depois do teste USB
 
-Registre placa, variante HC-05, alimentação, Android, editor, programa e data. Teste estados 0–3, as 12 trocas entre estados diferentes, repetições, caractere inválido, reset, ausência de supervisão e reconexão iniciando em zero. Separe resultados de software, simulador e hardware.
+O programa usa D2 para receber e D3 para transmitir, com a biblioteca `SoftwareSerial`, a 9600 bit/s no modo de dados. TX de um dispositivo transmite para RX do outro.
 
-## Pendências de potência
+Antes de ligar o HC-05, o professor precisa conferir sua placa, alimentação, referência GND e adaptação da tensão dos sinais. Aceitar determinada tensão em VCC não comprova que RX aceite a mesma tensão. Não copie a posição dos pinos de uma foto de outro modelo.
 
-Não há circuito de 220 V neste pacote. Motor, seletor, capacitor, proteção térmica, relés, intertravamento independente, fonte, invólucro, cabos, desconexão e ensaios dependem do modelo real e do responsável competente. Não troque os LEDs por relés para extrapolar o protótipo.
+## Entenda os comandos e o sinal de presença
 
-## Continuação da validação
+O texto `0` apaga todos os LEDs. Os textos `1`, `2` e `3` escolhem um LED. O Arduino responde com o caractere da escolha aplicada. Uma letra inválida, como `X`, apaga os LEDs e confirma `0`; os caracteres de final de linha CR e LF são ignorados.
 
-Consulte `VALIDACAO_MANUAL.md` neste diretório. Importação, APK e ensaio Android devem ser registrados separadamente. A importação foi concluída; o editor apresentou o resultado da compilação APK. O download pelo professor e a inspeção do binário foram concluídos. A execução Android permanece pendente. A exportação real fica entre as evidências do pacote.
+**O aplicativo exige o programa 3**, cujo nome de arquivo é `03_bancada_supervisionada.ino`. Ele reconhece `?`, o sinal enviado pelo app a cada 500 milissegundos, ou meio segundo, para indicar sua presença. Essa mensagem periódica também é chamada de heartbeat. O programa 2 considera `?` inválido e apaga os LEDs; use-o somente para o exercício anterior de mensagens simples.
+
+No programa 3, após 2000 milissegundos sem mensagem válida para a verificação, os LEDs apagam. Voltar a enviar apenas `?` não os reacende; é necessário um novo comando de velocidade. `?` não recebe resposta. Esses tempos servem ao exercício e não dimensionam a proteção de um motor.
+
+## O que a resposta do aplicativo significa
+
+Enquanto espera a confirmação de um comando, o app bloqueia velocidades e permite pedir Desligar. O primeiro pedido de `0` pode substituir a espera por uma velocidade e iniciar seu próprio prazo. Repetir Desligar enquanto já espera `0` não deve renovar esse prazo. Só a resposta esperada libera as velocidades.
+
+“Confirmação lógica” e “estado lógico” são os textos usados no APK para informar a resposta do programa. Não comprovam rotação nem abertura de contatos. Falta de confirmação, permissão recusada, erro ou resposta inválida encerram a conexão e bloqueiam comandos.
+
+O Android pode atrasar o evento do relógio do app, e seu relógio pode ser ajustado. Não interprete o prazo como garantia de reação em exatamente dois segundos. Como as mensagens não têm um número único de identificação, uma resposta antiga igual pode parecer atual. Vários pedidos de Desligar podem acumular respostas. Sem comando pendente, a ausência exclusiva de respostas também não é detectada apenas pelo sinal `?`, que não recebe eco.
+
+## Estude ou modifique o aplicativo
+
+No App Inventor, importe o AIA como projeto separado, preservando o original. Use o título “Ventilador MbB”. O projeto disponível possui dez componentes, dez eventos, cinco variáveis globais e cinco procedimentos; os blocos organizam as tarefas para evitar repetição. A aula do site ensina os procedimentos antes dos eventos que os utilizam.
+
+O APK disponível e o AIA correspondem ao aplicativo 0.3-experimental, código 3. Se modificar os blocos, gere outro APK pelo menu Build e registre sua versão. Não é necessário compilar novamente apenas para testar o APK já fornecido.
+
+## Registre o que você realmente observou
+
+Anote data, placa, programa, HC-05, alimentação, modelo do celular e Android. Para cada teste, escreva: passos, resultado esperado, resultado observado e situação — aprovado, falhou ou não realizado.
+
+A conferência de arquivos e assinaturas do APK foi concluída. O funcionamento no Android, as permissões e a comunicação com HC-05 precisam ser verificados no aparelho e na montagem reais. Uma simulação ou compilação não encerra esses testes. Use o roteiro `VALIDACAO_MANUAL.md` para continuar.

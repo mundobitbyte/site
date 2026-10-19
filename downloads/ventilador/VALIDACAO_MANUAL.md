@@ -1,59 +1,88 @@
-# Validação manual — aplicativo de bancada 0.3-experimental/code 3
+# Ventilador MbB — roteiro para conferir o funcionamento
 
-Importação, reexportação e compilação MIT concluídas. APK posteriormente recebido do professor e inspecionado: integridade e assinaturas v1/v2/v3 válidas; título/versão conferidos. Detalhes em `APK_VERIFICADO.md`. Instalação Android, Companion e ensaios físicos continuam pendentes.
+Faça uma parte de cada vez. Registre o que esperava e o que observou antes de mudar código ou fios. Os testes com componentes deste roteiro usam somente LEDs, sem relés nem ventilador conectados.
 
-## 1. Importar no MIT — procedimento reproduzível, sem hardware
+## 1. Confira o site no computador e no celular
 
-1. Acesse https://ai2.appinventor.mit.edu/ no seu navegador e entre na sua conta. Não envie senha ou códigos de acesso na conversa.
-2. Use Projects → Import project (.aia) from my computer e selecione `VentiladorMBB.aia` desta revisão. Se já existir um projeto com o mesmo nome, preserve-o: faça uma cópia local do novo arquivo com outro nome, por exemplo VentiladorMBB03.aia, e importe essa cópia como um projeto novo. Não sobrescreva o único original.
-3. No Designer, confira dez componentes: Titulo, Conectar, Estado, Velocidade1, Velocidade2, Velocidade3, Desligar, Aviso, BluetoothClient1 e Clock1. Screen1 é a tela, contada à parte.
-4. Em Blocks, confira dez eventos: Initialize, BeforePicking, AfterPicking, quatro Click, Timer, PermissionDenied e ErrorOccurred. Confira cinco globais: recebido, conectadoAntes, aguardando, esperado e prazoConfirmacao. Confira os cinco procedimentos DefinirComandos, LimparEspera, EncerrarEnlace, EnviarComando e ProcessarResposta. Examine blocos desconhecidos, desabilitados, avisos e conexões soltas. Confira “Ventilador MbB” no título da tela, AppName e legenda Titulo.
-5. Exporte uma cópia `.aia` pelo próprio editor e capturas reais de Designer/Blocks. Registre data e versão do editor. **Importar não significa compilar nem testar Android.**
+Abra `https://www.mundobitbyte.com.br/pages/arduino-ventilador-bluetooth.html`.
 
-## 2. Companion e APK — Android, inicialmente sem circuito
+1. Percorra as oito etapas. Abra e feche o menu, escolha uma etapa e confira se consegue ler o texto sem ficar escondido pelos menus.
+2. Abra as quatro aulas de apoio e retorne à etapa de origem. Confira também Voltar/Avançar do navegador e a pesquisa por “HC-05” e “prazoConfirmacao”.
+3. Amplie figuras e tabelas que precisem de leitura maior. Confira a legenda e o fechamento. As imagens do editor mostram a construção do app, sem comprovar sua execução no Android.
+4. Marque e desmarque um item de estudo. Recarregue e confira se a marcação foi mantida no mesmo navegador.
+5. No simulador, conecte e teste 1, 2, 3 e 0. Somente um LED deve acender; 0 apaga todos. Pare os sinais de presença e espere o LED apagar. A simulação não usa Bluetooth nem controla equipamento.
+6. Copie os três códigos e compare com os arquivos `.ino` baixados. Baixe o APK e o AIA e confira os nomes dos arquivos.
+7. No celular, repita a navegação em pé, deitado e com “site para computador” ativado. A página inteira não deve exigir rolagem horizontal; um bloco de código pode ter sua própria rolagem.
 
-O APK `VentiladorMBB03.apk` está disponível ao lado do AIA. Sua inspeção está em `APK_VERIFICADO.md`. Para gerar outro, use Compilar → Android App (.apk) no MIT. Não é necessário repetir a compilação para testar o arquivo recebido. A compilação e as assinaturas válidas não comprovam a execução no Android.
+Há testes automatizados de navegação e leitura em larguras de computador e celular. Ainda é necessário conferir o navegador e o aparelho usados na atividade, principalmente paisagem e modo para computador.
 
-1. No Companion, observe tela, rolagem, textos e comandos inicialmente desabilitados. A visualização da tela não comprova Bluetooth nem o comportamento do APK.
-2. Pelo menu Build, gere um APK. Registre sucesso ou a mensagem exata de erro. Uma compilação concluída não comprova instalação nem comunicação.
-3. Instale o APK no Android de teste e registre modelo, versão Android e versão do Companion quando usado. Teste Bluetooth desligado e permissão negada. A lista não deve manter dispositivos de uma tentativa anterior quando o Bluetooth ficar indisponível. Registre o comportamento observado ao cancelar a seleção.
+## 2. Teste o APK sem circuito: o que é possível verificar
 
-## 3. Bancada — somente baixa tensão identificada e aprovada
+Instale `VentiladorMBB03.apk`, versão 0.3-experimental/código 3. Anote modelo do celular e versão do Android.
 
-Não conecte ventilador, relés ou rede elétrica. Antes de usar o HC-05, identifique variante, documentação, alimentação, adaptação de níveis, pareamento e baud rate. Use os três LEDs com resistores conforme README; docente confere a montagem desenergizada. **O app com heartbeat exige o checkpoint 3. No checkpoint 2, `?` é inválido e apaga os LEDs.** Não modifique o programa 2 para usá-lo com este app.
+1. Abra o app e confira título, textos, rolagem e comandos inicialmente bloqueados.
+2. Toque em Conectar com o Bluetooth desligado e registre a mensagem.
+3. Se o Android pedir permissão, teste a recusa e registre o comportamento. Para voltar ao teste com permissão, use as configurações do aplicativo no Android ou uma nova tentativa permitida pelo sistema.
+4. Se você autorizar o Bluetooth durante a primeira tentativa, toque novamente em Conectar para atualizar a lista, se necessário. A autorização pode interromper aquela primeira abertura.
+5. Se o HC-05 não estiver previamente pareado, ele não aparecerá na lista de aparelhos pareados do app.
 
-1. Grave `03_bancada_supervisionada` no Uno e conecte ao HC-05 aprovado. Ao conectar o app, ele envia texto `0`. As velocidades devem aguardar a resposta `0`; “Desligar” permanece disponível. Reconectar nunca restaura a velocidade anterior.
-2. Teste 1, 2, 3 e 0; depois as 12 trocas entre estados diferentes e repetições. Um LED por vez; 0 apaga todos. Durante cada espera de confirmação, velocidades ficam bloqueadas. “Desligar” pode interromper a espera e aguardar `0`. Sem responder, repita Desligar a cada 400–500 ms: o prazo da primeira espera por `0` não deve ser renovado. Simule resposta atrasada da velocidade anterior: ela não deve liberar os botões nem renovar o prazo. Teste também erro durante reenvio de `0`.
-3. Em uma bancada de teste preparada pelo docente, simule ausência da resposta inicial e de uma resposta de velocidade. Não solte ou mova fios com alimentação ligada: desligue a bancada antes de reconfigurar. Outra opção é um dispositivo SPP de teste que registre os comandos e suprima deliberadamente a resposta. O app deve encerrar o enlace no primeiro Timer executado após o prazo; não deve exibir confirmação de um byte tardio. Registre o atraso observado, sem presumir exatamente 2 s no Android.
-4. No checkpoint 3, interrompa o envio de `?` por um cliente SPP de teste. Os LEDs devem apagar após o prazo local de bancada; retomar apenas `?` não os religa. Fechar o app/mandá-lo ao fundo é um teste distinto: observe se o Android realmente interrompeu a supervisão.
-5. Teste reset do Uno, perda de alimentação do módulo, resposta inválida e reconexão. A alimentação deve ser removida antes de modificar o circuito. Registre mensagens, LEDs observados e necessidade de novo comando.
+**Sem o Arduino respondendo, as velocidades 1, 2 e 3 não serão liberadas.** O app envia `0` e espera a confirmação `0`. Sem essa resposta, encerra a tentativa e mantém os comandos bloqueados. Isso é diferente de um botão que não recebeu o toque por defeito. Para testar a seleção sem componentes, use o simulador do site.
 
-**Limites:** `?` não gera eco nos sketches atuais. Sem comando pendente, o app não detecta por si só uma falha exclusiva no retorno Arduino → Android. O protocolo de um caractere não tem autenticação ou identificador de transação; uma resposta antiga igual pode parecer atual. O prazo do app usa SystemTime (relógio ajustável) e depende do agendamento do Timer. Esses recursos não são proteções de potência.
+Registre separadamente se a lista apenas fechou, se apareceu uma mensagem de desconexão ou se o aplicativo inteiro fechou e voltou à tela inicial do celular. Só o último caso é um fechamento do app.
 
-## 4. Prévia — computador e celular
+## 3. Confira Uno e LEDs pelo USB
 
-Abra o percurso no site em `pages/arduino-ventilador-bluetooth.html`. A exportação portátil, quando fornecida separadamente, reúne as aulas de apoio ao final. Faça os testes visuais tanto no computador como no celular.
+Antes de montar, retire toda a alimentação. Use os LEDs e resistores conforme `README.md` e peça a conferência do professor.
 
-1. Confira em computador (por exemplo, 1366 × 768), celular em retrato (360 e 390 px de largura), paisagem e “site para computador” no celular. Registre navegador, sistema, dimensões e zoom; as dimensões sugeridas são alvos, não resultados já obtidos.
-2. Percorra as oito etapas. Abra/feche o menu por botão, fundo e Escape; selecione etapas e confira foco, rolagem, legibilidade e ausência de conteúdo sob os menus. Verifique eventual rolagem lateral: blocos de código podem rolar internamente, a página inteira não deve precisar disso.
-3. Abra cada aula de apoio e retorne à etapa de origem. No portátil, as aulas estão ao final; na prévia integrada, pertencem aos módulos. Na integrada, teste também voltar/avançar e pesquisa pública por “HC-05” e “prazoConfirmacao”. Conta/Firebase não fazem parte da prévia.
-4. Amplie as figuras pelo visualizador; confira legenda, legibilidade e fechamento. Distinga os seis SVG conceituais das duas capturas reais do MIT (Designer e recorte do evento Velocidade1). Nenhuma captura é execução Android.
-5. Marque/desmarque checklists e recarregue. Confira o estado salvo; em arquivo local, a persistência pode variar conforme o navegador. Os checklists não autorizam potência.
-6. No simulador, conecte, teste 0–3 e interrompa a supervisão: LEDs simulados devem apagar. Confira o feedback das perguntas e do modelo de relé.
-7. Copie os três códigos e cole em editor de texto; compare com cada `.ino`. Baixe `.ino`, `.aia`, `.bky` e `.scm` e confira nomes/conteúdo. Se a cópia ou download falhar no celular, registre a falha e use os arquivos extraídos do ZIP.
+1. Abra a pasta `01_serial_leds` na IDE Arduino, selecione Uno e grave o programa.
+2. Abra o Monitor Serial a 9600 bit/s.
+3. Envie 1, 2, 3 e 0 como texto. Confira um LED por vez e todos apagados em 0. Compare com a resposta recebida.
+4. Envie X. Os LEDs devem apagar e o programa deve responder 0.
+5. Reinicie o Uno: ele deve começar com todos os LEDs apagados.
 
-## Registro mínimo
+Se isso falhar, resolva a montagem ou a gravação antes de acrescentar Bluetooth.
 
-Para cada teste: data; revisão/arquivo; ambiente; passos; resultado esperado; resultado observado; aprovado/falhou/não realizado; evidência e observação. Envie erros e capturas sem credenciais ou dados privados. Mantenha separados importação, geração de APK, instalação, Companion, comunicação física e inspeção profissional.
+## 4. Confira HC-05 e aplicativo juntos
 
-## 5. Encerrar as pendências desta entrega
+O professor precisa identificar a placa HC-05, conferir alimentação, níveis dos sinais e comunicação serial a 9600 bit/s no modo de dados. Retire a alimentação antes de montar ou mudar fios. Não conecte motor ou relés.
 
-| Verificação | Estado nesta entrega | Evidência necessária para concluir |
-|---|---|---|
-| APK | Recebido do professor; integridade, versão e assinaturas verificadas | Concluído para o arquivo de hash indicado em APK_VERIFICADO.md |
-| Android/Companion | Não realizado | Modelo, Android, permissões, mensagens e resultados dos casos das seções 2 e 3 |
-| HC-05 e LEDs | Não realizado fisicamente | Identificação da variante/interface, conferência desenergizada e resultados de bancada |
-| Site em desktop/celular | Não realizado em navegador real | Resultados dos sete itens da seção 4, incluindo ampliação e downloads |
-| Potência 220 V | Etapa não liberada | Dossiê do equipamento e análise/execução profissional específica |
+1. Grave `03_bancada_supervisionada.ino`, o programa 3. O aplicativo envia `?` periodicamente; o programa 2 não serve para esse teste.
+2. Pareie o HC-05 nas configurações Bluetooth do Android. Abra o app, toque em Conectar e escolha esse módulo.
+3. Confira o início em 0, com LEDs apagados. As velocidades só devem ser liberadas após a resposta inicial 0; enquanto espera, Desligar permanece disponível.
+4. Teste os quatro comandos, as 12 trocas entre escolhas diferentes e as quatro repetições. Compare mensagem recebida e LED observado. Um LED por vez; 0 apaga todos.
+5. Desligue o Bluetooth do celular e observe a parada dos LEDs após cerca de dois segundos sem mensagens. O app pode reconhecer a perda em outro instante, conforme o Android.
+6. Reconecte: comece em 0, sem recuperar automaticamente a velocidade anterior.
+7. Faça testes separados com app em segundo plano e tela bloqueada. Observe se o Android interrompeu as mensagens; não presuma que isso ocorreu só porque a tela apagou.
 
-No teste de Desligar repetido, registre também cliques rápidos: cada reenvio pode produzir outro retorno “0”. Como o app lê um byte por ciclo, respostas podem se acumular e uma resposta antiga igual não é distinguida de uma atual. Não interprete a confirmação lógica como prova de um contato aberto ou do motor parado. Não altere o protocolo ou os sketches por tentativa para ocultar esse limite.
+Se aparecer desconexão após a tentativa, confira primeiro qual programa foi gravado, TX/RX, configuração serial e se há resposta inicial 0. Não libere os botões retirando essa confirmação.
+
+## 5. Teste respostas ausentes ou atrasadas com o professor
+
+Esses casos exigem um teste preparado que controle o envio das respostas. Pode ser usado um dispositivo serial Bluetooth de teste que registre os comandos e deixe de responder deliberadamente. Não improvise soltando fios com alimentação ligada.
+
+| Situação criada no teste | O que observar |
+| --- | --- |
+| A conexão abre, mas a resposta inicial 0 não chega. | Velocidades continuam bloqueadas; o app encerra a conexão no primeiro evento do relógio executado após o prazo. |
+| A resposta de uma velocidade não chega. | O app não confirma aquela escolha; mantém a espera até o prazo e depois encerra a conexão. |
+| Enquanto espera uma velocidade, o usuário pede Desligar. | O pedido 0 passa a ter prioridade e seu próprio prazo. |
+| Já esperando 0, o usuário repete Desligar a cada 400–500 ms. | Reenviar 0 não renova o prazo original dessa espera. |
+| Chega uma resposta de velocidade anterior enquanto o app espera 0. | A resposta não libera velocidades nem renova o prazo. |
+| A resposta chega depois do prazo. | Não deve liberar os comandos daquela espera vencida. |
+| Ocorre um erro de envio. | Comandos ficam bloqueados e a explicação da falha deve permanecer. |
+| Pelo cliente de teste, os sinais ? param e depois retornam sozinhos. | O programa 3 apaga os LEDs; receber somente ? novamente não os reacende. |
+
+O prazo do app depende do evento Timer e do relógio do Android. Anote o atraso observado; não exija que a tela reaja em exatamente dois segundos.
+
+O protocolo não identifica cada pedido individualmente: uma resposta antiga igual pode parecer atual. Cliques rápidos em Desligar podem acumular respostas, pois o app lê um caractere por ciclo. O sinal ? não recebe eco; sem comando esperando confirmação, ele não detecta sozinho uma falha exclusiva do retorno Arduino → celular. Não interprete esses recursos como proteção de um motor.
+
+## 6. Se for estudar ou modificar os blocos
+
+Importe `VentiladorMBB.aia` em um projeto separado. Confira dez componentes, dez eventos, cinco variáveis globais e cinco procedimentos. Siga a aula do site para entender seus nomes e funções. Preserve o projeto original.
+
+O Companion permite testar durante a construção. Registre esse resultado separadamente do APK instalado. Se modificar o projeto, compile seu novo APK pelo menu Build e repita os testes relevantes. Não é necessário recompilar o APK fornecido apenas para testá-lo.
+
+## 7. Anote o resultado sem misturar os ambientes
+
+Para cada teste, registre data, arquivos usados, placa, programa, HC-05, alimentação, celular, Android, passos, resultado esperado e observado. Marque aprovado, falhou ou não realizado. Capturas e mensagens devem omitir senhas e dados privados.
+
+A identificação, a integridade e as assinaturas do APK disponibilizado já foram conferidas. A conexão física e o funcionamento completo precisam de resultados com o Android e os componentes reais. A etapa do ventilador de 220 V continua dependendo de projeto, inspeções e testes profissionais específicos.

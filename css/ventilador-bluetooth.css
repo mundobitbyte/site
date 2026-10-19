@@ -21,3 +21,16 @@
 @media(max-width:760px){.vent-sim-grid{grid-template-columns:1fr}.vent-aula{padding:18px 14px;border-radius:12px;scroll-margin-top:135px}.vent-aula .vent-code pre{font-size:12px;padding:13px}.vent-code-head{font-size:12px}.vent-simulador{padding:14px}.vent-retorno{position:static}.vent-aula table{font-size:13px}}
 @media(max-width:760px){.vent-projeto > header{padding:0 10px!important}.vent-projeto > header .brand{display:none!important}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+/* Destaques e leitura do percurso no padrão MbB. */
+.vent-nota{margin:24px 0;padding:4px 0 4px 16px;border-left:3px solid #0b7285}
+.vent-nota>strong{font-size:.82rem;letter-spacing:.06em;color:#07515f}
+.vent-nota p{margin:6px 0}
+.vent-aprofundar{margin:24px 0;border-top:1px solid #c8dfe4;border-bottom:1px solid #c8dfe4;padding:12px 0}
+.vent-aprofundar>summary{cursor:pointer;font-weight:700;color:#07515f;padding:6px 0}
+.vent-aula .table-wrap{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+.vent-aula .table-wrap table{width:100%;border-collapse:collapse}
+.vent-aula li{margin:8px 0;max-width:82ch}
+.vent-app-preview{box-sizing:border-box;width:min(100%,360px)}
+.vent-aula .mbb-visualizador-trigger{max-width:100%;white-space:normal}
+.vent-aula button{max-width:100%;white-space:normal}
+.vent-aula .table-wrap[data-mbb-ampliavel="tabela"] table{min-width:40rem}

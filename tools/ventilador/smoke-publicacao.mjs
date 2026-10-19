@@ -21,21 +21,32 @@ page.on('request',req=>{const u=new URL(req.url());if(u.origin===base||u.protoco
 async function open(path){await page.goto(base+path,{waitUntil:'networkidle0'});}
 async function noOverflow(label){assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),label+': overflow global');}
 try{
- for(const width of [1280,390,360]){
-  await page.setViewport({width,height:900,deviceScaleFactor:1});await open(project);
+ for(const [width,height] of [[1280,900],[390,844],[360,800],[844,390],[980,650]]){
+  await page.setViewport({width,height,deviceScaleFactor:1});await open(project);
   await page.waitForSelector('figure[data-mbb-visualizador-pronto]');
   assert.equal(await page.$$eval('section[id^="etapa-"]',els=>els.length),8);
   await noOverflow('percurso '+width);
+  const drawer=await page.$eval('#stageToggle',e=>getComputedStyle(e).display!=='none');
   for(let i=1;i<=8;i++){
-   if(width<761){await page.click('#stageToggle');await page.waitForFunction(()=>{const r=document.getElementById('stageSidebar').getBoundingClientRect();return document.querySelector('#stageToggle').getAttribute('aria-expanded')==='true'&&r.left>=-1&&r.right<=innerWidth+1;});}
+   if(drawer){await page.click('#stageToggle');await page.waitForFunction(()=>{const r=document.getElementById('stageSidebar').getBoundingClientRect();return document.querySelector('#stageToggle').getAttribute('aria-expanded')==='true'&&r.left>=-1&&r.right<=innerWidth+1;});}
    await page.click('#stageMenu a[href="#etapa-'+i+'"]');
    assert.equal(new URL(page.url()).hash,'#etapa-'+i);
-   if(width<761){assert.equal(await page.$eval('#stageToggle',e=>e.getAttribute('aria-expanded')),'false');await page.waitForFunction(()=>document.getElementById('stageSidebar').getBoundingClientRect().right<=1);}
+   if(drawer){assert.equal(await page.$eval('#stageToggle',e=>e.getAttribute('aria-expanded')),'false');await page.waitForFunction(()=>document.getElementById('stageSidebar').getBoundingClientRect().right<=1);}
    await noOverflow('etapa '+i+' '+width);
   }
   await page.screenshot({path:'artifacts/ventilador/percurso-'+width+'.png',fullPage:true});
   console.log('PASS percurso, etapas e menu',width);
  }
+ // Tabela de três colunas: leitura ampliada no visualizador global MbB.
+ await open(project+'#etapa-1');
+ const tableButton='[data-mbb-ampliavel="tabela"] + [data-mbb-visualizador-trigger]';
+ await page.waitForSelector(tableButton);await page.click(tableButton);
+ await page.waitForFunction(()=>document.getElementById('mbbVisualizador')?.hidden===false);
+ assert.ok(await page.$('#mbbVisualizador table'));
+ await page.click('[data-mbb-view-action="close"]');
+ // A ilustração da tela não pode ser confundida com controles de equipamento.
+ assert.equal(await page.$$eval('.vent-app-preview button',els=>els.every(e=>e.disabled)),true);
+ console.log('PASS tabela ampliada e ilustracao sem comandos reais');
  // Figura tecnica: abrir e fechar pelo visualizador real.
  await open(project+'#etapa-5');
  await page.waitForSelector('#etapa-5 .mbb-visualizador-trigger');
@@ -66,6 +77,9 @@ try{
   else assert.equal(await page.$eval('#'+anchor,e=>e.classList.contains('active-panel')),true);
   await noOverflow('apoio '+anchor);
   const back=await page.$eval('.mbb-retorno-projeto a',e=>e.href);assert.equal(new URL(back).hash,'#'+stage);
+  // O curso usa rolagem suave ao ativar painéis. Concluir a rolagem antes do clique real.
+  await page.$eval('.mbb-retorno-projeto a',e=>e.scrollIntoView({block:'center',behavior:'instant'}));
+  await page.waitForFunction(()=>{const e=document.querySelector('.mbb-retorno-projeto a'),r=e.getBoundingClientRect();return document.elementFromPoint(r.left+r.width/2,r.top+r.height/2)?.closest('a')===e;});
   await Promise.all([page.waitForNavigation({waitUntil:'networkidle0'}),page.click('.mbb-retorno-projeto a')]);
   assert.equal(new URL(page.url()).hash,'#'+stage);
   console.log('PASS conceito e retorno',anchor);
