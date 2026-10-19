@@ -21,8 +21,8 @@ page.on('request',req=>{const u=new URL(req.url());if(u.origin===base||u.protoco
 async function open(path){await page.goto(base+path,{waitUntil:'networkidle0'});}
 async function noOverflow(label){assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),label+': overflow global');}
 try{
- for(const width of [1280,390,360]){
-  await page.setViewport({width,height:900,deviceScaleFactor:1});await open(project);
+ for(const [width,height] of [[1280,900],[390,844],[360,800],[844,390],[980,650]]){
+  await page.setViewport({width,height,deviceScaleFactor:1});await open(project);
   await page.waitForSelector('figure[data-mbb-visualizador-pronto]');
   assert.equal(await page.$$eval('section[id^="etapa-"]',els=>els.length),8);
   await noOverflow('percurso '+width);
@@ -36,6 +36,16 @@ try{
   await page.screenshot({path:'artifacts/ventilador/percurso-'+width+'.png',fullPage:true});
   console.log('PASS percurso, etapas e menu',width);
  }
+ // Tabela de três colunas: leitura ampliada no visualizador global MbB.
+ await open(project+'#etapa-1');
+ const tableButton='[data-mbb-ampliavel="tabela"] + [data-mbb-visualizador-trigger]';
+ await page.waitForSelector(tableButton);await page.click(tableButton);
+ await page.waitForFunction(()=>document.getElementById('mbbVisualizador')?.hidden===false);
+ assert.ok(await page.$('#mbbVisualizador table'));
+ await page.click('[data-mbb-view-action="close"]');
+ // A ilustração da tela não pode ser confundida com controles de equipamento.
+ assert.equal(await page.$$eval('.vent-app-preview button',els=>els.every(e=>e.disabled)),true);
+ console.log('PASS tabela ampliada e ilustracao sem comandos reais');
  // Figura tecnica: abrir e fechar pelo visualizador real.
  await open(project+'#etapa-5');
  await page.waitForSelector('#etapa-5 .mbb-visualizador-trigger');

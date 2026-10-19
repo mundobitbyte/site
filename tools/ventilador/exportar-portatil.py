@@ -10,10 +10,10 @@ doc=html.document_fromstring((ROOT/'pages/arduino-ventilador-bluetooth.html').re
 doc.find('.//title').text='Prévia portátil — Controle de Ventilador por Bluetooth · MbB'
 menu=doc.xpath('//*[@id="arduinoModuleMenu"]')[0]
 for e in list(menu):menu.remove(e)
-a=etree.SubElement(menu,'a',{'class':'module-btn active','href':'#topo'});a.text='Prévia de avaliação · oito etapas e aulas de apoio'
+a=etree.SubElement(menu,'a',{'class':'module-btn active','href':'#topo'});a.text='Oito etapas e aulas de apoio'
 home=doc.xpath('//a[contains(@class,"portal-link")]')[0];home.set('href','#topo');home.text='↑ Percurso'
 intro=doc.xpath('//*[@id="apresentacao"]')[0]
-notice=etree.SubElement(intro,'p');notice.text='Arquivo portátil para avaliação: as aulas de apoio estão reunidas ao final. No site integrado, permanecem nos módulos originais. Não utiliza Bluetooth real ou serviços de conta.'
+notice=etree.SubElement(intro,'p');notice.text='Neste arquivo, as aulas de apoio estão reunidas ao final. O simulador funciona só na tela; para conectar o HC-05, use o aplicativo Android e o Uno com o programa 3.'
 mapping=[('arduino.html','atuadores-reles',3),('arduino-conectividade.html','b6-hc05',4),('arduino-seguranca.html','b9-eletricidade',2),('appinventor.html','bluetooth-ventilador',6)]
 main=doc.xpath('//main')[0]
 for page,id,etapa in mapping:
@@ -25,6 +25,8 @@ for page,id,etapa in mapping:
     main.append(node)
     for link in doc.xpath('//a[@data-mbb-conceito]'):
         if link.get('href')==page+'#'+id:link.set('href','#apoio-'+id)
+for link in doc.xpath('//a[starts-with(@href,"arduino-ventilador-bluetooth.html#")]'):
+    link.set('href','#'+link.get('href').split('#',1)[1])
 for stylesheet in doc.xpath('//link[@rel="stylesheet"]'):
     path=(ROOT/'pages'/stylesheet.get('href').split('?')[0]).resolve()
     style=etree.Element('style');style.text=path.read_text();stylesheet.getparent().replace(stylesheet,style)

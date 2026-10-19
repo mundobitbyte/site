@@ -15,7 +15,7 @@ def svg(name,title,body,h=660,desc=''):
     (OUT/name).write_text(s,encoding='utf-8')
 # Cabecalho digital em vista superior: ordem conferida no pinout Arduino A000066.
 # Desenho autoral simplificado; os circuitos abaixo sao funcionais, sem protoboard presumida.
-b=text(45,100,'A · Identifique a serigrafia no Uno Rev3 · USB à esquerda',21,weight='700')
+b=text(45,100,'A · Confira as marcações no Uno Rev3 · USB à esquerda',21,weight='700')
 b+=rect(85,170,1040,210,'url(#board)','#06414c',22)+rect(40,210,115,90,'#c6cdd2','#71808a',5)
 b+=text(55,263,'USB',22,weight='700')+rect(360,240,350,65,'#182b36','#07141b',5)+text(450,279,'ATmega328P',24,'#fff')
 b+=text(180,340,'UNO REV3 · desenho simplificado, sem escala',21,'#fff')
@@ -46,32 +46,32 @@ for x in range(120,260,16):b+=line(x,180,x,320,'#e6a457',8)
 b+=text(108,370,'Bobina',22,weight='700')+text(108,402,'Campo magnético',18)+text(108,430,'move o contato',18)
 b+=line(330,385,425,260,'#2a4855',8)+line(425,260,480,260,'#2a4855',8)+line(425,190,480,190,'#2a4855',8)
 for x,y,s in [(480,260,'NF'),(480,190,'NA'),(325,385,'COM')]:b+=text(x,y+38,s,19,weight='700')
-b+=text(330,470,'Desenergizado',18)
+b+=text(330,470,'Bobina desligada',18)
 b+=rect(600,130,530,180)+text(625,170,'COM não significa GND',24,weight='700')+text(625,208,'COM é o contato comum da chave.',20)+text(625,245,'NA: normalmente aberto.',20)+text(625,280,'NF: normalmente fechado.',20)
-b+=rect(600,340,530,180,'#fff5df','#d5b575')+text(625,380,'A bobina não é o circuito da carga',22,weight='700')+text(625,418,'Um módulo pode compartilhar referências.',19)+text(625,452,'Optoacoplador, sozinho, não comprova',19)+text(625,483,'isolamento de todo o conjunto.',19)
+b+=rect(600,340,530,180,'#fff5df','#d5b575')+text(625,380,'Bobina e aparelho têm papéis diferentes',22,weight='700')+text(625,418,'Algumas placas unem as referências.',19)+text(625,452,'Optoacoplador, sozinho, não comprova',19)+text(625,483,'isolamento de todo o conjunto.',19)
 b+=text(70,586,'Modelo conceitual ideal. Não representa bornes, pinagem ou capacidade de um módulo comercial.',19)
 svg('rele-contatos.svg','Relé: comando e contato cumprem funções diferentes',b,640)
-b=rect(65,155,310,320,'url(#board)','#06414c')+text(100,208,'Arduino Uno',30,'#fff','700')+text(100,270,'D2 · RX software',23,'#fff')+text(100,370,'D3 · TX software',23,'#fff')+text(100,430,'Referência GND',22,'#fff')
+b=rect(65,155,310,320,'url(#board)','#06414c')+text(100,208,'Arduino Uno',30,'#fff','700')+text(100,270,'D2 · recebe (RX)',23,'#fff')+text(100,370,'D3 · envia (TX)',23,'#fff')+text(100,430,'Referência GND',22,'#fff')
 b+=rect(830,155,310,320,'#103043','#071c2a')+text(867,208,'HC-05',31,'#fff','700')+text(867,270,'TX do módulo',22,'#fff')+text(867,370,'RX do módulo',22,'#fff')+text(867,430,'GND',22,'#fff')
 b+=line(830,263,375,263)+text(480,242,'níveis compatíveis',20)
 b+=line(375,363,435,363)+rect(435,316,335,89,'#fff5df','#bca46b',8)+text(455,350,'Adaptação de nível',23,weight='700')+text(455,383,'dimensionada e verificada',19)+line(770,363,830,363)
 b+=line(375,423,830,423,'#283b48')+text(70,535,'A tensão de VCC depende da placa exata. VCC e RX não têm, necessariamente, a mesma tolerância.',19)
-b+=text(70,578,'Mapa funcional condicional: alimentação e adaptador aguardam identificação do HC-05.',20,weight='700')
-svg('hc05-interface.svg','UART: transmitir de um lado, receber do outro',b,640)
-b=rect(65,130,490,370,'#ecf8f7','#75adaf')+text(100,180,'Bancada de aprendizagem',29,weight='700')
-for y,s in [(235,'Celular → Bluetooth → Arduino'),(290,'Saídas → resistores → LEDs'),(345,'Alimentação de bancada verificada'),(400,'Sem ligação elétrica com a rede')]:b+=text(100,y,s,22)
+b+=text(70,578,'Confira a placa HC-05 antes de definir alimentação e adaptação dos sinais.',20,weight='700')
+svg('hc05-interface.svg','TX transmite; RX recebe',b,640)
+b=rect(65,130,490,370,'#ecf8f7','#75adaf')+text(100,180,'Exercício com LEDs',29,weight='700')
+for y,s in [(235,'Celular → Bluetooth → Arduino'),(290,'Saídas → resistores → LEDs'),(345,'Alimentação conferida'),(400,'Sem ligação elétrica com a rede')]:b+=text(100,y,s,22)
 b+=rect(650,130,490,370,'#fff3e6','#c5a17d')+text(680,180,'Etapa profissional · 220 V',27,weight='700')
-for y,s in [(235,'Motor e seletor identificados'),(290,'Intertravamento e proteções'),(345,'Invólucro, seccionamento e ensaios'),(400,'Projeto específico ainda pendente')]:b+=text(680,y,s,21)
-b+=line(600,115,600,525,'#a87031',6)+text(65,575,'Não há conexões de potência neste material experimental. O botão do app não isola a alimentação.',20)
+for y,s in [(235,'Motor e seletor identificados'),(290,'Evitar velocidades incompatíveis'),(345,'Caixa, desconexão e testes'),(400,'Projeto elétrico a definir')]:b+=text(680,y,s,21)
+b+=line(600,115,600,525,'#a87031',6)+text(65,575,'Esta atividade não liga o ventilador. Desligar no app não retira sua alimentação.',20)
 svg('fronteira-seguranca.svg','Duas etapas, duas responsabilidades',b,640)
 b=''
-events=[('Conectar.BeforePicking','Listar aparelhos já pareados.'),('Conectar.AfterPicking','Enviar 0; aguardar antes de liberar.'),('VelocidadeN.Click','Sem espera: enviar 1, 2 ou 3.'),('Desligar.Click','Reenviar 0 sem renovar sua espera.'),('Clock.Timer · 500 ms','Conferir prazo; enviar ?; ler um byte.'),('PermissionDenied / ErrorOccurred','Informar a falha e encerrar o enlace.')]
+events=[('Conectar.BeforePicking','Listar aparelhos já pareados.'),('Conectar.AfterPicking','Enviar 0; aguardar antes de liberar.'),('VelocidadeN.Click','Sem espera: enviar 1, 2 ou 3.'),('Desligar.Click','Reenviar 0 sem renovar sua espera.'),('Clock.Timer · a cada 500 ms','Conferir prazo; enviar ?; ler a resposta.'),('PermissionDenied / ErrorOccurred','Informar a falha e encerrar a conexão.')]
 for i,(title,sub) in enumerate(events):
     x=50+(i%2)*580;y=105+(i//2)*145
     b+=rect(x,y,540,120,'#fff','#b9cfd5',14)+rect(x,y,9,120,'#0b7285','#0b7285',3)+text(x+26,y+37,title,20,weight='700')+text(x+26,y+79,sub,18)
-b+=text(50,605,'Mapa conceitual de eventos; não é captura. Importação MIT conferida; execução Android ainda pendente.',18)
+b+=text(50,605,'Mapa para estudar as tarefas dos eventos. Teste o aplicativo no seu Android.',18)
 svg('app-eventos.svg','Do toque à mensagem: eventos do aplicativo',b,650)
-b=text(45,100,'Modelo lógico do app 0.3 com o checkpoint 3 · não mede movimento',21)
+b=text(45,100,'Como o app 0.3 usa o programa 3 · não mede movimento',21)
 cards=[(45,150,480,135,'1 · Desconectado','Quatro botões bloqueados.','Conectar inicia enviando texto 0.'),
 (675,150,480,135,'2 · Aguardando 0','Velocidades bloqueadas; Desligar ativo.','Só confirmação 0 no prazo libera.'),
 (675,390,480,135,'3 · Pronto para escolher','1, 2 ou 3 inicia uma nova espera.','O comando 0 solicita apagar os LEDs.'),
@@ -85,8 +85,8 @@ b+=line(285,380,285,310)+line(285,310,720,310)+line(720,310,720,380)+text(328,33
 for x,y,points in [(665,220,'655,212 665,220 655,228'),(915,380,'907,370 915,380 923,370'),(535,450,'545,442 535,450 545,458'),(720,380,'712,370 720,380 728,370')]:b+=f'<polygon points="{points}" fill="#0d8393"/>'
 b+=rect(45,585,1110,170,'#fff5df','#d5b575')+text(70,625,'Desligar conserva o prazo de confirmação',26,weight='700')
 b+=text(70,666,'Esperava 1/2/3? O primeiro 0 inicia seu prazo. Já esperava 0? Reenvio mantém o prazo original.',18)
-b+=text(70,704,'Prazo vencido, erro ou byte inválido → encerra o enlace e bloqueia os botões.',19)
-b+=text(45,800,'Timer: conferir prazo → se conectado enviar ? → ler no máximo um byte disponível.',20)
-b+=text(45,837,'Atraso do Android e ajuste do relógio afetam o prazo. Não é proteção de potência.',19)
+b+=text(70,704,'Prazo vencido, erro ou resposta inválida → encerra a conexão e bloqueia os botões.',19)
+b+=text(45,800,'Timer: conferir prazo → enviar ? se conectado → ler um caractere disponível.',20)
+b+=text(45,837,'O Android e seu relógio podem alterar o tempo observado. Isso não protege um motor.',19)
 svg('protocolo-estados.svg','Conectar, esperar, confirmar: o que o app sabe',b,875)
 print('6 visuais vetoriais gerados; imagens MIT sao capturas reais separadas.')

@@ -61,7 +61,7 @@ test('portátil: aulas, destinos, downloads, menu, checklist, simulador, cópia 
     d.querySelector('[data-sim-conectar]').click();
     for(const n of ['0','1','2','3']) {d.querySelector('[data-sim-comando="'+n+'"]').click();assert.equal(d.querySelectorAll('[data-sim-led][data-on="true"]').length,n==='0'?0:1);}
     d.querySelector('[data-sim-falha]').click();await new Promise(r=>setTimeout(r,2550));
-    assert.equal(d.querySelectorAll('[data-sim-led][data-on="true"]').length,0);assert.match(d.querySelector('[data-sim-log]').textContent,/Prazo de bancada expirou/);
+    assert.equal(d.querySelectorAll('[data-sim-led][data-on="true"]').length,0);assert.match(d.querySelector('[data-sim-log]').textContent,/mensagens pararam por 2 s/);
     const rele=d.querySelector('[data-rele-toggle]');rele.checked=true;rele.dispatchEvent(new w.Event('change'));assert.match(d.querySelector('[data-rele-estado]').textContent,/COM–NA fechado/);
     d.querySelector('[data-vent-quiz] button[data-correto="true"]').click();assert.match(d.querySelector('[data-vent-quiz] [role="status"]').textContent,/Correto/);
     const figs=d.querySelectorAll('figure[data-mbb-ampliavel]');assert.ok(figs.length>=5);

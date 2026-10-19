@@ -1,4 +1,4 @@
-# APK de bancada — inspeção do arquivo
+# Ventilador MbB — identificação do arquivo Android
 
 Arquivo: `VentiladorMBB03.apk` · Nome: Ventilador MbB
 
@@ -16,4 +16,4 @@ Arquivo: `VentiladorMBB03.apk` · Nome: Ventilador MbB
 
 **Pendente:** instalação/execução Android, Companion, permissões em aparelho real e comunicação física. Assinatura válida comprova integridade em relação ao signatário; não substitui testes funcionais.
 
-Este app com heartbeat exige `03_bancada_supervisionada.ino`, somente LEDs em baixa tensão. Não conecta diretamente um ventilador e não comprova rotação ou abertura de contatos.
+Este app envia um sinal periódico de presença (heartbeat) e exige `03_bancada_supervisionada.ino`, somente LEDs em baixa tensão. Não conecta diretamente um ventilador e não comprova rotação ou abertura de contatos.

@@ -66,28 +66,28 @@
       function render() {
         sim.querySelectorAll('[data-sim-comando]').forEach(b => b.disabled = !controle.conectado);
         sim.querySelectorAll('[data-sim-led]').forEach(led => led.dataset.on = String(Number(led.dataset.simLed) === controle.estado));
-        estado.textContent = (controle.conectado ? 'Enlace simulado conectado. ' : 'Enlace simulado desconectado. ') + 'Estado lógico: ' + controle.estado + '. Sem ventilador físico.';
+        estado.textContent = (controle.conectado ? 'Simulação conectada. ' : 'Simulação desconectada. ') + 'Escolha do programa: ' + controle.estado + '. Apenas LEDs na tela.';
       }
       sim.querySelector('[data-sim-conectar]').addEventListener('click', () => {
-        if (controle.conectado) { controle.desconectar(); registrar('Enlace encerrado; LEDs apagados na simulação.'); }
+        if (controle.conectado) { controle.desconectar(); registrar('Simulação desconectada; LEDs apagados.'); }
         else { supervisao = true; controle.conectar(Date.now()); registrar('Conexão simulada → comando inicial 0 → confirmação 0.'); }
         render();
       });
       sim.querySelectorAll('[data-sim-comando]').forEach(b => b.addEventListener('click', () => {
-        const resposta = controle.receber(b.dataset.simComando, Date.now()); registrar('Enviar texto ' + b.dataset.simComando + ' → confirmação lógica ' + resposta); render();
+        const resposta = controle.receber(b.dataset.simComando, Date.now()); registrar('Texto enviado: ' + b.dataset.simComando + ' → resposta do programa: ' + resposta); render();
       }));
-      sim.querySelector('[data-sim-falha]').addEventListener('click', () => { supervisao = false; registrar('Supervisão interrompida. Aguarde até 2 s para observar a parada lógica.'); });
+      sim.querySelector('[data-sim-falha]').addEventListener('click', () => { supervisao = false; registrar('Sinais de presença interrompidos. Aguarde o prazo de 2 s para ver os LEDs apagarem.'); });
       root.setInterval(() => {
         const agora = Date.now();
         // Primeiro verifica o prazo: uma aba suspensa não deve mascarar a expiração.
-        if (controle.verificar(agora)) { registrar('Prazo de bancada expirou → estado 0. Não retoma a velocidade.'); render(); }
+        if (controle.verificar(agora)) { registrar('As mensagens pararam por 2 s → LEDs apagados. A escolha anterior não é retomada.'); render(); }
         if (controle.conectado && supervisao) controle.receber('?', agora);
       }, 500);
       render();
     }
     const rele = document.querySelector('[data-rele-toggle]');
     if (rele) rele.addEventListener('change', () => {
-      document.querySelector('[data-rele-estado]').textContent = rele.checked ? 'Bobina energizada: COM–NA fechado; COM–NF aberto (modelo ideal).' : 'Bobina desenergizada: COM–NF fechado; COM–NA aberto (modelo ideal).';
+      document.querySelector('[data-rele-estado]').textContent = rele.checked ? 'Bobina com alimentação: COM–NA fechado; COM–NF aberto (modelo ideal).' : 'Bobina sem alimentação: COM–NF fechado; COM–NA aberto (modelo ideal).';
     });
     document.querySelectorAll('[data-vent-quiz]').forEach(grupo => {
       grupo.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
