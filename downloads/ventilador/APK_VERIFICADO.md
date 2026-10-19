@@ -14,6 +14,8 @@ Arquivo: `VentiladorMBB03.apk` · Nome: Ventilador MbB
 - SDK mínimo declarado: 14; alvo: 36. Esses metadados não comprovam execução em todas essas versões.
 - Os dez eventos esperados estão no código compilado; o trecho de Desligar compara o prazo antes do reenvio de 0, coerente com a revisão. Isso não é prova de equivalência completa nem ensaio Android.
 
-**Pendente:** instalação/execução Android, Companion, permissões em aparelho real e comunicação física. Assinatura válida comprova integridade em relação ao signatário; não substitui testes funcionais.
+**Teste inicial relatado pelo professor em 19/10/2026:** o APK foi instalado e abriu no celular. A lista de aparelhos fechou após a seleção e apareceu indicação de desconexão; as velocidades permaneceram bloqueadas. Não havia Arduino conectado para responder ao aplicativo. Esse relato não demonstra defeito nos botões nem comprova comunicação física. A mensagem exata, o modelo do celular e a versão do Android ainda precisam ser registrados.
+
+**Ainda falta conferir:** conexão com HC-05 e Uno usando o programa 3, resposta inicial 0, comandos, permissões, falhas e reconexão no aparelho real. O Companion é um teste separado. Assinatura válida comprova integridade em relação ao signatário; não substitui testes funcionais.
 
 Este app envia um sinal periódico de presença (heartbeat) e exige `03_bancada_supervisionada.ino`, somente LEDs em baixa tensão. Não conecta diretamente um ventilador e não comprova rotação ou abertura de contatos.
