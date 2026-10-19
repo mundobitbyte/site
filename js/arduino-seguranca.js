@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function(){
   link10.textContent = '10. Projeto IoT';
   link10.style.textDecoration = 'none';
 
-  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
+  const exercicios = menu.querySelector('a[href="arduino-ventilador-bluetooth.html"]') || menu.querySelector('a[href="arduino-exercicios.html"]');
   if(exercicios) menu.insertBefore(link10, exercicios);
   else menu.appendChild(link10);
 });
@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     if(updateUrl){
       history.replaceState(null, '', hash);
+      window.dispatchEvent(new Event('hashchange'));
     }
 
     const irDiretoAoTopico = updateUrl || location.hash === hash;
@@ -75,6 +76,8 @@ document.addEventListener('DOMContentLoaded', function(){
     : '#b9-prep';
 
   showPanel(initialHash, false);
+  window.addEventListener('hashchange', () => { if (/^#[A-Za-z0-9_-]+$/.test(location.hash)) showPanel(location.hash, false); });
+  window.addEventListener('popstate', () => { if (/^#[A-Za-z0-9_-]+$/.test(location.hash)) showPanel(location.hash, false); });
 });
 
 function manterModuloAtivoVisivel(){

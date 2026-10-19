@@ -1,0 +1,2 @@
+PASS: node meu-mbb/atualizar-pesquisa.cjs --check (exit 0).
+PASS: node meu-mbb/gerar-visitas.cjs --check (exit 0).
