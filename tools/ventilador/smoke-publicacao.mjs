@@ -26,11 +26,12 @@ try{
   await page.waitForSelector('figure[data-mbb-visualizador-pronto]');
   assert.equal(await page.$$eval('section[id^="etapa-"]',els=>els.length),8);
   await noOverflow('percurso '+width);
+  const drawer=await page.$eval('#stageToggle',e=>getComputedStyle(e).display!=='none');
   for(let i=1;i<=8;i++){
-   if(width<761){await page.click('#stageToggle');await page.waitForFunction(()=>{const r=document.getElementById('stageSidebar').getBoundingClientRect();return document.querySelector('#stageToggle').getAttribute('aria-expanded')==='true'&&r.left>=-1&&r.right<=innerWidth+1;});}
+   if(drawer){await page.click('#stageToggle');await page.waitForFunction(()=>{const r=document.getElementById('stageSidebar').getBoundingClientRect();return document.querySelector('#stageToggle').getAttribute('aria-expanded')==='true'&&r.left>=-1&&r.right<=innerWidth+1;});}
    await page.click('#stageMenu a[href="#etapa-'+i+'"]');
    assert.equal(new URL(page.url()).hash,'#etapa-'+i);
-   if(width<761){assert.equal(await page.$eval('#stageToggle',e=>e.getAttribute('aria-expanded')),'false');await page.waitForFunction(()=>document.getElementById('stageSidebar').getBoundingClientRect().right<=1);}
+   if(drawer){assert.equal(await page.$eval('#stageToggle',e=>e.getAttribute('aria-expanded')),'false');await page.waitForFunction(()=>document.getElementById('stageSidebar').getBoundingClientRect().right<=1);}
    await noOverflow('etapa '+i+' '+width);
   }
   await page.screenshot({path:'artifacts/ventilador/percurso-'+width+'.png',fullPage:true});
