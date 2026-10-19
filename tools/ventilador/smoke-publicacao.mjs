@@ -27,10 +27,10 @@ try{
   assert.equal(await page.$$eval('section[id^="etapa-"]',els=>els.length),8);
   await noOverflow('percurso '+width);
   for(let i=1;i<=8;i++){
-   if(width<761){await page.click('#stageToggle');await page.waitForFunction(()=>document.querySelector('#stageToggle').getAttribute('aria-expanded')==='true');}
+   if(width<761){await page.click('#stageToggle');await page.waitForFunction(()=>{const r=document.getElementById('stageSidebar').getBoundingClientRect();return document.querySelector('#stageToggle').getAttribute('aria-expanded')==='true'&&r.left>=-1&&r.right<=innerWidth+1;});}
    await page.click('#stageMenu a[href="#etapa-'+i+'"]');
    assert.equal(new URL(page.url()).hash,'#etapa-'+i);
-   if(width<761)assert.equal(await page.$eval('#stageToggle',e=>e.getAttribute('aria-expanded')),'false');
+   if(width<761){assert.equal(await page.$eval('#stageToggle',e=>e.getAttribute('aria-expanded')),'false');await page.waitForFunction(()=>document.getElementById('stageSidebar').getBoundingClientRect().right<=1);}
    await noOverflow('etapa '+i+' '+width);
   }
   await page.screenshot({path:'artifacts/ventilador/percurso-'+width+'.png',fullPage:true});
@@ -82,4 +82,4 @@ try{
  }
  assert.equal(errors.length,0,errors.join('\n'));
  console.log('PASS downloads/bytes/APK e ausencia de erros JavaScript');
-}finally{await browser.close();}
+}catch(error){await page.screenshot({path:'artifacts/ventilador/falha.png',fullPage:true});console.error('DIAGNOSTICO',await page.evaluate(()=>({url:location.href,width:innerWidth,sidebar:document.getElementById('stageSidebar')?.getBoundingClientRect().toJSON(),toggle:document.getElementById('stageToggle')?.getAttribute('aria-expanded')})));throw error;}finally{await browser.close();}
