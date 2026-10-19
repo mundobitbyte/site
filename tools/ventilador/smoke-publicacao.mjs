@@ -77,6 +77,9 @@ try{
   else assert.equal(await page.$eval('#'+anchor,e=>e.classList.contains('active-panel')),true);
   await noOverflow('apoio '+anchor);
   const back=await page.$eval('.mbb-retorno-projeto a',e=>e.href);assert.equal(new URL(back).hash,'#'+stage);
+  // O curso usa rolagem suave ao ativar painéis. Concluir a rolagem antes do clique real.
+  await page.$eval('.mbb-retorno-projeto a',e=>e.scrollIntoView({block:'center',behavior:'instant'}));
+  await page.waitForFunction(()=>{const e=document.querySelector('.mbb-retorno-projeto a'),r=e.getBoundingClientRect();return document.elementFromPoint(r.left+r.width/2,r.top+r.height/2)?.closest('a')===e;});
   await Promise.all([page.waitForNavigation({waitUntil:'networkidle0'}),page.click('.mbb-retorno-projeto a')]);
   assert.equal(new URL(page.url()).hash,'#'+stage);
   console.log('PASS conceito e retorno',anchor);
