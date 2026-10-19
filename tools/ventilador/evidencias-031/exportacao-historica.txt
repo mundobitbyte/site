@@ -1,0 +1,5 @@
+PASS: exportacao MIT integra, sem chaves privadas; 572 blocos/IDs e arvore funcional preservados; Designer identico (10 componentes), 10 eventos, 5 globais e 0 procedimentos.
+METADADOS MIT: versionname=1.0; versioncode=1; namespace reescrito pelo editor.
+SHA256_EXPORTADO=a26ac290a534eddfbfd214b34a52203cfb8bb21bbb7fb4292dc07ad9a8db6026
+LIMITES: importacao/compilacao registradas na evidencia do navegador; este comparador nao executa o APK nem confirma Bluetooth fisico.
+

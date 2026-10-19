@@ -51,6 +51,9 @@
 
 @media(max-width:900px){.mbb6-summary,.mbb6-connections{grid-template-columns:1fr}}
 </style>
+<!-- VENTILADOR:RECURSOS:INICIO -->
+<link rel="stylesheet" href="../css/ventilador-bluetooth.css?v=1"><link rel="stylesheet" data-mbb-visualizador-global href="../css/mbb-visualizador.css?v=20261002-1">
+<!-- VENTILADOR:RECURSOS:FIM -->
 </head>
 <body>
 <header>
@@ -65,7 +68,10 @@
   <a class="module-btn" href="arduino.html#p8">4. Atuadores/Automação</a>
   <a class="module-btn" href="arduino-programacao-aplicada.html">5. Programação Aplicada</a>
   <a class="module-btn active" href="#topo">6. Conectividade</a>
-  <a class="module-btn" href="arduino-exercicios.html">99. Exercícios</a>
+  <!-- VENTILADOR:MENU11:INICIO -->
+<a class="module-btn" href="arduino-ventilador-bluetooth.html">11. Projetos Práticos</a>
+<!-- VENTILADOR:MENU11:FIM -->
+<a class="module-btn" href="arduino-exercicios.html">99. Exercícios</a>
 </div>
 
 <div class="layout arduino-layout" id="arduinoLayout">
@@ -75,6 +81,9 @@
     <a class="stage-link module-visible active" href="#b6-0">0. Conhecendo o ESP32</a>
     <a class="stage-link module-visible" href="#b6-prep">Preparação — Circuito</a>
     <a class="stage-link module-visible" href="#b6-1">6.1 Bluetooth</a>
+<!-- VENTILADOR:MENU:INICIO -->
+<a class="stage-link module-visible" href="#b6-hc05">Complemento — HC-05 no Uno</a>
+<!-- VENTILADOR:MENU:FIM -->
     <a class="stage-link module-visible" href="#b6-2">6.2 Wi-Fi</a>
     <a class="stage-link module-visible" href="#b6-3">6.3 HTTP</a>
     <a class="stage-link module-visible" href="#b6-4">6.4 mDNS</a>
@@ -575,11 +584,23 @@ void loop() {
   </div>
 </section>
 
+<!-- VENTILADOR:AULA:INICIO -->
+<section id="b6-hc05" class="mbb6-panel project vent-aula"><h2>HC-05 no Arduino Uno</h2><p>No exemplo com ESP32, o Bluetooth está integrado à placa. No Uno precisamos acrescentar uma interface. O HC-05 faz a ponte entre <strong>Bluetooth Classic com perfil serial SPP</strong> e a comunicação serial UART. Ele não é um módulo BLE.</p>
+<p>UART transmite uma sequência de bits entre TX e RX. TX de um dispositivo deve chegar ao RX do outro. Na conexão proposta para o software desta bancada, o Uno usa D2 como recepção e D3 como transmissão; os pinos 0 e 1 ficam livres para a USB.</p><figure data-mbb-ampliavel="grafico" data-mbb-titulo="Mapa condicional de TX e RX entre Uno e HC-05, incluindo adaptação de nível."><img src="../img/arduino/ventilador/hc05-interface.svg" alt="Mapa condicional de TX e RX entre Uno e HC-05, incluindo adaptação de nível." loading="lazy" decoding="async"><figcaption>Mapa lógico, não montagem liberada: alimentação, níveis e adaptação dependem da variante concreta do módulo.</figcaption></figure>
+<h3>Identificar vem antes de alimentar</h3><p>“HC-05” não identifica toda a placa adaptadora. Um regulador em VCC não comprova tolerância de RX a 5 V. Fotografe ou registre a serigrafia, localize o documento da variante e confirme VCC, GND, TX, RX e, se existentes, KEY/EN e STATE. Não conecte um pino apenas pela posição em uma foto de outro módulo.</p>
+<p>O firmware entregue usa <code>SoftwareSerial(2, 3)</code> e 9600 bit/s em modo de dados. Esse é o perfil exigido pelo programa, que precisa ser conferido no HC-05 real. O modo de comandos AT pode usar outra configuração. Não altere configurações por tentativa.</p>
+<h3>Três resultados diferentes</h3><ol><li><strong>Pareado:</strong> o Android reconheceu e associou o dispositivo.</li><li><strong>Conectado:</strong> o aplicativo abriu um enlace SPP.</li><li><strong>Comando confirmado:</strong> o Arduino recebeu a mensagem e respondeu. Ainda não é uma medição física do motor.</li></ol>
+<h3>Teste depois da identificação</h3><p>Primeiro confirme a bancada de LEDs pelo Monitor Serial. Depois, com a alimentação desligada, monte somente a interface de baixa tensão conferida pelo responsável. Grave o checkpoint Bluetooth, pareie pelo Android e envie os caracteres de texto <code>0</code>, <code>1</code>, <code>2</code> e <code>3</code>.</p>
+<p>Se não houver resposta, confira baud rate, TX/RX, referência elétrica e o modo do módulo. Não aumente a tensão. Não suponha PIN universal de pareamento. O LED do módulo e o pino STATE só podem ser interpretados conforme sua documentação.</p><div class="vent-checkpoint"><h3>Checkpoint de aprendizagem</h3><p>O celular diz “pareado”, mas o LED de bancada não muda. Qual teste separa comunicação e saída?</p><details><summary>Conferir o raciocínio</summary><p>Comprove primeiro a bancada pelo checkpoint USB. Depois confira a abertura SPP no app, o texto enviado e o caractere de confirmação do Arduino.</p></details></div><p><a href="#b6-2">Continuar pelo curso: Wi-Fi com ESP32</a></p></section>
+<!-- VENTILADOR:AULA:FIM -->
 </main>
 </div>
 </div>
-<script src="../js/arduino-conectividade.js?v=20261008-3"></script>
+<script src="../js/arduino-conectividade.js?v=20261019-ventilador-1"></script>
 <script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>
 <script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+<!-- VENTILADOR:SCRIPTS:INICIO -->
+<script src="../js/mbb-visualizador.js?v=20261002-1" data-mbb-visualizador-global></script><script src="../js/ventilador-bluetooth.js?v=1"></script><script src="../js/mbb-ventilador-contexto.js?v=1"></script>
+<!-- VENTILADOR:SCRIPTS:FIM -->
 </body>
 </html>

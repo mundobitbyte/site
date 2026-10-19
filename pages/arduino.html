@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Apostila Técnica Interativa — Arduino: Projetos Iniciais com Circuitos Reais</title>
-<link href="../css/arduino.css?v=20261005-2" rel="stylesheet"/></head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="module-menu" id="arduinoModuleMenu" aria-label="Módulos do Arduino">
+<link href="../css/arduino.css?v=20261005-2" rel="stylesheet"/><!-- VENTILADOR:RECURSOS:INICIO -->
+<link rel="stylesheet" href="../css/ventilador-bluetooth.css?v=1"><link rel="stylesheet" data-mbb-visualizador-global href="../css/mbb-visualizador.css?v=20261002-1">
+<!-- VENTILADOR:RECURSOS:FIM -->
+</head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="module-menu" id="arduinoModuleMenu" aria-label="Módulos do Arduino">
 <button class="module-btn active" type="button" data-module="fundamentos" data-target="#intro">1. Fundamentos</button>
 <button class="module-btn" type="button" data-module="io" data-target="#p1">2. Entrada/Saída</button>
 <button class="module-btn" type="button" data-module="sensores" data-target="#p6">3. Sensores</button>
 <button class="module-btn" type="button" data-module="atuadores" data-target="#p8">4. Atuadores/Automação</button>
+<!-- VENTILADOR:MENU11:INICIO -->
+<a class="module-btn" href="arduino-ventilador-bluetooth.html">11. Projetos Práticos</a>
+<!-- VENTILADOR:MENU11:FIM -->
 <a class="module-btn" href="arduino-exercicios.html" style="text-decoration:none">99. Exercícios</a>
 </div>
 <div class="layout arduino-layout no-sidebar" id="arduinoLayout">
@@ -2059,7 +2065,21 @@ void loop() {
 </section>
 
 </section>
+<!-- VENTILADOR:AULA:INICIO -->
+<section class="project" id="atuadores-reles"><div class="vent-aula"><h2>Relés — do sinal ao contato</h2><p>Um pino consegue fornecer um sinal de controle, mas não deve alimentar diretamente qualquer carga. A nova necessidade é separar <strong>quem dá a ordem</strong> de <strong>quem comuta a carga</strong>. Um relé eletromecânico faz isso com uma bobina e um conjunto de contatos.</p>
+<p>Quando a bobina recebe a alimentação apropriada, seu campo magnético movimenta o contato. <strong>COM</strong> é o terminal comum; <strong>NA</strong> está normalmente aberto; <strong>NF</strong> está normalmente fechado. “Normalmente” significa bobina desenergizada. COM não é sinônimo de GND.</p><figure data-mbb-ampliavel="grafico" data-mbb-titulo="Modelo conceitual da bobina e dos contatos COM, NA e NF."><img src="../img/arduino/ventilador/rele-contatos.svg" alt="Modelo conceitual da bobina e dos contatos COM, NA e NF." loading="lazy" decoding="async"><figcaption>Representação funcional ideal; não representa o circuito ou a posição dos bornes de um módulo específico.</figcaption></figure>
+<div class="vent-simulador"><h3>Experimente o contato ideal</h3><label><input type="checkbox" data-rele-toggle> Energizar a bobina no modelo</label><p data-rele-estado role="status">Bobina desenergizada: COM–NF fechado; COM–NA aberto (modelo ideal).</p><p>O modelo não reproduz arco, repique, atraso ou contato colado. Ele ensina somente a relação entre bobina e contato.</p></div>
+<h3>O relé solto e o módulo não são a mesma coisa</h3><p>A bobina exige um circuito de acionamento. Um módulo pode incluir transistor, diodo para a bobina de corrente contínua, indicadores e optoacoplador. Verifique o esquema: a presença desses componentes não informa, sozinha, a capacidade dos bornes, das trilhas ou do isolamento. Não alimente uma bobina diretamente por um GPIO.</p>
+<h3>Antes da primeira montagem física</h3><ol><li>Identifique o modelo, a tensão e a corrente da bobina ou de VCC/JD-VCC, quando existentes.</li><li>Localize no documento do módulo os pinos de alimentação, entrada e os contatos.</li><li>Confira a tensão e a corrente exigidas da entrada de controle e se o acionamento ocorre em HIGH ou LOW.</li><li>Com toda a alimentação removida, o responsável pode conferir COM–NF e COM–NA com instrumento apropriado, sem conectar o ventilador.</li><li>Depois de aprovar módulo, fonte e driver, use como carga somente LED e resistor alimentados por fonte de bancada de baixa tensão adequada. Os contatos funcionam como uma chave no circuito do LED.</li></ol>
+<p><strong>Pendência desta edição:</strong> o módulo real ainda não foi identificado. Por isso, não há pinagem de alimentação, driver, fonte ou sketch físico de relé aprovados. A experiência executável disponível agora é o modelo de contato e a bancada com LEDs.</p>
+<h3>Por que “10 A” não resolve a seleção?</h3><p>A capacidade de um contato depende da tensão, do tipo de carga, da partida, da frequência de manobra e das condições reais. Um motor não se comporta como uma resistência. Um contato pode colar: mandar desligar sua bobina não garante que ele abra. Um programa que escolhe uma saída por vez também não comprova que somente um caminho físico está fechado.</p>
+<p>Para três velocidades de um motor, o projeto de potência precisa impedir combinações incompatíveis independentemente do software, inclusive nas falhas consideradas pelo responsável técnico. Não extrapole o modelo ideal para essa finalidade.</p>
+<h3>Erro comum</h3><p>Inverter NA e NF muda o comportamento em repouso. Trocar o programa para “compensar” sem entender o contato pode produzir partida inesperada ao desligar o Arduino.</p><div class="vent-checkpoint"><h3>Checkpoint de aprendizagem</h3><p>Com a bobina desligada, um LED continua aceso. Isso prova defeito?</p><details><summary>Conferir o raciocínio</summary><p>Não. Ele pode estar ligado ao contato NF. Identifique o caminho elétrico e o modelo antes de concluir. O experimento não envolve a rede elétrica.</p></details></div><p><a href="#p9">Continuar pelo curso: servo motor</a></p></div></section>
+<!-- VENTILADOR:AULA:FIM -->
 </main></div></div>
-<script src="../js/arduino.js"></script>
+<script src="../js/arduino.js?v=20261019-ventilador-1"></script>
 <script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+<!-- VENTILADOR:SCRIPTS:INICIO -->
+<script src="../js/mbb-visualizador.js?v=20261002-1" data-mbb-visualizador-global></script><script src="../js/ventilador-bluetooth.js?v=1"></script><script src="../js/mbb-ventilador-contexto.js?v=1"></script>
+<!-- VENTILADOR:SCRIPTS:FIM -->
 </body></html>

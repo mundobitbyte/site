@@ -604,7 +604,7 @@
   "pages/appinventor.html": {
     "conteudo_id": "mod-pages-appinventor",
     "titulo": "Programação Mobile com App Inventor",
-    "versao_conteudo": 1,
+    "versao_conteudo": 3,
     "localizacao_atual": "pages/appinventor.html",
     "ancoras": [
       "inicio",
@@ -619,7 +619,8 @@
       "usando-api",
       "exercicios-api-appinventor",
       "publicacao-app",
-      "exercicios"
+      "exercicios",
+      "bluetooth-ventilador"
     ]
   },
   "pages/arduino-avaliacao-conceitual.html": {
@@ -661,7 +662,7 @@
   "pages/arduino-conectividade.html": {
     "conteudo_id": "mod-pages-arduino-conectividade",
     "titulo": "6 — Conectividade | Sistemas Embarcados e IoT",
-    "versao_conteudo": 1,
+    "versao_conteudo": 2,
     "localizacao_atual": "pages/arduino-conectividade.html",
     "ancoras": [
       "b6-0",
@@ -670,7 +671,8 @@
       "b6-2",
       "b6-3",
       "b6-4",
-      "b6-5"
+      "b6-5",
+      "b6-hc05"
     ]
   },
   "pages/arduino-exercicios.html": {
@@ -755,18 +757,19 @@
   "pages/arduino-seguranca.html": {
     "conteudo_id": "mod-pages-arduino-seguranca",
     "titulo": "9 — Proteção e Segurança em IoT | Sistemas Embarcados e IoT",
-    "versao_conteudo": 1,
+    "versao_conteudo": 2,
     "localizacao_atual": "pages/arduino-seguranca.html",
     "ancoras": [
       "b9-prep",
       "b9-1",
-      "b9-2"
+      "b9-2",
+      "b9-eletricidade"
     ]
   },
   "pages/arduino.html": {
     "conteudo_id": "mod-pages-arduino",
     "titulo": "Arduino: Projetos Iniciais com Circuitos Reais",
-    "versao_conteudo": 1,
+    "versao_conteudo": 2,
     "localizacao_atual": "pages/arduino.html",
     "ancoras": [
       "p1",
@@ -781,7 +784,8 @@
       "lab1",
       "lab2",
       "lab3",
-      "lab4"
+      "lab4",
+      "atuadores-reles"
     ]
   },
   "pages/backend-fastapi.html": {
@@ -2156,6 +2160,22 @@
       ":~:text=Fa%C3%A7a%20a%20transfer%C3%AAncia",
       ":~:text=Fechamento",
       ":~:text=Ao%20concluir%20o%20m%C3%B3dulo"
+    ]
+  },
+  "pages/arduino-ventilador-bluetooth.html": {
+    "conteudo_id": "mod-pages-arduino-ventilador-bluetooth",
+    "titulo": "11 — Controle de Ventilador por Bluetooth | Projetos Práticos",
+    "versao_conteudo": 2,
+    "localizacao_atual": "pages/arduino-ventilador-bluetooth.html",
+    "ancoras": [
+      "etapa-1",
+      "etapa-2",
+      "etapa-3",
+      "etapa-4",
+      "etapa-5",
+      "etapa-6",
+      "etapa-7",
+      "etapa-8"
     ]
   }
 }
