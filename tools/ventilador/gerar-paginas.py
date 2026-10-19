@@ -9,7 +9,8 @@ def write(path, text):
     p=ROOT/path; p.parent.mkdir(parents=True,exist_ok=True); p.write_text(text,encoding='utf-8')
 def figure(name,alt,caption):
     filename=name if '.' in name else name+'.svg'
-    return f'<figure data-mbb-ampliavel="grafico" data-mbb-titulo="{escape(alt)}"><img src="../img/arduino/ventilador/{filename}" alt="{escape(alt)}" loading="lazy" decoding="async"><figcaption>{caption}</figcaption></figure>'
+    version = '?v=20261019-mbb-2' if filename.endswith('.svg') else ''
+    return f'<figure data-mbb-ampliavel="grafico" data-mbb-titulo="{escape(alt)}"><img src="../img/arduino/ventilador/{filename}{version}" alt="{escape(alt)}" loading="lazy" decoding="async"><figcaption>{caption}</figcaption></figure>'
 def table(head,rows):
     ampliar = ' data-mbb-ampliavel="tabela" data-mbb-titulo="'+escape(' · '.join(head))+'"' if len(head) >= 3 else ''
     return '<div class="table-wrap"'+ampliar+'><table><thead><tr>'+''.join('<th scope="col">'+h+'</th>' for h in head)+'</tr></thead><tbody>'+''.join('<tr>'+''.join('<td>'+c+'</td>' for c in row)+'</tr>' for row in rows)+'</tbody></table></div>'
