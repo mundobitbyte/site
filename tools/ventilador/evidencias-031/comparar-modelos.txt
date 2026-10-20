@@ -1,5 +1,0 @@
-PASS: 20000 passos em 100 rastros deterministas, seed 20261019; estados, mensagens, fila, botoes e prazos iguais a correcao minima.
-Inclui respostas antigas, repeticoes, erros, desconexoes, reconexoes, permissoes, prazo e variacao do relogio. Nao comprova o runtime MIT/Android.
-SHA256_REFERENCIA=7a34ea10b6e737ca79804c8622d49f26febf600e9e2c2f94bb4d49f2597f6138
-SHA256_REVISADO=69f806fd41c1435dbd4420e0ee737a92f92b20f064169e5de99684c6b713bfc6
-

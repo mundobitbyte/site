@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function(){
   const menu = document.getElementById('arduinoModuleMenu');
   if(!menu) return;
 
-  const exercicios = menu.querySelector('a[href="arduino-ventilador-bluetooth.html"]') || menu.querySelector('a[href="arduino-exercicios.html"]');
+  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
 
   if(!menu.querySelector('a[href="arduino-iot.html"]')){
     const link7 = document.createElement('a');
@@ -113,7 +113,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
     if(updateUrl){
       history.replaceState(null, '', hash);
-      window.dispatchEvent(new Event('hashchange'));
     }
 
     const irDiretoAoTopico = updateUrl || location.hash === hash;
@@ -145,8 +144,6 @@ document.addEventListener('DOMContentLoaded', function(){
     : '#b6-0';
 
   showPanel(initialHash, false);
-  window.addEventListener('hashchange', () => { if (/^#[A-Za-z0-9_-]+$/.test(location.hash)) showPanel(location.hash, false); });
-  window.addEventListener('popstate', () => { if (/^#[A-Za-z0-9_-]+$/.test(location.hash)) showPanel(location.hash, false); });
 });
 
 function manterModuloAtivoVisivel(){

@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Apostila Técnica Interativa — Arduino: Projetos Iniciais com Circuitos Reais</title>
-<link href="../css/arduino.css?v=20261005-2" rel="stylesheet"/><!-- VENTILADOR:RECURSOS:INICIO -->
-<link rel="stylesheet" href="../css/ventilador-bluetooth.css?v=20261019-mbb-2"><link rel="stylesheet" data-mbb-visualizador-global href="../css/mbb-visualizador.css?v=20261002-1">
-<!-- VENTILADOR:RECURSOS:FIM -->
-</head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="module-menu" id="arduinoModuleMenu" aria-label="Módulos do Arduino">
+<link href="../css/arduino.css?v=20261005-2" rel="stylesheet"/></head><body><header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Arduino</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header><div class="module-menu" id="arduinoModuleMenu" aria-label="Módulos do Arduino">
 <button class="module-btn active" type="button" data-module="fundamentos" data-target="#intro">1. Fundamentos</button>
 <button class="module-btn" type="button" data-module="io" data-target="#p1">2. Entrada/Saída</button>
 <button class="module-btn" type="button" data-module="sensores" data-target="#p6">3. Sensores</button>
 <button class="module-btn" type="button" data-module="atuadores" data-target="#p8">4. Atuadores/Automação</button>
-<!-- VENTILADOR:MENU11:INICIO -->
-<a class="module-btn" href="arduino-ventilador-bluetooth.html">11. Projetos Práticos</a>
-<!-- VENTILADOR:MENU11:FIM -->
 <a class="module-btn" href="arduino-exercicios.html" style="text-decoration:none">99. Exercícios</a>
 </div>
 <div class="layout arduino-layout no-sidebar" id="arduinoLayout">
@@ -2065,22 +2059,7 @@ void loop() {
 </section>
 
 </section>
-<!-- VENTILADOR:AULA:INICIO -->
-<section class="project" id="atuadores-reles"><div class="vent-aula"><h2>Relés — do sinal ao contato</h2><p>Você já usou um pino do Arduino para acender um LED. Mas o pino não pode alimentar qualquer aparelho. Para entender essa diferença, pense em um interruptor: a mão dá a ordem, enquanto os contatos abrem ou fecham o caminho da corrente. No relé, quem move esse interruptor é um pequeno eletroímã, chamado <strong>bobina</strong>.</p>
-<p>Quando a bobina recebe a alimentação correta, ela cria um campo magnético e move um contato. Veja os três nomes que aparecem no desenho: <strong>COM</strong> é o contato comum; <strong>NA</strong> significa normalmente aberto; <strong>NF</strong>, normalmente fechado. A palavra “normalmente” descreve a posição com a bobina sem alimentação. COM não é o GND do Arduino.</p><figure data-mbb-ampliavel="grafico" data-mbb-titulo="Como a bobina move os contatos COM, NA e NF do relé."><img src="../img/arduino/ventilador/rele-contatos.svg?v=20261019-mbb-2" alt="Como a bobina move os contatos COM, NA e NF do relé." loading="lazy" decoding="async"><figcaption>A figura explica o funcionamento. Para localizar os terminais de um relé real, consulte o desenho do fabricante.</figcaption></figure>
-<div class="vent-simulador"><h3>Experimente antes de continuar</h3><p>Marque e desmarque a opção. Observe qual caminho fica fechado em cada situação.</p><label><input type="checkbox" data-rele-toggle> Ligar a bobina no desenho</label><p data-rele-estado role="status">Bobina sem alimentação: COM–NF fechado; COM–NA aberto (modelo ideal).</p><p>“Fechado” permite a passagem da corrente; “aberto” interrompe esse caminho. Aqui observamos apenas o desenho: ele não representa desgaste nem falhas de um relé real.</p></div>
-<h3>Por que existe uma placa de relés?</h3><p>A bobina precisa de mais do que a ordem enviada pelo pino. Por isso, a placa pode trazer um transistor para acioná-la e um diodo para proteger o circuito quando uma bobina de corrente contínua é desligada. Alguns modelos também têm LEDs e um componente que transmite o sinal por luz, o <strong>optoacoplador</strong>. Esses componentes variam entre placas. Não ligue uma bobina diretamente ao pino do Arduino.</p>
-<p>Antes de usar uma placa, o professor precisa conferir seu modelo, a alimentação, a corrente exigida e se a entrada é acionada por <code>HIGH</code> ou <code>LOW</code>, os níveis alto e baixo do sinal digital. Marcações como <code>VCC</code> e <code>JD-VCC</code> devem ser interpretadas pelo documento daquela placa; não adivinhe a ligação pela posição dos pinos.</p>
-<h3>Como estudar um relé sem usar o ventilador</h3><ol><li>Comece pelo desenho e explique o caminho COM–NF com a bobina desligada.</li><li>Peça ao professor que identifique a placa e confira a alimentação e o circuito que a aciona.</li><li>Com tudo desligado da alimentação, o professor pode verificar os contatos com um instrumento apropriado.</li><li>Somente depois dessa conferência, um exercício separado pode usar os contatos como interruptor de um LED com resistor e fonte de baixa tensão adequada.</li></ol>
-<p>Os programas deste projeto controlam LEDs diretamente pelos pinos D5, D6 e D7. Eles não são programas prontos para uma placa de relés. Até que a placa real seja identificada e avaliada, use apenas a simulação dos contatos nesta aula.</p>
-<h3>Por que a inscrição “10 A” não basta?</h3><p>Ela não diz, sozinha, se o relé serve para aquele motor. Ao começar a girar, o motor pode exigir uma corrente diferente da corrente de funcionamento. O fabricante também estabelece condições de tensão, tipo de aparelho ligado e frequência das trocas. Além disso, um contato pode ficar preso, mesmo depois de desligar a bobina.</p>
-<aside class="vent-nota"><strong>ATENÇÃO</strong><p>Escolher uma saída de cada vez no programa não garante que apenas um contato real esteja fechado. No ventilador, o projeto elétrico precisa impedir ligações de velocidades incompatíveis e considerar falhas dos componentes. Essa avaliação cabe ao profissional responsável.</p></aside>
-<p>Um erro comum é trocar NA por NF e tentar corrigir apenas no código. Primeiro entenda o caminho da corrente: do contrário, o aparelho pode ligar quando você esperava que estivesse desligado.</p><div class="vent-checkpoint"><h3>Confira o que aprendeu</h3><p>Com a bobina desligada, um LED continua aceso. O relé está necessariamente com defeito?</p><details><summary>Conferir o raciocínio</summary><p>Não. O LED pode estar no caminho COM–NF, que fica fechado com a bobina sem alimentação. Confira o desenho e os terminais antes de concluir. Essa observação deve ser feita em um exercício de baixa tensão, sem rede elétrica.</p></details></div><p><a href="#p9">Continuar pelo curso: servo motor</a></p></div></section>
-<!-- VENTILADOR:AULA:FIM -->
 </main></div></div>
-<script src="../js/arduino.js?v=20261019-ventilador-1"></script>
+<script src="../js/arduino.js?v=20261020-retirada-1"></script>
 <script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
-<!-- VENTILADOR:SCRIPTS:INICIO -->
-<script src="../js/mbb-visualizador.js?v=20261002-1" data-mbb-visualizador-global></script><script src="../js/ventilador-bluetooth.js?v=20261019-mbb-2"></script><script src="../js/mbb-ventilador-contexto.js?v=1"></script>
-<!-- VENTILADOR:SCRIPTS:FIM -->
 </body></html>
