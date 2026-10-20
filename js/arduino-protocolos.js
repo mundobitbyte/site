@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function(){
   const menu = document.getElementById('arduinoModuleMenu');
   if(!menu) return;
 
-  const exercicios = menu.querySelector('a[href="arduino-ventilador-bluetooth.html"]') || menu.querySelector('a[href="arduino-exercicios.html"]');
+  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
 
   if(!menu.querySelector('a[href="arduino-seguranca.html"]')){
     const link9 = document.createElement('a');

@@ -59,7 +59,6 @@ function montarMenuEtapas(){
     <a class="stage-link" data-module="sensores" href="#lab2">Sensor de ré</a>
     <a class="stage-link" data-module="atuadores" href="#p8">LED RGB</a>
     <a class="stage-link" data-module="atuadores" href="#lab3">RGB + botões</a>
-    <a class="stage-link" data-module="atuadores" href="#atuadores-reles">Relés</a>
     <a class="stage-link" data-module="atuadores" href="#p9">Servo Motor</a>
     <a class="stage-link" data-module="atuadores" href="#lab4">Lixeira automática</a>
     <a class="stage-link stage-exercises" data-module="fundamentos io sensores atuadores" href="#exercicios">Exercícios</a>
@@ -72,7 +71,7 @@ function montarMenuEtapas(){
 function acrescentarModulos5a10(){
   const menu = document.getElementById('arduinoModuleMenu');
   if(!menu) return;
-  const exercicios = menu.querySelector('a[href="arduino-ventilador-bluetooth.html"]') || menu.querySelector('a[href="arduino-exercicios.html"]');
+  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
   const itens = [
     ['arduino-programacao-aplicada.html','5. Programação Aplicada'],
     ['arduino-conectividade.html','6. Conectividade'],
@@ -108,7 +107,7 @@ function iniciarNavegacaoArduino(){
     '#intro':'fundamentos', '#fund-experimentar':'fundamentos', '#fund-minilabs':'fundamentos', '#fund-desafios':'fundamentos', '#p1':'fundamentos',
     '#p2':'io', '#p3':'io', '#p4':'io', '#p5':'io', '#lab1':'io',
     '#p6':'sensores', '#p7':'sensores', '#lab2':'sensores',
-    '#atuadores-reles':'atuadores', '#p8':'atuadores', '#lab3':'atuadores', '#p9':'atuadores', '#lab4':'atuadores',
+    '#p8':'atuadores', '#lab3':'atuadores', '#p9':'atuadores', '#lab4':'atuadores',
     '#ex-fundamentos':'fundamentos', '#ex-led':'fundamentos',
     '#ex-blink':'io', '#ex-botao':'io', '#ex-buzzer':'io', '#ex-pwm':'io', '#ex-monitor-serial':'io',
     '#ex-ldr':'sensores', '#ex-sensor-re':'sensores',
@@ -139,7 +138,7 @@ function iniciarNavegacaoArduino(){
     document.querySelectorAll('main > section[id]').forEach(section => section.classList.remove('active-panel'));
     topPanel.classList.add('active-panel');
     setActiveStage(hash);
-    if(updateUrl) { history.replaceState(null,'',hash); window.dispatchEvent(new Event('hashchange')); }
+    if(updateUrl) history.replaceState(null,'',hash);
     window.scrollTo(0,0);
     if(hash !== '#' + topPanel.id){ requestAnimationFrame(() => { const nested=document.querySelector(hash); if(nested) nested.scrollIntoView({block:'start'}); }); }
   }
@@ -166,18 +165,13 @@ function iniciarNavegacaoArduino(){
   if(stageBackdrop) stageBackdrop.addEventListener('click',closeDrawer);
   document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
 
-  function lerAncora() {
-  const initialHash = /^#[A-Za-z0-9_-]+$/.test(location.hash) && document.getElementById(location.hash.slice(1)) ? location.hash : '#intro';
+  const initialHash = location.hash && document.querySelector(location.hash) ? location.hash : '#intro';
   let initialModule = sectionModule[initialHash];
   if(!initialModule){
     const t=document.querySelector(initialHash); const top=t && (t.matches('main > section[id]') ? t : t.closest('main > section[id]'));
     if(top && top.id==='exercicios') initialModule='io';
   }
   activateModule(initialModule || 'fundamentos', initialHash, false);
-  }
-  window.addEventListener('hashchange', lerAncora);
-  window.addEventListener('popstate', lerAncora);
-  lerAncora();
 }
 
 function manterModuloAtivoVisivel(){

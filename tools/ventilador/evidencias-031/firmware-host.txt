@@ -1,2 +1,0 @@
-PASS: firmware em host; 16 combinacoes, cada escrita GPIO, invalido, prazo, mensagem atrasada, CR/LF, wrap de 32 bits, loop e reset.
-Modelo de GPIO/serial/tempo; nao placa fisica.

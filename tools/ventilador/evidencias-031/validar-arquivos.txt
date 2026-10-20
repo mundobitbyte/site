@@ -1,8 +1,0 @@
-PASS: 8 etapas e 3 codigos identicos aos arquivos entregues.
-PASS: recursos locais e destinos dos conceitos; sem IDs repetidos nas 5 paginas.
-PASS: 6 SVG validos, escalaveis e sem dependencias externas.
-PASS: .aia ZIP, Designer e blocos correspondentes; referencias de componentes conferidas.
-PASS: Desligar repetido conserva prazo, mantem prioridade sobre 1/2/3, rejeita ACK tardio e preserva erro no reenvio.
-PASS: 10 eventos/5 globais no modelo XML; handshake 0, quatro comandos, bloqueio durante espera, Desligar prioritario, resposta antiga, prazo 1999/2000 ms, resposta tardia, Timer atrasado, heartbeat sem eco, perda, reconexao, Bluetooth desligado/ausente, permissao, byte invalido e erros durante envio/conexao/Timer.
-LIMITES: interpretacao estrutural nao e importacao MIT, compilacao de APK ou teste Android; prazo depende do agendamento Android e de SystemTime; protocolo sem identificador nao autentica resposta nem distingue ecos antigos iguais.
-

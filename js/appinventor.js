@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     target.scrollIntoView({behavior:"auto",block:"start",inline:"nearest"});
 
     activateLink(id);
-    if(updateHistory) { history.replaceState(null,"","#"+id); window.dispatchEvent(new Event("hashchange")); }
+    if(updateHistory) history.replaceState(null,"","#"+id);
   }
 
   moduleButtons.forEach(btn=>{
@@ -133,7 +133,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     updateActiveFromScroll();
   });
 
-  function lerAncora(){
   const initialId=location.hash?.slice(1);
   if(initialId && document.getElementById(initialId)){
     const exactLink=stageLinks.find(link=>link.getAttribute("href")==="#"+initialId);
@@ -147,10 +146,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     setModule("fundamentos",false);
     updateActiveFromScroll();
   }
-  }
-  window.addEventListener("hashchange",lerAncora);
-  window.addEventListener("popstate",lerAncora);
-  lerAncora();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
