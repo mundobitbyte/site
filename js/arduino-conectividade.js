@@ -169,10 +169,10 @@ document.addEventListener('DOMContentLoaded', function(){
   const secao = document.getElementById('b6-prep');
   if(!secao || secao.querySelector('[data-mbb-circuito="b6-prep"]')) return;
 
-  const cabecalho = secao.querySelector('.projectHead');
-  if(!cabecalho) return;
+  const montagem = Array.from(secao.querySelectorAll('.card')).find(card => card.querySelector('h3')?.textContent.includes('Montando o circuito-base'));
+  if(!montagem) return;
 
-  cabecalho.insertAdjacentHTML('afterend', `
+  montagem.insertAdjacentHTML('beforeend', `
     <div class="circuitPanel" data-mbb-circuito="b6-prep">
       <h3>Circuito-base do bloco</h3>
       <figure class="circuitFigure">
