@@ -91,10 +91,22 @@ class Pratica(unittest.TestCase):
         self.assertIn('Tempo estimado: 55 minutos.', self.get('/balcao.php'))
 
     def test_06_fonte_fora_da_raiz_publica(self):
+        marker = 'DADO-PRIVADO-DO-TESTE-WEB3'
+        (self.app / 'dados/cafe-aurora.sqlite').write_bytes(b'SQLite format 3\x00' + marker.encode())
+        homepage = self.get('/')
         for path in ['/src/atendimento.php', '/dados/cafe-aurora.sqlite']:
-            with self.assertRaises(urllib.error.HTTPError) as error:
-                self.get(path)
-            self.assertEqual(error.exception.code, 404)
+            try:
+                # O servidor embutido pode usar index.php como fallback para URL inexistente.
+                # 200 com a página pública não significa que o arquivo privado foi servido.
+                response = self.get(path)
+            except urllib.error.HTTPError as error:
+                self.assertEqual(error.code, 404)
+                error.close()
+            else:
+                self.assertEqual(response, homepage)
+                self.assertNotIn('function obterAtendimento', response)
+                self.assertNotIn(marker, response)
+                self.assertNotIn('SQLite format 3', response)
 
     def test_07_html_do_site_e_demais_arquivos_preservados(self):
         with zipfile.ZipFile(DOWNLOADS / 'cafe-aurora-web2-capitulo-12.zip') as z:
@@ -118,6 +130,7 @@ class Pratica(unittest.TestCase):
         with self.assertRaises(urllib.error.HTTPError) as error:
             self.get('/balcao.php')
         self.assertEqual(error.exception.code, 500)
+        error.exception.close()
 
     def test_10_mensagem_persistida_e_painel_autenticado(self):
         subprocess.run(['php', 'src/inicializar-banco.php'], cwd=self.app, check=True, capture_output=True)
