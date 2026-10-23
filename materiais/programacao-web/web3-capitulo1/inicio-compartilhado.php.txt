@@ -1,0 +1,8 @@
+<?php
+require_once dirname(__DIR__) . "/src/atendimento.php";
+$atendimento = obterAtendimento();
+
+$nomeNegocio = $atendimento["nomeNegocio"];
+$mensagemStatus = $atendimento["mensagemStatus"];
+$mensagemTempo = $atendimento["mensagemTempo"];
+?>
