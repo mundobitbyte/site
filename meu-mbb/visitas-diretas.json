@@ -1412,7 +1412,7 @@
       "levels-title",
       ":~:text=Web%20I%20%E2%80%94%20Sites",
       ":~:text=Web%20II%20%E2%80%94%20Sistemas",
-      ":~:text=Web%20III%20%E2%80%94%20APIs%20e%20Frameworks"
+      ":~:text=Web%20III%20%E2%80%94%20Aplica%C3%A7%C3%B5es%20e%20servi%C3%A7os"
     ]
   },
   "pages/programacao.html": {
@@ -2156,6 +2156,38 @@
       ":~:text=Fa%C3%A7a%20a%20transfer%C3%AAncia",
       ":~:text=Fechamento",
       ":~:text=Ao%20concluir%20o%20m%C3%B3dulo"
+    ]
+  },
+  "pages/programacao-web/web3.html": {
+    "conteudo_id": "web3-comum-balcao",
+    "titulo": "Web III — Capítulo 1 · Aula 1: o balcão precisa saber",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3.html",
+    "ancoras": [
+      "titulo-capitulo",
+      "pedido-balcao",
+      "primeira-tela",
+      "duas-fontes",
+      "fonte-compartilhada",
+      "balcao-consulta",
+      "checkpoint-aula-1"
+    ]
+  },
+  "pages/programacao-web/web3-aula2.html": {
+    "conteudo_id": "web3-comum-fonte",
+    "titulo": "Web III — Capítulo 1 · Aula 2: mudar uma vez",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-aula2.html",
+    "ancoras": [
+      "titulo-capitulo",
+      "duas-apresentacoes",
+      "conectar-site",
+      "mudar-uma-vez",
+      "encerrar-atendimento",
+      "pagina-aberta",
+      "preservar-cafe",
+      "checkpoint-capitulo-1",
+      "proxima-necessidade"
     ]
   }
 }

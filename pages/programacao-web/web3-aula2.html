@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Web III: continue o Café Aurora construindo uma tela de balcão e uma fonte de atendimento compartilhada. Capítulo 1, aula 2.">
+  <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-aula2.html">
+  <title>Web III — Uma informação, duas telas | Mundo bit Byte</title>
+  <link href="../../css/programacao-web.css?v=13" rel="stylesheet">
+  <link href="../../css/web3.css?v=1" rel="stylesheet">
+</head>
+<body class="module-page web3-page" data-module-title="Web III">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header>
+    <div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div>
+    <a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a>
+    <div class="brand">Professor Ronaldo Lavestein</div>
+  </header>
+  <nav class="level-menu" aria-label="Níveis de Programação Web">
+    <a class="level-menu-item" href="web1.html">Web I — Sites</a>
+    <a class="level-menu-item" href="web2.html">Web II — Sistemas</a>
+    <span class="level-menu-item active" aria-current="page">Web III <small>Em desenvolvimento</small></span>
+  </nav>
+  <div class="web-layout">
+    <nav class="chapter-menu" aria-label="Aulas do capítulo disponível">
+      <h2>Capítulo 1</h2>
+      <p class="web3-menu-title">Uma informação, duas telas</p>
+      <a class="chapter-link "  href="web3.html#capitulo-1">1. O balcão precisa saber</a>
+      <a class="chapter-link active" aria-current="page" href="web3-aula2.html#capitulo-1">2. Mudar uma vez</a>
+      <p class="web3-menu-note">Somente o Capítulo 1 está disponível. Os próximos serão liberados após revisão.</p>
+    </nav>
+    <main class="web-content" id="conteudo" tabindex="-1">
+      <article class="chapter" id="capitulo-1" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web III · Capítulo 1 · Aula 2 de 2</span>
+          <h2 id="titulo-capitulo" tabindex="-1">Uma informação, duas telas</h2>
+          <p class="chapter-meta">Café Aurora · início comum aos percursos · 4 horas-aula estimadas no capítulo</p>
+          <p class="web3-status">Em desenvolvimento · primeiro capítulo disponível para avaliação.</p>
+        </div>
+
+<section aria-labelledby="duas-apresentacoes">
+  <h3 id="duas-apresentacoes">O balcão já consulta. Falta o site.</h3>
+  <p>Na <a href="web3.html#checkpoint-aula-1">primeira aula</a>, você criou a tela de balcão e percebeu por que duas fontes independentes podem apresentar estimativas diferentes. O balcão já usa <code class="inline-code">src/atendimento.php</code>. Agora vamos fazer o site consultar a mesma informação.</p>
+  <p><strong>Abra sua cópia de estudo e mantenha o servidor PHP em execução.</strong> Em abas separadas, deixe <a href="http://localhost:8000/" target="_blank" rel="noopener">o site</a> e <a href="http://localhost:8000/balcao.php" target="_blank" rel="noopener">o balcão</a> abertos. A prática acontece localmente; esta página apresenta as instruções.</p>
+  <p>Se precisar recuperar o trabalho, o <a href="../../downloads/programacao-web/cafe-aurora-web3-aula-1.zip" download>checkpoint intermediário da aula 1</a> contém exatamente o ponto de partida desta aula. Descompacte em outra pasta e identifique a origem.</p>
+</section>
+<section aria-labelledby="conectar-site">
+  <h3 id="conectar-site">Uma alteração pequena na página que já existe</h3>
+  <p><strong>Abra <code class="inline-code">public/index.php</code>.</strong> Localize o primeiro bloco PHP: ele define o nome do negócio, o estado, a estimativa e os textos de atendimento. Substitua <strong>somente esse bloco, de &lt;?php até ?&gt;</strong>, pelo seguinte:</p>
+<pre class="code-block"><code>&lt;?php
+require_once dirname(__DIR__) . &quot;/src/atendimento.php&quot;;
+$atendimento = obterAtendimento();
+
+$nomeNegocio = $atendimento[&quot;nomeNegocio&quot;];
+$mensagemStatus = $atendimento[&quot;mensagemStatus&quot;];
+$mensagemTempo = $atendimento[&quot;mensagemTempo&quot;];
+?&gt;</code></pre>
+  <p><strong>Preserve todo o HTML que vem depois.</strong> Ele já usa as variáveis <code class="inline-code">$nomeNegocio</code>, <code class="inline-code">$mensagemStatus</code> e <code class="inline-code">$mensagemTempo</code>. As três atribuições mantêm esses nomes para receber os campos da fonte compartilhada. Não há motivo para reconstruir a página.</p>
+  <p>A decisão antiga não deve continuar no arquivo abaixo desse trecho. Se ela permanecer, poderá sobrescrever os valores novos e a duplicação continuará existindo.</p>
+<pre class="code-block"><code>php -l public/index.php</code></pre>
+  <p>Salve, confira a sintaxe e recarregue as duas abas. Com os valores de referência, as duas devem informar atendimento aberto e 25 minutos.</p>
+</section>
+<section aria-labelledby="mudar-uma-vez">
+  <h3 id="mudar-uma-vez">Agora faça uma mudança em um único ponto</h3>
+  <p>A proprietária avisou que a preparação passou a levar <strong>40 minutos</strong>. Antes de editar, responda: em qual arquivo você faria essa alteração?</p>
+  <p><strong>Altere apenas <code class="inline-code">$tempoEstimado</code> em <code class="inline-code">src/atendimento.php</code>.</strong> Salve e recarregue as duas páginas. Site e balcão precisam apresentar 40 minutos, sem uma segunda edição.</p>
+  <figure class="web3-resultado"><figcaption>O que conferir nas duas apresentações</figcaption><p>Pedidos para retirada estão abertos.</p><p><strong>Tempo estimado: 40 minutos.</strong></p></figure>
+  <p>A conquista não é ter dois textos iguais por coincidência. É conseguir alterar a fonte uma vez e demonstrar o efeito em dois consumidores.</p>
+  <p><strong>Faça agora uma mudança sem o passo a passo:</strong> escolha outra estimativa fictícia, preveja o resultado e demonstre-o nas duas páginas. Explique a um colega o caminho entre a fonte e o HTML.</p>
+</section>
+<section aria-labelledby="encerrar-atendimento">
+  <h3 id="encerrar-atendimento">Quando a cozinha encerra, a informação precisa mudar</h3>
+  <p>No mesmo arquivo compartilhado, altere <code class="inline-code">$pedidosAbertos</code> para <code class="inline-code">false</code>. Salve e solicite novamente as duas páginas.</p>
+  <figure class="web3-resultado"><figcaption>Resultado esperado com atendimento encerrado</figcaption><p>Pedidos para retirada estão encerrados.</p><p>Consulte novamente durante o horário de atendimento.</p></figure>
+  <p>O número da estimativa pode continuar definido no programa, mas não deve ser oferecido como prazo de um atendimento que está encerrado. Esse cuidado já existia no Web II e foi preservado ao reorganizar a decisão.</p>
+  <p>Volte para atendimento aberto e confira a mudança. Não crie um formulário de edição ou uma tabela nova: eles não são necessários para verificar esta primeira organização.</p>
+</section>
+<section aria-labelledby="pagina-aberta">
+  <h3 id="pagina-aberta">Uma fonte comum não atualiza a aba sozinha</h3>
+  <p><strong>Deixe o balcão aberto e altere novamente a estimativa na fonte.</strong> Salve, mas recarregue somente o site. Observe a diferença antes de recarregar o balcão.</p>
+  <p>A aba do balcão ainda mostra o HTML recebido na requisição anterior. Não é a duplicação que corrigimos: as duas páginas consultam a mesma fonte, mas fizeram as consultas em momentos diferentes.</p>
+  <p>Recarregue o balcão. A informação volta a concordar. Você deve conseguir explicar a diferença entre <strong>uma decisão compartilhada</strong> e <strong>atualização automática de uma tela já aberta</strong>.</p>
+</section>
+<section aria-labelledby="preservar-cafe">
+  <h3 id="preservar-cafe">O que já funcionava continua funcionando?</h3>
+  <p>Não alteramos o cardápio, os arquivos administrativos ou o banco. Mesmo assim, vale conferir os caminhos principais depois de mexer no início do site.</p>
+  <ol><li>Abra a página inicial e o cardápio; confira os links e a apresentação.</li><li>Envie uma mensagem fictícia pelo contato. Se a cópia ainda não tem banco ou administrador, use a preparação conhecida do Web II indicada abaixo.</li><li>Entre no painel, localize a mensagem, confira o andamento e a regra de exclusão que você já estudou.</li><li>Execute a suíte anterior, se as dependências estiverem instaladas. Corrija qualquer regressão antes de considerar a entrega concluída.</li></ol>
+  <details><summary>Preparação da referência e suíte do Web II</summary>
+    <p>Na raiz da cópia, os comandos abaixo preparam banco e administrador. O segundo solicita usuário administrativo e senha de pelo menos 12 caracteres pelo terminal. Use somente dados fictícios no exercício e não publique credenciais.</p>
+<pre class="code-block"><code>php src/verificar-ambiente.php
+php src/inicializar-banco.php
+php src/criar-administrador.php</code></pre>
+    <p>Para repetir os testes do projeto anterior, use o Composer já trabalhado no Web II:</p>
+<pre class="code-block"><code>composer install
+composer test</code></pre>
+    <p>A referência mantém PHP ^8.5, PDO/SQLite e PHPUnit ^13.0. Se houver dificuldade específica de dependência, retome <a href="web2.html#capitulo-11">a organização da suíte</a>. Não é necessário instalar outro framework para concluir este capítulo.</p>
+  </details>
+  <p><strong>Registre a verificação em poucas linhas</strong>, por exemplo em <code class="inline-code">docs/verificacoes-capitulo-1.md</code>: ação realizada, resultado esperado, observado e correção necessária. Uma captura ajuda, mas não substitui mostrar a mudança funcionando.</p>
+</section>
+<section class="checkpoint-box" aria-labelledby="checkpoint-capitulo-1">
+  <h3 id="checkpoint-capitulo-1">Mostre a conquista do capítulo</h3>
+  <p>Antes de marcar a aula como concluída no Meu estudo, faça esta demonstração na sua cópia:</p>
+  <ul class="check-list"><li>Altere uma estimativa em um único arquivo e mostre o efeito nas duas páginas.</li><li>Encerre o atendimento e confira as mensagens.</li><li>Mostre que a decisão duplicada saiu de <code class="inline-code">index.php</code> e <code class="inline-code">balcao.php</code>.</li><li>Explique por que uma aba já aberta precisa consultar novamente.</li><li>Apresente o resultado da conferência do fluxo anterior.</li></ul>
+  <p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-capitulo-1.zip" download>Baixar checkpoint do Capítulo 1 concluído</a></p>
+  <p>O pacote contém a base preservada, os três arquivos envolvidos e o roteiro de conferência. Use-o em uma pasta separada para comparação. Não contém banco, senha ou dependências instaladas.</p>
+</section>
+<section aria-labelledby="proxima-necessidade">
+  <h3 id="proxima-necessidade">O Café já avançou. A próxima necessidade apareceu.</h3>
+  <p>O balcão ganhou sua própria apresentação. Site e balcão passaram a consultar uma fonte comum, e você mostrou como preservar a decisão ao reorganizar o código.</p>
+  <p>Agora imagine consultar o atendimento sem recarregar todo o documento, ou apresentar a informação em uma interface que não executa PHP. Incluir o arquivo de apoio nessa interface não seria suficiente.</p>
+  <p>Precisaremos combinar os dados que ela recebe e uma forma de consultá-los. Essa será a continuação do Café.</p>
+  <p class="web3-status"><strong>Fim do conteúdo disponível.</strong> O próximo capítulo ainda não está publicado. Este início é comum; os percursos específicos serão apresentados quando estiverem disponíveis.</p>
+</section>
+<div class="chapter-footer"><a href="web3.html#checkpoint-aula-1">← Aula 1 — O balcão precisa saber</a><a href="../programacao-web.html">Voltar à Programação Web</a></div>
+
+      </article>
+    </main>
+  </div>
+  <script src="../../js/programacao-web.js?v=11"></script>
+  <script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+/* Somente as novas páginas de Web III. Reutiliza a identidade de Programação Web. */
+.web3-page .web3-menu-title { margin: 0 8px 14px; font-size: 14px; font-weight: 800; line-height: 1.5; }
+.web3-page .web3-menu-note { margin: 18px 8px; color: #46566d; font-size: 12px; line-height: 1.6; }
+.web3-page .web3-status { margin-top: 14px; padding: 10px 14px; color: #664500; background: #fff5ce; border-left: 4px solid #a86b00; border-radius: 5px; font-size: 14px; }
+.web3-page .web3-fala { margin: 18px 0; padding: 16px 22px; background: #f3f7ff; border-left: 4px solid var(--primary); border-radius: 6px; font-size: 18px; }
+.web3-page .web3-local { color: #46566d; font-size: 14px; }
+.web3-page .web3-resultado { margin: 22px 0; padding: 20px; background: #fffaf3; border: 1px solid #dec9a9; border-radius: 12px; color: #35291b; }
+.web3-page .web3-resultado figcaption { margin-bottom: 14px; font-size: 13px; font-weight: 700; color: #675036; }
+.web3-page .web3-resultado > strong { font-size: 25px; }
+.web3-page .web3-resultado h4 { margin: 8px 0; color: #35291b; }
+.web3-page .web3-resultado p { margin: 8px 0; }
+.web3-page a:focus-visible, .web3-page summary:focus-visible { outline: 3px solid #945300; outline-offset: 4px; }
+.web3-page :is(h2,h3,section) { scroll-margin-top: 20px; }
+.web3-page :is(p,li,a) { overflow-wrap: anywhere; }
+.web3-page pre { overflow-wrap: normal; }
+@media (max-width: 1050px) {
+  .web3-page .chapter-menu { display: flex; flex-wrap: wrap; height: auto; max-height: none; gap: 6px; padding: 10px; }
+  .web3-page .chapter-menu h2, .web3-page .web3-menu-title { width: 100%; margin: 0; }
+  .web3-page .chapter-menu .chapter-link { width: auto; white-space: normal; flex: 1 1 170px; margin: 0; }
+  .web3-page .web3-menu-note { display: none; }
+}
+@media (max-width: 680px) {
+  .web3-page header { flex-wrap: wrap; padding: 10px; }
+  .web3-page .header-left { flex: 1 1 100%; }
+  .web3-page header h1 { font-size: 17px; }
+  .web3-page .brand { font-size: 12px; }
+  .web3-page .web3-fala { padding: 12px 16px; font-size: 17px; }
+}
