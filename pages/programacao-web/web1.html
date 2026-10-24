@@ -7,6 +7,7 @@
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web1.html">
   <title>Web I — Capítulo 1 | Mundo bit Byte</title>
   <link href="../../css/programacao-web.css?v=13" rel="stylesheet">
+  <link href="../../css/web1-publicacao.css?v=1" rel="stylesheet">
 </head>
 <body class="module-page" data-module-title="Web I">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -38,6 +39,7 @@
       <a class="chapter-link" href="#capitulo-9" data-chapter-link="capitulo-9">9. Fetch e JSON</a>
       <a class="chapter-link" href="#capitulo-10" data-chapter-link="capitulo-10">10. Web Storage</a>
       <a class="chapter-link" href="#capitulo-11" data-chapter-link="capitulo-11">11. Testes e publicação</a>
+      <a class="chapter-link" href="#capitulo-12" data-chapter-link="capitulo-12">12. Café Aurora: do computador para a internet!</a>
     </nav>
 
     <main class="web-content" id="conteudo" tabindex="-1">
@@ -3904,6 +3906,7 @@ if (pedido && itensPedido.length && resumoPedido &&
 
         <section aria-labelledby="aula-4-11">
           <h3 id="aula-4-11">Aula 4 — Publicando com GitHub Pages</h3>
+          <p class="note-box"><strong>Escolha um caminho de publicação.</strong> Para publicar sem repositório nem terminal, siga o <a href="#capitulo-12" data-chapter-link="capitulo-12">encerramento com Vercel Drop, no capítulo 12</a>. O roteiro abaixo permanece como alternativa com GitHub Pages; não é necessário executar os dois.</p>
           <p>O Café Aurora é um site estático: o navegador recebe HTML, CSS, JavaScript, JSON e imagens. O GitHub Pages consegue publicar esses arquivos sem servidor próprio. O formulário permanece demonstrativo porque ainda não existe um serviço para receber mensagens.</p>
 
           <h4>Faça a revisão antes do envio</h4>
@@ -3965,7 +3968,7 @@ if (pedido && itensPedido.length && resumoPedido &&
             <li>quatro páginas com link “Pular para o conteúdo”;</li>
             <li>HTML validado e jornadas testadas;</li>
             <li>registro de uma melhoria orientada pelo Lighthouse;</li>
-            <li>repositório público sem dados sensíveis;</li>
+            <li>arquivos de publicação sem dados sensíveis (e repositório público, se optar pelo GitHub Pages);</li>
             <li>endereço do Café Aurora publicado e funcionando;</li>
             <li>evidências do teste local e da confirmação no endereço público.</li>
           </ul>
@@ -3998,7 +4001,7 @@ if (pedido && itensPedido.length && resumoPedido &&
         </section>
 
         <div class="limit-box">
-          <strong>Web I concluído</strong>
+          <strong>Projeto preparado para compartilhar</strong>
           <p>Você partiu de uma necessidade real e construiu um site completo, responsivo, acessível, interativo, capaz de carregar e preservar dados, testado e publicável. No Web II, o mesmo Café Aurora evolui de site para sistema executado no servidor; o Web III permanece reservado para uma etapa futura.</p>
         </div>
 
@@ -4015,13 +4018,167 @@ if (pedido && itensPedido.length && resumoPedido &&
 
         <div class="chapter-footer">
           <a href="#capitulo-10" data-chapter-link="capitulo-10">← Capítulo 10</a>
-          <span aria-disabled="true">Fim do Web I</span>
+          <a href="#capitulo-12" data-chapter-link="capitulo-12">Encerramento — Publicar com Vercel Drop →</a>
+        </div>
+      </article>
+
+      <article class="chapter" id="capitulo-12" data-chapter>
+        <div class="chapter-header">
+          <span class="chapter-kicker">Web I • Encerramento</span>
+          <h2 tabindex="-1">Capítulo 12 — Café Aurora: do computador para a internet!</h2>
+          <p class="chapter-meta">Chegou a hora de compartilhar nosso trabalho: vamos publicar o Café Aurora e descobrir como um site passa a ficar disponível na internet.</p>
+        </div>
+
+        <section class="publicacao-abertura" aria-labelledby="publicacao-contexto">
+          <h3 id="publicacao-contexto">O Café está pronto. Falta alguém conseguir visitar!</h3>
+          <p>Construímos as páginas, organizamos as imagens, cuidamos da apresentação e fizemos o cardápio responder às escolhas do visitante. Depois dos testes, você chama um colega para conhecer o resultado pelo celular.</p>
+          <p>Você envia o caminho da pasta. Ele tenta abrir… mas os arquivos estão no seu computador, não no dele.</p>
+          <p class="publicacao-pergunta">Como transformar nosso trabalho em um endereço que outra pessoa consiga acessar?</p>
+          <p>Vamos resolver isso publicando o <strong>Café Aurora, nosso projeto educacional fictício</strong>. Ao final, você terá um endereço para compartilhar e saberá explicar como ele funciona.</p>
+        </section>
+
+        <section aria-labelledby="publicacao-conceitos">
+          <h3 id="publicacao-conceitos">Antes de enviar: o que muda quando publicamos?</h3>
+          <p>Até aqui, o <strong>site local</strong> funciona com arquivos guardados no seu computador. Mesmo usando o Live Preview, o endereço local atende ao desenvolvimento; ele não é um endereço público para os colegas.</p>
+          <p>Para receber visitantes pela internet, precisamos de <strong>hospedagem</strong>: um serviço que mantenha os arquivos disponíveis. Um <strong>servidor</strong> é o sistema que responde às solicitações do navegador e entrega esses recursos. Nesta aula, a <strong>Vercel</strong> será a plataforma de hospedagem. Enviar uma versão e colocá-la em funcionamento é fazer um <strong>deploy</strong>, ou implantação.</p>
+          <ol class="publicacao-percurso" aria-label="Caminho da publicação, em quatro passos">
+            <li><strong>1. Arquivos do Café</strong><span>Páginas, estilos, scripts, dados e imagens.</span></li>
+            <li><strong>2. Vercel</strong><span>Recebe a versão que vamos hospedar.</span></li>
+            <li><strong>3. Endereço público</strong><span>Permite encontrar o site pela internet.</span></li>
+            <li><strong>4. Navegador do visitante</strong><span>Solicita os arquivos e apresenta as páginas.</span></li>
+          </ol>
+          <p>Em vez de enviar arquivo por arquivo, usaremos um <strong>ZIP</strong>: um arquivo compactado que reúne os arquivos e as pastas do projeto. Vamos extraí-lo primeiro para conferir o conteúdo e depois enviar o próprio ZIP.</p>
+          <p>Ao concluir a publicação, a Vercel fornecerá uma <strong>URL</strong> (<span lang="en">Uniform Resource Locator</span>), o endereço de um recurso. Em um exemplo fictício como <code class="inline-code">https://cafe-aurora-exemplo.vercel.app/cardapio.html</code>, o nome <code class="inline-code">cafe-aurora-exemplo.vercel.app</code> é o domínio utilizado para acessar o site; <code class="inline-code">/cardapio.html</code> identifica a página.</p>
+          <p>O início <strong>HTTPS</strong> (<span lang="en">Hypertext Transfer Protocol Secure</span>) indica comunicação protegida por criptografia entre navegador e servidor. Isso protege a comunicação; não garante que qualquer site seja confiável. Usaremos o endereço fornecido pela plataforma, sem comprar um domínio.</p>
+
+          <div class="task-box">
+            <fieldset>
+              <legend>Uma pergunta antes de começar</legend>
+              <p>O Café abre no seu computador. O que falta para um colega acessá-lo pelo celular, em outra rede?</p>
+              <label class="publicacao-opcao"><input type="radio" name="publicacao-conceito" value="pasta"> Enviar o caminho da pasta do meu computador.</label>
+              <label class="publicacao-opcao"><input type="radio" name="publicacao-conceito" value="hospedagem"> Hospedar os arquivos e compartilhar o endereço público.</label>
+              <button class="publicacao-botao" type="button" data-publicacao-conferir>Conferir resposta</button>
+              <p data-publicacao-resposta role="status"></p>
+            </fieldset>
+            <noscript><p><strong>Resposta comentada:</strong> precisamos hospedar os arquivos e compartilhar o endereço público. O caminho da sua pasta não dá acesso aos arquivos em outro aparelho.</p></noscript>
+          </div>
+        </section>
+
+        <section aria-labelledby="publicacao-preparar">
+          <h3 id="publicacao-preparar">1. Nosso projeto está pronto: vamos conferir a bagagem</h3>
+          <p>Usaremos a versão final do Web I. A cópia abaixo mantém o Café Aurora do checkpoint: apenas organiza o ZIP com <code class="inline-code">index.html</code> diretamente na raiz e ajusta o contato para validar os campos sem tentar enviar uma mensagem.</p>
+          <div class="publicacao-acoes">
+            <a class="publicacao-botao" href="../../downloads/programacao-web/cafe-aurora-web1-publicacao.zip" download>Baixar o Café Aurora — Checkpoint Final (ZIP)</a>
+          </div>
+          <ol>
+            <li><strong>Localize o download.</strong> No computador, abra o Explorador de Arquivos e entre em <strong>Downloads</strong>. Procure <code class="inline-code">cafe-aurora-web1-publicacao.zip</code>. No navegador, <strong>Ctrl + J</strong> também abre a lista de downloads.</li>
+            <li><strong>Extraia para uma pasta própria.</strong> No Windows, clique no ZIP com o botão direito e escolha <strong>Extrair Tudo… → Extrair</strong>. Mantenha a pasta de destino sugerida, sem misturar o conteúdo com outro projeto. Em outro sistema, use a opção equivalente de extrair ou descompactar.</li>
+            <li><strong>Abra a pasta extraída.</strong> Nela devem aparecer juntos <code class="inline-code">index.html</code>, <code class="inline-code">cardapio.html</code>, <code class="inline-code">sobre.html</code> e <code class="inline-code">contato.html</code>, além das pastas <code class="inline-code">css</code>, <code class="inline-code">js</code>, <code class="inline-code">dados</code> e <code class="inline-code">img</code>.</li>
+            <li><strong>Confira a página inicial.</strong> Dê dois cliques em <code class="inline-code">index.html</code>: a apresentação do Café deve abrir com estilo, imagem e menu. O HTML organiza o conteúdo; o CSS dá a apresentação; o JavaScript acrescenta as interações que já construímos.</li>
+            <li><strong>Teste o cardápio com o servidor local.</strong> Abra essa pasta no VS Code por <strong>Arquivo → Abrir Pasta</strong> e use o Live Preview, como no <a href="#aula-1-9">capítulo 9</a>. O carregamento do JSON usa <code class="inline-code">fetch()</code> e pode ser bloqueado se você abrir os arquivos por duplo clique. No cardápio, espere “Cardápio atualizado: 3 produtos.”, teste os filtros e selecione um produto para conferir o pedido.</li>
+          </ol>
+          <p><strong>Conferiu?</strong> Os quatro links do menu devem abrir as páginas certas. Se uma imagem ou estilo não aparecer, confira se extraiu o ZIP inteiro. Não mova somente o <code class="inline-code">index.html</code>: ele precisa dos demais recursos.</p>
+          <p>Guarde o ZIP original que acabou de baixar: é ele que enviaremos. A pasta extraída serviu para entender e testar seu conteúdo.</p>
+        </section>
+
+        <section aria-labelledby="publicacao-conta">
+          <h3 id="publicacao-conta">2. Conhecendo a Vercel: onde o Café vai receber visitantes</h3>
+          <p>Agora precisamos de um lugar para esses arquivos. Abra a <a href="https://vercel.com/login" target="_blank" rel="noopener noreferrer">página de acesso da Vercel (nova aba)</a>. Se já possui conta, entre nela. Caso contrário, use <a href="https://vercel.com/signup" target="_blank" rel="noopener noreferrer">Sign Up, criar conta (nova aba)</a>, e siga a identificação e a verificação solicitadas pela própria plataforma.</p>
+          <p>Escolha uma opção de acesso disponível para você. Esta atividade não exige criar um repositório nem usar terminal. Digite senhas e códigos apenas na Vercel ou no provedor de acesso escolhido; não os envie ao professor nem ao MbB.</p>
+          <p>O plano gratuito <strong>Hobby</strong> é destinado a uso pessoal e não comercial, dentro dos limites da plataforma. Nosso Café é fictício: não vende nem recebe pedidos reais. Isso não representa autorização geral para hospedar sites comerciais ou institucionais no Hobby; confira as condições com o professor antes de usar em outro contexto. Não é necessário contratar plano pago para seguir este roteiro.</p>
+          <p><strong>Entre antes do envio.</strong> A Vercel também permite publicar sites estáticos sem conta, mas essa publicação expira se não for reivindicada. Para guardar o Café na sua própria conta, vamos seguir com o acesso já realizado.</p>
+          <div class="publicacao-acoes"><a class="publicacao-botao" href="https://vercel.com/drop" target="_blank" rel="noopener noreferrer">Abrir o Vercel Drop (nova aba)</a></div>
+          <p>Na tela <strong>Drop It. It's Live.</strong>, você encontrará a área de envio e as opções <strong>file</strong> (arquivo) e <strong>folder</strong> (pasta). Vamos usar <strong>file</strong>.</p>
+          <figure class="tool-figure publicacao-tela">
+            <img src="../../img/programacao-web/vercel-drop-20261024.jpg" width="1363" height="936" loading="lazy" alt="Captura de tela real do Vercel Drop: abaixo do título Drop It. It's Live., os links file e folder permitem escolher o envio">
+            <figcaption>Tela real de entrada, capturada em 24/10/2026. Use <strong>file</strong> para selecionar o ZIP. A aparência pode variar; amplie a imagem para conferir os controles.</figcaption>
+          </figure>
+        </section>
+
+        <section aria-labelledby="publicacao-enviar">
+          <h3 id="publicacao-enviar">3. Publicando: da nossa pasta para um endereço</h3>
+          <ol>
+            <li>No <strong>Vercel Drop</strong>, clique em <strong>file</strong>. Na janela de arquivos, abra <strong>Downloads</strong>, selecione <code class="inline-code">cafe-aurora-web1-publicacao.zip</code> e confirme em <strong>Abrir</strong>. Você também pode arrastar esse ZIP para a área de envio.</li>
+            <li>Com sua conta conectada, confira o contexto de conta/equipe (<strong>team</strong>) que receberá o projeto. Use o seu contexto pessoal Hobby; não selecione uma equipe paga ou institucional sem orientação.</li>
+            <li>Informe o nome do projeto, por exemplo <code class="inline-code">cafe-aurora-seu-apelido</code>, trocando a parte final por um apelido sem dados pessoais. Se houver conflito de nome, acrescente um número.</li>
+            <li>Confira os arquivos selecionados e clique em <strong>Deploy</strong> (publicar). Aguarde a conclusão; enviar o arquivo e concluir a implantação são momentos diferentes.</li>
+            <li>Ao concluir, a plataforma apresentará o endereço do site. Abra o link mostrado e copie a URL pela barra de endereços do navegador. Se estiver na visão do projeto, use o endereço de produção exibido pela Vercel.</li>
+          </ol>
+          <p>Por que cuidamos de <code class="inline-code">index.html</code>? Ele é a página inicial que deve abrir quando o visitante usa o endereço sem indicar uma página. Nesta cópia, está na raiz do ZIP. A seleção <strong>Root (/)</strong> só é necessária se a Vercel perguntar qual página abrir primeiro; nesse caso, escolha <code class="inline-code">index.html</code>.</p>
+          <p>Um novo envio em <code class="inline-code">vercel.com/drop</code> cria outro projeto; não substitui automaticamente o anterior. O painel de um projeto existente também permite receber novos arquivos para atualizá-lo, mas não precisaremos disso para concluir esta aula.</p>
+          <details>
+            <summary>Algo não saiu como esperado?</summary>
+            <ul>
+              <li><strong>Apareceu uma contagem regressiva:</strong> você publicou sem estar conectado. Use <strong>Claim your project</strong> para vincular o projeto à sua conta antes de expirar, seguindo a orientação da Vercel.</li>
+              <li><strong>Página inicial com erro 404:</strong> confira se enviou o ZIP correto e se <code class="inline-code">index.html</code> está diretamente na raiz. Se a seleção de início aparecer, escolha esse arquivo.</li>
+              <li><strong>Imagem ou estilo ausente:</strong> não envie apenas o HTML. Confira o ZIP completo e as letras dos caminhos: <code class="inline-code">img</code> e <code class="inline-code">Img</code> podem ser nomes diferentes no servidor.</li>
+              <li><strong>Falha no envio ou na publicação:</strong> leia a mensagem, confira a conexão e se o arquivo ainda termina em <code class="inline-code">.zip</code>. Guarde a mensagem para pedir ajuda; não contrate um plano para tentar corrigir um erro.</li>
+              <li><strong>O link pede login ao colega:</strong> confira se copiou o endereço do site, não o painel da Vercel. Se o acesso continuar protegido, peça orientação ao professor antes de alterar configurações da conta.</li>
+            </ul>
+          </details>
+        </section>
+
+        <section aria-labelledby="publicacao-testar">
+          <h3 id="publicacao-testar">4. Nosso Café Aurora está no ar? Vamos visitar de verdade</h3>
+          <p>O envio terminou. Agora vem a prova que importa: usar o site pelo endereço público, como faria um visitante.</p>
+          <ol>
+            <li>Abra a URL publicada no computador. Confira a página inicial, a imagem do ambiente e a apresentação.</li>
+            <li>Percorra <strong>Início, Cardápio, Sobre e Contato</strong>. No cardápio, confira as três imagens, filtre bebidas e comidas e teste o total ao selecionar produtos.</li>
+            <li>Recarregue o cardápio: o pedido deve ser restaurado nesse navegador. A seleção do teste local não é transferida: o armazenamento pertence a cada origem e navegador. Use o botão de limpar para conferir a remoção.</li>
+            <li>Em Contato, deixe um campo obrigatório vazio para observar a validação. Depois preencha com dados fictícios e teste novamente: a mensagem deve explicar que <strong>nenhuma mensagem foi enviada</strong>. Publicar não cria um serviço para receber formulários ou pedidos.</li>
+            <li>Envie a URL para o seu celular, abra no navegador e teste o menu com o aparelho na vertical e na horizontal. Não envie o caminho da pasta nem um endereço <code class="inline-code">localhost</code>.</li>
+            <li>Abra também em uma janela anônima ou peça a um colega, em outro aparelho, para acessar sem entrar na sua conta da Vercel. Ele deve conseguir visitar as páginas.</li>
+          </ol>
+          <p>Se algo falhar, volte ao item correspondente, corrija a causa e repita o teste. A tela de sucesso da hospedagem não substitui essa conferência.</p>
+        </section>
+
+        <section aria-labelledby="publicacao-entrega">
+          <h3 id="publicacao-entrega">5. Registre a conquista e confira o que realizou</h3>
+          <p><label for="publicacao-url"><strong>Endereço do meu Café Aurora</strong></label></p>
+          <p id="publicacao-url-ajuda">Cole a URL completa fornecida pela Vercel, começando com <code class="inline-code">https://</code>. O campo prepara um link; não testa o site automaticamente.</p>
+          <input type="url" id="publicacao-url" data-publicacao-url placeholder="https://seu-projeto.vercel.app" maxlength="2048" autocomplete="off" spellcheck="false" aria-describedby="publicacao-url-ajuda publicacao-url-status">
+          <div class="publicacao-acoes">
+            <button type="button" class="publicacao-botao" data-publicacao-registrar>Registrar endereço</button>
+            <a class="publicacao-botao publicacao-endereco" data-publicacao-abrir target="_blank" rel="noopener noreferrer" hidden>Abrir meu site (nova aba)</a>
+          </div>
+          <p id="publicacao-url-status" data-publicacao-url-status role="status">O endereço pode ficar guardado nesta aba até você fechá-la.</p>
+          <p>Para conservar o endereço depois, copie-o para suas anotações. Se estiver conectado ao Meu MbB, use <strong>Meu estudo → Adicionar anotação</strong>. A conclusão do estudo continua sendo uma decisão sua; este checklist não altera seu progresso automaticamente.</p>
+          <fieldset>
+            <legend>Marque somente depois de testar</legend>
+            <label class="publicacao-opcao"><input type="checkbox" data-publicacao-check> Meu site abriu pelo endereço publicado.</label>
+            <label class="publicacao-opcao"><input type="checkbox" data-publicacao-check> As imagens foram carregadas.</label>
+            <label class="publicacao-opcao"><input type="checkbox" data-publicacao-check> Os menus e links funcionaram.</label>
+            <label class="publicacao-opcao"><input type="checkbox" data-publicacao-check> Consegui acessar o site pelo celular.</label>
+          </fieldset>
+          <p data-publicacao-progresso role="status">0 de 4 verificações marcadas por você.</p>
+          <noscript><p>Sem JavaScript, copie e guarde a URL nas suas anotações e abra-a diretamente no navegador. O checklist pode ser marcado manualmente; o registro e o contador interativos exigem JavaScript.</p></noscript>
+          <p><strong>Desafio opcional:</strong> compartilhe com um colega e peça que encontre um produto no cardápio. Ele conseguiu sem a sua ajuda? Esse retorno é mais uma evidência do que você construiu.</p>
+          <div class="publicacao-conquista" data-publicacao-conquista hidden>
+            <h3>Do primeiro arquivo a um site que você pode compartilhar!</h3>
+            <p>Você marcou as quatro verificações. Agora consegue explicar o caminho: organizou os arquivos, colocou uma versão na hospedagem e testou o endereço público. O Café Aurora saiu do seu computador e pode receber visitantes pela internet.</p>
+          </div>
+          <p>Guarde também esta explicação: <strong>“O navegador do visitante pede os arquivos ao servidor da hospedagem e monta as páginas. A URL permite chegar até elas.”</strong> Você não apenas clicou em publicar: compreendeu o que tornou essa visita possível.</p>
+        </section>
+
+        <section aria-labelledby="publicacao-fontes">
+          <h3 id="publicacao-fontes">Para consultar quando precisar</h3>
+          <p>Procedimento conferido em 24/10/2026. A plataforma pode mudar a interface; se encontrar uma diferença que impeça seguir o roteiro, registre a tela e peça orientação.</p>
+          <ul>
+            <li><a href="https://vercel.com/docs/drop" target="_blank" rel="noopener noreferrer">Como publicar com Vercel Drop — documentação oficial (nova aba)</a></li>
+            <li><a href="https://vercel.com/docs/plans/hobby" target="_blank" rel="noopener noreferrer">Plano Hobby: condições e limites — Vercel (nova aba)</a></li>
+            <li><a href="https://vercel.com/docs/limits/fair-use-guidelines" target="_blank" rel="noopener noreferrer">Uso pessoal e não comercial — Vercel (nova aba)</a></li>
+          </ul>
+        </section>
+        <div class="chapter-footer">
+          <a href="#capitulo-11" data-chapter-link="capitulo-11">← Capítulo 11 — Testes e publicação</a>
+          <a href="../programacao-web.html">Concluir e voltar à Programação Web</a>
         </div>
       </article>
     </main>
   </div>
 
   <script src="../../js/programacao-web.js?v=11"></script>
+<script src="../../js/web1-publicacao.js?v=1"></script>
 <script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body>
 </html>

@@ -127,7 +127,7 @@ function topicosEstaticos(html, pagina) {
   if (!principal || /class=["'][^"']*\bmodule\b[^"']*["']/i.test(principal)) return [];
   const titulos = [...principal.matchAll(/<h[23]\b([^>]*)>([\s\S]*?)<\/h[23]>/gi)];
   if (titulos.length < 3) return [];
-  return titulos.slice(0, 120).map((match, i) => {
+  return titulos.slice(0, pagina === 'pages/programacao-web/web1.html' ? 170 : 120).map((match, i) => {
     const titulo = tituloHtml(match[2]);
     let id = /\bid=["']([^"']+)["']/i.exec(match[1])?.[1];
     if (!id && /pages\/programacao-web\/web[12]\.html/.test(pagina)) {
