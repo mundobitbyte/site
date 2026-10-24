@@ -3,7 +3,7 @@ function obterAtendimento(): array
 {
     $nomeNegocio = "Café Aurora";
     $pedidosAbertos = true;
-    $tempoEstimado = 25;
+    $tempoEstimado = 55;
 
     if ($pedidosAbertos) {
         $mensagemStatus = "Pedidos para retirada estão abertos.";

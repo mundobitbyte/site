@@ -52,3 +52,6 @@ test('configuração, autenticação, regras e painel globais permanecem intacto
     assert.deepEqual(fs.readFileSync(path.join(root,name)),before);
   }
 });
+test('construção publicada reproduz os arquivos dos dois checkpoints', () => {
+  cp.execFileSync('python3', ['tests/web3/reproduzir-aula.py'], {cwd: root});
+});

@@ -1,7 +1,7 @@
 <?php
 $nomeNegocio = "Café Aurora";
 $pedidosAbertos = true;
-$tempoEstimado = 25;
+$tempoEstimado = 40;
 
 if ($pedidosAbertos) {
     $mensagemStatus = "Pedidos para retirada estão abertos.";

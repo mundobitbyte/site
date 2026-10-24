@@ -68,27 +68,27 @@ class Pratica(unittest.TestCase):
 
     def test_02_duas_paginas_e_css(self):
         for path in ['/', '/balcao.php']:
-            self.assertIn('Tempo estimado: 25 minutos.', self.get(path))
+            self.assertIn('Tempo estimado: 55 minutos.', self.get(path))
         self.assertIn('body', self.get('/css/styles.css'))
 
     def test_03_alteracao_unica_em_dois_consumidores(self):
-        self.change('$tempoEstimado = 25;', '$tempoEstimado = 40;')
+        self.change('$tempoEstimado = 55;', '$tempoEstimado = 40;')
         for path in ['/', '/balcao.php']:
             self.assertIn('Tempo estimado: 40 minutos.', self.get(path))
-            self.assertNotIn('Tempo estimado: 25 minutos.', self.get(path))
+            self.assertNotIn('Tempo estimado: 55 minutos.', self.get(path))
 
     def test_04_encerrado_nao_oferece_estimativa(self):
         self.change('$pedidosAbertos = true;', '$pedidosAbertos = false;')
         for path in ['/', '/balcao.php']:
             html = self.get(path)
             self.assertIn('Pedidos para retirada estão encerrados.', html)
-            self.assertNotIn('Tempo estimado: 25', html)
+            self.assertNotIn('Tempo estimado: 55', html)
 
     def test_05_resposta_anterior_nao_e_atualizacao_automatica(self):
         anterior = self.get('/balcao.php')
-        self.change('$tempoEstimado = 25;', '$tempoEstimado = 55;')
-        self.assertIn('Tempo estimado: 25 minutos.', anterior)
-        self.assertIn('Tempo estimado: 55 minutos.', self.get('/balcao.php'))
+        self.change('$tempoEstimado = 55;', '$tempoEstimado = 65;')
+        self.assertIn('Tempo estimado: 55 minutos.', anterior)
+        self.assertIn('Tempo estimado: 65 minutos.', self.get('/balcao.php'))
 
     def test_06_fonte_fora_da_raiz_publica(self):
         marker = 'DADO-PRIVADO-DO-TESTE-WEB3'
@@ -118,12 +118,14 @@ class Pratica(unittest.TestCase):
                 self.assertEqual((self.app / path).read_bytes(), content, path)
         self.assertIn('Cardápio', self.get('/cardapio.php'))
 
-    def test_08_checkpoint_intermediario_identificado(self):
+    def test_08_primeira_aula_ja_conecta_as_duas_paginas(self):
         with zipfile.ZipFile(DOWNLOADS / 'cafe-aurora-web3-aula-1.zip') as z:
             index = z.read('cafe-aurora-web3/public/index.php').decode()
-            self.assertNotIn('obterAtendimento', index)
+            self.assertIn('obterAtendimento', index)
             self.assertIn('obterAtendimento', z.read('cafe-aurora-web3/public/balcao.php').decode())
-            self.assertIn('intermediário', z.read('cafe-aurora-web3/ORIGEM.md').decode())
+            self.assertIn('duas páginas conectadas', z.read('cafe-aurora-web3/ORIGEM.md').decode())
+            for name in ['public/index.php', 'public/balcao.php', 'src/atendimento.php']:
+                self.assertEqual(z.read('cafe-aurora-web3/' + name), (self.app / name).read_bytes())
 
     def test_09_erro_de_inclusao_identificavel(self):
         (self.app / 'src/atendimento.php').rename(self.app / 'src/atendimento-ausente.php')

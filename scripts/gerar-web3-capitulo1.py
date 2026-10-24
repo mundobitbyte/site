@@ -15,28 +15,30 @@ def files(final):
                 if not p.endswith('/')}
     for p in ['atendimento.php', 'balcao.php']:
         data[('src/' if p == 'atendimento.php' else 'public/') + p] = (SOURCE / p).read_bytes()
-    if final:
-        index = data['public/index.php'].decode('utf-8')
-        _, rest = index.split('?>', 1)
-        head = (SOURCE / 'inicio-compartilhado.php.txt').read_text().rstrip()
-        data['public/index.php'] = (head + rest).encode('utf-8')
+    index = data['public/index.php'].decode('utf-8')
+    _, rest = index.split('?>', 1)
+    head = (SOURCE / 'inicio-compartilhado.php.txt').read_text().rstrip()
+    data['public/index.php'] = (head + rest).encode('utf-8')
     data['LEIA-ME-WEB3.md'] = (SOURCE / 'LEIA-ME.md').read_bytes()
     data['docs/verificacoes-capitulo-1.md'] = (
         '# Conferência do capítulo 1\n\n'
         'Origem da minha cópia: ...\n\n'
         '- [ ] Abri o balcão pelo servidor PHP local.\n'
         '- [ ] Identifiquei quem prepara a informação.\n'
-        '- [ ] AltereI somente a fonte e comparei as duas páginas.\n'
+        '- [ ] Alterei somente o prazo em src/atendimento.php e recarreguei as duas páginas.\n'
         '- [ ] Testei atendimento aberto e encerrado.\n'
         '- [ ] Expliquei por que a aba aberta não muda sozinha.\n'
         '- [ ] Conferi o fluxo de mensagem fictícia do Web II.\n\n'
         'Registre ação, resultado esperado, observado e eventual correção.\n'
-    ).replace('AltereI', 'Alterei').encode('utf-8')
+    ).encode('utf-8')
     data['ORIGEM.md'] = (
         '# Origem da referência\n\n'
         'Base: cafe-aurora-web2-capitulo-12.zip\n\n'
         f'SHA-256 da base: {hashlib.sha256(BASE.read_bytes()).hexdigest()}\n\n'
-        'Etapa: ' + ('Capítulo 1 concluído' if final else 'Aula 1 — intermediário') + '\n'
+        'Etapa: ' + ('Capítulo 1 — referência para conferência' if final else
+                     'Aula 1 — duas páginas conectadas') + '\n\n'
+        'Prazo da referência: 55 minutos. As escolhas e experiências das aulas\n'
+        'podem deixar outros valores na sua cópia.\n'
     ).encode('utf-8')
     return data
 
@@ -52,3 +54,11 @@ if __name__ == '__main__':
                 info.external_attr = 0o100644 << 16
                 out.writestr(info, content)
         print(name, target.stat().st_size, hashlib.sha256(target.read_bytes()).hexdigest())
+    # Somente a estrutura conhecida. O aluno acrescenta o PHP de sua própria cópia.
+    target = DEST / 'cafe-aurora-web3-balcao-base.zip'
+    with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as out:
+        info = zipfile.ZipInfo('balcao.php', (2026, 10, 23, 0, 0, 0))
+        info.compress_type = zipfile.ZIP_DEFLATED
+        info.external_attr = 0o100644 << 16
+        out.writestr(info, (SOURCE / 'balcao-estrutura.php.txt').read_bytes())
+    print(target.name, target.stat().st_size, hashlib.sha256(target.read_bytes()).hexdigest())

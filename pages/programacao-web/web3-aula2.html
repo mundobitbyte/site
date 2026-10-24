@@ -25,101 +25,84 @@
     <nav class="chapter-menu" aria-label="Aulas do capítulo disponível">
       <h2>Capítulo 1</h2>
       <p class="web3-menu-title">Uma informação, duas telas</p>
-      <a class="chapter-link "  href="web3.html#capitulo-1">1. O balcão precisa saber</a>
-      <a class="chapter-link active" aria-current="page" href="web3-aula2.html#capitulo-1">2. Mudar uma vez</a>
-      <p class="web3-menu-note">Somente o Capítulo 1 está disponível. Os próximos serão liberados após revisão.</p>
+      <a class="chapter-link "  href="web3.html#capitulo-1">1. Uma mudança, duas telas</a>
+      <a class="chapter-link active" aria-current="page" href="web3-aula2.html#capitulo-1">2. O balcão ficou aberto</a>
+      <p class="web3-menu-note">Capítulo 1 disponível.</p>
     </nav>
     <main class="web-content" id="conteudo" tabindex="-1">
       <article class="chapter" id="capitulo-1" data-chapter>
         <div class="chapter-header">
           <span class="chapter-kicker">Web III · Capítulo 1 · Aula 2 de 2</span>
           <h2 id="titulo-capitulo" tabindex="-1">Uma informação, duas telas</h2>
-          <p class="chapter-meta">Café Aurora · início comum aos percursos · 4 horas-aula estimadas no capítulo</p>
-          <p class="web3-status">Em desenvolvimento · primeiro capítulo disponível para avaliação.</p>
+          <p class="chapter-meta">Café Aurora · 2 aulas · cerca de 4 horas-aula no capítulo</p>
+          <p class="web3-status">Módulo em desenvolvimento · Capítulo 1 disponível.</p>
         </div>
 
 <section aria-labelledby="duas-apresentacoes">
-<h3 id="duas-apresentacoes">O aviso da cozinha também precisa chegar ao site</h3>
-  <p>Deixe as duas abas do Café abertas: <a href="http://localhost:8000/" target="_blank" rel="noopener">a página inicial</a> e <a href="http://localhost:8000/balcao.php" target="_blank" rel="noopener">o balcão</a>. Continue na cópia local, com o servidor PHP em execução no seu computador.</p>
-  <p>Na <a href="web3.html#checkpoint-aula-1">aula anterior</a>, a equipe ganhou uma tela curta para consultar o atendimento. Depois do aviso de 40 minutos, descobrimos o problema: corrigir o balcão não corrigia a informação que o visitante via no site.</p>
-  <p>Já começamos a resolver isso. O balcão agora pede os textos à função <code class="inline-code">obterAtendimento()</code>. Falta fazer a página inicial consultar o mesmo arquivo. Vamos terminar essa ligação antes do próximo aviso da cozinha.</p>
-  <details><summary>Vou retomar pelo checkpoint da aula 1</summary><p>Baixe o <a href="../../downloads/programacao-web/cafe-aurora-web3-aula-1.zip" download>checkpoint da aula 1</a> e descompacte em outra pasta. Ele contém o ponto de partida desta aula. Abra a pasta que contém <code class="inline-code">public</code> no terminal e inicie o servidor, como na primeira aula.</p></details>
+<h3 id="duas-apresentacoes">O atendimento continua</h3>
+  <p>O visitante consulta o site, e a equipe usa a tela do balcão. Na aula anterior, você fez as duas buscarem a informação de atendimento no mesmo arquivo. Vamos continuar nessa cópia do Café.</p>
+  <p><strong>Com o servidor PHP em execução no seu computador, abra <a href="http://localhost:8000/" target="_blank" rel="noopener">a página inicial</a> e <a href="http://localhost:8000/balcao.php" target="_blank" rel="noopener">o balcão</a> em abas separadas.</strong> Recarregue ambas: elas devem mostrar o prazo que você escolheu ao encerrar a primeira aula.</p>
+  <details><summary>Vou retomar pelo arquivo de conferência</summary><p>Baixe a <a href="../../downloads/programacao-web/cafe-aurora-web3-aula-1.zip" download>versão ao fim da aula 1</a> e descompacte em outra pasta. A referência começa com 55 minutos e já tem as duas páginas conectadas. Abra no terminal a pasta que contém <code class="inline-code">public</code> e execute <code class="inline-code">php -S localhost:8000 -t public</code>.</p></details>
 </section>
 <section aria-labelledby="conectar-site">
-<h3 id="conectar-site">Vamos ligar a página inicial à mesma informação</h3>
-  <p><strong>Abra <code class="inline-code">public/index.php</code> e localize o primeiro bloco PHP.</strong> Você encontrará ali os valores de atendimento e o <code class="inline-code">if</code> que usamos como ponto de partida. Eles já estão na função compartilhada.</p>
-  <p>A página inicial pode continuar com toda a apresentação que você construiu. Precisamos apenas buscar os três textos que ela já mostra. Para isso, vamos carregar o arquivo, chamar a função e associar os campos recebidos aos nomes que o HTML usa.</p>
-  <p><strong>Substitua somente esse primeiro bloco, de <code class="inline-code">&lt;?php</code> até <code class="inline-code">?&gt;</code>, por:</strong></p>
-<pre class="code-block"><code>&lt;?php
-require_once dirname(__DIR__) . &quot;/src/atendimento.php&quot;;
-$atendimento = obterAtendimento();
-
-$nomeNegocio = $atendimento[&quot;nomeNegocio&quot;];
-$mensagemStatus = $atendimento[&quot;mensagemStatus&quot;];
-$mensagemTempo = $atendimento[&quot;mensagemTempo&quot;];
-?&gt;</code></pre>
-  <p><strong>Mantenha o HTML que vem depois.</strong> As saídas da página continuam usando <code class="inline-code">$nomeNegocio</code>, <code class="inline-code">$mensagemStatus</code> e <code class="inline-code">$mensagemTempo</code>. Agora essas variáveis recebem os textos preparados pela função.</p>
-  <p>Confira se o bloco antigo saiu por inteiro. Se ele continuar abaixo da consulta, poderá definir outra estimativa e substituir o valor que acabamos de receber.</p>
-<pre class="code-block"><code>php -l public/index.php</code></pre>
-  <p>Salve, confira a sintaxe e recarregue as duas abas. Com os valores da referência, o visitante e a equipe veem atendimento aberto e 25 minutos. Vamos descobrir se essa concordância se mantém quando o prazo muda.</p>
-</section>
-<section aria-labelledby="mudar-uma-vez">
-<h3 id="mudar-uma-vez">O mesmo aviso, agora para as duas telas</h3>
-  <p>A cozinha volta a avisar: o preparo passou para <strong>40 minutos</strong>. Desta vez, pare um instante antes de editar. Onde você faria a mudança para que tanto a equipe quanto o visitante recebam o novo prazo?</p>
-  <p><strong>Em <code class="inline-code">src/atendimento.php</code>, altere apenas <code class="inline-code">$tempoEstimado</code> para 40.</strong> Salve e recarregue as duas páginas. Deixe os outros arquivos como estão e observe o resultado.</p>
-  <figure class="web3-resultado"><figcaption>Confira o aviso no site e no balcão</figcaption><p>Pedidos para retirada estão abertos.</p><p><strong>Tempo estimado: 40 minutos.</strong></p></figure>
-  <p>As duas passaram a mostrar 40? Volte ao editor e acompanhe o caminho: cada página chama <code class="inline-code">obterAtendimento()</code>, recebe os textos e os coloca no seu HTML. É por isso que uma alteração na fonte compartilhada atende às duas.</p>
-  <p>Agora escolha outra estimativa e faça a mudança sem consultar o passo a passo. Se estiver em dupla, peça ao colega que informe o prazo e troquem de papel depois. Se surgir uma diferença entre as telas, procure onde ainda pode ter ficado uma cópia do valor.</p>
+<h3 id="conectar-site">Um pedido de mudança, agora sem o passo a passo</h3>
+  <p>A cozinha informou que o movimento diminuiu: o preparo está em 20 minutos. <strong>Faça essa alteração no projeto e confira o que aparece nas duas páginas.</strong> Tente escolher o arquivo antes de abrir a ajuda.</p>
+  <details><summary>Onde faço a alteração?</summary><p>Em <code class="inline-code">src/atendimento.php</code>, altere <code class="inline-code">$tempoEstimado</code> para 20, salve e recarregue as duas abas. As páginas recebem o texto preparado pela função. Se ainda precisar ligar uma delas, retome <a href="web3.html#balcao-consulta">a ligação do balcão e do site</a> na primeira aula.</p></details>
+  <p>Se os dois prazos mudaram, você já está usando a organização que construiu. Vamos ver como ela se comporta quando a cozinha para de receber pedidos.</p>
 </section>
 <section aria-labelledby="encerrar-atendimento">
 <h3 id="encerrar-atendimento">A cozinha encerrou os pedidos</h3>
-  <p>No fim do atendimento, só aumentar o prazo não resolve: a equipe precisa avisar que novos pedidos para retirada estão encerrados. O visitante que consulta o site também precisa saber disso antes de sair de casa.</p>
-  <p>A regra para essa situação já estava no Café. Vamos conferir se ela continua chegando às duas apresentações.</p>
-  <p><strong>No arquivo compartilhado, troque <code class="inline-code">$pedidosAbertos</code> para <code class="inline-code">false</code>.</strong> Salve e recarregue o site e o balcão.</p>
-  <figure class="web3-resultado"><figcaption>O que as duas páginas devem comunicar agora</figcaption><p>Pedidos para retirada estão encerrados.</p><p>Consulte novamente durante o horário de atendimento.</p></figure>
-  <p>Repare no prazo: o número continua definido no programa, mas a função escolhe a orientação de encerramento. Assim, a tela não oferece 40 minutos de preparo quando a cozinha já parou de receber pedidos.</p>
-  <p>Volte para <code class="inline-code">true</code> e confira a reabertura nas duas abas. Mantivemos a decisão do Web II e mudamos o lugar onde as páginas a consultam.</p>
+  <p>No fim do atendimento, informar um prazo maior seria uma orientação errada. Quem consulta o Café precisa saber que novos pedidos para retirada estão encerrados.</p>
+  <p><strong>No arquivo <code class="inline-code">src/atendimento.php</code>, altere <code class="inline-code">$pedidosAbertos</code> para <code class="inline-code">false</code>.</strong> Salve e recarregue as duas páginas.</p>
+  <figure class="web3-resultado"><figcaption>A orientação agora deve ser esta, nas duas telas</figcaption><p>Pedidos para retirada estão encerrados.</p><p>Consulte novamente durante o horário de atendimento.</p></figure>
+  <p>O valor de <code class="inline-code">$tempoEstimado</code> continua no programa. Por que ele deixou de aparecer? Acompanhe o <code class="inline-code">if</code> na função: com <code class="inline-code">false</code>, ela prepara a mensagem de encerramento no lugar do prazo. A decisão que existia no Web II continua valendo para as duas apresentações.</p>
+  <p><strong>Reabra o atendimento com <code class="inline-code">true</code> e recarregue as abas.</strong> Os 20 minutos devem voltar a aparecer. Deixe o atendimento aberto para a próxima experiência.</p>
 </section>
 <section aria-labelledby="pagina-aberta">
-<h3 id="pagina-aberta">E se a equipe deixar o balcão aberto?</h3>
-  <p>A pessoa que está atendendo não vai recarregar a tela a cada conversa. Vamos observar o que ela verá depois de mais uma mudança no preparo.</p>
-  <p><strong>Com o atendimento aberto, deixe a aba do balcão como está.</strong> Anote a estimativa que ela mostra. No arquivo compartilhado, escolha outro prazo, salve e recarregue <strong>somente a página inicial</strong>.</p>
-  <p>O site já mostra o novo prazo. O balcão ainda mostra o anterior. Mas agora sabemos que os dois consultam a mesma função. O que mudou em relação à divergência da primeira aula?</p>
-  <p>Pense no caminho que você estudou no Web II: o navegador faz uma solicitação, o PHP prepara o HTML e o navegador recebe essa resposta. A aba do balcão ainda está mostrando a resposta de antes da alteração. Salvar o arquivo não faz essa aba enviar outra solicitação.</p>
-  <p><strong>Recarregue o balcão e confira.</strong> Ao pedir uma nova resposta, ele recebe o prazo atual. Já resolvemos onde preparar a informação; ficou faltando uma maneira mais prática de consultá-la enquanto a equipe usa a tela.</p>
+<h3 id="pagina-aberta">O balcão ficou aberto enquanto o prazo mudou</h3>
+  <p>Durante o atendimento, a equipe pode deixar a tela aberta entre uma consulta e outra. Vamos acompanhar essa situação sem recarregar tudo ao mesmo tempo.</p>
+  <p><strong>Mantenha a aba do balcão mostrando 20 minutos.</strong> No arquivo compartilhado, altere o prazo para 35, salve e recarregue <strong>somente a página inicial</strong>.</p>
+  <p>O site mostra 35 minutos. O balcão ainda mostra 20. Parece a divergência da primeira aula, mas confira os arquivos: agora existe uma única definição do prazo.</p>
+  <p>A diferença está na resposta que cada aba recebeu. Quando você recarregou a página inicial, o navegador pediu outra página e o PHP preparou o HTML com 35 minutos. O balcão ainda está exibindo a resposta de antes da mudança.</p>
+  <p><strong>Recarregue o balcão.</strong> Os 35 minutos chegaram? Não foi preciso corrigir outro arquivo; foi preciso pedir uma nova resposta.</p>
+  <p>Conseguimos organizar onde a informação é preparada. Isso, por si só, não faz uma aba aberta consultar o servidor novamente. Essa diferença será importante para o próximo passo do Café.</p>
+</section>
+<section aria-labelledby="mudar-uma-vez">
+<h3 id="mudar-uma-vez">Explique a diferença que você acabou de observar</h3>
+  <p>Imagine que alguém da equipe diga: “As telas ficaram diferentes outra vez. A mudança não funcionou?”. Responda usando o que você acabou de fazer.</p>
+  <p>Para sustentar a resposta, mostre onde o prazo é definido e qual aba ainda precisava receber uma nova página. Se estiver em dupla, explique ao colega; se estiver sozinho, acompanhe o caminho apontando os trechos no editor.</p>
+  <p>Quando as duas páginas tinham cópias da decisão, recarregar não resolvia a diferença. Agora, com a decisão compartilhada, uma nova consulta traz a informação atual. Esse é o limite que acabamos de localizar.</p>
 </section>
 <section aria-labelledby="preservar-cafe">
-<h3 id="preservar-cafe">Antes de entregar a tela à equipe</h3>
-  <p>O atendimento agora aparece nos dois lugares certos. Vamos usar o restante do Café por alguns minutos para conferir se a mudança preservou os caminhos que já funcionavam.</p>
-  <ol><li>Entre pela página inicial e siga para o cardápio. Confira se os links e a apresentação continuam corretos.</li><li>Abra o contato e envie uma mensagem fictícia, como alguém que quer tirar uma dúvida com a equipe.</li><li>Entre no painel, encontre essa mensagem e acompanhe seu andamento. Confira também a regra de exclusão estudada no Web II.</li><li>Se as dependências da suíte já estiverem instaladas, repita os testes anteriores. Investigue qualquer falha antes de encerrar a entrega.</li></ol>
-  <details><summary>Estou usando a referência e preciso preparar banco, administrador ou testes</summary>
-    <p>Na raiz da cópia, os comandos abaixo conferem o ambiente, preparam o banco e criam o administrador. O último pede um usuário administrativo e uma senha de pelo menos 12 caracteres pelo terminal. Use dados fictícios para esta conferência e mantenha suas credenciais privadas.</p>
-<pre class="code-block"><code>php src/verificar-ambiente.php
+<h3 id="preservar-cafe">Antes de guardar sua entrega</h3>
+  <p>Volte à página inicial e siga para o cardápio. Confira os links e a apresentação. No balcão, use “Voltar ao site”. As mudanças deste capítulo ficaram no início PHP da página inicial, na nova tela e no arquivo de apoio.</p>
+  <p>Para fechar a entrega, use também o contato e o painel que já funcionavam no Web II: envie uma mensagem fictícia e confira se ela aparece após o login. Assim verificamos se o Café continua atendendo pelo caminho anterior.</p>
+  <details><summary>Estou usando a referência e preciso preparar o banco e o painel</summary>
+    <p>A referência não inclui banco nem credenciais. Na raiz dessa cópia, execute os comandos que você usou no Web II:</p>
+    <pre class="code-block"><code>php src/verificar-ambiente.php
 php src/inicializar-banco.php
 php src/criar-administrador.php</code></pre>
-    <p>Para instalar as dependências e executar a suíte que você organizou no Web II:</p>
-<pre class="code-block"><code>composer install
-composer test</code></pre>
-    <p>A referência mantém PHP ^8.5, PDO/SQLite e PHPUnit ^13.0. Se precisar rever essa preparação, consulte <a href="web2.html#capitulo-11">a aula sobre a suíte</a> e depois retorne à conferência.</p>
+    <p>O último comando pede usuário e senha pelo terminal. Crie uma credencial local e use apenas dados fictícios nesta conferência. Se precisar recuperar essa preparação, consulte <a href="web2.html#capitulo-6">o registro das mensagens</a> e <a href="web2.html#capitulo-7">o painel do Web II</a>.</p>
   </details>
-  <p>Se encontrar uma diferença, anote o que fez e o que apareceu antes de mexer em outros arquivos. Isso ajuda a localizar a causa. O arquivo <code class="inline-code">docs/verificacoes-capitulo-1.md</code> do checkpoint tem espaço para registrar a conferência e a correção.</p>
+  <details><summary>Vou repetir também os testes automatizados do Web II</summary>
+    <p>Se a sua cópia já está preparada, execute <code class="inline-code">composer test</code>. Na referência, instale primeiro as dependências com <code class="inline-code">composer install</code>. Permanecem os requisitos da entrega do Web II: PHP ^8.5, PDO/SQLite e PHPUnit ^13.0. A <a href="web2.html#capitulo-11">aula sobre a suíte</a> explica essa preparação.</p>
+  </details>
+  <p>Se algo falhar, registre o caminho que percorreu e a mensagem recebida antes de mudar outros arquivos. Localizar o problema é mais útil do que refazer o projeto inteiro.</p>
 </section>
 <section class="checkpoint-box" aria-labelledby="checkpoint-capitulo-1">
-<h3 id="checkpoint-capitulo-1">Mostre como o Café ficou</h3>
-  <p>Deixe o site e o balcão lado a lado. Imagine um novo aviso da cozinha com outra estimativa e, depois, o encerramento dos pedidos. Faça as mudanças e mostre o que as duas páginas recebem. Se estiver em dupla, um de vocês pode representar a equipe e informar as mudanças ao outro.</p>
-  <p>Ao explicar o resultado, acompanhe o caminho entre <code class="inline-code">src/atendimento.php</code> e as duas apresentações. Se estiver sozinho, experimente explicar em voz alta enquanto aponta os trechos no editor. Responda também: “Se eu salvar uma alteração e não recarregar o balcão, o que vai aparecer ali?”. Depois confira na tela.</p>
-  <p>Se consegue fazer e explicar essas mudanças, registre a conclusão da aula em <strong>Meu estudo</strong>. Se ainda ficou alguma dúvida, anote-a para retomar o trecho correspondente.</p>
-  <p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-capitulo-1.zip" download>Baixar checkpoint do Capítulo 1 concluído</a></p>
-  <p>Use o pacote para conferir algum arquivo ou recuperar a prática, em outra pasta. Ele reúne a base do Web II com o balcão e a fonte compartilhada, além do roteiro de conferência. O banco e as credenciais são preparados apenas na sua cópia local.</p>
+<h3 id="checkpoint-capitulo-1">O que você leva deste capítulo</h3>
+  <p>O Café ganhou uma tela de consulta para o balcão. Site e balcão preparam a informação no mesmo lugar, preservando suas apresentações. Você também verificou que uma aba aberta precisa fazer uma nova consulta para receber uma mudança.</p>
+  <p>Guarde seu projeto com o atendimento aberto. Se ainda não consegue explicar algum desses resultados, volte à experiência correspondente e acompanhe o que acontece na tela. Você pode registrar essa dúvida nas anotações do <strong>Meu estudo</strong>.</p>
+  <p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-capitulo-1.zip" download>Conferir os arquivos do Capítulo 1</a></p>
+  <p>Abra a referência em outra pasta para comparar. Ela mantém as duas páginas conectadas e o prazo de 55 minutos da primeira aula; as mudanças desta aula são experiências na sua cópia.</p>
 </section>
 <section aria-labelledby="proxima-necessidade">
-<h3 id="proxima-necessidade">A tela vai ficar aberta no balcão</h3>
-  <p>A proprietária já pode consultar o atendimento em uma tela própria, e uma mudança no prazo chega também ao site. Mas, durante a experiência, você viu o que acontece quando o balcão fica aberto por mais tempo.</p>
-  <p>Seria melhor a equipe consultar o prazo sem precisar carregar a página inteira outra vez. Você já usou <code class="inline-code">fetch()</code> no Web I para buscar os produtos do cardápio. Poderíamos fazer uma consulta parecida para buscar a informação atual do atendimento?</p>
-  <p>Essa pergunta nasce do balcão que acabamos de construir. Para respondê-la, vamos precisar pensar no que o PHP deve devolver quando outra parte do programa pede apenas os dados. É daí que continuaremos.</p>
-  <p class="web3-status">Você chegou ao fim do Capítulo 1. O próximo capítulo ainda não está publicado.</p>
+<h3 id="proxima-necessidade">Como consultar o prazo sem carregar tudo outra vez?</h3>
+  <p>A equipe quer manter o balcão aberto, mas precisa receber o prazo atual. Recarregar cabeçalho, rodapé e todo o restante a cada consulta parece trabalho a mais.</p>
+  <p>No Web I, você usou <code class="inline-code">fetch()</code> para buscar os produtos do cardápio. Podemos aproveitar essa ideia para pedir ao PHP somente os dados do atendimento? Essa será a próxima necessidade: decidir o que o servidor deve devolver para uma consulta assim.</p>
+  <p class="web3-status">Fim do Capítulo 1. Os próximos capítulos ainda não estão disponíveis.</p>
 </section>
-<div class="chapter-footer"><a href="web3.html#checkpoint-aula-1">← Aula 1 — O balcão precisa saber</a><a href="../programacao-web.html">Voltar à Programação Web</a></div>
+<div class="chapter-footer"><a href="web3.html#checkpoint-aula-1">← Aula 1 — Uma mudança, duas telas</a><a href="../programacao-web.html">Voltar à Programação Web</a></div>
 
       </article>
     </main>

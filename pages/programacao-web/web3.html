@@ -25,52 +25,147 @@
     <nav class="chapter-menu" aria-label="Aulas do capítulo disponível">
       <h2>Capítulo 1</h2>
       <p class="web3-menu-title">Uma informação, duas telas</p>
-      <a class="chapter-link active" aria-current="page" href="web3.html#capitulo-1">1. O balcão precisa saber</a>
-      <a class="chapter-link "  href="web3-aula2.html#capitulo-1">2. Mudar uma vez</a>
-      <p class="web3-menu-note">Somente o Capítulo 1 está disponível. Os próximos serão liberados após revisão.</p>
+      <a class="chapter-link active" aria-current="page" href="web3.html#capitulo-1">1. Uma mudança, duas telas</a>
+      <a class="chapter-link "  href="web3-aula2.html#capitulo-1">2. O balcão ficou aberto</a>
+      <p class="web3-menu-note">Capítulo 1 disponível.</p>
     </nav>
     <main class="web-content" id="conteudo" tabindex="-1">
       <article class="chapter" id="capitulo-1" data-chapter>
         <div class="chapter-header">
           <span class="chapter-kicker">Web III · Capítulo 1 · Aula 1 de 2</span>
           <h2 id="titulo-capitulo" tabindex="-1">Uma informação, duas telas</h2>
-          <p class="chapter-meta">Café Aurora · início comum aos percursos · 4 horas-aula estimadas no capítulo</p>
-          <p class="web3-status">Em desenvolvimento · primeiro capítulo disponível para avaliação.</p>
+          <p class="chapter-meta">Café Aurora · 2 aulas · cerca de 4 horas-aula no capítulo</p>
+          <p class="web3-status">Módulo em desenvolvimento · Capítulo 1 disponível.</p>
         </div>
 
 <section aria-labelledby="pedido-balcao">
-<h3 id="pedido-balcao">Uma consulta rápida, ali no balcão</h3>
-  <p>É perto do almoço no Café Aurora. Uma pessoa consulta o site antes de sair de casa; outra chega ao balcão e pergunta quanto tempo o pedido para retirada vai levar. A equipe precisa dar a mesma orientação para as duas.</p>
-  <p>A informação já aparece na página inicial que você construiu no Web II. Mas, entre uma conversa e outra, quem atende precisa encontrá-la depressa. A proprietária faz uma sugestão:</p>
-  <blockquote class="web3-fala"><p>— Podemos deixar uma tela aberta aqui, só com a informação do atendimento? Assim a equipe consulta o prazo sem precisar procurar no restante do site.</p></blockquote>
-  <p>Podemos. Vamos aproveitar o Café que já está funcionando e preparar essa tela.</p>
-  <p><strong>Abra uma cópia da sua entrega final do Web II.</strong> Guarde a original e use a cópia para continuar o projeto. No terminal, dentro da pasta que contém <code class="inline-code">public</code>, inicie o servidor:</p>
-<pre class="code-block"><code>php -S localhost:8000 -t public</code></pre>
-  <p>Entre em <a href="http://localhost:8000/" target="_blank" rel="noopener">http://localhost:8000/</a> e encontre a mensagem sobre pedidos para retirada. Ela será nosso ponto de partida. Se você já consegue vê-la, siga para a construção do balcão.</p>
-  <p class="web3-local">Acompanhe a aula aqui e execute o PHP no seu computador, na cópia do projeto, como no Web II.</p>
-  <details><summary>Preciso de ajuda para abrir a cópia</summary>
-    <p>Se o terminal não reconhece PHP, consulte a <a href="web2.html#aula-2-1">preparação do Web II</a> e depois volte a este ponto. Se a porta estiver ocupada, encerre o servidor anterior com <kbd>Ctrl</kbd> + <kbd>C</kbd> ou escolha outra porta e use esse número no navegador.</p>
-    <p>Confira também a pasta aberta no terminal: o comando procura <code class="inline-code">public</code> dentro dela. Um arquivo PHP precisa passar pelo servidor; abri-lo por duplo clique não executa o programa.</p>
-    <p>Se não tiver sua entrega, você pode baixar a <a href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-12.zip" download>referência final do Web II</a> e descompactá-la em outra pasta. Identifique no seu registro que partiu dessa referência. Para começar estas duas páginas, ainda não precisamos preparar o banco.</p>
+<h3 id="pedido-balcao">O prazo mudou. Vamos avisar quem consulta o site.</h3>
+  <p>Abra a página inicial do Café Aurora que você concluiu no Web II e encontre o prazo para retirada. Na versão de referência, ele está em 25 minutos.</p>
+  <p>A cozinha avisou que hoje o preparo vai demorar um pouco mais. Vamos atualizar essa informação antes que alguém saia de casa contando com o prazo antigo.</p>
+  <p><strong>Trabalhe em uma cópia da sua entrega final do Web II.</strong> Guarde a original. Com o projeto aberto no editor e o servidor PHP em execução, entre em <a href="http://localhost:8000/" target="_blank" rel="noopener">http://localhost:8000/</a>.</p>
+  <details><summary>Preciso abrir o projeto ou recuperar minha entrega</summary>
+    <p>No terminal, entre na pasta da cópia que contém <code class="inline-code">public</code> e execute:</p>
+    <pre class="code-block"><code>php -S localhost:8000 -t public</code></pre>
+    <p>Se não tiver sua entrega, baixe a <a href="../../downloads/programacao-web/cafe-aurora-web2-capitulo-12.zip" download>referência final do Web II</a>, descompacte e abra a pasta que contém <code class="inline-code">public</code>. Para esta primeira prática, ainda não precisamos preparar o banco.</p>
+    <p>Se PHP não for reconhecido, volte à <a href="web2.html#aula-2-1">preparação do Web II</a>. Se a porta estiver ocupada, encerre o servidor anterior com <kbd>Ctrl</kbd> + <kbd>C</kbd> ou escolha outra porta e use o mesmo número no navegador. Abrir o arquivo por duplo clique não executa PHP.</p>
+  </details>
+  <p><strong>Em <code class="inline-code">public/index.php</code>, localize <code class="inline-code">$tempoEstimado</code> no primeiro bloco PHP e altere seu valor para 40.</strong> Se o atendimento estiver encerrado na sua versão, use <code class="inline-code">$pedidosAbertos = true;</code> para acompanhar esta situação. Salve e recarregue a página.</p>
+  <pre class="code-block"><code data-web3-trecho="prazo-inicial">$tempoEstimado = 40;</code></pre>
+  <p>O novo prazo apareceu? Você encontrou o trecho que prepara essa mensagem. Se nada mudou, confira se salvou o arquivo da cópia que está rodando no servidor e se o atendimento está aberto.</p>
+  <p>Agora falta ajudar quem atende no balcão. A equipe quer deixar uma tela simples aberta para consultar essa mesma informação entre uma conversa e outra. Vamos prepará-la aproveitando o Café que já existe.</p>
+  <p class="web3-local">As alterações são feitas por você, no papel de desenvolvedor, no projeto PHP executado no seu computador. O material desta página acompanha a construção.</p>
+</section>
+<section aria-labelledby="primeira-tela">
+<h3 id="primeira-tela">Uma tela para consultar durante o atendimento</h3>
+  <p>A página inicial apresenta o Café e leva ao cardápio. No balcão, precisamos de menos: o nome do negócio, a situação do atendimento e o prazo.</p>
+  <p><strong>Baixe a <a href="../../downloads/programacao-web/cafe-aurora-web3-balcao-base.zip" download>estrutura da tela do balcão</a>.</strong> Descompacte o ZIP em uma pasta separada e copie somente <code class="inline-code">balcao.php</code> para a pasta <code class="inline-code">public</code> da sua cópia do Café. Não substitua o restante do projeto.</p>
+  <p>Esse arquivo reaproveita o HTML e o CSS que você conhece. Abra-o no editor: ele começa com <code class="inline-code">&lt;!DOCTYPE html&gt;</code> e já tem os lugares que mostram <code class="inline-code">$nomeNegocio</code>, <code class="inline-code">$mensagemStatus</code> e <code class="inline-code">$mensagemTempo</code>. Ainda falta preparar essas variáveis; faremos isso antes de abrir a página.</p>
+  <details><summary>Prefiro montar a estrutura sem baixar o ZIP</summary>
+    <p>Crie <code class="inline-code">public/balcao.php</code> com o HTML abaixo. Ele é a mesma estrutura do arquivo para download. Depois continue no próximo parágrafo.</p>
+    <pre class="code-block"><code data-web3-trecho="estrutura">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-BR&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Balcão — Café Aurora&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/styles.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a class=&quot;skip-link&quot; href=&quot;#conteudo&quot;&gt;Pular para o conteúdo&lt;/a&gt;
+  &lt;header&gt;
+    &lt;p&gt;&lt;a href=&quot;index.php&quot;&gt;Café Aurora&lt;/a&gt;&lt;/p&gt;
+    &lt;nav aria-label=&quot;Navegação do balcão&quot;&gt;
+      &lt;ul&gt;&lt;li&gt;&lt;a href=&quot;index.php&quot;&gt;Voltar ao site&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;main id=&quot;conteudo&quot; tabindex=&quot;-1&quot;&gt;
+    &lt;h1&gt;&lt;?= htmlspecialchars($nomeNegocio, ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/h1&gt;
+    &lt;section aria-labelledby=&quot;atendimento&quot;&gt;
+      &lt;h2 id=&quot;atendimento&quot;&gt;Atendimento no balcão&lt;/h2&gt;
+      &lt;p&gt;&lt;?= htmlspecialchars($mensagemStatus, ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;?= htmlspecialchars($mensagemTempo, ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;&lt;p&gt;Projeto educacional fictício — Café Aurora.&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+  </details>
+  <p><strong>Em <code class="inline-code">public/index.php</code>, copie o primeiro bloco PHP inteiro, de <code class="inline-code">&lt;?php</code> até <code class="inline-code">?&gt;</code>.</strong> Cole-o no início de <code class="inline-code">public/balcao.php</code>, antes do <code class="inline-code">&lt;!DOCTYPE html&gt;</code>. É o trecho que define o prazo de 40 minutos e escolhe as mensagens conforme o atendimento está aberto ou encerrado.</p>
+  <p><strong>Salve e abra <a href="http://localhost:8000/balcao.php" target="_blank" rel="noopener">http://localhost:8000/balcao.php</a>.</strong> A apresentação é mais curta, mas a orientação deve ser a mesma da página inicial:</p>
+  <figure class="web3-resultado"><figcaption>Na sua tela do balcão</figcaption><strong>Café Aurora</strong><h4>Atendimento no balcão</h4><p>Pedidos para retirada estão abertos.</p><p>Tempo estimado: 40 minutos.</p></figure>
+  <p>Deixe as duas páginas abertas em abas separadas. Se aparecer um aviso de variável indefinida, confira se o bloco PHP foi colado inteiro antes do HTML. Se faltar a aparência do Café, confira se <code class="inline-code">balcao.php</code> está em <code class="inline-code">public</code>, ao lado de <code class="inline-code">index.php</code>, e se a pasta <code class="inline-code">css</code> continua ali.</p>
+</section>
+<section aria-labelledby="duas-fontes">
+<h3 id="duas-fontes">O balcão mudou. E o visitante?</h3>
+  <p>O movimento aumentou: agora o preparo está em 55 minutos. Vamos atualizar a tela que a equipe acabou de receber.</p>
+  <p><strong>Em <code class="inline-code">public/balcao.php</code>, altere somente <code class="inline-code">$tempoEstimado</code> de 40 para 55.</strong> Salve e recarregue as duas abas.</p>
+  <p>O balcão mostra 55 minutos, mas a página inicial ainda mostra 40. A informação ficou diferente para duas pessoas que estão consultando o mesmo atendimento.</p>
+  <p>Volte aos dois arquivos no editor e localize o prazo em cada um. Quando copiamos o bloco PHP, criamos duas decisões independentes. Alterar uma delas não altera a outra.</p>
+  <p>Poderíamos corrigir o número na página inicial também. Mas teríamos de lembrar das duas cópias a cada novo aviso. <strong>Mantenha o balcão em 55 e o site em 40 por enquanto.</strong> Essa diferença vai nos ajudar a enxergar quando a ligação estiver funcionando.</p>
+</section>
+<section aria-labelledby="fonte-compartilhada">
+<h3 id="fonte-compartilhada">Vamos preparar a informação em um lugar só</h3>
+  <p>As apresentações podem continuar diferentes. O que precisa ser igual é a decisão sobre o atendimento. Vamos retirar essa decisão das páginas e deixá-las buscar os textos já preparados.</p>
+  <p>No Web II, você usou funções em arquivos de apoio. Vamos aproveitar essa organização: <strong>crie <code class="inline-code">src/atendimento.php</code> com o conteúdo abaixo.</strong> O trecho de variáveis e o <code class="inline-code">if</code> são os mesmos do balcão, mantendo os 55 minutos. Vamos reuni-los em uma função que devolve os três textos em um array com campos nomeados.</p>
+  <pre class="code-block"><code data-web3-trecho="fonte">&lt;?php
+function obterAtendimento(): array
+{
+    $nomeNegocio = &quot;Café Aurora&quot;;
+    $pedidosAbertos = true;
+    $tempoEstimado = 55;
+
+    if ($pedidosAbertos) {
+        $mensagemStatus = &quot;Pedidos para retirada estão abertos.&quot;;
+        $mensagemTempo = &quot;Tempo estimado: $tempoEstimado minutos.&quot;;
+    } else {
+        $mensagemStatus = &quot;Pedidos para retirada estão encerrados.&quot;;
+        $mensagemTempo = &quot;Consulte novamente durante o horário de atendimento.&quot;;
+    }
+
+    return [
+        &quot;nomeNegocio&quot; =&gt; $nomeNegocio,
+        &quot;mensagemStatus&quot; =&gt; $mensagemStatus,
+        &quot;mensagemTempo&quot; =&gt; $mensagemTempo
+    ];
+}</code></pre>
+  <p>A função <code class="inline-code">obterAtendimento()</code> reúne a decisão e devolve os três textos. O <code class="inline-code">return</code> entrega um array: cada nome à esquerda de <code class="inline-code">=&gt;</code> identifica o texto à direita. Por exemplo, <code class="inline-code">&quot;mensagemTempo&quot;</code> dá nome à mensagem do prazo.</p>
+  <p>Assim, as páginas vão buscar <code class="inline-code">mensagemTempo</code> sem precisar repetir o <code class="inline-code">if</code>. É nesse sentido que teremos uma <strong>fonte compartilhada</strong>: um lugar para preparar a informação, usado pelas duas páginas.</p>
+  <details><summary>Preciso lembrar como a função entrega esses textos</summary>
+    <p>Declarar a função não a executa. Uma página chama <code class="inline-code">obterAtendimento()</code>; a função escolhe as mensagens e devolve o array; a página guarda esse resultado em uma variável. O <code class="inline-code">: array</code> informa o tipo devolvido. Você já trabalhou com funções e arrays no <a href="web2.html#capitulo-3">tratamento dos formulários do Web II</a>.</p>
   </details>
 </section>
+<section aria-labelledby="balcao-consulta">
+<h3 id="balcao-consulta">O balcão e o site vão buscar os mesmos textos</h3>
+  <p>O arquivo de apoio está pronto. Vamos fazer as páginas usá-lo, começando pelo balcão.</p>
+  <p><strong>Em <code class="inline-code">public/balcao.php</code>, substitua somente o primeiro bloco PHP, de <code class="inline-code">&lt;?php</code> até <code class="inline-code">?&gt;</code>, pelo trecho abaixo.</strong> Mantenha todo o HTML que vem depois.</p>
+  <pre class="code-block"><code data-web3-trecho="consulta">&lt;?php
+require_once dirname(__DIR__) . &quot;/src/atendimento.php&quot;;
+$atendimento = obterAtendimento();
 
-<section aria-labelledby="primeira-tela">
-<h3 id="primeira-tela">Vamos preparar a tela do balcão</h3>
-  <p>Observe a página inicial por um instante. Ela apresenta o Café, mostra seus destaques e leva ao cardápio. Para a consulta que a equipe acabou de pedir, podemos trabalhar com bem menos: o nome do Café, a situação do atendimento e o prazo.</p>
-  <p><strong>Crie <code class="inline-code">balcao.php</code> dentro de <code class="inline-code">public</code>.</strong> Começaremos com os mesmos dados e a mesma decisão da página inicial, em uma apresentação mais curta. O arquivo completo fica assim:</p>
-<pre class="code-block"><code>&lt;?php
-$nomeNegocio = &quot;Café Aurora&quot;;
-$pedidosAbertos = true;
-$tempoEstimado = 25;
+$nomeNegocio = $atendimento[&quot;nomeNegocio&quot;];
+$mensagemStatus = $atendimento[&quot;mensagemStatus&quot;];
+$mensagemTempo = $atendimento[&quot;mensagemTempo&quot;];
+?&gt;</code></pre>
+  <p>As duas primeiras linhas carregam o arquivo e chamam a função. Nas três seguintes, cada texto recebido é guardado na variável que o HTML já mostra. Por isso, não precisamos refazer os parágrafos nem trocar o CSS.</p>
+  <p><strong>Salve e recarregue o balcão.</strong> Ele continua mostrando 55 minutos. Agora acompanhe no editor: o número está em <code class="inline-code">src/atendimento.php</code>; o balcão busca a mensagem pronta.</p>
+  <p>Falta o visitante receber o mesmo aviso. <strong>Em <code class="inline-code">public/index.php</code>, substitua o primeiro bloco PHP pelo mesmo trecho de consulta acima.</strong> Mantenha o HTML da página inicial. Salve e recarregue as duas abas.</p>
+  <figure class="web3-resultado"><figcaption>Agora, no site e no balcão</figcaption><p>Pedidos para retirada estão abertos.</p><p><strong>Tempo estimado: 55 minutos.</strong></p></figure>
+  <p>A página inicial passou de 40 para 55 sem uma segunda correção do prazo. As duas apresentações agora usam a mesma preparação da informação.</p>
+  <details><summary>A página não abriu ou os prazos continuam diferentes</summary>
+    <p>Se apareceu <code class="inline-code">Failed opening required</code>, confira o caminho: <code class="inline-code">src</code> e <code class="inline-code">public</code> são pastas irmãs. <code class="inline-code">dirname(__DIR__)</code> sai de <code class="inline-code">public</code> para alcançar a raiz do projeto. Confira também o nome <code class="inline-code">atendimento.php</code>.</p>
+    <p>Se apareceu <code class="inline-code">Call to undefined function</code>, confira se o arquivo foi carregado e se o nome da função é o mesmo na declaração e na chamada. Você pode conferir a sintaxe no terminal, na raiz do projeto:</p>
+    <pre class="code-block"><code>php -l src/atendimento.php
+php -l public/balcao.php
+php -l public/index.php</code></pre>
+    <p>Se as páginas abrem, mas mostram prazos diferentes mesmo depois de recarregadas, procure um <code class="inline-code">$tempoEstimado</code> ou um bloco antigo que tenha ficado em uma delas. O número deve ser definido apenas dentro da função. Confira também se está usando as duas abas do mesmo servidor.</p>
+  </details>
+  <details><summary>Preciso comparar o balcao.php completo</summary><p>Use esta versão para localizar uma diferença na sua construção. O HTML é o mesmo da estrutura inicial; a mudança está no primeiro bloco PHP.</p><pre class="code-block"><code data-web3-trecho="balcao-final">&lt;?php
+require_once dirname(__DIR__) . &quot;/src/atendimento.php&quot;;
+$atendimento = obterAtendimento();
 
-if ($pedidosAbertos) {
-    $mensagemStatus = &quot;Pedidos para retirada estão abertos.&quot;;
-    $mensagemTempo = &quot;Tempo estimado: $tempoEstimado minutos.&quot;;
-} else {
-    $mensagemStatus = &quot;Pedidos para retirada estão encerrados.&quot;;
-    $mensagemTempo = &quot;Consulte novamente durante o horário de atendimento.&quot;;
-}
+$nomeNegocio = $atendimento[&quot;nomeNegocio&quot;];
+$mensagemStatus = $atendimento[&quot;mensagemStatus&quot;];
+$mensagemTempo = $atendimento[&quot;mensagemTempo&quot;];
 ?&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;pt-BR&quot;&gt;
@@ -98,132 +193,17 @@ if ($pedidosAbertos) {
   &lt;/main&gt;
   &lt;footer&gt;&lt;p&gt;Projeto educacional fictício — Café Aurora.&lt;/p&gt;&lt;/footer&gt;
 &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-  <p><strong>Salve e abra <a href="http://localhost:8000/balcao.php" target="_blank" rel="noopener">http://localhost:8000/balcao.php</a>.</strong> Você deve reconhecer as cores e a apresentação do Café: continuamos usando o arquivo <code class="inline-code">css/styles.css</code> que já existe no projeto.</p>
-  <figure class="web3-resultado">
-    <figcaption>Confira a informação na sua tela de balcão</figcaption>
-    <strong>Café Aurora</strong><h4>Atendimento no balcão</h4>
-    <p>Pedidos para retirada estão abertos.</p><p>Tempo estimado: 25 minutos.</p>
-  </figure>
-  <p>Deixe essa aba aberta e volte à página inicial. Agora temos dois lugares onde a equipe e o visitante podem consultar o atendimento.</p>
-  <p>Antes de seguir, confira se os dois mostram os mesmos valores. Usaremos 25 minutos nesta experiência. Se você personalizou sua entrega, ajuste esse valor nas duas páginas para acompanhar a comparação.</p>
-  <details><summary>Por que mantivemos htmlspecialchars nas saídas?</summary><p>É o cuidado com os textos que você já usou no Web II. <code class="inline-code">htmlspecialchars</code> faz os caracteres especiais aparecerem como texto no HTML. Reaproveitamos essa proteção ao preparar a nova apresentação.</p></details>
+&lt;/html&gt;</code></pre></details>
 </section>
-
-<section aria-labelledby="duas-fontes">
-<h3 id="duas-fontes">A cozinha avisou: agora são 40 minutos</h3>
-  <p>O movimento aumentou e a equipe precisa informar um prazo maior. Vamos acompanhar essa mudança na tela que acabamos de fazer.</p>
-  <p><strong>Em <code class="inline-code">public/balcao.php</code>, troque <code class="inline-code">$tempoEstimado = 25;</code> por <code class="inline-code">$tempoEstimado = 40;</code>.</strong> Salve o arquivo. Antes de recarregar, pense no visitante que está consultando o site: ele também receberá o novo prazo?</p>
-  <p>Recarregue as duas abas e compare. O balcão mostra 40 minutos. A página inicial continua mostrando 25.</p>
-  <p>Para quem atende, o prazo mudou. Para quem consulta o site, ainda não. A divergência apareceu porque cada arquivo tem sua própria variável e prepara sua própria mensagem.</p>
-  <p>Você poderia abrir <code class="inline-code">index.php</code> e corrigir a outra cópia. Funcionaria desta vez. Mas, no próximo aviso da cozinha, teríamos de lembrar das duas novamente.</p>
-  <p>Vamos organizar isso antes de continuar. <strong>Volte o balcão para 25 minutos</strong>; em seguida, vamos colocar a informação em um lugar que as duas páginas possam consultar.</p>
-</section>
-
-<section aria-labelledby="fonte-compartilhada">
-<h3 id="fonte-compartilhada">Onde vamos guardar essa decisão?</h3>
-  <p>O que as duas páginas precisam compartilhar? Não é o site inteiro. O balcão pode continuar com sua apresentação curta; o que precisa ser igual é a informação sobre o atendimento.</p>
-  <p>Vamos usar uma função para preparar os três textos e entregá-los a quem precisar mostrá-los. Ela será a <strong>fonte compartilhada</strong> do site e do balcão.</p>
-  <p><strong>Crie <code class="inline-code">src/atendimento.php</code></strong>, junto dos arquivos de apoio do Web II. A função se chamará <code class="inline-code">obterAtendimento()</code>. Dentro dela, vamos reunir as variáveis e o <code class="inline-code">if</code> que você acabou de comparar.</p>
-  <p>Para devolver os três textos de uma vez, usaremos um array com campos nomeados. O <code class="inline-code">return</code> entrega esse array a quem chamou a função; <code class="inline-code">: array</code> informa o tipo do retorno. Veja como isso aparece no arquivo:</p>
-<pre class="code-block"><code>&lt;?php
-function obterAtendimento(): array
-{
-    $nomeNegocio = &quot;Café Aurora&quot;;
-    $pedidosAbertos = true;
-    $tempoEstimado = 25;
-
-    if ($pedidosAbertos) {
-        $mensagemStatus = &quot;Pedidos para retirada estão abertos.&quot;;
-        $mensagemTempo = &quot;Tempo estimado: $tempoEstimado minutos.&quot;;
-    } else {
-        $mensagemStatus = &quot;Pedidos para retirada estão encerrados.&quot;;
-        $mensagemTempo = &quot;Consulte novamente durante o horário de atendimento.&quot;;
-    }
-
-    return [
-        &quot;nomeNegocio&quot; =&gt; $nomeNegocio,
-        &quot;mensagemStatus&quot; =&gt; $mensagemStatus,
-        &quot;mensagemTempo&quot; =&gt; $mensagemTempo
-    ];
-}</code></pre>
-  <p>Localize os trechos que já estavam na página inicial. A decisão continua a mesma: quando os pedidos estão abertos, mostramos a estimativa; quando estão encerrados, orientamos a pessoa a consultar novamente.</p>
-  <p>A diferença está no destino desses textos. No <code class="inline-code">return</code>, cada nome à esquerda de <code class="inline-code">=&gt;</code> identifica o valor à direita. Assim, a página poderá pedir <code class="inline-code">mensagemTempo</code> para mostrar o prazo, sem repetir o <code class="inline-code">if</code>.</p>
-  <p>O arquivo está em <code class="inline-code">src</code>, fora da pasta pública, como os apoios que você organizou no Web II. Agora precisamos fazer o balcão usar essa função.</p>
-</section>
-
-<section aria-labelledby="balcao-consulta">
-<h3 id="balcao-consulta">Vamos buscar os textos no novo arquivo</h3>
-  <p><strong>Volte a <code class="inline-code">public/balcao.php</code>.</strong> O começo desse arquivo ainda define os valores e decide quais mensagens mostrar. Essa parte já está em <code class="inline-code">src/atendimento.php</code>; podemos substituí-la pela consulta à função.</p>
-  <p>O <code class="inline-code">require_once</code> carrega nosso arquivo de apoio. Em seguida, <code class="inline-code">obterAtendimento()</code> prepara os textos e devolve o array, que guardaremos em <code class="inline-code">$atendimento</code>.</p>
-  <p><strong>Substitua somente o primeiro bloco PHP, de <code class="inline-code">&lt;?php</code> até <code class="inline-code">?&gt;</code>, por:</strong></p>
-<pre class="code-block"><code>&lt;?php
-require_once dirname(__DIR__) . &quot;/src/atendimento.php&quot;;
-$atendimento = obterAtendimento();
-?&gt;</code></pre>
-  <p>Confira o caminho antes de seguir. <code class="inline-code">__DIR__</code> é a pasta de <code class="inline-code">balcao.php</code>. <code class="inline-code">dirname(__DIR__)</code> sobe para a raiz do projeto, de onde alcançamos <code class="inline-code">src/atendimento.php</code>.</p>
-  <p>Falta ligar os textos recebidos à apresentação. Por exemplo, <code class="inline-code">$atendimento["mensagemTempo"]</code> lê o campo que contém a mensagem do prazo.</p>
-  <p><strong>No mesmo arquivo, substitua apenas o bloco <code class="inline-code">&lt;main&gt;</code> pelo seguinte.</strong> A estrutura é a mesma que você acabou de usar; observe de onde vêm agora o nome e os dois parágrafos:</p>
-<pre class="code-block"><code>  &lt;main id=&quot;conteudo&quot; tabindex=&quot;-1&quot;&gt;
-    &lt;h1&gt;&lt;?= htmlspecialchars($atendimento[&quot;nomeNegocio&quot;], ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/h1&gt;
-    &lt;section aria-labelledby=&quot;atendimento&quot;&gt;
-      &lt;h2 id=&quot;atendimento&quot;&gt;Atendimento no balcão&lt;/h2&gt;
-      &lt;p&gt;&lt;?= htmlspecialchars($atendimento[&quot;mensagemStatus&quot;], ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/p&gt;
-      &lt;p&gt;&lt;?= htmlspecialchars($atendimento[&quot;mensagemTempo&quot;], ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/p&gt;
-    &lt;/section&gt;
-  &lt;/main&gt;</code></pre>
-  <p>Salve os dois arquivos e confira a sintaxe:</p>
-<pre class="code-block"><code>php -l src/atendimento.php
-php -l public/balcao.php</code></pre>
-  <p>Se o terminal não apontou erro, recarregue o balcão. Ele deve continuar mostrando atendimento aberto e 25 minutos. Por fora, a equipe vê a mesma tela; por dentro, os textos já vêm do arquivo compartilhado.</p>
-  <details><summary>Preciso conferir o balcao.php completo</summary>
-    <p>Compare com a sua versão. O cabeçalho, o CSS e o rodapé foram mantidos; as alterações estão no começo PHP e nas três saídas dentro de <code class="inline-code">main</code>.</p>
-<pre class="code-block"><code>&lt;?php
-require_once dirname(__DIR__) . &quot;/src/atendimento.php&quot;;
-$atendimento = obterAtendimento();
-?&gt;
-&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;pt-BR&quot;&gt;
-&lt;head&gt;
-  &lt;meta charset=&quot;UTF-8&quot;&gt;
-  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-  &lt;title&gt;Balcão — Café Aurora&lt;/title&gt;
-  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/styles.css&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;a class=&quot;skip-link&quot; href=&quot;#conteudo&quot;&gt;Pular para o conteúdo&lt;/a&gt;
-  &lt;header&gt;
-    &lt;p&gt;&lt;a href=&quot;index.php&quot;&gt;Café Aurora&lt;/a&gt;&lt;/p&gt;
-    &lt;nav aria-label=&quot;Navegação do balcão&quot;&gt;
-      &lt;ul&gt;&lt;li&gt;&lt;a href=&quot;index.php&quot;&gt;Voltar ao site&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
-    &lt;/nav&gt;
-  &lt;/header&gt;
-  &lt;main id=&quot;conteudo&quot; tabindex=&quot;-1&quot;&gt;
-    &lt;h1&gt;&lt;?= htmlspecialchars($atendimento[&quot;nomeNegocio&quot;], ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/h1&gt;
-    &lt;section aria-labelledby=&quot;atendimento&quot;&gt;
-      &lt;h2 id=&quot;atendimento&quot;&gt;Atendimento no balcão&lt;/h2&gt;
-      &lt;p&gt;&lt;?= htmlspecialchars($atendimento[&quot;mensagemStatus&quot;], ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/p&gt;
-      &lt;p&gt;&lt;?= htmlspecialchars($atendimento[&quot;mensagemTempo&quot;], ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/p&gt;
-    &lt;/section&gt;
-  &lt;/main&gt;
-  &lt;footer&gt;&lt;p&gt;Projeto educacional fictício — Café Aurora.&lt;/p&gt;&lt;/footer&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-  </details>
-  <details><summary>Apareceu “Failed opening required” ou “Call to undefined function”</summary>
-    <p>Confira o caminho e os nomes dos arquivos, inclusive maiúsculas e minúsculas. <code class="inline-code">atendimento.php</code> deve estar em <code class="inline-code">src</code>, ao lado de <code class="inline-code">public</code>. O nome da função na chamada também precisa coincidir com o da declaração. Corrija, confira a sintaxe e abra a página novamente.</p>
-  </details>
-</section>
-
 <section class="checkpoint-box" aria-labelledby="checkpoint-aula-1">
-<h3 id="checkpoint-aula-1">Deixe o balcão pronto para a próxima conversa</h3>
-  <p>A equipe já tem sua tela de consulta. Antes de encerrar esta aula, acompanhe no editor de onde ela busca os textos e qual arquivo ainda mantém uma cópia da decisão. Se estiver em dupla, mostre esse caminho ao colega.</p>
-  <p>Se a cozinha mudar o prazo mais uma vez, você já consegue apontar por que a página inicial ainda poderá ficar diferente? É essa ligação que vamos completar na aula seguinte.</p>
-  <p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-aula-1.zip" download>Baixar checkpoint da aula 1 — balcão conectado à fonte</a></p>
-  <p>Se precisar comparar ou recuperar algum trecho, descompacte o checkpoint em outra pasta. Ele para exatamente aqui: o balcão consulta a função, e a página inicial ainda será conectada.</p>
-  <p>Você pode guardar uma dúvida em <strong>Meu estudo</strong> e retomá-la na próxima aula. As anotações, os favoritos e a conclusão ficam disponíveis com sua conta verificada.</p>
+<h3 id="checkpoint-aula-1">Um novo prazo, uma única alteração</h3>
+  <p>Vamos conferir se a solução depende mesmo de um lugar só. <strong>Em <code class="inline-code">src/atendimento.php</code>, escolha outro valor para <code class="inline-code">$tempoEstimado</code>.</strong> Salve e recarregue as duas páginas, sem editar nenhuma delas.</p>
+  <p>As duas mostram o prazo que você escolheu? Acompanhe o caminho no editor: a função prepara a mensagem, cada página a recebe e o HTML a apresenta. Você manteve duas telas e deixou de manter duas cópias da decisão.</p>
+  <p>Guarde essa versão. Na próxima aula, vamos acompanhar o encerramento dos pedidos e descobrir o que acontece se a equipe deixar o balcão aberto por mais tempo.</p>
+  <p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-aula-1.zip" download>Conferir os arquivos ao fim da aula 1</a></p>
+  <p>Se precisar recuperar um trecho, abra o pacote em outra pasta. As duas páginas já estão conectadas; a referência mantém 55 minutos, antes da sua escolha de prazo.</p>
 </section>
-<div class="chapter-footer"><a href="web2.html#capitulo-12">← Entrega do Web II</a><a href="web3-aula2.html#capitulo-1">Aula 2 — Mudar uma vez →</a></div>
+<div class="chapter-footer"><a href="web2.html#capitulo-12">← Entrega do Web II</a><a href="web3-aula2.html#capitulo-1">Aula 2 — O balcão ficou aberto →</a></div>
 
       </article>
     </main>
