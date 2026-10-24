@@ -11,7 +11,7 @@
     "practice": "Troque 40 por \"40\", salve e execute npm run verificar no segundo terminal. Leia a indicação de tipo incompatível. Corrija para 45, sem aspas, e confira a mensagem na página.",
     "result": "Café Aurora\nNegócio: Café Aurora\nAtendimento aberto: true\nTempo estimado: 40 minutos.",
     "check": "A verificação aceita 45 e recusa \"40\". Você consegue explicar a diferença entre o texto e o número.",
-    "next": "Agora precisamos representar o caso em que não há uma estimativa disponível."
+    "next": "Com os dados bem representados, vamos usar números em um cálculo do Café."
   },
   {
     "id": "ts-calculos",
