@@ -1,11 +1,7 @@
-const pedidosAbertos: boolean = true;
-let tempoEstimado: number | null = 40;
-let mensagem: string;
+const preco: number = 8;
+const quantidade: number = 3;
+const total = preco * quantidade;
 
-if (pedidosAbertos && tempoEstimado !== null) {
-  mensagem = `Tempo estimado: ${tempoEstimado} minutos.`;
-} else {
-  mensagem = "Consulte a equipe antes de pedir.";
-}
-
-document.body.textContent = `Café Aurora\n${mensagem}`;
+document.body.textContent = `Café Aurora
+Café coado: ${quantidade} unidades.
+Total: R$ ${total.toFixed(2)}`;

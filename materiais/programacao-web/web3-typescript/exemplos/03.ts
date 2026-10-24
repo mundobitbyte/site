@@ -1,10 +1,11 @@
-function calcularPrazo(preparo: number, margem: number): number {
-  return preparo + margem;
+const pedidosAbertos: boolean = true;
+let tempoEstimado: number | null = 40;
+let mensagem: string;
+
+if (pedidosAbertos && tempoEstimado !== null) {
+  mensagem = `Tempo estimado: ${tempoEstimado} minutos.`;
+} else {
+  mensagem = "Consulte a equipe antes de pedir.";
 }
 
-const formatarPrazo = (minutos: number): string => {
-  return `Tempo estimado: ${minutos} minutos.`;
-};
-
-const prazo = calcularPrazo(40, 5);
-document.body.textContent = `Café Aurora\n${formatarPrazo(prazo)}`;
+document.body.textContent = `Café Aurora\n${mensagem}`;

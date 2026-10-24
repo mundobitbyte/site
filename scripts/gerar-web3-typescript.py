@@ -40,7 +40,7 @@ def article(ident, title, body, objective=None):
 
 intro='''
 <p>O site e o balcão do Café Aurora já buscam a mesma informação no PHP. Daqui a pouco, o navegador também precisará trabalhar com esses dados. Antes dessa ligação, vamos experimentar como o TypeScript nos ajuda a perceber uma troca de tipos durante o desenvolvimento.</p>
-<p>A base é o JavaScript que você já trabalhou no Web I; a <a href="../reactnative.html#rn-javascriptEssencial-js-intro">revisão do módulo React Native</a> é um apoio se precisar, não um curso inteiro para fazer antes.</p>
+<p>A base é o JavaScript que você já trabalhou no Web I; a <a href="../reactnative.html">revisão do módulo React Native</a> é um apoio se precisar. Nessa página, escolha “JS Essencial”; você não precisa fazer o curso inteiro de React Native para acompanhar esta unidade.</p>
 <h3 id="ts-ambiente">Abra a bancada e veja o primeiro resultado</h3>
 <p><strong>Baixe o <a href="../../downloads/programacao-web/cafe-aurora-typescript-essencial.zip" download>kit de TypeScript do Café Aurora</a> e descompacte em outra pasta.</strong> Abra a pasta que contém <code class="inline-code">package.json</code> no VS Code. Sua aplicação PHP continua guardada como está; esta bancada permite fazer pequenas experiências nos mesmos dados do Café.</p>
 <p>Vamos usar Node.js 24, npm, TypeScript e Vite. Node.js executa as ferramentas no computador; npm instala as dependências declaradas no projeto; TypeScript verifica os tipos; Vite prepara o código para o navegador e serve a página local. Se estiver usando o terminal do Laragon, confira as versões disponíveis em vez de instalar outra cópia sem necessidade.</p>
@@ -56,7 +56,7 @@ Tempo estimado: 40 minutos.</pre></figure>
 <p>O navegador recebe JavaScript preparado a partir do TypeScript. As anotações de tipo não fazem parte dessa execução. O Vite transforma o arquivo, mas não faz a verificação de tipos. <strong>Abra um segundo terminal na mesma pasta e execute:</strong></p>
 VERIFICAR
 <p>Um resultado sem erro significa que o verificador não encontrou incompatibilidades nos arquivos de <code class="inline-code">src</code>. Isso não substitui testar o comportamento na página. Se um erro aparecer, leia arquivo e linha; depois de corrigir, execute o comando novamente.</p>
-<p>Nos tópicos 1 a 8, substitua somente o conteúdo de <code class="inline-code">src/main.ts</code> pelo exemplo completo da página. Salve sua tentativa antes de trocar. No tópico 9, acrescentaremos um arquivo de apoio. Não é necessário repetir a instalação a cada tópico.</p>
+<p>Nos tópicos 1 a 11, substitua somente o conteúdo de <code class="inline-code">src/main.ts</code> pelo exemplo completo da página. Salve sua tentativa antes de trocar. No tópico 12, acrescentaremos um arquivo de apoio. Não é necessário repetir a instalação a cada tópico.</p>
 <p>Ao terminar a bancada, <code class="inline-code">npm run build</code> verifica os tipos e gera os arquivos estáticos em <code class="inline-code">dist</code>. Por enquanto, concentre-se na experiência do tópico 1.</p>
 <p class="web3-status">Unidade em desenvolvimento · versão experimental para avaliação.</p>
 <div class="chapter-footer"><a href="web3-aula2.html#proxima-necessidade">← Voltar ao Café</a><a href="#ts-variaveis" data-ts-link="ts-variaveis">1. Variáveis e tipos →</a></div>
@@ -66,9 +66,9 @@ parts=[article('ts-intro','TypeScript Essencial para o Café Aurora',intro)]
 nav=[('ts-intro','Comece aqui')]+[(t['id'],t['menu']) for t in DATA]+[('ts-exercicios','99. Exercícios')]
 for i,t in enumerate(DATA,1):
     body=f'<p>{escape(t["lead"])}</p>'
-    if i==9:
+    if t['file'].endswith('/main.ts'):
         body+='<p><strong>Crie <code class="inline-code">src/atendimento.ts</code> com este conteúdo:</strong></p>'
-        body+=code((SOURCE/'exemplos/09/atendimento.ts').read_text(),'exemplos/09/atendimento.ts')
+        body+=code((SOURCE/'exemplos/12/atendimento.ts').read_text(),'exemplos/12/atendimento.ts')
         body+='<p><strong>Agora substitua <code class="inline-code">src/main.ts</code> pelo exemplo abaixo.</strong> Os dois arquivos precisam estar na mesma pasta.</p>'
     else:
         body+='<p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p>'
@@ -86,7 +86,7 @@ exercises=[
  ('3. Duas funções para a consulta','Escreva uma função que calcula o prazo a partir de preparo e margem. Escreva outra que recebe esse resultado e prepara a mensagem. Declare parâmetros e retornos.','Uma função entrega número, a outra texto. Uma chamada com argumento incompatível é identificada.'),
  ('4. Encontrar no cardápio','Crie uma lista de quatro produtos tipados. Mostre seus nomes com map, filtre por um limite de preço e procure um identificador com find. Teste também um identificador ausente.','A lista, o filtro e a busca têm resultados distintos; um produto ausente não provoca acesso a undefined.'),
  ('5. Comparar o aviso novo com o anterior','Descreva o atendimento com interface. Faça uma cópia com spread e altere o prazo dessa cópia. Mostre os dois valores usando desestruturação onde ela ajudar a leitura.','O aviso novo muda e o objeto anterior continua com seu valor inicial.'),
- ('6. Receber, conferir e organizar','Adapte a resposta local do tópico 8. Aceite apenas prazo numérico finito e não negativo. Separe a preparação em um arquivo de apoio, como no tópico 9. Teste número válido, texto, campo ausente e JSON inválido.','O caso válido aparece; os demais são recusados. O verificador passa e nenhum dado é aceito apenas por uma afirmação de tipo.')]
+ ('6. Preparar em um arquivo, apresentar em outro','Como no tópico 12, separe a preparação do atendimento em um arquivo de apoio. Faça main.ts usar a função e seu tipo. Altere o prazo somente no apoio, confira a página e provoque um nome de campo incompatível para reconhecer o erro antes de corrigir.','A apresentação recebe o valor do apoio e o verificador identifica um campo inexistente. Explique por que o exemplo ainda não consulta o PHP.')]
 body='<p>Agora resolva pequenas mudanças com menos orientação. Continue na bancada; guarde seus arquivos antes de substituir um exemplo. Não é necessário construir outro site ou aplicativo.</p>'
 for n,(title,task,check) in enumerate(exercises,1):
     body+=f'<section class="task-box"><h3 id="ts-exercicio-{n}">{title}</h3><p>{task}</p><p><strong>Resultado para conferir:</strong> {check}</p></section>'
@@ -97,7 +97,7 @@ body+='''<p>Ao terminar, demonstre uma alteração que funciona e uma entrada qu
 <li><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html" target="_blank" rel="noopener">Tipos básicos, arrays, funções e objetos</a></li>
 <li><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html" target="_blank" rel="noopener">Verificações e redução de possibilidades</a></li>
 <li><a href="https://vite.dev/guide/features.html#typescript" target="_blank" rel="noopener">Vite e TypeScript</a></li></ul></details>
-<div class="chapter-footer"><a href="#ts-imports" data-ts-link="ts-imports">← 9. Módulos</a><a href="web3-aula2.html#proxima-necessidade">Voltar ao Café Aurora →</a></div>'''
+<div class="chapter-footer"><a href="#ts-imports" data-ts-link="ts-imports">← 12. Ponte para interfaces</a><a href="web3-aula2.html#proxima-necessidade">Voltar ao Café Aurora →</a></div>'''
 parts.append(article('ts-exercicios','99 — Exercícios TypeScript',body,'Aplicar os conceitos nos dados do Café e explicar os resultados.'))
 menu=''.join(f'<a class="chapter-link" href="#{ident}" data-ts-link="{ident}">{title}</a>' for ident,title in nav)
 options=''.join(f'<option value="{ident}">{title}</option>' for ident,title in nav)

@@ -1,7 +1,7 @@
 # Web III — TypeScript Essencial: entrega experimental
 
 A unidade segue os moldes de JavaScript Essencial do React Native: introdução,
-tópicos 1 a 9, objetivo, exemplo completo, trecho explicado, resultado esperado,
+tópicos 1 a 12, objetivo, exemplo completo, trecho explicado, resultado esperado,
 experiência e tópico 99 com seis desafios. Os exemplos usam dados do Café Aurora.
 
 ## Inserção e continuidade
@@ -9,8 +9,8 @@ experiência e tópico 99 com seis desafios. Os exemplos usam dados do Café Aur
 A entrada está depois do Capítulo 1, antes da consulta real ao PHP. Preserva as
 duas aulas publicadas e acrescenta uma ligação na navegação da branch. O aluno
 trabalha em uma bancada de linguagem; não reconstrói o sistema em outra stack.
-O tópico 8 usa resposta local, identificada como tal. Tipagem estática e validação
-da resposta durante a execução recebem tratamentos distintos.
+O tópico 12 prepara dados locais em outro arquivo, sem alegar uma consulta de
+rede. Validação de respostas externas fica para a primeira integração real.
 
 JavaScript prévio é retomado por necessidade. O módulo React Native não é um
 pré-requisito integral. PHP/Laravel continuam responsáveis pelo percurso MVC;
@@ -46,9 +46,9 @@ Capítulo 1, e condicionou as entregas seguintes a uma nova avaliação.
 
 ## Verificação
 
-Os testes específicos compilam os nove exemplos com strict e executam o
+Os testes específicos compilam os doze exemplos com strict e executam o
 JavaScript gerado. Conferem resultados, atribuição incompatível, prazo ausente,
-busca sem resultado e rejeição de respostas locais inadequadas. Código mostrado
+busca sem resultado e campo obrigatório ausente. Código mostrado
 e arquivos do ZIP são comparados às fontes. O workflow instala o ZIP real em
 pasta temporária e executa o build com verificação de tipos.
 

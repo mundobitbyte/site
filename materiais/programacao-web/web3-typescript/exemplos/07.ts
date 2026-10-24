@@ -1,14 +1,10 @@
-const apelido: string = "";
-const pedidosAbertos: boolean = true;
-const prazo: number | null = 0;
+type Produto = { id: number; nome: string; preco: number; disponivel: boolean };
 
-const nomeExibido = apelido || "Café Aurora";
-const podeInformarPrazo = pedidosAbertos && prazo !== null;
-const situacao = pedidosAbertos ? "Aberto" : "Encerrado";
-const prazoExibido = prazo ?? "Consulte a equipe";
+const produtos: Produto[] = [
+  { id: 1, nome: "Café coado", preco: 8, disponivel: true },
+  { id: 2, nome: "Pão artesanal", preco: 12, disponivel: true },
+  { id: 3, nome: "Bolo de laranja", preco: 9, disponivel: true },
+];
 
-document.body.textContent = `${nomeExibido}
-Atendimento: ${situacao}
-Pedidos encerrados: ${!pedidosAbertos}
-Pode informar prazo: ${podeInformarPrazo}
-Prazo: ${prazoExibido}`;
+document.body.textContent = `Café Aurora
+Produtos cadastrados: ${produtos.length}`;

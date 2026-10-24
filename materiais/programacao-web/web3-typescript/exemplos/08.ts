@@ -1,25 +1,18 @@
-async function carregar(): Promise<void> {
-  document.body.textContent = "Consultando o prazo do Café Aurora…";
+type Produto = {
+  id: number;
+  nome: string;
+  preco: number;
+  disponivel: boolean;
+};
 
-  try {
-    const texto = await Promise.resolve('{"tempoEstimado":35}');
-    const dados: unknown = JSON.parse(texto);
+const produtos: Produto[] = [
+  { id: 1, nome: "Café coado", preco: 8, disponivel: true },
+  { id: 2, nome: "Pão artesanal", preco: 12, disponivel: true },
+  { id: 3, nome: "Bolo de laranja", preco: 9, disponivel: true },
+];
 
-    if (
-      typeof dados !== "object" || dados === null ||
-      !("tempoEstimado" in dados) ||
-      typeof dados.tempoEstimado !== "number" ||
-      !Number.isFinite(dados.tempoEstimado) || dados.tempoEstimado < 0
-    ) {
-      throw new Error("O prazo recebido não é válido.");
-    }
+const linhas = produtos.map((produto) => {
+  return `${produto.nome} — R$ ${produto.preco.toFixed(2)}`;
+});
 
-    document.body.textContent =
-      `Café Aurora\nTempo estimado: ${dados.tempoEstimado} minutos.`;
-  } catch (erro) {
-    const mensagem = erro instanceof Error ? erro.message : "Falha na consulta.";
-    document.body.textContent = `Café Aurora\n${mensagem}`;
-  }
-}
-
-carregar();
+document.body.textContent = `Café Aurora\n${linhas.join("\n")}`;

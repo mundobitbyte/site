@@ -1,17 +1,15 @@
-interface Atendimento {
+type Produto = {
+  id: number;
   nome: string;
-  tempoEstimado: number;
-}
-
-const atendimento: Atendimento = {
-  nome: "Café Aurora",
-  tempoEstimado: 40,
+  preco: number;
+  disponivel: boolean;
 };
 
-const { nome, tempoEstimado } = atendimento;
-const atualizado: Atendimento = { ...atendimento, tempoEstimado: 55 };
+const produto: Produto = {
+  id: 1, nome: "Café coado", preco: 8, disponivel: true,
+};
 
-document.body.textContent = `${nome}
-Antes: ${tempoEstimado} minutos.
-Depois: ${atualizado.tempoEstimado} minutos.
-Original preservado: ${atendimento.tempoEstimado} minutos.`;
+document.body.textContent = `Café Aurora
+Produto: ${produto.nome}
+Preço: R$ ${produto.preco.toFixed(2)}
+Disponível: ${produto.disponivel}`;
