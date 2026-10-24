@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TypeScript Essencial — Web III | Mundo bit Byte</title><meta name="description" content="TypeScript Essencial aplicado ao Café Aurora: exemplos executáveis, leitura guiada e exercícios para continuar o Web III.">
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet"><link href="../../css/web3-typescript.css?v=1" rel="stylesheet"></head>
+<body class="module-page web3-page web3-typescript"><a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="web3.html">← Web III</a><h1>TypeScript Essencial</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="web-layout"><nav class="chapter-menu" aria-label="Tópicos de TypeScript"><h2>TypeScript Essencial</h2><div class="typescript-menu-links"><a class="chapter-link" href="#ts-intro" data-ts-link="ts-intro">Comece aqui</a><a class="chapter-link" href="#ts-variaveis" data-ts-link="ts-variaveis">1. Variáveis</a><a class="chapter-link" href="#ts-condicoes" data-ts-link="ts-condicoes">2. if / else</a><a class="chapter-link" href="#ts-funcoes" data-ts-link="ts-funcoes">3. Funções</a><a class="chapter-link" href="#ts-arrays" data-ts-link="ts-arrays">4. Arrays e objetos</a><a class="chapter-link" href="#ts-filter-find" data-ts-link="ts-filter-find">5. filter / find</a><a class="chapter-link" href="#ts-objetos" data-ts-link="ts-objetos">6. Desestruturação</a><a class="chapter-link" href="#ts-operadores" data-ts-link="ts-operadores">7. Operadores</a><a class="chapter-link" href="#ts-async" data-ts-link="ts-async">8. Assíncrono e JSON</a><a class="chapter-link" href="#ts-imports" data-ts-link="ts-imports">9. import / export</a><a class="chapter-link" href="#ts-exercicios" data-ts-link="ts-exercicios">99. Exercícios</a></div><div class="typescript-mobile-menu"><label for="ts-topico">Tópico de TypeScript</label><select id="ts-topico"><option value="ts-intro">Comece aqui</option><option value="ts-variaveis">1. Variáveis</option><option value="ts-condicoes">2. if / else</option><option value="ts-funcoes">3. Funções</option><option value="ts-arrays">4. Arrays e objetos</option><option value="ts-filter-find">5. filter / find</option><option value="ts-objetos">6. Desestruturação</option><option value="ts-operadores">7. Operadores</option><option value="ts-async">8. Assíncrono e JSON</option><option value="ts-imports">9. import / export</option><option value="ts-exercicios">99. Exercícios</option></select></div><p class="web3-menu-note"><a href="web3-aula2.html#proxima-necessidade">Voltar ao Café Aurora</a></p></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="ts-intro" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-intro-titulo" tabindex="-1">TypeScript Essencial para o Café Aurora</h2></div>
+<p>O site e o balcão do Café Aurora já buscam a mesma informação no PHP. Daqui a pouco, o navegador também precisará trabalhar com esses dados. Antes dessa ligação, vamos experimentar como o TypeScript nos ajuda a perceber uma troca de tipos durante o desenvolvimento.</p>
+<p>A base é o JavaScript que você já trabalhou no Web I; a <a href="../reactnative.html#rn-javascriptEssencial-js-intro">revisão do módulo React Native</a> é um apoio se precisar, não um curso inteiro para fazer antes.</p>
+<h3 id="ts-ambiente">Abra a bancada e veja o primeiro resultado</h3>
+<p><strong>Baixe o <a href="../../downloads/programacao-web/cafe-aurora-typescript-essencial.zip" download>kit de TypeScript do Café Aurora</a> e descompacte em outra pasta.</strong> Abra a pasta que contém <code class="inline-code">package.json</code> no VS Code. Sua aplicação PHP continua guardada como está; esta bancada permite fazer pequenas experiências nos mesmos dados do Café.</p>
+<p>Vamos usar Node.js 24, npm, TypeScript e Vite. Node.js executa as ferramentas no computador; npm instala as dependências declaradas no projeto; TypeScript verifica os tipos; Vite prepara o código para o navegador e serve a página local. Se estiver usando o terminal do Laragon, confira as versões disponíveis em vez de instalar outra cópia sem necessidade.</p>
+<pre class="code-block"><code>node --version
+npm --version
+npm ci
+npm run dev</code></pre>
+<p>O primeiro comando precisa mostrar uma versão 24.x. Se Node.js ou npm não forem reconhecidos, prepare o <a href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js 24</a> no laboratório com a orientação do professor e reabra o terminal. <code class="inline-code">npm ci</code> instala exatamente as dependências do arquivo de trava, <code class="inline-code">package-lock.json</code>; precisa de acesso à rede nessa preparação.</p>
+<p><strong>Abra o endereço local exibido pelo Vite no terminal.</strong> Ele geralmente começa com <code class="inline-code">http://127.0.0.1:5173/</code>, mas pode escolher outra porta. Mantenha esse terminal aberto.</p>
+<figure class="web3-resultado"><figcaption>O primeiro exemplo já deve aparecer na sua bancada</figcaption><pre>Café Aurora
+Negócio: Café Aurora
+Atendimento aberto: true
+Tempo estimado: 40 minutos.</pre></figure>
+<p><strong>Abra <code class="inline-code">src/main.ts</code> e altere 40 para 45.</strong> Salve e veja o prazo mudar. Essa será a rotina: ler um trecho, experimentar e observar. No tópico 1, veremos como conferir também o tipo desse valor.</p>
+<h3 id="ts-verificacao">A página abriu. O que ainda precisamos conferir?</h3>
+<p>O navegador recebe JavaScript preparado a partir do TypeScript. As anotações de tipo não fazem parte dessa execução. O Vite transforma o arquivo, mas não faz a verificação de tipos. <strong>Abra um segundo terminal na mesma pasta e execute:</strong></p>
+<pre class="code-block"><code>npm run verificar</code></pre>
+<p>Um resultado sem erro significa que o verificador não encontrou incompatibilidades nos arquivos de <code class="inline-code">src</code>. Isso não substitui testar o comportamento na página. Se um erro aparecer, leia arquivo e linha; depois de corrigir, execute o comando novamente.</p>
+<p>Nos tópicos 1 a 8, substitua somente o conteúdo de <code class="inline-code">src/main.ts</code> pelo exemplo completo da página. Salve sua tentativa antes de trocar. No tópico 9, acrescentaremos um arquivo de apoio. Não é necessário repetir a instalação a cada tópico.</p>
+<p>Ao terminar a bancada, <code class="inline-code">npm run build</code> verifica os tipos e gera os arquivos estáticos em <code class="inline-code">dist</code>. Por enquanto, concentre-se na experiência do tópico 1.</p>
+<p class="web3-status">Unidade em desenvolvimento · versão experimental para avaliação.</p>
+<div class="chapter-footer"><a href="web3-aula2.html#proxima-necessidade">← Voltar ao Café</a><a href="#ts-variaveis" data-ts-link="ts-variaveis">1. Variáveis e tipos →</a></div>
+</article>
+<article class="chapter" id="ts-variaveis" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-variaveis-titulo" tabindex="-1">1 — const, let e tipos básicos</h2><p class="chapter-meta"><strong>Objetivo:</strong> Alterar os dados do atendimento e identificar uma atribuição incompatível antes de entregar o código.</p></div><p>A tela do balcão já mostra um prazo. Vamos representar essa informação em TypeScript e experimentar o que acontece quando um número vira texto.</p><p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p><pre class="code-block"><code data-ts-source="exemplos/01.ts">const nome = &quot;Café Aurora&quot;;
+let tempoEstimado: number = 25;
+const pedidosAbertos: boolean = true;
+
+tempoEstimado = 40;
+
+document.body.textContent = `Café Aurora
+Negócio: ${nome}
+Atendimento aberto: ${pedidosAbertos}
+Tempo estimado: ${tempoEstimado} minutos.`;</code></pre><h3 id="ts-variaveis-leitura">O que observar</h3><p>O nome é inferido como texto pelo valor recebido. Em <code class="inline-code">tempoEstimado</code>, : <code class="inline-code">number</code> declara que a variável recebe números; : <code class="inline-code">boolean</code> descreve verdadeiro ou falso. </p><p><code class="inline-code">const</code> impede reatribuir a variável; <code class="inline-code">let</code> permite atribuir outro valor. A crase monta uma mensagem com os valores entre ${...}. A última instrução mostra texto no corpo da página: é apenas a saída desta bancada, não uma alteração no site PHP.</p><figure class="web3-resultado"><figcaption>Resultado esperado antes das suas alterações</figcaption><pre>Café Aurora
+Negócio: Café Aurora
+Atendimento aberto: true
+Tempo estimado: 40 minutos.</pre></figure><h3 id="ts-variaveis-pratica">Experimente no Café</h3><p>Troque 40 por &quot;40&quot;, salve e execute npm run verificar no segundo terminal. Leia a indicação de tipo incompatível. Corrija para 45, sem aspas, e confira a mensagem na página.</p><p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p><p><strong>Confira:</strong> A verificação aceita 45 e recusa &quot;40&quot;. Você consegue explicar a diferença entre o texto e o número.</p><p>Agora precisamos representar o caso em que não há uma estimativa disponível.</p><div class="chapter-footer"><a href="#ts-intro" data-ts-link="ts-intro">← Comece aqui</a><a href="#ts-condicoes" data-ts-link="ts-condicoes">2. if / else →</a></div></article>
+<article class="chapter" id="ts-condicoes" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-condicoes-titulo" tabindex="-1">2 — Condições e valores ausentes</h2><p class="chapter-meta"><strong>Objetivo:</strong> Mostrar o prazo somente quando o atendimento está aberto e a estimativa existe.</p></div><p>A cozinha pode estar recebendo pedidos sem conseguir informar uma estimativa naquele instante. Não vamos inventar zero minutos para preencher esse espaço.</p><p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p><pre class="code-block"><code data-ts-source="exemplos/02.ts">const pedidosAbertos: boolean = true;
+let tempoEstimado: number | null = 40;
+let mensagem: string;
+
+if (pedidosAbertos &amp;&amp; tempoEstimado !== null) {
+  mensagem = `Tempo estimado: ${tempoEstimado} minutos.`;
+} else {
+  mensagem = &quot;Consulte a equipe antes de pedir.&quot;;
+}
+
+document.body.textContent = `Café Aurora\n${mensagem}`;</code></pre><h3 id="ts-condicoes-leitura">Escolhendo uma orientação</h3><p><code class="inline-code">number | null</code> permite dois casos: um número ou ausência de estimativa. <code class="inline-code">null</code> é um valor que escolhemos para representar essa ausência. </p><p>O operador <code class="inline-code">&amp;&amp;</code> exige que as duas condições sejam verdadeiras. Depois de <code class="inline-code">tempoEstimado</code> !== <code class="inline-code">null</code>, o TypeScript reconhece o caso numérico dentro do bloco. Essa redução das possibilidades é chamada de narrowing. O else orienta a pessoa a consultar a equipe.</p><figure class="web3-resultado"><figcaption>Resultado esperado antes das suas alterações</figcaption><pre>Café Aurora
+Tempo estimado: 40 minutos.</pre></figure><h3 id="ts-condicoes-pratica">Experimente no Café</h3><p>Substitua 40 por null e confira a orientação. Depois experimente pedidosAbertos = false. Para continuar, deixe o arquivo com o caso que você quiser: o próximo exemplo é independente deste.</p><p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p><p><strong>Confira:</strong> Sem estimativa, a página pede que a pessoa consulte a equipe e não anuncia um prazo fictício.</p><p>Com os casos representados, vamos reunir um pequeno cálculo em uma função.</p><div class="chapter-footer"><a href="#ts-variaveis" data-ts-link="ts-variaveis">← 1. Variáveis</a><a href="#ts-funcoes" data-ts-link="ts-funcoes">3. Funções →</a></div></article>
+<article class="chapter" id="ts-funcoes" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-funcoes-titulo" tabindex="-1">3 — Funções e arrow functions</h2><p class="chapter-meta"><strong>Objetivo:</strong> Declarar o que uma função recebe e o que entrega.</p></div><p>Para um pedido específico, o preparo leva 40 minutos e a retirada precisa considerar mais 5. Vamos calcular esse prazo sem espalhar a soma e sua apresentação pelo programa.</p><p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p><pre class="code-block"><code data-ts-source="exemplos/03.ts">function calcularPrazo(preparo: number, margem: number): number {
+  return preparo + margem;
+}
+
+const formatarPrazo = (minutos: number): string =&gt; {
+  return `Tempo estimado: ${minutos} minutos.`;
+};
+
+const prazo = calcularPrazo(40, 5);
+document.body.textContent = `Café Aurora\n${formatarPrazo(prazo)}`;</code></pre><h3 id="ts-funcoes-leitura">Duas funções, duas responsabilidades</h3><p><code class="inline-code">calcularPrazo</code> recebe dois números e retorna outro número. <code class="inline-code">formatarPrazo</code> recebe o resultado e retorna texto, por isso seu retorno é <code class="inline-code">string</code>. </p><p>A sintaxe com =&gt; é uma arrow function; ela continua sendo uma função. O TypeScript consegue inferir muitos retornos, mas aqui os declaramos para deixar o acordo visível.</p><figure class="web3-resultado"><figcaption>Resultado esperado antes das suas alterações</figcaption><pre>Café Aurora
+Tempo estimado: 45 minutos.</pre></figure><h3 id="ts-funcoes-pratica">Experimente no Café</h3><p>Use calcularPrazo(30, 10) e confira 40 minutos. Experimente passar &quot;30&quot; como primeiro argumento e rode a verificação de tipos; em seguida, corrija o argumento.</p><p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p><p><strong>Confira:</strong> Você distingue o número calculado do texto apresentado e consegue localizar o argumento recusado.</p><p>O cardápio tem vários produtos. Vamos descrever o formato de cada item.</p><div class="chapter-footer"><a href="#ts-condicoes" data-ts-link="ts-condicoes">← 2. if / else</a><a href="#ts-arrays" data-ts-link="ts-arrays">4. Arrays e objetos →</a></div></article>
+<article class="chapter" id="ts-arrays" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-arrays-titulo" tabindex="-1">4 — Arrays, objetos, type e map</h2><p class="chapter-meta"><strong>Objetivo:</strong> Representar uma lista de produtos com campos conhecidos e produzir sua apresentação.</p></div><p>O Café já tem produtos conhecidos do Web I. Nesta bancada vamos usar três deles para conferir nome e preço sem depender de um servidor novo.</p><p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p><pre class="code-block"><code data-ts-source="exemplos/04.ts">type Produto = {
+  id: number;
+  nome: string;
+  preco: number;
+};
+
+const produtos: Produto[] = [
+  { id: 1, nome: &quot;Café coado&quot;, preco: 8 },
+  { id: 2, nome: &quot;Pão artesanal&quot;, preco: 12 },
+  { id: 3, nome: &quot;Bolo de laranja&quot;, preco: 9 },
+];
+
+const linhas = produtos.map((produto) =&gt; {
+  return `${produto.nome} — R$ ${produto.preco.toFixed(2)}`;
+});
+
+document.body.textContent = `Café Aurora\n${linhas.join(&quot;\n&quot;)}`;</code></pre><h3 id="ts-arrays-leitura">Um formato para cada produto</h3><p><code class="inline-code">type</code> <code class="inline-code">Produto</code> dá um nome ao formato do objeto. Cada item precisa de id, nome e preco com os tipos indicados. <code class="inline-code">Produto[]</code> descreve um array desses itens. </p><p><code class="inline-code">map</code> transforma cada produto em uma linha de texto; o tipo de produto é inferido a partir do array. <code class="inline-code">toFixed</code>(2) produz texto com duas casas decimais e ponto; <code class="inline-code">join</code>(&quot;\n&quot;) reúne as linhas. Esta saída curta serve para observar os dados, sem refazer o layout do cardápio.</p><figure class="web3-resultado"><figcaption>Resultado esperado antes das suas alterações</figcaption><pre>Café Aurora
+Café coado — R$ 8.00
+Pão artesanal — R$ 12.00
+Bolo de laranja — R$ 9.00</pre></figure><h3 id="ts-arrays-pratica">Experimente no Café</h3><p>Acrescente um produto com id 4, nome e preço numérico. Confira a nova linha. Retire temporariamente seu preco e observe a indicação do editor; complete o campo antes de verificar.</p><p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p><p><strong>Confira:</strong> O novo produto aparece e a verificação reconhece quando falta um campo obrigatório.</p><p>Com a lista organizada, podemos selecionar produtos e procurar um item específico.</p><div class="chapter-footer"><a href="#ts-funcoes" data-ts-link="ts-funcoes">← 3. Funções</a><a href="#ts-filter-find" data-ts-link="ts-filter-find">5. filter / find →</a></div></article>
+<article class="chapter" id="ts-filter-find" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-filter-find-titulo" tabindex="-1">5 — filter, find e undefined</h2><p class="chapter-meta"><strong>Objetivo:</strong> Distinguir uma lista filtrada de um resultado que pode não existir.</p></div><p>Uma pessoa quer saber quantos produtos custam até R$ 9,00. Outra pergunta pelo produto de código 2. São duas consultas diferentes sobre os mesmos dados.</p><p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p><pre class="code-block"><code data-ts-source="exemplos/05.ts">type Produto = { id: number; nome: string; preco: number };
+
+const produtos: Produto[] = [
+  { id: 1, nome: &quot;Café coado&quot;, preco: 8 },
+  { id: 2, nome: &quot;Pão artesanal&quot;, preco: 12 },
+  { id: 3, nome: &quot;Bolo de laranja&quot;, preco: 9 },
+];
+
+const acessiveis = produtos.filter((produto) =&gt; produto.preco &lt;= 9);
+const escolhido = produtos.find((produto) =&gt; produto.id === 2);
+let mensagem = &quot;Produto não encontrado.&quot;;
+
+if (escolhido !== undefined) {
+  mensagem = `${escolhido.nome}: R$ ${escolhido.preco.toFixed(2)}`;
+}
+
+document.body.textContent = `Café Aurora
+Até R$ 9,00: ${acessiveis.length} produtos.
+${mensagem}`;</code></pre><h3 id="ts-filter-find-leitura">Encontrar também pode falhar</h3><p><code class="inline-code">filter</code> devolve um array, que pode estar vazio. <code class="inline-code">find</code> devolve o primeiro produto que corresponde à condição ou <code class="inline-code">undefined</code> quando não encontra nenhum. </p><p>Por isso verificamos escolhido !== <code class="inline-code">undefined</code> antes de acessar seu nome e seu preço. <code class="inline-code">undefined</code> é o resultado ausente desta busca; não é um produto com campos vazios.</p><figure class="web3-resultado"><figcaption>Resultado esperado antes das suas alterações</figcaption><pre>Café Aurora
+Até R$ 9,00: 2 produtos.
+Pão artesanal: R$ 12.00</pre></figure><h3 id="ts-filter-find-pratica">Experimente no Café</h3><p>Troque o código procurado de 2 para 99 e confira “Produto não encontrado”. Depois altere o limite do filtro para 8 e confira que a contagem passou para um.</p><p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p><p><strong>Confira:</strong> Uma busca sem resultado produz uma orientação legível, sem tentar acessar propriedades de undefined.</p><p>Vamos preparar uma atualização sem modificar o objeto que serviu de referência.</p><div class="chapter-footer"><a href="#ts-arrays" data-ts-link="ts-arrays">← 4. Arrays e objetos</a><a href="#ts-objetos" data-ts-link="ts-objetos">6. Desestruturação →</a></div></article>
+<article class="chapter" id="ts-objetos" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-objetos-titulo" tabindex="-1">6 — Desestruturação, spread e interface</h2><p class="chapter-meta"><strong>Objetivo:</strong> Ler campos de um objeto e preparar outro objeto com um valor atualizado.</p></div><p>A estimativa do atendimento passou de 40 para 55 minutos. Precisamos comparar o aviso anterior com o novo antes de decidir qual será apresentado.</p><p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p><pre class="code-block"><code data-ts-source="exemplos/06.ts">interface Atendimento {
+  nome: string;
+  tempoEstimado: number;
+}
+
+const atendimento: Atendimento = {
+  nome: &quot;Café Aurora&quot;,
+  tempoEstimado: 40,
+};
+
+const { nome, tempoEstimado } = atendimento;
+const atualizado: Atendimento = { ...atendimento, tempoEstimado: 55 };
+
+document.body.textContent = `${nome}
+Antes: ${tempoEstimado} minutos.
+Depois: ${atualizado.tempoEstimado} minutos.
+Original preservado: ${atendimento.tempoEstimado} minutos.`;</code></pre><h3 id="ts-objetos-leitura">Copiar e atualizar um campo</h3><p><code class="inline-code">interface</code> <code class="inline-code">Atendimento</code> descreve os campos desse objeto. Assim como o <code class="inline-code">type</code> usado no produto, ela nomeia um formato; não precisamos de comparações avançadas entre os dois recursos nesta unidade. </p><p>A desestruturação retira nome e <code class="inline-code">tempoEstimado</code> para variáveis. O spread ... copia os campos no novo objeto e o campo escrito depois substitui a estimativa. </p><p>Aqui os campos são valores simples; spread não faz uma cópia profunda de objetos internos.</p><figure class="web3-resultado"><figcaption>Resultado esperado antes das suas alterações</figcaption><pre>Café Aurora
+Antes: 40 minutos.
+Depois: 55 minutos.
+Original preservado: 40 minutos.</pre></figure><h3 id="ts-objetos-pratica">Experimente no Café</h3><p>Mude somente tempoEstimado no objeto atualizado para 60. Confira que o original ainda mostra 40. Tente usar &quot;60&quot; e verifique a incompatibilidade antes de corrigir.</p><p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p><p><strong>Confira:</strong> Você consegue apontar qual objeto mudou e qual continua servindo de referência.</p><p>Agora vamos ler algumas decisões compactas sem esconder seus significados.</p><div class="chapter-footer"><a href="#ts-filter-find" data-ts-link="ts-filter-find">← 5. filter / find</a><a href="#ts-operadores" data-ts-link="ts-operadores">7. Operadores →</a></div></article>
+<article class="chapter" id="ts-operadores" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-operadores-titulo" tabindex="-1">7 — &amp;&amp;, ||, !, ternário e ??</h2><p class="chapter-meta"><strong>Objetivo:</strong> Escolher mensagens e valores alternativos sem confundir zero com ausência.</p></div><p>O nome de exibição pode estar vazio e uma estimativa válida pode ser zero. Os dois casos não devem receber automaticamente o mesmo tratamento.</p><p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p><pre class="code-block"><code data-ts-source="exemplos/07.ts">const apelido: string = &quot;&quot;;
+const pedidosAbertos: boolean = true;
+const prazo: number | null = 0;
+
+const nomeExibido = apelido || &quot;Café Aurora&quot;;
+const podeInformarPrazo = pedidosAbertos &amp;&amp; prazo !== null;
+const situacao = pedidosAbertos ? &quot;Aberto&quot; : &quot;Encerrado&quot;;
+const prazoExibido = prazo ?? &quot;Consulte a equipe&quot;;
+
+document.body.textContent = `${nomeExibido}
+Atendimento: ${situacao}
+Pedidos encerrados: ${!pedidosAbertos}
+Pode informar prazo: ${podeInformarPrazo}
+Prazo: ${prazoExibido}`;</code></pre><h3 id="ts-operadores-leitura">Ausência e valor falso são casos diferentes</h3><p><code class="inline-code">||</code> usa o segundo valor quando o primeiro é falsy, como uma <code class="inline-code">string</code> vazia ou zero. <code class="inline-code">??</code> usa a alternativa apenas para <code class="inline-code">null</code> ou <code class="inline-code">undefined</code> e preserva zero. </p><p><code class="inline-code">&amp;&amp;</code> combina as condições; ! inverte um booleano; condição ? valor1 : valor2 escolhe um dos valores. </p><p>Neste exemplo, prazo representa uma estimativa informada; não é garantia de preparo imediato nem validação de permissão.</p><figure class="web3-resultado"><figcaption>Resultado esperado antes das suas alterações</figcaption><pre>Café Aurora
+Atendimento: Aberto
+Pedidos encerrados: false
+Pode informar prazo: true
+Prazo: 0</pre></figure><h3 id="ts-operadores-pratica">Experimente no Café</h3><p>Compare o resultado de prazo ?? &quot;Consulte a equipe&quot; com prazo || &quot;Consulte a equipe&quot; usando zero. Depois use null e observe a alternativa. Troque pedidosAbertos para false para conferir o ternário e a negação.</p><p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p><p><strong>Confira:</strong> Você escolhe ?? quando zero deve continuar sendo um valor e reconhece quando || substitui esse zero.</p><p>O dado nem sempre nasce no nosso arquivo. Vamos receber um texto e conferir seu conteúdo.</p><div class="chapter-footer"><a href="#ts-objetos" data-ts-link="ts-objetos">← 6. Desestruturação</a><a href="#ts-async" data-ts-link="ts-async">8. Assíncrono e JSON →</a></div></article>
+<article class="chapter" id="ts-async" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-async-titulo" tabindex="-1">8 — Promise, async/await, try/catch e JSON</h2><p class="chapter-meta"><strong>Objetivo:</strong> Receber uma resposta de estudo, validar o prazo e tratar uma falha.</p></div><p>Antes de ligar o balcão ao servidor, vamos ensaiar o recebimento de um prazo. O texto abaixo é uma resposta local controlada: ainda não existe uma consulta de rede neste exemplo.</p><p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p><pre class="code-block"><code data-ts-source="exemplos/08.ts">async function carregar(): Promise&lt;void&gt; {
+  document.body.textContent = &quot;Consultando o prazo do Café Aurora…&quot;;
+
+  try {
+    const texto = await Promise.resolve(&#x27;{&quot;tempoEstimado&quot;:35}&#x27;);
+    const dados: unknown = JSON.parse(texto);
+
+    if (
+      typeof dados !== &quot;object&quot; || dados === null ||
+      !(&quot;tempoEstimado&quot; in dados) ||
+      typeof dados.tempoEstimado !== &quot;number&quot; ||
+      !Number.isFinite(dados.tempoEstimado) || dados.tempoEstimado &lt; 0
+    ) {
+      throw new Error(&quot;O prazo recebido não é válido.&quot;);
+    }
+
+    document.body.textContent =
+      `Café Aurora\nTempo estimado: ${dados.tempoEstimado} minutos.`;
+  } catch (erro) {
+    const mensagem = erro instanceof Error ? erro.message : &quot;Falha na consulta.&quot;;
+    document.body.textContent = `Café Aurora\n${mensagem}`;
+  }
+}
+
+carregar();</code></pre><h3 id="ts-async-leitura">Declarar um tipo não valida uma resposta</h3><p><code class="inline-code">Promise.resolve</code> entrega um resultado assíncrono local; <code class="inline-code">async</code> permite usar <code class="inline-code">await</code> dentro da função. <code class="inline-code">Promise&lt;void&gt;</code> indica que a função termina sem devolver um valor útil a quem a chamou. </p><p><code class="inline-code">JSON.parse</code> transforma o texto, mas não garante seu formato: guardamos o resultado como <code class="inline-code">unknown</code>. </p><p>Primeiro conferimos objeto não nulo, depois a existência de <code class="inline-code">tempoEstimado</code>, seu tipo numérico e seu intervalo. O operador in confere a propriedade, <code class="inline-code">typeof</code> identifica o tipo e <code class="inline-code">Number.isFinite</code> recusa valores não finitos. </p><p><code class="inline-code">throw</code> cria a falha que o <code class="inline-code">catch</code> trata. Como erro também é desconhecido, <code class="inline-code">instanceof Error</code> permite ler sua mensagem com segurança.</p><figure class="web3-resultado"><figcaption>Resultado esperado antes das suas alterações</figcaption><pre>Café Aurora
+Tempo estimado: 35 minutos.</pre></figure><h3 id="ts-async-pratica">Experimente no Café</h3><p>Troque o JSON por {&quot;tempoEstimado&quot;:&quot;35&quot;}, mantendo as aspas externas do texto, e confira a recusa. Tente também null, {} e um JSON malformado. Ao fim, use novamente um prazo numérico não negativo e veja a consulta funcionar.</p><p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p><p><strong>Confira:</strong> Texto numérico, campo ausente e JSON inválido não viram uma estimativa aceita. O caso válido continua funcionando.</p><p>Vamos separar a preparação dos dados da apresentação, sem acrescentar uma biblioteca.</p><div class="chapter-footer"><a href="#ts-operadores" data-ts-link="ts-operadores">← 7. Operadores</a><a href="#ts-imports" data-ts-link="ts-imports">9. import / export →</a></div></article>
+<article class="chapter" id="ts-imports" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-imports-titulo" tabindex="-1">9 — Módulos, import e export</h2><p class="chapter-meta"><strong>Objetivo:</strong> Usar um dado e seu tipo a partir de outro arquivo.</p></div><p>Na primeira experiência do Web III, o PHP passou a preparar a informação em um arquivo de apoio. Podemos organizar esta pequena parte do cliente com a mesma intenção: deixar claro quem prepara e quem apresenta.</p><p><strong>Crie <code class="inline-code">src/atendimento.ts</code> com este conteúdo:</strong></p><pre class="code-block"><code data-ts-source="exemplos/09/atendimento.ts">export type Atendimento = {
+  nome: string;
+  tempoEstimado: number;
+};
+
+export function obterAtendimento(): Atendimento {
+  return { nome: &quot;Café Aurora&quot;, tempoEstimado: 35 };
+}</code></pre><p><strong>Agora substitua <code class="inline-code">src/main.ts</code> pelo exemplo abaixo.</strong> Os dois arquivos precisam estar na mesma pasta.</p><pre class="code-block"><code data-ts-source="exemplos/09/main.ts">import { obterAtendimento } from &quot;./atendimento.js&quot;;
+import type { Atendimento } from &quot;./atendimento.js&quot;;
+
+const atendimento: Atendimento = obterAtendimento();
+
+document.body.textContent = `${atendimento.nome}
+Tempo estimado: ${atendimento.tempoEstimado} minutos.`;</code></pre><h3 id="ts-imports-leitura">Um recurso pode atravessar o arquivo; seu tipo não precisa executar</h3><p><code class="inline-code">export</code> disponibiliza o tipo e a função no arquivo de apoio. <code class="inline-code">import</code> traz a função para main.ts. <code class="inline-code">import type</code> traz somente a descrição <code class="inline-code">Atendimento</code> para a verificação. </p><p>Usamos ./atendimento.js no caminho pensando no JavaScript gerado; a configuração do projeto e o Vite localizam atendimento.ts durante o desenvolvimento. </p><p>O objeto ainda é preparado localmente: não substituímos a função PHP por esta função de estudo nem fizemos uma requisição ao servidor.</p><figure class="web3-resultado"><figcaption>Resultado esperado antes das suas alterações</figcaption><pre>Café Aurora
+Tempo estimado: 35 minutos.</pre></figure><h3 id="ts-imports-pratica">Experimente no Café</h3><p>Altere a estimativa somente em src/atendimento.ts e confira o resultado. Depois renomeie um campo na descrição e no retorno, mas não em main.ts; rode npm run verificar e localize o consumidor que precisa ser ajustado. Mantenha os nomes coerentes ao terminar.</p><p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p><p><strong>Confira:</strong> A mensagem usa o valor do arquivo de apoio, e a verificação aponta um campo renomeado que o consumidor ainda tenta usar.</p><p>Use os desafios para aplicar essas escolhas com menos orientação. A consulta real ao PHP virá na continuidade do Café.</p><div class="chapter-footer"><a href="#ts-async" data-ts-link="ts-async">← 8. Assíncrono e JSON</a><a href="#ts-exercicios" data-ts-link="ts-exercicios">99. Exercícios →</a></div></article>
+<article class="chapter" id="ts-exercicios" data-ts-topic><div class="chapter-header"><span class="chapter-kicker">Web III · TypeScript Essencial</span><h2 id="ts-exercicios-titulo" tabindex="-1">99 — Exercícios TypeScript</h2><p class="chapter-meta"><strong>Objetivo:</strong> Aplicar os conceitos nos dados do Café e explicar os resultados.</p></div><p>Agora resolva pequenas mudanças com menos orientação. Continue na bancada; guarde seus arquivos antes de substituir um exemplo. Não é necessário construir outro site ou aplicativo.</p><section class="task-box"><h3 id="ts-exercicio-1">1. Um prazo bem representado</h3><p>Defina o nome do Café, a situação do atendimento e um prazo numérico. Acrescente uma variável com a margem de retirada e mostre o prazo final. Provoque uma atribuição de texto, reconheça o erro de tipo e corrija.</p><p><strong>Resultado para conferir:</strong> O prazo final é uma soma numérica; a verificação passa depois da correção.</p></section><section class="task-box"><h3 id="ts-exercicio-2">2. Sem prazo disponível</h3><p>Represente uma estimativa ausente com null e informe que a pessoa deve consultar a equipe. Teste também atendimento encerrado. Não apresente zero como substituto automático da ausência.</p><p><strong>Resultado para conferir:</strong> Os casos aberto com prazo, aberto sem prazo e encerrado têm orientações coerentes.</p></section><section class="task-box"><h3 id="ts-exercicio-3">3. Duas funções para a consulta</h3><p>Escreva uma função que calcula o prazo a partir de preparo e margem. Escreva outra que recebe esse resultado e prepara a mensagem. Declare parâmetros e retornos.</p><p><strong>Resultado para conferir:</strong> Uma função entrega número, a outra texto. Uma chamada com argumento incompatível é identificada.</p></section><section class="task-box"><h3 id="ts-exercicio-4">4. Encontrar no cardápio</h3><p>Crie uma lista de quatro produtos tipados. Mostre seus nomes com map, filtre por um limite de preço e procure um identificador com find. Teste também um identificador ausente.</p><p><strong>Resultado para conferir:</strong> A lista, o filtro e a busca têm resultados distintos; um produto ausente não provoca acesso a undefined.</p></section><section class="task-box"><h3 id="ts-exercicio-5">5. Comparar o aviso novo com o anterior</h3><p>Descreva o atendimento com interface. Faça uma cópia com spread e altere o prazo dessa cópia. Mostre os dois valores usando desestruturação onde ela ajudar a leitura.</p><p><strong>Resultado para conferir:</strong> O aviso novo muda e o objeto anterior continua com seu valor inicial.</p></section><section class="task-box"><h3 id="ts-exercicio-6">6. Receber, conferir e organizar</h3><p>Adapte a resposta local do tópico 8. Aceite apenas prazo numérico finito e não negativo. Separe a preparação em um arquivo de apoio, como no tópico 9. Teste número válido, texto, campo ausente e JSON inválido.</p><p><strong>Resultado para conferir:</strong> O caso válido aparece; os demais são recusados. O verificador passa e nenhum dado é aceito apenas por uma afirmação de tipo.</p></section><p>Ao terminar, demonstre uma alteração que funciona e uma entrada que seu código recusa. Explique o que a verificação de tipos percebeu e o que você precisou conferir durante a execução. Você pode guardar dúvidas e descobertas nas anotações do <strong>Meu estudo</strong>.</p>
+<p>O Café PHP continua preservado. Na continuidade do Web III, vamos usar o que você aprendeu para tratar os dados de uma consulta real. Esta bancada ainda não faz essa integração.</p>
+<details><summary>Referências para consultar um ponto específico</summary><ul>
+<li><a href="https://www.typescriptlang.org/docs/handbook/2/basic-types.html" target="_blank" rel="noopener">TypeScript: fundamentos e verificação</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html" target="_blank" rel="noopener">Tipos básicos, arrays, funções e objetos</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html" target="_blank" rel="noopener">Verificações e redução de possibilidades</a></li>
+<li><a href="https://vite.dev/guide/features.html#typescript" target="_blank" rel="noopener">Vite e TypeScript</a></li></ul></details>
+<div class="chapter-footer"><a href="#ts-imports" data-ts-link="ts-imports">← 9. Módulos</a><a href="web3-aula2.html#proxima-necessidade">Voltar ao Café Aurora →</a></div></article></main></div>
+<script src="../../js/web3-typescript.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>
