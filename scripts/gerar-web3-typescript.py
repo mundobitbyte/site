@@ -40,7 +40,6 @@ def article(ident, title, body, objective=None):
 
 intro='''
 <p>O site e o balcão do Café Aurora já buscam a mesma informação no PHP. Daqui a pouco, o navegador também precisará trabalhar com esses dados. Antes dessa ligação, vamos experimentar como o TypeScript nos ajuda a perceber uma troca de tipos durante o desenvolvimento.</p>
-<p>A base é o JavaScript que você já trabalhou no Web I; a <a href="../reactnative.html">revisão do módulo React Native</a> é um apoio se precisar. Nessa página, escolha “JS Essencial”; você não precisa fazer o curso inteiro de React Native para acompanhar esta unidade.</p>
 <h3 id="ts-ambiente">Abra a bancada e veja o primeiro resultado</h3>
 <p><strong>Baixe o <a href="../../downloads/programacao-web/cafe-aurora-typescript-essencial.zip" download>kit de TypeScript do Café Aurora</a> e descompacte em outra pasta.</strong> Abra a pasta que contém <code class="inline-code">package.json</code> no VS Code. Sua aplicação PHP continua guardada como está; esta bancada permite fazer pequenas experiências nos mesmos dados do Café.</p>
 <p>Vamos usar Node.js 24, npm, TypeScript e Vite. Node.js executa as ferramentas no computador; npm instala as dependências declaradas no projeto; TypeScript verifica os tipos; Vite prepara o código para o navegador e serve a página local. Se estiver usando o terminal do Laragon, confira as versões disponíveis em vez de instalar outra cópia sem necessidade.</p>
@@ -58,7 +57,7 @@ VERIFICAR
 <p>Um resultado sem erro significa que o verificador não encontrou incompatibilidades nos arquivos de <code class="inline-code">src</code>. Isso não substitui testar o comportamento na página. Se um erro aparecer, leia arquivo e linha; depois de corrigir, execute o comando novamente.</p>
 <p>Nos tópicos 1 a 11, substitua somente o conteúdo de <code class="inline-code">src/main.ts</code> pelo exemplo completo da página. Salve sua tentativa antes de trocar. No tópico 12, acrescentaremos um arquivo de apoio. Não é necessário repetir a instalação a cada tópico.</p>
 <p>Ao terminar a bancada, <code class="inline-code">npm run build</code> verifica os tipos e gera os arquivos estáticos em <code class="inline-code">dist</code>. Por enquanto, concentre-se na experiência do tópico 1.</p>
-<p class="web3-status">Unidade em desenvolvimento · versão experimental para avaliação.</p>
+<p class="web3-status">Web III em desenvolvimento · TypeScript Essencial disponível.</p>
 <div class="chapter-footer"><a href="web3-aula2.html#proxima-necessidade">← Voltar ao Café</a><a href="#ts-variaveis" data-ts-link="ts-variaveis">1. Variáveis e tipos →</a></div>
 '''.replace('COMANDOS',code('node --version\nnpm --version\nnpm ci\nnpm run dev')).replace('VERIFICAR',code('npm run verificar'))
 

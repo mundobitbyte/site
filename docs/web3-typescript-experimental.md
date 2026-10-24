@@ -1,8 +1,8 @@
 # Web III — TypeScript Essencial: entrega experimental
 
-A unidade segue os moldes de JavaScript Essencial do React Native: introdução,
-tópicos 1 a 12, objetivo, exemplo completo, trecho explicado, resultado esperado,
-experiência e tópico 99 com seis desafios. Os exemplos usam dados do Café Aurora.
+A unidade apresenta introdução, tópicos 1 a 12, objetivo, exemplo completo,
+trecho explicado, resultado esperado, experiência e tópico 99 com seis desafios.
+Os exemplos usam dados do Café Aurora.
 
 ## Inserção e continuidade
 
@@ -40,9 +40,10 @@ homologação de um plano curricular nem comprova a versão aplicável a cada tu
 As cargas totais precisam ser recalculadas depois de dimensionar a prática e
 confirmar a matriz de cada turma. Não há garantia de caber em 80 horas-aula.
 
-Esta branch e a PR são para avaliação. Não autorizar merge ou publicação por
-sucesso dos testes: o professor autorizou publicação automática apenas do
-Capítulo 1, e condicionou as entregas seguintes a uma nova avaliação.
+Após avaliar a prévia, o professor autorizou a publicação desta unidade e pediu
+que o material público não cite o modelo usado na sua elaboração. A publicação
+fica condicionada à validação técnica desta revisão. Essa autorização não se
+estende automaticamente às entregas seguintes.
 
 ## Verificação
 
