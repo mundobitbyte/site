@@ -68,5 +68,5 @@
 
 #capitulo-12 .publicacao-tela img { width: 100%; aspect-ratio: 2.8; object-fit: cover; object-position: center; }
 @media (max-width: 1050px) {
-  #capitulo-12, #capitulo-12 h3[id] { scroll-margin-top: 118px; }
+  #capitulo-12, #capitulo-12 h3[id], #publicacao-exemplo { scroll-margin-top: 118px; }
 }
