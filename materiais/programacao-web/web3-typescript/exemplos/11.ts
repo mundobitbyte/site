@@ -5,7 +5,7 @@ interface Atendimento {
 
 const atendimento: Atendimento = {
   nome: "Café Aurora",
-  tempoEstimado: 40,
+  tempoEstimado: 45,
 };
 
 const { nome, tempoEstimado } = atendimento;

@@ -4,6 +4,28 @@ A unidade apresenta introdução, tópicos 1 a 12, objetivo, exemplo completo,
 trecho explicado, resultado esperado, experiência e tópico 99 com seis desafios.
 Os exemplos usam dados do Café Aurora.
 
+## Revisão de continuidade e entrada (24/10/2026)
+
+A abertura explica o que é TypeScript, seu vínculo com JavaScript, utilidade,
+critério de adoção e limites. Mantém VS Code como editor, diferencia Node/npm,
+Vite e verificador, e orienta extração, pasta, terminal, instalação, endereço,
+edição, conferência de tipos e retomada. Nenhum React é exigido nesta unidade.
+
+O kit começa com 35 minutos, referência da experiência da aba aberta no
+Capítulo 1. A equipe comunica 45 na primeira alteração. O tópico 1 continua
+essa tentativa sem reiniciar o arquivo. Cada valor é estimativa informada pela
+equipe e representada localmente; não há cálculo preditivo nem consulta PHP.
+O tópico de condições retoma 45; a comparação de avisos usa 45 → 55, e o último
+exemplo organiza os 55 em arquivo de apoio. Atividades de cálculo identificam
+separadamente seus próprios valores de entrada.
+
+O menu lateral continua visível no computador. No celular/tablet, o botão
+“☰ Tópicos” abre a mesma lista em dialog nativo, seguindo a convenção de menu
+recolhível dos módulos Arduino/App Inventor. Há fechamento, Escape, contenção
+nativa de foco, tópico atual e retorno ao conteúdo. Não existem cópias dos
+links nem IDs novos de progresso. Sem JavaScript, a lista e o conteúdo ficam
+acessíveis na página. Âncoras históricas, ID da unidade e versão 1 permanecem.
+
 ## Inserção e continuidade
 
 A entrada está depois do Capítulo 1, antes da consulta real ao PHP. Preserva as

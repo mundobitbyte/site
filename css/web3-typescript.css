@@ -1,12 +1,85 @@
 /* Somente a unidade TypeScript: mantém o visual e os controles do Web III. */
-.web3-typescript .typescript-mobile-menu { display: none; }
+.web3-typescript .ts-mobile-tools { display: none; }
+.web3-typescript .ts-mobile-tools[hidden] { display: none; }
 .web3-typescript .web3-resultado pre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
 .web3-typescript .task-box { margin: 22px 0; }
 .web3-typescript [data-ts-topic][hidden] { display: none; }
+.web3-typescript .ts-topics-dialog {
+  position: fixed;
+  inset: 0 auto 0 0;
+  margin: 0;
+  width: min(360px, calc(100vw - 24px));
+  height: 100dvh;
+  max-height: 100dvh;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+@media (max-width: 680px) {
+  /* O cabeçalho ocupa duas linhas; mantém conta e pesquisa inteiras. */
+  .web3-typescript header { height: auto; max-height: none; min-height: 46px; }
+}
+.web3-typescript .ts-topics-dialog::backdrop { background: rgba(15, 23, 42, .58); }
+.web3-typescript .ts-dialog-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+.web3-typescript .ts-dialog-header h2 { font-size: 17px; }
+.web3-typescript :is(.ts-menu-toggle, .ts-menu-close) {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #aebed2;
+  border-radius: 8px;
+  background: #fff;
+  color: #0f3f86;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+.web3-typescript .ts-menu-close { min-width: 44px; font-size: 24px; line-height: 1; }
+.web3-typescript :is(.ts-menu-toggle, .ts-menu-close):focus-visible { outline: 3px solid #945300; outline-offset: 3px; }
 @media (max-width: 1050px) {
-  .web3-typescript .typescript-menu-links { display: none; }
-  .web3-typescript .typescript-mobile-menu { display: grid; gap: 6px; width: 100%; }
-  .web3-typescript .typescript-mobile-menu label { font-size: 13px; font-weight: 700; }
-  .web3-typescript select { width: 100%; min-height: 44px; border: 1px solid #aebed2; border-radius: 7px; background: #fff; color: #132033; padding: 8px; font: inherit; }
-  .web3-typescript select:focus-visible { outline: 3px solid #945300; outline-offset: 2px; }
+  .web3-typescript.ts-drawer-open { overflow: hidden; }
+  .web3-typescript .ts-mobile-tools:not([hidden]) {
+    position: sticky;
+    top: var(--ts-level-height, 48px);
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+  }
+  .web3-typescript .ts-menu-toggle { flex: 0 0 auto; }
+  .web3-typescript .ts-current-topic { min-width: 0; font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
+  .web3-typescript .ts-topics-dialog .chapter-menu {
+    position: static;
+    display: block;
+    height: auto;
+    max-height: none;
+    padding: 14px;
+    overflow: visible;
+    border: 0;
+  }
+  .web3-typescript .ts-topics-dialog .chapter-menu h2 { display: none; }
+  .web3-typescript .ts-topics-dialog .chapter-link {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    margin-bottom: 6px;
+    padding: 12px;
+  }
+  .web3-typescript .ts-topics-dialog .web3-menu-note { display: block; margin: 16px 8px; }
 }
