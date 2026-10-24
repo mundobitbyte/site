@@ -36,14 +36,34 @@ test('páginas não prometem PHP remoto nem oferecem capítulos inexistentes', (
     assert.equal(new Set(ids).size,ids.length,'ID repetido');
   }
 });
-test('mudança em Web I/II se limita a habilitar o link de navegação', () => {
+test('Web I preserva os capítulos de construção e Web II mantém seu conteúdo', () => {
   for(const name of ['web1.html','web2.html']){
     const p='pages/programacao-web/'+name;
     const before=cp.execFileSync('git',['show','470485389c31407946c36b5c5578664aee26890d:'+p],{cwd:root,encoding:'utf8'});
     const after=fs.readFileSync(path.join(root,p),'utf8');
     const nav=/<nav class="level-menu"[\s\S]*?<\/nav>/;
-    assert.equal(after.replace(nav,''),before.replace(nav,''));
+    if(name === 'web2.html') {
+      assert.equal(after.replace(nav,''),before.replace(nav,''));
+      continue;
+    }
+    // O encerramento de Web I pode evoluir sem congelar o arquivo inteiro
+    // na implantação de Web III. Protegemos a construção já aprovada.
+    function capitulo(html, numero) {
+      const inicio = html.indexOf(`<article class="chapter" id="capitulo-${numero}" data-chapter>`);
+      assert.ok(inicio >= 0, `Capítulo ${numero} ausente`);
+      const proximo = html.indexOf('<article class="chapter"', inicio + 1);
+      return html.slice(inicio, proximo < 0 ? html.indexOf('</main>', inicio) : proximo).trim();
+    }
+    for(let numero = 1; numero <= 10; numero++) {
+      assert.equal(capitulo(after, numero), capitulo(before, numero), `Capítulo ${numero} modificado`);
+    }
+    for(const [,id] of before.matchAll(/\bid="([^"]+)"/g)) {
+      assert.ok(after.includes(`id="${id}"`), `Âncora anterior removida: ${id}`);
+    }
   }
+  const zip = 'downloads/programacao-web/cafe-aurora-web1-final.zip';
+  const original = cp.execFileSync('git', ['show', '470485389c31407946c36b5c5578664aee26890d:' + zip], {cwd: root});
+  assert.deepEqual(fs.readFileSync(path.join(root, zip)), original, 'Checkpoint final original modificado');
 });
 test('configuração, autenticação, regras e painel globais permanecem intactos', () => {
   for(const p of ['conta.js','firestore.rules','firebase-config.js','painel.js','visitas-diretas.js','catalogo-core.js']){
