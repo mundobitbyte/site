@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Café Aurora — estudos de TypeScript</title>
+  <style>
+    body { margin: 0; padding: clamp(20px, 5vw, 56px); background: #fff9f0; color: #342a20;
+      font: 18px/1.8 system-ui, sans-serif; white-space: pre-wrap; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  Preparando a consulta do Café Aurora…
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

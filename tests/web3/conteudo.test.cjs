@@ -21,7 +21,8 @@ test('duas aulas comuns têm registros distintos e usam integração existente',
 test('pesquisa chega ao ponto real sem duplicar aulas comuns por percurso', () => {
   const found=core.pesquisar(catalogo,'fonte compartilhada').filter(u=>u.conteudo_id.startsWith('web3-'));
   assert.ok(found.length>=1);
-  assert.equal(catalogo.unidades.filter(u=>u.conteudo_id.startsWith('web3-')).length,2);
+  assert.equal(catalogo.unidades.filter(u=>u.conteudo_id.startsWith('web3-comum-')).length,2);
+  assert.equal(catalogo.unidades.filter(u=>u.conteudo_id==='web3-typescript-essencial').length,1);
   for(const unit of catalogo.unidades.filter(u=>u.conteudo_id.startsWith('web3-'))){
     const html=fs.readFileSync(path.join(root,unit.localizacao_atual),'utf8');
     for(const topic of unit.topicos_busca)assert.ok(html.includes(`id="${topic.ancora}"`),topic.ancora);

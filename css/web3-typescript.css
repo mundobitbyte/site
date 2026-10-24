@@ -1,0 +1,12 @@
+/* Somente a unidade TypeScript: mantém o visual e os controles do Web III. */
+.web3-typescript .typescript-mobile-menu { display: none; }
+.web3-typescript .web3-resultado pre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+.web3-typescript .task-box { margin: 22px 0; }
+.web3-typescript [data-ts-topic][hidden] { display: none; }
+@media (max-width: 1050px) {
+  .web3-typescript .typescript-menu-links { display: none; }
+  .web3-typescript .typescript-mobile-menu { display: grid; gap: 6px; width: 100%; }
+  .web3-typescript .typescript-mobile-menu label { font-size: 13px; font-weight: 700; }
+  .web3-typescript select { width: 100%; min-height: 44px; border: 1px solid #aebed2; border-radius: 7px; background: #fff; color: #132033; padding: 8px; font: inherit; }
+  .web3-typescript select:focus-visible { outline: 3px solid #945300; outline-offset: 2px; }
+}
