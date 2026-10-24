@@ -1,6 +1,10 @@
 <?php
 require_once dirname(__DIR__) . "/src/atendimento.php";
 $atendimento = obterAtendimento();
+
+$nomeNegocio = $atendimento["nomeNegocio"];
+$mensagemStatus = $atendimento["mensagemStatus"];
+$mensagemTempo = $atendimento["mensagemTempo"];
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -19,11 +23,11 @@ $atendimento = obterAtendimento();
     </nav>
   </header>
   <main id="conteudo" tabindex="-1">
-    <h1><?= htmlspecialchars($atendimento["nomeNegocio"], ENT_QUOTES, "UTF-8") ?></h1>
+    <h1><?= htmlspecialchars($nomeNegocio, ENT_QUOTES, "UTF-8") ?></h1>
     <section aria-labelledby="atendimento">
       <h2 id="atendimento">Atendimento no balcão</h2>
-      <p><?= htmlspecialchars($atendimento["mensagemStatus"], ENT_QUOTES, "UTF-8") ?></p>
-      <p><?= htmlspecialchars($atendimento["mensagemTempo"], ENT_QUOTES, "UTF-8") ?></p>
+      <p><?= htmlspecialchars($mensagemStatus, ENT_QUOTES, "UTF-8") ?></p>
+      <p><?= htmlspecialchars($mensagemTempo, ENT_QUOTES, "UTF-8") ?></p>
     </section>
   </main>
   <footer><p>Projeto educacional fictício — Café Aurora.</p></footer>

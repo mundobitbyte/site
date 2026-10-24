@@ -2160,7 +2160,7 @@
   },
   "pages/programacao-web/web3.html": {
     "conteudo_id": "web3-comum-balcao",
-    "titulo": "Web III — Capítulo 1 · Aula 1: o balcão precisa saber",
+    "titulo": "Web III — Capítulo 1 · Aula 1: uma mudança, duas telas",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/programacao-web/web3.html",
     "ancoras": [
@@ -2175,16 +2175,16 @@
   },
   "pages/programacao-web/web3-aula2.html": {
     "conteudo_id": "web3-comum-fonte",
-    "titulo": "Web III — Capítulo 1 · Aula 2: mudar uma vez",
+    "titulo": "Web III — Capítulo 1 · Aula 2: o balcão ficou aberto",
     "versao_conteudo": 1,
     "localizacao_atual": "pages/programacao-web/web3-aula2.html",
     "ancoras": [
       "titulo-capitulo",
       "duas-apresentacoes",
       "conectar-site",
-      "mudar-uma-vez",
       "encerrar-atendimento",
       "pagina-aberta",
+      "mudar-uma-vez",
       "preservar-cafe",
       "checkpoint-capitulo-1",
       "proxima-necessidade"
