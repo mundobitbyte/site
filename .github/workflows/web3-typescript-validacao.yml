@@ -1,0 +1,36 @@
+name: Validação TypeScript Essencial Web III
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'materiais/programacao-web/web3-typescript/**'
+      - 'pages/programacao-web/web3-typescript.html'
+      - 'js/web3-typescript.js'
+      - 'css/web3-typescript.css'
+      - 'downloads/programacao-web/cafe-aurora-typescript-essencial.zip'
+      - 'scripts/gerar-web3-typescript.py'
+      - 'tests/web3/verificar-typescript.cjs'
+      - '.github/workflows/web3-typescript-validacao.yml'
+permissions:
+  contents: read
+jobs:
+  bancada:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Extrair e instalar o download real em pasta temporária
+        run: |
+          python3 -m zipfile -e downloads/programacao-web/cafe-aurora-typescript-essencial.zip "$RUNNER_TEMP/web3-ts"
+          npm ci --prefix "$RUNNER_TEMP/web3-ts/cafe-aurora-typescript" --no-audit --no-fund
+      - name: Conferir os exemplos, erros provocados e correspondência com o material
+        env:
+          MBB_TS_TOOLS: ${{ runner.temp }}/web3-ts/cafe-aurora-typescript
+        run: node --test tests/web3/verificar-typescript.cjs
+      - name: Verificar e construir a bancada baixada
+        run: npm run build --prefix "$RUNNER_TEMP/web3-ts/cafe-aurora-typescript"
+      - name: Conferir o script exclusivo da unidade
+        run: node --check js/web3-typescript.js
