@@ -140,6 +140,7 @@
 
   function reveal(target) {
     if (window.innerWidth > 1050) {
+      window.scrollTo({top: 0, behavior: 'instant'});
       const top = target ? content.scrollTop + target.getBoundingClientRect().top - content.getBoundingClientRect().top - 20 : 0;
       content.scrollTo({top, behavior: 'instant'});
     } else if (!target || target.tagName === 'H2') {
