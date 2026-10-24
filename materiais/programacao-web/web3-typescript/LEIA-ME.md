@@ -1,30 +1,94 @@
 # Café Aurora — TypeScript Essencial
 
-Esta é uma bancada de estudos do mesmo Café. Ela não substitui a aplicação PHP
-nem contém banco, painel, credenciais ou serviços de nuvem. Guarde-a em outra
-pasta; a entrega do Web II continua intacta.
+Continue no VS Code. Este projeto permite estudar TypeScript com os dados do
+Café Aurora e observar os resultados no navegador. Guarde-o em uma pasta de
+estudos; a aplicação PHP continua na própria pasta.
+
+TypeScript acrescenta ao JavaScript recursos para descrever e verificar os
+tipos durante o desenvolvimento. Essa conferência ajuda quando o programa
+passa a compartilhar dados entre variáveis, funções e arquivos. Não elimina
+testes de comportamento nem comprova o formato de dados recebidos de fora.
+
+O prazo inicial é de 35 minutos, retomando o aviso da experiência da aba aberta
+no Capítulo 1. É uma estimativa informada pela equipe, representada no código;
+o exemplo não calcula uma previsão nem consulta a aplicação PHP. Se sua cópia
+anterior tem outro prazo, pode guardá-la como está. Este kit adota 35 como
+referência para compararmos os resultados.
 
 ## Preparar uma vez
 
-Use Node.js 24 e npm. No terminal da pasta que contém package.json:
+1. Extraia o ZIP. No VS Code, use Arquivo → Abrir Pasta e selecione a pasta
+   cafe-aurora-typescript, que contém package.json.
+2. No explorador lateral, localize src/main.ts: é o arquivo que vamos editar.
+3. Use Terminal → Novo Terminal e confira se o caminho é o da pasta do projeto.
+4. Confira Node.js 24 e npm, executando um comando por vez:
 
 ```sh
 node --version
 npm --version
+```
+
+O primeiro deve começar com v24.; o segundo mostra uma versão do npm. Se algum
+não for reconhecido, prepare Node.js 24 com npm e reabra o VS Code. No Windows,
+se o PowerShell bloquear npm.ps1, escolha o perfil Prompt de Comando no terminal
+integrado. Não é necessário alterar políticas do computador.
+
+Node.js executa as ferramentas deste projeto; npm gerencia a instalação e os
+comandos definidos em package.json. Se já estiverem disponíveis no terminal do
+Laragon, confira as versões antes de instalar outra cópia.
+
+Instale as dependências com acesso à internet e aguarde terminar:
+
+```sh
 npm ci
+```
+
+O comando usa as versões registradas em package-lock.json. O kit foi travado em
+TypeScript 7.0.2 e Vite 8.3.5. A pasta node_modules contém as ferramentas; seus
+arquivos continuam em src. Não é preciso repetir a instalação a cada aula.
+
+Agora inicie a página:
+
+```sh
 npm run dev
 ```
 
-Abra o endereço local mostrado pelo Vite no terminal. Mantenha esse terminal
-aberto. Abra outro terminal na mesma pasta para executar `npm run verificar`.
-O kit foi travado em TypeScript 7.0.2 e Vite 8.3.5; use package-lock.json com
-`npm ci`, sem atualizar dependências durante a prática.
+Vite prepara o TypeScript para o navegador e serve a página local. Você escreve
+no VS Code e abre o endereço mostrado no terminal, em vez de iniciar Live
+Preview neste projeto. Geralmente será http://127.0.0.1:5173/, mas a porta pode
+mudar. Use o endereço informado. Ele aponta para o próprio computador; não
+publica o exercício na internet. Mantenha esse terminal aberto.
+
+## Primeira alteração: o novo aviso da cozinha
+
+A página começa mostrando o atendimento aberto e o prazo de 35 minutos. true
+significa verdadeiro: o atendimento está aberto.
+
+A equipe informa que entraram novos pedidos e o prazo agora é de 45 minutos.
+Em src/main.ts, localize `let tempoEstimado: number = 35;` e troque somente 35
+por 45. Salve com Ctrl + S e confira os 45 minutos no navegador.
+
+Abra outro terminal na mesma pasta para executar `npm run verificar`. O comando
+confere os tipos; terminar sem erros complementa a observação da página. No
+tópico 1, mantenha a alteração e experimente escrever "45" entre aspas: o tipo
+esperado é number, e a verificação precisa recusar esse texto. Retire as aspas,
+salve e verifique novamente. A página pode mostrar os algarismos mesmo quando
+há incompatibilidade de tipos: Vite não realiza essa conferência sozinho.
+
+## Retomar ou encerrar
+
+Ao voltar, abra a mesma pasta no VS Code, execute `npm run dev` e abra o endereço
+informado. As dependências já instaladas continuam disponíveis. Para parar o
+servidor, selecione seu terminal e pressione Ctrl + C. Seus arquivos salvos
+permanecem na pasta.
 
 ## Tópicos 1 a 11
 
 A pasta src é o lugar da sua edição. Ela começa com o exemplo do tópico 1.
-Cada tópico fornece um exemplo completo para substituir somente src/main.ts.
-Salve sua tentativa antes de trocar de tópico. Os arquivos exemplares em
+O tópico 1 permite continuar na primeira alteração, sem recolocar o prazo
+inicial. Depois, cada tópico fornece um exemplo completo para a situação
+narrada, substituindo somente src/main.ts. Salve sua tentativa antes de trocar.
+Os arquivos exemplares em
 exemplos/01.ts a exemplos/11.ts são referências para comparar ou recuperar,
 não doze versões completas do Café.
 

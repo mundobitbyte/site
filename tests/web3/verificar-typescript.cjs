@@ -43,10 +43,14 @@ for(let n=1;n<=roteiro.length;n++){
   });
 }
 test('verificador recusa prazo recebido como texto no código do aluno',async()=>{
-  await executar('01',s=>s.replace('tempoEstimado = 40;', 'tempoEstimado = "40";'),false);
+  await executar('01',s=>s.replace('number = 35;', 'number = "45";'),false);
+});
+test('novo aviso da cozinha muda 35 para 45 e preserva os demais dados',async()=>{
+  assert.equal(await executar('01',s=>s.replace('number = 35;', 'number = 45;')),
+    roteiro[0].result.replace('35 minutos.', '45 minutos.'));
 });
 test('ausência de prazo não vira estimativa numérica fictícia',async()=>{
-  assert.match(await executar('03',s=>s.replace('= 40;', '= null;')),/Consulte a equipe/);
+  assert.match(await executar('03',s=>s.replace('= 45;', '= null;')),/Consulte a equipe/);
 });
 test('find sem resultado não acessa propriedades de undefined',async()=>{
   assert.match(await executar('09',s=>s.replace('produto.id === 2','produto.id === 99')),/Produto não encontrado/);
@@ -55,6 +59,8 @@ test('descrição do produto recusa um campo obrigatório ausente',async()=>{
   await executar('06',s=>s.replace('preco: 8, ',''),false);
 });
 test('códigos mostrados e todos os arquivos do ZIP correspondem às fontes',()=>{
+  assert.equal(fs.readFileSync(path.join(source,'src/main.ts'),'utf8'),
+    fs.readFileSync(path.join(source,'exemplos/01.ts'),'utf8'),'O kit precisa iniciar no exemplo mostrado ao aluno');
   const html=fs.readFileSync(path.join(root,'pages/programacao-web/web3-typescript.html'),'utf8');
   function decode(s){return s.replace(/&quot;/g,'"').replace(/&#x27;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');}
   const matches=[...html.matchAll(/<code data-ts-source="([^"]+)">([\s\S]*?)<\/code>/g)];

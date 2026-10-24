@@ -4,5 +4,5 @@ export type Atendimento = {
 };
 
 export function obterAtendimento(): Atendimento {
-  return { nome: "Café Aurora", tempoEstimado: 35 };
+  return { nome: "Café Aurora", tempoEstimado: 55 };
 }
