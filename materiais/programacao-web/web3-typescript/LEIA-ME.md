@@ -98,6 +98,12 @@ mantendo a verificação de produto ausente. As saídas de referência usam os t
 produtos do kit; sua contagem acompanha os itens da sua lista. Quando mudar
 limitePreco, o limite escrito na tela precisa acompanhar a consulta.
 
+Para guardar suas tentativas, crie uma pasta entregas ao lado de src, fora dela.
+O verificador examina todos os arquivos TypeScript de src; uma cópia com erro
+nessa pasta também interfere na verificação, mesmo sem ser usada pela página.
+Guarde a tentativa em entregas e mantenha os arquivos de trabalho corrigidos.
+Para repeti-la, copie seus arquivos de volta para src.
+
 Salve sua tentativa antes de trocar de situação. Os arquivos exemplares em
 exemplos/01.ts a exemplos/11.ts servem para comparar ou recuperar um ponto,
 não são versões completas da aplicação PHP.
@@ -128,9 +134,15 @@ A formatação monetária completa pode ser retomada na integração com a inter
 
 ## Exercícios
 
-Use os desafios do tópico 99. Guarde sua solução em uma cópia da bancada ou
-salve seus arquivos antes de substituir main.ts. Para cada desafio, confira
-o caso normal e uma entrada inadequada. A verificação precisa passar depois
-de corrigir o erro provocado intencionalmente.
+Use os desafios do tópico 99, retomando os arquivos das aulas em vez de criar
+outro projeto. Cada atividade oferece um caminho para rever a experiência
+correspondente. Guarde sua solução fora de src, por exemplo
+entregas/desafio-1.ts. Para o desafio 6, guarde main.ts e atendimento.ts juntos
+em entregas/desafio-6.
+
+Confira os casos pedidos na página e uma entrada inadequada. Corrija o erro
+intencional antes de verificar a versão de trabalho. Ao fechar a unidade,
+demonstre uma solução, explique a origem dos valores e diferencie o que foi
+conferido pelos tipos do que precisou ser observado durante a execução.
 
 © 2026 Mundo bit Byte — Ronaldo Lavestein. Uso conforme os direitos do site.

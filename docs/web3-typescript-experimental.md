@@ -78,6 +78,21 @@ estende automaticamente às entregas seguintes.
 
 ## Verificação
 
+A revisão circular de retomada e checkpoints, em 25/10/2026, volta da entrega
+final à preparação inicial: explica onde guardar tentativas para que um erro
+intencional arquivado não bloqueie o trabalho seguinte. Os seis desafios
+retomam necessidades do Café e exemplos existentes, com links para as aulas
+correspondentes e evidências concretas para conferência. O checkpoint pede
+demonstrar a solução e distinguir verificação de tipos e comportamento. Um
+teste executa o compilador com a mesma tentativa inválida fora e dentro de src.
+
+A conferência do Capítulo 1 reconstrói as duas aulas a partir dos trechos
+ensinados e de uma cópia da referência final anterior. Confere via HTTP o
+prazo inicial de 40, a divergência 40/55, o compartilhamento em 55, a mudança
+para 20, o encerramento e a distinção entre resposta anterior e nova em 35.
+Essa execução exige PHP e é feita no CI; não é declarada como teste local no
+host de autoria, que não possui PHP/Composer. O Web II não é alterado.
+
 Os testes específicos compilam os doze exemplos com strict e executam o
 JavaScript gerado. Conferem resultados, atribuição incompatível, prazo ausente,
 busca sem resultado e campo obrigatório ausente. Código mostrado

@@ -27,6 +27,8 @@ jobs:
           node-version: '22'
       - name: Testar arquivos reais dos checkpoints e suíte herdada
         run: python3 tests/web3/verificar-pratica.py --composer
+      - name: Reconstruir as duas aulas do Capítulo 1 pelos trechos ensinados
+        run: python3 tests/web3/auditar-construcao-capitulo1.py
       - name: Validar conteúdo e preservação
         run: node --test tests/web3/conteudo.test.cjs
   meu-mbb:
