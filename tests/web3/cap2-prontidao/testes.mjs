@@ -169,6 +169,10 @@ test('PHP real: GET, contrato exato, cache, alteração única e estados do aten
   fs.writeFileSync(fonte, original.replace('$tempoEstimado = 30;', '$tempoEstimado = null;'));
   dados = await mod.obterAtendimento(); assert.match(dados.mensagemStatus, /abertos/); assert.match(dados.mensagemTempo, /Consulte a equipe/);
   assert.doesNotMatch(dados.mensagemTempo, /0 minutos/);
+  fs.writeFileSync(fonte, original.replace('$tempoEstimado = 30;', '$tempoEstimado = null;').replace('$pedidosAbertos = true;', '$pedidosAbertos = false;'));
+  dados = await mod.obterAtendimento(); assert.match(dados.mensagemStatus, /encerrados/); assert.doesNotMatch(dados.mensagemTempo, /minutos/);
+  fs.writeFileSync(fonte, original.replace('$tempoEstimado = 30;', '$tempoEstimado = 0;'));
+  dados = await mod.obterAtendimento(); assert.match(dados.mensagemTempo, /0 minutos/);
   fs.writeFileSync(fonte, original);
 });
 test('PHP real: POST recusado, fontes e dados fora da raiz pública', { skip: !phpDisponivel }, async () => {

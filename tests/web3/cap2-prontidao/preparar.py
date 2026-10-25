@@ -7,6 +7,7 @@ from pathlib import Path
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 import zipfile
@@ -220,8 +221,22 @@ def preparar_balcao(app):
 
 
 def fotografar(app):
-    return {str(p.relative_to(app)): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in (app / 'public').rglob('*') if p.is_file()}
+    arquivos = {}
+    for diretorio, pastas, nomes in os.walk(app):
+        pastas[:] = [p for p in pastas if p != 'node_modules']
+        for nome in nomes:
+            p = Path(diretorio) / nome
+            relativo = str(p.relative_to(app))
+            if relativo == 'public/js/balcao/main.js':
+                continue
+            arquivos[relativo] = hashlib.sha256(p.read_bytes()).hexdigest()
+    return arquivos
+
+
+def conferir_fotografia(app, antes):
+    for nome, sha in antes.items():
+        assert (app / nome).is_file(), nome
+        assert hashlib.sha256((app / nome).read_bytes()).hexdigest() == sha, nome
 
 
 def run(args, cwd, log):
@@ -258,7 +273,7 @@ def caderno(app, destino):
             linhas += [f'Arquivo: {nome}\n', '```typescript\n' + conteudo + '```\n']
         linhas += ['Salve os arquivos indicados e execute npm run build. Mantenha os demais arquivos da etapa anterior.\n']
     linhas += ['Arquivo: src/atendimento.php\n', '```php\n' + (app / 'src/atendimento.php').read_text() + '\n```\n',
-               'Na conquista 6, o elseif da função PHP trata a estimativa ausente sem alterar os nomes devolvidos.\n',
+               'Na conquista 6, teste primeiro o encerramento. Com o atendimento aberto, o elseif trata a estimativa ausente. Os nomes devolvidos são preservados.\n',
                'A pasta public/js/balcao contém saída gerada. A configuração não limpa pastas existentes.\n',
                'O servidor PHP usa somente public como raiz. Execute, da raiz do Café: php -d opcache.enable_cli=0 -S localhost:8000 -t public\n',
                'A opção -d vale somente para este processo de desenvolvimento: evita que o cache de código compilado da CLI adie suas alterações PHP. Não modifica o php.ini do computador.\n',
@@ -278,25 +293,47 @@ def reconstruir(destino, instalar=True, php=False):
     preparar_balcao(app)
     (app / 'public/js/balcao').mkdir(exist_ok=True)
     (app / 'public/js/balcao/preservar.txt').write_text('MARCADOR-DE-PRESERVACAO')
-    antes = fotografar(app)
     if instalar:
         run(['npm', 'ci', '--no-audit', '--no-fund'], cliente, destino / 'npm-ci.log')
     resultados = []
     for n, arquivos in etapas().items():
         for nome, conteudo in arquivos.items():
             (app / nome).write_text(conteudo)
+        antes = fotografar(app)
         run(['npm', 'run', 'build'], cliente, destino / f'build-etapa-{n}.log')
         assert (app / 'public/js/balcao/main.js').is_file()
-        for nome, sha in antes.items():
-            assert hashlib.sha256((app / nome).read_bytes()).hexdigest() == sha, nome
-        resultados.append({'etapa': n, 'build': 'aprovado', 'arquivosAnterioresPreservados': True})
+        conferir_fotografia(app, antes)
+        resultados.append({'etapa': n, 'build': 'aprovado', 'arquivosAnterioresPreservados': True, 'arquivosConferidos': len(antes)})
         if n == 4:
             run([str(cliente / 'node_modules/.bin/tsc'), '--noEmit', 'false', '--rootDir', 'src', '--outDir', str(destino / 'etapa4-js')],
                 cliente, destino / 'etapa4-compilada.log')
-    fonte.write_text(fonte.read_text().replace('    } else {', '''    } elseif ($tempoEstimado === null) {
+    conteudo = fonte.read_text()
+    inicio = conteudo.index('    if ($pedidosAbertos) {')
+    fim = conteudo.index('\n\n    return [', inicio)
+    decisao = '''    if (!$pedidosAbertos) {
+        $mensagemStatus = "Pedidos para retirada estão encerrados.";
+        $mensagemTempo = "Consulte novamente durante o horário de atendimento.";
+    } elseif ($tempoEstimado === null) {
         $mensagemStatus = "Pedidos para retirada estão abertos.";
         $mensagemTempo = "Consulte a equipe para saber a estimativa.";
-    } else {''', 1))
+    } else {
+        $mensagemStatus = "Pedidos para retirada estão abertos.";
+        $mensagemTempo = "Tempo estimado: $tempoEstimado minutos.";
+    }'''
+    fonte.write_text(conteudo[:inicio] + decisao + conteudo[fim:])
+    # Uma falha de tipos precisa parar o build, sem limpar a saída anterior.
+    saida = app / 'public/js/balcao/main.js'
+    hash_saida = hashlib.sha256(saida.read_bytes()).hexdigest()
+    erro = cliente / 'src/erro-intencional.ts'
+    erro.write_text('const prazo: number = "texto";\n')
+    tentativa = subprocess.run(['npm','run','build'], cwd=cliente, capture_output=True, text=True, timeout=180)
+    (destino / 'build-erro-intencional.log').write_text(tentativa.stdout + tentativa.stderr)
+    assert tentativa.returncode != 0 and '2322' in tentativa.stdout + tentativa.stderr
+    assert hashlib.sha256(saida.read_bytes()).hexdigest() == hash_saida
+    erro.unlink()
+    antes = fotografar(app)
+    run(['npm','run','build'], cliente, destino / 'build-apos-correcao.log')
+    conferir_fotografia(app, antes)
     run([str(cliente / 'node_modules/.bin/tsc'), '--noEmit', 'false', '--rootDir', 'src', '--outDir', str(destino / 'final-js')],
         cliente, destino / 'final-compilada.log')
     for pasta in ['etapa4-js', 'final-js']:
@@ -333,7 +370,9 @@ def reconstruir_caderno(caderno_path, destino):
         n, bloco = int(grupos[indice]), grupos[indice + 1]
         aplicar(bloco)
         if n >= 2:
+            antes = fotografar(app)
             run(['npm', 'run', 'build'], cliente, destino / f'caderno-build-{n}.log')
+            conferir_fotografia(app, antes)
             etapas_feitas.append(n)
     assert etapas_feitas == [2, 3, 4, 5, 6], etapas_feitas
     assert (app / 'public/js/balcao/main.js').is_file()
