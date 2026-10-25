@@ -86,7 +86,9 @@ permanecem na pasta.
 
 A pasta src é o lugar da sua edição. Ela começa com o exemplo do tópico 1.
 O tópico 1 permite continuar na primeira alteração, sem recolocar o prazo
-inicial. Depois, acompanhe a instrução de edição de cada aula. Nos tópicos 8 a
+inicial. Depois, acompanhe a instrução de edição de cada aula. No tópico 5, troque
+somente as duas funções e preserve a chamada do pedido anterior. No 7, mantenha
+Produto e seu objeto produto: a lista começa usando esse objeto. Nos tópicos 8 a
 10, mantenha Produto e o seu array produtos: a página mostra o trecho que muda
 e guarda o arquivo completo em “Conferir o arquivo completo desta aula”.
 Assim, o quarto produto que você criou continua nas consultas seguintes.

@@ -70,9 +70,9 @@ test('atendimento encerrado não anuncia prazo nem pede para fazer um pedido',as
 });
 test('cálculo e apresentação funcionam nas duas formas de função ensinadas',async()=>{
   for(const numero of ['04','05']) {
-    assert.equal(await executar(numero,s=>s.replace('calcularPrazo(40, 5)','calcularPrazo(30, 10)')),
+    assert.equal(await executar(numero,s=>s.replace(/calcularPrazo\(\d+, \d+\)/,'calcularPrazo(30, 10)')),
       'Café Aurora\nTempo estimado: 40 minutos.');
-    await executar(numero,s=>s.replace('calcularPrazo(40, 5)','calcularPrazo("30", 10)'),false);
+    await executar(numero,s=>s.replace(/calcularPrazo\(\d+, \d+\)/,'calcularPrazo("30", 10)'),false);
   }
 });
 test('find sem resultado não acessa propriedades de undefined',async()=>{
@@ -96,6 +96,31 @@ function trecho(t) {
   assert.ok(fim>inicio);
   return arquivo.slice(inicio,fim).trimEnd();
 }
+
+test('troca somente das funções preserva o pedido que o aluno já calculou',async()=>{
+  const anterior=fs.readFileSync(path.join(source,'exemplos/04.ts'),'utf8')
+    .replace('calcularPrazo(40, 5)','calcularPrazo(30, 10)');
+  const codigo=trecho(roteiro[4])+anterior.slice(anterior.indexOf('\n\nconst prazo'));
+  assert.equal(await executar('05',()=>codigo),'Café Aurora\nTempo estimado: 40 minutos.');
+  assert.equal(await executar('05',()=>codigo.replace('calcularPrazo(30, 10)','calcularPrazo(20, 5)')),
+    'Café Aurora\nTempo estimado: 25 minutos.');
+});
+
+test('produto personalizado atravessa as aulas 6 a 10 sem reconstruir a lista',async()=>{
+  let codigo=fs.readFileSync(path.join(source,'exemplos/06.ts'),'utf8')
+    .replace('"Café coado", preco: 8','"Chá da casa", preco: 6');
+  codigo=codigo.slice(0,codigo.indexOf('document.body.textContent'))+trecho(roteiro[6]);
+  assert.equal(await executar('07',()=>codigo),'Café Aurora\nProdutos cadastrados: 3');
+  codigo=codigo.replace('\n];','\n  { id: 4, nome: "Biscoito", preco: 4, disponivel: true },\n];');
+  codigo=codigo.slice(0,codigo.indexOf('document.body.textContent'))+trecho(roteiro[7]);
+  assert.match(await executar('08',()=>codigo),/Chá da casa — R\$ 6\.00/);
+  codigo=codigo.slice(0,codigo.indexOf('const linhas'))+trecho(roteiro[8]);
+  codigo=codigo.replace('codigoProcurado: number = 2','codigoProcurado: number = 1');
+  assert.equal(await executar('09',()=>codigo),'Café Aurora\nProdutos até R$ 9.00: 3.\nChá da casa: R$ 6.00');
+  const inicio=codigo.indexOf(roteiro[9].edit.from),fim=codigo.indexOf(roteiro[9].edit.until,inicio);
+  codigo=codigo.slice(0,inicio)+trecho(roteiro[9])+codigo.slice(fim);
+  assert.equal(await executar('10',()=>codigo),'Café Aurora\nProdutos até R$ 9.00: 3.\nChá da casa: R$ 6.00');
+});
 
 test('edições das aulas 8 a 10 conservam a lista personalizada e a busca protegida',async()=>{
   const t8=roteiro[7],t9=roteiro[8],t10=roteiro[9];
@@ -124,7 +149,7 @@ test('códigos mostrados e todos os arquivos do ZIP correspondem às fontes',()=
   assert.equal(matches.length,13);
   for(const [,name,text] of matches)assert.equal(decode(text).trimEnd(),fs.readFileSync(path.join(source,name),'utf8').trimEnd(),name);
   const fragments=[...html.matchAll(/<code data-ts-fragment="([^"]+)">([\s\S]*?)<\/code>/g)];
-  assert.equal(fragments.length,3);
+  assert.equal(fragments.length,5);
   for(const [,name,text] of fragments) {
     const t=roteiro.find(t=>'exemplos/'+t.file===name);
     assert.equal(decode(text).trimEnd(),trecho(t));

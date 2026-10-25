@@ -116,15 +116,17 @@ for i,t in enumerate(DATA,1):
         end=example.index(edit['until'],start) if edit.get('until') else len(example)
         body+=explanation(edit['instruction'])
         body+=code(example[start:end],fragment='exemplos/'+t['file'])
-        body+='<details><summary>Conferir o arquivo completo desta aula</summary><p>Use esta referência se precisar recuperar o exemplo. Para continuar com seus próprios produtos, mantenha a lista que você já montou.</p>'
+        body+='<details><summary>Conferir o arquivo completo desta aula</summary><p>'+escape(edit.get('recovery','Use esta referência se precisar recuperar o exemplo. Para continuar com seus próprios produtos, mantenha a lista que você já montou.'))+'</p>'
         body+=code(example,'exemplos/'+t['file'])+'</details>'
     else:
         body+='<p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p>'
     if not t.get('edit'):
         body+=code(example,'exemplos/'+t['file'])
     body+=f'<h3 id="{t["id"]}-leitura">{escape(t["focusTitle"])}</h3>{explanation(t["explanation"])}'
-    caption='Resultado com os três produtos da referência' if t.get('edit') else 'Resultado esperado antes das suas alterações'
+    caption=t.get('edit',{}).get('caption') or ('Resultado com os três produtos da referência' if t.get('edit') else 'Resultado esperado antes das suas alterações')
     body+=f'<figure class="web3-resultado"><figcaption>{caption}</figcaption><pre>{escape(t["result"])}</pre></figure>'
+    if i == 1:
+        body+='<p>Essa é a saída da referência inicial. Como você já atualizou o aviso, sua tela deve continuar mostrando <strong>45 minutos</strong>; não precisa voltar a 35 para acompanhar a leitura.</p>'
     body+=f'<h3 id="{t["id"]}-pratica">Experimente no Café</h3><p>{escape(t["practice"])}</p>'
     body+='<p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p>'
     body+=f'<p><strong>Confira:</strong> {escape(t["check"])}</p><p>{escape(t["next"])}</p>'
