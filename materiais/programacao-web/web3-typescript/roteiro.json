@@ -61,13 +61,20 @@
     "menu": "5. Forma moderna",
     "title": "5 — Reconhecer uma arrow function",
     "objective": "Ler uma função escrita com => e reconhecer seus parâmetros e retorno.",
-    "lead": "As duas funções já calculam o prazo e preparam a mensagem. Você encontrará outra maneira de escrevê-las em exemplos de listas e de interfaces: a arrow function, ou função de seta. Vamos reconhecer essa escrita mantendo as mesmas duas ações, para comparar o código com o que acabamos de construir.",
+    "lead": "As duas funções já calculam o prazo e preparam a mensagem. Na última prática, você usou 30 minutos de preparo e 10 de margem: a tela mostrou 40. Vamos manter esse pedido e reconhecer outra maneira de escrever as mesmas ações, a arrow function, ou função de seta. Essa escrita aparecerá também quando trabalharmos com listas.",
     "focusTitle": "A função continua recebendo e devolvendo valores",
     "explanation": "const calcularPrazo guarda uma função. Os parâmetros ficam entre parênteses, com os mesmos tipos de antes. A seta => separa as entradas daquilo que a função faz. Com uma expressão depois da seta, como preparo + margem, o resultado é devolvido diretamente, sem escrever return.\n\nformatarPrazo mostra a outra possibilidade: depois da seta há um bloco entre chaves. Nesse caso, escrevemos return para entregar a mensagem. Ela continua recebendo um número e devolvendo uma string, como no tópico anterior.\n\nAs duas chamadas no fim do arquivo continuam iguais. Estamos comparando formas de escrita para essas ações; funções de seta têm outras particularidades, que não precisamos explorar para este exemplo.",
-    "practice": "Na chamada de calcularPrazo, use os mesmos 30 e 10 do pedido anterior. A tela precisa continuar mostrando 40 minutos. Compare as duas versões: localize os parâmetros e identifique onde o resultado é entregue em cada uma. Você consegue explicar por que uma das setas usa return e a outra não?",
-    "result": "Café Aurora\nTempo estimado: 45 minutos.",
+    "practice": "Confira que a tela continua mostrando 40 minutos, sem alterar a chamada de calcularPrazo. Compare com a versão que guardou: localize os parâmetros e identifique onde o resultado é entregue em cada forma. Depois use 20 e 5 na mesma chamada e confira 25 minutos. Você consegue explicar por que uma das setas usa return e a outra não?",
+    "result": "Café Aurora\nTempo estimado: 40 minutos.",
     "check": "Você reconhece a mesma regra nas duas formas e distingue a função de cálculo da função de apresentação.",
-    "next": "O Café também precisa trabalhar com informações que pertencem ao mesmo produto."
+    "next": "O Café também precisa trabalhar com informações que pertencem ao mesmo produto.",
+    "edit": {
+      "from": "const calcularPrazo",
+      "until": "\n\nconst prazo",
+      "instruction": "Continue em src/main.ts com as duas funções da aula anterior. Substitua somente as declarações de calcularPrazo e formatarPrazo pelo trecho abaixo, até antes de const prazo. Mantenha a chamada calcularPrazo(30, 10) que você já testou e a apresentação que vem depois dela.",
+      "recovery": "A referência completa usa os 30 minutos de preparo e os 10 de margem da prática anterior. Se você testou outro par, mantenha sua chamada ao comparar as duas formas.",
+      "caption": "Resultado com o pedido de 30 minutos de preparo e 10 de margem"
+    }
   },
   {
     "id": "ts-produto",
@@ -89,13 +96,19 @@
     "menu": "7. Vários produtos",
     "title": "7 — Guardar vários produtos em um array",
     "objective": "Construir uma coleção cujos itens seguem o mesmo formato.",
-    "lead": "O cardápio tem café, pão e bolo. Vamos reunir os três produtos em uma lista, mantendo para cada um o formato que acabamos de descrever.",
+    "lead": "Você já tem um produto com nome, preço e disponibilidade. Vamos mantê-lo, inclusive com as alterações que você fez, e acrescentar pão e bolo à mesma lista. Primeiro vamos conferir quantos produtos ela reúne; depois mostraremos cada um.",
     "focusTitle": "Cada posição precisa respeitar o formato",
-    "explanation": "Produto[] descreve um array de produtos. Os colchetes de valores reúnem os objetos separados por vírgula. A propriedade length informa quantos itens existem.\n\nO TypeScript confere cada item. A lista pode crescer sem que um preço textual ou um nome ausente passe despercebido pela verificação. Uma lista vazia também é válida e tem length igual a zero.",
+    "explanation": "Produto[] descreve um array de produtos. Dentro dos colchetes, o primeiro item é produto: usamos o objeto que já existe, sem digitá-lo outra vez. Os outros dois itens são objetos escritos ali, separados por vírgulas. Todos precisam respeitar o mesmo formato.\n\nproduto é um objeto; produtos é o nome que escolhemos para a lista. A propriedade length informa quantos itens ela contém. A lista pode crescer sem que um preço textual ou um nome ausente passe despercebido pela verificação. Uma lista vazia também é válida e tem length igual a zero.",
     "practice": "Acrescente um quarto produto com identificador próprio, nome, preço numérico e disponivel: true. Salve e confira quatro produtos. Para experimentar a ausência de itens, guarde uma cópia do seu main.ts e troque somente a lista de objetos após o sinal = por [], mantendo a declaração const produtos: Produto[]. Observe zero. Depois recupere sua lista com quatro produtos: vamos usá-la na próxima aula.",
     "result": "Café Aurora\nProdutos cadastrados: 3",
     "check": "A contagem acompanha os itens e todos respeitam o mesmo formato.",
-    "next": "Já sabemos quantos produtos existem. Agora vamos mostrar uma linha para cada um."
+    "next": "Já sabemos quantos produtos existem. Agora vamos mostrar uma linha para cada um.",
+    "edit": {
+      "from": "const produtos",
+      "instruction": "Em src/main.ts, preserve a descrição type Produto e o objeto const produto que você já alterou. Substitua somente a instrução document.body.textContent e seu texto pelo trecho abaixo. Ele cria o array e apresenta a contagem.",
+      "recovery": "A referência completa inclui o produto inicial do kit. Para preservar suas alterações, mantenha seu objeto produto e troque somente o trecho indicado acima.",
+      "caption": "Resultado antes de acrescentar o quarto produto"
+    }
   },
   {
     "id": "ts-arrays",
@@ -104,7 +117,10 @@
     "objective": "Representar uma lista de produtos com campos conhecidos e produzir sua apresentação.",
     "lead": "A contagem já acompanha a lista, mas a equipe ainda precisa enxergar quais produtos estão nela. Vamos manter seu array do tópico anterior e produzir uma linha com nome e preço para cada item. Se você acrescentou o quarto produto, ele também deverá aparecer.",
     "file": "08.ts",
-    "edit": {"from": "const linhas", "instruction": "Em src/main.ts, mantenha a descrição Produto e seu array produtos. Substitua somente a instrução document.body.textContent pelo trecho abaixo. Ele cria as linhas e depois as apresenta. Sua lista personalizada continua no mesmo arquivo."},
+    "edit": {
+      "from": "const linhas",
+      "instruction": "Em src/main.ts, mantenha a descrição Produto e seu array produtos. Substitua somente a instrução document.body.textContent pelo trecho abaixo. Ele cria as linhas e depois as apresenta. Sua lista personalizada continua no mesmo arquivo."
+    },
     "focusTitle": "De um produto para uma linha de texto",
     "explanation": "produtos.map chama uma função para cada item do array e reúne os resultados em outro array, que guardamos em linhas. A função de seta recebe um produto por vez. O TypeScript reconhece seu tipo a partir de Produto[]; não precisamos repetir a indicação no parâmetro.\n\nDentro da função, return entrega a linha com nome e preço daquele produto. toFixed(2), que já usamos no cálculo, prepara o preço com duas casas decimais e ponto. A lista de produtos continua existindo; map não a substitui por textos.\n\nlinhas.join(\"\\n\") reúne essas linhas em um único texto. join coloca entre os itens o separador indicado: \\n representa uma quebra de linha. A última instrução apresenta esse texto no corpo da página.",
     "practice": "Confira se o produto que você acrescentou no tópico 7 aparece na tela. Altere somente seu nome no array e observe a linha correspondente. Depois experimente deixar o array vazio, usando uma cópia para guardar seus produtos. A tela deve ficar apenas com Café Aurora. Recupere a lista antes de seguir.",
@@ -120,7 +136,10 @@
     "lead": "Agora conseguimos ler os produtos. Uma pessoa pergunta quantos custam até R$ 9,00; outra quer o nome e o preço do produto de código 2. Vamos consultar a mesma lista que você já montou, distinguindo a seleção de vários itens da procura por um único produto.",
     "file": "09.ts",
     "focusTitle": "Encontrar também pode falhar",
-    "edit": {"from": "const limitePreco", "instruction": "Em src/main.ts, preserve Produto e o array produtos. Substitua o trecho que começa em const linhas e vai até o fim do arquivo pelo código abaixo. Ele usa sua lista para fazer as duas consultas."},
+    "edit": {
+      "from": "const limitePreco",
+      "instruction": "Em src/main.ts, preserve Produto e o array produtos. Substitua o trecho que começa em const linhas e vai até o fim do arquivo pelo código abaixo. Ele usa sua lista para fazer as duas consultas."
+    },
     "explanation": "limitePreco guarda o limite informado pela pessoa, e codigoProcurado guarda o identificador que ela quer consultar. Esses valores ficam separados para podermos mudar a pergunta sem reescrever a lista.\n\nfilter executa a função de seta para cada produto. produto.preco <= limitePreco pergunta se o preço é menor ou igual ao limite. Os produtos para os quais a resposta é verdadeira entram em outro array, acessiveis. Se nenhum atender, esse array fica vazio e length mostra zero.\n\nfind procura o primeiro item para o qual produto.id === codigoProcurado é verdadeiro. === compara o identificador sem converter tipos. O resultado é um produto ou undefined, quando não encontra nenhum.\n\nA mensagem começa com Produto não encontrado. O teste escolhido !== undefined pergunta se há um produto; só então lemos seu nome e preço. !== significa diferente, sem converter os tipos. O limite apresentado no fim vem da mesma variável usada no filtro: ao mudar a pergunta, a mensagem também acompanha.",
     "practice": "Mude somente codigoProcurado de 2 para um identificador ausente na sua lista, como 99, e confira Produto não encontrado. Depois altere limitePreco para 8. A mensagem deve mostrar R$ 8.00 e a contagem correspondente à sua lista. Com os três produtos da referência, ela será um; se você acrescentou outros, confira quais também atendem. Termine com um código existente na sua lista.",
     "result": "Café Aurora\nProdutos até R$ 9.00: 2.\nPão artesanal: R$ 12.00",
@@ -135,7 +154,11 @@
     "objective": "Retirar campos de um objeto para variáveis com nomes claros.",
     "lead": "A busca já encontra um produto e só lê seus campos quando ele existe. Vamos trabalhar nesse mesmo trecho: em vez de repetir escolhido.nome e escolhido.preco na mensagem, podemos retirar esses campos para nomes locais. Sua lista, o filtro e a busca continuam como estão.",
     "focusTitle": "Os nomes precisam existir no objeto",
-    "edit": {"from": "if (escolhido !== undefined) {", "until": "\n\ndocument.body", "instruction": "Em src/main.ts, localize o bloco if (escolhido !== undefined). Substitua somente esse bloco, da linha do if até sua chave de fechamento, pelo trecho abaixo. Preserve a apresentação que vem depois dele e todas as consultas anteriores."},
+    "edit": {
+      "from": "if (escolhido !== undefined) {",
+      "until": "\n\ndocument.body",
+      "instruction": "Em src/main.ts, localize o bloco if (escolhido !== undefined). Substitua somente esse bloco, da linha do if até sua chave de fechamento, pelo trecho abaixo. Preserve a apresentação que vem depois dele e todas as consultas anteriores."
+    },
     "explanation": "const { nome, preco } = escolhido lê os dois campos e cria variáveis locais com esses nomes. Essa leitura é chamada de desestruturação. Os tipos são inferidos a partir do produto encontrado: nome continua sendo string e preco, number.\n\nO sinal = recebe aqui o objeto de onde vamos retirar os campos. As chaves do lado esquerdo indicam quais campos queremos ler; não estamos criando nem modificando um produto.\n\nMantivemos a leitura dentro do if. Assim, escolhido já foi reconhecido como produto, e não como undefined. A mensagem usa os nomes locais e apresenta o mesmo resultado de antes. Se o identificador não existir, continua valendo a orientação Produto não encontrado.",
     "practice": "Acrescente id aos campos retirados e mostre esse identificador na mensagem, antes do nome. Depois acrescente temporariamente descricao à desestruturação e execute a verificação: esse campo não está em Produto. Retire-o, verifique novamente e teste também um identificador ausente, preservando a orientação da busca.",
     "result": "Café Aurora\nProdutos até R$ 9.00: 2.\nPão artesanal: R$ 12.00",

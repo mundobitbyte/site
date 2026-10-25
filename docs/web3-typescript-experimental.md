@@ -104,3 +104,14 @@ Testes de regras são emulados; não representam sincronização real em produç
 Revisão visual inclui desktop e larguras de celular/tablet. Piloto com alunos,
 leitor de tela, dispositivos físicos e ambiente Windows/Laragon continuam
 pendentes; não foram simulados como se fossem executados.
+
+## Revisão de fluidez (25/10/2026)
+
+O tópico 5 troca somente as duas funções, mantendo a chamada de 30 e 10 da
+prática anterior. O resultado permanece em 40; a comparação não reinicia o
+exemplo em 45. O tópico 7 acrescenta a lista a partir do produto que o aluno
+já personalizou no 6, e os tópicos 8–10 conservam essa lista. Referências
+completas continuam recolhidas para recuperação, com orientações específicas.
+A leitura do tópico 1 distingue a saída inicial de 35 da alteração já feita
+para 45. Um teste recompõe a troca das funções sobre o arquivo anterior; outro
+acompanha o produto personalizado até a lista, o filtro e a busca.

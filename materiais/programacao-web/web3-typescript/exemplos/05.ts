@@ -4,6 +4,6 @@ const formatarPrazo = (minutos: number): string => {
   return `Tempo estimado: ${minutos} minutos.`;
 };
 
-const prazo = calcularPrazo(40, 5);
+const prazo = calcularPrazo(30, 10);
 document.body.textContent = `Café Aurora
 ${formatarPrazo(prazo)}`;
