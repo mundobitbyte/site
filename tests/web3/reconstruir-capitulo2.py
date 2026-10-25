@@ -157,6 +157,14 @@ class Publicacao(unittest.TestCase):
                 self.assertTrue(local.exists(),href)
                 if anchor and local.suffix==".html":
                     self.assertIn(f'id="{anchor}"',local.read_text(),href)
+        base=json.loads(subprocess.check_output(["git","show","be9e8dfdeb496ffbbaa8a96edc8eca3981568bf0:meu-mbb/catalogo.json"],cwd=ROOT))
+        atuais={u["conteudo_id"]:u for u in catalogo["unidades"]}
+        for anterior in base["unidades"]:
+            for chave in ["conteudo_id","versao_conteudo","localizacao_atual","status","obrigatorio"]:
+                self.assertEqual(anterior.get(chave),atuais[anterior["conteudo_id"]].get(chave),(anterior["conteudo_id"],chave))
+        script="const c=require('./meu-mbb/catalogo-core.js');const d=require('./meu-mbb/catalogo.json');const fs=require('fs');console.log(JSON.stringify(JSON.parse(fs.readFileSync(0,'utf8')).map(a=>c.pesquisar(d,a.titulo)[0]?.conteudo_id)));"
+        resultado=subprocess.run(["node","-e",script],cwd=ROOT,input=json.dumps(AULAS),capture_output=True,text=True,check=True)
+        self.assertEqual(json.loads(resultado.stdout),[a["id"] for a in AULAS],"Pesquisa não chega à aula esperada")
         for rel in ["pages/programacao-web/web1.html","pages/programacao-web/web2.html","js/programacao-web.js","meu-mbb/conta.js","meu-mbb/firestore.rules","meu-mbb/visitas-diretas.js"]:
             old=subprocess.check_output(["git","show","be9e8dfdeb496ffbbaa8a96edc8eca3981568bf0:"+rel],cwd=ROOT)
             self.assertEqual((ROOT/rel).read_bytes(),old,rel)
