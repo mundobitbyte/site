@@ -2317,5 +2317,20 @@
       "checkpoint-cap2-aula3",
       "continuar-cap2"
     ]
+  },
+  "pages/programacao-web/web3-capitulo2-aula4.html": {
+    "conteudo_id": "web3-cap2-conferencia",
+    "titulo": "Web III — Capítulo 2 · Aula 4: Conferir antes de apresentar",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-capitulo2-aula4.html",
+    "ancoras": [
+      "titulo-aula",
+      "campo-ausente",
+      "entrada-desconhecida",
+      "receber-recusa",
+      "ensaiar-recusa",
+      "checkpoint-cap2-aula4",
+      "continuar-cap2"
+    ]
   }
 }

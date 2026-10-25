@@ -169,6 +169,16 @@ class Publicacao(unittest.TestCase):
             old=subprocess.check_output(["git","show","be9e8dfdeb496ffbbaa8a96edc8eca3981568bf0:"+rel],cwd=ROOT)
             self.assertEqual((ROOT/rel).read_bytes(),old,rel)
 
+    @unittest.skipIf(len(AULAS)<4,"Conferência de dados começa na aula 4")
+    def test_05_contrato_typescript_do_download(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base=Path(tmp);app=extrair(len(AULAS),base);cliente=app/"cliente-balcao"
+            subprocess.run(["npm","ci","--no-audit","--no-fund"],cwd=cliente,check=True)
+            destino=base/"final-js";destino.mkdir();(destino/"package.json").write_text('{"type":"module"}')
+            subprocess.run([str(cliente/"node_modules/.bin/tsc"),"--noEmit","false","--rootDir","src","--outDir",str(destino),"--module","NodeNext","--moduleResolution","NodeNext"],cwd=cliente,check=True)
+            ambiente={**os.environ,"MBB_CAP2_MODULO":str(destino/"atendimento.js")}
+            subprocess.run(["node","--test",str(ROOT/"tests/web3/contrato-capitulo2.test.mjs")],env=ambiente,check=True)
+
 def regressao():
     spec=importlib.util.spec_from_file_location("cap1",ROOT/"tests/web3/verificar-pratica.py")
     m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)

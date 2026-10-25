@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Café Aurora: Conferir antes de apresentar. Web III, Capítulo 2, Aula 4.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-capitulo2-aula4.html">
+<title>Web III — Conferir antes de apresentar | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet">
+<link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet">
+<link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet">
+</head>
+<body class="module-page web3-page web3-typescript web3-cap2" data-module-title="Web III · Aula 4: Conferir antes de apresentar">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Capítulo 2 · Aula 4</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do Capítulo 2</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout">
+<nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis do Capítulo 2">
+<h2>Capítulo 2</h2><p class="web3-menu-title">O balcão busca o aviso</p>
+<a class="chapter-link" href="web3-capitulo2-aula1.html#capitulo-2">1. O PHP devolve somente o aviso</a>
+<a class="chapter-link" href="web3-capitulo2-aula2.html#capitulo-2">2. O TypeScript chega ao balcão</a>
+<a class="chapter-link" href="web3-capitulo2-aula3.html#capitulo-2">3. Os mesmos nomes, o mesmo aviso</a>
+<a class="chapter-link active" aria-current="page" href="web3-capitulo2-aula4.html#capitulo-2">4. Conferir antes de apresentar</a>
+
+<a class="cap2-voltar" href="web3-typescript.html#ts-checkpoint-final">← TypeScript Essencial</a>
+<a class="cap2-voltar" href="web3.html">Capítulo 1 — Uma informação, duas telas</a>
+
+</nav>
+<main class="web-content" id="conteudo" tabindex="-1">
+<article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Capítulo 2 · Aula 4 de 7</span>
+<h2 id="titulo-aula" tabindex="-1">Conferir antes de apresentar</h2>
+<p class="chapter-meta">Café Aurora · cerca de 2 horas-aula · 14 horas-aula previstas no capítulo</p>
+<p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<section aria-labelledby="campo-ausente">
+<h3 id="campo-ausente">E se a orientação de prazo não vier?</h3>
+<p>O botão já apresenta os três textos nos lugares certos. Na última experiência, você conseguiu distinguir o objeto local da resposta PHP. Falta uma conferência antes de trocar a origem dos dados.</p>
+<p>Imagine que uma alteração no servidor deixe de devolver mensagemTempo. A interface TypeScript descreve o formato esperado, mas essa descrição não inspeciona automaticamente uma resposta recebida durante a execução. O balcão não pode apresentar “undefined” como se fosse uma orientação.</p>
+<p><strong>Vamos ensaiar esse caso na mesma cópia, ainda sem rede.</strong> Prepararemos uma entrada que pode ter qualquer formato, conferiremos os campos e só depois a entregaremos à função de apresentação.</p>
+</section>
+<section aria-labelledby="entrada-desconhecida">
+<h3 id="entrada-desconhecida">Desconhecido não significa liberado</h3>
+<p>O tipo <code>unknown</code> diz: “ainda não sabemos o formato deste valor”. Ao contrário de afirmar <code>Atendimento</code>, ele não permite ler os campos antes de conferi-los. É uma escolha para a entrada que precisa ser examinada.</p>
+<p>Nossa nova função <code>conferirAtendimento</code> recebe unknown e só devolve Atendimento se encontrar os três textos. Se recusar a entrada, usa <code>throw new Error(...)</code>, como a guarda dos elementos na aula anterior. O clique receberá esse erro e mostrará uma orientação.</p>
+<p>Antes de escrever, acompanhe os motivos da recusa:</p>
+<ol><li><code>typeof dados !== "object"</code> recusa números, textos e outros valores que não são objetos. <code>null</code> também precisa de uma verificação própria: em JavaScript, seu typeof é "object".</li><li><code>Array.isArray(dados)</code> identifica arrays, que também são objetos, mas não são a resposta de três campos que combinamos.</li><li><code>"nomeNegocio" in dados</code> pergunta se a propriedade existe. O <code>!</code> nega esse resultado; só lemos o valor depois de verificar a presença.</li><li><code>typeof dados.nomeNegocio !== "string"</code> recusa outro tipo. <code>trim()</code> retira espaços nas pontas; compará-lo com <code>""</code> recusa um texto vazio ou só com espaços.</li></ol>
+<p>O <code>||</code> reúne motivos de recusa. A avaliação para no primeiro verdadeiro; por isso a ordem importa. Repetiremos a conferência para mensagemStatus e mensagemTempo. No retorno, construiremos um objeto apenas com os três campos aceitos.</p>
+<p><strong>Em <code>cliente-balcao/src/atendimento.ts</code>, mantenha a interface e complete o arquivo assim:</strong></p>
+<pre class="code-block"><code data-cap2-file="cliente-balcao/src/atendimento.ts" data-cap2-mode="arquivo">export interface Atendimento {
+  nomeNegocio: string;
+  mensagemStatus: string;
+  mensagemTempo: string;
+}
+
+export function conferirAtendimento(dados: unknown): Atendimento {
+  if (typeof dados !== &quot;object&quot; || dados === null || Array.isArray(dados)) {
+    throw new Error(&quot;A resposta precisa ser um objeto.&quot;);
+  }
+  if (!(&quot;nomeNegocio&quot; in dados) || typeof dados.nomeNegocio !== &quot;string&quot; || dados.nomeNegocio.trim() === &quot;&quot;) {
+    throw new Error(&quot;Nome do negócio ausente ou inválido.&quot;);
+  }
+  if (!(&quot;mensagemStatus&quot; in dados) || typeof dados.mensagemStatus !== &quot;string&quot; || dados.mensagemStatus.trim() === &quot;&quot;) {
+    throw new Error(&quot;Mensagem de situação ausente ou inválida.&quot;);
+  }
+  if (!(&quot;mensagemTempo&quot; in dados) || typeof dados.mensagemTempo !== &quot;string&quot; || dados.mensagemTempo.trim() === &quot;&quot;) {
+    throw new Error(&quot;Mensagem de prazo ausente ou inválida.&quot;);
+  }
+  return {
+    nomeNegocio: dados.nomeNegocio,
+    mensagemStatus: dados.mensagemStatus,
+    mensagemTempo: dados.mensagemTempo,
+  };
+}
+
+export function obterAtendimento(): Atendimento {
+  const dados: unknown = {
+    nomeNegocio: &quot;Café Aurora&quot;,
+    mensagemStatus: &quot;Pedidos para retirada estão abertos.&quot;,
+    mensagemTempo: &quot;Tempo estimado: 30 minutos.&quot;,
+  };
+  return conferirAtendimento(dados);
+}</code></pre>
+<p>Observe a mudança em obterAtendimento: agora ela prepara <code>dados: unknown</code> e entrega essa entrada à conferência. Por enquanto os valores continuam escritos aqui. Essa separação permitirá trocar a origem posteriormente sem refazer as verificações.</p>
+<p>Um campo extra é ignorado na construção do retorno. A função confere o formato básico, não decide se o Café está aberto nem recalcula minutos. Essas decisões continuam no PHP quando a consulta real chegar.</p>
+</section>
+<section aria-labelledby="receber-recusa">
+<h3 id="receber-recusa">O balcão precisa explicar a recusa</h3>
+<p>Se a conferência lançar um erro, a apresentação não deve seguir com dados incompletos. Vamos retomar <code>try</code> e <code>catch</code> do <a href="web1.html#capitulo-9">Web I</a>, agora em torno do ensaio local.</p>
+<p><strong>Em main.ts, preserve os imports, as procuras, as guardas e a função apresentar.</strong> Substitua somente o bloco do addEventListener pelo seguinte:</p>
+<pre class="code-block"><code>botao.addEventListener("click", () =&gt; {
+  try {
+    apresentar(obterAtendimento());
+    aviso.textContent = "Ensaio local conferido; ainda não houve consulta ao servidor.";
+  } catch (erro) {
+    situacao.textContent = "";
+    tempo.textContent = "";
+    aviso.textContent = "O ensaio recebeu dados inválidos. Confira sua tentativa.";
+    console.error(erro);
+  }
+});</code></pre>
+<p>No try, conferimos e apresentamos. Se houver recusa, o catch retira situação e prazo anteriores e informa o problema. <code>console.error(erro)</code> ajuda a localizar o campo no Console do navegador; o visitante recebe uma frase compreensível.</p>
+<details><summary>Comparar o main.ts completo</summary><p>Use para conferir o lugar do evento, sem trocar desnecessariamente os elementos ou o HTML.</p>
+<pre class="code-block"><code data-cap2-file="cliente-balcao/src/main.ts" data-cap2-mode="arquivo">import { obterAtendimento } from &quot;./atendimento.js&quot;;
+import type { Atendimento } from &quot;./atendimento.js&quot;;
+
+const nome = document.querySelector(&quot;#nome-negocio&quot;);
+const situacao = document.querySelector(&quot;#mensagem-status&quot;);
+const tempo = document.querySelector(&quot;#mensagem-tempo&quot;);
+const botao = document.querySelector(&quot;#atualizar-atendimento&quot;);
+const aviso = document.querySelector(&quot;#aviso-consulta&quot;);
+
+if (!(nome instanceof HTMLElement) || !(situacao instanceof HTMLElement) ||
+    !(tempo instanceof HTMLElement) || !(botao instanceof HTMLButtonElement) ||
+    !(aviso instanceof HTMLElement)) {
+  throw new Error(&quot;Confira os elementos do balcão no HTML.&quot;);
+}
+
+const apresentar = (atendimento: Atendimento) =&gt; {
+  nome.textContent = atendimento.nomeNegocio;
+  situacao.textContent = atendimento.mensagemStatus;
+  tempo.textContent = atendimento.mensagemTempo;
+};
+
+botao.disabled = false;
+botao.textContent = &quot;Conferir apresentação&quot;;
+aviso.textContent = &quot;Ensaio local: este botão ainda não consulta o PHP.&quot;;
+
+botao.addEventListener(&quot;click&quot;, () =&gt; {
+  try {
+    apresentar(obterAtendimento());
+    aviso.textContent = &quot;Ensaio local conferido; ainda não houve consulta ao servidor.&quot;;
+  } catch (erro) {
+    situacao.textContent = &quot;&quot;;
+    tempo.textContent = &quot;&quot;;
+    aviso.textContent = &quot;O ensaio recebeu dados inválidos. Confira sua tentativa.&quot;;
+    console.error(erro);
+  }
+});</code></pre>
+</details>
+<p><strong>Salve, gere com npm run build e recarregue o balcão.</strong> Clique em “Conferir apresentação” com a entrada válida. O resultado deve continuar igual ao da aula anterior.</p>
+</section>
+<section aria-labelledby="ensaiar-recusa">
+<h3 id="ensaiar-recusa">Uma alteração por vez, um resultado para conferir</h3>
+<p><strong>Em obterAtendimento, retire somente a linha mensagemTempo do objeto dados.</strong> Mantenha o tipo unknown. Salve, faça build, recarregue e clique.</p>
+<figure class="web3-resultado"><figcaption>A entrada foi recusada antes da apresentação</figcaption><p>O ensaio recebeu dados inválidos. Confira sua tentativa.</p></figure>
+<p>O build pode passar: dados foi declarado unknown, não Atendimento. É a função de conferência que deve recusar esse formato durante a execução. O prazo antigo não fica apresentado como se fosse o resultado do ensaio.</p>
+<p><strong>Abra o Console e encontre “Mensagem de prazo ausente ou inválida.”.</strong> Recoloque a linha com o texto correto, gere, recarregue e clique de novo. A apresentação deve se recuperar.</p>
+<p>Depois teste separadamente, sempre voltando ao caso válido antes do seguinte:</p>
+<ul><li>Troque a frase de prazo pelo número <code>30</code>: existe um campo, mas seu tipo está errado.</li><li>Use <code>"   "</code> no lugar da frase: continua sendo string, mas não informa nada.</li><li>Substitua o objeto de entrada por <code>null</code> e depois por <code>[]</code>: ambos precisam ser recusados no primeiro teste.</li><li>Acrescente um campo local <code>observacao: "ensaio"</code>: os três textos válidos continuam sendo aceitos e o campo extra não ganha um elemento na página.</li></ul>
+<p>As alterações são feitas somente no valor de dados dentro de obterAtendimento. Cada tentativa exige build e recarregamento. Ao terminar, <strong>restaure o objeto válido de três textos, com 30 minutos, gere e confira a recuperação</strong>.</p>
+<p>Não resolva o problema escrevendo <code>as Atendimento</code> na entrada: essa afirmação não faz os campos surgirem nem valida o que chegou. A conferência precisa acontecer de verdade.</p>
+</section>
+<section class="checkpoint-box" aria-labelledby="checkpoint-cap2-aula4">
+<h3 id="checkpoint-cap2-aula4">Aceitar, recusar e recuperar</h3>
+<p>Crie um caso inválido diferente dos que repetiu, mostre qual condição o recusa e corrija a entrada. Explique por que o tipo unknown não permite tratar um valor como Atendimento sem conferência e por que passar no build não garante a forma de uma resposta externa.</p>
+<p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-cap2-aula4.zip" download>Conferir os arquivos ao fim da Aula 4</a></p>
+<p>A referência termina com o objeto local válido. Preserve suas tentativas fora de src para que o verificador não as misture à solução em uso. O HTML e a API permanecem como antes; npm ci só é necessário para preparar uma cópia nova.</p>
+</section>
+<section aria-labelledby="continuar-cap2"><h3 id="continuar-cap2">Podemos trocar a origem sem perder a conferência</h3>
+<p>A apresentação está pronta e a entrada incompleta é recusada. Agora podemos substituir o objeto local pelos dados da API. Buscar, conferir e apresentar terão papéis claros; o botão passará, enfim, a pedir o aviso atual ao PHP.</p><p class="web3-status">Web III — Em desenvolvimento. 4 aulas disponíveis. As próximas continuam em preparação.</p></section>
+
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-capitulo2-aula3.html#capitulo-2">← Aula 3 — Os mesmos nomes, o mesmo aviso</a><a href="web3.html">Voltar ao Web III</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script>
+<script src="../../js/web3-menu-aulas.js?v=1"></script>
+<script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>
