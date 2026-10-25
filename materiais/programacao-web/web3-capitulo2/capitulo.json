@@ -24,6 +24,12 @@
       "titulo": "Conferir antes de apresentar",
       "id": "web3-cap2-conferencia",
       "horas": 2
+    },
+    {
+      "numero": 5,
+      "titulo": "Agora o aviso vem do PHP",
+      "id": "web3-cap2-consulta",
+      "horas": 2
     }
   ]
 }

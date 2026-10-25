@@ -36,6 +36,15 @@ def reconstruir(base):
     for aula in AULAS:
         n=aula["numero"]; parser=Blocos()
         parser.feed((ROOT/f"pages/programacao-web/web3-capitulo2-aula{n}.html").read_text())
+        if n==5:
+            cliente=app/"cliente-balcao";fonte=cliente/"src/atendimento.ts";anterior=fonte.read_text()
+            novo=next(code for attr,code in parser.blocos if attr["data-cap2-file"]=="cliente-balcao/src/atendimento.ts")
+            try:
+                fonte.write_text(novo+"\n")
+                falha=subprocess.run(["npm","run","build"],cwd=cliente,capture_output=True,text=True)
+                assert falha.returncode!=0 and "Promise" in falha.stdout+falha.stderr,"O consumidor síncrono deveria recusar a Promise"
+            finally:fonte.write_text(anterior)
+            print("Aula 5: produtor assíncrono com consumidor antigo recusado; os dois serão atualizados juntos.")
         for attr,code in parser.blocos:
             caminho=app/attr["data-cap2-file"]
             assert app in caminho.parents
@@ -195,6 +204,9 @@ class Publicacao(unittest.TestCase):
             subprocess.run([str(cliente/"node_modules/.bin/tsc"),"--noEmit","false","--rootDir","src","--outDir",str(destino),"--module","NodeNext","--moduleResolution","NodeNext"],cwd=cliente,check=True)
             ambiente={**os.environ,"MBB_CAP2_MODULO":str(destino/"atendimento.js")}
             subprocess.run(["node","--test",str(ROOT/"tests/web3/contrato-capitulo2.test.mjs")],env=ambiente,check=True)
+            if len(AULAS)>=5:
+                ambiente.update({"MBB_CAP2_BASE":str(base),"MBB_CAP2_AULA":str(len(AULAS)),"MBB_EXIGIR_PHP":"1"})
+                subprocess.run(["node","--test",str(ROOT/"tests/web3/integracao-capitulo2.test.mjs")],env=ambiente,check=True)
 
 def regressao():
     spec=importlib.util.spec_from_file_location("cap1",ROOT/"tests/web3/verificar-pratica.py")
