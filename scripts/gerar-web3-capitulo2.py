@@ -90,7 +90,7 @@ def pagina(aula):
 <link href="../../css/web3-typescript.css?v=2" rel="stylesheet">
 <link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet">
 </head>
-<body class="module-page web3-page web3-typescript web3-cap2" data-module-title="Web III">
+<body class="module-page web3-page web3-typescript web3-cap2" data-module-title="Web III · Aula {n}: {titulo}">
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 <header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
 <nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
