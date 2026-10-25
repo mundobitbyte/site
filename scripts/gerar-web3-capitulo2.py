@@ -118,7 +118,7 @@ def pagina(aula):
 <nav class="chapter-footer" aria-label="Anterior e próxima aula">{anterior}{proxima}</nav>
 </article></main></div>
 <script src="../../js/programacao-web.js?v=11"></script>
-<script src="../../js/web3-menu-aulas.js?v=1"></script>
+<script src="../../js/web3-menu-aulas.js?v=2"></script>
 <script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body></html>
 """

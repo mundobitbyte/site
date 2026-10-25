@@ -79,6 +79,15 @@ def reconstruir(base):
                 finally:main.write_text(original)
                 subprocess.run(["npm","run","build"],cwd=cliente,check=True)
                 print("Erro de tipo intencional recusado; correção recompilada.")
+            if n==3 and len(AULAS)>=4:
+                fonte=cliente/"src/atendimento.ts";original=fonte.read_text()
+                try:
+                    fonte.write_text(original.replace('    mensagemTempo: "Tempo estimado: 30 minutos.",\n',''))
+                    erro=subprocess.run(["npm","run","build"],cwd=cliente,capture_output=True,text=True)
+                    assert erro.returncode!=0 and "mensagemTempo" in erro.stdout+erro.stderr,"O objeto tipado deveria acusar o campo ausente"
+                finally:fonte.write_text(original)
+                subprocess.run(["npm","run","build"],cwd=cliente,check=True)
+                print("Entrada da aula 4: campo ausente no objeto tipado foi recusado; referência restaurada.")
         print(f"Aula {n}: blocos reconstruídos correspondem ao ZIP.")
     return app
 

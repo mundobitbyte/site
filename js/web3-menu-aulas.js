@@ -39,10 +39,38 @@
       : !event.shiftKey && event.target === itens.at(-1) ? itens[0] : null;
     if (destino) { event.preventDefault(); destino.focus(); }
   });
+  menu.addEventListener("click", event => {
+    if (event.target.closest("a[href]")) fechar();
+  });
   small.addEventListener("change", ajustar);
   if (typeof ResizeObserver === "function") new ResizeObserver(() =>
     document.body.style.setProperty("--ts-level-height", levels.getBoundingClientRect().height + "px")
   ).observe(levels);
+  function posicionarDestino() {
+    let id = "";
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+    const alvo = document.getElementById(id);
+    const inicio = !id || ["capitulo-2", "titulo-aula", "conteudo"].includes(id);
+    if (!inicio && (!alvo || !content.contains(alvo))) return;
+    if (inicio) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      if (!small.matches) content.scrollTo({ top: 0, behavior: "instant" });
+    } else if (!small.matches) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      const top = content.scrollTop + alvo.getBoundingClientRect().top - content.getBoundingClientRect().top - 20;
+      content.scrollTo({ top, behavior: "instant" });
+    } else {
+      alvo.scrollIntoView({ block: "start", behavior: "instant" });
+      const barras = levels.getBoundingClientRect().height + (toolbar.hidden ? 0 : toolbar.getBoundingClientRect().height);
+      window.scrollBy({ top: -barras - 20, behavior: "instant" });
+    }
+  }
+  // Preserva o hash da pesquisa/retomada sem deslocar o cabeçalho fora da tela.
+  const reposicionar = () => requestAnimationFrame(posicionarDestino);
+  window.addEventListener("load", reposicionar);
+  window.addEventListener("hashchange", reposicionar);
+  window.addEventListener("popstate", reposicionar);
   ajustar();
+  reposicionar();
 })();
 

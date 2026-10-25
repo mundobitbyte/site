@@ -37,13 +37,15 @@
 <section aria-labelledby="campo-ausente">
 <h3 id="campo-ausente">E se a orientação de prazo não vier?</h3>
 <p>O botão já apresenta os três textos nos lugares certos. Na última experiência, você conseguiu distinguir o objeto local da resposta PHP. Falta uma conferência antes de trocar a origem dos dados.</p>
+<p><strong>Antes de alterar o arquivo, faça uma conferência curta:</strong> em <code>cliente-balcao/src/atendimento.ts</code>, retire somente a linha mensagemTempo do objeto devolvido por obterAtendimento. Mantenha a interface como está. No terminal de cliente-balcao, execute <code>npm run build</code>.</p>
+<p>O verificador apontou o campo ausente? <strong>Recoloque a linha e gere novamente.</strong> Ele conseguiu proteger um objeto que nós escrevemos. Vamos investigar o que muda quando a entrada precisa ser conferida durante a execução.</p>
 <p>Imagine que uma alteração no servidor deixe de devolver mensagemTempo. A interface TypeScript descreve o formato esperado, mas essa descrição não inspeciona automaticamente uma resposta recebida durante a execução. O balcão não pode apresentar “undefined” como se fosse uma orientação.</p>
 <p><strong>Vamos ensaiar esse caso na mesma cópia, ainda sem rede.</strong> Prepararemos uma entrada que pode ter qualquer formato, conferiremos os campos e só depois a entregaremos à função de apresentação.</p>
 </section>
 <section aria-labelledby="entrada-desconhecida">
 <h3 id="entrada-desconhecida">Desconhecido não significa liberado</h3>
-<p>O tipo <code>unknown</code> diz: “ainda não sabemos o formato deste valor”. Ao contrário de afirmar <code>Atendimento</code>, ele não permite ler os campos antes de conferi-los. É uma escolha para a entrada que precisa ser examinada.</p>
-<p>Nossa nova função <code>conferirAtendimento</code> recebe unknown e só devolve Atendimento se encontrar os três textos. Se recusar a entrada, usa <code>throw new Error(...)</code>, como a guarda dos elementos na aula anterior. O clique receberá esse erro e mostrará uma orientação.</p>
+<p>O tipo <code>unknown</code> diz: “ainda não sabemos o formato deste valor”. Ao contrário de afirmar <code>Atendimento</code>, ele não permite ler os campos antes de conferi-los. É uma maneira de representar a entrada que precisa ser examinada.</p>
+<p>Nossa nova função <code>conferirAtendimento</code> recebe unknown e só devolve Atendimento se encontrar os três textos. Se recusar a entrada, usa <code>throw new Error(...)</code>, como a guarda dos elementos na aula anterior. A ação do botão receberá esse erro e mostrará uma orientação.</p>
 <p>Antes de escrever, acompanhe os motivos da recusa:</p>
 <ol><li><code>typeof dados !== "object"</code> recusa números, textos e outros valores que não são objetos. <code>null</code> também precisa de uma verificação própria: em JavaScript, seu typeof é "object".</li><li><code>Array.isArray(dados)</code> identifica arrays, que também são objetos, mas não são a resposta de três campos que combinamos.</li><li><code>"nomeNegocio" in dados</code> pergunta se a propriedade existe. O <code>!</code> nega esse resultado; só lemos o valor depois de verificar a presença.</li><li><code>typeof dados.nomeNegocio !== "string"</code> recusa outro tipo. <code>trim()</code> retira espaços nas pontas; compará-lo com <code>""</code> recusa um texto vazio ou só com espaços.</li></ol>
 <p>O <code>||</code> reúne motivos de recusa. A avaliação para no primeiro verdadeiro; por isso a ordem importa. Repetiremos a conferência para mensagemStatus e mensagemTempo. No retorno, construiremos um objeto apenas com os três campos aceitos.</p>
@@ -145,7 +147,7 @@ botao.addEventListener(&quot;click&quot;, () =&gt; {
 <h3 id="ensaiar-recusa">Uma alteração por vez, um resultado para conferir</h3>
 <p><strong>Em obterAtendimento, retire somente a linha mensagemTempo do objeto dados.</strong> Mantenha o tipo unknown. Salve, faça build, recarregue e clique.</p>
 <figure class="web3-resultado"><figcaption>A entrada foi recusada antes da apresentação</figcaption><p>O ensaio recebeu dados inválidos. Confira sua tentativa.</p></figure>
-<p>O build pode passar: dados foi declarado unknown, não Atendimento. É a função de conferência que deve recusar esse formato durante a execução. O prazo antigo não fica apresentado como se fosse o resultado do ensaio.</p>
+<p>Na abertura, retirar esse campo fez o build falhar. Agora o build pode passar: dados foi declarado unknown, não Atendimento. É a função de conferência que deve recusar esse formato durante a execução. O prazo antigo não fica apresentado como se fosse o resultado do ensaio.</p>
 <p><strong>Abra o Console e encontre “Mensagem de prazo ausente ou inválida.”.</strong> Recoloque a linha com o texto correto, gere, recarregue e clique de novo. A apresentação deve se recuperar.</p>
 <p>Depois teste separadamente, sempre voltando ao caso válido antes do seguinte:</p>
 <ul><li>Troque a frase de prazo pelo número <code>30</code>: existe um campo, mas seu tipo está errado.</li><li>Use <code>"   "</code> no lugar da frase: continua sendo string, mas não informa nada.</li><li>Substitua o objeto de entrada por <code>null</code> e depois por <code>[]</code>: ambos precisam ser recusados no primeiro teste.</li><li>Acrescente um campo local <code>observacao: "ensaio"</code>: os três textos válidos continuam sendo aceitos e o campo extra não ganha um elemento na página.</li></ul>
@@ -164,6 +166,6 @@ botao.addEventListener(&quot;click&quot;, () =&gt; {
 <nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-capitulo2-aula3.html#capitulo-2">← Aula 3 — Os mesmos nomes, o mesmo aviso</a><a href="web3.html">Voltar ao Web III</a></nav>
 </article></main></div>
 <script src="../../js/programacao-web.js?v=11"></script>
-<script src="../../js/web3-menu-aulas.js?v=1"></script>
+<script src="../../js/web3-menu-aulas.js?v=2"></script>
 <script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body></html>
