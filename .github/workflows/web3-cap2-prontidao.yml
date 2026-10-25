@@ -1,0 +1,62 @@
+name: Ensaio de prontidão Web III Capítulo 2
+on:
+  pull_request:
+    branches: [main]
+    paths: ['tests/web3/cap2-prontidao/**', '.github/workflows/web3-cap2-prontidao.yml']
+permissions:
+  contents: read
+jobs:
+  ensaio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5.12'
+          extensions: pdo_sqlite, mbstring
+          tools: composer
+          coverage: none
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Registrar o ambiente e reconstruir as pequenas conquistas
+        run: |
+          php --version
+          node --version
+          npm --version
+          python3 tests/web3/cap2-prontidao/preparar.py "$RUNNER_TEMP/ensaio"
+      - name: Conferir contrato, transporte, estados e regressão evoluída
+        env:
+          MBB_CAP2_BASE: ${{ runner.temp }}/ensaio
+          MBB_EXIGIR_PHP: '1'
+        run: |
+          node --test tests/web3/cap2-prontidao/testes.mjs | tee "$RUNNER_TEMP/ensaio/testes.log"
+          python3 tests/web3/cap2-prontidao/regressao.py "$RUNNER_TEMP/ensaio"
+      - name: Reconstruir de novo, lendo somente os blocos do caderno
+        run: |
+          python3 tests/web3/cap2-prontidao/preparar.py "$RUNNER_TEMP/limpa" --caderno "$RUNNER_TEMP/ensaio/Caderno_Reconstrucao_Tecnica.md"
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          base=Path(os.environ['RUNNER_TEMP'])
+          a=base/'ensaio/cafe-aurora-web3'
+          b=base/'limpa/cafe-aurora-web3'
+          for nome in ['public/api/atendimento.php','public/balcao.php','src/atendimento.php','cliente-balcao/src/main.ts','cliente-balcao/src/atendimento.ts','cliente-balcao/vite.config.mjs','public/js/balcao/main.js']:
+              assert (a/nome).read_text().rstrip()==(b/nome).read_text().rstrip(),nome
+          print('Fontes e JavaScript das duas reconstruções correspondem, desconsiderando somente quebras finais.')
+          PY
+      - name: Repetir os exemplos publicados de TypeScript
+        env:
+          MBB_TS_TOOLS: ${{ runner.temp }}/ensaio/cafe-aurora-web3/cliente-balcao
+        run: node --test tests/web3/verificar-typescript.cjs
+      - name: Guardar somente evidências e o caderno, sem dados pessoais
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ensaio-prontidao-capitulo2
+          path: |
+            ${{ runner.temp }}/ensaio/*.log
+            ${{ runner.temp }}/ensaio/*.json
+            ${{ runner.temp }}/ensaio/Caderno_Reconstrucao_Tecnica.md
+            ${{ runner.temp }}/limpa/*.log
