@@ -1,0 +1,80 @@
+<section aria-labelledby="uma-mensagem">
+<h3 id="uma-mensagem">Primeiro, uma mensagem dentro do balcão</h3>
+<p>A API já devolve o aviso da cozinha. Antes de ligar a consulta, vamos conferir uma ligação menor: fazer o código TypeScript escrever uma mensagem <strong>dentro da página PHP que já existe</strong>.</p>
+<p><strong>Continue na cópia do Café usada na Aula 1.</strong> Confirme que <a href="http://localhost:8000/api/atendimento.php" target="_blank" rel="noopener">a API</a> responde e que <a href="http://localhost:8000/balcao.php" target="_blank" rel="noopener">o balcão</a> abre pelo servidor PHP. Mantenha esse servidor em execução no terminal. Se precisar reabri-lo, retome <a href="web3-capitulo2-aula1.html#balcao-aberto">o começo da aula anterior</a>.</p>
+<p>Na bancada do Essencial, o Vite acompanhava suas alterações e entregava uma página de teste. Aqui o PHP já entrega a página. Precisamos gerar um arquivo JavaScript para ela carregar. Essa geração é o <strong>build</strong>. O VS Code continua sendo nosso editor.</p>
+</section>
+<section aria-labelledby="guardar-bancada">
+<h3 id="guardar-bancada">Levar as ferramentas sem perder suas experiências</h3>
+<p><strong>Guarde a bancada TypeScript e a pasta <code>entregas</code> como estão.</strong> No VS Code, mantenha aberta a pasta da aplicação PHP. Dentro dela, ao lado de <code>public</code> e <code>src</code>, crie a pasta <code>cliente-balcao</code>.</p>
+<p>Da bancada, copie para <code>cliente-balcao</code> somente estes três arquivos:</p>
+<p><code data-cap2-file="cliente-balcao" data-cap2-mode="kit">package.json, package-lock.json e tsconfig.json</code></p>
+<p>O primeiro lista os comandos e as ferramentas; o lock registra as versões exatas; o tsconfig mantém as verificações já usadas. <strong>Não copie <code>node_modules</code>, <code>dist</code>, o HTML da bancada nem sua configuração Vite antiga.</strong> O destino do build será diferente.</p>
+<p>Crie <code>cliente-balcao/src</code> e copie para ela os dois arquivos que concluiu no tópico 12:</p>
+<p><code data-cap2-file="cliente-balcao/src" data-cap2-mode="topico12">main.ts e atendimento.ts</code></p>
+<p>Se você renomeou campos nos desafios, guarde ambos antes desta experiência. Vamos trabalhar com a referência de dois arquivos para comparar a mudança de formato na próxima aula.</p>
+<details><summary>Vou recuperar os arquivos de referência do TypeScript</summary>
+<p>Extraia o <a href="../../downloads/programacao-web/cafe-aurora-typescript-essencial.zip" download>kit do TypeScript Essencial</a> em outra pasta. O <code>src/main.ts</code> do ZIP é o exemplo 1. Os dois arquivos do fim do tópico 12 estão em <strong><code>exemplos/12/main.ts</code> e <code>exemplos/12/atendimento.ts</code></strong>. Copie esses dois para <code>cliente-balcao/src</code>. Os três arquivos de ferramentas estão na raiz do kit.</p>
+<p>Essa recuperação não exige refazer o Essencial nem substituir suas soluções. Você pode rever <a href="web3-typescript.html#ts-imports">a prática dos dois arquivos</a> se precisar localizar o que cada um fazia.</p>
+</details>
+<p><strong>Abra um segundo terminal no VS Code:</strong> em <strong>Terminal → Novo Terminal</strong>, deixe o primeiro executando o PHP. No terminal novo, que começa na raiz do Café, entre no cliente:</p>
+<pre class="code-block"><code>cd cliente-balcao
+node --version
+npm --version</code></pre>
+<p>O caminho agora precisa terminar em <code>cliente-balcao</code>, a pasta que contém package.json. O kit usa Node 24: o primeiro comando deve começar com <code>v24.</code>. O segundo mostra a versão do npm. Se não forem reconhecidos, retome <a href="web3-typescript.html#ts-ambiente">a preparação do Essencial</a> e confira o PATH com o professor; não instale versões diferentes por tentativa.</p>
+<p>Com as ferramentas reconhecidas, execute nesse terminal:</p>
+<pre class="code-block"><code>npm ci</code></pre>
+<p>O npm instala as versões do lockfile em <code>cliente-balcao/node_modules</code>. É preciso conexão nesta instalação. Faça isso ao preparar uma cópia nova, não a cada mudança no código. Seus arquivos editáveis continuam em <code>src</code>.</p>
+</section>
+<section aria-labelledby="destino-build">
+<h3 id="destino-build">Decidir onde o JavaScript vai ficar</h3>
+<p>O navegador não executa o arquivo .ts diretamente. Vamos colocar sua versão JavaScript em <code>public/js/balcao/main.js</code>. Essa pasta será dedicada ao comportamento do balcão; não mova para ela PHP, CSS ou arquivos pessoais.</p>
+<p><strong>Dentro de <code>cliente-balcao</code>, crie <code>vite.config.mjs</code>.</strong> Ele configura o Vite em JavaScript de módulo. O <code>defineConfig</code> organiza essas opções; o arquivo se chamará .mjs, enquanto nossas práticas continuam em .ts.</p>
+<p>As opções importantes são o ponto de entrada, o destino e a preservação do que já existe. <code>entry</code> aponta para main.ts. <code>outDir</code> usa <code>..</code> para sair de cliente-balcao e alcançar a pasta pública do Café. <code>emptyOutDir: false</code> impede apagar o conteúdo do destino; <code>publicDir: false</code> evita a cópia automática de outra pasta pública. Escreva:</p>
+{{arquivo:cliente-balcao/vite.config.mjs}}
+<p><code>lib</code> pede a geração a partir dessa entrada, sem um index.html do Vite. <code>formats: ["es"]</code> usa módulos JavaScript, como os imports já estudados. <code>fileName: "main"</code> mantém o nome main.js. <code>minify: false</code> conserva a saída legível; <code>sourcemap: false</code> dispensa o arquivo auxiliar de mapeamento nesta prática.</p>
+<p>A saída <code>main.js</code> será substituída a cada build correto. A opção de preservação protege os <em>outros</em> arquivos, não transforma o JavaScript gerado em um arquivo para editar manualmente.</p>
+</section>
+<section aria-labelledby="mudar-um-paragrafo">
+<h3 id="mudar-um-paragrafo">Escolher um lugar para a mensagem</h3>
+<p>No exercício isolado, <code>document.body.textContent</code> ocupava o corpo inteiro da bancada. No balcão, isso apagaria os links e todo o restante da página. Vamos escolher um único parágrafo.</p>
+<p><strong>Em <code>public/balcao.php</code>, acrescente o parágrafo abaixo logo depois dos dois parágrafos de atendimento, antes do <code>&lt;/section&gt;</code> correspondente:</strong></p>
+<pre class="code-block"><code>&lt;p id="aviso-consulta" role="status"&gt;Informação recebida ao abrir a página.&lt;/p&gt;</code></pre>
+<p>O <code>id</code> permite localizar esse elemento. <code>role="status"</code> identifica uma mensagem de estado para tecnologias assistivas. Antes do fechamento <code>&lt;/body&gt;</code>, acrescente:</p>
+<pre class="code-block"><code>&lt;script type="module" src="js/balcao/main.js"&gt;&lt;/script&gt;</code></pre>
+<p>Esse caminho parte da página pública. O atributo <code>type="module"</code> permite carregar o JavaScript de módulo gerado. <strong>Mantenha o começo PHP, cabeçalho, seção e rodapé que já existem.</strong></p>
+<details><summary>Quero comparar o arquivo completo sem perder meu HTML</summary>
+<p>Use esta referência para localizar o parágrafo e o script; preserve suas demais alterações. Não há botão de consulta nesta etapa.</p>
+{{arquivo:public/balcao.php}}
+</details>
+<p><strong>Substitua apenas <code>cliente-balcao/src/main.ts</code> pelo exemplo pequeno abaixo.</strong> Mantenha atendimento.ts guardado na mesma pasta: voltaremos a usá-lo na próxima aula.</p>
+<p><code>querySelector("#aviso-consulta")</code> procura o parágrafo pelo id; o <code>#</code> indica esse tipo de seletor. Como uma procura também pode não encontrar nada, o TypeScript considera essa possibilidade. <code>instanceof HTMLElement</code> confere se encontramos um elemento HTML antes de mudar seu texto.</p>
+{{arquivo:cliente-balcao/src/main.ts}}
+<p>O <code>if</code> cria esse trecho seguro para acessar <code>textContent</code>. Não precisamos afirmar que o elemento existe com um <code>!</code> nem enfraquecer a verificação.</p>
+</section>
+<section aria-labelledby="primeiro-build">
+<h3 id="primeiro-build">Gerar e ver a mudança</h3>
+<p><strong>Salve os arquivos. No segundo terminal, ainda em cliente-balcao, execute:</strong></p>
+<pre class="code-block"><code>npm run build</code></pre>
+<p>Esse comando primeiro roda <code>npm run verificar</code>, a checagem de tipos já usada no Essencial. Se ela passar, o Vite gera o JavaScript. Confira a mensagem de conclusão no terminal e o arquivo <code>public/js/balcao/main.js</code> no Explorador.</p>
+<p><strong>Recarregue <a href="http://localhost:8000/balcao.php" target="_blank" rel="noopener">o balcão pelo servidor PHP</a>.</strong> Não abra a página da bancada Vite nem use Live Preview para esse PHP.</p>
+<figure class="web3-resultado"><figcaption>Mensagem nova dentro da mesma página</figcaption><p>O código TypeScript já está ligado ao balcão.</p></figure>
+<p>O prazo e os links continuam ali? A pequena mudança comprova a ligação: PHP entregou o HTML, o navegador carregou o JavaScript gerado e esse código alterou somente o parágrafo escolhido. Ainda não fizemos uma consulta à API.</p>
+<p><strong>Mude a mensagem no TypeScript para “A equipe já pode conferir esta tela.” e salve.</strong> Recarregue antes do build: a mensagem anterior permanece, porque a saída ainda é a anterior. Agora execute build e recarregue novamente. Sua frase chegou?</p>
+<p>Depois da experiência, volte à mensagem de referência, gere novamente e recarregue. Esse cuidado deixa claro de qual versão do código a tela veio.</p>
+</section>
+<section aria-labelledby="conferir-geracao">
+<h3 id="conferir-geracao">Quando é preciso gerar outra vez?</h3>
+<ul><li>Alterou o <strong>TypeScript</strong>: salve, execute build e recarregue a página para carregar o JavaScript novo.</li><li>Alterou somente o <strong>PHP</strong>: salve e faça uma nova consulta ou recarregue a página. Não precisa de build TypeScript.</li><li>Alterou o <strong>HTML do balcão</strong>: salve e recarregue.</li></ul>
+<p>Experimente atribuir um número a <code>aviso.textContent</code>, execute build e leia o erro de tipo. O JavaScript anterior pode continuar no disco; ele não comprova que a tentativa nova deu certo. <strong>Corrija para texto e repita o build antes de seguir.</strong></p>
+<p>Se a mensagem não aparecer, confira o id, o caminho do script, o terminal e a última saída do build. Um 404 de main.js indica que ele não foi gerado no destino esperado ou que o caminho está incorreto. Não edite o arquivo gerado para esconder o problema.</p>
+</section>
+<section class="checkpoint-box" aria-labelledby="checkpoint-cap2-aula2">
+<h3 id="checkpoint-cap2-aula2">Mostre uma mudança pequena do começo ao fim</h3>
+<p>Apresente sua própria frase no parágrafo, preservando o restante do balcão. Aponte o .ts que editou, o .js que foi gerado, o terminal de build e o terminal PHP. Explique por que salvá-lo não atualiza automaticamente a saída nesta configuração.</p>
+<p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-cap2-aula2.zip" download>Conferir os arquivos ao fim da Aula 2</a></p>
+<p>Extraia a referência em outra pasta. Ela inclui os arquivos de fonte e o lockfile; <strong>execute npm ci e npm run build em cliente-balcao antes de abrir o balcão</strong>. Não inclui node_modules nem JavaScript previamente gerado. Sua bancada original não deve ser substituída.</p>
+</section>
+<section aria-labelledby="continuar-cap2"><h3 id="continuar-cap2">A ligação funciona. Agora, os dados.</h3>
+<p>A mensagem mostrou que o código chega ao balcão sem apagar a página. Na próxima aula, vamos voltar aos dois arquivos e aos três nomes que o PHP devolve. Primeiro acertaremos a apresentação com um objeto local; depois trocaremos sua origem.</p>
+<p class="web3-status">Web III — Em desenvolvimento. {{disponibilidade}}</p></section>
