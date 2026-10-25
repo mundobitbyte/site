@@ -28,6 +28,15 @@ acessíveis na página. Âncoras históricas, ID da unidade e versão 1 permanec
 
 ## Inserção e continuidade
 
+Revisão de 25/10/2026: o tópico 3 distingue atendimento encerrado de ausência
+de estimativa. O tópico 4 apresenta cálculo e formatação antes de comparar as
+duas funções com setas no 5. Os tópicos 8–10 editam trechos sobre a lista que o
+aluno criou no 7; o arquivo completo fica recolhido para recuperação. No 9,
+limitePreco alimenta tanto o filtro quanto o texto da tela. O 10 conserva a
+busca e sua proteção contra undefined. O 12 exporta a interface que o aluno
+acabou de conhecer. Os testes reproduzem as edições parciais com um produto
+adicional, além dos casos de limite, ausência e encerramento.
+
 A entrada está depois do Capítulo 1, antes da consulta real ao PHP. Preserva as
 duas aulas publicadas e acrescenta uma ligação na navegação da branch. O aluno
 trabalha em uma bancada de linguagem; não reconstrói o sistema em outra stack.

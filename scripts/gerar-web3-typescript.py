@@ -10,8 +10,8 @@ SOURCE = ROOT / 'materiais/programacao-web/web3-typescript'
 PAGE = ROOT / 'pages/programacao-web/web3-typescript.html'
 DATA = json.loads((SOURCE / 'roteiro.json').read_text())
 
-def code(text, source=None):
-    label = f' data-ts-source="{source}"' if source else ''
+def code(text, source=None, fragment=None):
+    label = f' data-ts-source="{source}"' if source else (f' data-ts-fragment="{fragment}"' if fragment else '')
     return f'<pre class="code-block"><code{label}>{escape(text.rstrip())}</code></pre>'
 
 def explanation(text):
@@ -90,7 +90,7 @@ VERIFICAR
 <li><strong>A página não abre ou não muda:</strong> confira se o terminal com npm run dev continua ativo, se abriu o endereço que ele informou e se salvou src/main.ts.</li></ul></details>
 <h3 id="ts-retomada">Como continuar nas próximas aulas</h3>
 <p>Ao voltar, abra esta pasta no VS Code, use <code class="inline-code">npm run dev</code> no terminal e abra o endereço informado. Não precisa repetir <code class="inline-code">npm ci</code> a cada aula com as dependências já instaladas. Para encerrar o servidor ao terminar, selecione seu terminal e pressione <strong>Ctrl + C</strong>; os arquivos salvos permanecem na pasta.</p>
-<p>No tópico 1, você pode continuar no arquivo que acabou de alterar. Nos tópicos seguintes, cada exemplo completo corresponde à situação narrada naquela aula. Guarde sua tentativa antes de substituir <code class="inline-code">src/main.ts</code>. Os arquivos em <code class="inline-code">exemplos</code> permitem comparar ou recuperar o ponto de partida. No tópico 12, acrescentaremos um arquivo de apoio.</p>
+<p>No tópico 1, você pode continuar no arquivo que acabou de alterar. Cada aula indica o que editar em <code class="inline-code">src/main.ts</code>. Nos tópicos 8 a 10, vamos manter sua lista de produtos e modificar somente o trecho indicado; o arquivo completo ficará disponível para conferência. Guarde sua tentativa antes de trocar de situação. Os arquivos em <code class="inline-code">exemplos</code> permitem recuperar uma referência. No tópico 12, acrescentaremos um arquivo de apoio.</p>
 <details><summary>Quando quiser gerar os arquivos para distribuição</summary><p>O comando <code class="inline-code">npm run build</code> verifica os tipos e prepara a versão estática em <code class="inline-code">dist</code>. Essa etapa será útil ao distribuir a página; agora, continue com a leitura do seu primeiro exemplo.</p></details>
 <p class="web3-local">Para consultar: <a href="https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html" target="_blank" rel="noopener">apresentação oficial do TypeScript</a> e <a href="https://vite.dev/guide/features#typescript" target="_blank" rel="noopener">TypeScript no Vite</a>.</p>
 <p class="web3-status">Web III em desenvolvimento · TypeScript Essencial disponível.</p>
@@ -101,17 +101,28 @@ parts=[article('ts-intro','TypeScript Essencial para o Café Aurora',intro)]
 nav=[('ts-intro','Comece aqui')]+[(t['id'],t['menu']) for t in DATA]+[('ts-exercicios','99. Exercícios')]
 for i,t in enumerate(DATA,1):
     body=f'<p>{escape(t["lead"])}</p>'
+    example=(SOURCE/'exemplos'/t['file']).read_text()
     if t['file'].endswith('/main.ts'):
         body+='<p><strong>Crie <code class="inline-code">src/atendimento.ts</code> com este conteúdo:</strong></p>'
         body+=code((SOURCE/'exemplos/12/atendimento.ts').read_text(),'exemplos/12/atendimento.ts')
         body+='<p><strong>Agora substitua <code class="inline-code">src/main.ts</code> pelo exemplo abaixo.</strong> Os dois arquivos precisam estar na mesma pasta.</p>'
     elif i == 1:
         body+='<p><strong>Continue em <code class="inline-code">src/main.ts</code>.</strong> Se já atualizou o prazo para 45 na abertura, mantenha sua alteração. O código abaixo mostra a referência inicial, com 35 minutos, para acompanharmos a leitura.</p>'
+    elif t.get('edit'):
+        edit=t['edit']
+        start=example.index(edit['from'])
+        end=example.index(edit['until'],start) if edit.get('until') else len(example)
+        body+=explanation(edit['instruction'])
+        body+=code(example[start:end],fragment='exemplos/'+t['file'])
+        body+='<details><summary>Conferir o arquivo completo desta aula</summary><p>Use esta referência se precisar recuperar o exemplo. Para continuar com seus próprios produtos, mantenha a lista que você já montou.</p>'
+        body+=code(example,'exemplos/'+t['file'])+'</details>'
     else:
         body+='<p><strong>Em <code class="inline-code">src/main.ts</code>, use o exemplo completo abaixo.</strong> Salve e confira o resultado na página da bancada.</p>'
-    body+=code((SOURCE/'exemplos'/t['file']).read_text(),'exemplos/'+t['file'])
+    if not t.get('edit'):
+        body+=code(example,'exemplos/'+t['file'])
     body+=f'<h3 id="{t["id"]}-leitura">{escape(t["focusTitle"])}</h3>{explanation(t["explanation"])}'
-    body+=f'<figure class="web3-resultado"><figcaption>Resultado esperado antes das suas alterações</figcaption><pre>{escape(t["result"])}</pre></figure>'
+    caption='Resultado com os três produtos da referência' if t.get('edit') else 'Resultado esperado antes das suas alterações'
+    body+=f'<figure class="web3-resultado"><figcaption>{caption}</figcaption><pre>{escape(t["result"])}</pre></figure>'
     body+=f'<h3 id="{t["id"]}-pratica">Experimente no Café</h3><p>{escape(t["practice"])}</p>'
     body+='<p>Salve, observe a página e execute <code class="inline-code">npm run verificar</code> no segundo terminal. Corrija qualquer erro intencional antes de seguir.</p>'
     body+=f'<p><strong>Confira:</strong> {escape(t["check"])}</p><p>{escape(t["next"])}</p>'

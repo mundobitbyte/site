@@ -86,11 +86,21 @@ permanecem na pasta.
 
 A pasta src é o lugar da sua edição. Ela começa com o exemplo do tópico 1.
 O tópico 1 permite continuar na primeira alteração, sem recolocar o prazo
-inicial. Depois, cada tópico fornece um exemplo completo para a situação
-narrada, substituindo somente src/main.ts. Salve sua tentativa antes de trocar.
-Os arquivos exemplares em
-exemplos/01.ts a exemplos/11.ts são referências para comparar ou recuperar,
-não doze versões completas do Café.
+inicial. Depois, acompanhe a instrução de edição de cada aula. Nos tópicos 8 a
+10, mantenha Produto e o seu array produtos: a página mostra o trecho que muda
+e guarda o arquivo completo em “Conferir o arquivo completo desta aula”.
+Assim, o quarto produto que você criou continua nas consultas seguintes.
+
+O tópico 8 troca a saída de contagem por linhas de nome/preço. O tópico 9
+substitui esse trecho por filtro e busca, com limitePreco e codigoProcurado.
+O tópico 10 muda somente o bloco if para ler os campos por desestruturação,
+mantendo a verificação de produto ausente. As saídas de referência usam os três
+produtos do kit; sua contagem acompanha os itens da sua lista. Quando mudar
+limitePreco, o limite escrito na tela precisa acompanhar a consulta.
+
+Salve sua tentativa antes de trocar de situação. Os arquivos exemplares em
+exemplos/01.ts a exemplos/11.ts servem para comparar ou recuperar um ponto,
+não são versões completas da aplicação PHP.
 
 A saída usa document.body.textContent para mostrar texto sem reconstruir a
 interface do projeto PHP. O Vite transforma TypeScript para o navegador, mas

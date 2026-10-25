@@ -6,8 +6,10 @@ const produtos: Produto[] = [
   { id: 3, nome: "Bolo de laranja", preco: 9, disponivel: true },
 ];
 
-const acessiveis = produtos.filter((produto) => produto.preco <= 9);
-const escolhido = produtos.find((produto) => produto.id === 2);
+const limitePreco: number = 9;
+const codigoProcurado: number = 2;
+const acessiveis = produtos.filter((produto) => produto.preco <= limitePreco);
+const escolhido = produtos.find((produto) => produto.id === codigoProcurado);
 let mensagem = "Produto não encontrado.";
 
 if (escolhido !== undefined) {
@@ -15,5 +17,5 @@ if (escolhido !== undefined) {
 }
 
 document.body.textContent = `Café Aurora
-Até R$ 9,00: ${acessiveis.length} produtos.
+Produtos até R$ ${limitePreco.toFixed(2)}: ${acessiveis.length}.
 ${mensagem}`;
