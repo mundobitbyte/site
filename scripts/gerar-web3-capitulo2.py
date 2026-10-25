@@ -106,7 +106,7 @@ def pagina(aula):
 {menu}
 <a class="cap2-voltar" href="web3-typescript.html#ts-checkpoint-final">← TypeScript Essencial</a>
 <a class="cap2-voltar" href="web3.html">Capítulo 1 — Uma informação, duas telas</a>
-<p class="web3-menu-note">Somente aulas concluídas aparecem no menu.</p>
+
 </nav>
 <main class="web-content" id="conteudo" tabindex="-1">
 <article class="chapter" id="capitulo-2" data-chapter>
