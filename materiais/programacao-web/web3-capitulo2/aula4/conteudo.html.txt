@@ -1,0 +1,60 @@
+<section aria-labelledby="campo-ausente">
+<h3 id="campo-ausente">E se a orientação de prazo não vier?</h3>
+<p>O botão já apresenta os três textos nos lugares certos. Na última experiência, você conseguiu distinguir o objeto local da resposta PHP. Falta uma conferência antes de trocar a origem dos dados.</p>
+<p><strong>Antes de alterar o arquivo, faça uma conferência curta:</strong> em <code>cliente-balcao/src/atendimento.ts</code>, retire somente a linha mensagemTempo do objeto devolvido por obterAtendimento. Mantenha a interface como está. No terminal de cliente-balcao, execute <code>npm run build</code>.</p>
+<p>O verificador apontou o campo ausente? <strong>Recoloque a linha e gere novamente.</strong> Ele conseguiu proteger um objeto que nós escrevemos. Vamos investigar o que muda quando a entrada precisa ser conferida durante a execução.</p>
+<p>Imagine que uma alteração no servidor deixe de devolver mensagemTempo. A interface TypeScript descreve o formato esperado, mas essa descrição não inspeciona automaticamente uma resposta recebida durante a execução. O balcão não pode apresentar “undefined” como se fosse uma orientação.</p>
+<p><strong>Vamos ensaiar esse caso na mesma cópia, ainda sem rede.</strong> Prepararemos uma entrada que pode ter qualquer formato, conferiremos os campos e só depois a entregaremos à função de apresentação.</p>
+</section>
+<section aria-labelledby="entrada-desconhecida">
+<h3 id="entrada-desconhecida">Desconhecido não significa liberado</h3>
+<p>O tipo <code>unknown</code> diz: “ainda não sabemos o formato deste valor”. Ao contrário de afirmar <code>Atendimento</code>, ele não permite ler os campos antes de conferi-los. É uma maneira de representar a entrada que precisa ser examinada.</p>
+<p>Nossa nova função <code>conferirAtendimento</code> recebe unknown e só devolve Atendimento se encontrar os três textos. Se recusar a entrada, usa <code>throw new Error(...)</code>, como a guarda dos elementos na aula anterior. A ação do botão receberá esse erro e mostrará uma orientação.</p>
+<p>Antes de escrever, acompanhe os motivos da recusa:</p>
+<ol><li><code>typeof dados !== "object"</code> recusa números, textos e outros valores que não são objetos. <code>null</code> também precisa de uma verificação própria: em JavaScript, seu typeof é "object".</li><li><code>Array.isArray(dados)</code> identifica arrays, que também são objetos, mas não são a resposta de três campos que combinamos.</li><li><code>"nomeNegocio" in dados</code> pergunta se a propriedade existe. O <code>!</code> nega esse resultado; só lemos o valor depois de verificar a presença.</li><li><code>typeof dados.nomeNegocio !== "string"</code> recusa outro tipo. <code>trim()</code> retira espaços nas pontas; compará-lo com <code>""</code> recusa um texto vazio ou só com espaços.</li></ol>
+<p>O <code>||</code> reúne motivos de recusa. A avaliação para no primeiro verdadeiro; por isso a ordem importa. Repetiremos a conferência para mensagemStatus e mensagemTempo. No retorno, construiremos um objeto apenas com os três campos aceitos.</p>
+<p><strong>Em <code>cliente-balcao/src/atendimento.ts</code>, mantenha a interface e complete o arquivo assim:</strong></p>
+{{arquivo:cliente-balcao/src/atendimento.ts}}
+<p>Observe a mudança em obterAtendimento: agora ela prepara <code>dados: unknown</code> e entrega essa entrada à conferência. Por enquanto os valores continuam escritos aqui. Essa separação permitirá trocar a origem posteriormente sem refazer as verificações.</p>
+<p>Um campo extra é ignorado na construção do retorno. A função confere o formato básico, não decide se o Café está aberto nem recalcula minutos. Essas decisões continuam no PHP quando a consulta real chegar.</p>
+</section>
+<section aria-labelledby="receber-recusa">
+<h3 id="receber-recusa">O balcão precisa explicar a recusa</h3>
+<p>Se a conferência lançar um erro, a apresentação não deve seguir com dados incompletos. Vamos retomar <code>try</code> e <code>catch</code> do <a href="web1.html#capitulo-9">Web I</a>, agora em torno do ensaio local.</p>
+<p><strong>Em main.ts, preserve os imports, as procuras, as guardas e a função apresentar.</strong> Substitua somente o bloco do addEventListener pelo seguinte:</p>
+<pre class="code-block"><code>botao.addEventListener("click", () =&gt; {
+  try {
+    apresentar(obterAtendimento());
+    aviso.textContent = "Ensaio local conferido; ainda não houve consulta ao servidor.";
+  } catch (erro) {
+    situacao.textContent = "";
+    tempo.textContent = "";
+    aviso.textContent = "O ensaio recebeu dados inválidos. Confira sua tentativa.";
+    console.error(erro);
+  }
+});</code></pre>
+<p>No try, conferimos e apresentamos. Se houver recusa, o catch retira situação e prazo anteriores e informa o problema. <code>console.error(erro)</code> ajuda a localizar o campo no Console do navegador; o visitante recebe uma frase compreensível.</p>
+<details><summary>Comparar o main.ts completo</summary><p>Use para conferir o lugar do evento, sem trocar desnecessariamente os elementos ou o HTML.</p>
+{{arquivo:cliente-balcao/src/main.ts}}
+</details>
+<p><strong>Salve, gere com npm run build e recarregue o balcão.</strong> Clique em “Conferir apresentação” com a entrada válida. O resultado deve continuar igual ao da aula anterior.</p>
+</section>
+<section aria-labelledby="ensaiar-recusa">
+<h3 id="ensaiar-recusa">Uma alteração por vez, um resultado para conferir</h3>
+<p><strong>Em obterAtendimento, retire somente a linha mensagemTempo do objeto dados.</strong> Mantenha o tipo unknown. Salve, faça build, recarregue e clique.</p>
+<figure class="web3-resultado"><figcaption>A entrada foi recusada antes da apresentação</figcaption><p>O ensaio recebeu dados inválidos. Confira sua tentativa.</p></figure>
+<p>Na abertura, retirar esse campo fez o build falhar. Agora o build pode passar: dados foi declarado unknown, não Atendimento. É a função de conferência que deve recusar esse formato durante a execução. O prazo antigo não fica apresentado como se fosse o resultado do ensaio.</p>
+<p><strong>Abra o Console e encontre “Mensagem de prazo ausente ou inválida.”.</strong> Recoloque a linha com o texto correto, gere, recarregue e clique de novo. A apresentação deve se recuperar.</p>
+<p>Depois teste separadamente, sempre voltando ao caso válido antes do seguinte:</p>
+<ul><li>Troque a frase de prazo pelo número <code>30</code>: existe um campo, mas seu tipo está errado.</li><li>Use <code>"   "</code> no lugar da frase: continua sendo string, mas não informa nada.</li><li>Substitua o objeto de entrada por <code>null</code> e depois por <code>[]</code>: ambos precisam ser recusados no primeiro teste.</li><li>Acrescente um campo local <code>observacao: "ensaio"</code>: os três textos válidos continuam sendo aceitos e o campo extra não ganha um elemento na página.</li></ul>
+<p>As alterações são feitas somente no valor de dados dentro de obterAtendimento. Cada tentativa exige build e recarregamento. Ao terminar, <strong>restaure o objeto válido de três textos, com 30 minutos, gere e confira a recuperação</strong>.</p>
+<p>Não resolva o problema escrevendo <code>as Atendimento</code> na entrada: essa afirmação não faz os campos surgirem nem valida o que chegou. A conferência precisa acontecer de verdade.</p>
+</section>
+<section class="checkpoint-box" aria-labelledby="checkpoint-cap2-aula4">
+<h3 id="checkpoint-cap2-aula4">Aceitar, recusar e recuperar</h3>
+<p>Crie um caso inválido diferente dos que repetiu, mostre qual condição o recusa e corrija a entrada. Explique por que o tipo unknown não permite tratar um valor como Atendimento sem conferência e por que passar no build não garante a forma de uma resposta externa.</p>
+<p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-cap2-aula4.zip" download>Conferir os arquivos ao fim da Aula 4</a></p>
+<p>A referência termina com o objeto local válido. Preserve suas tentativas fora de src para que o verificador não as misture à solução em uso. O HTML e a API permanecem como antes; npm ci só é necessário para preparar uma cópia nova.</p>
+</section>
+<section aria-labelledby="continuar-cap2"><h3 id="continuar-cap2">Podemos trocar a origem sem perder a conferência</h3>
+<p>A apresentação está pronta e a entrada incompleta é recusada. Agora podemos substituir o objeto local pelos dados da API. Buscar, conferir e apresentar terão papéis claros; o botão passará, enfim, a pedir o aviso atual ao PHP.</p><p class="web3-status">Web III — Em desenvolvimento. {{disponibilidade}}</p></section>

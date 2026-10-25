@@ -30,7 +30,7 @@ def dados(n):
         f"# Café Aurora — Capítulo 2, fim da Aula {n}\n\n"
         "Referência para conferir em outra pasta. Preserve a sua solução e suas escolhas.\n"
         "Base: checkpoint final do Capítulo 1. Sem banco de dados, credenciais, vendor ou node_modules.\n\n"
-        "Na raiz da aplicação, inicie: php -d opcache.enable_cli=0 -S localhost:8000 -t public\n"
+        "Na raiz da aplicação, inicie: php -d opcache.enable=0 -S localhost:8000 -t public\n"
         "Abra http://localhost:8000/balcao.php e http://localhost:8000/api/atendimento.php.\n"
         + ("\nEm cliente-balcao, execute npm ci e npm run build. A saída é public/js/balcao/main.js.\n"
            "Alterou TypeScript: build e recarregamento. Alterou PHP: nova consulta, sem build.\n" if n >= 2 else "")
@@ -118,7 +118,7 @@ def pagina(aula):
 <nav class="chapter-footer" aria-label="Anterior e próxima aula">{anterior}{proxima}</nav>
 </article></main></div>
 <script src="../../js/programacao-web.js?v=11"></script>
-<script src="../../js/web3-menu-aulas.js?v=1"></script>
+<script src="../../js/web3-menu-aulas.js?v=2"></script>
 <script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body></html>
 """

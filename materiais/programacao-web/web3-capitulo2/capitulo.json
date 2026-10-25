@@ -18,6 +18,12 @@
       "titulo": "Os mesmos nomes, o mesmo aviso",
       "id": "web3-cap2-contrato",
       "horas": 2
+    },
+    {
+      "numero": 4,
+      "titulo": "Conferir antes de apresentar",
+      "id": "web3-cap2-conferencia",
+      "horas": 2
     }
   ]
 }

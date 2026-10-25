@@ -79,13 +79,24 @@ def reconstruir(base):
                 finally:main.write_text(original)
                 subprocess.run(["npm","run","build"],cwd=cliente,check=True)
                 print("Erro de tipo intencional recusado; correção recompilada.")
+            if n==3 and len(AULAS)>=4:
+                fonte=cliente/"src/atendimento.ts";original=fonte.read_text()
+                try:
+                    fonte.write_text(original.replace('    mensagemTempo: "Tempo estimado: 30 minutos.",\n',''))
+                    erro=subprocess.run(["npm","run","build"],cwd=cliente,capture_output=True,text=True)
+                    assert erro.returncode!=0 and "mensagemTempo" in erro.stdout+erro.stderr,"O objeto tipado deveria acusar o campo ausente"
+                finally:fonte.write_text(original)
+                subprocess.run(["npm","run","build"],cwd=cliente,check=True)
+                print("Entrada da aula 4: campo ausente no objeto tipado foi recusado; referência restaurada.")
         print(f"Aula {n}: blocos reconstruídos correspondem ao ZIP.")
     return app
 
 @contextmanager
 def servidor(app):
     with socket.socket() as s:s.bind(("127.0.0.1",0));porta=s.getsockname()[1]
-    proc=subprocess.Popen(["php","-d","opcache.enable_cli=0","-S",f"127.0.0.1:{porta}","-t","public"],cwd=app,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+    prova=app/"public/__mbb_config_ensaio.php"
+    prova.write_text('<?php header("Content-Type: application/json"); echo json_encode(["sapi"=>PHP_SAPI,"cache"=>ini_get("opcache.enable")]);')
+    proc=subprocess.Popen(["php","-d","opcache.enable=0","-S",f"127.0.0.1:{porta}","-t","public"],cwd=app,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     url=f"http://127.0.0.1:{porta}/"
     def req(caminho="api/atendimento.php",method="GET"):
         try:r=urllib.request.urlopen(urllib.request.Request(url+caminho,method=method),timeout=5)
@@ -96,8 +107,14 @@ def servidor(app):
             try:req();break
             except OSError:time.sleep(.05)
         else:raise AssertionError("PHP não iniciou.")
+        configuracao=json.loads(req("__mbb_config_ensaio.php")[2])
+        assert configuracao["sapi"]=="cli-server",configuracao
+        assert configuracao["cache"] in ["0","",False,0],configuracao
+        prova.unlink()
         yield req
-    finally:proc.terminate();proc.wait(timeout=10)
+    finally:
+        proc.terminate();proc.wait(timeout=10)
+        if prova.exists():prova.unlink()
 
 class Publicacao(unittest.TestCase):
     def test_01_reconstrucao_literal_e_zip(self):
@@ -168,6 +185,16 @@ class Publicacao(unittest.TestCase):
         for rel in ["pages/programacao-web/web1.html","pages/programacao-web/web2.html","js/programacao-web.js","meu-mbb/conta.js","meu-mbb/firestore.rules","meu-mbb/visitas-diretas.js"]:
             old=subprocess.check_output(["git","show","be9e8dfdeb496ffbbaa8a96edc8eca3981568bf0:"+rel],cwd=ROOT)
             self.assertEqual((ROOT/rel).read_bytes(),old,rel)
+
+    @unittest.skipIf(len(AULAS)<4,"Conferência de dados começa na aula 4")
+    def test_05_contrato_typescript_do_download(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base=Path(tmp);app=extrair(len(AULAS),base);cliente=app/"cliente-balcao"
+            subprocess.run(["npm","ci","--no-audit","--no-fund"],cwd=cliente,check=True)
+            destino=base/"final-js";destino.mkdir();(destino/"package.json").write_text('{"type":"module"}')
+            subprocess.run([str(cliente/"node_modules/.bin/tsc"),"--noEmit","false","--rootDir","src","--outDir",str(destino),"--module","NodeNext","--moduleResolution","NodeNext"],cwd=cliente,check=True)
+            ambiente={**os.environ,"MBB_CAP2_MODULO":str(destino/"atendimento.js")}
+            subprocess.run(["node","--test",str(ROOT/"tests/web3/contrato-capitulo2.test.mjs")],env=ambiente,check=True)
 
 def regressao():
     spec=importlib.util.spec_from_file_location("cap1",ROOT/"tests/web3/verificar-pratica.py")
