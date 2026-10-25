@@ -40,7 +40,14 @@ def reconstruir(base):
             caminho=app/attr["data-cap2-file"]
             assert app in caminho.parents
             caminho.parent.mkdir(parents=True,exist_ok=True)
-            if attr.get("data-cap2-mode")=="prazo":
+            if attr.get("data-cap2-mode") in ["kit","topico12"]:
+                caminho.mkdir(parents=True,exist_ok=True)
+                nomes=["package.json","package-lock.json","tsconfig.json"] if attr["data-cap2-mode"]=="kit" else ["main.ts","atendimento.ts"]
+                with zipfile.ZipFile(D/"cafe-aurora-typescript-essencial.zip") as kit:
+                    for nome in nomes:
+                        origem=("" if attr["data-cap2-mode"]=="kit" else "exemplos/12/")+nome
+                        (caminho/nome).write_bytes(kit.read("cafe-aurora-typescript/"+origem))
+            elif attr.get("data-cap2-mode")=="prazo":
                 novo,q=re.subn(r"\$tempoEstimado = [^;]+;",lambda m:code.strip(),caminho.read_text(),count=1)
                 assert q==1;caminho.write_text(novo)
             else:caminho.write_text(code.rstrip()+"\n")
@@ -55,9 +62,23 @@ def reconstruir(base):
             cliente=app/"cliente-balcao"
             if not (cliente/"node_modules").exists():
                 subprocess.run(["npm","ci","--no-audit","--no-fund"],cwd=cliente,check=True)
-            before={p: p.read_bytes() for p in (app/"public").rglob("*") if p.is_file() and p!=app/"public/js/balcao/main.js"}
+            sentinela=app/"public/js/balcao/preservar.txt"
+            sentinela.parent.mkdir(parents=True,exist_ok=True);sentinela.write_text("Arquivo anterior ao build.\n")
+            before={p:p.read_bytes() for p in app.rglob("*") if p.is_file() and "node_modules" not in p.parts and p!=app/"public/js/balcao/main.js"}
             subprocess.run(["npm","run","build"],cwd=cliente,check=True)
-            assert all(p.read_bytes()==b for p,b in before.items()),"Build alterou arquivo público anterior"
+            assert all(p.read_bytes()==b for p,b in before.items()),"Build alterou arquivo anterior"
+            print(f"Build da aula {n}: {len(before)} arquivos anteriores preservados.")
+            if n==2:
+                main=cliente/"src/main.ts";original=main.read_text()
+                gerado=app/"public/js/balcao/main.js";anterior=gerado.read_bytes()
+                try:
+                    main.write_text(original.replace('aviso.textContent = "O código TypeScript já está ligado ao balcão.";','aviso.textContent = 30;'))
+                    erro=subprocess.run(["npm","run","build"],cwd=cliente,capture_output=True)
+                    assert erro.returncode!=0,"Erro de tipo deveria impedir o build"
+                    assert gerado.read_bytes()==anterior,"Build inválido alterou a saída anterior"
+                finally:main.write_text(original)
+                subprocess.run(["npm","run","build"],cwd=cliente,check=True)
+                print("Erro de tipo intencional recusado; correção recompilada.")
         print(f"Aula {n}: blocos reconstruídos correspondem ao ZIP.")
     return app
 

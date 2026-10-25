@@ -2284,5 +2284,22 @@
       "checkpoint-cap2-aula1",
       "continuar-cap2"
     ]
+  },
+  "pages/programacao-web/web3-capitulo2-aula2.html": {
+    "conteudo_id": "web3-cap2-ligacao",
+    "titulo": "Web III — Capítulo 2 · Aula 2: O TypeScript chega ao balcão",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-capitulo2-aula2.html",
+    "ancoras": [
+      "titulo-aula",
+      "uma-mensagem",
+      "guardar-bancada",
+      "destino-build",
+      "mudar-um-paragrafo",
+      "primeiro-build",
+      "conferir-geracao",
+      "checkpoint-cap2-aula2",
+      "continuar-cap2"
+    ]
   }
 }

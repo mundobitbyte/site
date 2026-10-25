@@ -1,0 +1,10 @@
+{
+  "cliente-balcao/package.json": "@kit:package.json",
+  "cliente-balcao/package-lock.json": "@kit:package-lock.json",
+  "cliente-balcao/tsconfig.json": "@kit:tsconfig.json",
+  "cliente-balcao/src/atendimento.ts": "@kit:exemplos/12/atendimento.ts",
+  "cliente-balcao/src/main.ts": "main.ts",
+  "cliente-balcao/vite.config.mjs": "vite.config.mjs",
+  "public/balcao.php": "balcao.php"
+}
+

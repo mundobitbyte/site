@@ -6,7 +6,12 @@
       "titulo": "O PHP devolve somente o aviso",
       "id": "web3-cap2-aviso",
       "horas": 2
+    },
+    {
+      "numero": 2,
+      "titulo": "O TypeScript chega ao balcão",
+      "id": "web3-cap2-ligacao",
+      "horas": 2
     }
   ]
 }
-

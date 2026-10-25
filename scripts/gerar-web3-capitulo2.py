@@ -21,7 +21,11 @@ def dados(n):
         mapa = SOURCE / f"aula{k}/arquivos.json"
         if mapa.exists():
             for destino, origem in json.loads(mapa.read_text()).items():
-                data[destino] = (SOURCE / f"aula{k}" / origem).read_bytes()
+                if origem.startswith("@kit:"):
+                    with zipfile.ZipFile(DOWNLOADS / "cafe-aurora-typescript-essencial.zip") as kit:
+                        data[destino] = kit.read("cafe-aurora-typescript/"+origem[5:])
+                else:
+                    data[destino] = (SOURCE / f"aula{k}" / origem).read_bytes()
     data["LEIA-ME-CAPITULO-2.md"] = (
         f"# Café Aurora — Capítulo 2, fim da Aula {n}\n\n"
         "Referência para conferir em outra pasta. Preserve a sua solução e suas escolhas.\n"
