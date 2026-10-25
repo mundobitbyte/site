@@ -32,7 +32,9 @@ test('páginas não prometem PHP remoto nem oferecem capítulos inexistentes', (
   for(const name of ['web3.html','web3-aula2.html']){
     const html=fs.readFileSync(path.join(root,'pages/programacao-web',name),'utf8');
     assert.match(html,/localmente|no seu computador/);
-    assert.doesNotMatch(html,/href="[^"#]*web3[^"#]*capitulo-2/);
+    for (const [,destino] of html.matchAll(/href="(web3[^"#]*capitulo2[^"#]*)(?:#[^"]*)?"/g)) {
+      assert.ok(fs.existsSync(path.join(root, "pages/programacao-web", destino)), destino);
+    }
     const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
     assert.equal(new Set(ids).size,ids.length,'ID repetido');
   }

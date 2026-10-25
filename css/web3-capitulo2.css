@@ -1,0 +1,11 @@
+/* Ajustes locais; cores, código, ampliação e menu mantêm os recursos MbB. */
+.web3-cap2 .web-content { min-width: 0; }
+.web3-cap2 .chapter section { margin-bottom: 30px; }
+.web3-cap2 code:not(pre code) { overflow-wrap: anywhere; font-size: .94em; }
+.web3-cap2 pre { max-width: 100%; }
+.web3-cap2 .web3-resultado pre { font-family: Consolas, monospace; font-size: 14px; }
+.web3-cap2 .chapter-menu .cap2-voltar { margin: 12px 8px; display: block; }
+.web3-cap2 .chapter-meta { line-height: 1.6; }
+.web3-cap2 :is(button,a,summary):focus-visible { outline: 3px solid #945300; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .web3-cap2 { scroll-behavior: auto; } }
+
