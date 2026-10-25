@@ -11,7 +11,7 @@ const tools = process.env.MBB_TS_TOOLS || source;
 const tsc = path.join(tools,'node_modules/.bin/tsc');
 const roteiro = JSON.parse(fs.readFileSync(path.join(source,'roteiro.json'),'utf8'));
 
-async function executar(numero, transformar = texto => texto, deveCompilar = true) {
+async function executar(numero, transformar = texto => texto, deveCompilar = true, arquivosExtras = {}) {
   const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'mbb-ts-'));
   const app=path.join(tmp,'src');fs.mkdirSync(app);
   try {
@@ -23,6 +23,11 @@ async function executar(numero, transformar = texto => texto, deveCompilar = tru
     const file=numero==='12'?'12/main.ts':numero+'.ts';
     fs.writeFileSync(path.join(app,'main.ts'),transformar(fs.readFileSync(path.join(source,'exemplos',file),'utf8')));
     if(numero==='12')fs.copyFileSync(path.join(source,'exemplos/12/atendimento.ts'),path.join(app,'atendimento.ts'));
+    for(const [relativo,texto] of Object.entries(arquivosExtras)) {
+      const destino=path.join(tmp,relativo);
+      fs.mkdirSync(path.dirname(destino),{recursive:true});
+      fs.writeFileSync(destino,texto);
+    }
     const compilation=cp.spawnSync(tsc,['-p',path.join(tmp,'tsconfig.json')],{encoding:'utf8'});
     if(!deveCompilar){assert.notEqual(compilation.status,0);assert.match(compilation.stdout+compilation.stderr,/2322|2345|2741/);return;}
     assert.equal(compilation.status,0,compilation.stdout+compilation.stderr);
@@ -48,6 +53,11 @@ test('verificador recusa prazo recebido como texto no código do aluno',async()=
 test('novo aviso da cozinha muda 35 para 45 e preserva os demais dados',async()=>{
   assert.equal(await executar('01',s=>s.replace('number = 35;', 'number = 45;')),
     roteiro[0].result.replace('35 minutos.', '45 minutos.'));
+});
+test('tentativa guardada fora de src não bloqueia a próxima atividade',async()=>{
+  const tentativa='const prazo: number = "texto";';
+  assert.equal(await executar('01',s=>s,true,{'entregas/desafio-1.ts':tentativa}),roteiro[0].result);
+  await executar('01',s=>s,false,{'src/main-copia.ts':tentativa});
 });
 test('ausência de prazo não vira estimativa numérica fictícia',async()=>{
   assert.match(await executar('03',s=>s.replace('= 45;', '= null;')),/Consulte a equipe/);
