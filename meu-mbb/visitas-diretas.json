@@ -2347,5 +2347,21 @@
       "checkpoint-cap2-aula5",
       "continuar-cap2"
     ]
+  },
+  "pages/programacao-web/web3-capitulo2-aula6.html": {
+    "conteudo_id": "web3-cap2-recuperacao",
+    "titulo": "Web III — Capítulo 2 · Aula 6: Quando a consulta demora ou falha",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-capitulo2-aula6.html",
+    "ancoras": [
+      "titulo-aula",
+      "consulta-interrompida",
+      "limite-consulta",
+      "respostas-controladas",
+      "sem-estimativa",
+      "proteger-dados",
+      "checkpoint-cap2-aula6",
+      "continuar-cap2"
+    ]
   }
 }

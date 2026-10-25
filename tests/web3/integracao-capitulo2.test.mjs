@@ -29,9 +29,13 @@ before(async () => {
   fixture = http.createServer((req, res) => {
     requisicoes++;
     const atual = { ...cenario };
+    if (atual.cabecalhosImediatos) {
+      res.writeHead(atual.status, { "Content-Type": atual.tipo });
+      res.flushHeaders();
+    }
     const timer = setTimeout(() => {
       if (res.destroyed) return;
-      res.writeHead(atual.status, { 'Content-Type': atual.tipo });
+      if (!atual.cabecalhosImediatos) res.writeHead(atual.status, { 'Content-Type': atual.tipo });
       res.end(atual.corpo);
     }, atual.atraso || 0);
     res.on('close', () => clearTimeout(timer));
@@ -90,6 +94,14 @@ test('limite real de 8000 ms cancela uma resposta que não chegou', { skip: Numb
   const inicio = Date.now(); await assert.rejects(mod.obterAtendimento(), /abort/i);
   const tempo = Date.now() - inicio;
   assert.ok(tempo >= 7500 && tempo < 15000, `Cancelamento observado: ${tempo} ms`);
+  respostaNormal(); assert.deepEqual(await mod.obterAtendimento(), textos);
+});
+
+
+test('cancelamento também alcança a espera pelo corpo depois dos cabeçalhos', { skip: Number(process.env.MBB_CAP2_AULA) < 6 }, async () => {
+  origem = fixtureUrl; respostaNormal(); cenario.atraso = 30000; cenario.cabecalhosImediatos = true;
+  const inicio = Date.now(); await assert.rejects(mod.obterAtendimento(), /abort/i);
+  assert.ok(Date.now() - inicio >= 7500 && Date.now() - inicio < 15000);
   respostaNormal(); assert.deepEqual(await mod.obterAtendimento(), textos);
 });
 

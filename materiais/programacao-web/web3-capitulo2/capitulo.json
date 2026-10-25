@@ -30,6 +30,12 @@
       "titulo": "Agora o aviso vem do PHP",
       "id": "web3-cap2-consulta",
       "horas": 2
+    },
+    {
+      "numero": 6,
+      "titulo": "Quando a consulta demora ou falha",
+      "id": "web3-cap2-recuperacao",
+      "horas": 2
     }
   ]
 }
