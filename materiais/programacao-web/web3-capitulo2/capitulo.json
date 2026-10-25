@@ -1,0 +1,12 @@
+{
+  "titulo": "O balcão busca o aviso",
+  "aulas": [
+    {
+      "numero": 1,
+      "titulo": "O PHP devolve somente o aviso",
+      "id": "web3-cap2-aviso",
+      "horas": 2
+    }
+  ]
+}
+

@@ -2269,5 +2269,20 @@
       "ts-exercicio-6",
       "ts-checkpoint-final"
     ]
+  },
+  "pages/programacao-web/web3-capitulo2-aula1.html": {
+    "conteudo_id": "web3-cap2-aviso",
+    "titulo": "Web III — Capítulo 2 · Aula 1: O PHP devolve somente o aviso",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-capitulo2-aula1.html",
+    "ancoras": [
+      "titulo-aula",
+      "balcao-aberto",
+      "endereco-aviso",
+      "resposta-compartilhada",
+      "consulta-confiavel",
+      "checkpoint-cap2-aula1",
+      "continuar-cap2"
+    ]
   }
 }

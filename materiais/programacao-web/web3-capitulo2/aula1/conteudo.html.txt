@@ -1,0 +1,77 @@
+<section aria-labelledby="balcao-aberto">
+<h3 id="balcao-aberto">A cozinha mudou o prazo. A tela continua aberta.</h3>
+<p>O balcão do Café Aurora ficou aberto enquanto a equipe atendia. Parte dos pedidos já saiu, e a cozinha avisou: agora a retirada leva <strong>30 minutos</strong>.</p>
+<p><strong>Abra o balcão da sua cópia do Café e confira o prazo que aparece.</strong> Vamos continuar a aplicação que você concluiu no Capítulo 1. Se ela já estiver aberta, mantenha essa aba: precisamos observar a resposta que está nela.</p>
+<details><summary>Preciso reabrir o projeto e o servidor</summary>
+<p>No VS Code, use <strong>Arquivo → Abrir Pasta</strong> e escolha a pasta da sua aplicação PHP, aquela que contém <code>public</code> e <code>src</code>. Em <strong>Terminal → Novo Terminal</strong>, confira a versão:</p>
+<pre class="code-block"><code>php --version</code></pre>
+<p>A referência herdada do Web II usa PHP 8.5 ou posterior da série 8. Se o comando não for reconhecido, veja a orientação de Laragon abaixo. Para iniciar o servidor, execute nesta mesma pasta:</p>
+<pre class="code-block"><code>php -d opcache.enable_cli=0 -S localhost:8000 -t public</code></pre>
+<p><code>-S</code> inicia o servidor de desenvolvimento; <code>localhost:8000</code> é seu endereço. <code>-t public</code> entrega somente a pasta pública. A opção <code>-d opcache.enable_cli=0</code> evita guardar código PHP antigo em cache neste processo; não altera o php.ini. Deixe o terminal aberto. Se já havia um servidor nessa porta, encerre-o com <kbd>Ctrl</kbd> + <kbd>C</kbd> no terminal dele antes de iniciar outro.</p>
+<p>Abra <a href="http://localhost:8000/balcao.php" target="_blank" rel="noopener">http://localhost:8000/balcao.php</a>. Esse endereço é da aplicação no seu computador; o Mundo bit Byte apresenta as instruções e os arquivos.</p>
+</details>
+<details><summary>Uso Laragon e o VS Code não encontra o PHP</summary>
+<p>No Laragon, abra <strong>Menu → Laragon → Terminal</strong> e confira <code>php --version</code>. O terminal do Laragon tem seu próprio ambiente. Para usar as ferramentas no terminal do VS Code, a documentação indica <strong>Menu → Tools → Path → Add Laragon to Path</strong>; depois feche e reabra o VS Code e confira novamente a versão. No laboratório, faça essa configuração com o professor.</p>
+<p>Confirme o PHP 8.5 adequado à referência, em vez de presumir que a versão escolhida para o servidor do Laragon também é a do terminal. Nesta prática usamos o servidor do comando acima. <a href="https://laragon.org/docs/isolated" target="_blank" rel="noopener">Orientação oficial sobre o PATH</a>. O procedimento foi fundamentado na documentação; a execução em Windows/Laragon ainda precisa de conferência no laboratório.</p>
+</details>
+<details><summary>Não estou com a cópia do Capítulo 1</summary><p>Baixe a <a href="../../downloads/programacao-web/cafe-aurora-web3-capitulo-1.zip" download>referência final do Capítulo 1</a> e extraia em uma pasta nova. Ela começa com 55 minutos. Sua própria cópia pode ter outro valor, como 35, ao fim das experiências: isso não é erro. Preserve seu trabalho e suas mensagens locais; não extraia uma referência por cima deles.</p></details>
+<p>Em <code>src/atendimento.php</code>, encontre <code>$tempoEstimado</code>. <strong>Anote o valor que estava ali e mude somente essa linha para:</strong></p>
+<pre class="code-block"><code data-cap2-file="src/atendimento.php" data-cap2-mode="prazo">$tempoEstimado = 30;</code></pre>
+<p>Salve. Volte ao balcão <strong>sem recarregar a aba</strong>. O prazo antigo ainda aparece?</p>
+<p>O arquivo mudou, mas a tela conserva a resposta recebida ao abrir. No Capítulo 1, fizemos duas páginas usarem a mesma informação. Agora precisamos dar ao balcão uma maneira de pedir essa informação outra vez, sem trazer cabeçalho, rodapé e página inteira.</p>
+</section>
+<section aria-labelledby="endereco-aviso">
+<h3 id="endereco-aviso">Um endereço para pedir só o aviso</h3>
+<p>Já temos quem prepare a resposta: a função <code>obterAtendimento()</code>, em <code>src/atendimento.php</code>. Ela devolve o nome do Café, a situação dos pedidos e a orientação de prazo. Vamos usar essa mesma função em um endereço novo.</p>
+<p>O formato <strong>JSON</strong>, que você conheceu no <a href="web1.html#capitulo-9">capítulo 9 do Web I</a>, permite enviar dados com nomes de campos e valores. Aqui teremos três pares. Não precisamos montar outra página HTML para transportá-los.</p>
+<p><strong>No Explorador do VS Code, crie a pasta <code>api</code> dentro de <code>public</code>. Dentro dela, crie o arquivo <code>atendimento.php</code>.</strong> Há dois arquivos com esse nome: o de <code>src</code> prepara o atendimento; o de <code>public/api</code> responde à consulta.</p>
+<p>O arquivo novo usará <code>require_once</code>, como no Capítulo 1. Agora há dois níveis até a raiz: de <code>api</code> para <code>public</code>, e de <code>public</code> para a pasta do projeto. Por isso usamos <code>dirname(__DIR__, 2)</code>. O ponto <code>.</code> junta esse caminho com <code>"/src/atendimento.php"</code>.</p>
+<p><code>header()</code> informa o tipo da resposta: <code>application/json</code>, com texto UTF-8. Ele vem antes do <code>echo</code>, que envia o corpo. <code>json_encode()</code> transforma o array PHP em JSON; <code>JSON_UNESCAPED_UNICODE</code> mantém os acentos legíveis. Escreva no arquivo novo:</p>
+{{codigo:api-inicial}}
+<p><strong>Salve e abra uma nova aba em <a href="http://localhost:8000/api/atendimento.php" target="_blank" rel="noopener">http://localhost:8000/api/atendimento.php</a>.</strong> O servidor PHP continua no mesmo terminal. Não use Live Preview para executar esse arquivo.</p>
+<figure class="web3-resultado"><figcaption>Resposta esperada com atendimento aberto e 30 minutos</figcaption>
+<pre class="code-block"><code>{
+  "nomeNegocio": "Café Aurora",
+  "mensagemStatus": "Pedidos para retirada estão abertos.",
+  "mensagemTempo": "Tempo estimado: 30 minutos."
+}</code></pre></figure>
+<p>Seu navegador pode mostrar tudo em uma linha ou oferecer uma visualização formatada. Confira os nomes e valores: a aparência não muda os dados.</p>
+<p>Esse endereço é uma pequena <strong>API</strong>: uma interface pela qual outro programa pode pedir a informação. Nossa primeira operação é uma consulta. Ao abrir a URL, o navegador envia uma requisição HTTP <strong>GET</strong>. Na continuidade, o código do balcão fará esse pedido.</p>
+</section>
+<section aria-labelledby="resposta-compartilhada">
+<h3 id="resposta-compartilhada">Os três nomes já estavam no Café</h3>
+<p><strong>Compare o JSON com o <code>return</code> de <code>src/atendimento.php</code>.</strong> Você encontra os mesmos nomes? Nenhum campo foi inventado para o TypeScript.</p>
+<ul><li><code>nomeNegocio</code> traz o nome que o PHP preparou.</li><li><code>mensagemStatus</code> informa se os pedidos estão abertos ou encerrados.</li><li><code>mensagemTempo</code> já é uma frase; não é apenas o número 30.</li></ul>
+<p>Volte à aba antiga do balcão. Ela ainda mostra o prazo anterior? <strong>Recarregue somente a aba da API.</strong> O JSON mostra 30, mas isso não troca o conteúdo que o balcão já recebeu. Temos uma fonte compartilhada e respostas recebidas em momentos diferentes.</p>
+<p>Para conferir a mesma regra em outra situação, altere <code>$pedidosAbertos</code> para <code>false</code> no arquivo de apoio. Recarregue a API:</p>
+<figure class="web3-resultado"><figcaption>Atendimento encerrado: a orientação substitui os minutos</figcaption><pre class="code-block"><code>{
+  "nomeNegocio": "Café Aurora",
+  "mensagemStatus": "Pedidos para retirada estão encerrados.",
+  "mensagemTempo": "Consulte novamente durante o horário de atendimento."
+}</code></pre></figure>
+<p><strong>Reabra com <code>true</code> e mantenha 30 minutos.</strong> Recarregue a API e as duas páginas PHP para conferir o retorno. Não copiamos a decisão de abertura para o arquivo novo: ele consulta a mesma função.</p>
+</section>
+<section aria-labelledby="consulta-confiavel">
+<h3 id="consulta-confiavel">Deixar claro o que essa consulta aceita</h3>
+<p>O endereço está respondendo. Vamos terminar o arquivo dizendo que ele aceita consultas GET, que uma nova consulta deve buscar a informação atual e que um problema interno não deve revelar caminhos de arquivos.</p>
+<p><code>$_SERVER["REQUEST_METHOD"]</code> informa o método recebido. Se ele não for GET, responderemos <strong>405</strong>, “método não permitido”, e <code>Allow: GET</code>. <code>exit</code> encerra essa resposta sem continuar até a função. Uma consulta bem-sucedida mantém o código <strong>200</strong>.</p>
+<p><code>Cache-Control: no-store</code> pede que essa resposta não seja armazenada. Em caso de falha interna, o código <strong>500</strong> acompanha uma orientação genérica. No <code>try</code> tentamos ler e converter; <code>catch (Throwable $erro)</code> recebe um erro ou exceção do PHP. <code>JSON_THROW_ON_ERROR</code> faz uma falha de conversão chegar a esse tratamento. O sinal <code>|</code> reúne as duas opções do JSON. A mensagem técnica pode ser consultada pelo desenvolvedor no terminal, sem ser enviada ao visitante.</p>
+<p><strong>Substitua o conteúdo de <code>public/api/atendimento.php</code> pela versão completa:</strong></p>
+{{codigo:api}}
+<p><code>ini_set("display_errors", "0")</code> impede que avisos técnicos sejam impressos no corpo desta resposta; não muda a configuração de outras páginas. O campo <code>erro</code> só aparece em uma falha: ele não faz parte dos três campos de sucesso.</p>
+<p><strong>Salve e consulte novamente a API.</strong> O JSON correto deve continuar igual. Abra as ferramentas do navegador com <kbd>F12</kbd> ou o menu <strong>Inspecionar</strong>, escolha <strong>Rede / Network</strong> e recarregue essa aba. Selecione a requisição <code>atendimento.php</code>: em Cabeçalhos, procure GET, status 200 e Content-Type com application/json. Em Resposta, confira os três campos. Os nomes dos painéis podem variar conforme o navegador.</p>
+<p>Se aparecer 404, confira a pasta e a URL. Se aparecer 500, leia o terminal e confira o caminho do <code>require_once</code>. Corrija o arquivo indicado e tente novamente. Se o próprio código PHP aparecer como texto, você abriu pelo servidor errado: use o endereço iniciado pelo comando PHP.</p>
+</section>
+<section class="checkpoint-box" aria-labelledby="checkpoint-cap2-aula1">
+<h3 id="checkpoint-cap2-aula1">Mostre o caminho do aviso</h3>
+<p>Sem refazer o Café, você acrescentou uma forma de consultar o atendimento em JSON. Antes de guardar sua cópia, demonstre:</p>
+<ol><li>Onde uma única função prepara os textos usados pelas duas páginas e pela API.</li><li>Qual campo representa a orientação de prazo e por que ele é texto.</li><li>Como a API muda ao encerrar os pedidos, sem copiar a regra para outro arquivo.</li><li>Por que uma aba aberta conserva a resposta anterior até fazer outra consulta.</li></ol>
+<p>Registre seu valor anterior, a mudança para 30 e uma resposta observada. Use suas anotações ou o <strong>Meu estudo</strong>; visitar a aula não substitui realizar a prática.</p>
+<p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-cap2-aula1.zip" download>Conferir os arquivos ao fim da Aula 1</a></p>
+<p>A referência está com pedidos abertos e 30 minutos. Extraia em outra pasta para comparar; não substitua sua cópia. O banco e as credenciais não acompanham o ZIP. Para retomar o painel, use a <a href="web3-aula2.html#preservar-cafe">preparação já ensinada no Capítulo 1</a>.</p>
+</section>
+<section aria-labelledby="continuar-cap2">
+<h3 id="continuar-cap2">A resposta está pronta. Falta chegar ao balcão.</h3>
+<p>Agora existe um endereço que entrega somente os dados. Na bancada TypeScript, você preparou um objeto local em dois arquivos; eles ainda não consultavam esse endereço. Vamos levar uma pequena ação daquela bancada para a página PHP, começando por uma mensagem, antes de ligar a consulta.</p>
+<p class="web3-status">Web III — Em desenvolvimento. {{disponibilidade}}</p>
+</section>

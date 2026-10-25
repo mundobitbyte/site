@@ -1,0 +1,36 @@
+name: Validação Web III Capítulo 2
+on:
+  pull_request:
+    branches: [main]
+    paths: ['pages/programacao-web/**', 'materiais/programacao-web/web3-capitulo2/**', 'downloads/programacao-web/cafe-aurora-web3-cap2-*.zip', 'scripts/gerar-web3-capitulo2.py', 'tests/web3/**', 'js/web3-menu-aulas.js', 'css/web3-capitulo2.css', 'meu-mbb/catalogo.json', '.github/workflows/web3-capitulo2-validacao.yml']
+permissions:
+  contents: read
+jobs:
+  reconstrucao:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5.12'
+          extensions: pdo_sqlite, mbstring
+          tools: composer
+          coverage: none
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Reconstruir literalmente as aulas disponíveis e executar PHP real
+        env:
+          MBB_CAP2_REGRESSAO: '1'
+        run: python3 tests/web3/reconstruir-capitulo2.py
+      - name: Verificar reprodução dos arquivos gerados e índices
+        run: |
+          python3 scripts/gerar-web3-capitulo2.py
+          node meu-mbb/atualizar-pesquisa.cjs
+          node meu-mbb/gerar-visitas.cjs
+          git diff --exit-code
+          node --check js/web3-menu-aulas.js
+
