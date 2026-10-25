@@ -52,11 +52,58 @@ test('novo aviso da cozinha muda 35 para 45 e preserva os demais dados',async()=
 test('ausência de prazo não vira estimativa numérica fictícia',async()=>{
   assert.match(await executar('03',s=>s.replace('= 45;', '= null;')),/Consulte a equipe/);
 });
+test('atendimento encerrado não anuncia prazo nem pede para fazer um pedido',async()=>{
+  for(const prazo of ['45','null']) {
+    assert.equal(await executar('03',s=>s.replace('= true;','= false;').replace('= 45;',`= ${prazo};`)),
+      'Café Aurora\nAtendimento encerrado.');
+  }
+});
+test('cálculo e apresentação funcionam nas duas formas de função ensinadas',async()=>{
+  for(const numero of ['04','05']) {
+    assert.equal(await executar(numero,s=>s.replace('calcularPrazo(40, 5)','calcularPrazo(30, 10)')),
+      'Café Aurora\nTempo estimado: 40 minutos.');
+    await executar(numero,s=>s.replace('calcularPrazo(40, 5)','calcularPrazo("30", 10)'),false);
+  }
+});
 test('find sem resultado não acessa propriedades de undefined',async()=>{
-  assert.match(await executar('09',s=>s.replace('produto.id === 2','produto.id === 99')),/Produto não encontrado/);
+  assert.match(await executar('09',s=>s.replace('codigoProcurado: number = 2','codigoProcurado: number = 99')),/Produto não encontrado/);
+});
+test('limite exibido acompanha a consulta, inclusive quando não há itens',async()=>{
+  for(const [limite,contagem] of [[8,1],[5,0]]) {
+    assert.match(await executar('09',s=>s.replace('limitePreco: number = 9',`limitePreco: number = ${limite}`)),
+      new RegExp(`Produtos até R\\$ ${limite}\\.00: ${contagem}\\.`));
+  }
 });
 test('descrição do produto recusa um campo obrigatório ausente',async()=>{
   await executar('06',s=>s.replace('preco: 8, ',''),false);
+});
+
+function trecho(t) {
+  const arquivo=fs.readFileSync(path.join(source,'exemplos',t.file),'utf8');
+  const inicio=arquivo.indexOf(t.edit.from);
+  assert.ok(inicio>=0);
+  const fim=t.edit.until?arquivo.indexOf(t.edit.until,inicio):arquivo.length;
+  assert.ok(fim>inicio);
+  return arquivo.slice(inicio,fim).trimEnd();
+}
+
+test('edições das aulas 8 a 10 conservam a lista personalizada e a busca protegida',async()=>{
+  const t8=roteiro[7],t9=roteiro[8],t10=roteiro[9];
+  let codigo=fs.readFileSync(path.join(source,'exemplos/07.ts'),'utf8')
+    .replace('\n];','\n  { id: 4, nome: "Chá de hortelã", preco: 6, disponivel: true },\n];');
+  codigo=codigo.slice(0,codigo.indexOf('document.body.textContent'))+trecho(t8);
+  const lista=await executar('08',()=>codigo);
+  assert.match(lista,/Chá de hortelã — R\$ 6\.00/);
+  assert.equal(lista.split('\n').length,5);
+  codigo=codigo.slice(0,codigo.indexOf('const linhas'))+trecho(t9);
+  assert.equal(await executar('09',()=>codigo),
+    'Café Aurora\nProdutos até R$ 9.00: 3.\nPão artesanal: R$ 12.00');
+  const inicio=codigo.indexOf(t10.edit.from),fim=codigo.indexOf(t10.edit.until,inicio);
+  codigo=codigo.slice(0,inicio)+trecho(t10)+codigo.slice(fim);
+  assert.equal(await executar('10',()=>codigo),
+    'Café Aurora\nProdutos até R$ 9.00: 3.\nPão artesanal: R$ 12.00');
+  assert.match(await executar('10',()=>codigo.replace('codigoProcurado: number = 2','codigoProcurado: number = 99')),
+    /Produto não encontrado/);
 });
 test('códigos mostrados e todos os arquivos do ZIP correspondem às fontes',()=>{
   assert.equal(fs.readFileSync(path.join(source,'src/main.ts'),'utf8'),
@@ -66,6 +113,12 @@ test('códigos mostrados e todos os arquivos do ZIP correspondem às fontes',()=
   const matches=[...html.matchAll(/<code data-ts-source="([^"]+)">([\s\S]*?)<\/code>/g)];
   assert.equal(matches.length,13);
   for(const [,name,text] of matches)assert.equal(decode(text).trimEnd(),fs.readFileSync(path.join(source,name),'utf8').trimEnd(),name);
+  const fragments=[...html.matchAll(/<code data-ts-fragment="([^"]+)">([\s\S]*?)<\/code>/g)];
+  assert.equal(fragments.length,3);
+  for(const [,name,text] of fragments) {
+    const t=roteiro.find(t=>'exemplos/'+t.file===name);
+    assert.equal(decode(text).trimEnd(),trecho(t));
+  }
   cp.execFileSync('python3',['-c',`from pathlib import Path
 import zipfile
 root=Path(${JSON.stringify(source)})
