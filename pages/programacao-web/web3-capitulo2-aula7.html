@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Café Aurora: Outra pessoa consegue repetir. Web III, Capítulo 2, Aula 7.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-capitulo2-aula7.html">
+<title>Web III — Outra pessoa consegue repetir | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet">
+<link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet">
+<link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet">
+</head>
+<body class="module-page web3-page web3-typescript web3-cap2" data-module-title="Web III · Aula 7: Outra pessoa consegue repetir">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Capítulo 2 · Aula 7</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do Capítulo 2</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout">
+<nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis do Capítulo 2">
+<h2>Capítulo 2</h2><p class="web3-menu-title">O balcão busca o aviso</p>
+<a class="chapter-link" href="web3-capitulo2-aula1.html#capitulo-2">1. O PHP devolve somente o aviso</a>
+<a class="chapter-link" href="web3-capitulo2-aula2.html#capitulo-2">2. O TypeScript chega ao balcão</a>
+<a class="chapter-link" href="web3-capitulo2-aula3.html#capitulo-2">3. Os mesmos nomes, o mesmo aviso</a>
+<a class="chapter-link" href="web3-capitulo2-aula4.html#capitulo-2">4. Conferir antes de apresentar</a>
+<a class="chapter-link" href="web3-capitulo2-aula5.html#capitulo-2">5. Agora o aviso vem do PHP</a>
+<a class="chapter-link" href="web3-capitulo2-aula6.html#capitulo-2">6. Quando a consulta demora ou falha</a>
+<a class="chapter-link active" aria-current="page" href="web3-capitulo2-aula7.html#capitulo-2">7. Outra pessoa consegue repetir</a>
+
+<a class="cap2-voltar" href="web3-typescript.html#ts-checkpoint-final">← TypeScript Essencial</a>
+<a class="cap2-voltar" href="web3.html">Capítulo 1 — Uma informação, duas telas</a>
+
+</nav>
+<main class="web-content" id="conteudo" tabindex="-1">
+<article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Capítulo 2 · Aula 7 de 7</span>
+<h2 id="titulo-aula" tabindex="-1">Outra pessoa consegue repetir</h2>
+<p class="chapter-meta">Café Aurora · cerca de 2 horas-aula · 14 horas-aula previstas no capítulo</p>
+<p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<section aria-labelledby="outra-maquina">
+<h3 id="outra-maquina">“Abri a pasta, mas o botão não respondeu.”</h3>
+<p>Uma colega vai conferir o balcão antes de usá-lo no atendimento. Você enviou os arquivos, ela abriu a página e o aviso apareceu, mas o botão continuou desabilitado. Na sua máquina funcionava. O que pode ter ficado para trás?</p>
+<p><strong>Na sua cópia, localize <code>public/js/balcao/main.js</code>. Compare com <code>cliente-balcao/src/main.ts</code>.</strong> Um é o código que o navegador carrega; o outro é a fonte que você edita. Se a nova pasta recebeu somente os .ts, ainda precisa gerar o JavaScript. Se recebeu apenas um .js antigo, pode parecer pronta sem representar as últimas correções.</p>
+<p>Vamos conferir a entrega em uma pasta nova, sem depender das instalações ou dos arquivos gerados da primeira cópia. Você não vai refazer o Café nem estudar as seis aulas inteiras outra vez. Vai reunir as mudanças que já construiu, preparar o ambiente e demonstrar o resultado.</p>
+</section>
+<section aria-labelledby="copia-limpa">
+<h3 id="copia-limpa">Separar o que construímos do que as ferramentas geram</h3>
+<p><strong>Guarde sua solução atual. Crie uma pasta chamada <code>conferencia-cap2</code> e extraia nela a <a href="../../downloads/programacao-web/cafe-aurora-web3-capitulo-1.zip" download>referência final do Capítulo 1</a>.</strong> Abra a pasta cafe-aurora-web3 extraída pelo VS Code. É uma cópia de conferência, sem suas mensagens ou credenciais pessoais.</p>
+<p>Usaremos essa base já conhecida. A partir da sua solução concluída, copie somente os arquivos que evoluíram no capítulo, mantendo os caminhos:</p>
+<div class="table-wrap"><table><caption>Arquivos que levam a evolução para a nova cópia</caption><thead><tr><th scope="col">Caminho na aplicação</th><th scope="col">Por que precisa estar aqui</th></tr></thead><tbody>
+<tr><td><code>src/atendimento.php</code></td><td>Fonte PHP compartilhada, incluindo ausência de estimativa.</td></tr>
+<tr><td><code>public/api/atendimento.php</code></td><td>Endpoint correto, sem sleep nem respostas de falha.</td></tr>
+<tr><td><code>public/balcao.php</code></td><td>Elementos identificados, botão, aviso e referência ao script.</td></tr>
+<tr><td><code>cliente-balcao/package.json</code><br><code>cliente-balcao/package-lock.json</code><br><code>cliente-balcao/tsconfig.json</code></td><td>Preparação copiada da bancada na Aula 2; o lock registra as dependências.</td></tr>
+<tr><td><code>cliente-balcao/vite.config.mjs</code></td><td>Destino do build e proteção dos arquivos existentes.</td></tr>
+<tr><td><code>cliente-balcao/src/atendimento.ts</code><br><code>cliente-balcao/src/main.ts</code></td><td>Consulta, conferência e apresentação que você concluiu.</td></tr>
+</tbody></table></div>
+<p><strong>Não copie node_modules, vendor, banco, credenciais nem public/js/balcao/main.js.</strong> As dependências e o JavaScript serão preparados nesta nova cópia. Se quiser demonstrar também suas alterações pessoais em outros arquivos, acrescente-as conscientemente depois da comparação; preserve a pasta original.</p>
+<p>Antes de executar comandos, abra atendimento.ts e confira se há AbortController, conferência dos três campos e consulta ao endereço correto. Abra a API e confira se chama a função PHP. Não use o download final para substituir silenciosamente uma parte que ainda não consegue explicar.</p>
+</section>
+<section aria-labelledby="reconstruir-saida">
+<h3 id="reconstruir-saida">Gerar o que o navegador realmente usa</h3>
+<p><strong>No terminal da raiz de cafe-aurora-web3, confira o PHP e inicie o servidor.</strong> Se sua primeira cópia ainda ocupa a porta 8000, pare aquele servidor com Ctrl + C no terminal correspondente. Usaremos uma aplicação por vez nessa porta.</p>
+<pre class="code-block"><code>php --version
+php -d opcache.enable=0 -S localhost:8000 -t public</code></pre>
+<p>Deixe esse terminal em execução. Abra outro terminal, confirme que ele está na raiz da nova aplicação e entre na pasta do cliente:</p>
+<pre class="code-block"><code>cd cliente-balcao
+node --version
+npm --version
+npm ci
+npm run build</code></pre>
+<p>Use a versão Node 24 já preparada na <a href="web3-capitulo2-aula2.html#guardar-bancada">Aula 2</a>. npm ci usa o package-lock para instalar uma cópia das dependências; não procura node_modules na solução anterior. O build verifica o TypeScript e gera <code>public/js/balcao/main.js</code>. Confira se o arquivo apareceu nesse caminho e se public/api, CSS e demais páginas continuam presentes.</p>
+<p><strong>Abra <a href="http://localhost:8000/balcao.php" target="_blank" rel="noopener">http://localhost:8000/balcao.php</a> e clique em “Atualizar atendimento”.</strong> Confira também a <a href="http://localhost:8000/api/atendimento.php" target="_blank" rel="noopener">resposta da API</a>. O resultado deve vir da nova cópia, executada pelo terminal que você acabou de iniciar.</p>
+<p>Se o build falhar, leia a primeira mensagem e confira o arquivo indicado; não entregue um .js de outra pasta para esconder o problema. Se o botão continuar desabilitado, abra o Console e a Rede: main.js foi encontrado? O script aponta para js/balcao/main.js? Os cinco ids ainda correspondem ao main.ts?</p>
+<p>Se o PHP não for reconhecido no terminal do VS Code, retome a <a href="web3-capitulo2-aula1.html#balcao-aberto">orientação de Laragon da Aula 1</a> com o professor. O caminho de configuração foi fundamentado na documentação; sua execução em Windows/Laragon ainda precisa ser conferida no laboratório.</p>
+</section>
+<section aria-labelledby="conferir-entrega">
+<h3 id="conferir-entrega">Uma tela final não conta a história inteira</h3>
+<p>Vamos conferir comportamentos, não apenas uma captura bonita. Em cada linha, registre o que fez, o que observou e o que corrigiu. Use dados fictícios. As falhas controladas são as da <a href="web3-capitulo2-aula6.html#respostas-controladas">Aula 6</a>; restaure a solução válida depois de cada uma.</p>
+<div class="table-wrap"><table><caption>Conferência da nova cópia</caption><thead><tr><th scope="col">Experiência</th><th scope="col">Evidência esperada</th></tr></thead><tbody>
+<tr><td>Deixe o balcão aberto, mude 30 para 47 no PHP e consulte.</td><td>O prazo muda pelo botão. A Rede mostra o GET e os três campos; o documento não recarrega inteiro.</td></tr>
+<tr><td>Encerre pedidos; depois teste aberto/null e encerrado/null.</td><td>Encerramento prevalece. Aberto sem estimativa orienta a consultar a equipe, sem erro de rede.</td></tr>
+<tr><td>Ensaie campo ausente e uma resposta de falha HTTP.</td><td>Não apresenta dados incompletos, undefined ou o prazo antigo. Permite corrigir e consultar de novo.</td></tr>
+<tr><td>Ensaie a demora de dez segundos.</td><td>A espera do cliente é cancelada por volta de oito segundos. Retirar a demora permite recuperar.</td></tr>
+<tr><td>Use marcas de texto no nome, como na Aula 6.</td><td>O conteúdo recebido é texto; não cria elementos HTML.</td></tr>
+<tr><td>Use Tab e Enter; reduza a largura da janela.</td><td>O botão é alcançável, o foco continua utilizável e as orientações permanecem legíveis.</td></tr>
+<tr><td>Volte ao site e abra o cardápio; teste contato e painel na cópia de conferência.</td><td>Os caminhos anteriores do Café continuam funcionando. Mensagem fictícia aparece no painel após login local.</td></tr>
+</tbody></table></div>
+<details><summary>Preparar o banco e o painel nesta cópia nova</summary><p>O ZIP não inclui banco ou credenciais. Na raiz da nova aplicação, em um terminal livre, use a preparação já ensinada:</p>
+<pre class="code-block"><code>php src/verificar-ambiente.php
+php src/inicializar-banco.php
+php src/criar-administrador.php</code></pre>
+<p>O último comando pede usuário e senha locais. Confira PHP 8.5 e as extensões exigidas pela <a href="web3-aula2.html#preservar-cafe">prática do Capítulo 1</a>, incluindo PDO/SQLite. Não copie o banco pessoal para completar o ensaio. Se for repetir a suíte do Web II, instale as dependências com composer install e rode composer test, conforme a <a href="web2.html#capitulo-11">aula de testes</a>.</p></details>
+<p><strong>Ao terminar, restaure “Café Aurora”, true, 30 e a API correta, sem atrasos ou falhas artificiais.</strong> Faça uma consulta válida na nova cópia e confira as duas páginas PHP.</p>
+</section>
+<section aria-labelledby="explicar-escolhas">
+<h3 id="explicar-escolhas">Sua explicação acompanha os arquivos</h3>
+<p>Se houver um colega disponível, peça que ele prepare a cópia usando suas orientações. Observe onde precisa ajudá-lo: essa dificuldade pode revelar um caminho, comando ou arquivo que faltou explicar. Quando trabalhar sozinho, faça a conferência na pasta nova e registre as mesmas evidências; não declare um teste com outra pessoa que não aconteceu.</p>
+<p>Depois explique individualmente, apontando para seus arquivos:</p>
+<ol><li>Onde a regra do atendimento é preparada uma única vez e quem a consulta.</li><li>Por que nomeNegocio, mensagemStatus e mensagemTempo são três textos, e onde cada um aparece.</li><li>Como Promise/await, unknown e a conferência participam de momentos diferentes.</li><li>O que acontece com a tela, o botão e a possibilidade de recuperação durante uma falha.</li><li>Qual alteração precisa de build e qual precisa somente de uma nova consulta PHP.</li><li>Como outra cópia produz o mesmo comportamento sem carregar suas dependências, dados ou credenciais.</li></ol>
+<p>Na avaliação, demonstre esses comportamentos, explique uma decisão e recupere um erro. Se houver uma lacuna, retome somente a experiência correspondente e confira de novo. Visitar a aula ou marcar um conteúdo como concluído não substitui a prática.</p>
+<p>Use o Meu MbB para registrar sua própria evidência ou uma dúvida no conteúdo em que ela surgiu. Favoritos, anotações e retomada continuam seguindo os recursos do site; não é necessário criar um cadastro diferente para este capítulo.</p>
+</section>
+<section class="checkpoint-box" aria-labelledby="checkpoint-cap2-aula7"><h3 id="checkpoint-cap2-aula7">O balcão está pronto para ser conferido</h3>
+<p>Entregue os arquivos de fonte e um registro curto da reconstrução: versões usadas, comandos, um sucesso, uma falha e sua recuperação. Identifique também qualquer teste que não conseguiu executar e o motivo. Preserve a versão que você construiu e suas escolhas.</p>
+<p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-cap2-aula7.zip" download>Conferir a referência final do Capítulo 2</a></p><p>O código da aplicação é o mesmo que concluímos na Aula 6. Nesta aula, a conquista é reproduzir, verificar e explicar. O download não inclui dependências instaladas, JavaScript gerado, banco nem credenciais; siga a preparação acima para executá-lo.</p></section>
+<section aria-labelledby="continuar-cap2"><h3 id="continuar-cap2">A informação mudou uma vez. O balcão aprendeu a buscá-la.</h3><p>No início, a página aberta conservava o aviso antigo. Agora ela consulta o servidor, confere os três campos e atualiza somente o atendimento. A mesma regra PHP continua servindo às duas telas, com uma orientação quando não há prazo e um caminho de recuperação quando a consulta falha.</p><p>Ao rever o Café, pense: se outra interface passar a usar essa informação, o que ela poderá reaproveitar e qual responsabilidade deverá continuar no servidor? Guarde sua explicação junto da entrega.</p><p class="web3-status">Web III — Em desenvolvimento. As 7 aulas deste capítulo estão disponíveis. Os capítulos seguintes ainda não estão disponíveis.</p><p>Este é o encerramento do Capítulo 2. Você pode voltar ao Web III ou retomar uma experiência que queira conferir.</p></section>
+
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-capitulo2-aula6.html#capitulo-2">← Aula 6 — Quando a consulta demora ou falha</a><a href="web3.html">Voltar ao Web III</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script>
+<script src="../../js/web3-menu-aulas.js?v=2"></script>
+<script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>
