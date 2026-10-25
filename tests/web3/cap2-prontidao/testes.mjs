@@ -1,4 +1,4 @@
-import { test, before, after } from 'node:test';
+import { test, before, after, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -44,7 +44,7 @@ before(async () => {
     const porta = await portaLivre();
     phpUrl = `http://127.0.0.1:${porta}/`;
     const arquivo = fs.openSync(path.join(base, 'php-http.log'), 'w');
-    php = spawn('php', ['-S', `127.0.0.1:${porta}`, '-t', 'public'], { cwd: app, stdio: ['ignore', arquivo, arquivo] });
+    php = spawn('php', ['-d', 'opcache.enable_cli=0', '-S', `127.0.0.1:${porta}`, '-t', 'public'], { cwd: app, stdio: ['ignore', arquivo, arquivo] });
     fs.closeSync(arquivo);
     for (let n = 0; n < 100; n++) {
       try { const r = await realFetch(phpUrl); if (r.ok) break; }
@@ -54,6 +54,8 @@ before(async () => {
     }
   }
 });
+
+beforeEach(() => { fs.writeFileSync(fonte, original); });
 
 after(async () => {
   fs.writeFileSync(fonte, original);
@@ -193,7 +195,7 @@ test('PHP real: indisponibilidade de rede e recuperação', { skip: !phpDisponiv
   const terminou = new Promise(r => php.once('exit', r)); php.kill(); await terminou;
   await assert.rejects(mod.obterAtendimento());
   const endereco = new URL(phpUrl);
-  php = spawn('php', ['-S', '127.0.0.1:' + endereco.port, '-t', 'public'], { cwd: app, stdio: 'ignore' });
+  php = spawn('php', ['-d', 'opcache.enable_cli=0', '-S', '127.0.0.1:' + endereco.port, '-t', 'public'], { cwd: app, stdio: 'ignore' });
   for (let n = 0; n < 100; n++) {
     try { assert.deepEqual(await mod.obterAtendimento(), textos); return; }
     catch { await new Promise(r => setTimeout(r, 50)); }

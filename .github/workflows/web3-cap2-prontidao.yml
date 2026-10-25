@@ -27,10 +27,12 @@ jobs:
           npm --version
           python3 tests/web3/cap2-prontidao/preparar.py "$RUNNER_TEMP/ensaio"
       - name: Conferir contrato, transporte, estados e regressão evoluída
+        shell: bash
         env:
           MBB_CAP2_BASE: ${{ runner.temp }}/ensaio
           MBB_EXIGIR_PHP: '1'
         run: |
+          set -o pipefail
           node --test tests/web3/cap2-prontidao/testes.mjs | tee "$RUNNER_TEMP/ensaio/testes.log"
           python3 tests/web3/cap2-prontidao/regressao.py "$RUNNER_TEMP/ensaio"
       - name: Reconstruir de novo, lendo somente os blocos do caderno

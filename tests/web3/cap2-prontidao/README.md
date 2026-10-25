@@ -14,6 +14,11 @@ DOM simulado não comprova renderização, navegação por teclado, foco nem lei
 de tela. Windows, Laragon e a operação do VS Code no laboratório precisam de
 homologação própria. Os exemplos ainda não são o capítulo público completo.
 
+O servidor CLI do ensaio usa -d opcache.enable_cli=0, somente nesse processo.
+Isso evita que código PHP alterado na prática fique temporariamente em cache.
+O primeiro ensaio encontrou três falhas com esse cache ativo; o pipeline de
+logs também precisou passar a propagar corretamente o código de falha.
+
 O regressao.py aplica a evolução a outra cópia e reutiliza o cenário real de
 SQLite, mensagem fictícia e login/painel do Capítulo 1.
 

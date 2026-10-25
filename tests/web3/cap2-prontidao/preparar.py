@@ -260,7 +260,8 @@ def caderno(app, destino):
     linhas += ['Arquivo: src/atendimento.php\n', '```php\n' + (app / 'src/atendimento.php').read_text() + '\n```\n',
                'Na conquista 6, o elseif da função PHP trata a estimativa ausente sem alterar os nomes devolvidos.\n',
                'A pasta public/js/balcao contém saída gerada. A configuração não limpa pastas existentes.\n',
-               'O servidor PHP usa somente public como raiz. Execute, da raiz do Café: php -S localhost:8000 -t public\n',
+               'O servidor PHP usa somente public como raiz. Execute, da raiz do Café: php -d opcache.enable_cli=0 -S localhost:8000 -t public\n',
+               'A opção -d vale somente para este processo de desenvolvimento: evita que o cache de código compilado da CLI adie suas alterações PHP. Não modifica o php.ini do computador.\n',
                'Acesse http://localhost:8000/balcao.php; não o servidor de desenvolvimento Vite.\n']
     destino.write_text('\n'.join(linhas))
 
