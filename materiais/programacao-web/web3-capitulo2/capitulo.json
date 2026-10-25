@@ -12,6 +12,12 @@
       "titulo": "O TypeScript chega ao balcão",
       "id": "web3-cap2-ligacao",
       "horas": 2
+    },
+    {
+      "numero": 3,
+      "titulo": "Os mesmos nomes, o mesmo aviso",
+      "id": "web3-cap2-contrato",
+      "horas": 2
     }
   ]
 }

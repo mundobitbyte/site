@@ -2301,5 +2301,21 @@
       "checkpoint-cap2-aula2",
       "continuar-cap2"
     ]
+  },
+  "pages/programacao-web/web3-capitulo2-aula3.html": {
+    "conteudo_id": "web3-cap2-contrato",
+    "titulo": "Web III — Capítulo 2 · Aula 3: Os mesmos nomes, o mesmo aviso",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-capitulo2-aula3.html",
+    "ancoras": [
+      "titulo-aula",
+      "tres-lugares",
+      "nomes-reais",
+      "pontos-apresentacao",
+      "apresentar-local",
+      "origem-local",
+      "checkpoint-cap2-aula3",
+      "continuar-cap2"
+    ]
   }
 }

@@ -1,0 +1,60 @@
+<section aria-labelledby="tres-lugares">
+<h3 id="tres-lugares">A mensagem chegou. E o aviso do atendimento?</h3>
+<p>A pequena frase da aula anterior apareceu dentro do balcão e os links continuaram no lugar. Agora a equipe precisa apresentar <strong>o nome do Café, a situação dos pedidos e a orientação de prazo</strong> nos lugares certos.</p>
+<p><strong>Abra seu <code>cliente-balcao/src/atendimento.ts</code> e, em outra aba, <a href="http://localhost:8000/api/atendimento.php" target="_blank" rel="noopener">a resposta da API</a>.</strong> A bancada usava dois campos; o PHP devolve três. Vamos compará-los antes de mudar qualquer nome.</p>
+<p>Primeiro acertaremos a apresentação com um objeto local. O botão desta aula será chamado <strong>“Conferir apresentação”</strong>: ele ainda não faz uma consulta à API. Assim podemos enxergar o que muda na tela antes de acrescentar a espera pela rede.</p>
+</section>
+<section aria-labelledby="nomes-reais">
+<h3 id="nomes-reais">Os nomes vêm da resposta que já existe</h3>
+<div class="table-wrap"><table><caption>Da bancada do tópico 12 para o retorno PHP</caption><thead><tr><th scope="col">Na bancada</th><th scope="col">No PHP</th><th scope="col">O que muda</th></tr></thead><tbody>
+<tr><td><code>nome: string</code></td><td><code>nomeNegocio: string</code></td><td>O cliente acompanha o nome já usado no retorno do servidor.</td></tr>
+<tr><td><code>tempoEstimado: number</code></td><td><code>mensagemTempo: string</code></td><td>Receberemos a frase preparada, não somente um número.</td></tr>
+<tr><td>Não havia este campo</td><td><code>mensagemStatus: string</code></td><td>A situação dos pedidos passa a fazer parte do objeto do cliente.</td></tr>
+</tbody></table></div>
+<p>Se a cozinha encerra os pedidos, mensagemTempo deixa de anunciar minutos e orienta a consultar o horário de atendimento. Por isso não basta renomear tempoEstimado: <strong>o significado e o tipo mudaram</strong>. Não some “minutos” a uma frase que já veio pronta.</p>
+<p>Esses nomes são o combinado entre quem fornece e quem recebe os dados; chamaremos esse combinado de <strong>contrato</strong>. Por enquanto vamos representá-lo localmente. As regras de abertura e prazo continuam sendo preparadas no PHP.</p>
+<p>Se você experimentou nomes próprios no Essencial, compare cada um com esta referência antes de substituí-lo nesta cópia de integração. Sua bancada original e as entregas continuam guardadas.</p>
+<p><strong>Em <code>cliente-balcao/src/atendimento.ts</code>, atualize a interface e o objeto local:</strong></p>
+{{arquivo:cliente-balcao/src/atendimento.ts}}
+<p>A função continua síncrona: ao chamá-la, recebemos o objeto que acabamos de escrever. O <code>: Atendimento</code> verifica seu retorno; não dispara nenhuma consulta. Os três valores são textos, e o retorno passa a incluir mensagemStatus.</p>
+</section>
+<section aria-labelledby="pontos-apresentacao">
+<h3 id="pontos-apresentacao">Dar um endereço a cada texto da tela</h3>
+<p><strong>Em <code>public/balcao.php</code>, acrescente os ids abaixo aos três elementos que já apresentam os dados.</strong> Preserve as expressões PHP entre as tags:</p>
+<pre class="code-block"><code>&lt;h1 id="nome-negocio"&gt;...&lt;/h1&gt;
+&lt;p id="mensagem-status"&gt;...&lt;/p&gt;
+&lt;p id="mensagem-tempo"&gt;...&lt;/p&gt;</code></pre>
+<p>As reticências acima indicam o conteúdo PHP existente; <strong>não digite “...” no lugar dele</strong>. Os ids identificam onde cada texto será apresentado. O parágrafo aviso-consulta da Aula 2 continua na seção.</p>
+<p>Logo antes desse parágrafo, acrescente o botão:</p>
+<pre class="code-block"><code>&lt;button id="atualizar-atendimento" type="button" disabled&gt;Conferir apresentação&lt;/button&gt;</code></pre>
+<p><code>type="button"</code> descreve uma ação sem enviar um formulário. Ele começa desabilitado com <code>disabled</code>; só será habilitado depois de o JavaScript encontrar os elementos. O id foi escolhido para continuar útil quando a consulta real chegar.</p>
+<details><summary>Conferir o HTML completo e manter minhas alterações</summary><p>Compare os ids e o botão com a sua página. As mudanças ficam na seção de atendimento; o script e os demais caminhos permanecem.</p>
+{{arquivo:public/balcao.php}}
+</details>
+</section>
+<section aria-labelledby="apresentar-local">
+<h3 id="apresentar-local">Preparar em um arquivo, apresentar em outro</h3>
+<p>Vamos retomar os imports do <a href="web3-typescript.html#ts-imports">tópico 12</a>. <code>import</code> traz a função; <code>import type</code> traz a descrição Atendimento para o verificador. Os arquivos .ts continuam na mesma pasta; a escrita <code>./atendimento.js</code> acompanha a saída JavaScript, como na bancada.</p>
+<p>A procura que fizemos para um parágrafo agora alcança os cinco elementos. A guarda usa <code>!</code>, “não”, e <code>||</code>, “ou”: se algum elemento não tiver o tipo esperado, <code>throw new Error(...)</code> interrompe a ligação com uma mensagem no Console. O botão precisa ser um <code>HTMLButtonElement</code>, pois usaremos sua propriedade disabled.</p>
+<p><code>apresentar</code> será uma função de seta que recebe Atendimento e muda somente três textContent. Essa função é declarada depois das guardas, para manter a verificação dos elementos. O clique será ligado com <code>addEventListener</code>, que você já usou no <a href="web1.html#capitulo-8">Web I</a>.</p>
+<p><strong>Em <code>cliente-balcao/src/main.ts</code>, use esta ligação completa:</strong></p>
+{{arquivo:cliente-balcao/src/main.ts}}
+<p>Os nomes à esquerda, como <code>tempo</code>, apontam para elementos HTML. À direita, <code>atendimento.mensagemTempo</code> é um campo do objeto. A função de apresentação coloca o valor no elemento correspondente.</p>
+<p><strong>Salve, execute <code>npm run build</code> no terminal de cliente-balcao e recarregue o balcão no servidor PHP.</strong> O botão fica habilitado, e o aviso identifica o ensaio local. Clique em “Conferir apresentação”. O nome, a situação e a frase de prazo devem continuar nos seus lugares.</p>
+</section>
+<section aria-labelledby="origem-local">
+<h3 id="origem-local">Fazer a diferença aparecer</h3>
+<p>Com os mesmos valores locais e do PHP, o resultado pode parecer igual. Vamos separar as origens com uma experiência pequena.</p>
+<p><strong>Somente no retorno local de atendimento.ts, mude a frase para “Tempo estimado: 25 minutos.”.</strong> Estamos ensaiando a apresentação de outro aviso; a cozinha ainda informa 30 no servidor.</p>
+<p>Salve, gere o JavaScript e recarregue o balcão. Ao abrir, o PHP apresenta 30. <strong>Clique em “Conferir apresentação”.</strong> Agora aparecem os 25 do objeto local. O aviso logo abaixo continua dizendo que é um ensaio.</p>
+<p>Abra ou recarregue a API: ela ainda devolve 30. O botão não leu esse endereço, e alterar o TypeScript não mudou a fonte PHP. Essa comparação nos ajuda a explicar de onde cada informação veio.</p>
+<p><strong>Volte o objeto local para 30, execute build e recarregue.</strong> Mantemos a referência coerente para a próxima aula. Nenhum cabeçalho, rodapé ou link precisou ser reconstruído.</p>
+</section>
+<section class="checkpoint-box" aria-labelledby="checkpoint-cap2-aula3">
+<h3 id="checkpoint-cap2-aula3">Mostre de onde veio cada valor</h3>
+<p>Demonstre a troca local 30 → 25 e explique por que a API não acompanhou. Aponte a correspondência dos três campos com os elementos da página e justifique por que mensagemTempo é texto. Confira que o link “Voltar ao site” e o restante do Café continuam funcionando.</p>
+<p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-cap2-aula3.zip" download>Conferir os arquivos ao fim da Aula 3</a></p>
+<p>Referência com dados locais e PHP em 30. Para comparar em outra pasta: npm ci e npm run build dentro de cliente-balcao; servidor PHP na raiz da aplicação. Preserve suas experiências em sua cópia.</p>
+</section>
+<section aria-labelledby="continuar-cap2"><h3 id="continuar-cap2">O formato esperado ainda precisa ser conferido</h3>
+<p>O verificador conhece os três campos do objeto que nós escrevemos. E se uma informação vier incompleta? Antes de trocar a origem pela rede, vamos aprender a conferir os dados que chegam à apresentação.</p><p class="web3-status">Web III — Em desenvolvimento. {{disponibilidade}}</p></section>
