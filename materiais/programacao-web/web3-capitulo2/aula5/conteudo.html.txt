@@ -1,0 +1,66 @@
+<section aria-labelledby="cozinha-mudou">
+<h3 id="cozinha-mudou">A cozinha mudou o prazo. O botão percebeu?</h3>
+<p>O balcão está aberto e o ensaio local funciona. Enquanto isso, chegaram mais pedidos à cozinha. A nova orientação é de 47 minutos. A equipe precisa consultar essa informação sem fechar o balcão que já está na tela.</p>
+<p><strong>Deixe o balcão aberto. Em <code>src/atendimento.php</code>, mude somente <code>$tempoEstimado = 30;</code> para <code>$tempoEstimado = 47;</code> e salve.</strong> Recarregue a API em outra aba: ela já informa 47. No balcão que ficou aberto, clique em “Conferir apresentação”. Ainda aparecem os 30 do objeto local?</p>
+<p>O botão fez exatamente o que construímos: conferiu e apresentou um objeto escrito no TypeScript. Agora chegou a hora de trocar sua origem. Manteremos os três campos, a conferência e os elementos HTML. Quem fornecerá os valores será o PHP.</p>
+<p>Continue na sua cópia da Aula 4, preservando a bancada original. Mantenha o terminal PHP ativo na raiz de <code>cafe-aurora-web3</code> e o segundo terminal em <code>cliente-balcao</code>. Esta página do Mundo bit Byte apresenta o roteiro; sua aplicação roda em <code>http://localhost:8000/balcao.php</code>.</p>
+</section>
+<section aria-labelledby="esperar-resposta">
+<h3 id="esperar-resposta">Pedir não é o mesmo que já ter recebido</h3>
+<p>No <a href="web1.html#capitulo-9">capítulo 9 do Web I</a>, o cardápio buscava um arquivo JSON com <code>fetch</code>. Aqui o endereço termina em PHP: o servidor executa a função compartilhada e devolve JSON. A espera pela resposta continua existindo.</p>
+<p>Por isso obterAtendimento deixará de devolver Atendimento imediatamente. Ela será <code>async</code>, com retorno <code>Promise&lt;Atendimento&gt;</code>: uma promessa cujo resultado, se a consulta e a conferência derem certo, será Atendimento. Os sinais &lt; e &gt; descrevem o tipo do resultado; não criam os dados nem garantem que a rede funcionará.</p>
+
+<p><code>await fetch</code> aguarda a resposta sem bloquear a página inteira. O endereço é relativo ao <strong>documento aberto no navegador</strong>: balcao.php e api/atendimento.php pertencem a localhost:8000. Ele não é relativo à pasta do main.js gerado. <code>cache: "no-store"</code> pede uma consulta sem reaproveitar uma resposta guardada.</p>
+<p>Retomamos <code>resposta.ok</code>: receber HTTP 404 ou 500 não é um sucesso, mesmo que fetch tenha recebido uma resposta. A mensagem com crases e <code>${resposta.status}</code> registra o código para investigação no Console.</p>
+<p>Antes de ler o corpo, examinamos o cabeçalho Content-Type. <code>get</code> pode devolver null; depois dessa guarda, <code>split(";")[0]</code> separa o tipo de uma indicação como charset=UTF-8. trim e toLowerCase permitem comparar “application/json” sem espaços nas pontas ou diferença entre maiúsculas e minúsculas.</p>
+<p>O segundo await aguarda a leitura do JSON. O resultado entra como <strong>unknown</strong> na mesma conferência da Aula 4. Um cabeçalho JSON não garante que existam nossos três textos.</p>
+<p><strong>Em <code>cliente-balcao/src/atendimento.ts</code>, preserve a interface e conferirAtendimento. Substitua apenas obterAtendimento pela função abaixo:</strong></p>
+<pre class="code-block"><code>export async function obterAtendimento(): Promise&lt;Atendimento&gt; {
+  const resposta = await fetch("api/atendimento.php", { cache: "no-store" });
+  if (!resposta.ok) {
+    throw new Error(`A consulta respondeu HTTP ${resposta.status}.`);
+  }
+  const tipo = resposta.headers.get("Content-Type");
+  if (tipo === null || tipo.split(";")[0].trim().toLowerCase() !== "application/json") {
+    throw new Error("A resposta não foi identificada como JSON.");
+  }
+  const dados: unknown = await resposta.json();
+  return conferirAtendimento(dados);
+}</code></pre>
+<details><summary>Conferir o atendimento.ts completo</summary><p>A conferência permanece igual. Sai somente o objeto local, entra a consulta.</p>
+{{arquivo:cliente-balcao/src/atendimento.ts}}
+</details>
+<p><strong>Execute npm run build agora.</strong> O verificador deve apontar que o main.ts ainda tenta entregar uma Promise diretamente a apresentar. Esse erro mostra a outra ponta da mudança: quem chama a função também precisa esperar. Vamos corrigir antes de abrir o resultado.</p>
+</section>
+<section aria-labelledby="botao-consulta">
+<h3 id="botao-consulta">Um clique, uma consulta, uma orientação</h3>
+<p>Durante a espera, o prazo anterior não pode parecer uma informação recém-consultada. Retiraremos situação e prazo, manteremos o nome e escreveremos “Consultando o atendimento…”. O botão ficará desabilitado até a consulta terminar, impedindo pedidos simultâneos.</p>
+<p>No evento, <code>async</code> permite usar <code>await obterAtendimento()</code>. Só depois vem apresentar. O catch já conhecido recebe falhas de rede, de leitura ou de conferência. Acrescentaremos <code>finally</code>, o bloco executado depois do try/catch tanto no sucesso quanto no erro: ali devolvemos o botão à pessoa.</p>
+<p>Também guardamos se o botão tinha foco. Alguns navegadores retiram o foco ao desabilitá-lo. Ao terminar, só o devolvemos se ele tiver ido para o corpo da página; se a pessoa escolheu outro controle, respeitamos essa escolha. <code>preventScroll: true</code> evita deslocar a tela ao devolver o foco.</p>
+<p><strong>Em main.ts, mantenha os imports, as procuras, as guardas e apresentar. A partir de botao.disabled = false, troque as mensagens e o evento pela parte correspondente deste arquivo:</strong></p>
+{{arquivo:cliente-balcao/src/main.ts}}
+<p>Em <code>public/balcao.php</code>, altere apenas o texto do botão para <strong>Atualizar atendimento</strong>. Preserve id, type e disabled. Agora esse nome descreve uma consulta real.</p>
+<pre class="code-block"><code>&lt;button id="atualizar-atendimento" type="button" disabled&gt;Atualizar atendimento&lt;/button&gt;</code></pre>
+<details><summary>Comparar o balcao.php completo</summary><p>Seus links e demais alterações pessoais continuam. A mudança desta aula é o rótulo.</p>
+{{arquivo:public/balcao.php}}
+</details>
+<p><strong>Salve, execute npm run build em cliente-balcao e recarregue o balcão no servidor PHP.</strong> O build deve passar. Você verá a informação que o PHP preparou ao abrir a página e o novo botão habilitado. Ainda não fazemos consulta automática: ela acontece quando você pede.</p>
+</section>
+<section aria-labelledby="atualizar-sem-recarga">
+<h3 id="atualizar-sem-recarga">Agora deixe a página aberta</h3>
+<p><strong>Com o balcão aberto, volte o prazo PHP de 47 para 30 e salve. Não faça build nem recarregue o balcão.</strong> Clique em “Atualizar atendimento”. O prazo deve mudar de 47 para 30, acompanhado de “Atendimento consultado agora.”.</p>
+<p>Faça também o caminho contrário: a cozinha passou a informar 47; altere o PHP, salve e clique novamente. O cabeçalho, os links e o restante do documento permanecem. Só os textos do atendimento foram atualizados.</p>
+<p>Para enxergar o pedido, abra as ferramentas do navegador com F12, escolha <strong>Rede / Network</strong>, limpe a lista e clique no botão. Se o navegador agrupar por tipo, escolha Fetch/XHR. Abra a requisição atendimento.php: confira o método GET, o status 200 e a resposta com nomeNegocio, mensagemStatus e mensagemTempo. Não deve surgir um novo carregamento do documento balcao.php por causa do clique.</p>
+<p><strong>No PHP, mude pedidosAbertos para false, salve e consulte.</strong> A orientação de encerramento aparece sem inventar minutos. Reponha true e 30 ao terminar. Consulte novamente para conferir a recuperação e deixar a referência preparada para a próxima aula.</p>
+<p>Se o texto não mudou, investigue a origem: abriu localhost:8000/balcao.php? O terminal PHP continua ativo? O build terminou sem erros depois da alteração dos .ts? Recarregou uma vez para carregar esse JavaScript novo? A resposta vista na Rede corresponde ao PHP que você editou?</p>
+<p>Uma alteração no <strong>PHP</strong> exige salvar e fazer uma nova consulta. Uma alteração no <strong>TypeScript</strong> exige salvar, gerar o JavaScript e recarregar para carregar esse código novo. Não precisamos reinstalar as dependências a cada tentativa.</p>
+</section>
+<section class="checkpoint-box" aria-labelledby="checkpoint-cap2-aula5">
+<h3 id="checkpoint-cap2-aula5">Demonstre o caminho inteiro</h3>
+<p>Com a página aberta, altere o prazo no PHP e mostre sua atualização pelo botão. Localize o JSON na Rede e explique a ordem: buscar, conferir, apresentar. Aponte o await nos dois arquivos e justifique por que a Promise não pode ser entregue diretamente à apresentação.</p>
+<p>Teste também com Tab e Enter: você consegue chegar ao botão, consultar e continuar navegando? Confira o link “Voltar ao site”. Guarde uma anotação sobre a diferença entre alterar PHP e alterar TypeScript.</p>
+<p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-cap2-aula5.zip" download>Conferir os arquivos ao fim da Aula 5</a></p>
+<p>A referência termina com pedidos abertos e 30 minutos. Compare em outra pasta: npm ci e npm run build em cliente-balcao; PHP na raiz, com o comando da Aula 1. Não substitua sua solução nem leve node_modules de uma pasta para outra.</p>
+</section>
+<section aria-labelledby="continuar-cap2"><h3 id="continuar-cap2">E quando a resposta não chega?</h3>
+<p>O balcão já consulta a cozinha pelo servidor. Se a resposta falhar, o botão volta a permitir uma tentativa. Falta decidir por quanto tempo esperar e experimentar respostas que não merecem ser apresentadas. É a próxima necessidade do atendimento.</p><p class="web3-status">Web III — Em desenvolvimento. {{disponibilidade}}</p></section>

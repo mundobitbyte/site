@@ -2332,5 +2332,20 @@
       "checkpoint-cap2-aula4",
       "continuar-cap2"
     ]
+  },
+  "pages/programacao-web/web3-capitulo2-aula5.html": {
+    "conteudo_id": "web3-cap2-consulta",
+    "titulo": "Web III — Capítulo 2 · Aula 5: Agora o aviso vem do PHP",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-capitulo2-aula5.html",
+    "ancoras": [
+      "titulo-aula",
+      "cozinha-mudou",
+      "esperar-resposta",
+      "botao-consulta",
+      "atualizar-sem-recarga",
+      "checkpoint-cap2-aula5",
+      "continuar-cap2"
+    ]
   }
 }

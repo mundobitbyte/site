@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Café Aurora: Agora o aviso vem do PHP. Web III, Capítulo 2, Aula 5.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-capitulo2-aula5.html">
+<title>Web III — Agora o aviso vem do PHP | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet">
+<link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet">
+<link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet">
+</head>
+<body class="module-page web3-page web3-typescript web3-cap2" data-module-title="Web III · Aula 5: Agora o aviso vem do PHP">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Capítulo 2 · Aula 5</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do Capítulo 2</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout">
+<nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis do Capítulo 2">
+<h2>Capítulo 2</h2><p class="web3-menu-title">O balcão busca o aviso</p>
+<a class="chapter-link" href="web3-capitulo2-aula1.html#capitulo-2">1. O PHP devolve somente o aviso</a>
+<a class="chapter-link" href="web3-capitulo2-aula2.html#capitulo-2">2. O TypeScript chega ao balcão</a>
+<a class="chapter-link" href="web3-capitulo2-aula3.html#capitulo-2">3. Os mesmos nomes, o mesmo aviso</a>
+<a class="chapter-link" href="web3-capitulo2-aula4.html#capitulo-2">4. Conferir antes de apresentar</a>
+<a class="chapter-link active" aria-current="page" href="web3-capitulo2-aula5.html#capitulo-2">5. Agora o aviso vem do PHP</a>
+
+<a class="cap2-voltar" href="web3-typescript.html#ts-checkpoint-final">← TypeScript Essencial</a>
+<a class="cap2-voltar" href="web3.html">Capítulo 1 — Uma informação, duas telas</a>
+
+</nav>
+<main class="web-content" id="conteudo" tabindex="-1">
+<article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Capítulo 2 · Aula 5 de 7</span>
+<h2 id="titulo-aula" tabindex="-1">Agora o aviso vem do PHP</h2>
+<p class="chapter-meta">Café Aurora · cerca de 2 horas-aula · 14 horas-aula previstas no capítulo</p>
+<p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<section aria-labelledby="cozinha-mudou">
+<h3 id="cozinha-mudou">A cozinha mudou o prazo. O botão percebeu?</h3>
+<p>O balcão está aberto e o ensaio local funciona. Enquanto isso, chegaram mais pedidos à cozinha. A nova orientação é de 47 minutos. A equipe precisa consultar essa informação sem fechar o balcão que já está na tela.</p>
+<p><strong>Deixe o balcão aberto. Em <code>src/atendimento.php</code>, mude somente <code>$tempoEstimado = 30;</code> para <code>$tempoEstimado = 47;</code> e salve.</strong> Recarregue a API em outra aba: ela já informa 47. No balcão que ficou aberto, clique em “Conferir apresentação”. Ainda aparecem os 30 do objeto local?</p>
+<p>O botão fez exatamente o que construímos: conferiu e apresentou um objeto escrito no TypeScript. Agora chegou a hora de trocar sua origem. Manteremos os três campos, a conferência e os elementos HTML. Quem fornecerá os valores será o PHP.</p>
+<p>Continue na sua cópia da Aula 4, preservando a bancada original. Mantenha o terminal PHP ativo na raiz de <code>cafe-aurora-web3</code> e o segundo terminal em <code>cliente-balcao</code>. Esta página do Mundo bit Byte apresenta o roteiro; sua aplicação roda em <code>http://localhost:8000/balcao.php</code>.</p>
+</section>
+<section aria-labelledby="esperar-resposta">
+<h3 id="esperar-resposta">Pedir não é o mesmo que já ter recebido</h3>
+<p>No <a href="web1.html#capitulo-9">capítulo 9 do Web I</a>, o cardápio buscava um arquivo JSON com <code>fetch</code>. Aqui o endereço termina em PHP: o servidor executa a função compartilhada e devolve JSON. A espera pela resposta continua existindo.</p>
+<p>Por isso obterAtendimento deixará de devolver Atendimento imediatamente. Ela será <code>async</code>, com retorno <code>Promise&lt;Atendimento&gt;</code>: uma promessa cujo resultado, se a consulta e a conferência derem certo, será Atendimento. Os sinais &lt; e &gt; descrevem o tipo do resultado; não criam os dados nem garantem que a rede funcionará.</p>
+
+<p><code>await fetch</code> aguarda a resposta sem bloquear a página inteira. O endereço é relativo ao <strong>documento aberto no navegador</strong>: balcao.php e api/atendimento.php pertencem a localhost:8000. Ele não é relativo à pasta do main.js gerado. <code>cache: "no-store"</code> pede uma consulta sem reaproveitar uma resposta guardada.</p>
+<p>Retomamos <code>resposta.ok</code>: receber HTTP 404 ou 500 não é um sucesso, mesmo que fetch tenha recebido uma resposta. A mensagem com crases e <code>${resposta.status}</code> registra o código para investigação no Console.</p>
+<p>Antes de ler o corpo, examinamos o cabeçalho Content-Type. <code>get</code> pode devolver null; depois dessa guarda, <code>split(";")[0]</code> separa o tipo de uma indicação como charset=UTF-8. trim e toLowerCase permitem comparar “application/json” sem espaços nas pontas ou diferença entre maiúsculas e minúsculas.</p>
+<p>O segundo await aguarda a leitura do JSON. O resultado entra como <strong>unknown</strong> na mesma conferência da Aula 4. Um cabeçalho JSON não garante que existam nossos três textos.</p>
+<p><strong>Em <code>cliente-balcao/src/atendimento.ts</code>, preserve a interface e conferirAtendimento. Substitua apenas obterAtendimento pela função abaixo:</strong></p>
+<pre class="code-block"><code>export async function obterAtendimento(): Promise&lt;Atendimento&gt; {
+  const resposta = await fetch("api/atendimento.php", { cache: "no-store" });
+  if (!resposta.ok) {
+    throw new Error(`A consulta respondeu HTTP ${resposta.status}.`);
+  }
+  const tipo = resposta.headers.get("Content-Type");
+  if (tipo === null || tipo.split(";")[0].trim().toLowerCase() !== "application/json") {
+    throw new Error("A resposta não foi identificada como JSON.");
+  }
+  const dados: unknown = await resposta.json();
+  return conferirAtendimento(dados);
+}</code></pre>
+<details><summary>Conferir o atendimento.ts completo</summary><p>A conferência permanece igual. Sai somente o objeto local, entra a consulta.</p>
+<pre class="code-block"><code data-cap2-file="cliente-balcao/src/atendimento.ts" data-cap2-mode="arquivo">export interface Atendimento {
+  nomeNegocio: string;
+  mensagemStatus: string;
+  mensagemTempo: string;
+}
+
+export function conferirAtendimento(dados: unknown): Atendimento {
+  if (typeof dados !== &quot;object&quot; || dados === null || Array.isArray(dados)) {
+    throw new Error(&quot;A resposta precisa ser um objeto.&quot;);
+  }
+  if (!(&quot;nomeNegocio&quot; in dados) || typeof dados.nomeNegocio !== &quot;string&quot; || dados.nomeNegocio.trim() === &quot;&quot;) {
+    throw new Error(&quot;Nome do negócio ausente ou inválido.&quot;);
+  }
+  if (!(&quot;mensagemStatus&quot; in dados) || typeof dados.mensagemStatus !== &quot;string&quot; || dados.mensagemStatus.trim() === &quot;&quot;) {
+    throw new Error(&quot;Mensagem de situação ausente ou inválida.&quot;);
+  }
+  if (!(&quot;mensagemTempo&quot; in dados) || typeof dados.mensagemTempo !== &quot;string&quot; || dados.mensagemTempo.trim() === &quot;&quot;) {
+    throw new Error(&quot;Mensagem de prazo ausente ou inválida.&quot;);
+  }
+  return {
+    nomeNegocio: dados.nomeNegocio,
+    mensagemStatus: dados.mensagemStatus,
+    mensagemTempo: dados.mensagemTempo,
+  };
+}
+
+export async function obterAtendimento(): Promise&lt;Atendimento&gt; {
+  const resposta = await fetch(&quot;api/atendimento.php&quot;, { cache: &quot;no-store&quot; });
+  if (!resposta.ok) {
+    throw new Error(`A consulta respondeu HTTP ${resposta.status}.`);
+  }
+  const tipo = resposta.headers.get(&quot;Content-Type&quot;);
+  if (tipo === null || tipo.split(&quot;;&quot;)[0].trim().toLowerCase() !== &quot;application/json&quot;) {
+    throw new Error(&quot;A resposta não foi identificada como JSON.&quot;);
+  }
+  const dados: unknown = await resposta.json();
+  return conferirAtendimento(dados);
+}</code></pre>
+</details>
+<p><strong>Execute npm run build agora.</strong> O verificador deve apontar que o main.ts ainda tenta entregar uma Promise diretamente a apresentar. Esse erro mostra a outra ponta da mudança: quem chama a função também precisa esperar. Vamos corrigir antes de abrir o resultado.</p>
+</section>
+<section aria-labelledby="botao-consulta">
+<h3 id="botao-consulta">Um clique, uma consulta, uma orientação</h3>
+<p>Durante a espera, o prazo anterior não pode parecer uma informação recém-consultada. Retiraremos situação e prazo, manteremos o nome e escreveremos “Consultando o atendimento…”. O botão ficará desabilitado até a consulta terminar, impedindo pedidos simultâneos.</p>
+<p>No evento, <code>async</code> permite usar <code>await obterAtendimento()</code>. Só depois vem apresentar. O catch já conhecido recebe falhas de rede, de leitura ou de conferência. Acrescentaremos <code>finally</code>, o bloco executado depois do try/catch tanto no sucesso quanto no erro: ali devolvemos o botão à pessoa.</p>
+<p>Também guardamos se o botão tinha foco. Alguns navegadores retiram o foco ao desabilitá-lo. Ao terminar, só o devolvemos se ele tiver ido para o corpo da página; se a pessoa escolheu outro controle, respeitamos essa escolha. <code>preventScroll: true</code> evita deslocar a tela ao devolver o foco.</p>
+<p><strong>Em main.ts, mantenha os imports, as procuras, as guardas e apresentar. A partir de botao.disabled = false, troque as mensagens e o evento pela parte correspondente deste arquivo:</strong></p>
+<pre class="code-block"><code data-cap2-file="cliente-balcao/src/main.ts" data-cap2-mode="arquivo">import { obterAtendimento } from &quot;./atendimento.js&quot;;
+import type { Atendimento } from &quot;./atendimento.js&quot;;
+
+const nome = document.querySelector(&quot;#nome-negocio&quot;);
+const situacao = document.querySelector(&quot;#mensagem-status&quot;);
+const tempo = document.querySelector(&quot;#mensagem-tempo&quot;);
+const botao = document.querySelector(&quot;#atualizar-atendimento&quot;);
+const aviso = document.querySelector(&quot;#aviso-consulta&quot;);
+
+if (!(nome instanceof HTMLElement) || !(situacao instanceof HTMLElement) ||
+    !(tempo instanceof HTMLElement) || !(botao instanceof HTMLButtonElement) ||
+    !(aviso instanceof HTMLElement)) {
+  throw new Error(&quot;Confira os elementos do balcão no HTML.&quot;);
+}
+
+const apresentar = (atendimento: Atendimento) =&gt; {
+  nome.textContent = atendimento.nomeNegocio;
+  situacao.textContent = atendimento.mensagemStatus;
+  tempo.textContent = atendimento.mensagemTempo;
+};
+
+botao.disabled = false;
+botao.textContent = &quot;Atualizar atendimento&quot;;
+aviso.textContent = &quot;Informação recebida ao abrir a página. Você pode consultar novamente.&quot;;
+
+botao.addEventListener(&quot;click&quot;, async () =&gt; {
+  if (botao.disabled) return;
+  const devolverFoco = document.activeElement === botao;
+  botao.disabled = true;
+  situacao.textContent = &quot;&quot;;
+  tempo.textContent = &quot;&quot;;
+  aviso.textContent = &quot;Consultando o atendimento…&quot;;
+  try {
+    const atendimento = await obterAtendimento();
+    apresentar(atendimento);
+    aviso.textContent = &quot;Atendimento consultado agora.&quot;;
+  } catch (erro) {
+    situacao.textContent = &quot;&quot;;
+    tempo.textContent = &quot;&quot;;
+    aviso.textContent = &quot;Não foi possível consultar. Tente novamente.&quot;;
+    console.error(erro);
+  } finally {
+    botao.disabled = false;
+    if (devolverFoco &amp;&amp; document.activeElement === document.body) {
+      botao.focus({ preventScroll: true });
+    }
+  }
+});</code></pre>
+<p>Em <code>public/balcao.php</code>, altere apenas o texto do botão para <strong>Atualizar atendimento</strong>. Preserve id, type e disabled. Agora esse nome descreve uma consulta real.</p>
+<pre class="code-block"><code>&lt;button id="atualizar-atendimento" type="button" disabled&gt;Atualizar atendimento&lt;/button&gt;</code></pre>
+<details><summary>Comparar o balcao.php completo</summary><p>Seus links e demais alterações pessoais continuam. A mudança desta aula é o rótulo.</p>
+<pre class="code-block"><code data-cap2-file="public/balcao.php" data-cap2-mode="arquivo">&lt;?php
+require_once dirname(__DIR__) . &quot;/src/atendimento.php&quot;;
+$atendimento = obterAtendimento();
+
+$nomeNegocio = $atendimento[&quot;nomeNegocio&quot;];
+$mensagemStatus = $atendimento[&quot;mensagemStatus&quot;];
+$mensagemTempo = $atendimento[&quot;mensagemTempo&quot;];
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-BR&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Balcão — Café Aurora&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/styles.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a class=&quot;skip-link&quot; href=&quot;#conteudo&quot;&gt;Pular para o conteúdo&lt;/a&gt;
+  &lt;header&gt;
+    &lt;p&gt;&lt;a href=&quot;index.php&quot;&gt;Café Aurora&lt;/a&gt;&lt;/p&gt;
+    &lt;nav aria-label=&quot;Navegação do balcão&quot;&gt;
+      &lt;ul&gt;&lt;li&gt;&lt;a href=&quot;index.php&quot;&gt;Voltar ao site&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;main id=&quot;conteudo&quot; tabindex=&quot;-1&quot;&gt;
+    &lt;h1 id=&quot;nome-negocio&quot;&gt;&lt;?= htmlspecialchars($nomeNegocio, ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/h1&gt;
+    &lt;section aria-labelledby=&quot;atendimento&quot;&gt;
+      &lt;h2 id=&quot;atendimento&quot;&gt;Atendimento no balcão&lt;/h2&gt;
+      &lt;p id=&quot;mensagem-status&quot;&gt;&lt;?= htmlspecialchars($mensagemStatus, ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/p&gt;
+      &lt;p id=&quot;mensagem-tempo&quot;&gt;&lt;?= htmlspecialchars($mensagemTempo, ENT_QUOTES, &quot;UTF-8&quot;) ?&gt;&lt;/p&gt;
+      &lt;button id=&quot;atualizar-atendimento&quot; type=&quot;button&quot; disabled&gt;Atualizar atendimento&lt;/button&gt;
+      &lt;p id=&quot;aviso-consulta&quot; role=&quot;status&quot;&gt;Informação recebida ao abrir a página.&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;&lt;p&gt;Projeto educacional fictício — Café Aurora.&lt;/p&gt;&lt;/footer&gt;
+  &lt;script type=&quot;module&quot; src=&quot;js/balcao/main.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</details>
+<p><strong>Salve, execute npm run build em cliente-balcao e recarregue o balcão no servidor PHP.</strong> O build deve passar. Você verá a informação que o PHP preparou ao abrir a página e o novo botão habilitado. Ainda não fazemos consulta automática: ela acontece quando você pede.</p>
+</section>
+<section aria-labelledby="atualizar-sem-recarga">
+<h3 id="atualizar-sem-recarga">Agora deixe a página aberta</h3>
+<p><strong>Com o balcão aberto, volte o prazo PHP de 47 para 30 e salve. Não faça build nem recarregue o balcão.</strong> Clique em “Atualizar atendimento”. O prazo deve mudar de 47 para 30, acompanhado de “Atendimento consultado agora.”.</p>
+<p>Faça também o caminho contrário: a cozinha passou a informar 47; altere o PHP, salve e clique novamente. O cabeçalho, os links e o restante do documento permanecem. Só os textos do atendimento foram atualizados.</p>
+<p>Para enxergar o pedido, abra as ferramentas do navegador com F12, escolha <strong>Rede / Network</strong>, limpe a lista e clique no botão. Se o navegador agrupar por tipo, escolha Fetch/XHR. Abra a requisição atendimento.php: confira o método GET, o status 200 e a resposta com nomeNegocio, mensagemStatus e mensagemTempo. Não deve surgir um novo carregamento do documento balcao.php por causa do clique.</p>
+<p><strong>No PHP, mude pedidosAbertos para false, salve e consulte.</strong> A orientação de encerramento aparece sem inventar minutos. Reponha true e 30 ao terminar. Consulte novamente para conferir a recuperação e deixar a referência preparada para a próxima aula.</p>
+<p>Se o texto não mudou, investigue a origem: abriu localhost:8000/balcao.php? O terminal PHP continua ativo? O build terminou sem erros depois da alteração dos .ts? Recarregou uma vez para carregar esse JavaScript novo? A resposta vista na Rede corresponde ao PHP que você editou?</p>
+<p>Uma alteração no <strong>PHP</strong> exige salvar e fazer uma nova consulta. Uma alteração no <strong>TypeScript</strong> exige salvar, gerar o JavaScript e recarregar para carregar esse código novo. Não precisamos reinstalar as dependências a cada tentativa.</p>
+</section>
+<section class="checkpoint-box" aria-labelledby="checkpoint-cap2-aula5">
+<h3 id="checkpoint-cap2-aula5">Demonstre o caminho inteiro</h3>
+<p>Com a página aberta, altere o prazo no PHP e mostre sua atualização pelo botão. Localize o JSON na Rede e explique a ordem: buscar, conferir, apresentar. Aponte o await nos dois arquivos e justifique por que a Promise não pode ser entregue diretamente à apresentação.</p>
+<p>Teste também com Tab e Enter: você consegue chegar ao botão, consultar e continuar navegando? Confira o link “Voltar ao site”. Guarde uma anotação sobre a diferença entre alterar PHP e alterar TypeScript.</p>
+<p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-cap2-aula5.zip" download>Conferir os arquivos ao fim da Aula 5</a></p>
+<p>A referência termina com pedidos abertos e 30 minutos. Compare em outra pasta: npm ci e npm run build em cliente-balcao; PHP na raiz, com o comando da Aula 1. Não substitua sua solução nem leve node_modules de uma pasta para outra.</p>
+</section>
+<section aria-labelledby="continuar-cap2"><h3 id="continuar-cap2">E quando a resposta não chega?</h3>
+<p>O balcão já consulta a cozinha pelo servidor. Se a resposta falhar, o botão volta a permitir uma tentativa. Falta decidir por quanto tempo esperar e experimentar respostas que não merecem ser apresentadas. É a próxima necessidade do atendimento.</p><p class="web3-status">Web III — Em desenvolvimento. 5 aulas disponíveis. As próximas continuam em preparação.</p></section>
+
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-capitulo2-aula4.html#capitulo-2">← Aula 4 — Conferir antes de apresentar</a><a href="web3.html">Voltar ao Web III</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script>
+<script src="../../js/web3-menu-aulas.js?v=2"></script>
+<script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>
