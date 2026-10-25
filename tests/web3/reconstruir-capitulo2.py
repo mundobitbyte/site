@@ -85,7 +85,9 @@ def reconstruir(base):
 @contextmanager
 def servidor(app):
     with socket.socket() as s:s.bind(("127.0.0.1",0));porta=s.getsockname()[1]
-    proc=subprocess.Popen(["php","-d","opcache.enable_cli=0","-S",f"127.0.0.1:{porta}","-t","public"],cwd=app,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+    prova=app/"public/__mbb_config_ensaio.php"
+    prova.write_text('<?php header("Content-Type: application/json"); echo json_encode(["sapi"=>PHP_SAPI,"cache"=>ini_get("opcache.enable")]);')
+    proc=subprocess.Popen(["php","-d","opcache.enable=0","-S",f"127.0.0.1:{porta}","-t","public"],cwd=app,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     url=f"http://127.0.0.1:{porta}/"
     def req(caminho="api/atendimento.php",method="GET"):
         try:r=urllib.request.urlopen(urllib.request.Request(url+caminho,method=method),timeout=5)
@@ -96,8 +98,14 @@ def servidor(app):
             try:req();break
             except OSError:time.sleep(.05)
         else:raise AssertionError("PHP não iniciou.")
+        configuracao=json.loads(req("__mbb_config_ensaio.php")[2])
+        assert configuracao["sapi"]=="cli-server",configuracao
+        assert configuracao["cache"] in ["0","",False,0],configuracao
+        prova.unlink()
         yield req
-    finally:proc.terminate();proc.wait(timeout=10)
+    finally:
+        proc.terminate();proc.wait(timeout=10)
+        if prova.exists():prova.unlink()
 
 class Publicacao(unittest.TestCase):
     def test_01_reconstrucao_literal_e_zip(self):

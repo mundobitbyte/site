@@ -42,8 +42,8 @@
 <p>No VS Code, use <strong>Arquivo → Abrir Pasta</strong> e escolha a pasta da sua aplicação PHP, aquela que contém <code>public</code> e <code>src</code>. Em <strong>Terminal → Novo Terminal</strong>, confira a versão:</p>
 <pre class="code-block"><code>php --version</code></pre>
 <p>A referência herdada do Web II usa PHP 8.5 ou posterior da série 8. Se o comando não for reconhecido, veja a orientação de Laragon abaixo. Para iniciar o servidor, execute nesta mesma pasta:</p>
-<pre class="code-block"><code>php -d opcache.enable_cli=0 -S localhost:8000 -t public</code></pre>
-<p><code>-S</code> inicia o servidor de desenvolvimento; <code>localhost:8000</code> é seu endereço. <code>-t public</code> entrega somente a pasta pública. A opção <code>-d opcache.enable_cli=0</code> evita guardar código PHP antigo em cache neste processo; não altera o php.ini. Deixe o terminal aberto. Se já havia um servidor nessa porta, encerre-o com <kbd>Ctrl</kbd> + <kbd>C</kbd> no terminal dele antes de iniciar outro.</p>
+<pre class="code-block"><code>php -d opcache.enable=0 -S localhost:8000 -t public</code></pre>
+<p><code>-S</code> inicia o servidor de desenvolvimento; <code>localhost:8000</code> é seu endereço. <code>-t public</code> entrega somente a pasta pública. A opção <code>-d opcache.enable=0</code> desativa o cache de código somente neste servidor de desenvolvimento, para que uma nova consulta use o arquivo que você acabou de salvar; não altera o php.ini. Deixe o terminal aberto. Se já havia um servidor nessa porta, encerre-o com <kbd>Ctrl</kbd> + <kbd>C</kbd> no terminal dele antes de iniciar outro.</p>
 <p>Abra <a href="http://localhost:8000/balcao.php" target="_blank" rel="noopener">http://localhost:8000/balcao.php</a>. Esse endereço é da aplicação no seu computador; o Mundo bit Byte apresenta as instruções e os arquivos.</p>
 </details>
 <details><summary>Uso Laragon e o VS Code não encontra o PHP</summary>
