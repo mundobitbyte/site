@@ -2363,5 +2363,21 @@
       "checkpoint-cap2-aula6",
       "continuar-cap2"
     ]
+  },
+  "pages/programacao-web/web3-capitulo2-aula7.html": {
+    "conteudo_id": "web3-cap2-entrega",
+    "titulo": "Web III — Capítulo 2 · Aula 7: Outra pessoa consegue repetir",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-capitulo2-aula7.html",
+    "ancoras": [
+      "titulo-aula",
+      "outra-maquina",
+      "copia-limpa",
+      "reconstruir-saida",
+      "conferir-entrega",
+      "explicar-escolhas",
+      "checkpoint-cap2-aula7",
+      "continuar-cap2"
+    ]
   }
 }

@@ -36,6 +36,12 @@
       "titulo": "Quando a consulta demora ou falha",
       "id": "web3-cap2-recuperacao",
       "horas": 2
+    },
+    {
+      "numero": 7,
+      "titulo": "Outra pessoa consegue repetir",
+      "id": "web3-cap2-entrega",
+      "horas": 2
     }
   ]
 }
