@@ -1,0 +1,93 @@
+<section aria-labelledby="consulta-interrompida">
+<h3 id="consulta-interrompida">O prazo sumiu. E agora?</h3>
+<p>O balcão já consegue pedir um aviso novo. Vamos conferir se a equipe também consegue continuar quando a consulta falha. Faça este ensaio somente na sua cópia local, mantendo a aba do balcão aberta.</p>
+<p><strong>No terminal do servidor PHP, pressione Ctrl + C. Sem recarregar o balcão, clique em “Atualizar atendimento”.</strong> A orientação deve mudar para “Não foi possível consultar. Tente novamente.”. O prazo antigo deve sair da tela, e o botão deve voltar a ficar disponível.</p>
+<p>Reinicie o servidor na raiz de cafe-aurora-web3:</p>
+<pre class="code-block"><code>php -d opcache.enable=0 -S localhost:8000 -t public</code></pre>
+<p><strong>Volte à mesma aba e consulte de novo.</strong> Os três textos retornaram? Você acabou de conferir a recuperação sem reinstalar ferramentas, refazer o build ou reconstruir a página. Se recarregasse a página com o PHP desligado, não haveria documento para o nosso botão executar; por isso mantivemos a aba aberta.</p>
+</section>
+<section aria-labelledby="limite-consulta">
+<h3 id="limite-consulta">Não podemos deixar a pessoa esperando sem fim</h3>
+<p>Um servidor desligado costuma produzir uma falha rapidamente. Já uma conexão que continua aberta sem devolver dados pode manter o botão ocupado por muito tempo. Precisamos limitar a espera da <strong>consulta</strong>.</p>
+<p>Vamos adotar <strong>8 segundos, escritos como 8000 milissegundos</strong>, para este exercício. Esse número é uma escolha didática para conseguirmos observar o cancelamento. Não veio da cozinha, não altera os 30 minutos de preparo e precisaria ser avaliado com os usuários e a rede em um produto real.</p>
+<p><code>AbortController</code> cria um controle de cancelamento. Entregamos seu <code>signal</code> ao fetch; chamar <code>abort()</code> interrompe a espera do cliente. <code>setTimeout</code> agenda essa chamada para depois de 8000 ms e devolve um identificador. Guardamos esse identificador em temporizador para poder cancelar o agendamento.</p>
+<p>O finally desta função tem outro trabalho: executar <code>clearTimeout</code>, tanto se os dados chegarem quanto se ocorrer um erro. Assim uma consulta concluída não deixa seu temporizador pendente. O finally do main.ts continua responsável por liberar o botão.</p>
+<p><strong>Em <code>cliente-balcao/src/atendimento.ts</code>, mantenha interface e conferirAtendimento. Troque somente obterAtendimento pela função a seguir.</strong> A consulta e suas conferências agora ficam dentro do try:</p>
+<pre class="code-block"><code>export async function obterAtendimento(): Promise&lt;Atendimento&gt; {
+  const controlador = new AbortController();
+  const temporizador = setTimeout(() =&gt; controlador.abort(), 8000);
+  try {
+    const resposta = await fetch("api/atendimento.php", {
+      cache: "no-store",
+      signal: controlador.signal,
+    });
+    if (!resposta.ok) {
+      throw new Error(`A consulta respondeu HTTP ${resposta.status}.`);
+    }
+    const tipo = resposta.headers.get("Content-Type");
+    if (tipo === null || tipo.split(";")[0].trim().toLowerCase() !== "application/json") {
+      throw new Error("A resposta não foi identificada como JSON.");
+    }
+    const dados: unknown = await resposta.json();
+    return conferirAtendimento(dados);
+  } finally {
+    clearTimeout(temporizador);
+  }
+}</code></pre>
+<details><summary>Comparar o atendimento.ts completo</summary><p>O contrato de três campos e a validação permanecem como na Aula 4.</p>
+{{arquivo:cliente-balcao/src/atendimento.ts}}
+</details>
+<p><strong>Salve, faça npm run build em cliente-balcao e recarregue o balcão uma vez.</strong> Consulte normalmente antes de provocar a demora. Não alteramos main.ts nem o HTML nesta aula.</p>
+<p>Agora abra <code>public/api/atendimento.php</code>. <strong>Dentro do try, imediatamente antes do require_once, acrescente temporariamente <code>sleep(10);</code>.</strong> sleep faz o PHP esperar dez segundos. Salve, mantenha o balcão aberto e clique. Observe “Consultando…”, o botão desabilitado e a retirada do prazo anterior. Por volta de oito segundos, a consulta deve falhar e liberar nova tentativa.</p>
+<p>No Console, procure o erro de cancelamento, normalmente chamado AbortError. Na Rede, a requisição pode aparecer como cancelada. O navegador não ordenou que o PHP parasse seu trabalho: limitou a própria espera. O servidor de desenvolvimento pode continuar ocupado até terminar os dez segundos.</p>
+<p><strong>Retire sleep(10), salve e tente novamente depois desse ensaio terminar.</strong> A consulta deve se recuperar. Uma demora artificial não fica na API de referência, e nenhuma alteração PHP exige build.</p>
+</section>
+<section aria-labelledby="respostas-controladas">
+<h3 id="respostas-controladas">Receber alguma coisa ainda não basta</h3>
+<p>Vamos testar separadamente as conferências que já escrevemos. <strong>Guarde uma cópia do conteúdo correto de public/api/atendimento.php fora de public</strong>, por exemplo em uma pasta ensaios na raiz. Em cada experiência abaixo, troque temporariamente o conteúdo do endpoint, salve e clique no balcão. Depois restaure a API correta e confirme uma consulta válida antes do próximo caso.</p>
+<p>Comece com uma resposta que declara falha HTTP. Use este arquivo temporário:</p>
+<pre class="code-block"><code>&lt;?php
+http_response_code(500);
+header("Content-Type: application/json; charset=utf-8");
+echo '{"erro":"Falha controlada no ensaio."}';</code></pre>
+<p>O Console deve registrar HTTP 500. Repita substituindo apenas 500 por 404. Em ambos, resposta.ok impede tratar o corpo como Atendimento. Não basta renomear um arquivo para prometer um 404: dependendo da configuração, o servidor pode devolver outra página.</p>
+<details><summary>Ensaiar HTML no lugar de JSON</summary><p>Mesmo com status 200, este tipo de conteúdo é recusado antes da leitura dos campos:</p>
+<pre class="code-block"><code>&lt;?php
+header("Content-Type: text/html; charset=utf-8");
+echo '&lt;p&gt;Esta resposta não é o aviso JSON.&lt;/p&gt;';</code></pre></details>
+<details><summary>Ensaiar um JSON que não pode ser lido</summary><p>O cabeçalho está correto, mas a chave aberta não forma um JSON completo. A leitura com resposta.json deve falhar:</p>
+<pre class="code-block"><code>&lt;?php
+header("Content-Type: application/json; charset=utf-8");
+echo '{incompleto';</code></pre></details>
+<details><summary>Ensaiar um campo ausente no JSON</summary><p>É um JSON legível. Falta mensagemTempo, então conferirAtendimento deve recusá-lo:</p>
+<pre class="code-block"><code>&lt;?php
+header("Content-Type: application/json; charset=utf-8");
+echo json_encode([
+    "nomeNegocio" =&gt; "Café Aurora",
+    "mensagemStatus" =&gt; "Pedidos para retirada estão abertos."
+], JSON_UNESCAPED_UNICODE);</code></pre></details>
+<p>Em cada falha, confira três evidências: nenhuma situação ou estimativa antiga fica apresentada como atual; a orientação é compreensível; o botão permite tentar novamente. O Console ajuda quem desenvolve a distinguir os motivos, sem expor detalhes internos ao visitante.</p>
+<p><strong>Ao terminar, restaure a API completa da Aula 1 e consulte com sucesso.</strong> Não deixe sleep, arquivos de falha ou cópias de código privado em public.</p>
+</section>
+<section aria-labelledby="sem-estimativa">
+<h3 id="sem-estimativa">A cozinha respondeu: ainda não há uma estimativa</h3>
+<p>Imagine uma situação diferente: o Café está recebendo pedidos, mas a equipe precisa conferir a fila antes de informar o prazo. A consulta funcionou; falta uma estimativa da cozinha. Seria incorreto escrever “0 minutos” ou anunciar falha de conexão.</p>
+<p><strong>Em <code>src/atendimento.php</code>, troque temporariamente 30 por <code>null</code>, salve e consulte.</strong> Na versão anterior pode aparecer “Tempo estimado: minutos.”. Encontramos uma limitação da regra PHP, não da rede ou do contrato de três textos.</p>
+<p>Vamos retomar a ordem de condições praticada no TypeScript Essencial. Primeiro perguntamos se os pedidos estão encerrados. Só se estiverem abertos verificamos se o prazo é null; por último usamos o número. <code>=== null</code> compara com ausência explicitamente: o número zero continua sendo um valor, não uma informação ausente.</p>
+<p><strong>Preserve seus valores do Café e altere o if/else de src/atendimento.php para a sequência deste arquivo.</strong> O sinal ! nega pedidosAbertos, e elseif significa “senão, se”:</p>
+{{arquivo:src/atendimento.php}}
+<p>Na referência completa, true e 30 já estão restaurados. Se preferir manter null enquanto faz a experiência, use a nova sequência de condições e só restaure 30 ao terminar. A função continua devolvendo os mesmos três campos; a API e o TypeScript não precisam conhecer a fila da cozinha.</p>
+<p><strong>Sem recarregar o balcão, faça uma combinação por vez, salve o PHP e consulte.</strong> Registre a frase recebida em cada caso:</p>
+<div class="table-wrap"><table><caption>Ausência, zero e encerramento têm significados diferentes</caption><thead><tr><th scope="col">Pedidos / prazo no PHP</th><th scope="col">Resultado a conferir</th></tr></thead><tbody><tr><td>true / 30</td><td>Abertos, com 30 minutos.</td></tr><tr><td>false / 30</td><td>Encerrados; consultar durante o horário de atendimento.</td></tr><tr><td>true / null</td><td>Abertos; consultar a equipe sobre o prazo.</td></tr><tr><td>false / null</td><td>Encerrados; a primeira condição continua prevalecendo.</td></tr><tr><td>true / 0</td><td>Abertos, com o valor numérico 0. Ele não virou ausência.</td></tr></tbody></table></div>
+<p>O zero serve para conferir a comparação; não é uma promessa de preparo instantâneo. <strong>Restaure true e 30 e confirme a consulta.</strong> As duas páginas PHP também recebem a nova regra quando são solicitadas novamente.</p>
+</section>
+<section aria-labelledby="proteger-dados">
+<h3 id="proteger-dados">Texto recebido continua sendo texto</h3>
+<p>A conferência verifica a presença e o tipo dos campos. Quem apresenta também tem uma responsabilidade: usar <code>textContent</code>, como já fizemos, para que uma frase não seja interpretada como HTML. Não troque por innerHTML para “resolver” a apresentação.</p>
+<p>Faça um ensaio curto no nome do negócio em src/atendimento.php: use <code>"&lt;strong&gt;Café Aurora&lt;/strong&gt;"</code>. Salve e consulte. As marcas devem aparecer como texto, sem transformar o nome em HTML. Reponha “Café Aurora”. No HTML inicial, htmlspecialchars continua protegendo a saída PHP.</p>
+<p>Confira ainda a raiz do servidor: o comando termina em <strong>-t public</strong>. src, cliente-balcao e eventuais dados privados ficam fora dela. O endpoint público entrega somente a resposta necessária; uma falha interna recebe a mensagem genérica já preparada na Aula 1.</p>
+</section>
+<section class="checkpoint-box" aria-labelledby="checkpoint-cap2-aula6"><h3 id="checkpoint-cap2-aula6">Provocar, explicar e recuperar</h3>
+<p>Escolha uma falha de consulta, mostre a retirada da estimativa antiga e recupere o atendimento. Explique a diferença entre os oito segundos de espera e os minutos de preparo. Demonstre depois o caso aberto/null como resposta válida e justifique por que encerrado/null segue a primeira condição.</p>
+<p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-cap2-aula6.zip" download>Conferir os arquivos ao fim da Aula 6</a></p><p>A referência não contém falhas artificiais e termina com pedidos abertos e 30 minutos. Compare em outra pasta, preservando sua solução, seus dados e as experiências guardadas fora de public.</p></section>
+<section aria-labelledby="continuar-cap2"><h3 id="continuar-cap2">Funciona aqui. Outra pessoa consegue chegar até aqui?</h3><p>A consulta já aceita, recusa e recupera. Antes de considerar a entrega pronta, vamos conferir se ela depende de algum arquivo ou instalação que só existe nesta máquina. Essa será a última experiência do capítulo.</p><p class="web3-status">Web III — Em desenvolvimento. {{disponibilidade}}</p></section>
