@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Conheça o Café Aurora, seus produtos artesanais, ambiente e horário de atendimento.">
+  <title>Café Aurora — Café e produtos artesanais no bairro</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header>
+    <p><a href="index.html">Café Aurora</a></p>
+    <nav aria-label="Navegação principal">
+      <ul>
+        <li><a href="index.html" aria-current="page">Início</a></li>
+        <li><a href="balcao.html#titulo-imagem">Cardápio</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="balcao.html#titulo-operador">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="conteudo" tabindex="-1">
+    <h1>Café Aurora</h1>
+    <p>Café, encontros e bons momentos no coração do bairro.</p>
+    <section aria-labelledby="titulo-atendimento"><h2 id="titulo-atendimento">Atendimento</h2><h3 id="nome-negocio">Café Aurora</h3><p id="mensagem-status">Atendimento ainda não confirmado.</p><p id="mensagem-tempo"></p><button id="consultar-atendimento" type="button">Consultar atendimento</button><button id="acompanhar" type="button">Acompanhar atualizações</button><p id="retorno-consulta" role="status">Consulte o serviço para receber o aviso atual.</p></section>
+    <section aria-labelledby="destaques">
+      <h2 id="destaques">Destaques da casa</h2>
+      <p>Cafés selecionados, pães artesanais e receitas preparadas diariamente.</p>
+      <p><a href="balcao.html#titulo-imagem">Conheça o cardápio</a></p>
+    </section>
+    <section aria-labelledby="ambiente">
+      <h2 id="ambiente">Um ambiente acolhedor</h2>
+      <figure>
+        <img
+          src="img/ambiente-cafe-1024.webp"
+          srcset="img/ambiente-cafe-640.webp 640w, img/ambiente-cafe-1024.webp 1024w, img/ambiente-cafe.webp 1280w"
+          sizes="(max-width: 48rem) calc(100vw - 2rem), 70rem"
+          alt="Salão do Café Aurora com mesas de madeira e plantas"
+          width="1280"
+          height="853"
+        >
+        <figcaption>Um espaço para conversar, estudar ou trabalhar.</figcaption>
+      </figure>
+    </section>
+  </main>
+  <footer><p>&copy; 2026 Café Aurora. Projeto educacional fictício.</p></footer>
+  <script type="module" src="js/balcao/main.js"></script>
+</body>
+</html>

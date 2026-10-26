@@ -1,0 +1,56 @@
+name: Validação dos percursos Web III
+on:
+  pull_request:
+    branches: [main]
+    paths: ['materiais/programacao-web/web3-evolucao/**','tests/web3/**','scripts/gerar-web3-evolucao.py','.github/workflows/web3-percursos-validacao.yml']
+permissions:
+  contents: read
+jobs:
+  ambientes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5.12'
+          extensions: pdo_sqlite, mbstring, soap, dom, xml, curl
+          tools: composer
+          coverage: none
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.4'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Conferir backend nativo e preparar aplicações isoladas
+        run: |
+          python3 tests/web3/evolucao-backend.py
+          python3 tests/web3/preparar-percursos.py /tmp/cafe-percursos
+      - name: Laravel — instalação com trava, testes e configuração
+        working-directory: /tmp/cafe-percursos/mvc
+        run: |
+          composer install --no-interaction --no-plugins
+          php artisan key:generate
+          php artisan migrate --force
+          php artisan cafe:importar-cardapio
+          vendor/bin/phpunit
+      - name: React e TypeScript — build
+        working-directory: /tmp/cafe-percursos/spa/cliente-balcao
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+      - name: BaaS — instalar dependências e construir cliente e funções
+        working-directory: /tmp/cafe-percursos/baas
+        run: |
+          npm ci --no-audit --no-fund
+          npm ci --prefix cliente-balcao --no-audit --no-fund
+          npm run build --prefix cliente-balcao
+          npm ci --prefix functions --no-audit --no-fund
+          npm test --prefix functions
+      - name: BaaS — emuladores de regras e integrações reais locais
+        working-directory: /tmp/cafe-percursos/baas
+        run: |
+          npm test
+          npm run test:integracoes

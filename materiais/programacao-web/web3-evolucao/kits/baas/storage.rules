@@ -1,0 +1,15 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /imagens/{uid}/{id} {
+      allow read: if true;
+      allow create: if resource == null && request.auth != null && request.auth.uid == uid
+        && request.auth.token.operador == true
+        && id.matches('[a-zA-Z0-9_-]+')
+        && request.resource.size > 0 && request.resource.size <= 2 * 1024 * 1024
+        && request.resource.contentType.matches('image/(png|jpeg|webp)');
+      allow update: if false;
+      allow delete: if request.auth != null && request.auth.uid == uid && request.auth.token.operador == true;
+    }
+  }
+}

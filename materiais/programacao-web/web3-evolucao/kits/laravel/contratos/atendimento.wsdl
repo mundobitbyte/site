@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:CafeAurora" targetNamespace="urn:CafeAurora" name="Atendimento">
+ <types><xsd:schema targetNamespace="urn:CafeAurora"><xsd:complexType name="Atendimento"><xsd:sequence><xsd:element name="nomeNegocio" type="xsd:string"/><xsd:element name="mensagemStatus" type="xsd:string"/><xsd:element name="mensagemTempo" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:schema></types>
+ <message name="Consulta"/><message name="Resposta"><part name="return" type="tns:Atendimento"/></message>
+ <portType name="AtendimentoPortType"><operation name="consultar"><input message="tns:Consulta"/><output message="tns:Resposta"/></operation></portType>
+ <binding name="AtendimentoBinding" type="tns:AtendimentoPortType"><soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/><operation name="consultar"><soap:operation soapAction="urn:CafeAurora#consultar"/><input><soap:body use="literal" namespace="urn:CafeAurora"/></input><output><soap:body use="literal" namespace="urn:CafeAurora"/></output></operation></binding>
+ <service name="AtendimentoService"><port name="AtendimentoPort" binding="tns:AtendimentoBinding"><soap:address location="http://127.0.0.1:9001/servidor.php"/></port></service>
+</definitions>

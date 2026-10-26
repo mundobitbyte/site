@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import { initializeApp as cliente,deleteApp as apagarCliente } from 'firebase/app';
+import { getAuth,connectAuthEmulator,signInWithEmailAndPassword,signOut } from 'firebase/auth';
+import { getFunctions,connectFunctionsEmulator,httpsCallable } from 'firebase/functions';
+import { initializeApp as servidor } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
+
+process.env.FIRESTORE_EMULATOR_HOST='127.0.0.1:8080';
+process.env.FIREBASE_AUTH_EMULATOR_HOST='127.0.0.1:9099';
+await import('../scripts/preparar.mjs');
+const app=cliente({apiKey:'ficticia',projectId:'demo-cafe-aurora-web3'});
+const auth=getAuth(app);connectAuthEmulator(auth,'http://127.0.0.1:9099',{disableWarnings:true});
+const funcoes=getFunctions(app,'us-central1');connectFunctionsEmulator(funcoes,'127.0.0.1',5001);
+const banco=getFirestore(servidor({projectId:'demo-cafe-aurora-web3'},'conferencia'));
+const alterar=httpsCallable(funcoes,'alterarAtendimentoSeguro');
+const d={nomeNegocio:'Café Aurora',pedidosAbertos:true,tempoEstimado:47};
+await assert.rejects(()=>alterar(d),e=>e.code==='functions/unauthenticated');
+await signInWithEmailAndPassword(auth,'leitor@example.test','senha-ficticia-aurora');
+await assert.rejects(()=>alterar(d),e=>e.code==='functions/permission-denied');
+await signOut(auth);await signInWithEmailAndPassword(auth,'operador@example.test','senha-ficticia-aurora');
+assert.equal((await alterar(d)).data.confirmado,true);
+assert.equal((await banco.doc('atendimento/atual').get()).data().tempoEstimado,47);
+await assert.rejects(()=>alterar({...d,tempoEstimado:-1}),e=>e.code==='functions/invalid-argument');
+assert.equal((await banco.doc('atendimento/atual').get()).data().tempoEstimado,47);
+let historico=[];
+for(let n=0;n<30;n++){historico=(await banco.collection('historico').get()).docs;if(historico.length)break;await new Promise(r=>setTimeout(r,300));}
+assert.equal(historico.length,1,'a mudança deve produzir um registro de evento');
+assert.equal(historico[0].data().depois.tempoEstimado,47);
+await alterar(d);await new Promise(r=>setTimeout(r,600));
+assert.equal((await banco.collection('historico').get()).size,1,'gravação sem mudança não cria outro registro');
+const r=(await httpsCallable(funcoes,'prepararRascunho')({produto:'Café coado',ingredientes:'café e água'})).data;
+assert.equal(r.origem,'resposta-controlada');assert.ok(r.texto.includes('Café coado'));
+assert.equal((await banco.doc('produtos/cafe-coado').get()).exists,false,'rascunho não publica produto');
+await assert.rejects(()=>httpsCallable(funcoes,'enviarAviso')({}),e=>e.code==='functions/failed-precondition');
+await signOut(auth);await apagarCliente(app);await banco.terminate();await getFirestore().terminate();
+console.log('Integrações locais aprovadas: identidade/papel, entrada inválida, escrita, gatilho, ausência de mudança, rascunho controlado sem publicação e recusa explícita de envio push emulado.');

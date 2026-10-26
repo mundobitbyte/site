@@ -1,0 +1,21 @@
+{
+  "name": "cafe-aurora-servicos-locais",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "emuladores": "firebase emulators:start --project demo-cafe-aurora-web3",
+    "test": "firebase emulators:exec --project demo-cafe-aurora-web3 --only firestore,auth,storage \"node --test tests/*.test.mjs\"",
+    "preparar": "node scripts/preparar-local.mjs",
+    "test:integracoes": "firebase emulators:exec --project demo-cafe-aurora-web3 --only firestore,auth,storage,functions \"node tests/integracoes.local.mjs\""
+  },
+  "devDependencies": {
+    "firebase-tools": "15.0.0",
+    "firebase": "12.10.0",
+    "firebase-admin": "14.5.0",
+    "@firebase/rules-unit-testing": "5.0.2"
+  },
+  "overrides": {
+    "@firebase/app": "0.14.9",
+    "@firebase/app-compat": "0.5.9"
+  }
+}
