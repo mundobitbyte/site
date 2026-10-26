@@ -222,11 +222,11 @@ document.addEventListener('DOMContentLoaded', function(){
   `;
 
   const arquivo = document.createElement('article');
-  arquivo.className = 'card code wide';
+  arquivo.className = 'card wide mbb6-wokwi-aux';
   arquivo.setAttribute('data-mbb-wokwi-bluetooth', 'arquivo');
   arquivo.innerHTML = `
-    <h3>6A.1 Crie o arquivo <code>BluetoothSerial.h</code> no Wokwi <button type="button" onclick="copyCode('b6-1-wokwi-header',this)">Copiar</button></h3>
-    <p>No editor do projeto Wokwi, crie uma nova aba/arquivo com o nome exato <code>BluetoothSerial.h</code> e cole o conteúdo abaixo. O projeto ficará com dois arquivos: <code>sketch.ino</code> e <code>BluetoothSerial.h</code>.</p>
+    <h3>6A.1 — Crie o arquivo <code>BluetoothSerial.h</code> no Wokwi</h3>
+    <p class="mbb6-aux-intro">No Wokwi, crie uma nova aba de arquivo e digite exatamente <code>BluetoothSerial.h</code>, respeitando as letras maiúsculas e minúsculas. Selecione o conteúdo do quadro abaixo e cole nesse arquivo. Ao final, seu projeto terá <code>sketch.ino</code> e <code>BluetoothSerial.h</code>.</p>
     <pre id="b6-1-wokwi-header">#ifndef BLUETOOTH_SERIAL_H
 #define BLUETOOTH_SERIAL_H
 
@@ -254,7 +254,8 @@ public:
 };
 
 #endif</pre>
-    <div class="explain" style="margin-top:12px">
+    <p class="mbb6-aux-note"><strong>Não confunda:</strong> <code>BluetoothSerial.h</code> é o nome do arquivo. <code>BLUETOOTH_SERIAL_H</code>, escrito nos comandos <code>#ifndef</code> e <code>#define</code>, é apenas um identificador interno usado para evitar inclusões repetidas.</p>
+    <div class="explain">
       <p><strong>O que esse arquivo faz:</strong> disponibiliza no Wokwi os comandos <code>SerialBT.begin()</code>, <code>SerialBT.available()</code>, <code>SerialBT.read()</code> e <code>SerialBT.println()</code>, encaminhando a comunicação ao Monitor Serial durante a simulação.</p>
       <p><strong>Importante:</strong> ele não cria Bluetooth dentro do Wokwi. Ele apenas simula a interface necessária para testar a lógica do programa.</p>
     </div>
