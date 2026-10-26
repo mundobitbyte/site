@@ -171,11 +171,12 @@
   max-width:85ch;
   line-height:1.65;
 }
-#b6-1 .mbb6-wokwi-aux > pre{
-  margin:0 18px;
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-codebox > pre{
+  margin:0;
   padding:17px 19px;
-  border-radius:10px;
-  border:1px solid #d5e4e9;
+  border-radius:0 0 10px 10px;
+  border:0;
+
   background:#f6fafc !important;
   color:#1c3340 !important;
   font-size:13px;
@@ -183,6 +184,35 @@
   white-space:pre;
   overflow-x:auto;
   tab-size:2;
+}
+
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-codebox{
+  margin:0 18px;
+  border:1px solid #d5e4e9;
+  border-radius:10px;
+  overflow:hidden;
+  background:#f6fafc;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-toolbar{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:10px 12px 0;
+  background:#f6fafc;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-copy{
+  background:#0b7285;
+  color:#fff;
+  font-size:13px;
+  font-weight:700;
+  padding:7px 13px;
+  border:0;
+  border-radius:7px;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-copy:hover{background:#07515f}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-copy:focus-visible{
+  outline:3px solid #62b6c5;
+  outline-offset:2px;
 }
 #b6-1 .mbb6-wokwi-aux .mbb6-aux-note{
   margin:16px 18px 0;
@@ -209,8 +239,9 @@
 @media(max-width:700px){
   #b6-1 .mbb6-wokwi-aux > h3{padding:12px 14px;font-size:14px !important}
   #b6-1 .mbb6-wokwi-aux .mbb6-aux-intro{margin:14px}
-  #b6-1 .mbb6-wokwi-aux > pre{
-    margin:0 12px;
+  #b6-1 .mbb6-wokwi-aux .mbb6-aux-codebox{margin:0 12px}
+  #b6-1 .mbb6-wokwi-aux .mbb6-aux-codebox > pre{
+    margin:0;
     padding:13px 12px;
     font-size:12px;
     white-space:pre-wrap;
@@ -761,7 +792,7 @@ void loop() {
 </main>
 </div>
 </div>
-<script src="../js/arduino-conectividade.js?v=20261026-6a1"></script>
+<script src="../js/arduino-conectividade.js?v=20261026-6a1-copiar"></script>
 <script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>
 <script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body>
