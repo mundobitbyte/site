@@ -1107,7 +1107,7 @@ screens/
         // Conteúdo definitivo atribuído por reactnative-navegacao-iniciante-mbb.js.
         // Não manter uma segunda versão dos enunciados neste arquivo.
         boxes: [],
-      },,
+      },
     ],
   };
 
