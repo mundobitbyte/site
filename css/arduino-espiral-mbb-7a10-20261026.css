@@ -1,0 +1,183 @@
+/* Mundo bit Byte — padrão visual Modo MbB nos módulos 7–10.
+   Arquivo carregado somente nas quatro páginas do percurso. */
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .cards{
+  row-gap:18px;
+}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card > h3{
+  text-transform:none;
+  letter-spacing:normal;
+  line-height:1.45;
+}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card.code{
+  background:#fff;
+  border-color:#c8dee3;
+}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card.code > h3{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:0;
+  padding:14px 18px;
+  background:#eff8fa !important;
+  color:#134956 !important;
+  border-bottom:1px solid #d5e4e9 !important;
+  font-size:15px !important;
+  font-weight:800;
+  line-height:1.5;
+  text-transform:none;
+  letter-spacing:normal;
+}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card.code > h3 button{
+  margin-left:auto;
+  flex:0 0 auto;
+  padding:7px 13px;
+  background:#0b7285;
+  color:#fff;
+  border:0;
+  border-radius:7px;
+  font-size:13px;
+  font-weight:700;
+}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card.code > h3 button:hover{
+  background:#07515f;
+}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card.code > h3 button:focus-visible{
+  outline:3px solid #62b6c5;
+  outline-offset:2px;
+}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card pre{
+  display:block;
+  margin:16px 18px 18px;
+  padding:17px 19px;
+  background:#f6fafc !important;
+  color:#1c3340 !important;
+  border:1px solid #d5e4e9;
+  border-radius:10px !important;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:13px;
+  line-height:1.65;
+  tab-size:2;
+  white-space:pre;
+  overflow-x:auto !important;
+  overflow-y:auto;
+  max-width:100%;
+  word-break:normal;
+}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card pre code{
+  border:0 !important;
+  background:transparent !important;
+  color:inherit !important;
+  padding:0;
+  font:inherit;
+}
+.mbb-espiral-card,.mbb-espiral-code{
+  grid-column:1/-1;
+  border:1px solid #c4dfe4;
+  border-radius:13px;
+  background:#fff;
+  box-shadow:0 3px 12px rgba(13,79,89,.04);
+  overflow:hidden;
+}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) :is(.mbb-espiral-card,.mbb-espiral-code)>h3{
+  margin:0;
+  padding:14px 19px;
+  background:#eef8fa !important;
+  color:#144a56 !important;
+  border-bottom:1px solid #d5e8ea;
+  font-size:15px !important;
+  font-weight:800;
+  line-height:1.5;
+  text-transform:none;
+  letter-spacing:0;
+}
+.mbb-espiral-body{padding:18px 20px 20px}
+:is(.mbb-espiral-card,.mbb-espiral-code) .mbb-espiral-body p{
+  margin:0;
+  line-height:1.65;
+  font-size:14.5px;
+  color:#334155;
+}
+:is(.mbb-espiral-card,.mbb-espiral-code) .mbb-espiral-body .mbb-espiral-lead{
+  max-width:88ch;
+  margin:0 0 15px;
+  font-size:14.5px;
+}
+.mbb-espiral-columns{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.mbb-espiral-columns>div{
+  padding:15px 16px;
+  border:1px solid #e0ebed;
+  border-radius:10px;
+  background:#f8fbfc;
+}
+.mbb-espiral-columns>div:nth-child(2){background:#f1f8fa}
+.mbb-espiral-columns h4{
+  margin:0 0 8px;
+  color:#165261;
+  font-size:14px;
+  line-height:1.4;
+}
+.mbb-espiral-code-rows{
+  display:grid;
+  border:1px solid #dce8ec;
+  border-radius:10px;
+  overflow:hidden;
+}
+.mbb-espiral-code-row{
+  display:grid;
+  grid-template-columns:minmax(170px,35%) minmax(0,1fr);
+  gap:16px;
+  align-items:start;
+  padding:12px 15px;
+  border-bottom:1px solid #e3edf0;
+}
+.mbb-espiral-code-row:last-child{border-bottom:0}
+.mbb-espiral-code-row:nth-child(even){background:#f8fbfc}
+.mbb-espiral-code-row code{
+  min-width:0;
+  width:fit-content;
+  max-width:100%;
+  display:inline-block;
+  padding:4px 7px;
+  border:1px solid #cedfe5;
+  border-radius:6px;
+  background:#eaf3f7;
+  color:#163d47;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:12.5px;
+  line-height:1.5;
+  overflow-wrap:anywhere;
+  white-space:normal;
+}
+:is(.mbb-espiral-card,.mbb-espiral-code) .mbb-espiral-body .mbb-espiral-action{
+  margin-top:16px;
+  padding:13px 15px;
+  border-left:3px solid #1b8395;
+  border-radius:0 8px 8px 0;
+  background:#f1f8fa;
+  font-size:14px;
+}
+@media(max-width:760px){
+  :is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .cards{row-gap:15px}
+  :is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card.code > h3{padding:12px 14px;font-size:14px !important}
+  :is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card pre{
+    margin:12px;
+    padding:13px 12px;
+    font-size:12px;
+    line-height:1.6;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+  }
+  .mbb-espiral-body{padding:15px}
+  .mbb-espiral-columns{grid-template-columns:minmax(0,1fr);gap:10px}
+  .mbb-espiral-columns>div{padding:13px}
+  .mbb-espiral-code-row{grid-template-columns:minmax(0,1fr);gap:7px;padding:12px 13px}
+  :is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) :is(.mbb-espiral-card,.mbb-espiral-code)>h3{
+    padding:12px 14px;font-size:14px !important;
+  }
+}
