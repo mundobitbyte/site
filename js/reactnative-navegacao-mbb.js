@@ -1103,21 +1103,11 @@ screens/
       {
         id: 'nav-exercicios',
         menu: '99. Exercícios',
-        title: '99 — Exercícios de Navegação entre Telas',
-        objective: 'Aplicar o ciclo criar → importar → registrar → navegar em novas situações.',
         modulePage: true,
-        kicker: 'Agora é sua vez',
-        lead: 'Parta da Central de Consultas pronta. Em cada exercício, acrescente uma tela sem remover as que já funcionam.',
-        highlight: 'Antes de programar, escreva a sequência: arquivo que será criado → import no App.js → Stack.Screen → botão que chama navigate().',
-        boxes: [
-          ['1. Sobre o app', 'Crie screens/Sobre.js com nome do aplicativo, objetivo e tecnologias usadas. Adicione “Sobre” à tela inicial.'],
-          ['2. Conversor', 'Crie screens/Conversor.js com dois campos e uma conversão simples de quilômetros para milhas. Registre e navegue até ela.'],
-          ['3. Contador', 'Crie screens/Contador.js usando useState para aumentar e diminuir um valor. Integre sem alterar as outras telas.'],
-          ['4. Diagnóstico', 'Troque propositalmente o texto usado em navigate() por um nome não registrado, observe o erro e depois corrija.'],
-          ['5. Organização', 'Explique em uma frase por que Inicio.js fica em screens e por que um componente reutilizável, como um cartão, poderia ficar em components.'],
-          ['6. Projeto pessoal', 'Adicione uma tela útil para um aplicativo que você realmente gostaria de construir e documente o ciclo completo de integração.'],
-        ],
-      },
+        // Conteúdo definitivo atribuído por reactnative-navegacao-iniciante-mbb.js.
+        // Não manter uma segunda versão dos enunciados neste arquivo.
+        boxes: [],
+      },,
     ],
   };
 
