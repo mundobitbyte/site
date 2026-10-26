@@ -10,8 +10,8 @@ const montar = () => {
     if (!botao.hasAttribute('aria-label')) {
       const titulo = (botao.closest('h3')?.textContent || 'código').replace(/\bCopiar\b/g, '').trim();
       botao.setAttribute('aria-label', 'Copiar código: ' + titulo);
+      botao.setAttribute('title', 'Copiar código: ' + titulo);
     }
-    botao.setAttribute('aria-live', 'polite');
   });
   trajetos.forEach(([id,titulo,retomar,compreender,desafio]) => {
     const painel = document.getElementById(id);
