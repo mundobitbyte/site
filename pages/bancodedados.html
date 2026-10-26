@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Apostila Interativa — Banco de Dados</title>
 
-<link href="../css/bancodedados.css" rel="stylesheet"/></head>
+<link href="../css/bancodedados.css" rel="stylesheet"/><link href="../css/bancodedados-heidisql.css" rel="stylesheet"/></head>
 <body>
 <header><div class="header-left"><a class="btn-voltar portal-link" href="../index.html">← Mundo bit Byte</a><h1>Banco de Dados</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header>
 <div class="app"><nav><h3>Módulos</h3>
@@ -1318,7 +1318,7 @@ FORNECEDOR 1 ─ N PRODUTO_FORNECEDOR
 <section class="hero">
 <span class="kicker">Capítulo 4</span>
 <h2>SQL com MySQL</h2>
-<p>Implementação física do modelo comercial refinado no MySQL usando SQL, com foco em terminal CLI, criação e evolução de estruturas, cinco tabelas relacionadas, restrições, inserção dos dados existentes, consultas, filtros, alterações, exclusões, chaves estrangeiras, JOIN, agregações, GROUP BY e boas práticas.</p>
+<p>Implementação física do modelo comercial refinado no MySQL usando SQL, com primeira prática no terminal CLI e transição gradual para o HeidiSQL, criação e evolução de estruturas, cinco tabelas relacionadas, restrições, inserção dos dados existentes, consultas, filtros, alterações, exclusões, chaves estrangeiras, JOIN, agregações, GROUP BY e boas práticas.</p>
 </section>
 <article class="chapter">
 <h2>BLOCO 1 — Modelagem Física</h2>
@@ -1345,7 +1345,7 @@ MySQL interpreta
 MySQL executa
 ↓
 Banco físico é alterado</pre></div>
-<p>Neste tutorial, os exemplos principais serão pensados para o <strong>CLI do MySQL</strong>, aquela tela preta de terminal, para que o aluno aprenda SQL de forma direta.</p>
+<p>Neste capítulo, começaremos pelo <strong>CLI do MySQL</strong> para conhecer a conexão pelo terminal. Em seguida, conheceremos o <strong>HeidiSQL</strong> para executar a mesma linguagem SQL em uma interface gráfica. Ambos são clientes do MySQL Server; o banco e os comandos SQL não dependem de uma interface específica.</p>
 <h2>BLOCO 4 — Preparando o Ambiente MySQL</h2>
 <p>Para executar os comandos deste capítulo, o computador precisa ter o <strong>MySQL Server</strong> instalado e configurado. No Windows, a instalação oficial atual pode ser feita pelo pacote MSI e pelo MySQL Configurator.</p>
 <ol>
@@ -1364,9 +1364,26 @@ Banco físico é alterado</pre></div>
 <div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>CREATE DATABASE comercio;
 SHOW DATABASES;
 USE comercio;</code></pre></div>
-<p><strong>CREATE DATABASE</strong> cria o banco. <strong>SHOW DATABASES</strong> lista os bancos existentes. <strong>USE</strong> seleciona o banco ativo.</p>
+<p><strong>CREATE DATABASE</strong> cria o banco. <strong>SHOW DATABASES</strong> lista os bancos existentes. <strong>USE</strong> seleciona o banco ativo.</p><p><strong>Observe antes e depois:</strong> no CLI, experimente primeiro <code>SHOW DATABASES;</code>, depois crie <code>comercio</code> se ele ainda não existir, consulte novamente a lista e por último execute <code>USE comercio;</code>. Se <code>comercio</code> já existir, não repita a criação. Essa experiência inicial dá sentido ao acesso pelo terminal.</p>
 <pre>Query OK, 1 row affected
 Database changed</pre>
+<section class="heidi-guide" aria-labelledby="heidi-primeiro-contato">
+<h3 id="heidi-primeiro-contato">Uma informação, duas maneiras de trabalhar: conheça o HeidiSQL</h3>
+<p>Você já se conectou ao MySQL pelo terminal, consultou os bancos existentes e criou o banco <code>comercio</code>. Agora vamos descobrir outra forma de trabalhar com <strong>o mesmo servidor</strong>. O <strong>MySQL Server</strong> armazena e processa os dados; o <strong>CLI</strong> e o <strong>HeidiSQL</strong> são clientes que permitem enviar comandos SQL a esse servidor. Você também pode criar bancos diretamente no HeidiSQL, tanto pelo editor SQL quanto por menus gráficos: <strong>não é obrigatório usar o terminal para isso</strong>.</p>
+<p><strong>Baixar e instalar:</strong> acesse o <a href="https://www.heidisql.com/download.php" target="_blank" rel="noopener noreferrer">site oficial do HeidiSQL</a>, escolha o instalador compatível com seu Windows e conclua a instalação. O HeidiSQL é um cliente: <strong>o MySQL Server precisa estar instalado e em execução</strong>.</p>
+<h4>1. Faça a conexão</h4>
+<p>Abra o HeidiSQL e crie uma sessão. Para o MySQL local usado no curso, informe <strong>Hostname/IP: 127.0.0.1</strong>, <strong>usuário: root</strong>, a <strong>senha configurada na instalação do MySQL</strong> e <strong>porta: 3306</strong> (a menos que sua instalação use outra). Clique em <strong>Connect</strong>. A senha não deve ser compartilhada nem mostrada em capturas.</p>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-conexao-inicial.webp" alt="Tela de conexão HeidiSQL anotada: Hostname/IP, usuário, senha, porta e Connect" loading="lazy" decoding="async"/><figcaption>Reconheça os campos da sessão e conecte-se ao mesmo servidor que utilizou no CLI.</figcaption></figure>
+<h4>2. Encontre seu banco e experimente a consulta</h4>
+<p>No painel esquerdo, localize <code>comercio</code>. Selecione esse banco e abra a aba <strong>Query</strong> (editor SQL). Copie do conteúdo desta página o comando <code>SHOW DATABASES;</code>, cole no editor e clique em <strong>Executar</strong> (ou pressione <kbd>F9</kbd>). Confira a lista na grade inferior. Os outros bancos que aparecem nas imagens são apenas exemplos do computador usado na captura: no seu, a lista pode ser diferente.</p>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-show-databases.webp" alt="Aba Query, comando SHOW DATABASES, botão de execução, lista de bancos e comércio na árvore" loading="lazy" decoding="async"/><figcaption>O mesmo comando usado no terminal agora mostra o resultado em uma grade.</figcaption></figure>
+<div class="heidi-note"><strong>Experimente sem repetir a criação:</strong> o banco <code>comercio</code> já existe porque você o criou pelo CLI. A imagem seguinte mostra uma alternativa de criação pelo menu <strong>Tools &gt; Create Database</strong>. Apenas observe essa possibilidade; <strong>não crie outro banco comercio</strong>.</div>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-criando-banco-pelo-menu.webp" alt="Menu Tools do HeidiSQL com opção Create Database destacada" loading="lazy" decoding="async"/><figcaption>O menu gráfico é outra maneira de criar um banco de dados, além de escrever CREATE DATABASE no editor SQL.</figcaption></figure>
+<h4>3. Aprenda a executar e limpar comandos</h4>
+<p>Na área do editor, clique com o botão direito para encontrar <strong>Run (F9)</strong> e <strong>Clear</strong>. O primeiro executa a consulta; o segundo limpa o <em>texto do editor</em>, não as tabelas ou registros que já foram criados. Antes de executar vários comandos juntos, confira quais instruções estão no editor e qual banco está selecionado.</p>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-executando-ou-limpando-editor-sql.webp" alt="Menu de contexto do editor SQL com Run F9 e Clear" loading="lazy" decoding="async"/><figcaption>Limpar o editor não desfaz um CREATE, INSERT, UPDATE ou DELETE já confirmado.</figcaption></figure>
+<p><strong>Checkpoint MbB:</strong> você encontrou no HeidiSQL o mesmo <code>comercio</code> criado pelo CLI, executou <code>SHOW DATABASES;</code> e viu seu resultado. Agora vamos construir as tabelas com SQL, usando o HeidiSQL como ferramenta prática principal. O CLI continuará disponível e voltará quando for importante para o conteúdo.</p>
+</section>
 <h2>BLOCO 6 — CREATE TABLE: criando as tabelas do sistema comercial</h2>
 <p>Agora criaremos as cinco tabelas do modelo lógico refinado. A ordem importa: primeiro as tabelas que não dependem de outras; depois as que possuem chaves estrangeiras; por último, a tabela associativa.</p>
 <div class="visual"><pre>CATEGORIA    CIDADE
@@ -1437,6 +1454,17 @@ DESCRIBE cidade;
 DESCRIBE fornecedor;
 DESCRIBE produto;
 DESCRIBE produto_fornecedor;</code></pre></div>
+<section class="heidi-guide" aria-labelledby="heidi-tabelas-checkpoint">
+<h3 id="heidi-tabelas-checkpoint">Checkpoint prático — criando e conferindo tabelas no HeidiSQL</h3>
+<p>Selecione <code>comercio</code> na árvore lateral. No <strong>bloco de código acima</strong> estão as cinco instruções <code>CREATE TABLE</code> originais. Para aprender em passos, você pode executar <strong>apenas a primeira instrução</strong>, que cria <code>categoria</code>, e depois executar as demais <strong>uma única vez</strong>, preservando a ordem de dependências. Alternativamente, cole o script completo em um banco ainda sem essas tabelas e execute o lote uma vez. <strong>Não faça os dois procedimentos no mesmo banco.</strong></p>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-criando-primeira-tabela.webp" alt="Editor HeidiSQL com CREATE TABLE categoria e SHOW TABLES" loading="lazy" decoding="async"/><figcaption>Primeira conquista: criar uma tabela com SQL no editor gráfico.</figcaption></figure>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-confirmando-tabela-criada.webp" alt="Resultado de SHOW TABLES contendo a tabela categoria" loading="lazy" decoding="async"/><figcaption>Execute SHOW TABLES; para observar a tabela criada. A imagem mostra um estágio anterior à criação das outras quatro tabelas.</figcaption></figure>
+<p>Depois de executar as tabelas restantes, o banco terá <code>categoria</code>, <code>cidade</code>, <code>fornecedor</code>, <code>produto</code> e <code>produto_fornecedor</code>. Se optar pela execução em lote, confira antes se as tabelas já existem: um novo <code>CREATE TABLE</code> para uma tabela existente provocará erro.</p>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-executando-varias-tabelas.webp" alt="Script com várias instruções CREATE TABLE no HeidiSQL" loading="lazy" decoding="async"/><figcaption>A execução em lote serve para um script ainda não executado; respeite as chaves estrangeiras e a ordem das tabelas.</figcaption></figure>
+<p>O próximo bloco de comandos deste capítulo usa <code>SHOW TABLES;</code> e <code>DESCRIBE</code>. Copie-o, execute e observe a grade inferior. Quando há várias instruções de consulta, a grade pode exibir apenas o último resultado selecionado: execute cada <code>DESCRIBE</code> separadamente se quiser conferir cada tabela.</p>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-conferindo-estrutura-describe.webp" alt="Comandos SHOW TABLES e DESCRIBE com grade de campos, tipos e chaves" loading="lazy" decoding="async"/><figcaption>DESCRIBE permite verificar colunas, tipos, valores nulos e chaves; as imagens mostram exemplos de uma sessão de laboratório.</figcaption></figure>
+<div class="heidi-note"><strong>Antes de continuar:</strong> confirme a presença das cinco tabelas. Não refaça o script de criação ao passar para INSERT. Se uma tabela já existe, avance para a conferência e as inserções previstas no capítulo.</div>
+</section>
 <h2>BLOCO 6.1 — ALTER TABLE: quando a estrutura precisa evoluir</h2>
 <p>CREATE TABLE cria a estrutura inicial. Mas sistemas evoluem. <strong>ALTER TABLE</strong> modifica a estrutura de uma tabela que já existe.</p>
 <p>Para aprender sem alterar o modelo comercial, use uma tabela de laboratório:</p>
