@@ -1371,6 +1371,7 @@ Database changed</pre>
 <h3 id="heidi-primeiro-contato">Uma informação, duas maneiras de trabalhar: conheça o HeidiSQL</h3>
 <p>Você já se conectou ao MySQL pelo terminal, consultou os bancos existentes e criou o banco <code>comercio</code>. Agora vamos descobrir outra forma de trabalhar com <strong>o mesmo servidor</strong>. O <strong>MySQL Server</strong> armazena e processa os dados; o <strong>CLI</strong> e o <strong>HeidiSQL</strong> são clientes que permitem enviar comandos SQL a esse servidor. Você também pode criar bancos diretamente no HeidiSQL, tanto pelo editor SQL quanto por menus gráficos: <strong>não é obrigatório usar o terminal para isso</strong>.</p>
 <p><strong>Baixar e instalar:</strong> acesse o <a href="https://www.heidisql.com/download.php" target="_blank" rel="noopener noreferrer">site oficial do HeidiSQL</a>, escolha o instalador compatível com seu Windows e conclua a instalação. O HeidiSQL é um cliente: <strong>o MySQL Server precisa estar instalado e em execução</strong>.</p>
+<div class="heidi-note"><strong>Versões das telas:</strong> as capturas desta aula foram feitas no <strong>HeidiSQL 3.2 (revisão 1129)</strong>, uma versão antiga, conforme a tela Sobre do programa utilizado. A versão <strong>12.22 foi lançada em 25/10/2026</strong>. Ao instalar uma versão recente, você poderá encontrar menus, ícones e janelas com aparência diferente. Identifique os recursos por sua <strong>função</strong> (conexão, árvore de bancos, editor SQL, executar e resultados), não apenas pelo desenho do botão. A sintaxe SQL dos exemplos continua sendo executada pelo MySQL Server.</div>
 <h4>1. Faça a conexão</h4>
 <p>Abra o HeidiSQL e crie uma sessão. Para o MySQL local usado no curso, informe <strong>Hostname/IP: 127.0.0.1</strong>, <strong>usuário: root</strong>, a <strong>senha configurada na instalação do MySQL</strong> e <strong>porta: 3306</strong> (a menos que sua instalação use outra). Clique em <strong>Connect</strong>. A senha não deve ser compartilhada nem mostrada em capturas.</p>
 <figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-conexao-inicial.webp" alt="Tela de conexão HeidiSQL anotada: Hostname/IP, usuário, senha, porta e Connect" loading="lazy" decoding="async"/><figcaption>Reconheça os campos da sessão e conecte-se ao mesmo servidor que utilizou no CLI.</figcaption></figure>
@@ -1385,6 +1386,25 @@ Database changed</pre>
 <p><strong>Checkpoint MbB:</strong> você encontrou no HeidiSQL o mesmo <code>comercio</code> criado pelo CLI, executou <code>SHOW DATABASES;</code> e viu seu resultado. Agora vamos construir as tabelas com SQL, usando o HeidiSQL como ferramenta prática principal. O CLI continuará disponível e voltará quando for importante para o conteúdo.</p>
 </section>
 <h2>BLOCO 6 — CREATE TABLE: criando as tabelas do sistema comercial</h2>
+<section class="heidi-guide" aria-labelledby="sql-da-modelagem-para-tabela">
+<h3 id="sql-da-modelagem-para-tabela">Antes de criar: como uma tabela nasce do nosso modelo?</h3>
+<p>Na modelagem lógica, você decidiu <strong>quais informações</strong> o comércio precisa guardar e <strong>como elas se relacionam</strong>. Agora o SQL transforma esse planejamento em tabelas reais. Você não precisa decorar o código pronto: primeiro vamos compreender suas peças.</p>
+<ol class="heidi-steps">
+<li><strong>Nome da tabela:</strong> identifica o conjunto de registros. Escolhemos <code>categoria</code>, <code>produto</code> e outros nomes do modelo já estudado.</li>
+<li><strong>Colunas (campos):</strong> definem quais informações guardar, como <code>nome</code> e <code>preco</code>. Cada coluna tem um <strong>nome</strong> e um <strong>tipo de dado</strong>, como <code>INT</code> (número inteiro), <code>VARCHAR(50)</code> (texto de até 50 caracteres) ou <code>DECIMAL(10,2)</code> (número decimal com duas casas). O título exibido em uma tela de sistema pode ser diferente do nome técnico da coluna.</li>
+<li><strong>Regras de preenchimento:</strong> <code>NOT NULL</code> exige um valor; <code>UNIQUE</code> impede a repetição dos valores abrangidos pela regra; <code>DEFAULT</code> define um valor inicial quando nenhum é informado.</li>
+<li><strong>Identificação:</strong> <code>PRIMARY KEY</code> (chave primária) identifica cada registro de forma única. <code>AUTO_INCREMENT</code> pode gerar automaticamente novos identificadores numéricos.</li>
+<li><strong>Relacionamentos:</strong> <code>FOREIGN KEY</code> (chave estrangeira) aponta para uma chave de outra tabela; <code>REFERENCES</code> informa <strong>qual tabela e coluna</strong> são referenciadas. É assim que o MySQL protege os vínculos entre registros.</li>
+<li><strong>Validações:</strong> <code>CONSTRAINT</code> pode dar um nome a uma regra, enquanto <code>CHECK</code> define uma condição, como exigir preço não negativo. Para as verificações CHECK serem efetivamente aplicadas, use uma versão de MySQL com suporte à sua execução, como MySQL 8.0.16 ou posterior.</li>
+</ol>
+<h4>Leia sua primeira instrução, sem pressa</h4>
+<div class="codebox"><button class="copy-btn" type="button">Copiar exemplo de estudo</button><pre><code>CREATE TABLE categoria (
+    id_categoria INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL UNIQUE
+);</code></pre></div>
+<p>Leia da esquerda para a direita: <code>CREATE TABLE categoria</code> escolhe o nome; os parênteses reúnem as definições; <code>id_categoria</code> é um número inteiro que identifica cada categoria; <code>nome</code> guarda texto obrigatório e sem duplicatas. A vírgula separa definições e o ponto e vírgula encerra a instrução.</p>
+<div class="heidi-note"><strong>Atenção:</strong> esse primeiro exemplo está aqui para <em>interpretar</em> o SQL. A execução das cinco tabelas será feita no bloco completo logo abaixo. Se você já criou <code>categoria</code>, não execute o <code>CREATE TABLE</code> novamente no mesmo banco.</div>
+</section>
 <p>Agora criaremos as cinco tabelas do modelo lógico refinado. A ordem importa: primeiro as tabelas que não dependem de outras; depois as que possuem chaves estrangeiras; por último, a tabela associativa.</p>
 <div class="visual"><pre>CATEGORIA    CIDADE
     ↓          ↓
@@ -1447,6 +1467,18 @@ CREATE TABLE produto_fornecedor (
     CONSTRAINT chk_prazo_entrega CHECK (prazo_entrega &gt;= 0)
 );</code></pre></div>
 <p>Agora o SQL respeita exatamente o raciocínio do capítulo anterior: <strong>produto não possui id_fornecedor</strong>. A relação N:N fica em <strong>produto_fornecedor</strong>.</p>
+<section class="heidi-guide" aria-labelledby="sql-entendendo-relacoes">
+<h3 id="sql-entendendo-relacoes">Por que a tabela produto_fornecedor tem mais regras?</h3>
+<p>Uma categoria tem seu próprio identificador. Já a tabela <code>produto_fornecedor</code> representa o relacionamento entre dois conjuntos de registros: um produto pode ter vários fornecedores e um fornecedor pode oferecer vários produtos. Por isso ela guarda <strong>os dois identificadores juntos</strong>.</p>
+<div class="sql-explain-grid">
+<div><strong>Nome e colunas</strong><p><code>CREATE TABLE produto_fornecedor</code> inicia a estrutura. <code>id_produto INT NOT NULL</code> e <code>id_fornecedor INT NOT NULL</code> exigem os dois IDs. <code>preco_custo DECIMAL(10,2)</code> e <code>prazo_entrega INT</code> guardam informações específicas de cada parceria; sem <code>NOT NULL</code>, podem ficar sem valor (<code>NULL</code>).</p></div>
+<div><strong>Chave primária composta</strong><p><code>PRIMARY KEY (id_produto, id_fornecedor)</code> torna <strong>único o par</strong> produto–fornecedor. Um mesmo produto pode aparecer em várias linhas com fornecedores diferentes, mas o mesmo par não pode ser cadastrado duas vezes.</p></div>
+<div><strong>Referências</strong><p><code>FOREIGN KEY (id_produto) REFERENCES produto(id_produto)</code> exige um produto existente. De modo equivalente, <code>FOREIGN KEY (id_fornecedor) REFERENCES fornecedor(id_fornecedor)</code> exige um fornecedor existente. Essas tabelas precisam existir antes da criação da associativa.</p></div>
+<div><strong>Regras CHECK</strong><p><code>CONSTRAINT chk_preco_custo CHECK (preco_custo &gt;= 0)</code> nomeia e define a regra que rejeita custos negativos. A regra <code>chk_prazo_entrega</code> faz o mesmo para prazos negativos. O nome após <code>CONSTRAINT</code> ajuda a reconhecer a validação em mensagens de erro.</p></div>
+</div>
+<p><strong>Como interpretar:</strong> cada vírgula separa uma coluna ou uma regra; as definições ficam entre <code>(</code> e <code>)</code>; o <code>;</code> fecha a instrução. Uma chave estrangeira <strong>não cria automaticamente</strong> o produto ou o fornecedor referenciado: os registros associados precisam existir quando você inserir vínculos.</p>
+<div class="heidi-note"><strong>Conquista MbB:</strong> antes de copiar o script, identifique nele a tabela, duas colunas identificadoras, a chave primária composta, as duas referências e as duas verificações de valor. Agora você já consegue explicar <em>por que</em> cada trecho está presente.</div>
+</section>
 <div class="grid2"><section class="card note"><div class="card-body"><h3>AUTO_INCREMENT</h3><p>Permite que o MySQL gere automaticamente o próximo ID quando a aplicação não informa um valor. Mesmo assim, ainda podemos inserir IDs explícitos quando precisamos preservar códigos de uma base existente.</p></div></section><section class="card note"><div class="card-body"><h3>Restrições reais</h3><p><strong>NOT NULL</strong> exige valor, <strong>UNIQUE</strong> impede duplicidade, <strong>DEFAULT</strong> fornece um valor padrão e <strong>CHECK</strong> rejeita valores que violem uma regra definida.</p></div></section></div>
 <div class="codebox"><button class="copy-btn" type="button">Copiar comandos de conferência</button><pre><code>SHOW TABLES;
 DESCRIBE categoria;
