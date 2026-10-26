@@ -251,6 +251,102 @@
   #b6-1 .mbb6-wokwi-aux .explain{margin:12px;padding:12px}
 }
 </style>
+
+<style>
+/* Modo MbB — Padrão visual claro exclusivo dos códigos do Módulo 6.
+   Aplica-se aos exemplos estáticos, aos exemplos inseridos por JS, ao
+   Monitor Serial e aos comandos do terminal, sem afetar outros módulos. */
+#arduinoLayout .mbb6-panel .card.code {
+  background:#fff;
+  border-color:#c8dee3;
+}
+#arduinoLayout .mbb6-panel .card.code > h3 {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:0;
+  padding:14px 18px;
+  background:#eff8fa !important;
+  color:#134956 !important;
+  border-bottom:1px solid #d5e4e9 !important;
+  font-size:15px !important;
+  font-weight:800;
+  line-height:1.5;
+  text-transform:none;
+  letter-spacing:normal;
+}
+#arduinoLayout .mbb6-panel .card.code > h3 button,
+#arduinoLayout .mbb6-panel .mbb6-wokwi-aux .mbb6-aux-copy {
+  background:#0b7285 !important;
+  color:#fff !important;
+  font-size:13px;
+  font-weight:700;
+  border:0;
+  border-radius:7px;
+  padding:7px 13px;
+  cursor:pointer;
+}
+#arduinoLayout .mbb6-panel .card.code > h3 button {
+  flex:0 0 auto;
+  margin-left:auto;
+}
+#arduinoLayout .mbb6-panel .card.code > h3 button:hover,
+#arduinoLayout .mbb6-panel .mbb6-wokwi-aux .mbb6-aux-copy:hover {
+  background:#07515f !important;
+}
+#arduinoLayout .mbb6-panel .card.code > h3 button:focus-visible,
+#arduinoLayout .mbb6-panel .mbb6-wokwi-aux .mbb6-aux-copy:focus-visible {
+  outline:3px solid #62b6c5;
+  outline-offset:2px;
+}
+#arduinoLayout .mbb6-panel .card:not(.mbb6-wokwi-aux) pre {
+  display:block;
+  margin:16px 18px 18px;
+  padding:17px 19px;
+  background:#f6fafc !important;
+  color:#1c3340 !important;
+  border:1px solid #d5e4e9;
+  border-radius:10px !important;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:13px;
+  line-height:1.65;
+  tab-size:2;
+  white-space:pre;
+  overflow-x:auto !important;
+  overflow-y:auto;
+  max-width:100%;
+  word-break:normal;
+}
+#arduinoLayout .mbb6-panel .card:not(.mbb6-wokwi-aux) pre code {
+  background:transparent !important;
+  color:inherit !important;
+  border:0 !important;
+  padding:0;
+  font:inherit;
+}
+/* O arquivo de apoio 6A.1 mantém a própria barra Copiar e a moldura clara. */
+#arduinoLayout .mbb6-panel .mbb6-wokwi-aux .mbb6-aux-codebox > pre {
+  background:#f6fafc !important;
+  color:#1c3340 !important;
+}
+@media(max-width:700px) {
+  #arduinoLayout .mbb6-panel .card.code > h3 {
+    padding:12px 14px;
+    font-size:14px !important;
+  }
+  #arduinoLayout .mbb6-panel .card:not(.mbb6-wokwi-aux) pre {
+    margin:12px;
+    padding:13px 12px;
+    font-size:12px;
+    line-height:1.6;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    overflow-x:auto !important;
+  }
+}
+</style>
 <script src="../js/arduino-conectividade-aprofundamento-mbb-20261026.js?v=2" defer></script>
 </head>
 <body>
