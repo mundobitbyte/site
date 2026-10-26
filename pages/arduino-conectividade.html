@@ -138,6 +138,88 @@
   .mbb6-aprofundamento .mbb6-depth-content .mbb6-depth-intro{margin-bottom:16px}
 }
 </style>
+<style>
+/* Modo MbB: conservar a grafia real de bibliotecas, arquivos e comandos nos títulos. */
+.mbb6-panel .card > h3{
+  text-transform:none;
+  letter-spacing:normal;
+}
+
+/* 6A.1 — arquivo auxiliar, não um programa principal: visual claro e leitura espaçada. */
+#b6-1 .mbb6-wokwi-aux{
+  background:#fff;
+  border-color:#c8dee3;
+}
+#b6-1 .mbb6-wokwi-aux > h3{
+  display:block;
+  padding:14px 18px;
+  background:#eff8fa !important;
+  color:#134956 !important;
+  font-size:15px !important;
+  line-height:1.55;
+  font-weight:800;
+  overflow-wrap:anywhere;
+}
+#b6-1 .mbb6-wokwi-aux > h3 code{
+  text-transform:none;
+  letter-spacing:normal;
+  font-size:0.95em;
+  overflow-wrap:anywhere;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-intro{
+  margin:16px 18px;
+  max-width:85ch;
+  line-height:1.65;
+}
+#b6-1 .mbb6-wokwi-aux > pre{
+  margin:0 18px;
+  padding:17px 19px;
+  border-radius:10px;
+  border:1px solid #d5e4e9;
+  background:#f6fafc !important;
+  color:#1c3340 !important;
+  font-size:13px;
+  line-height:1.65;
+  white-space:pre;
+  overflow-x:auto;
+  tab-size:2;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-note{
+  margin:16px 18px 0;
+  padding:11px 13px;
+  border-left:3px solid #25889b;
+  border-radius:0 8px 8px 0;
+  background:#f1f8fa;
+  line-height:1.6;
+  font-size:13.5px;
+}
+#b6-1 .mbb6-wokwi-aux .explain{
+  margin:14px 18px 18px;
+  padding:14px 15px;
+  background:#fff;
+  border:1px solid #e1eaed;
+  border-radius:10px;
+}
+#b6-1 .mbb6-wokwi-aux .explain p{
+  margin:0 0 10px;
+}
+#b6-1 .mbb6-wokwi-aux .explain p:last-child{
+  margin-bottom:0;
+}
+@media(max-width:700px){
+  #b6-1 .mbb6-wokwi-aux > h3{padding:12px 14px;font-size:14px !important}
+  #b6-1 .mbb6-wokwi-aux .mbb6-aux-intro{margin:14px}
+  #b6-1 .mbb6-wokwi-aux > pre{
+    margin:0 12px;
+    padding:13px 12px;
+    font-size:12px;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+  }
+  #b6-1 .mbb6-wokwi-aux .mbb6-aux-note{margin:14px 12px 0}
+  #b6-1 .mbb6-wokwi-aux .explain{margin:12px;padding:12px}
+}
+</style>
 <script src="../js/arduino-conectividade-aprofundamento-mbb-20261026.js?v=2" defer></script>
 </head>
 <body>
@@ -679,7 +761,7 @@ void loop() {
 </main>
 </div>
 </div>
-<script src="../js/arduino-conectividade.js?v=20261020-retirada-1"></script>
+<script src="../js/arduino-conectividade.js?v=20261026-6a1"></script>
 <script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>
 <script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body>
