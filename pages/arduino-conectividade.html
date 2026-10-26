@@ -52,15 +52,93 @@
 @media(max-width:900px){.mbb6-summary,.mbb6-connections{grid-template-columns:1fr}}
 </style>
 <style>
-.mbb6-aprofundamento{border:1px solid #b9dfe6;background:#f8fcfd}
-.mbb6-aprofundamento h3{line-height:1.35}
-.mbb6-aprofundamento-texto{line-height:1.65;max-width:90ch}
-.mbb6-aprofundamento-texto p{margin:0 0 .85em}
-.mbb6-aprofundamento-texto p:last-child{margin-bottom:0}
-.mbb6-aprofundamento-texto code{overflow-wrap:anywhere}
-@media(max-width:700px){.mbb6-aprofundamento{padding:13px}.mbb6-aprofundamento-texto{line-height:1.55}}
+/* Modo MbB — respiro, hierarquia e leitura guiada dos comandos do Módulo 6 */
+.mbb6-panel .cards{row-gap:18px}
+.mbb6-aprofundamento{
+  grid-column:1/-1;
+  background:#fff;
+  border:1px solid #b7d8dd;
+  box-shadow:0 3px 14px rgba(10,75,84,.045);
+}
+.card.mbb6-aprofundamento > h3{
+  padding:15px 20px;
+  margin:0;
+  background:#ecf8fa;
+  color:#174e58;
+  font-size:16px;
+  font-weight:800;
+  line-height:1.45;
+  text-transform:none;
+  letter-spacing:0;
+}
+.mbb6-depth-content{padding:20px 22px 22px}
+.mbb6-aprofundamento .mbb6-depth-content p{margin:0;line-height:1.65;font-size:14.5px}
+.mbb6-aprofundamento .mbb6-depth-intro{max-width:78ch;color:#263c45;font-size:15px;margin:0 0 19px}
+.mbb6-depth-content h4{
+  margin:18px 0 12px;
+  color:#164d58;
+  font-size:14px;
+  line-height:1.45;
+  font-weight:800;
+}
+.mbb6-depth-rows{
+  display:grid;
+  border:1px solid #dbe8ea;
+  border-radius:12px;
+  overflow:hidden;
+}
+.mbb6-depth-row{
+  display:grid;
+  grid-template-columns:minmax(175px,32%) minmax(0,1fr);
+  align-items:start;
+  gap:18px;
+  padding:13px 16px;
+  background:#fff;
+  border-bottom:1px solid #e5eef0;
+}
+.mbb6-depth-row:nth-child(even){background:#f7fafb}
+.mbb6-depth-row:last-child{border-bottom:0}
+.mbb6-depth-command{min-width:0}
+.mbb6-depth-command code{
+  display:inline-block;
+  max-width:100%;
+  padding:4px 7px;
+  background:#e9f2f5;
+  border:1px solid #c8dce2;
+  color:#173e49;
+  border-radius:6px;
+  font-size:13px;
+  line-height:1.5;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.mbb6-aprofundamento .mbb6-depth-row p{font-size:14px;color:#334155;min-width:0}
+.mbb6-depth-check{
+  margin-top:19px;
+  padding:15px 17px;
+  background:#f0f8fa;
+  border-left:3px solid #238497;
+  border-radius:0 10px 10px 0;
+}
+.mbb6-depth-check strong{display:block;color:#14505d;font-size:14px;margin:0 0 5px}
+.mbb6-aprofundamento .mbb6-depth-check p{font-size:14px}
+.mbb6-aprofundamento .mbb6-depth-caution{
+  margin-top:16px;
+  padding:0 2px;
+  font-size:13.5px;
+  line-height:1.6;
+  color:#475569;
+}
+@media(max-width:700px){
+  .mbb6-panel .cards{row-gap:15px}
+  .card.mbb6-aprofundamento > h3{padding:13px 15px;font-size:15px}
+  .mbb6-depth-content{padding:16px 15px 18px}
+  .mbb6-depth-row{grid-template-columns:minmax(0,1fr);gap:7px;padding:12px 13px}
+  .mbb6-depth-check{padding:13px 14px}
+  .mbb6-aprofundamento .mbb6-depth-intro{margin-bottom:16px}
+}
 </style>
-<script src="../js/arduino-conectividade-aprofundamento-mbb-20261026.js?v=1" defer></script>
+<script src="../js/arduino-conectividade-aprofundamento-mbb-20261026.js?v=2" defer></script>
 </head>
 <body>
 <header>
