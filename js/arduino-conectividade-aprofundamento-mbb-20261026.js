@@ -12,8 +12,16 @@
       card.innerHTML = '<h3>Entenda antes de avançar — '+titulo+'</h3><div class="mbb6-aprofundamento-texto">'+conteudo+'</div>';
       const cards = secao.querySelector('.cards');
       if (!cards) return;
+      // A explicação breve original vem primeiro; o aprofundamento continua
+      // a leitura, sem interromper código -> explicação -> prática.
       const codigo = cards.querySelector('article.code');
-      const ancora = codigo || cards.firstElementChild;
+      const artigos = Array.from(cards.querySelectorAll(':scope > article'));
+      const resumo = artigos.find(item => {
+        const titulo = item.querySelector('h3')?.textContent || '';
+        return titulo.includes('5. Entendendo as novidades') ||
+               titulo.includes('8. Como o cliente funciona');
+      });
+      const ancora = resumo || codigo || cards.firstElementChild;
       if (ancora) ancora.insertAdjacentElement('afterend', card);
       else cards.appendChild(card);
     });
