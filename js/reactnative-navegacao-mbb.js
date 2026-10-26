@@ -1104,8 +1104,11 @@ screens/
         id: 'nav-exercicios',
         menu: '99. Exercícios',
         modulePage: true,
-        // Conteúdo definitivo atribuído por reactnative-navegacao-iniciante-mbb.js.
-        // Não manter uma segunda versão dos enunciados neste arquivo.
+        title: '99 — Exercícios: agora você repete o ciclo sozinho',
+        objective: 'Praticar a criação e a integração de novas telas na Central de Consultas.',
+        kicker: 'Amplie a Central de Consultas: de quatro para sete telas',
+        lead: 'Na etapa 10 — Projeto completo, você encontra os arquivos da Central de Consultas com quatro telas. Parta desse projeto e acrescente Sobre, Conversor e Contador, construindo e testando uma tela de cada vez.',
+        highlight: 'Crie a tela, importe e registre o componente no App.js, adicione o acesso em Inicio.js e confirme que as telas anteriores continuam funcionando.',
         boxes: [],
       },
     ],
