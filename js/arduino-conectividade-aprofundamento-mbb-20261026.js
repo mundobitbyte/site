@@ -16,10 +16,11 @@
       // a leitura, sem interromper código -> explicação -> prática.
       const codigo = cards.querySelector('article.code');
       const artigos = Array.from(cards.querySelectorAll(':scope > article'));
-      const resumo = artigos.find(item =>
-        /^\s*5\\. Entendendo as novidades/.test(item.querySelector('h3')?.textContent || '') ||
-        /^\s*8\\. Como o cliente funciona/.test(item.querySelector('h3')?.textContent || '')
-      );
+      const resumo = artigos.find(item => {
+        const titulo = item.querySelector('h3')?.textContent || '';
+        return titulo.includes('5. Entendendo as novidades') ||
+               titulo.includes('8. Como o cliente funciona');
+      });
       const ancora = resumo || codigo || cards.firstElementChild;
       if (ancora) ancora.insertAdjacentElement('afterend', card);
       else cards.appendChild(card);
