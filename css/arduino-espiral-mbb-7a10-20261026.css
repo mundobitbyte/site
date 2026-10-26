@@ -32,7 +32,9 @@
 :is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .card.code > h3 button{
   margin-left:auto;
   flex:0 0 auto;
-  padding:7px 13px;
+  padding:8px 14px;
+  min-height:40px;
+  min-width:76px;
   background:#0b7285;
   color:#fff;
   border:0;
