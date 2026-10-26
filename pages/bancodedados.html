@@ -1399,43 +1399,40 @@ Database changed</pre>
 <li><strong>Relacionamentos:</strong> <code>FOREIGN KEY</code> (chave estrangeira) aponta para uma chave de outra tabela; <code>REFERENCES</code> informa <strong>qual tabela e coluna</strong> são referenciadas. É assim que o MySQL protege os vínculos entre registros.</li>
 <li><strong>Validações:</strong> <code>CONSTRAINT</code> pode dar um nome a uma regra, enquanto <code>CHECK</code> define uma condição, como exigir preço não negativo. Para as verificações CHECK serem efetivamente aplicadas, use uma versão de MySQL com suporte à sua execução, como MySQL 8.0.16 ou posterior.</li>
 </ol>
-<h4>Leia sua primeira instrução, sem pressa</h4>
-<div class="codebox"><button class="copy-btn" type="button">Copiar exemplo de estudo</button><pre><code>CREATE TABLE categoria (
-    id_categoria INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(50) NOT NULL UNIQUE
-);</code></pre></div>
-<p>Leia da esquerda para a direita: <code>CREATE TABLE categoria</code> escolhe o nome; os parênteses reúnem as definições; <code>id_categoria</code> é um número inteiro que identifica cada categoria; <code>nome</code> guarda texto obrigatório e sem duplicatas. A vírgula separa definições e o ponto e vírgula encerra a instrução.</p>
-<div class="heidi-note"><strong>Atenção:</strong> esse primeiro exemplo está aqui para <em>interpretar</em> o SQL. A execução das cinco tabelas será feita no bloco completo logo abaixo. Se você já criou <code>categoria</code>, não execute o <code>CREATE TABLE</code> novamente no mesmo banco.</div>
 </section>
-<p>Agora criaremos as cinco tabelas do modelo lógico refinado. A ordem importa: primeiro as tabelas que não dependem de outras; depois as que possuem chaves estrangeiras; por último, a tabela associativa.</p>
+
+<p>Agora criaremos <strong>uma tabela por vez</strong>, na ordem exigida pelos relacionamentos. Antes de cada código, observe o que queremos guardar e por que escolhemos suas regras. Use o botão <strong>Copiar</strong> daquela tabela, cole no HeidiSQL e execute apenas uma vez. Se já realizou essa etapa, confira a tabela em vez de recriá-la.</p>
 <div class="visual"><pre>CATEGORIA    CIDADE
     ↓          ↓
  PRODUTO   FORNECEDOR
       ↘    ↙
  PRODUTO_FORNECEDOR</pre></div>
-<section class="heidi-guide" aria-labelledby="heidi-tabelas-execucao">
-<h3 id="heidi-tabelas-execucao">Agora sim: da explicação à primeira execução</h3>
-<p>Já entendemos as partes de uma tabela. No próximo bloco estão os <strong>cinco CREATE TABLE do projeto</strong>. Primeiro, selecione <code>comercio</code> no HeidiSQL e copie <strong>somente a instrução de <code>categoria</code></strong>. Execute uma vez, como mostra a imagem.</p>
-<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-criando-primeira-tabela.webp" alt="Editor HeidiSQL com CREATE TABLE categoria e SHOW TABLES" loading="lazy" decoding="async"/><figcaption>Primeira conquista: criar uma tabela com SQL no editor gráfico.</figcaption></figure>
-<p><strong>Confira antes de avançar:</strong> digite e execute <code>SHOW TABLES;</code> no editor. Na grade de resultados deverá aparecer <code>categoria</code>, como na captura abaixo. Se a tabela já estiver criada, apenas confira — não repita o CREATE.</p>
-<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-confirmando-tabela-criada.webp" alt="Resultado de SHOW TABLES contendo a tabela categoria" loading="lazy" decoding="async"/><figcaption>Execute SHOW TABLES; para observar a tabela criada. A imagem mostra um estágio anterior à criação das outras quatro tabelas.</figcaption></figure>
-<p>Depois volte ao bloco original e execute <code>cidade</code>, <code>fornecedor</code>, <code>produto</code> e <code>produto_fornecedor</code>, <strong>nessa ordem</strong>. A ordem importa por causa das chaves estrangeiras. Você também poderia executar o script completo de uma vez <strong>num banco em que nenhuma das cinco tabelas exista</strong>, mas não misture os dois procedimentos.</p>
-<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-executando-varias-tabelas.webp" alt="Script com várias instruções CREATE TABLE no HeidiSQL" loading="lazy" decoding="async"/><figcaption>A execução em lote serve para um script ainda não executado; respeite as chaves estrangeiras e a ordem das tabelas.</figcaption></figure>
-<p><strong>Checkpoint:</strong> o banco <code>comercio</code> deverá conter cinco tabelas. As capturas representam momentos diferentes de um laboratório; os bancos extras que nelas aparecem não precisam existir no seu computador.</p>
-</section>
-<div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>CREATE TABLE categoria (
+<section class="heidi-guide" aria-labelledby="bd-etapa-categoria">
+<h3 id="bd-etapa-categoria">1. Categoria — nossa primeira tabela</h3>
+<p>Começamos com <code>categoria</code>, porque ela ainda não precisa de nenhuma outra tabela. Seu <code>id_categoria</code> é a chave primária inteira, gerada automaticamente; o <code>nome</code> é obrigatório e não pode se repetir. Observe os parênteses, as vírgulas e o ponto e vírgula.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar CREATE TABLE categoria</button><pre><code>CREATE TABLE categoria (
     id_categoria INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL UNIQUE
-);
-
-CREATE TABLE cidade (
+);</code></pre></div>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-criando-primeira-tabela.webp" alt="No editor do HeidiSQL, execute CREATE TABLE categoria no banco comercio." loading="lazy" decoding="async"/><figcaption>No editor do HeidiSQL, execute CREATE TABLE categoria no banco comercio.</figcaption></figure>
+<p><strong>Primeira conquista:</strong> execute <code>SHOW TABLES;</code> separadamente e encontre <code>categoria</code> na lista. Na captura a seguir, somente essa tabela havia sido criada.</p>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-confirmando-tabela-criada.webp" alt="A consulta SHOW TABLES mostra categoria como primeira tabela criada." loading="lazy" decoding="async"/><figcaption>A consulta SHOW TABLES mostra categoria como primeira tabela criada.</figcaption></figure>
+</section>
+<section class="heidi-guide" aria-labelledby="bd-etapa-cidade">
+<h3 id="bd-etapa-cidade">2. Cidade — organizando nomes e estados</h3>
+<p>A tabela <code>cidade</code> também é independente. <code>nome_cidade VARCHAR(80)</code> guarda o nome e <code>estado CHAR(2)</code> guarda a sigla de duas letras. A regra <code>UNIQUE (nome_cidade, estado)</code> impede repetir a <strong>mesma combinação</strong> de cidade e estado, mas permite cidades de mesmo nome em estados diferentes.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar CREATE TABLE cidade</button><pre><code>CREATE TABLE cidade (
     id_cidade INT PRIMARY KEY AUTO_INCREMENT,
     nome_cidade VARCHAR(80) NOT NULL,
     estado CHAR(2) NOT NULL,
     UNIQUE (nome_cidade, estado)
-);
-
-CREATE TABLE fornecedor (
+);</code></pre></div>
+<p>Execute uma vez e confira que agora existem <code>categoria</code> e <code>cidade</code>.</p>
+</section>
+<section class="heidi-guide" aria-labelledby="bd-etapa-fornecedor">
+<h3 id="bd-etapa-fornecedor">3. Fornecedor — primeira chave estrangeira</h3>
+<p>O fornecedor recebe <code>id_fornecedor</code>, <code>nome</code> e <code>telefone</code>. O campo <code>id_cidade INT</code> indica a cidade associada, quando conhecida; como não tem <code>NOT NULL</code>, pode ficar vazio. A cláusula <code>FOREIGN KEY (id_cidade) REFERENCES cidade(id_cidade)</code> obriga os valores preenchidos a apontarem para uma cidade existente. Por isso criamos <code>cidade</code> antes.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar CREATE TABLE fornecedor</button><pre><code>CREATE TABLE fornecedor (
     id_fornecedor INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(80) NOT NULL,
     telefone VARCHAR(20),
@@ -1443,9 +1440,14 @@ CREATE TABLE fornecedor (
 
     FOREIGN KEY (id_cidade)
         REFERENCES cidade(id_cidade)
-);
-
-CREATE TABLE produto (
+);</code></pre></div>
+<p><strong>Checkpoint:</strong> três tabelas prontas. Confira a lista com <code>SHOW TABLES;</code>; não execute novamente as instruções concluídas.</p>
+</section>
+<section class="heidi-guide" aria-labelledby="bd-etapa-produto">
+<h3 id="bd-etapa-produto">4. Produto — regras de preenchimento, CHECK e relacionamento</h3>
+<p>Agora temos uma estrutura mais completa. <code>descricao VARCHAR(100) NOT NULL</code> exige a descrição; <code>preco DECIMAL(10,2)</code> representa o preço; <code>qtde INT NOT NULL DEFAULT 0</code> inicia a quantidade em zero quando omitida; <code>estoque_minimo</code> faz o mesmo para o estoque mínimo.</p>
+<p>A coluna <code>id_categoria INT NOT NULL</code> é obrigatória. <code>FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)</code> associa o produto a uma categoria já cadastrada. Já as três regras nomeadas com <code>CONSTRAINT</code> utilizam <code>CHECK</code> para não aceitar preço, quantidade ou estoque mínimo negativos. Aqui <strong>CONSTRAINT nomeia a regra</strong>, e <strong>CHECK define a condição</strong>. Em MySQL, utilize uma versão que efetivamente aplique CHECK, como 8.0.16 ou posterior.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar CREATE TABLE produto</button><pre><code>CREATE TABLE produto (
     id_produto INT PRIMARY KEY AUTO_INCREMENT,
     descricao VARCHAR(100) NOT NULL,
     preco DECIMAL(10,2) NOT NULL,
@@ -1459,9 +1461,25 @@ CREATE TABLE produto (
 
     FOREIGN KEY (id_categoria)
         REFERENCES categoria(id_categoria)
-);
-
-CREATE TABLE produto_fornecedor (
+);</code></pre></div>
+<p><strong>Conquista:</strong> explique com suas palavras por que <code>produto</code> depende de <code>categoria</code> e por que um preço negativo deve ser recusado.</p>
+</section>
+<section class="heidi-guide" aria-labelledby="bd-etapa-produto-fornecedor">
+<h3 id="bd-etapa-produto-fornecedor">5. Produto_fornecedor — uma relação, dois identificadores</h3>
+<p>Esta é a tabela associativa do relacionamento <strong>muitos para muitos</strong>. Ela depende das tabelas <code>produto</code> e <code>fornecedor</code>, que já criamos. Antes de copiar seu SQL, reconheça suas regras:</p>
+<section class="heidi-guide" aria-labelledby="sql-entendendo-relacoes">
+<h3 id="sql-entendendo-relacoes">Por que a tabela produto_fornecedor tem mais regras?</h3>
+<p>Uma categoria tem seu próprio identificador. Já a tabela <code>produto_fornecedor</code> representa o relacionamento entre dois conjuntos de registros: um produto pode ter vários fornecedores e um fornecedor pode oferecer vários produtos. Por isso ela guarda <strong>os dois identificadores juntos</strong>.</p>
+<div class="sql-explain-grid">
+<div><strong>Nome e colunas</strong><p><code>CREATE TABLE produto_fornecedor</code> inicia a estrutura. <code>id_produto INT NOT NULL</code> e <code>id_fornecedor INT NOT NULL</code> exigem os dois IDs. <code>preco_custo DECIMAL(10,2)</code> e <code>prazo_entrega INT</code> guardam informações específicas de cada parceria; sem <code>NOT NULL</code>, podem ficar sem valor (<code>NULL</code>).</p></div>
+<div><strong>Chave primária composta</strong><p><code>PRIMARY KEY (id_produto, id_fornecedor)</code> torna <strong>único o par</strong> produto–fornecedor. Um mesmo produto pode aparecer em várias linhas com fornecedores diferentes, mas o mesmo par não pode ser cadastrado duas vezes.</p></div>
+<div><strong>Referências</strong><p><code>FOREIGN KEY (id_produto) REFERENCES produto(id_produto)</code> exige um produto existente. De modo equivalente, <code>FOREIGN KEY (id_fornecedor) REFERENCES fornecedor(id_fornecedor)</code> exige um fornecedor existente. Essas tabelas precisam existir antes da criação da associativa.</p></div>
+<div><strong>Regras CHECK</strong><p><code>CONSTRAINT chk_preco_custo CHECK (preco_custo &gt;= 0)</code> nomeia e define a regra que rejeita custos negativos. A regra <code>chk_prazo_entrega</code> faz o mesmo para prazos negativos. O nome após <code>CONSTRAINT</code> ajuda a reconhecer a validação em mensagens de erro.</p></div>
+</div>
+<p><strong>Como interpretar:</strong> cada vírgula separa uma coluna ou uma regra; as definições ficam entre <code>(</code> e <code>)</code>; o <code>;</code> fecha a instrução. Uma chave estrangeira <strong>não cria automaticamente</strong> o produto ou o fornecedor referenciado: os registros associados precisam existir quando você inserir vínculos.</p>
+<div class="heidi-note"><strong>Conquista MbB:</strong> antes de copiar o script, identifique nele a tabela, duas colunas identificadoras, a chave primária composta, as duas referências e as duas verificações de valor. Agora você já consegue explicar <em>por que</em> cada trecho está presente.</div>
+</section>
+<div class="codebox"><button class="copy-btn" type="button">Copiar CREATE TABLE produto_fornecedor</button><pre><code>CREATE TABLE produto_fornecedor (
     id_produto INT NOT NULL,
     id_fornecedor INT NOT NULL,
     preco_custo DECIMAL(10,2),
@@ -1478,19 +1496,14 @@ CREATE TABLE produto_fornecedor (
     CONSTRAINT chk_preco_custo CHECK (preco_custo &gt;= 0),
     CONSTRAINT chk_prazo_entrega CHECK (prazo_entrega &gt;= 0)
 );</code></pre></div>
-<p>Agora o SQL respeita exatamente o raciocínio do capítulo anterior: <strong>produto não possui id_fornecedor</strong>. A relação N:N fica em <strong>produto_fornecedor</strong>.</p>
-<section class="heidi-guide" aria-labelledby="sql-entendendo-relacoes">
-<h3 id="sql-entendendo-relacoes">Por que a tabela produto_fornecedor tem mais regras?</h3>
-<p>Uma categoria tem seu próprio identificador. Já a tabela <code>produto_fornecedor</code> representa o relacionamento entre dois conjuntos de registros: um produto pode ter vários fornecedores e um fornecedor pode oferecer vários produtos. Por isso ela guarda <strong>os dois identificadores juntos</strong>.</p>
-<div class="sql-explain-grid">
-<div><strong>Nome e colunas</strong><p><code>CREATE TABLE produto_fornecedor</code> inicia a estrutura. <code>id_produto INT NOT NULL</code> e <code>id_fornecedor INT NOT NULL</code> exigem os dois IDs. <code>preco_custo DECIMAL(10,2)</code> e <code>prazo_entrega INT</code> guardam informações específicas de cada parceria; sem <code>NOT NULL</code>, podem ficar sem valor (<code>NULL</code>).</p></div>
-<div><strong>Chave primária composta</strong><p><code>PRIMARY KEY (id_produto, id_fornecedor)</code> torna <strong>único o par</strong> produto–fornecedor. Um mesmo produto pode aparecer em várias linhas com fornecedores diferentes, mas o mesmo par não pode ser cadastrado duas vezes.</p></div>
-<div><strong>Referências</strong><p><code>FOREIGN KEY (id_produto) REFERENCES produto(id_produto)</code> exige um produto existente. De modo equivalente, <code>FOREIGN KEY (id_fornecedor) REFERENCES fornecedor(id_fornecedor)</code> exige um fornecedor existente. Essas tabelas precisam existir antes da criação da associativa.</p></div>
-<div><strong>Regras CHECK</strong><p><code>CONSTRAINT chk_preco_custo CHECK (preco_custo &gt;= 0)</code> nomeia e define a regra que rejeita custos negativos. A regra <code>chk_prazo_entrega</code> faz o mesmo para prazos negativos. O nome após <code>CONSTRAINT</code> ajuda a reconhecer a validação em mensagens de erro.</p></div>
-</div>
-<p><strong>Como interpretar:</strong> cada vírgula separa uma coluna ou uma regra; as definições ficam entre <code>(</code> e <code>)</code>; o <code>;</code> fecha a instrução. Uma chave estrangeira <strong>não cria automaticamente</strong> o produto ou o fornecedor referenciado: os registros associados precisam existir quando você inserir vínculos.</p>
-<div class="heidi-note"><strong>Conquista MbB:</strong> antes de copiar o script, identifique nele a tabela, duas colunas identificadoras, a chave primária composta, as duas referências e as duas verificações de valor. Agora você já consegue explicar <em>por que</em> cada trecho está presente.</div>
+<p><strong>Checkpoint final:</strong> execute <code>SHOW TABLES;</code> e confira as <strong>cinco tabelas</strong>. Não copie tudo novamente: cada bloco deve ser executado uma única vez.</p>
 </section>
+<section class="heidi-guide" aria-labelledby="bd-lotes-opcional">
+<h3 id="bd-lotes-opcional">E se eu quiser executar várias instruções juntas?</h3>
+<p>O HeidiSQL também permite colar várias instruções no editor e executar o lote. A imagem abaixo serve para <strong>reconhecer essa funcionalidade</strong>, não para refazer o exercício. Como você já criou as cinco tabelas separadamente, <strong>não execute novamente esses CREATE TABLE</strong> no banco <code>comercio</code>.</p>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-executando-varias-tabelas.webp" alt="Exemplo ilustrativo de várias instruções CREATE TABLE no editor HeidiSQL." loading="lazy" decoding="async"/><figcaption>Exemplo ilustrativo de várias instruções CREATE TABLE no editor HeidiSQL.</figcaption></figure>
+</section>
+<p>Agora o SQL respeita exatamente o raciocínio do capítulo anterior: <strong>produto não possui id_fornecedor</strong>; a relação N:N fica em <strong>produto_fornecedor</strong>.</p>
 <div class="grid2"><section class="card note"><div class="card-body"><h3>AUTO_INCREMENT</h3><p>Permite que o MySQL gere automaticamente o próximo ID quando a aplicação não informa um valor. Mesmo assim, ainda podemos inserir IDs explícitos quando precisamos preservar códigos de uma base existente.</p></div></section><section class="card note"><div class="card-body"><h3>Restrições reais</h3><p><strong>NOT NULL</strong> exige valor, <strong>UNIQUE</strong> impede duplicidade, <strong>DEFAULT</strong> fornece um valor padrão e <strong>CHECK</strong> rejeita valores que violem uma regra definida.</p></div></section></div>
 <div class="codebox"><button class="copy-btn" type="button">Copiar comandos de conferência</button><pre><code>SHOW TABLES;
 DESCRIBE categoria;
