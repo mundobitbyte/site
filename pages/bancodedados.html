@@ -1515,26 +1515,6 @@ DESCRIBE produto;
 DESCRIBE produto_fornecedor;</code></pre></div>
 
 <section class="heidi-guide" aria-labelledby="heidi-estrutura-conferida"><h3 id="heidi-estrutura-conferida">Veja o que foi criado</h3><p>Execute os comandos de conferência logo acima. <code>SHOW TABLES;</code> lista as tabelas; cada <code>DESCRIBE</code> mostra colunas, tipos, valores nulos e chaves de uma tabela. Para observar cada resultado separadamente, selecione e execute uma consulta por vez.</p><div class="heidi-note"><strong>Como interpretar o resultado:</strong> <code>Field</code> identifica o campo; <code>Type</code> indica seu tipo SQL; <code>Null</code> informa se aceita valores nulos; <code>Key</code> mostra indicadores de chave; <code>Default</code> é o valor padrão; <code>Extra</code> exibe propriedades adicionais, como <code>auto_increment</code>. Por exemplo, na tabela <code>categoria</code>, procure <code>id_categoria</code> como chave primária (<code>PRI</code>) e <code>nome</code> como <code>VARCHAR(50)</code>. Faça essa conferência diretamente na grade do seu HeidiSQL, comparando os campos com o CREATE de cada tabela.</div><p><strong>Conquista MbB:</strong> antes de passar a <code>INSERT</code>, confira as cinco tabelas e compare suas estruturas com o modelo lógico.</p></section>
-<h2>BLOCO 6.1 — ALTER TABLE: quando a estrutura precisa evoluir</h2>
-<p>Na primeira passagem, siga para o <strong>INSERT</strong> logo abaixo. Depois de cadastrar os dados e fazer as primeiras consultas do Bloco 8, você pode voltar a esta prática para aprender a modificar uma estrutura.</p>
-<details id="bd-alter-table-opcional"><summary>Prática opcional — adicionar e remover uma coluna com ALTER TABLE</summary>
-<p>CREATE TABLE cria a estrutura inicial. Mas sistemas evoluem. <strong>ALTER TABLE</strong> modifica a estrutura de uma tabela que já existe.</p>
-<p>Para aprender sem alterar o modelo comercial, use uma tabela de laboratório:</p>
-<div class="codebox"><button class="copy-btn" type="button">Copiar laboratório ALTER TABLE</button><pre><code>CREATE TABLE estrutura_lab (
-    id INT PRIMARY KEY
-);
-
-ALTER TABLE estrutura_lab
-ADD COLUMN observacao VARCHAR(100);
-
-DESCRIBE estrutura_lab;
-
-ALTER TABLE estrutura_lab
-DROP COLUMN observacao;
-
-DROP TABLE estrutura_lab;</code></pre></div>
-<div class="card warning"><div class="card-body"><h3>Mudança de estrutura não é um Ctrl+Z</h3><p>ALTER TABLE, DROP TABLE e outros comandos que mudam a estrutura podem causar <strong>commit implícito</strong> no MySQL. Por isso o laboratório usa uma tabela descartável. Mais adiante, quando estudarmos transações, veremos por que não devemos contar com ROLLBACK para recuperar uma estrutura removida.</p></div></div>
-</details>
 <h2>BLOCO 7 — INSERT INTO: inserindo os dados da base</h2>
 <p>Agora o banco deixa de ser apenas estrutura e começa a receber dados. Vamos preservar os dados existentes de categoria, fornecedor e produto e transformar a antiga ligação produto–fornecedor em registros da tabela associativa.</p>
 <div class="card note"><div class="card-body"><h3>Não inventar dado que não existe</h3><p>A base recebida não informa a cidade de cada fornecedor nem preço de custo/prazo de entrega por fornecedor. Por isso esses campos ficarão <strong>NULL</strong> até existirem dados reais. A estrutura está pronta, mas não vamos preencher informações fictícias apenas para “completar” a tabela.</p></div></div>
@@ -1753,6 +1733,26 @@ SELECT descricao, preco
 FROM produto
 ORDER BY id_produto
 LIMIT 10;</code></pre></div>
+<h2 id="bd-topico-sql-bloco-6-1-alter-table-quando-a-estrutura-precisa-evoluir">BLOCO 8.1 — ALTER TABLE: quando a estrutura precisa evoluir</h2>
+<p>Você já criou as tabelas, cadastrou os dados e conferiu os resultados com SELECT. Agora vamos experimentar uma mudança de estrutura em uma tabela de laboratório, preservando o sistema comercial.</p>
+<details id="bd-alter-table-opcional"><summary>Prática opcional — adicionar e remover uma coluna com ALTER TABLE</summary>
+<p>CREATE TABLE cria a estrutura inicial. Mas sistemas evoluem. <strong>ALTER TABLE</strong> modifica a estrutura de uma tabela que já existe.</p>
+<p>Para aprender sem alterar o modelo comercial, use uma tabela de laboratório:</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar laboratório ALTER TABLE</button><pre><code>CREATE TABLE estrutura_lab (
+    id INT PRIMARY KEY
+);
+
+ALTER TABLE estrutura_lab
+ADD COLUMN observacao VARCHAR(100);
+
+DESCRIBE estrutura_lab;
+
+ALTER TABLE estrutura_lab
+DROP COLUMN observacao;
+
+DROP TABLE estrutura_lab;</code></pre></div>
+<div class="card warning"><div class="card-body"><h3>Mudança de estrutura não é um Ctrl+Z</h3><p>ALTER TABLE, DROP TABLE e outros comandos que mudam a estrutura podem causar <strong>commit implícito</strong> no MySQL. Por isso o laboratório usa uma tabela descartável. Mais adiante, quando estudarmos transações, veremos por que não devemos contar com ROLLBACK para recuperar uma estrutura removida.</p></div></div>
+</details>
 <h2>BLOCO 9 — WHERE: filtrando dados</h2>
 <p>Já escolhemos colunas e limitamos a quantidade de linhas. Agora precisamos escolher quais registros atendem a uma condição. <strong>WHERE</strong> mantém no resultado as linhas que atendem à condição indicada. Faça uma consulta por vez e observe o que entra e o que fica de fora.</p>
 <h3>1. Encontre os produtos de uma categoria</h3>
