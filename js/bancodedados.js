@@ -33,6 +33,7 @@ function showModule(id){
       backToExerciseHome();
     }
     jumpToTop();
+    requestAnimationFrame(() => window.MBBVisualizadorSite?.scan(document));
   }
 }
 document.querySelectorAll('.nav-link[data-target]').forEach(btn=>btn.addEventListener('click',()=>showModule(btn.dataset.target)));
@@ -148,3 +149,13 @@ document.addEventListener('click', function(e){
   script.dataset.mbbVisualizadorSite='1';
   document.body.appendChild(script);
 })();
+
+// Capturas carregadas sob demanda também precisam da ampliação global.
+// O seletor global pode iniciar antes de as imagens ganharem dimensões visíveis.
+function atualizarCapturasHeidiSQL(){
+  requestAnimationFrame(() => window.MBBVisualizadorSite?.scan(document));
+}
+document.addEventListener('load', event => {
+  if (event.target.matches?.('.heidi-figure img')) atualizarCapturasHeidiSQL();
+}, true);
+window.addEventListener('load', atualizarCapturasHeidiSQL, {once:true});

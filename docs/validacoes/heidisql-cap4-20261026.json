@@ -1,0 +1,400 @@
+{
+  "mysql": {
+    "version": "8.0.46-0ubuntu0.24.04.3",
+    "before": "information_schema\nmysql\nperformance_schema\nsys",
+    "tables": [
+      "categoria",
+      "cidade",
+      "fornecedor",
+      "produto",
+      "produto_fornecedor"
+    ],
+    "describe": "id_categoria\tint\tNO\tPRI\tNULL\tauto_increment\nnome\tvarchar(50)\tNO\tUNI\tNULL\t\nid_produto\tint\tNO\tPRI\tNULL\t\nid_fornecedor\tint\tNO\tPRI\tNULL\t\npreco_custo\tdecimal(10,2)\tYES\t\tNULL\t\nprazo_entrega\tint\tYES\t\tNULL",
+    "counts": "26\t0\t25\t60\t60",
+    "constraints": {
+      "UNIQUE": "ERROR 1062 (23000) at line 1: Duplicate entry 'DOCE' for key 'categoria.nome'",
+      "NOT NULL": "ERROR 1048 (23000) at line 1: Column 'nome' cannot be null",
+      "FK": "ERROR 1452 (23000) at line 1: Cannot add or update a child row: a foreign key constraint fails (`comercio`.`produto`, CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`))",
+      "CHECK": "ERROR 3819 (HY000) at line 1: Check constraint 'chk_produto_preco' is violated.",
+      "PK composta": "ERROR 1062 (23000) at line 1: Duplicate entry '12-5' for key 'produto_fornecedor.PRIMARY'"
+    },
+    "default": "qtde=0 e estoque_minimo=0; registro temporário removido",
+    "show_create": "produto\tCREATE TABLE `produto` (\\n  `id_produto` int NOT NULL AUTO_INCREMENT,\\n  `descricao` varchar(100) NOT NULL,\\n  `preco` decimal(10,2) NOT NULL,\\n  `qtde` int NOT NULL DEFAULT '0',\\n  `id_categoria` int NOT NULL,\\n  `estoque_minimo` int NOT NULL DEFAULT '0',\\n  PRIMARY KEY (`id_produto`),\\n  KEY `id_categoria` (`id_categoria`),\\n  CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`),\\n  CONSTRAINT `chk_produto_estoque_minimo` CHECK ((`estoque_minimo` >= 0)),\\n  CONSTRAINT `chk_produto_preco` CHECK ((`preco` >= 0)),\\n  CONSTRAINT `chk_produto_qtde` CHECK ((`qtde` >= 0))\\n) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+    "cleanup": "Banco descartável removido"
+  },
+  "navegador": [
+    {
+      "width": 1440,
+      "images": 7,
+      "clipboard": 35,
+      "modules": [
+        {
+          "id": "inicio",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "fundamentos",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "modelagem",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "modelagem-logica",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "sql",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "joins",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "sgbd",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "transacoes",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "avancado",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "projetos",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "moderna",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        },
+        {
+          "id": "exercicios",
+          "vw": 1440,
+          "root": 1440,
+          "main": 1190,
+          "ms": 1190
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "images": 7,
+      "clipboard": 35,
+      "modules": [
+        {
+          "id": "inicio",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 390
+        },
+        {
+          "id": "fundamentos",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 390
+        },
+        {
+          "id": "modelagem",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 393
+        },
+        {
+          "id": "modelagem-logica",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 544
+        },
+        {
+          "id": "sql",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 390
+        },
+        {
+          "id": "joins",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 399
+        },
+        {
+          "id": "sgbd",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 390
+        },
+        {
+          "id": "transacoes",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 390
+        },
+        {
+          "id": "avancado",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 396
+        },
+        {
+          "id": "projetos",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 576
+        },
+        {
+          "id": "moderna",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 392
+        },
+        {
+          "id": "exercicios",
+          "vw": 390,
+          "root": 390,
+          "main": 390,
+          "ms": 390
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 360,
+      "images": 7,
+      "clipboard": 35,
+      "modules": [
+        {
+          "id": "inicio",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 360
+        },
+        {
+          "id": "fundamentos",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 360
+        },
+        {
+          "id": "modelagem",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 393
+        },
+        {
+          "id": "modelagem-logica",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 544
+        },
+        {
+          "id": "sql",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 360
+        },
+        {
+          "id": "joins",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 399
+        },
+        {
+          "id": "sgbd",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 361
+        },
+        {
+          "id": "transacoes",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 360
+        },
+        {
+          "id": "avancado",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 396
+        },
+        {
+          "id": "projetos",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 576
+        },
+        {
+          "id": "moderna",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 392
+        },
+        {
+          "id": "exercicios",
+          "vw": 360,
+          "root": 360,
+          "main": 360,
+          "ms": 360
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 320,
+      "images": 7,
+      "clipboard": 35,
+      "modules": [
+        {
+          "id": "inicio",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 320
+        },
+        {
+          "id": "fundamentos",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 320
+        },
+        {
+          "id": "modelagem",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 393
+        },
+        {
+          "id": "modelagem-logica",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 544
+        },
+        {
+          "id": "sql",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 320
+        },
+        {
+          "id": "joins",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 399
+        },
+        {
+          "id": "sgbd",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 361
+        },
+        {
+          "id": "transacoes",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 320
+        },
+        {
+          "id": "avancado",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 396
+        },
+        {
+          "id": "projetos",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 576
+        },
+        {
+          "id": "moderna",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 392
+        },
+        {
+          "id": "exercicios",
+          "vw": 320,
+          "root": 320,
+          "main": 320,
+          "ms": 320
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "testes_node": {
+    "total": 29,
+    "passaram": 29
+  },
+  "visualizador_global": "smoke.mjs e regra-mbb-global.mjs passaram"
+}

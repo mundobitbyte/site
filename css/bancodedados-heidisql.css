@@ -2,8 +2,8 @@
 .heidi-guide{margin:1.35rem 0;padding:1.1rem;border:1px solid #c5d8ed;border-radius:15px;background:linear-gradient(155deg,#f7fbff,#ffffff);color:#183451}
 .heidi-guide h3,.heidi-guide h4{margin-top:.4rem;color:#173e69}
 .heidi-guide p{line-height:1.65}
-.heidi-figure{margin:1.2rem 0;padding:.75rem;border:1px solid #d9e4f0;border-radius:12px;background:#fff}
-.heidi-figure img{width:100%;max-width:100%;height:auto;display:block;object-fit:contain;border-radius:8px}
+.heidi-figure{max-width:980px;margin:1.2rem auto;padding:.75rem;border:1px solid #d9e4f0;border-radius:12px;background:#fff}
+.heidi-figure img{width:auto;margin:0 auto;max-width:100%;height:auto;display:block;object-fit:contain;border-radius:8px}
 .heidi-figure figcaption{font-size:.93rem;line-height:1.5;color:#40556e;padding:.6rem .25rem .1rem}
 .heidi-steps{padding-left:1.4rem;line-height:1.7}
 .heidi-steps li{margin:.4rem 0}
@@ -17,3 +17,17 @@
 .sql-explain-grid p{margin:.5rem 0 0}
 .sql-explain-grid code{white-space:normal;overflow-wrap:anywhere}
 @media(max-width:720px){.sql-explain-grid{grid-template-columns:1fr}}
+
+/* Capturas pequenas mantêm a escala natural; todas usam a ampliação global MbB. */
+.heidi-figure-compact{max-width:540px}
+.heidi-guide code{overflow-wrap:anywhere}
+
+/* No celular, rótulos de duas linhas ficam acima do SQL, sem cobri-lo. */
+@media(max-width:720px){
+  #mod-sql .codebox>.copy-btn{position:relative;top:auto;right:auto;display:block;margin:10px 10px 0 auto;max-width:calc(100% - 20px);white-space:normal}
+  #mod-sql .codebox>pre{padding-top:12px}
+}
+
+/* Destinos de leitura ficam abaixo do menu fixo de capítulos. */
+#mod-sql [id]{scroll-margin-top:16px}
+@media(max-width:1050px){#mod-sql [id]{scroll-margin-top:84px}}
