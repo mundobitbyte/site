@@ -3,6 +3,7 @@
   const campo = document.getElementById('consulta');
   const resumo = document.getElementById('resumo');
   const resultados = document.getElementById('resultados');
+  campo.value = new URLSearchParams(location.search).get('q') || '';
   // O catálogo e a pesquisa não carregam autenticação. Ela é consultada
   // somente quando alguém abre um resultado para registrar a visita.
   let contaPronta;
@@ -119,7 +120,6 @@
       if (achados.length > 50) resumo.textContent += ' Exibindo os 50 mais relevantes.';
     }
     campo.addEventListener('input', renderizar);
-    campo.value = new URLSearchParams(location.search).get('q') || '';
     renderizar();
   } catch (_) { resumo.textContent = 'A pesquisa está indisponível no momento. Você pode continuar navegando pelo site.'; }
 }());

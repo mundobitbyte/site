@@ -1,0 +1,1347 @@
+{
+  "base": "fcc2684f7eb18a6992dc72d91781de9263f3557c",
+  "conversion": {
+    "conexao": {
+      "source": "image(20261027-120017).png",
+      "file": "heidisql-12-22-conexao.webp",
+      "width": 835,
+      "height": 478,
+      "function": "Gerenciador de sessões: Nova, conexão local e Abrir",
+      "lossless_pixels_equal": true,
+      "sha256": "32995596f1255302c0a784f82696c3c0a1ae34dd5d2598d1de137326b25f8011",
+      "bytes": 16830
+    },
+    "show-databases": {
+      "source": "image(20261027-120301).png",
+      "file": "heidisql-12-22-show-databases.webp",
+      "width": 810,
+      "height": 643,
+      "function": "SHOW DATABASES no editor e na grade de resultados",
+      "lossless_pixels_equal": true,
+      "sha256": "8b3542b47b05827ec83d1a165964a0e1f215bea2577e097b84f4d3ec537a36b9",
+      "bytes": 20088
+    },
+    "editor-executar-limpar": {
+      "source": "image(20261027-120343).png",
+      "file": "heidisql-12-22-editor-executar-limpar.webp",
+      "width": 813,
+      "height": 443,
+      "function": "Menu do editor: Executar, Executar seleção e Limpar",
+      "lossless_pixels_equal": true,
+      "sha256": "6bef5077d9bec136fc3b690b34971fbe73423edde217ed986d49fff79a09f67c",
+      "bytes": 24376
+    },
+    "create-categoria": {
+      "source": "image(20261027-120447).png",
+      "file": "heidisql-12-22-create-categoria.webp",
+      "width": 892,
+      "height": 247,
+      "function": "CREATE TABLE categoria no editor, com categoria na árvore",
+      "lossless_pixels_equal": true,
+      "sha256": "20733b975f921a6716df0d641ad7f6954f47f33f9ce2f78c5fa5ab17454b28e4",
+      "bytes": 22382
+    },
+    "show-tables-categoria": {
+      "source": "image(20261027-120528).png",
+      "file": "heidisql-12-22-show-tables-categoria.webp",
+      "width": 892,
+      "height": 303,
+      "function": "SHOW TABLES: categoria no resultado",
+      "lossless_pixels_equal": true,
+      "sha256": "9cfc4d4938f64a17963e797c858fedbf9ea17f51622f48112ac8b21621cbad4b",
+      "bytes": 21638
+    },
+    "script-varias-tabelas": {
+      "source": "image(20261027-120722).png",
+      "file": "heidisql-12-22-script-varias-tabelas.webp",
+      "width": 905,
+      "height": 732,
+      "function": "Somente armazenada: script de várias tabelas, fora da aula",
+      "lossless_pixels_equal": true,
+      "sha256": "999bdd5fb765fc5cbc34c2381d3cbd1802b07bdb92db6a2e7d73806eb218d47a",
+      "bytes": 31178
+    },
+    "insert-categoria": {
+      "source": "image(20261027-120829).png",
+      "file": "heidisql-12-22-insert-categoria.webp",
+      "width": 892,
+      "height": 517,
+      "function": "INSERT das 26 categorias no editor, sem grade de resultado",
+      "lossless_pixels_equal": true,
+      "sha256": "4b3484927109611e04ebefa9c29d36a529e8ae62652461031e2cef43c3870954",
+      "bytes": 29078
+    },
+    "select-categoria": {
+      "source": "image(20261027-120933).png",
+      "file": "heidisql-12-22-select-categoria.webp",
+      "width": 974,
+      "height": 734,
+      "function": "Resultado de SELECT: 26 categorias; demais tabelas ainda vazias",
+      "lossless_pixels_equal": true,
+      "sha256": "fc21b78e528031fea55b010fe08b49676d7f105ab7e16e0654191c99a51294c0",
+      "bytes": 32622
+    }
+  },
+  "browser": [
+    {
+      "width": 1440,
+      "sections": 21,
+      "images": 7,
+      "zoom": 7,
+      "copies": 41,
+      "modules": 12,
+      "reservedBeforeLoad": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "sections": 21,
+      "images": 7,
+      "zoom": 7,
+      "copies": 41,
+      "modules": 12,
+      "reservedBeforeLoad": true,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "sections": 21,
+      "images": 7,
+      "zoom": 7,
+      "copies": 41,
+      "modules": 12,
+      "reservedBeforeLoad": true,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "sections": 21,
+      "images": 7,
+      "zoom": 7,
+      "copies": 41,
+      "modules": 12,
+      "reservedBeforeLoad": true,
+      "errors": []
+    },
+    {
+      "search": "HeidiSQL encontrado; link abriu SQL sem login"
+    }
+  ],
+  "study_exercises": [
+    {
+      "width": 1440,
+      "exerciseChapters": 11,
+      "study": "favorito, conclusão, adicionar/editar/apagar nota, visita e âncora em conta simulada local",
+      "realFirebaseWrites": 0
+    },
+    {
+      "width": 390,
+      "exerciseChapters": 11,
+      "study": "favorito, conclusão, adicionar/editar/apagar nota, visita e âncora em conta simulada local",
+      "realFirebaseWrites": 0
+    }
+  ],
+  "mysql": {
+    "version": "8.0.46-0ubuntu0.24.04.4",
+    "statements": [
+      {
+        "block": "Copiar conferência da versão do MySQL",
+        "sql": "SELECT VERSION()",
+        "ok": true,
+        "rows": 1,
+        "affected": 1,
+        "preview": [
+          [
+            "8.0.46-0ubuntu0.24.04.4"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar SHOW DATABASES",
+        "sql": "SHOW DATABASES",
+        "ok": true,
+        "rows": 4,
+        "affected": 4,
+        "preview": [
+          [
+            "information_schema"
+          ],
+          [
+            "mysql"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar CREATE DATABASE comercio",
+        "sql": "CREATE DATABASE comercio",
+        "ok": true,
+        "rows": 0,
+        "affected": 1,
+        "preview": []
+      },
+      {
+        "block": "Copiar conferência e seleção do banco",
+        "sql": "SHOW DATABASES",
+        "ok": true,
+        "rows": 5,
+        "affected": 5,
+        "preview": [
+          [
+            "comercio"
+          ],
+          [
+            "information_schema"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar conferência e seleção do banco",
+        "sql": "USE comercio",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar SHOW DATABASES no HeidiSQL",
+        "sql": "SHOW DATABASES",
+        "ok": true,
+        "rows": 5,
+        "affected": 5,
+        "preview": [
+          [
+            "comercio"
+          ],
+          [
+            "information_schema"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar USE comercio no HeidiSQL",
+        "sql": "USE comercio",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar CREATE TABLE categoria",
+        "sql": "CREATE TABLE categoria (\n    id_categoria INT PRIMARY KEY AUTO_INCREMENT,\n    nome VARCHAR(50) NOT NULL UNIQUE\n)",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar SHOW TABLES — conferir categoria",
+        "sql": "SHOW TABLES",
+        "ok": true,
+        "rows": 1,
+        "affected": 1,
+        "preview": [
+          [
+            "categoria"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar CREATE TABLE cidade",
+        "sql": "CREATE TABLE cidade (\n    id_cidade INT PRIMARY KEY AUTO_INCREMENT,\n    nome_cidade VARCHAR(80) NOT NULL,\n    estado CHAR(2) NOT NULL,\n    UNIQUE (nome_cidade, estado)\n)",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar CREATE TABLE fornecedor",
+        "sql": "CREATE TABLE fornecedor (\n    id_fornecedor INT PRIMARY KEY AUTO_INCREMENT,\n    nome VARCHAR(80) NOT NULL,\n    telefone VARCHAR(20),\n    id_cidade INT,\n\n    FOREIGN KEY (id_cidade)\n        REFERENCES cidade(id_cidade)\n)",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar CREATE TABLE produto",
+        "sql": "CREATE TABLE produto (\n    id_produto INT PRIMARY KEY AUTO_INCREMENT,\n    descricao VARCHAR(100) NOT NULL,\n    preco DECIMAL(10,2) NOT NULL,\n    qtde INT NOT NULL DEFAULT 0,\n    id_categoria INT NOT NULL,\n    estoque_minimo INT NOT NULL DEFAULT 0,\n\n    CONSTRAINT chk_produto_preco CHECK (preco >= 0),\n    CONSTRAINT chk_produto_qtde CHECK (qtde >= 0),\n    CONSTRAINT chk_produto_estoque_minimo CHECK (estoque_minimo >= 0),\n\n    FOREIGN KEY (id_categoria)\n        REFERENCES categoria(id_categoria)\n)",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar CREATE TABLE produto_fornecedor",
+        "sql": "CREATE TABLE produto_fornecedor (\n    id_produto INT NOT NULL,\n    id_fornecedor INT NOT NULL,\n    preco_custo DECIMAL(10,2),\n    prazo_entrega INT,\n\n    PRIMARY KEY (id_produto, id_fornecedor),\n\n    FOREIGN KEY (id_produto)\n        REFERENCES produto(id_produto),\n\n    FOREIGN KEY (id_fornecedor)\n        REFERENCES fornecedor(id_fornecedor),\n\n    CONSTRAINT chk_preco_custo CHECK (preco_custo >= 0),\n    CONSTRAINT chk_prazo_entrega CHECK (prazo_entrega >= 0)\n)",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar comandos de conferência",
+        "sql": "SHOW TABLES",
+        "ok": true,
+        "rows": 5,
+        "affected": 5,
+        "preview": [
+          [
+            "categoria"
+          ],
+          [
+            "cidade"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comandos de conferência",
+        "sql": "DESCRIBE categoria",
+        "ok": true,
+        "rows": 2,
+        "affected": 2,
+        "preview": [
+          [
+            "id_categoria",
+            "int",
+            "NO",
+            "PRI",
+            "None",
+            "auto_increment"
+          ],
+          [
+            "nome",
+            "varchar(50)",
+            "NO",
+            "UNI",
+            "None",
+            ""
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comandos de conferência",
+        "sql": "DESCRIBE cidade",
+        "ok": true,
+        "rows": 3,
+        "affected": 3,
+        "preview": [
+          [
+            "id_cidade",
+            "int",
+            "NO",
+            "PRI",
+            "None",
+            "auto_increment"
+          ],
+          [
+            "nome_cidade",
+            "varchar(80)",
+            "NO",
+            "MUL",
+            "None",
+            ""
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comandos de conferência",
+        "sql": "DESCRIBE fornecedor",
+        "ok": true,
+        "rows": 4,
+        "affected": 4,
+        "preview": [
+          [
+            "id_fornecedor",
+            "int",
+            "NO",
+            "PRI",
+            "None",
+            "auto_increment"
+          ],
+          [
+            "nome",
+            "varchar(80)",
+            "NO",
+            "",
+            "None",
+            ""
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comandos de conferência",
+        "sql": "DESCRIBE produto",
+        "ok": true,
+        "rows": 6,
+        "affected": 6,
+        "preview": [
+          [
+            "id_produto",
+            "int",
+            "NO",
+            "PRI",
+            "None",
+            "auto_increment"
+          ],
+          [
+            "descricao",
+            "varchar(100)",
+            "NO",
+            "",
+            "None",
+            ""
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comandos de conferência",
+        "sql": "DESCRIBE produto_fornecedor",
+        "ok": true,
+        "rows": 4,
+        "affected": 4,
+        "preview": [
+          [
+            "id_produto",
+            "int",
+            "NO",
+            "PRI",
+            "None",
+            ""
+          ],
+          [
+            "id_fornecedor",
+            "int",
+            "NO",
+            "PRI",
+            "None",
+            ""
+          ]
+        ]
+      },
+      {
+        "block": "Copiar laboratório ALTER TABLE",
+        "sql": "CREATE TABLE estrutura_lab (\n    id INT PRIMARY KEY\n)",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar laboratório ALTER TABLE",
+        "sql": "ALTER TABLE estrutura_lab\nADD COLUMN observacao VARCHAR(100)",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar laboratório ALTER TABLE",
+        "sql": "DESCRIBE estrutura_lab",
+        "ok": true,
+        "rows": 2,
+        "affected": 2,
+        "preview": [
+          [
+            "id",
+            "int",
+            "NO",
+            "PRI",
+            "None",
+            ""
+          ],
+          [
+            "observacao",
+            "varchar(100)",
+            "YES",
+            "",
+            "None",
+            ""
+          ]
+        ]
+      },
+      {
+        "block": "Copiar laboratório ALTER TABLE",
+        "sql": "ALTER TABLE estrutura_lab\nDROP COLUMN observacao",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar laboratório ALTER TABLE",
+        "sql": "DROP TABLE estrutura_lab",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar INSERT categoria",
+        "sql": "INSERT INTO categoria (id_categoria, nome)\nVALUES\n(1, 'DOCE'),\n(2, 'SALGADO'),\n(3, 'BEBIDA'),\n(4, 'LIMPEZA'),\n(5, 'PERFUMARIA'),\n(6, 'UTENSILIO'),\n(7, 'FRUTAS'),\n(8, 'VERDURA'),\n(9, 'CARNE'),\n(10, 'FRIOS'),\n(11, 'PADARIA'),\n(12, 'HIGIENE'),\n(13, 'CONGELADOS'),\n(14, 'MATINAIS'),\n(15, 'LATICINIOS'),\n(16, 'ENLATADOS'),\n(17, 'TEMPEROS'),\n(18, 'MASSAS'),\n(19, 'BISCOITOS'),\n(20, 'DOCES E SOBREMESAS'),\n(21, 'PET SHOP'),\n(22, 'UTILIDADES DOMESTICAS'),\n(23, 'PAPELARIA'),\n(24, 'DESCARTAVEIS'),\n(25, 'HORTIFRUTI'),\n(26, 'MERCEARIA')",
+        "ok": true,
+        "rows": 0,
+        "affected": 26,
+        "preview": []
+      },
+      {
+        "block": "Copiar SELECT categoria — conferir cadastro",
+        "sql": "SELECT * FROM categoria",
+        "ok": true,
+        "rows": 26,
+        "affected": 26,
+        "preview": [
+          [
+            "3",
+            "BEBIDA"
+          ],
+          [
+            "19",
+            "BISCOITOS"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar INSERT fornecedor",
+        "sql": "INSERT INTO fornecedor (id_fornecedor, nome, telefone)\nVALUES\n(3, 'ARMAZEM DO COMERCIO', '(19) 9999-1001'),\n(4, 'COCA-COLA FEMSA', '(19) 9999-1002'),\n(5, 'NESTLE BRASIL', '(19) 9999-1003'),\n(6, 'AMBEV DISTRIBUIDORA', '(19) 9999-1004'),\n(7, 'SADIA ALIMENTOS', '(19) 9999-1005'),\n(8, 'PERDIGAO DISTRIBUICAO', '(19) 9999-1006'),\n(9, 'YPE PRODUTOS', '(19) 9999-1007'),\n(10, 'UNILEVER BRASIL', '(19) 9999-1008'),\n(11, 'PEPSICO', '(19) 9999-1009'),\n(12, 'BAUDUCCO', '(19) 9999-1010'),\n(13, 'CASA DO MERCADO', '(19) 9999-1011'),\n(18, 'DISTRIBUIDORA CENTRAL', '(19) 9999-1012'),\n(19, 'MAX ALIMENTOS', '(19) 9999-1013'),\n(20, 'BOM PRECO ATACADO', '(19) 9999-1014'),\n(21, 'NOVA ERA COMERCIAL', '(19) 9999-1015'),\n(22, 'SUPERMIX DISTRIBUIDORA', '(19) 9999-1016'),\n(23, 'REAL COMERCIO', '(19) 9999-1017'),\n(24, 'ALFA DISTRIBUICAO', '(19) 9999-1018'),\n(25, 'COMERCIAL BRASIL', '(19) 9999-1019'),\n(26, 'ESTRELA DO LAR', '(19) 9999-1020'),\n(27, 'TOP BEBIDAS', '(19) 9999-1021'),\n(28, 'VALE ALIMENTOS', '(19) 9999-1022'),\n(29, 'PRIME DISTRIBUIDORA', '(19) 9999-1023'),\n(30, 'IDEAL COMERCIO', '(19) 9999-1024'),\n(31, 'TOTAL LIMPEZA', '(19) 9999-1025')",
+        "ok": true,
+        "rows": 0,
+        "affected": 25,
+        "preview": []
+      },
+      {
+        "block": "Copiar INSERT produto",
+        "sql": "INSERT INTO produto (id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)\nVALUES\n(12, 'BALA 7 BELO', 0, 12, 1, 5),\n(13, 'PIRULITO', 1, 25, 1, 5),\n(14, 'CHICLETE', 0, 8, 1, 10),\n(15, 'PACOCA', 1, 6, 1, 10),\n(16, 'BOMBOM', 2, 15, 1, 10),\n(17, 'COXINHA', 8, 20, 2, 5),\n(18, 'QUIBE', 10, 18, 2, 5),\n(19, 'MISTAO', 15, 2, 2, 3),\n(20, 'PASTEL', 9, 4, 2, 5),\n(21, 'ENROLADINHO', 6, 7, 2, 5),\n(22, 'COCA COLA LATA', 5, 120, 3, 20),\n(23, 'GUARANA LATA', 4, 15, 3, 20),\n(24, 'SUCO DE LARANJA', 6, 9, 3, 10),\n(25, 'AGUA MINERAL', 2, 18, 3, 30),\n(26, 'ENERGETICO', 9, 3, 3, 5),\n(27, 'DETERGENTE', 3, 25, 4, 10),\n(28, 'SABAO EM PO', 18, 5, 4, 8),\n(29, 'AGUA SANITARIA', 5, 6, 4, 8),\n(30, 'DESINFETANTE', 7, 4, 4, 8),\n(31, 'ESPONJA', 2, 30, 4, 15),\n(32, 'SHAMPOO', 15, 12, 5, 5),\n(33, 'CONDICIONADOR', 17, 9, 5, 5),\n(34, 'SABONETE', 3, 40, 5, 10),\n(35, 'CREME DENTAL', 6, 8, 12, 10),\n(36, 'DESODORANTE', 12, 2, 5, 5),\n(37, 'PRATO DESCARTAVEL', 8, 35, 24, 10),\n(38, 'COPO DESCARTAVEL', 6, 10, 24, 15),\n(39, 'GUARDANAPO', 4, 12, 24, 20),\n(40, 'PAPEL ALUMINIO', 9, 4, 22, 5),\n(41, 'FILME PVC', 7, 3, 22, 5),\n(42, 'MACA', 8, 20, 7, 10),\n(43, 'BANANA', 6, 18, 7, 10),\n(44, 'LARANJA', 5, 22, 7, 10),\n(45, 'MAMAO', 9, 4, 7, 5),\n(46, 'UVA', 14, 2, 7, 5),\n(47, 'ALFACE', 3, 15, 8, 8),\n(48, 'TOMATE', 7, 7, 8, 10),\n(49, 'BATATA', 5, 9, 8, 12),\n(50, 'CEBOLA', 6, 6, 8, 10),\n(51, 'CENOURA', 4, 5, 8, 8),\n(52, 'PICANHA', 65, 1, 9, 2),\n(53, 'FRANGO', 18, 8, 9, 5),\n(54, 'LINGUICA', 22, 4, 9, 5),\n(55, 'CARNE MOIDA', 35, 3, 9, 5),\n(56, 'BISTECA', 28, 2, 9, 3),\n(57, 'PRESUNTO', 32, 6, 10, 5),\n(58, 'MUSSARELA', 45, 4, 10, 5),\n(59, 'MORTADELA', 16, 12, 10, 5),\n(60, 'IOGURTE', 7, 5, 15, 8),\n(61, 'REQUEIJAO', 12, 2, 15, 5),\n(62, 'PAO FRANCES', 1, 130, 11, 20),\n(63, 'SONHO', 6, 4, 11, 5),\n(64, 'BOLO DE CHOCOLATE', 25, 1, 11, 2),\n(65, 'ROSCA DOCE', 12, 2, 11, 2),\n(66, 'PAO DE FORMA', 9, 6, 11, 5),\n(67, 'PAPEL HIGIENICO', 18, 8, 12, 10),\n(68, 'ABSORVENTE', 9, 3, 12, 5),\n(69, 'ALGODAO', 5, 2, 12, 5),\n(70, 'COTONETE', 4, 2, 12, 5),\n(71, 'ESCOVA DENTAL', 7, 4, 12, 5)",
+        "ok": true,
+        "rows": 0,
+        "affected": 60,
+        "preview": []
+      },
+      {
+        "block": "Copiar INSERT produto_fornecedor",
+        "sql": "INSERT INTO produto_fornecedor (id_produto, id_fornecedor)\nVALUES\n(12, 5),\n(13, 5),\n(14, 5),\n(15, 5),\n(16, 5),\n(17, 13),\n(18, 13),\n(19, 13),\n(20, 13),\n(21, 13),\n(22, 4),\n(23, 6),\n(24, 11),\n(25, 27),\n(26, 6),\n(27, 9),\n(28, 9),\n(29, 9),\n(30, 10),\n(31, 31),\n(32, 10),\n(33, 10),\n(34, 10),\n(35, 10),\n(36, 10),\n(37, 25),\n(38, 25),\n(39, 25),\n(40, 25),\n(41, 25),\n(42, 28),\n(43, 28),\n(44, 28),\n(45, 28),\n(46, 28),\n(47, 28),\n(48, 28),\n(49, 28),\n(50, 28),\n(51, 28),\n(52, 19),\n(53, 7),\n(54, 8),\n(55, 19),\n(56, 7),\n(57, 7),\n(58, 7),\n(59, 7),\n(60, 5),\n(61, 5),\n(62, 12),\n(63, 12),\n(64, 12),\n(65, 12),\n(66, 12),\n(67, 10),\n(68, 10),\n(69, 10),\n(70, 10),\n(71, 10)",
+        "ok": true,
+        "rows": 0,
+        "affected": 60,
+        "preview": []
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT * FROM categoria",
+        "ok": true,
+        "rows": 26,
+        "affected": 26,
+        "preview": [
+          [
+            "3",
+            "BEBIDA"
+          ],
+          [
+            "19",
+            "BISCOITOS"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT * FROM cidade",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT * FROM fornecedor",
+        "ok": true,
+        "rows": 25,
+        "affected": 25,
+        "preview": [
+          [
+            "3",
+            "ARMAZEM DO COMERCIO",
+            "(19) 9999-1001",
+            "None"
+          ],
+          [
+            "4",
+            "COCA-COLA FEMSA",
+            "(19) 9999-1002",
+            "None"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT * FROM produto",
+        "ok": true,
+        "rows": 60,
+        "affected": 60,
+        "preview": [
+          [
+            "12",
+            "BALA 7 BELO",
+            "0.00",
+            "12",
+            "1",
+            "5"
+          ],
+          [
+            "13",
+            "PIRULITO",
+            "1.00",
+            "25",
+            "1",
+            "5"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT * FROM produto_fornecedor",
+        "ok": true,
+        "rows": 60,
+        "affected": 60,
+        "preview": [
+          [
+            "12",
+            "5",
+            "None",
+            "None"
+          ],
+          [
+            "13",
+            "5",
+            "None",
+            "None"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT descricao, preco, qtde\nFROM produto",
+        "ok": true,
+        "rows": 60,
+        "affected": 60,
+        "preview": [
+          [
+            "BALA 7 BELO",
+            "0.00",
+            "12"
+          ],
+          [
+            "PIRULITO",
+            "1.00",
+            "25"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar exemplos",
+        "sql": "SELECT DISTINCT id_categoria\nFROM produto",
+        "ok": true,
+        "rows": 14,
+        "affected": 14,
+        "preview": [
+          [
+            "1"
+          ],
+          [
+            "2"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar exemplos",
+        "sql": "SELECT descricao, preco\nFROM produto\nORDER BY id_produto\nLIMIT 10",
+        "ok": true,
+        "rows": 10,
+        "affected": 10,
+        "preview": [
+          [
+            "BALA 7 BELO",
+            "0.00"
+          ],
+          [
+            "PIRULITO",
+            "1.00"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT *\nFROM produto\nWHERE id_categoria = 3",
+        "ok": true,
+        "rows": 5,
+        "affected": 5,
+        "preview": [
+          [
+            "22",
+            "COCA COLA LATA",
+            "5.00",
+            "120",
+            "3",
+            "20"
+          ],
+          [
+            "23",
+            "GUARANA LATA",
+            "4.00",
+            "15",
+            "3",
+            "20"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT *\nFROM produto\nWHERE qtde <= estoque_minimo",
+        "ok": true,
+        "rows": 38,
+        "affected": 38,
+        "preview": [
+          [
+            "14",
+            "CHICLETE",
+            "0.00",
+            "8",
+            "1",
+            "10"
+          ],
+          [
+            "15",
+            "PACOCA",
+            "1.00",
+            "6",
+            "1",
+            "10"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT descricao, preco\nFROM produto\nWHERE preco > 20",
+        "ok": true,
+        "rows": 7,
+        "affected": 7,
+        "preview": [
+          [
+            "PICANHA",
+            "65.00"
+          ],
+          [
+            "LINGUICA",
+            "22.00"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar exemplos",
+        "sql": "SELECT *\nFROM produto\nWHERE preco >= 5 AND preco <= 20",
+        "ok": true,
+        "rows": 38,
+        "affected": 38,
+        "preview": [
+          [
+            "17",
+            "COXINHA",
+            "8.00",
+            "20",
+            "2",
+            "5"
+          ],
+          [
+            "18",
+            "QUIBE",
+            "10.00",
+            "18",
+            "2",
+            "5"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar exemplos",
+        "sql": "SELECT *\nFROM produto\nWHERE id_categoria IN (3, 7, 8)",
+        "ok": true,
+        "rows": 15,
+        "affected": 15,
+        "preview": [
+          [
+            "22",
+            "COCA COLA LATA",
+            "5.00",
+            "120",
+            "3",
+            "20"
+          ],
+          [
+            "23",
+            "GUARANA LATA",
+            "4.00",
+            "15",
+            "3",
+            "20"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar exemplos",
+        "sql": "SELECT *\nFROM produto\nWHERE preco BETWEEN 10 AND 30",
+        "ok": true,
+        "rows": 15,
+        "affected": 15,
+        "preview": [
+          [
+            "18",
+            "QUIBE",
+            "10.00",
+            "18",
+            "2",
+            "5"
+          ],
+          [
+            "19",
+            "MISTAO",
+            "15.00",
+            "2",
+            "2",
+            "3"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar exemplos",
+        "sql": "SELECT *\nFROM fornecedor\nWHERE id_cidade IS NULL",
+        "ok": true,
+        "rows": 25,
+        "affected": 25,
+        "preview": [
+          [
+            "3",
+            "ARMAZEM DO COMERCIO",
+            "(19) 9999-1001",
+            "None"
+          ],
+          [
+            "4",
+            "COCA-COLA FEMSA",
+            "(19) 9999-1002",
+            "None"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar exemplos",
+        "sql": "SELECT *\nFROM produto\nWHERE NOT id_categoria = 3",
+        "ok": true,
+        "rows": 55,
+        "affected": 55,
+        "preview": [
+          [
+            "12",
+            "BALA 7 BELO",
+            "0.00",
+            "12",
+            "1",
+            "5"
+          ],
+          [
+            "13",
+            "PIRULITO",
+            "1.00",
+            "25",
+            "1",
+            "5"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar exemplos",
+        "sql": "SELECT *\nFROM produto\nWHERE id_categoria = 3 OR id_categoria = 15",
+        "ok": true,
+        "rows": 7,
+        "affected": 7,
+        "preview": [
+          [
+            "22",
+            "COCA COLA LATA",
+            "5.00",
+            "120",
+            "3",
+            "20"
+          ],
+          [
+            "23",
+            "GUARANA LATA",
+            "4.00",
+            "15",
+            "3",
+            "20"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT descricao, preco\nFROM produto\nORDER BY descricao",
+        "ok": true,
+        "rows": 60,
+        "affected": 60,
+        "preview": [
+          [
+            "ABSORVENTE",
+            "9.00"
+          ],
+          [
+            "AGUA MINERAL",
+            "2.00"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT descricao, preco\nFROM produto\nORDER BY preco DESC",
+        "ok": true,
+        "rows": 60,
+        "affected": 60,
+        "preview": [
+          [
+            "PICANHA",
+            "65.00"
+          ],
+          [
+            "MUSSARELA",
+            "45.00"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT descricao, qtde\nFROM produto\nORDER BY qtde",
+        "ok": true,
+        "rows": 60,
+        "affected": 60,
+        "preview": [
+          [
+            "BOLO DE CHOCOLATE",
+            "1"
+          ],
+          [
+            "PICANHA",
+            "1"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT descricao\nFROM produto\nWHERE descricao LIKE 'P%'",
+        "ok": true,
+        "rows": 10,
+        "affected": 10,
+        "preview": [
+          [
+            "PIRULITO"
+          ],
+          [
+            "PACOCA"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT descricao\nFROM produto\nWHERE descricao LIKE '%COLA%'",
+        "ok": true,
+        "rows": 2,
+        "affected": 2,
+        "preview": [
+          [
+            "COCA COLA LATA"
+          ],
+          [
+            "BOLO DE CHOCOLATE"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT nome\nFROM fornecedor\nWHERE nome LIKE '%BRASIL%'",
+        "ok": true,
+        "rows": 3,
+        "affected": 3,
+        "preview": [
+          [
+            "NESTLE BRASIL"
+          ],
+          [
+            "UNILEVER BRASIL"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT nome\nFROM categoria\nWHERE nome LIKE '%DOCE%'",
+        "ok": true,
+        "rows": 2,
+        "affected": 2,
+        "preview": [
+          [
+            "DOCE"
+          ],
+          [
+            "DOCES E SOBREMESAS"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar UPDATE seguro",
+        "sql": "INSERT INTO produto\n(id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)\nVALUES\n(1001, 'PRODUTO TEMPORARIO UPDATE', 5, 1, 3, 0)",
+        "ok": true,
+        "rows": 0,
+        "affected": 1,
+        "preview": []
+      },
+      {
+        "block": "Copiar UPDATE seguro",
+        "sql": "SELECT *\nFROM produto\nWHERE id_produto = 1001",
+        "ok": true,
+        "rows": 1,
+        "affected": 1,
+        "preview": [
+          [
+            "1001",
+            "PRODUTO TEMPORARIO UPDATE",
+            "5.00",
+            "1",
+            "3",
+            "0"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar UPDATE seguro",
+        "sql": "UPDATE produto\nSET preco = 6\nWHERE id_produto = 1001",
+        "ok": true,
+        "rows": 0,
+        "affected": 1,
+        "preview": []
+      },
+      {
+        "block": "Copiar UPDATE seguro",
+        "sql": "SELECT *\nFROM produto\nWHERE id_produto = 1001",
+        "ok": true,
+        "rows": 1,
+        "affected": 1,
+        "preview": [
+          [
+            "1001",
+            "PRODUTO TEMPORARIO UPDATE",
+            "6.00",
+            "1",
+            "3",
+            "0"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar UPDATE seguro",
+        "sql": "DELETE FROM produto\nWHERE id_produto = 1001",
+        "ok": true,
+        "rows": 0,
+        "affected": 1,
+        "preview": []
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "INSERT INTO produto\n(id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)\nVALUES\n(1000, 'PRODUTO TEMPORARIO', 5, 1, 3, 0)",
+        "ok": true,
+        "rows": 0,
+        "affected": 1,
+        "preview": []
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT *\nFROM produto\nWHERE id_produto = 1000",
+        "ok": true,
+        "rows": 1,
+        "affected": 1,
+        "preview": [
+          [
+            "1000",
+            "PRODUTO TEMPORARIO",
+            "5.00",
+            "1",
+            "3",
+            "0"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "DELETE FROM produto\nWHERE id_produto = 1000",
+        "ok": true,
+        "rows": 0,
+        "affected": 1,
+        "preview": []
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT *\nFROM produto\nWHERE id_produto = 1000",
+        "ok": true,
+        "rows": 0,
+        "affected": 0,
+        "preview": []
+      },
+      {
+        "block": "Copiar produto válido do teste",
+        "sql": "INSERT INTO produto\n(id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)\nVALUES\n(900001, 'PRODUTO TESTE', 5, 10, 3, 5)",
+        "ok": true,
+        "rows": 0,
+        "affected": 1,
+        "preview": []
+      },
+      {
+        "block": "Copiar teste com categoria inexistente",
+        "sql": "INSERT INTO produto\n(id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)\nVALUES\n(900002, 'PRODUTO INVALIDO', 5, 10, 999, 5)",
+        "expected_error": 1452,
+        "message": "(1452, 'Cannot add or update a child row: a foreign key constraint fails (`comercio`.`produto`, CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`))')"
+      },
+      {
+        "block": "Copiar vínculo válido do teste",
+        "sql": "INSERT INTO produto_fornecedor (id_produto, id_fornecedor)\nVALUES (900001, 4)",
+        "ok": true,
+        "rows": 0,
+        "affected": 1,
+        "preview": []
+      },
+      {
+        "block": "Copiar teste com fornecedor inexistente",
+        "sql": "INSERT INTO produto_fornecedor (id_produto, id_fornecedor)\nVALUES (900001, 999)",
+        "expected_error": 1452,
+        "message": "(1452, 'Cannot add or update a child row: a foreign key constraint fails (`comercio`.`produto_fornecedor`, CONSTRAINT `produto_fornecedor_ibfk_2` FOREIGN KEY (`id_fornecedor`) REFERENCES `fornecedor` (`id_fornecedor`))')"
+      },
+      {
+        "block": "Copiar limpeza do teste de integridade",
+        "sql": "DELETE FROM produto_fornecedor\nWHERE id_produto = 900001",
+        "ok": true,
+        "rows": 0,
+        "affected": 1,
+        "preview": []
+      },
+      {
+        "block": "Copiar limpeza do teste de integridade",
+        "sql": "DELETE FROM produto\nWHERE id_produto = 900001",
+        "ok": true,
+        "rows": 0,
+        "affected": 1,
+        "preview": []
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT\n    produto.descricao,\n    categoria.nome AS categoria\nFROM produto\nINNER JOIN categoria\n    ON produto.id_categoria = categoria.id_categoria",
+        "ok": true,
+        "rows": 60,
+        "affected": 60,
+        "preview": [
+          [
+            "COCA COLA LATA",
+            "BEBIDA"
+          ],
+          [
+            "GUARANA LATA",
+            "BEBIDA"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar JOIN completo",
+        "sql": "SELECT\n    produto.descricao,\n    categoria.nome AS categoria,\n    fornecedor.nome AS fornecedor\nFROM produto\nINNER JOIN categoria\n    ON produto.id_categoria = categoria.id_categoria\nINNER JOIN produto_fornecedor\n    ON produto.id_produto = produto_fornecedor.id_produto\nINNER JOIN fornecedor\n    ON produto_fornecedor.id_fornecedor = fornecedor.id_fornecedor\nORDER BY produto.descricao",
+        "ok": true,
+        "rows": 60,
+        "affected": 60,
+        "preview": [
+          [
+            "ABSORVENTE",
+            "HIGIENE",
+            "UNILEVER BRASIL"
+          ],
+          [
+            "AGUA MINERAL",
+            "BEBIDA",
+            "TOP BEBIDAS"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT COUNT(*) FROM produto",
+        "ok": true,
+        "rows": 1,
+        "affected": 1,
+        "preview": [
+          [
+            "60"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT SUM(qtde) FROM produto",
+        "ok": true,
+        "rows": 1,
+        "affected": 1,
+        "preview": [
+          [
+            "804"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT AVG(preco) FROM produto",
+        "ok": true,
+        "rows": 1,
+        "affected": 1,
+        "preview": [
+          [
+            "10.716667"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT MIN(preco) FROM produto",
+        "ok": true,
+        "rows": 1,
+        "affected": 1,
+        "preview": [
+          [
+            "0.00"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT MAX(preco) FROM produto",
+        "ok": true,
+        "rows": 1,
+        "affected": 1,
+        "preview": [
+          [
+            "65.00"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar comando",
+        "sql": "SELECT\n    categoria.nome AS categoria,\n    COUNT(*) AS total_produtos\nFROM produto\nINNER JOIN categoria\n    ON produto.id_categoria = categoria.id_categoria\nGROUP BY categoria.nome\nORDER BY total_produtos DESC",
+        "ok": true,
+        "rows": 14,
+        "affected": 14,
+        "preview": [
+          [
+            "HIGIENE",
+            "6"
+          ],
+          [
+            "BEBIDA",
+            "5"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar relatório por categoria",
+        "sql": "SELECT\n    categoria.nome AS categoria,\n    SUM(produto.qtde) AS total_estoque,\n    AVG(produto.preco) AS preco_medio\nFROM produto\nINNER JOIN categoria\n    ON produto.id_categoria = categoria.id_categoria\nGROUP BY categoria.nome\nORDER BY total_estoque DESC",
+        "ok": true,
+        "rows": 14,
+        "affected": 14,
+        "preview": [
+          [
+            "BEBIDA",
+            "165",
+            "5.200000"
+          ],
+          [
+            "PADARIA",
+            "143",
+            "10.600000"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar relatório por fornecedor",
+        "sql": "SELECT\n    fornecedor.nome AS fornecedor,\n    COUNT(*) AS total_produtos\nFROM produto_fornecedor\nINNER JOIN fornecedor\n    ON produto_fornecedor.id_fornecedor = fornecedor.id_fornecedor\nGROUP BY fornecedor.id_fornecedor, fornecedor.nome\nORDER BY total_produtos DESC",
+        "ok": true,
+        "rows": 15,
+        "affected": 15,
+        "preview": [
+          [
+            "UNILEVER BRASIL",
+            "11"
+          ],
+          [
+            "VALE ALIMENTOS",
+            "10"
+          ]
+        ]
+      },
+      {
+        "block": "Copiar exemplo com HAVING",
+        "sql": "SELECT\n    categoria.nome AS categoria,\n    COUNT(*) AS total_produtos\nFROM produto\nINNER JOIN categoria\n    ON produto.id_categoria = categoria.id_categoria\nGROUP BY categoria.id_categoria, categoria.nome\nHAVING COUNT(*) >= 3\nORDER BY total_produtos DESC",
+        "ok": true,
+        "rows": 12,
+        "affected": 12,
+        "preview": [
+          [
+            "HIGIENE",
+            "6"
+          ],
+          [
+            "BEBIDA",
+            "5"
+          ]
+        ]
+      }
+    ],
+    "first_insert_checkpoint": {
+      "categoria": 26,
+      "cidade": 0,
+      "fornecedor": 0,
+      "produto": 0,
+      "produto_fornecedor": 0
+    },
+    "baseline_preserved": {
+      "categoria": {
+        "count": 26,
+        "sha256": "b5bd02518f54ea797a5f48483b94e23fc061006adf944b310898e65b5b412f08"
+      },
+      "cidade": {
+        "count": 0,
+        "sha256": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+      },
+      "fornecedor": {
+        "count": 25,
+        "sha256": "31d06f4d6d8a15bfd832af4032d976c5845bab3f088140a71f303a1ed4f7a4ff"
+      },
+      "produto": {
+        "count": 60,
+        "sha256": "e71d9984dcc624b885966108541cae937cac0d811fc8b21b5fd0df6f92d7edd7"
+      },
+      "produto_fornecedor": {
+        "count": 60,
+        "sha256": "6e721a9eec0d09710b1975555a1e93f6381218f50a46035e52b953b099350eb7"
+      }
+    },
+    "counts": {
+      "categoria": 26,
+      "cidade": 0,
+      "fornecedor": 25,
+      "produto": 60,
+      "produto_fornecedor": 60
+    },
+    "cleanup": "Banco descartável removido e servidor encerrado"
+  },
+  "node_tests": {
+    "pass": 29,
+    "fail": 0
+  },
+  "windows_apps_executed": false,
+  "real_firebase_writes": 0
+}
