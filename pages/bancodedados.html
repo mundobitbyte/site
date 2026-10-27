@@ -1345,7 +1345,7 @@ MySQL interpreta
 MySQL executa
 ↓
 Banco físico é alterado</pre></div>
-<p>Neste capítulo, começaremos pelo <strong>CLI do MySQL</strong> para conhecer a conexão pelo terminal. Em seguida, conheceremos o <strong>HeidiSQL</strong> para executar a mesma linguagem SQL em uma interface gráfica. Ambos são clientes do MySQL Server; o banco e os comandos SQL não dependem de uma interface específica.</p>
+<p>Neste capítulo, começaremos pelo <strong>CLI do MySQL</strong> (<em>Command Line Interface</em>, ou interface de linha de comando) para conhecer a conexão pelo terminal. Em seguida, conheceremos o <strong>HeidiSQL</strong> para executar a mesma linguagem SQL em uma interface gráfica. Ambos são clientes do MySQL Server; o banco e os comandos SQL não dependem de uma interface específica.</p>
 <h2>BLOCO 4 — Preparando o Ambiente MySQL</h2>
 <p>Para executar os comandos deste capítulo, o computador precisa ter o <strong>MySQL Server</strong> instalado e configurado. No Windows, a instalação oficial atual pode ser feita pelo pacote MSI e pelo MySQL Configurator.</p>
 <ol>
@@ -1374,23 +1374,23 @@ USE comercio;</code></pre></div>
 <p><strong>Baixar e instalar:</strong> acesse o <a href="https://www.heidisql.com/download.php" target="_blank" rel="noopener noreferrer">site oficial do HeidiSQL</a>, escolha o instalador compatível com seu Windows e conclua a instalação. O HeidiSQL é um cliente: <strong>o MySQL Server precisa estar instalado e em execução</strong>.</p>
 <div class="heidi-note"><strong>Versões das telas:</strong> as capturas desta aula foram feitas no <strong>HeidiSQL 3.2 (revisão 1129)</strong>, uma versão antiga, conforme a tela Sobre do programa utilizado. Na <a href="https://www.heidisql.com/download.php" target="_blank" rel="noopener noreferrer">página oficial de downloads</a>, a versão estável para Windows consultada em 26/10/2026 é a <strong>12.22, lançada em 25/10/2026</strong>. Ao instalar uma versão recente, você poderá encontrar menus, ícones e janelas com aparência diferente. Identifique os recursos por sua <strong>função</strong> (conexão, árvore de bancos, editor SQL, executar e resultados), não apenas pelo desenho do botão. A sintaxe SQL dos exemplos continua sendo executada pelo MySQL Server.</div>
 <h4>1. Faça a conexão</h4>
-<p>Abra o HeidiSQL e crie uma sessão. Para o MySQL local usado no curso, informe <strong>Hostname/IP: 127.0.0.1</strong>, <strong>usuário: root</strong>, a <strong>senha configurada na instalação do MySQL</strong> e <strong>porta: 3306</strong> (a menos que sua instalação use outra). Clique em <strong>Connect</strong>. A senha não deve ser compartilhada nem mostrada em capturas.</p>
-<figure class="heidi-figure heidi-figure-compact"><img src="../img/bancodedados/heidisql/original-conexao-inicial.webp" width="456" height="346" alt="Captura de tela: conexão HeidiSQL: Hostname/IP, usuário, senha, porta e Connect" loading="lazy" decoding="async"/><figcaption>Reconheça os campos da sessão e conecte-se ao mesmo servidor que utilizou no CLI.</figcaption></figure>
+<p>Abra o HeidiSQL e clique em <strong>New (Nova)</strong> para criar uma sessão. Para o MySQL local usado no curso, informe <strong>Hostname/IP: 127.0.0.1</strong>, <strong>usuário: root</strong>, a <strong>senha configurada na instalação do MySQL</strong> e <strong>porta: 3306</strong> (a menos que sua instalação use outra). Clique em <strong>Connect</strong>. A senha não deve ser compartilhada nem mostrada em capturas.</p>
+<figure class="heidi-figure heidi-figure-compact"><img src="../img/bancodedados/heidisql/original-conexao-inicial.webp" width="456" height="346" style="width:456px" alt="Captura de tela: conexão HeidiSQL: Hostname/IP, usuário, senha, porta e Connect" loading="lazy" decoding="async"/><figcaption>Reconheça os campos da sessão e conecte-se ao mesmo servidor que utilizou no CLI.</figcaption></figure>
 <h4>2. Outra forma de criar bancos — observação, não execução</h4>
 <p>O HeidiSQL também permite criar bancos pelo menu gráfico. Na versão da captura, o caminho é:</p>
 <ol class="heidi-steps"><li>Abra o menu <strong>Tools</strong>.</li><li>Escolha <strong>Create Database...</strong>.</li></ol>
 <div class="heidi-note"><strong>Apenas observe:</strong> <code>comercio</code> já existe; não o recrie. A seleção de <code>loja</code> na lateral é incidental e não faz parte do procedimento. Na versão recente, a posição ou o nome da opção pode variar.</div>
-<figure class="heidi-figure heidi-figure-compact"><img src="../img/bancodedados/heidisql/original-criar-banco-menu.webp" width="451" height="391" alt="Captura de tela: menu Tools com Create Database no HeidiSQL; a seleção loja é incidental" loading="lazy" decoding="async"/><figcaption>Outra maneira de criar bancos: <strong>Tools → Create Database...</strong>.</figcaption></figure>
+<figure class="heidi-figure heidi-figure-compact"><img src="../img/bancodedados/heidisql/original-criar-banco-menu.webp" width="451" height="391" style="width:451px" alt="Captura de tela: menu Tools com Create Database no HeidiSQL; a seleção loja é incidental" loading="lazy" decoding="async"/><figcaption>Outra maneira de criar bancos: <strong>Tools → Create Database...</strong></figcaption></figure>
 <h4>3. Consulte os bancos existentes no editor SQL</h4>
-<p>No painel esquerdo, localize <code>comercio</code>. Selecione esse banco e abra a aba <strong>Query</strong> (editor SQL). Use o botão abaixo para copiar <code>SHOW DATABASES;</code> e cole no editor e clique em <strong>Executar</strong> (ou pressione <kbd>F9</kbd>). Confira a lista na grade inferior. Os outros bancos que aparecem nas imagens são apenas exemplos do computador usado na captura: no seu, a lista pode ser diferente.</p>
+<p>No painel esquerdo, localize <code>comercio</code>. Selecione esse banco e abra a aba <strong>Query</strong> (editor SQL). Copie <code>SHOW DATABASES;</code> pelo botão abaixo e cole na área de texto do editor. Clique no <strong>triângulo azul de execução</strong>, acima dessa área, ou pressione <kbd>F9</kbd>. A lista de bancos aparecerá na <strong>grade de resultados</strong>, abaixo do editor. Os outros bancos que aparecem nas imagens são apenas exemplos do computador usado na captura: no seu, a lista pode ser diferente.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar SHOW DATABASES no HeidiSQL</button><pre><code>SHOW DATABASES;</code></pre></div>
-<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/original-show-databases.webp" width="862" height="399" alt="Captura de tela: Aba Query, comando SHOW DATABASES, botão de execução, lista de bancos e comércio na árvore" loading="lazy" decoding="async"/><figcaption>O mesmo comando usado no terminal agora mostra o resultado em uma grade.</figcaption></figure>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/original-show-databases.webp" width="862" height="399" style="width:862px" alt="Captura de tela: Aba Query, comando SHOW DATABASES, botão de execução, lista de bancos e comercio na árvore" loading="lazy" decoding="async"/><figcaption>O mesmo comando usado no terminal agora mostra o resultado em uma grade.</figcaption></figure>
 
 <p>Como esta é outra conexão, confirme também o banco ativo: deixe apenas o comando abaixo no editor e execute. Assim, a criação das tabelas ocorrerá em <code>comercio</code>.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar USE comercio no HeidiSQL</button><pre><code>USE comercio;</code></pre></div>
 <h4>4. Aprenda a executar e limpar comandos</h4>
-<p>Na área do editor, o menu de contexto apresenta <strong>Run (F9)</strong> e <strong>Clear</strong> nesta versão antiga. <strong>Run (F9)</strong> pode executar todas as instruções do editor; para executar só um trecho, use a opção específica de seleção; <strong>Clear</strong> apenas limpa o texto digitado e <strong>não desfaz</strong> alterações já executadas no banco. Como o editor pode conter mais de uma instrução, para conferir uma tabela sem repetir sua criação, <strong>abra uma consulta nova ou deixe somente o comando de conferência no editor</strong> antes de executar.</p>
-<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/original-editor-run-clear.webp" width="868" height="421" alt="Captura de tela: Menu de contexto do editor SQL com Run F9 e Clear" loading="lazy" decoding="async"/><figcaption>Limpar o editor não desfaz um CREATE, INSERT, UPDATE ou DELETE já confirmado.</figcaption></figure>
+<p>Clique com o botão direito na área de texto do editor. Na captura, <strong>Run (F9)</strong> executa os comandos; <strong>Run Selection</strong> executa somente o trecho selecionado; <strong>Clear</strong> limpa o texto e <strong>não desfaz</strong> o que já foi executado no banco. Para seguir a aula com tranquilidade, <strong>deixe no editor apenas o comando da etapa atual</strong>. Ao passar da criação para uma consulta, substitua o texto anterior; não execute o CREATE outra vez.</p>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/original-editor-run-clear.webp" width="868" height="421" style="width:868px" alt="Captura de tela: Menu de contexto do editor SQL com Run F9 e Clear" loading="lazy" decoding="async"/><figcaption>Limpar o editor não desfaz um CREATE, INSERT, UPDATE ou DELETE já confirmado.</figcaption></figure>
 <p><strong>Checkpoint MbB:</strong> você encontrou no HeidiSQL o mesmo <code>comercio</code> criado pelo CLI, executou <code>SHOW DATABASES;</code> e viu seu resultado. Agora vamos construir as tabelas com SQL, usando o HeidiSQL como ferramenta prática principal. O CLI continuará disponível e voltará quando for importante para o conteúdo.</p>
 </section>
 <h2>BLOCO 6 — CREATE TABLE: criando as tabelas do sistema comercial</h2>
@@ -1413,10 +1413,10 @@ USE comercio;</code></pre></div>
     id_categoria INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL UNIQUE
 );</code></pre></div>
-<figure class="heidi-figure" data-mbb-ampliavel="grafico" data-mbb-titulo="HeidiSQL — editor com CREATE TABLE categoria"><img src="../img/bancodedados/heidisql/original-create-table-categoria.webp" width="973" height="327" alt="Captura de tela: editor com CREATE TABLE categoria e SHOW TABLES, sem a grade de conferência" loading="lazy" decoding="async"/><figcaption>Primeiro, execute somente o <strong>CREATE TABLE categoria</strong> do bloco acima. A captura também contém SHOW TABLES no editor, mas a conferência será feita separadamente, a seguir.</figcaption></figure>
+<figure class="heidi-figure" data-mbb-ampliavel="grafico" data-mbb-titulo="HeidiSQL — editor com CREATE TABLE categoria"><img src="../img/bancodedados/heidisql/original-create-table-categoria.webp" width="973" height="327" style="width:973px" alt="Captura de tela: editor com CREATE TABLE categoria e SHOW TABLES, sem a grade de conferência" loading="lazy" decoding="async"/><figcaption>Primeiro, execute somente o <strong>CREATE TABLE categoria</strong> do bloco acima. A captura também contém SHOW TABLES no editor, mas a conferência será feita separadamente, a seguir.</figcaption></figure>
 <p><strong>Primeira conquista:</strong> depois de executar <code>CREATE TABLE categoria</code> uma vez, deixe <strong>apenas</strong> <code>SHOW TABLES;</code> em uma nova aba de consulta ou no editor, execute e observe o resultado. Não execute novamente o CREATE. A próxima imagem representa a <strong>conferência após a criação</strong>, mostrando <code>categoria</code> na grade inferior.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar SHOW TABLES — conferir categoria</button><pre><code>SHOW TABLES;</code></pre></div>
-<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/original-resultado-show-tables-categoria.webp" width="824" height="435" alt="Captura de tela: Resultado de SHOW TABLES na grade do HeidiSQL: categoria em Tables_in_comercio" loading="lazy" decoding="async"/><figcaption>O resultado a conferir é a linha <strong>categoria</strong> na coluna <strong>Tables_in_comercio</strong>. A interface mostra o estado do laboratório nesse momento, antes das outras tabelas.</figcaption></figure>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/original-resultado-show-tables-categoria.webp" width="824" height="435" style="width:824px" alt="Captura de tela: Resultado de SHOW TABLES na grade do HeidiSQL: categoria em Tables_in_comercio" loading="lazy" decoding="async"/><figcaption>O resultado a conferir é a linha <strong>categoria</strong> na coluna <strong>Tables_in_comercio</strong>. A interface mostra o estado do laboratório nesse momento, antes das outras tabelas.</figcaption></figure>
 </section>
 <section class="heidi-guide" aria-labelledby="bd-etapa-cidade">
 <h3 id="bd-etapa-cidade">2. Cidade — organizando nomes e estados</h3>
@@ -1499,7 +1499,7 @@ DESCRIBE fornecedor;
 DESCRIBE produto;
 DESCRIBE produto_fornecedor;</code></pre></div>
 
-<section class="heidi-guide" aria-labelledby="heidi-estrutura-conferida"><h3 id="heidi-estrutura-conferida">Veja o que foi criado</h3><p>Execute os comandos de conferência logo acima. <code>SHOW TABLES;</code> lista as tabelas; cada <code>DESCRIBE</code> mostra colunas, tipos, valores nulos e chaves de uma tabela. Para observar cada resultado separadamente, selecione e execute uma consulta por vez.</p><div class="heidi-note"><strong>Como interpretar o resultado:</strong> <code>Field</code> identifica o campo; <code>Type</code> indica seu tipo SQL; <code>Null</code> informa se aceita valores nulos; <code>Key</code> mostra indicadores de chave; <code>Default</code> é o valor padrão; <code>Extra</code> exibe propriedades adicionais, como <code>auto_increment</code>. Por exemplo, na tabela <code>categoria</code>, procure <code>id_categoria</code> como chave primária (<code>PRI</code>) e <code>nome</code> como <code>VARCHAR(50)</code>. Faça essa conferência diretamente na sua versão do HeidiSQL. Na captura abaixo, o resultado visível é o último <code>DESCRIBE</code>, da tabela <code>produto_fornecedor</code>.</div><figure class="heidi-figure"><img src="../img/bancodedados/heidisql/original-describe-estrutura.webp" width="766" height="554" alt="Captura de tela: versão antiga do HeidiSQL após comandos DESCRIBE; parte dos valores é apresentada como MEMO" loading="lazy" decoding="async"/><figcaption>Nesta captura antiga, <code>(MEMO)</code> é uma particularidade visual das células, <strong>não um tipo SQL do MySQL</strong>. Para conferir os valores reais, execute <code>DESCRIBE</code> no seu HeidiSQL e leia os valores da coluna <code>Type</code>.</figcaption></figure><p><strong>Conquista MbB:</strong> antes de passar a <code>INSERT</code>, confira as cinco tabelas e compare suas estruturas com o modelo lógico.</p></section>
+<section class="heidi-guide" aria-labelledby="heidi-estrutura-conferida"><h3 id="heidi-estrutura-conferida">Veja o que foi criado</h3><p>Execute os comandos de conferência logo acima. <code>SHOW TABLES;</code> lista as tabelas; cada <code>DESCRIBE</code> mostra colunas, tipos, valores nulos e chaves de uma tabela. Para observar cada resultado separadamente, selecione e execute uma consulta por vez.</p><div class="heidi-note"><strong>Como interpretar o resultado:</strong> <code>Field</code> identifica o campo; <code>Type</code> indica seu tipo SQL; <code>Null</code> informa se aceita valores nulos; <code>Key</code> mostra indicadores de chave; <code>Default</code> é o valor padrão; <code>Extra</code> exibe propriedades adicionais, como <code>auto_increment</code>. Por exemplo, na tabela <code>categoria</code>, procure <code>id_categoria</code> como chave primária (<code>PRI</code>) e <code>nome</code> como <code>VARCHAR(50)</code>. Faça essa conferência diretamente na sua versão do HeidiSQL. Na captura abaixo, o resultado visível é o último <code>DESCRIBE</code>, da tabela <code>produto_fornecedor</code>.</div><figure class="heidi-figure"><img src="../img/bancodedados/heidisql/original-describe-estrutura.webp" width="766" height="554" style="width:766px" alt="Captura de tela: versão antiga do HeidiSQL após comandos DESCRIBE; parte dos valores é apresentada como MEMO" loading="lazy" decoding="async"/><figcaption>Nesta captura antiga, <code>(MEMO)</code> é uma particularidade visual das células, <strong>não um tipo SQL do MySQL</strong>. Para conferir os valores reais, execute <code>DESCRIBE</code> no seu HeidiSQL e leia os valores da coluna <code>Type</code>.</figcaption></figure><p><strong>Conquista MbB:</strong> antes de passar a <code>INSERT</code>, confira as cinco tabelas e compare suas estruturas com o modelo lógico.</p></section>
 <h2>BLOCO 6.1 — ALTER TABLE: quando a estrutura precisa evoluir</h2>
 <p>CREATE TABLE cria a estrutura inicial. Mas sistemas evoluem. <strong>ALTER TABLE</strong> modifica a estrutura de uma tabela que já existe.</p>
 <p>Para aprender sem alterar o modelo comercial, use uma tabela de laboratório:</p>
@@ -1521,6 +1521,7 @@ DROP TABLE estrutura_lab;</code></pre></div>
 <p>Agora o banco deixa de ser apenas estrutura e começa a receber dados. Vamos preservar os dados existentes de categoria, fornecedor e produto e transformar a antiga ligação produto–fornecedor em registros da tabela associativa.</p>
 <div class="card note"><div class="card-body"><h3>Não inventar dado que não existe</h3><p>A base recebida não informa a cidade de cada fornecedor nem preço de custo/prazo de entrega por fornecedor. Por isso esses campos ficarão <strong>NULL</strong> até existirem dados reais. A estrutura está pronta, mas não vamos preencher informações fictícias apenas para “completar” a tabela.</p></div></div>
 <h3>Inserindo categorias</h3>
+<p>Agora vamos preencher as tabelas que você acabou de conferir. Em <code>INSERT INTO categoria (id_categoria, nome)</code>, indicamos a tabela e a ordem das colunas. Depois de <code>VALUES</code>, cada par entre parênteses representa uma categoria; os textos ficam entre aspas simples. Execute este cadastro <strong>uma única vez</strong>: repetir os mesmos IDs causará duplicidade de chave.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar INSERT categoria</button><pre><code>INSERT INTO categoria (id_categoria, nome)
 VALUES
 (1, 'DOCE'),
@@ -1549,6 +1550,7 @@ VALUES
 (24, 'DESCARTAVEIS'),
 (25, 'HORTIFRUTI'),
 (26, 'MERCEARIA');</code></pre></div>
+<p><strong>Confira a conquista:</strong> no próximo bloco, você aprenderá <code>SELECT</code> para visualizar os registros inseridos. Por enquanto, confirme que o HeidiSQL terminou o comando sem erro e informou as linhas inseridas.</p>
 <h3>Cidades</h3>
 <p>A tabela cidade já existe, mas a base atual não informa a cidade verdadeira dos fornecedores. Portanto, ela ficará vazia por enquanto. Quando houver esses dados, eles deverão ser cadastrados antes de associá-los aos fornecedores.</p>
 <h3>Inserindo fornecedores</h3>
@@ -1782,7 +1784,7 @@ FROM produto
 ORDER BY qtde;</code></pre></div>
 <p>ASC é crescente. DESC é decrescente. Quando omitimos, o MySQL usa ordem crescente por padrão.</p>
 <h2>BLOCO 11 — LIKE: pesquisas textuais</h2>
-<p>LIKE permite procurar padrões em campos de texto. O símbolo % funciona como coringa.</p>
+<p>LIKE permite procurar padrões em campos de texto. O símbolo <code>%</code> representa zero ou mais caracteres: <code>'P%'</code> busca nomes que começam com P; <code>'%COLA%'</code> busca nomes que contêm COLA em qualquer posição.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>SELECT descricao
 FROM produto
 WHERE descricao LIKE 'P%';
@@ -1800,7 +1802,7 @@ FROM categoria
 WHERE nome LIKE '%DOCE%';</code></pre></div>
 <p>Esse tipo de busca aparece em sistemas reais quando o usuário digita parte do nome de um produto, fornecedor ou categoria.</p>
 <h2>BLOCO 12 — UPDATE: alterando registros</h2>
-<p>UPDATE modifica dados existentes. O uso do WHERE é essencial. Para praticar sem alterar um produto real da base, criaremos um registro temporário apenas para este teste.</p>
+<p>UPDATE modifica dados existentes. Vamos comparar o preço antes e depois sem alterar um produto real da base. No laboratório abaixo, <strong>execute uma instrução por vez</strong> e observe cada resultado de <code>SELECT</code>: o preço deve passar de 5 para 6. Só depois faça a limpeza indicada no final. O papel de <code>WHERE</code> é limitar a alteração ao produto do teste.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar UPDATE seguro</button><pre><code>INSERT INTO produto
 (id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)
 VALUES
@@ -1825,7 +1827,7 @@ WHERE id_produto = 1001;</code></pre></div>
 <div class="card note"><div class="card-body"><h3>Por que usamos um produto temporário?</h3><p>O objetivo é aprender UPDATE sem modificar a base que será usada nos capítulos seguintes. O comando DELETE usado apenas para limpeza será explicado detalhadamente no próximo bloco.</p></div></div>
 <h2>BLOCO 13 — DELETE: removendo registros</h2>
 <p>DELETE remove registros. Assim como UPDATE, precisa de muito cuidado com WHERE.</p>
-<p>Para praticar sem destruir um produto real da base, crie primeiro um registro temporário sem fornecedor associado.</p>
+<p>Para praticar sem destruir um produto real da base, crie primeiro um registro temporário sem fornecedor associado. <strong>Execute uma instrução por vez</strong>: a primeira consulta deve mostrar esse produto; depois do <code>DELETE</code>, a segunda deve retornar uma lista vazia.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>INSERT INTO produto
 (id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)
 VALUES
@@ -1845,36 +1847,38 @@ WHERE id_produto = 1000;</code></pre></div>
 <p>Se tentarmos apagar um produto que ainda aparece em <strong>produto_fornecedor</strong>, ou uma categoria que possui produtos vinculados, a FK pode impedir a exclusão. Isso não é erro do banco: é proteção da integridade referencial.</p>
 <h2>BLOCO 14 — FOREIGN KEY: integridade referencial real</h2>
 <p>A FOREIGN KEY é a implementação física do relacionamento entre tabelas. Ela impede referências para registros que não existem. Usaremos um produto temporário e o removeremos ao final.</p>
-<div class="codebox"><button class="copy-btn" type="button">Copiar teste de integridade</button><pre><code>-- deve funcionar: categoria 3 existe
+<p><strong>Uma tentativa por vez:</strong> use somente o bloco da etapa atual. Assim, um erro esperado não interrompe a execução dos passos seguintes nem impede a limpeza do laboratório.</p>
+<p>1. Crie o produto temporário com a categoria 3. Este comando deve ser aceito.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar produto válido do teste</button><pre><code>-- deve funcionar: categoria 3 existe
 INSERT INTO produto
 (id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)
 VALUES
-(900001, 'PRODUTO TESTE', 5, 10, 3, 5);
-
--- deve falhar: categoria 999 não existe
+(900001, 'PRODUTO TESTE', 5, 10, 3, 5);</code></pre></div>
+<p>2. Tente usar a categoria 999, que não existe na base da aula. A rejeição pela chave estrangeira é o resultado esperado; o produto inválido não deve ser gravado.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar teste com categoria inexistente</button><pre><code>-- deve falhar: categoria 999 não existe
 INSERT INTO produto
 (id_produto, descricao, preco, qtde, id_categoria, estoque_minimo)
 VALUES
-(900002, 'PRODUTO INVALIDO', 5, 10, 999, 5);
-
--- deve funcionar: produto e fornecedor existem
+(900002, 'PRODUTO INVALIDO', 5, 10, 999, 5);</code></pre></div>
+<p>3. Depois de observar o erro, substitua o texto do editor pelo próximo comando. O produto válido pode ser associado ao fornecedor 4, que existe.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar vínculo válido do teste</button><pre><code>-- deve funcionar: produto e fornecedor existem
 INSERT INTO produto_fornecedor (id_produto, id_fornecedor)
-VALUES (900001, 4);
-
--- deve falhar: fornecedor 999 não existe
+VALUES (900001, 4);</code></pre></div>
+<p>4. Agora tente associá-lo ao fornecedor 999. Esta segunda rejeição também é esperada.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar teste com fornecedor inexistente</button><pre><code>-- deve falhar: fornecedor 999 não existe
 INSERT INTO produto_fornecedor (id_produto, id_fornecedor)
-VALUES (900001, 999);
-
--- limpeza dos testes válidos
+VALUES (900001, 999);</code></pre></div>
+<p>5. Finalize com a limpeza, mesmo após os erros esperados. Primeiro remova o vínculo; depois, o produto temporário. Essa ordem respeita a chave estrangeira.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar limpeza do teste de integridade</button><pre><code>-- limpeza dos testes válidos
 DELETE FROM produto_fornecedor
 WHERE id_produto = 900001;
 
 DELETE FROM produto
 WHERE id_produto = 900001;</code></pre></div>
-<p>Os comandos inválidos são rejeitados pelas restrições. Os dois DELETEs finais removem somente os registros de laboratório que foram aceitos, preservando a base <code>comercio</code>.</p>
+<p>Ao terminar, os produtos <code>900001</code> e <code>900002</code> não devem existir. Os demais registros de <code>comercio</code> permanecem disponíveis para as próximas aulas.</p>
 <div class="card solution"><div class="card-body"><h3>O erro é parte do laboratório</h3><p>Quando a FK ou o CHECK bloqueia um dado inválido, o banco está fazendo exatamente o que foi modelado: protegendo integridade.</p></div></div>
 <h2>BLOCO 15 — JOIN: unindo tabelas relacionadas</h2>
-<p>JOIN é usado para unir dados de tabelas relacionadas. Aqui o banco relacional mostra seu verdadeiro valor.</p>
+<p>O produto guarda o ID da categoria, mas quem consulta o sistema precisa ler o nome dela. <strong>INNER JOIN</strong> reúne as duas tabelas no resultado; <code>ON</code> indica a correspondência entre seus campos. Em <code>produto.id_categoria</code>, o ponto separa o nome da tabela do nome da coluna. Já <code>AS categoria</code> dá um rótulo à coluna exibida, sem alterar a estrutura do banco.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>SELECT
     produto.descricao,
     categoria.nome AS categoria
@@ -1961,7 +1965,7 @@ ORDER BY total_produtos DESC;</code></pre></div>
 <h2>BLOCO 19 — Fechamento do Capítulo SQL com MySQL</h2>
 <p>Neste capítulo, o banco deixou de ser apenas desenho e estrutura lógica. Ele virou implementação física real no MySQL.</p>
 <p>Aprendemos modelagem física, SQL, MySQL, SGBD, CREATE DATABASE, CREATE TABLE, ALTER TABLE, AUTO_INCREMENT, restrições, INSERT, SELECT, DISTINCT, LIMIT, WHERE, AND, OR, NOT, IN, BETWEEN, IS NULL, ORDER BY, LIKE, UPDATE, DELETE, FOREIGN KEY, JOIN, funções de agregação, GROUP BY, HAVING e boas práticas.</p>
-<p>Mais importante: entendemos como transformar uma modelagem relacional completa em um banco físico real utilizando SQL no MySQL.</p>
+<p>O modelo comercial agora tem estrutura, dados e consultas funcionando juntos. Antes de avançar, abra <strong>99 Exercícios → Capítulo 4</strong> e explique por que as tabelas foram criadas nessa ordem. No Capítulo 5, retomaremos esse mesmo banco para aprofundar os relacionamentos e os resultados dos JOINs.</p>
 </article>
 </section>
 <section class="module" id="mod-joins">
