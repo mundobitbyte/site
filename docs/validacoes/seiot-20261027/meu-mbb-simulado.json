@@ -1,0 +1,107 @@
+[
+  {
+    "name": "conectividade",
+    "visitas": [
+      {
+        "id": "mod-pages-arduino-conectividade",
+        "ancora": ""
+      },
+      {
+        "id": "mod-pages-arduino-conectividade",
+        "ancora": "b6-prep"
+      }
+    ],
+    "estado": {
+      "notas": [
+        "Teste: leitura do sensor",
+        "Teste: comportamento sem Wi-Fi"
+      ],
+      "favorito": true,
+      "concluido": true
+    }
+  },
+  {
+    "name": "iot",
+    "visitas": [
+      {
+        "id": "mod-pages-arduino-iot",
+        "ancora": ""
+      },
+      {
+        "id": "mod-pages-arduino-iot",
+        "ancora": "b7-2"
+      }
+    ],
+    "estado": {
+      "notas": [
+        "Teste: leitura do sensor",
+        "Teste: comportamento sem Wi-Fi"
+      ],
+      "favorito": true,
+      "concluido": true
+    }
+  },
+  {
+    "name": "protocolos",
+    "visitas": [
+      {
+        "id": "mod-pages-arduino-protocolos",
+        "ancora": ""
+      },
+      {
+        "id": "mod-pages-arduino-protocolos",
+        "ancora": "b8-1"
+      }
+    ],
+    "estado": {
+      "notas": [
+        "Teste: leitura do sensor",
+        "Teste: comportamento sem Wi-Fi"
+      ],
+      "favorito": true,
+      "concluido": true
+    }
+  },
+  {
+    "name": "seguranca",
+    "visitas": [
+      {
+        "id": "mod-pages-arduino-seguranca",
+        "ancora": ""
+      },
+      {
+        "id": "mod-pages-arduino-seguranca",
+        "ancora": "b9-1"
+      }
+    ],
+    "estado": {
+      "notas": [
+        "Teste: leitura do sensor",
+        "Teste: comportamento sem Wi-Fi"
+      ],
+      "favorito": true,
+      "concluido": true
+    }
+  },
+  {
+    "name": "projeto-iot",
+    "visitas": [
+      {
+        "id": "mod-pages-arduino-projeto-iot",
+        "ancora": ""
+      },
+      {
+        "id": "mod-pages-arduino-projeto-iot",
+        "ancora": "b10-2"
+      }
+    ],
+    "estado": {
+      "notas": [
+        "Teste: leitura do sensor",
+        "Teste: comportamento sem Wi-Fi"
+      ],
+      "favorito": true,
+      "concluido": true
+    }
+  }
+]

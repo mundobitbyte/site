@@ -1,0 +1,176 @@
+{
+  "arduino_cli": "1.5.1",
+  "biblioteca_lcd": "LiquidCrystal I2C 1.1.2 (Frank de Brabander)",
+  "programas": [
+    {
+      "programa": "b10_final",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "a20dc75348520c7a9dc2566cd0f89d9a614f7d5d7b678035353f6d916525894c",
+      "resumo": [
+        "Sketch uses 930408 bytes (70%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 47456 bytes (14%) of dynamic memory, leaving 280224 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b10_local",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "6550ea76ccfa710bb482a2f8e09d6a51cede2c096cb8a88313245e87d41000e3",
+      "resumo": [
+        "Sketch uses 277664 bytes (21%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 22196 bytes (6%) of dynamic memory, leaving 305484 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b6_1_code",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "37f2783483cddc58572ae483076e3a454fb36f0374b55ef1b5c280989b0364b6",
+      "resumo": [
+        "Sketch uses 1061248 bytes (80%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 41876 bytes (12%) of dynamic memory, leaving 285804 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b6_2_code",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "0126eb589f1b6196baccf63952e3656e0d74a09f1c93786bf635c019901df489",
+      "resumo": [
+        "Sketch uses 879132 bytes (67%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 45672 bytes (13%) of dynamic memory, leaving 282008 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b6_2_wokwi_code",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "10bd5aff024708e8b777a259d8059b79ed7457daf5ded2520a3a0fd709401f5d",
+      "resumo": [
+        "Sketch uses 876272 bytes (66%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 45672 bytes (13%) of dynamic memory, leaving 282008 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b6_3_client_code",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "cba4fc81ebd3effc170583af6804033f610b74a79697d816fbdd57537e604e10",
+      "resumo": [
+        "Sketch uses 1017288 bytes (77%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 48792 bytes (14%) of dynamic memory, leaving 278888 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b6_3_client_wokwi_code",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "88ee3cd035c926b157cd2246009205c49aab3ea72c04533598d9ecf4a449e20c",
+      "resumo": [
+        "Sketch uses 1017268 bytes (77%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 48776 bytes (14%) of dynamic memory, leaving 278904 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b6_3_server_code",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "b24474959048b34123e6aedc3f13197d017cc6b4aa2c4eefb364ca5c2065302d",
+      "resumo": [
+        "Sketch uses 923312 bytes (70%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 47352 bytes (14%) of dynamic memory, leaving 280328 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b6_4_code",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "83da4d7e5239a6a25e9ce70501c19f1f80d062383341dbe84e6506a45a8a61a4",
+      "resumo": [
+        "Sketch uses 959108 bytes (73%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 49432 bytes (15%) of dynamic memory, leaving 278248 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b6_bluetooth_simulado",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "37f2783483cddc58572ae483076e3a454fb36f0374b55ef1b5c280989b0364b6",
+      "resumo": [
+        "Sketch uses 271852 bytes (20%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 22116 bytes (6%) of dynamic memory, leaving 305564 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b6_prep_code",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "bb5e586511b0250e0a4b93688b365c725d009a2446685955c13abd85c39e1f9b",
+      "resumo": [
+        "Sketch uses 257644 bytes (19%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 22100 bytes (6%) of dynamic memory, leaving 305580 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b8_i2c_lcd",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "fa353a0c4f345d077099b75c54f888d285e7b315c2e7b2ce06648c98ceb5f56a",
+      "resumo": [
+        "Sketch uses 284588 bytes (21%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 23508 bytes (7%) of dynamic memory, leaving 304172 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": [
+        "WARNING: library LiquidCrystal I2C claims to run on avr architecture(s) and may be incompatible with your current board which runs on esp32 architecture(s)."
+      ]
+    },
+    {
+      "programa": "b8_i2c_scanner",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "1fca2829f476e35f33ddf2221701a24fdf712e238f9c76657ec34f79221a77f1",
+      "resumo": [
+        "Sketch uses 293652 bytes (22%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 23500 bytes (7%) of dynamic memory, leaving 304180 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    },
+    {
+      "programa": "b8_rtos_code",
+      "compilacao": "aprovada",
+      "fqbn": "esp32:esp32:esp32",
+      "core": "3.3.12",
+      "sha256": "f988936dcee1203dbc1d7b64914b14aa385dc683c4cba59bee0d38e185be2254",
+      "resumo": [
+        "Sketch uses 271780 bytes (20%) of program storage space. Maximum is 1310720 bytes.",
+        "Global variables use 22116 bytes (6%) of dynamic memory, leaving 305564 bytes for local variables. Maximum is 327680 bytes."
+      ],
+      "avisos": []
+    }
+  ]
+}

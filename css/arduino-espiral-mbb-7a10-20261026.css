@@ -183,3 +183,24 @@
     padding:12px 14px;font-size:14px !important;
   }
 }
+
+/* Leituras junto do código: uma explicação por programa, sem outro cartão. */
+.mbb-leitura-integrada{border-top:1px solid #d5e4e9;background:#fff}
+.mbb-leitura-integrada>h4{margin:0;padding:15px 20px 0;color:#144a56;font-size:15px;line-height:1.5}
+.mbb-leitura-integrada .mbb-espiral-body p{margin:0;line-height:1.65;color:#334155;font-size:14px}
+.mbb-leitura-integrada .mbb-espiral-lead{margin-bottom:14px!important}
+.mbb-leitura-integrada .mbb-espiral-action{margin-top:14px!important;padding:12px 14px;border-left:3px solid #1b8395;background:#f1f8fa}
+.mbb-espiral-desafio{grid-column:1/-1;padding:13px 16px;border:1px solid #c4dfe4;border-radius:10px;background:#f8fbfc}
+.mbb-espiral-desafio summary{cursor:pointer;font-weight:750;color:#144a56;line-height:1.5}
+.mbb-espiral-desafio p{margin:12px 0 0;line-height:1.65}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .mbb-table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .mbb-table-scroll:focus-visible{outline:3px solid #1b8395;outline-offset:2px}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .cards>.card{min-width:0}
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) .cards>.card>p{line-height:1.6}
+@media(max-width:760px){
+ .mbb-leitura-integrada>h4{padding:13px 15px 0}
+ :is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) table th,
+ :is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) table td{overflow-wrap:break-word}
+}
+
+:is(.mbb7-panel,.mbb8-panel,.mbb9-panel,.mbb10-panel) pre[id]{scroll-margin-top:220px}
