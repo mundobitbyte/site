@@ -1391,8 +1391,8 @@ USE comercio;</code></pre></div>
 <p><strong>Baixar e instalar:</strong> acesse o <a href="https://www.heidisql.com/download.php" target="_blank" rel="noopener noreferrer">site oficial do HeidiSQL</a>, escolha o instalador compatível com seu Windows e conclua a instalação. O HeidiSQL é um cliente: <strong>o MySQL Server precisa estar instalado e em execução</strong>.</p>
 <div class="heidi-note"><strong>Versão das telas:</strong> as capturas originais desta aula mostram o <strong>HeidiSQL 12.22.0.7382</strong>, com a interface em português. A <a href="https://www.heidisql.com/download.php" target="_blank" rel="noopener noreferrer">página oficial de downloads</a>, consultada em 27/10/2026, apresenta a versão estável 12.22 para Windows. Se a aparência da sua instalação variar, localize a conexão, o editor <strong>Consulta</strong>, o botão <strong>Executar</strong> e a grade de resultados. A versão do servidor MySQL é conferida com <code>SELECT VERSION();</code>, como fizemos no terminal.</div>
 <h4>1. Faça a conexão</h4>
-<p>Abra o HeidiSQL e clique em <strong>Nova</strong> para criar uma sessão. Para o MySQL local usado no curso, informe <strong>Hostname/IP: 127.0.0.1</strong>, <strong>usuário: root</strong>, a <strong>senha configurada na instalação do MySQL</strong> e <strong>porta: 3306</strong>, ou a porta anotada no Configurator (<strong>3307</strong>, se você seguiu o exemplo de instalação separada). Use a mesma porta do acesso pelo CLI para chegar ao mesmo servidor. Clique em <strong>Abrir</strong>. A senha não deve ser compartilhada nem mostrada em capturas.</p>
-<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-12-22-conexao.webp" width="835" height="478" style="width:835px" alt="Captura de tela: gerenciador de sessões do HeidiSQL 12.22 com Nova, endereço 127.0.0.1, usuário root, porta 3306 e Abrir" loading="lazy" decoding="async"/><figcaption>Use <strong>Nova</strong> e preencha os dados da conexão. O menu aberto à esquerda gerencia sessões; <strong>Renomear</strong> não é um passo para conectar nem para criar um banco.</figcaption></figure>
+<p>Abra o HeidiSQL. Se estiver aparecendo um menu como o da captura abaixo, pressione <kbd>Esc</kbd> para fechá-lo e visualizar todos os campos. Clique em <strong>Nova</strong> para criar uma sessão. Para o MySQL local usado no curso, informe <strong>Hostname/IP: 127.0.0.1</strong>, <strong>usuário: root</strong>, a <strong>senha configurada na instalação do MySQL</strong> e <strong>porta: 3306</strong>, ou a porta anotada no Configurator (<strong>3307</strong>, se você seguiu o exemplo de instalação separada). Use a mesma porta do acesso pelo CLI para chegar ao mesmo servidor. Clique em <strong>Abrir</strong>. A senha não deve ser compartilhada nem mostrada em capturas.</p>
+<figure class="heidi-figure"><img src="../img/bancodedados/heidisql/heidisql-12-22-conexao.webp" width="835" height="478" style="width:835px" alt="Captura de tela: gerenciador de sessões do HeidiSQL 12.22 com Nova, endereço 127.0.0.1, usuário root, porta 3306 e Abrir" loading="lazy" decoding="async"/><figcaption>O botão <strong>Nova</strong> fica no canto inferior esquerdo e <strong>Abrir</strong>, na parte inferior direita. O menu de sessões está aberto nesta captura: feche-o com <strong>Esc</strong> antes de preencher os campos.</figcaption></figure>
 <h4>2. Outra forma de criar bancos — observação, não execução</h4>
 <p>Também é possível criar bancos pelo menu gráfico. Na janela principal, após conectar, clique com o botão direito no <strong>nome da conexão, no topo da árvore à esquerda</strong>, e localize <strong>Criar novo → Banco de dados</strong> (<em>Create new → Database</em>, em inglês). Esse menu pertence à conexão já aberta, não ao gerenciador de sessões da captura anterior.</p>
 <p><strong>Apenas observe a opção e feche o menu:</strong> <code>comercio</code> já foi criado pelo CLI; não crie outro banco nesta etapa. O menu é uma alternativa para quando você precisar criar um banco novo.</p>
@@ -1516,6 +1516,8 @@ DESCRIBE produto_fornecedor;</code></pre></div>
 
 <section class="heidi-guide" aria-labelledby="heidi-estrutura-conferida"><h3 id="heidi-estrutura-conferida">Veja o que foi criado</h3><p>Execute os comandos de conferência logo acima. <code>SHOW TABLES;</code> lista as tabelas; cada <code>DESCRIBE</code> mostra colunas, tipos, valores nulos e chaves de uma tabela. Para observar cada resultado separadamente, selecione e execute uma consulta por vez.</p><div class="heidi-note"><strong>Como interpretar o resultado:</strong> <code>Field</code> identifica o campo; <code>Type</code> indica seu tipo SQL; <code>Null</code> informa se aceita valores nulos; <code>Key</code> mostra indicadores de chave; <code>Default</code> é o valor padrão; <code>Extra</code> exibe propriedades adicionais, como <code>auto_increment</code>. Por exemplo, na tabela <code>categoria</code>, procure <code>id_categoria</code> como chave primária (<code>PRI</code>) e <code>nome</code> como <code>VARCHAR(50)</code>. Faça essa conferência diretamente na grade do seu HeidiSQL, comparando os campos com o CREATE de cada tabela.</div><p><strong>Conquista MbB:</strong> antes de passar a <code>INSERT</code>, confira as cinco tabelas e compare suas estruturas com o modelo lógico.</p></section>
 <h2>BLOCO 6.1 — ALTER TABLE: quando a estrutura precisa evoluir</h2>
+<p>Na primeira passagem, siga para o <strong>INSERT</strong> logo abaixo. Depois de cadastrar os dados e fazer as primeiras consultas do Bloco 8, você pode voltar a esta prática para aprender a modificar uma estrutura.</p>
+<details id="bd-alter-table-opcional"><summary>Prática opcional — adicionar e remover uma coluna com ALTER TABLE</summary>
 <p>CREATE TABLE cria a estrutura inicial. Mas sistemas evoluem. <strong>ALTER TABLE</strong> modifica a estrutura de uma tabela que já existe.</p>
 <p>Para aprender sem alterar o modelo comercial, use uma tabela de laboratório:</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar laboratório ALTER TABLE</button><pre><code>CREATE TABLE estrutura_lab (
@@ -1532,6 +1534,7 @@ DROP COLUMN observacao;
 
 DROP TABLE estrutura_lab;</code></pre></div>
 <div class="card warning"><div class="card-body"><h3>Mudança de estrutura não é um Ctrl+Z</h3><p>ALTER TABLE, DROP TABLE e outros comandos que mudam a estrutura podem causar <strong>commit implícito</strong> no MySQL. Por isso o laboratório usa uma tabela descartável. Mais adiante, quando estudarmos transações, veremos por que não devemos contar com ROLLBACK para recuperar uma estrutura removida.</p></div></div>
+</details>
 <h2>BLOCO 7 — INSERT INTO: inserindo os dados da base</h2>
 <p>Agora o banco deixa de ser apenas estrutura e começa a receber dados. Vamos preservar os dados existentes de categoria, fornecedor e produto e transformar a antiga ligação produto–fornecedor em registros da tabela associativa.</p>
 <div class="card note"><div class="card-body"><h3>Não inventar dado que não existe</h3><p>A base recebida não informa a cidade de cada fornecedor nem preço de custo/prazo de entrega por fornecedor. Por isso esses campos ficarão <strong>NULL</strong> até existirem dados reais. A estrutura está pronta, mas não vamos preencher informações fictícias apenas para “completar” a tabela.</p></div></div>
@@ -1742,6 +1745,7 @@ SELECT * FROM produto_fornecedor;</code></pre></div>
 FROM produto;</code></pre></div>
 <h3>DISTINCT e LIMIT</h3>
 <p><strong>DISTINCT</strong> elimina repetições no resultado e <strong>LIMIT</strong> restringe quantas linhas serão exibidas.</p>
+<p>Para consultar os mesmos dez primeiros produtos, precisamos definir uma ordem antes de limitar a lista. No segundo exemplo, <code>ORDER BY id_produto</code> coloca os produtos do menor identificador para o maior; em seguida, <code>LIMIT 10</code> mantém as primeiras dez linhas. No Bloco 10, vamos explorar outras formas de ordenar.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar exemplos</button><pre><code>SELECT DISTINCT id_categoria
 FROM produto;
 
@@ -1750,44 +1754,63 @@ FROM produto
 ORDER BY id_produto
 LIMIT 10;</code></pre></div>
 <h2>BLOCO 9 — WHERE: filtrando dados</h2>
-<p>WHERE aplica condições. Ele permite buscar apenas os registros que interessam.</p>
-<div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>SELECT *
+<p>Já escolhemos colunas e limitamos a quantidade de linhas. Agora precisamos escolher quais registros atendem a uma condição. <strong>WHERE</strong> mantém no resultado as linhas que atendem à condição indicada. Faça uma consulta por vez e observe o que entra e o que fica de fora.</p>
+<h3>1. Encontre os produtos de uma categoria</h3>
+<p>Queremos consultar apenas as bebidas. No cadastro de categorias, <strong>BEBIDA tem o identificador 3</strong>. A condição <code>id_categoria = 3</code> mantém somente os produtos dessa categoria.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar WHERE — bebidas</button><pre><code>SELECT *
 FROM produto
-WHERE id_categoria = 3;
-
-SELECT *
+WHERE id_categoria = 3;</code></pre></div>
+<p><strong>Observe:</strong> Confira as cinco bebidas, como COCA COLA LATA e AGUA MINERAL. Produtos de outras categorias não devem aparecer.</p>
+<h3>2. Descubra quais produtos precisam de reposição</h3>
+<p>Agora a pergunta é sobre o estoque. O símbolo <code>&lt;=</code> significa <strong>menor ou igual</strong>; vamos comparar a quantidade disponível com o estoque mínimo de cada produto.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar WHERE — estoque baixo</button><pre><code>SELECT *
 FROM produto
-WHERE qtde &lt;= estoque_minimo;
-
-SELECT descricao, preco
+WHERE qtde &lt;= estoque_minimo;</code></pre></div>
+<p><strong>Observe:</strong> ENERGETICO deve aparecer: sua quantidade é 3 e seu estoque mínimo é 5. O filtro compara duas colunas da mesma linha.</p>
+<h3>3. Consulte os produtos acima de um preço</h3>
+<p>Precisamos listar a descrição e o preço dos produtos que custam mais de 20. O símbolo <code>&gt;</code> significa <strong>maior que</strong>; o próprio valor 20 fica fora do resultado.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar WHERE — preço acima de 20</button><pre><code>SELECT descricao, preco
 FROM produto
 WHERE preco &gt; 20;</code></pre></div>
-<p>Com esses dados, já é possível identificar bebidas, produtos caros e itens com estoque baixo.</p>
-<h3>Combinando condições</h3>
-<div class="codebox"><button class="copy-btn" type="button">Copiar exemplos</button><pre><code>SELECT *
+<p><strong>Observe:</strong> PICANHA, com preço 65, deve aparecer. COCA COLA LATA, com preço 5, fica fora da lista.</p>
+<h3>Mais perguntas sobre os mesmos dados</h3>
+<p>Vamos retomar os filtros que você acabou de fazer e resolver uma nova pergunta por vez. Substitua a consulta anterior pela próxima, execute e confira o resultado antes de avançar.</p>
+<h4>1. Combine dois limites com AND</h4>
+<p>Queremos produtos com preço de 5 até 20, incluindo os dois limites. <code>&gt;=</code> significa maior ou igual. <strong>AND</strong> exige que as duas condições sejam verdadeiras ao mesmo tempo: preço maior ou igual a 5 e menor ou igual a 20.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar AND — faixa de preços</button><pre><code>SELECT *
 FROM produto
-WHERE preco &gt;= 5 AND preco &lt;= 20;
-
-SELECT *
+WHERE preco &gt;= 5 AND preco &lt;= 20;</code></pre></div>
+<p><strong>Observe:</strong> COCA COLA LATA, com preço 5, entra na faixa. PICANHA, com preço 65, não entra.</p>
+<h4>2. Escolha uma lista de categorias com IN</h4>
+<p>Agora precisamos de bebidas, frutas e verduras. Seus identificadores são <strong>3, 7 e 8</strong>. <strong>IN</strong> verifica se o valor está na lista entre parênteses.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar IN — lista de categorias</button><pre><code>SELECT *
 FROM produto
-WHERE id_categoria IN (3, 7, 8);
-
-SELECT *
+WHERE id_categoria IN (3, 7, 8);</code></pre></div>
+<p><strong>Observe:</strong> Todos os produtos retornados devem ter id_categoria igual a 3, 7 ou 8. Categorias como LIMPEZA ficam de fora.</p>
+<h4>3. Escreva uma faixa com BETWEEN</h4>
+<p>Já filtramos uma faixa usando duas comparações. Para expressar um intervalo diretamente, podemos usar <strong>BETWEEN</strong>. Aqui ele aceita preços de 10 até 30, <strong>incluindo 10 e 30</strong>.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar BETWEEN — intervalo de preços</button><pre><code>SELECT *
 FROM produto
-WHERE preco BETWEEN 10 AND 30;
-
-SELECT *
+WHERE preco BETWEEN 10 AND 30;</code></pre></div>
+<p><strong>Observe:</strong> QUIBE, com preço 10, deve aparecer; PICANHA, com preço 65, não. O AND deste exemplo faz parte da escrita do intervalo BETWEEN.</p>
+<h4>4. Encontre informações ausentes com IS NULL</h4>
+<p>Ainda não cadastramos as cidades dos fornecedores. O campo <code>id_cidade</code> ficou com <strong>NULL</strong>, que indica informação ausente. Para localizar esses casos, use <strong>IS NULL</strong>, e não <code>= NULL</code>. Para buscar valores preenchidos, usamos <code>IS NOT NULL</code>.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar IS NULL — fornecedores sem cidade</button><pre><code>SELECT *
 FROM fornecedor
-WHERE id_cidade IS NULL;
-
-SELECT *
+WHERE id_cidade IS NULL;</code></pre></div>
+<p><strong>Observe:</strong> Na base desta aula, os 25 fornecedores devem aparecer, pois nenhum deles recebeu uma cidade.</p>
+<h4>5. Exclua uma condição com NOT</h4>
+<p>E se quisermos todos os produtos que <strong>não são bebidas</strong>? <strong>NOT</strong> nega a condição que vem a seguir. Como bebida é a categoria 3, ela ficará fora do resultado.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar NOT — produtos de outras categorias</button><pre><code>SELECT *
 FROM produto
-WHERE NOT id_categoria = 3;
-
-SELECT *
+WHERE NOT id_categoria = 3;</code></pre></div>
+<p><strong>Observe:</strong> Nenhuma linha retornada deve ter id_categoria igual a 3.</p>
+<h4>6. Aceite alternativas com OR</h4>
+<p>Para consultar bebidas ou laticínios, use as categorias <strong>3 e 15</strong>. Diferente de AND, <strong>OR</strong> aceita que pelo menos uma das condições seja verdadeira.</p>
+<div class="codebox"><button class="copy-btn" type="button">Copiar OR — bebidas ou laticínios</button><pre><code>SELECT *
 FROM produto
 WHERE id_categoria = 3 OR id_categoria = 15;</code></pre></div>
-<p><strong>AND</strong> exige as duas condições; <strong>OR</strong> aceita uma ou outra; <strong>NOT</strong> nega uma condição; <strong>IN</strong> testa uma lista; <strong>BETWEEN</strong> testa um intervalo; e valores nulos são verificados com <strong>IS NULL</strong> ou <strong>IS NOT NULL</strong>, nunca com <code>= NULL</code>.</p>
+<p><strong>Observe:</strong> Devem aparecer apenas produtos das categorias 3 e 15, como COCA COLA LATA e IOGURTE.</p>
 <h2>BLOCO 10 — ORDER BY: ordenando resultados</h2>
 <p>ORDER BY organiza o resultado da consulta.</p>
 <div class="codebox"><button class="copy-btn" type="button">Copiar comando</button><pre><code>SELECT descricao, preco
