@@ -1,0 +1,68 @@
+{
+  "base": "89e21028269fe6d0232b0bcc3c5ff0a1b227093d",
+  "browser": [
+    {
+      "width": 1440,
+      "sections": 21,
+      "images": 7,
+      "zoom": 7,
+      "copies": 40,
+      "modules": 12,
+      "reservedBeforeLoad": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "sections": 21,
+      "images": 7,
+      "zoom": 7,
+      "copies": 40,
+      "modules": 12,
+      "reservedBeforeLoad": true,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "sections": 21,
+      "images": 7,
+      "zoom": 7,
+      "copies": 40,
+      "modules": 12,
+      "reservedBeforeLoad": true,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "sections": 21,
+      "images": 7,
+      "zoom": 7,
+      "copies": 40,
+      "modules": 12,
+      "reservedBeforeLoad": true,
+      "errors": []
+    },
+    {
+      "search": "8.4.13 encontrado; link abriu SQL sem login"
+    }
+  ],
+  "study_exercises": [
+    {
+      "width": 1440,
+      "exerciseChapters": 11,
+      "study": "favorito, conclusão, adicionar/editar/apagar nota, visita e âncora em conta simulada local",
+      "realFirebaseWrites": 0
+    },
+    {
+      "width": 390,
+      "exerciseChapters": 11,
+      "study": "favorito, conclusão, adicionar/editar/apagar nota, visita e âncora em conta simulada local",
+      "realFirebaseWrites": 0
+    }
+  ],
+  "node_tests": {
+    "pass": 29,
+    "fail": 0
+  },
+  "mysql_server_run_this_change": false,
+  "windows_installer_run": false
+}

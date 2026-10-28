@@ -50,7 +50,307 @@
 @media(max-width:900px){.mbb6-power-grid,.mbb6-check-grid{grid-template-columns:1fr}}
 
 @media(max-width:900px){.mbb6-summary,.mbb6-connections{grid-template-columns:1fr}}
+/* A leitura guiada substitui a explicação repetida no mesmo cartão. */
+#arduinoLayout .mbb6-leitura-integrada{border-top:1px solid #d5e4e9;margin-top:12px;background:#fff}
+#arduinoLayout .mbb6-panel pre[id]{scroll-margin-top:220px}
 </style>
+<style>
+/* Modo MbB — respiro, hierarquia e leitura guiada dos comandos do Módulo 6 */
+.mbb6-panel .cards{row-gap:18px}
+.mbb6-aprofundamento{
+  grid-column:1/-1;
+  background:#fff;
+  border:1px solid #b7d8dd;
+  box-shadow:0 3px 14px rgba(10,75,84,.045);
+}
+.card.mbb6-aprofundamento > h3{
+  padding:15px 20px;
+  margin:0;
+  background:#ecf8fa;
+  color:#174e58;
+  font-size:16px;
+  font-weight:800;
+  line-height:1.45;
+  text-transform:none;
+  letter-spacing:0;
+}
+.mbb6-depth-content{padding:20px 22px 22px}
+.mbb6-leitura-integrada .mbb6-depth-content p{margin:0;line-height:1.65;font-size:14.5px}
+.mbb6-leitura-integrada .mbb6-depth-content .mbb6-depth-intro{max-width:78ch;color:#263c45;font-size:15px;margin:0 0 19px}
+.mbb6-depth-content h4{
+  margin:18px 0 12px;
+  color:#164d58;
+  font-size:14px;
+  line-height:1.45;
+  font-weight:800;
+}
+.mbb6-depth-rows{
+  display:grid;
+  border:1px solid #dbe8ea;
+  border-radius:12px;
+  overflow:hidden;
+}
+.mbb6-depth-row{
+  display:grid;
+  grid-template-columns:minmax(175px,32%) minmax(0,1fr);
+  align-items:start;
+  gap:18px;
+  padding:13px 16px;
+  background:#fff;
+  border-bottom:1px solid #e5eef0;
+}
+.mbb6-depth-row:nth-child(even){background:#f7fafb}
+.mbb6-depth-row:last-child{border-bottom:0}
+.mbb6-depth-command{min-width:0}
+.mbb6-depth-command code{
+  display:inline-block;
+  max-width:100%;
+  padding:4px 7px;
+  background:#e9f2f5;
+  border:1px solid #c8dce2;
+  color:#173e49;
+  border-radius:6px;
+  font-size:13px;
+  line-height:1.5;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.mbb6-aprofundamento .mbb6-depth-row p{font-size:14px;color:#334155;min-width:0}
+.mbb6-depth-check{
+  margin-top:19px;
+  padding:15px 17px;
+  background:#f0f8fa;
+  border-left:3px solid #238497;
+  border-radius:0 10px 10px 0;
+}
+.mbb6-depth-check strong{display:block;color:#14505d;font-size:14px;margin:0 0 5px}
+.mbb6-aprofundamento .mbb6-depth-check p{font-size:14px}
+.mbb6-leitura-integrada .mbb6-depth-content .mbb6-depth-caution{
+  margin-top:16px;
+  padding:0 2px;
+  font-size:13.5px;
+  line-height:1.6;
+  color:#475569;
+}
+@media(max-width:700px){
+  .mbb6-panel .cards{row-gap:15px}
+  .card.mbb6-aprofundamento > h3{padding:13px 15px;font-size:15px}
+  .mbb6-depth-content{padding:16px 15px 18px}
+  .mbb6-depth-row{grid-template-columns:minmax(0,1fr);gap:7px;padding:12px 13px}
+  .mbb6-depth-check{padding:13px 14px}
+  .mbb6-leitura-integrada .mbb6-depth-content .mbb6-depth-intro{margin-bottom:16px}
+}
+</style>
+<style>
+/* Modo MbB: conservar a grafia real de bibliotecas, arquivos e comandos nos títulos. */
+.mbb6-panel .card > h3{
+  text-transform:none;
+  letter-spacing:normal;
+}
+
+/* 6A.1 — arquivo auxiliar, não um programa principal: visual claro e leitura espaçada. */
+#b6-1 .mbb6-wokwi-aux{
+  background:#fff;
+  border-color:#c8dee3;
+}
+#b6-1 .mbb6-wokwi-aux > h3{
+  display:block;
+  padding:14px 18px;
+  background:#eff8fa !important;
+  color:#134956 !important;
+  font-size:15px !important;
+  line-height:1.55;
+  font-weight:800;
+  overflow-wrap:anywhere;
+}
+#b6-1 .mbb6-wokwi-aux > h3 code{
+  text-transform:none;
+  letter-spacing:normal;
+  font-size:0.95em;
+  overflow-wrap:anywhere;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-intro{
+  margin:16px 18px;
+  max-width:85ch;
+  line-height:1.65;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-codebox > pre{
+  margin:0;
+  padding:17px 19px;
+  border-radius:0 0 10px 10px;
+  border:0;
+
+  background:#f6fafc !important;
+  color:#1c3340 !important;
+  font-size:13px;
+  line-height:1.65;
+  white-space:pre;
+  overflow-x:auto;
+  tab-size:2;
+}
+
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-codebox{
+  margin:0 18px;
+  border:1px solid #d5e4e9;
+  border-radius:10px;
+  overflow:hidden;
+  background:#f6fafc;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-toolbar{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:10px 12px 0;
+  background:#f6fafc;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-copy{
+  background:#0b7285;
+  color:#fff;
+  font-size:13px;
+  font-weight:700;
+  padding:7px 13px;
+  border:0;
+  border-radius:7px;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-copy:hover{background:#07515f}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-copy:focus-visible{
+  outline:3px solid #62b6c5;
+  outline-offset:2px;
+}
+#b6-1 .mbb6-wokwi-aux .mbb6-aux-note{
+  margin:16px 18px 0;
+  padding:11px 13px;
+  border-left:3px solid #25889b;
+  border-radius:0 8px 8px 0;
+  background:#f1f8fa;
+  line-height:1.6;
+  font-size:13.5px;
+}
+#b6-1 .mbb6-wokwi-aux .explain{
+  margin:14px 18px 18px;
+  padding:14px 15px;
+  background:#fff;
+  border:1px solid #e1eaed;
+  border-radius:10px;
+}
+#b6-1 .mbb6-wokwi-aux .explain p{
+  margin:0 0 10px;
+}
+#b6-1 .mbb6-wokwi-aux .explain p:last-child{
+  margin-bottom:0;
+}
+@media(max-width:700px){
+  #b6-1 .mbb6-wokwi-aux > h3{padding:12px 14px;font-size:14px !important}
+  #b6-1 .mbb6-wokwi-aux .mbb6-aux-intro{margin:14px}
+  #b6-1 .mbb6-wokwi-aux .mbb6-aux-codebox{margin:0 12px}
+  #b6-1 .mbb6-wokwi-aux .mbb6-aux-codebox > pre{
+    margin:0;
+    padding:13px 12px;
+    font-size:12px;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+  }
+  #b6-1 .mbb6-wokwi-aux .mbb6-aux-note{margin:14px 12px 0}
+  #b6-1 .mbb6-wokwi-aux .explain{margin:12px;padding:12px}
+}
+</style>
+
+<style>
+/* Modo MbB — Padrão visual claro exclusivo dos códigos do Módulo 6.
+   Aplica-se aos exemplos estáticos, aos exemplos inseridos por JS, ao
+   Monitor Serial e aos comandos do terminal, sem afetar outros módulos. */
+#arduinoLayout .mbb6-panel .card.code {
+  background:#fff;
+  border-color:#c8dee3;
+}
+#arduinoLayout .mbb6-panel .card.code > h3 {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:0;
+  padding:14px 18px;
+  background:#eff8fa !important;
+  color:#134956 !important;
+  border-bottom:1px solid #d5e4e9 !important;
+  font-size:15px !important;
+  font-weight:800;
+  line-height:1.5;
+  text-transform:none;
+  letter-spacing:normal;
+}
+#arduinoLayout .mbb6-panel .card.code > h3 button,
+#arduinoLayout .mbb6-panel .mbb6-wokwi-aux .mbb6-aux-copy {
+  background:#0b7285 !important;
+  color:#fff !important;
+  font-size:13px;
+  font-weight:700;
+  border:0;
+  border-radius:7px;
+  padding:7px 13px;
+  cursor:pointer;
+}
+#arduinoLayout .mbb6-panel .card.code > h3 button {
+  flex:0 0 auto;
+  margin-left:auto;
+}
+#arduinoLayout .mbb6-panel .card.code > h3 button:hover,
+#arduinoLayout .mbb6-panel .mbb6-wokwi-aux .mbb6-aux-copy:hover {
+  background:#07515f !important;
+}
+#arduinoLayout .mbb6-panel .card.code > h3 button:focus-visible,
+#arduinoLayout .mbb6-panel .mbb6-wokwi-aux .mbb6-aux-copy:focus-visible {
+  outline:3px solid #62b6c5;
+  outline-offset:2px;
+}
+#arduinoLayout .mbb6-panel .card:not(.mbb6-wokwi-aux) pre {
+  display:block;
+  margin:16px 18px 18px;
+  padding:17px 19px;
+  background:#f6fafc !important;
+  color:#1c3340 !important;
+  border:1px solid #d5e4e9;
+  border-radius:10px !important;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:13px;
+  line-height:1.65;
+  tab-size:2;
+  white-space:pre;
+  overflow-x:auto !important;
+  overflow-y:auto;
+  max-width:100%;
+  word-break:normal;
+}
+#arduinoLayout .mbb6-panel .card:not(.mbb6-wokwi-aux) pre code {
+  background:transparent !important;
+  color:inherit !important;
+  border:0 !important;
+  padding:0;
+  font:inherit;
+}
+/* O arquivo de apoio 6A.1 mantém a própria barra Copiar e a moldura clara. */
+#arduinoLayout .mbb6-panel .mbb6-wokwi-aux .mbb6-aux-codebox > pre {
+  background:#f6fafc !important;
+  color:#1c3340 !important;
+}
+@media(max-width:700px) {
+  #arduinoLayout .mbb6-panel .card.code > h3 {
+    padding:12px 14px;
+    font-size:14px !important;
+  }
+  #arduinoLayout .mbb6-panel .card:not(.mbb6-wokwi-aux) pre {
+    margin:12px;
+    padding:13px 12px;
+    font-size:12px;
+    line-height:1.6;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    overflow-x:auto !important;
+  }
+}
+</style>
+<script src="../js/arduino-conectividade-aprofundamento-mbb-20261026.js?v=20261027-1" defer></script>
 </head>
 <body>
 <header>
@@ -107,7 +407,7 @@
         <tr><td>Bluetooth</td><td>✓ Bluetooth Classic/SPP real com Android</td><td>△ O rádio Bluetooth não é simulado; testamos a lógica pelo Monitor Serial</td></tr>
         <tr><td>Wi-Fi</td><td>✓ Teste completo em rede 2,4 GHz compatível</td><td>✓ Teste completo com <code>Wokwi-GUEST</code></td></tr>
         <tr><td>HTTP — cliente</td><td>✓ Faz requisição para outro servidor</td><td>✓ Conexões de saída funcionam no gateway público</td></tr>
-        <tr><td>HTTP — servidor</td><td>✓ Navegador controla o LED na mesma rede</td><td>△ Navegador só entra no servidor com Private IoT Gateway</td></tr>
+        <tr><td>HTTP — servidor</td><td>✓ Navegador controla o LED na mesma rede</td><td>△ Navegador só entra com Private IoT Gateway (recurso pago e opcional)</td></tr>
         <tr><td>mDNS</td><td>✓ Pode ser testado na rede local; depende também do sistema e da rede</td><td>— Não é um teste confiável no gateway público</td></tr>
         <tr><td>Tunelamento</td><td>✓ Teste completo com um computador na mesma rede</td><td>— Não é prática do Wokwi padrão</td></tr>
       </table>
@@ -200,17 +500,17 @@
     <article class="card"><h3>3. Nosso percurso</h3><p><strong>Primeira conquista:</strong> mensagem no Monitor Serial. <strong>Segunda conquista:</strong> LED piscando. Depois aproveitaremos esse mesmo circuito nas etapas de conectividade.</p></article>
     <article class="card wide" data-mbb6-role="prep-wokwi"><h3>4. Criando seu primeiro projeto no Wokwi</h3>
       <p class="mbb6-note"><strong>Nossa escolha:</strong> nesta aula, vamos programar o ESP32 em linguagem Arduino (C/C++) <strong>dentro do Wokwi</strong>, diretamente no navegador. <strong>Você não precisa instalar a Arduino IDE nem conectar uma placa física</strong> para esta prática.</p>
-      <p>Vamos preparar nossa bancada virtual. Primeiro acessaremos o Wokwi e identificaremos nossa conta, se necessário. Depois criaremos o projeto ESP32 e executaremos nosso primeiro programa.</p>
+      <p>Vamos preparar nossa bancada virtual. Você pode executar a simulação sem entrar em uma conta. Para salvar o projeto e retomá-lo depois, identifique-se antes de criá-lo. Depois criaremos o projeto ESP32 e executaremos nosso primeiro programa.</p>
       <style>.mbb6-wokwi-step{padding:1rem 0;border-bottom:1px solid #dfe5ec}.mbb6-wokwi-shot{margin:.75rem 0}.mbb6-wokwi-shot img{display:block;width:100%;max-width:850px;height:auto;object-fit:contain;border-radius:9px;border:1px solid #ccd7e5}@media(max-width:640px){.mbb6-wokwi-step{padding:.8rem 0}.mbb6-wokwi-shot img{max-width:100%}} .mbb6-wokwi-step:not(:first-child) .mbb6-wokwi-shot img{max-width:360px}@media(max-width:640px){.mbb6-wokwi-step:not(:first-child) .mbb6-wokwi-shot img{max-width:min(100%,360px)}}@media(min-width:641px){.mbb6-wokwi-step:nth-child(2) .mbb6-wokwi-shot img,.mbb6-wokwi-step:nth-child(4) .mbb6-wokwi-shot img{width:350px!important;max-width:350px!important;height:auto!important}}@media(min-width:641px){.mbb6-wokwi-shot img[src$="wokwi-preparacao-05.webp"]{width:100%!important;max-width:650px!important;height:auto!important}}</style><div class="mbb6-wokwi-steps">
-        <div class="mbb6-wokwi-step"><figure class="mbb6-wokwi-shot"><img src="../img/arduino/wokwi/wokwi-preparacao-01.webp" alt="Etapa 1 da preparação do ESP32 no Wokwi" loading="lazy" decoding="async"></figure><h4>1. Acesse o Wokwi</h4><p>Entre em <a href="https://wokwi.com" target="_blank" rel="noopener noreferrer">wokwi.com</a>. Se ainda não tiver uma conta, clique em <strong>Sign Up</strong> (Cadastrar-se), no canto superior direito. Se já possuir conta, use <strong>Sign In</strong> (Entrar), quando disponível. Caso já esteja conectado, avance para a escolha da placa.</p></div>
-        <div class="mbb6-wokwi-step"><figure class="mbb6-wokwi-shot"><img src="../img/arduino/wokwi/wokwi-preparacao-02.webp" alt="Etapa 2 da preparação do ESP32 no Wokwi" loading="lazy" decoding="async"></figure><h4>2. Conclua a identificação</h4><p>Na tela <em>Welcome to Wokwi</em>, escolha <strong>Continue with Google</strong>, <strong>Continue with GitHub</strong> ou <strong>Continue with Email</strong> e siga as instruções na tela. Se você já estiver conectado e essa janela não aparecer, continue normalmente. Depois, na página do Wokwi, escolha a placa <strong>ESP32</strong>.</p></div>
+        <div class="mbb6-wokwi-step"><figure class="mbb6-wokwi-shot"><img src="../img/arduino/wokwi/wokwi-preparacao-01.webp" alt="Etapa 1 da preparação do ESP32 no Wokwi" loading="lazy" decoding="async"></figure><h4>1. Acesse o Wokwi</h4><p>Entre em <a href="https://wokwi.com" target="_blank" rel="noopener noreferrer">wokwi.com</a>. Se quiser salvar o projeto e ainda não tiver uma conta, clique em <strong>Sign Up</strong> (Cadastrar-se), no canto superior direito. Se já possuir conta, use <strong>Sign In</strong> (Entrar), quando disponível. Caso já esteja conectado, avance para a escolha da placa.</p></div>
+        <div class="mbb6-wokwi-step"><figure class="mbb6-wokwi-shot"><img src="../img/arduino/wokwi/wokwi-preparacao-02.webp" alt="Etapa 2 da preparação do ESP32 no Wokwi" loading="lazy" decoding="async"></figure><h4>2. Conclua a identificação</h4><p>Se escolheu entrar e a tela <em>Welcome to Wokwi</em> apareceu, escolha <strong>Continue with Google</strong>, <strong>Continue with GitHub</strong> ou <strong>Continue with Email</strong> e siga as instruções na tela. Se você já estiver conectado e essa janela não aparecer, continue normalmente. Depois, na página do Wokwi, escolha a placa <strong>ESP32</strong>.</p></div>
         <div class="mbb6-wokwi-step"><figure class="mbb6-wokwi-shot"><img src="../img/arduino/wokwi/wokwi-preparacao-03.webp" alt="Etapa 3 da preparação do ESP32 no Wokwi" loading="lazy" decoding="async"></figure><h4>3. Escolha o ESP32 original</h4><p>Na seleção de placas, escolha <strong>ESP32</strong>, e não ESP32-C3, ESP32-S2 ou ESP32-S3. Nesta sequência manteremos a placa baseada no ESP32 original, compatível também com a futura atividade de Bluetooth Classic/SPP.</p></div>
         <div class="mbb6-wokwi-step"><figure class="mbb6-wokwi-shot"><img src="../img/arduino/wokwi/wokwi-preparacao-04.webp" alt="Etapa 4 da preparação do ESP32 no Wokwi" loading="lazy" decoding="async"></figure><h4>4. Selecione o modelo Arduino</h4><p>Em <em>Beginner templates</em>, clique em <strong>Arduino</strong>. Atenção: <strong>Arduino aqui é o ambiente de programação escolhido para o projeto Wokwi</strong>; não significa abrir a Arduino IDE instalada no computador.</p></div>
         <div class="mbb6-wokwi-step"><figure class="mbb6-wokwi-shot"><img src="../img/arduino/wokwi/wokwi-preparacao-05.webp" alt="Etapa 5 da preparação do ESP32 no Wokwi" loading="lazy" decoding="async"></figure><h4>5. Reconheça o que apareceu</h4><p>À esquerda fica o <code>sketch.ino</code>, onde escreveremos o código. À direita fica a placa na área de simulação. O botão azul <strong>+</strong> adiciona componentes e o botão verde <strong>▶</strong> inicia a simulação. <strong>Não apague o código inicial ainda.</strong> Primeiro vamos executá-lo e observar a mensagem <code>Hello, ESP32!</code>.</p></div>
       </div>
       <div class="mbb6-checkpoint"><strong>Checkpoint 1:</strong> você encontrou a placa ESP32 e a aba <code>sketch.ino</code>? Agora vamos executar o exemplo, ainda sem acrescentar componentes.</div>
     </article>
-    <article class="card worked wide" data-mbb6-role="hello-esp32"><h3>5. Primeiro programa: Hello, ESP32!</h3><ol><li>No editor aberto, mantenha o código de exemplo em <code>sketch.ino</code>.</li><li>Clique no botão verde <strong>▶</strong> para iniciar a simulação. Aguarde a compilação.</li><li>Abra o <strong>Monitor Serial</strong> na área de simulação, se ele não aparecer automaticamente.</li><li>Procure a mensagem <code>Hello, ESP32!</code>. Ela é escrita uma vez pelo <code>setup()</code>, com <code>Serial.println()</code>.</li></ol><p class="mbb6-note"><strong>Se não apareceu:</strong> confira se iniciou a simulação e se abriu o Monitor Serial. Este teste não precisa de LED nem de resistor.</p><div class="mbb6-checkpoint"><strong>Checkpoint 2:</strong> a mensagem apareceu? Você já executou seu primeiro programa no ESP32 simulado!</div></article>
+    <article class="card worked wide" data-mbb6-role="hello-esp32"><h3>5. Primeiro programa: Hello, ESP32!</h3><ol><li>No editor aberto, mantenha o código de exemplo em <code>sketch.ino</code>. O modelo inicial pode aparecer como ESP32 DevKit C V4; ele também usa o ESP32 original. Não é necessário substituir a placa apenas porque a aparência difere da imagem. Na DevKit v1, uma inscrição como D23 identifica o GPIO 23 usado pelo código.</li><li>Clique no botão verde <strong>▶</strong> para iniciar a simulação. Aguarde a compilação.</li><li>Abra o <strong>Monitor Serial</strong> na área de simulação, se ele não aparecer automaticamente.</li><li>Procure a mensagem <code>Hello, ESP32!</code>. Ela é escrita uma vez pelo <code>setup()</code>, com <code>Serial.println()</code>.</li></ol><p class="mbb6-note"><strong>Se não apareceu:</strong> confira se iniciou a simulação e se abriu o Monitor Serial. Este teste não precisa de LED nem de resistor.</p><div class="mbb6-checkpoint"><strong>Checkpoint 2:</strong> a mensagem apareceu? Você já executou seu primeiro programa no ESP32 simulado!</div></article>
     <article class="card wide mbb6-bridge"><h3>6. Uma nova missão para o ESP32</h3><p>Até aqui, nosso programa mostrou uma mensagem na tela. <strong>Agora queremos observar uma ação fora do código:</strong> fazer um LED acender e apagar. Para isso, vamos montar um circuito na mesma placa que você acabou de testar.</p></article>
     <article class="card wide"><h3>7. Montando o circuito-base</h3><p>Clique no botão azul <strong>+</strong> ao lado do botão de simulação para abrir os componentes. Procure <strong>LED</strong> e adicione-o; repita para <strong>resistor</strong>. Ajuste o resistor para <strong>220 Ω</strong> e faça as ligações como na figura abaixo. Pare a simulação antes de editar a montagem.</p><div class="mbb6-connections"><div><strong>GPIO 23</strong><span>liga-se ao ânodo do LED.</span></div><div><strong>Cátodo do LED</strong><span>liga-se ao resistor de 220 Ω.</span></div><div><strong>Resistor 220 Ω</strong><span>liga-se ao GND do ESP32.</span></div><div><strong>Montagem</strong><span>este circuito será reutilizado nas próximas experiências de comunicação.</span></div></div></article>
     <article class="card code wide"><h3>8. Código do LED — substitua o Hello World <button type="button" onclick="copyCode('b6-prep-code',this)">Copiar</button></h3><pre id="b6-prep-code">const int LED = 23;
@@ -464,7 +764,7 @@ void setup() {
 void loop() {
 }</pre></article>
     <article class="card"><h3>8. Como o cliente funciona</h3><div class="explain"><p><code>HTTPClient http</code> cria o cliente HTTP.</p><p><code>http.begin()</code> informa a <strong>URL</strong> (endereço do recurso) que será consultada.</p><p><code>http.GET()</code> envia um pedido do tipo <strong>GET</strong>, usado para solicitar um recurso.</p><p>O valor retornado por <code>GET()</code> permite observar o código de resposta HTTP; <code>200</code>, por exemplo, indica uma resposta bem-sucedida.</p><p><code>http.getString()</code> lê o conteúdo recebido e <code>http.end()</code> libera os recursos usados pela conexão.</p></div></article>
-    <article class="card"><h3>9. Testando o cliente</h3><ol><li>Configure a rede.</li><li>Carregue o programa.</li><li>Abra o Monitor Serial em 115200.</li><li>Observe o código HTTP e o conteúdo recebido.</li></ol><p class="mbb6-note"><strong>No Wokwi padrão, este teste também é possível:</strong> o pedido parte do ESP32 simulado para a Internet. O endereço <code>example.com</code> é usado apenas como destino simples; a resposta pode variar com o serviço, portanto o objetivo é verificar se houve um código HTTP positivo e conteúdo recebido.</p><div class="mbb6-checkpoint"><strong>Checkpoint HTTP:</strong> na placa física, a Parte A deve permitir controlar o LED pelo navegador e a Parte B deve mostrar uma resposta recebida. No Wokwi padrão, a Parte B funciona; a Parte A só pode ser acessada pelo navegador com o Private IoT Gateway.</div></article>
+    <article class="card"><h3>9. Testando o cliente</h3><ol><li>Configure a rede.</li><li>Carregue o programa.</li><li>Abra o Monitor Serial em 115200.</li><li>Observe o código HTTP e o conteúdo recebido.</li></ol><p class="mbb6-note"><strong>No Wokwi padrão, este teste também é possível:</strong> o pedido parte do ESP32 simulado para a Internet. O endereço <code>example.com</code> é usado apenas como destino simples; a resposta pode variar com o serviço, portanto o objetivo é verificar se houve um código HTTP positivo e conteúdo recebido.</p><div class="mbb6-checkpoint"><strong>Checkpoint HTTP:</strong> na placa física, a Parte A deve permitir controlar o LED pelo navegador e a Parte B deve mostrar uma resposta recebida. No Wokwi padrão, a Parte B funciona; a Parte A só pode ser acessada pelo navegador com o Private IoT Gateway, recurso pago e opcional. Sem ele, registre somente as evidências realmente executadas no gateway público.</div></article>
     <article class="card errors wide"><h3>10. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>A página do ESP32 não abre</td><td>Celular/computador e ESP32 devem estar na mesma rede e o endereço deve usar o IP mostrado no Monitor Serial. Redes de escola, empresa ou “guest” podem isolar os clientes e impedir que um dispositivo acesse o outro; nesse caso, teste em uma rede simples que permita comunicação local.</td></tr><tr><td>O servidor abre, mas o LED não muda</td><td>Confira o GPIO 23 e se os caminhos /ligar e /desligar estão corretos.</td></tr><tr><td>A requisição do cliente retorna erro</td><td>Confirme primeiro se o Wi-Fi está conectado e se a rede permite acesso à Internet.</td></tr></table></article>
     <article class="card worked wide mbb6-bridge"><h3>11. Próximo problema</h3><p>Já conseguimos controlar o LED pelo navegador. Tecnicamente funciona, mas ainda dependemos de um número que pode mudar: o endereço IP. <strong>O próximo passo não é criar outro servidor; é tornar o servidor que já existe mais fácil de encontrar.</strong></p></article>
   </div>
@@ -574,12 +874,12 @@ void loop() {
   <div class="mbb6-context"><strong>Até aqui tudo funciona dentro da rede local.</strong> Mas imagine que você queira demonstrar o protótipo usando a Internet móvel do celular ou permitir um acesso externo apenas durante um teste. O endereço IP local e o nome <code>.local</code> não resolvem isso. <strong>O túnel entra justamente para criar um caminho temporário de fora para dentro</strong>, sem transformar esta experiência didática em uma publicação permanente. E, ao fazer isso, surge naturalmente a próxima preocupação: segurança.</div>
   <div class="cards">
     <article class="card wide"><h3>1. Quando isso é útil?</h3><p>Um túnel pode ser útil para demonstrar temporariamente um protótipo, testar o acesso a partir de outra rede ou permitir que alguém autorizado veja um serviço local por um período curto. Ele não é uma solução automática para publicar um produto definitivo; aqui serve para compreender a passagem de <strong>acesso local</strong> para <strong>acesso externo</strong>.</p></article>
-    <article class="card wide"><h3>2. Como o túnel funciona</h3><p>Um <strong>túnel</strong> cria um caminho intermediário entre um endereço acessível pela Internet e um serviço que continua dentro da rede local. Neste exemplo, usamos <strong>SSH</strong> (<em>Secure Shell</em>) para manter esse caminho.</p><div class="mbb6-route"><span>Internet</span><b>→</b><span>localhost.run</span><b>→ túnel SSH →</b><span>Computador</span><b>→ rede local →</b><span>ESP32</span></div><p class="mbb6-note"><strong>O ESP32 não fica diretamente na Internet.</strong> O computador da mesma rede cria o túnel e encaminha as requisições recebidas até o servidor HTTP da placa.</p></article>
+    <article class="card wide"><h3>2. Como o túnel funciona</h3><p>Um <strong>túnel</strong> cria um caminho intermediário entre um endereço acessível pela Internet e um serviço que continua dentro da rede local. Neste exemplo, usamos <strong>SSH</strong> (<em>Secure Shell</em>) para manter esse caminho.</p><div class="mbb6-route"><span>Internet</span><b>→</b><span>localhost.run</span><b>→ túnel SSH →</b><span>Computador</span><b>→ rede local →</b><span>ESP32</span></div><p class="mbb6-note"><strong>O ESP32 não fica diretamente na Internet.</strong> O computador da mesma rede cria o túnel e encaminha as requisições recebidas até o servidor HTTP da placa. Ainda assim, o serviço passa a poder ser alcançado da Internet; isso amplia sua exposição.</p></article>
     <article class="card"><h3>3. Antes de criar o túnel</h3><ol><li>Deixe o servidor HTTP do ESP32 funcionando.</li><li>Anote o IP mostrado no Monitor Serial.</li><li>No computador da mesma rede, abra <code>http://IP_DO_ESP32</code>.</li><li>Somente continue se a página abrir e controlar o LED normalmente.</li></ol></article>
     <article class="card" data-mbb6-role="tunel-ferramenta"><h3>4. Ferramenta para o teste</h3><p>Usaremos <strong>localhost.run</strong>, um serviço que recebe a conexão SSH do computador e fornece um endereço público temporário. Outras ferramentas de tunelamento existem, mas não precisamos trocar de serviço para compreender o caminho dos dados.</p></article>
     <article class="card code wide mbb6-terminal"><h3>5. Conferir o SSH <button type="button" onclick="copyCode('b6-5-ssh-code',this)">Copiar</button></h3><pre id="b6-5-ssh-code">ssh -V</pre></article>
     <article class="card code wide mbb6-terminal"><h3>6. Criar o túnel <button type="button" onclick="copyCode('b6-5-tunnel-code',this)">Copiar</button></h3><pre id="b6-5-tunnel-code">ssh -R 80:192.168.1.37:80 localhost.run</pre><div class="explain"><p>Troque <code>192.168.1.37</code> pelo IP real do seu ESP32.</p><p><code>-R</code> cria um encaminhamento remoto: o endereço público recebido pelo serviço será encaminhado pelo computador até a porta 80 do ESP32.</p></div></article>
-    <article class="card"><h3>7. Testando fora da rede local</h3><ol><li>Execute o comando. Na primeira conexão, o SSH pode perguntar se você confia na identidade do servidor; confira que o destino é <code>localhost.run</code> e confirme para continuar.</li><li>Mantenha o terminal aberto.</li><li>Copie a URL pública exibida pelo serviço.</li><li>No celular, desligue o Wi-Fi e use a Internet móvel.</li><li>Abra a URL pública.</li><li>Ligue e desligue o LED.</li><li>Ao terminar, volte ao terminal e pressione <code>Ctrl+C</code> para encerrar o túnel.</li></ol></article>
+    <article class="card"><h3>7. Testando fora da rede local</h3><ol><li>Execute o comando. Na primeira conexão, o SSH pode perguntar se você confia na identidade do servidor; confira a identidade e a impressão digital da chave com a documentação oficial do serviço antes de aceitar. Se não conseguir verificar ou se aparecer alerta de chave alterada, interrompa e peça orientação ao professor; não desative a verificação de identidade.</li><li>Mantenha o terminal aberto.</li><li>Copie a URL pública exibida pelo serviço.</li><li>No celular, desligue o Wi-Fi e use a Internet móvel.</li><li>Abra a URL pública.</li><li>Ligue e desligue o LED.</li><li>Ao terminar, volte ao terminal e pressione <code>Ctrl+C</code> para encerrar o túnel.</li></ol></article>
     <article class="card worked"><h3>8. Resultado esperado</h3><p>A página do ESP32 pode ser alcançada temporariamente a partir de outra rede enquanto o túnel estiver ativo. Ao encerrar o comando SSH, o caminho público deixa de encaminhar as requisições para o ESP32.</p><div class="mbb6-checkpoint"><strong>Checkpoint do túnel:</strong> o computador deve abrir o ESP32 localmente antes do túnel; depois, um celular em outra rede deve abrir a URL pública enquanto o terminal estiver ativo. No Wokwi padrão, este teste não é esperado.</div></article>
     <article class="card errors wide"><h3>9. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>O comando SSH não existe</td><td>Confira se o cliente OpenSSH está disponível no sistema.</td></tr><tr><td>O túnel abre, mas a página não</td><td>Confirme que o computador ainda consegue abrir diretamente o IP do ESP32.</td></tr><tr><td>A URL parou de funcionar</td><td>O túnel depende do terminal aberto e a URL gratuita é temporária.</td></tr><tr><td>A rede bloqueia a conexão SSH</td><td>Teste em outra rede ou use outra ferramenta de tunelamento permitida no ambiente.</td></tr></table></article>
     <article class="card exercise wide"><h3>10. Limite desta experiência</h3><p>Exponha somente o <strong>LED didático</strong>. Não use esta atividade para abrir temporariamente fechaduras, portões, câmeras, relés de potência ou dados pessoais. Tornar um serviço acessível externamente cria também uma nova pergunta: <strong>quem pode acessá-lo?</strong></p></article>
@@ -591,7 +891,7 @@ void loop() {
 </main>
 </div>
 </div>
-<script src="../js/arduino-conectividade.js?v=20261020-retirada-1"></script>
+<script src="../js/arduino-conectividade.js?v=20261027-1"></script>
 <script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>
 <script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body>

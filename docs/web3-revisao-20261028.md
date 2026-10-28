@@ -98,3 +98,12 @@ Executado localmente nesta revisão: 29 builds/reconstruções; auditoria das 31
 Não executados como se fossem provas equivalentes: Windows/Laragon, aparelho físico, leitor de tela, conta real do Meu MbB, aplicação BaaS completa em navegador com os emuladores remotos, cloud deploy, push FCM real, modelo Ollama real e piloto de duração/aprendizagem com alunos. A aplicação PHP não foi servida por esta hospedagem estática.
 
 Antes de integração/publicação: repetir o CI no commit editorial final; conferir a ligação do Capítulo 2; concluir revisão visual das páginas representativas e a leitura crítica do encadeamento. Falha material precisa ser corrigida, sem exigir novamente aprovação para os ajustes já autorizados.
+
+
+## Atualização após o primeiro CI editorial
+
+O commit remoto 95f1d11b preservou os 31 conteúdos e 29 ZIPs. A primeira validação editorial encontrou duas falhas materiais: índice derivado da nova preparação BaaS desatualizado e cliente SOAP sem conexão com o endereço do servidor. O endereço do contrato era 127.0.0.1 e o comando usava localhost, que pode resolver para IPv6. A instrução e o teste foram alinhados para 127.0.0.1. A validação passa também a compilar views e abrir as páginas Laravel/API por HTTP nas etapas iniciais, além de executar o cliente SOAP de verdade.
+
+A principal estava em 946ac0838eaa617669fc8a895d4e72e0391c01cb, com atualizações de Banco de Dados, React Native e Arduino. Elas foram incorporadas à branch, sem reescrita desses módulos. A comparação de preservação do catálogo passa a usar essa base mais recente. A divergência do índice novo não foi atribuída às alterações de outros autores; o índice foi regenerado a partir do conteúdo integrado.
+
+As estimativas de horas das etapas novas ficam no planejamento docente, sem apresentá-las no cabeçalho do aluno como carga aprovada. A matriz de cada turma continua pendente de fechamento.

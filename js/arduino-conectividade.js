@@ -105,21 +105,24 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   function showPanel(hash, updateUrl){
-    const panel = document.querySelector(hash);
-    if(!panel || !panel.classList.contains('mbb6-panel')) return;
+    const alvo = document.getElementById(hash.slice(1));
+    const panel = alvo?.closest('.mbb6-panel') || panels[0];
+    if(!panel) return;
 
     panels.forEach(item => item.classList.toggle('active-panel', item === panel));
-    links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === hash));
+    links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + panel.id));
 
     if(updateUrl){
       history.replaceState(null, '', hash);
+      // O Meu MbB acompanha a etapa pelo evento de mudança da âncora.
+      window.dispatchEvent(new Event('hashchange'));
     }
 
     const irDiretoAoTopico = updateUrl || location.hash === hash;
     closeDrawer();
 
     if(irDiretoAoTopico){
-      requestAnimationFrame(() => panel.scrollIntoView({ block: 'start' }));
+      requestAnimationFrame(() => (alvo && panel.contains(alvo) ? alvo : panel).scrollIntoView({ block: 'start' }));
     }else{
       window.scrollTo(0, 0);
     }
@@ -139,11 +142,13 @@ document.addEventListener('DOMContentLoaded', function(){
     if(event.key === 'Escape') closeDrawer();
   });
 
-  const initialHash = location.hash && document.querySelector(location.hash)
+  const initialHash = location.hash && document.getElementById(location.hash.slice(1))
     ? location.hash
     : '#b6-0';
 
   showPanel(initialHash, false);
+  if (location.hash) requestAnimationFrame(() => showPanel(location.hash, false));
+  window.addEventListener('hashchange', () => showPanel(location.hash || '#' + panels[0].id, false));
 });
 
 function manterModuloAtivoVisivel(){
@@ -222,12 +227,14 @@ document.addEventListener('DOMContentLoaded', function(){
   `;
 
   const arquivo = document.createElement('article');
-  arquivo.className = 'card code wide';
+  arquivo.className = 'card wide mbb6-wokwi-aux';
   arquivo.setAttribute('data-mbb-wokwi-bluetooth', 'arquivo');
   arquivo.innerHTML = `
-    <h3>6A.1 Crie o arquivo <code>BluetoothSerial.h</code> no Wokwi <button type="button" onclick="copyCode('b6-1-wokwi-header',this)">Copiar</button></h3>
-    <p>No editor do projeto Wokwi, crie uma nova aba/arquivo com o nome exato <code>BluetoothSerial.h</code> e cole o conteúdo abaixo. O projeto ficará com dois arquivos: <code>sketch.ino</code> e <code>BluetoothSerial.h</code>.</p>
-    <pre id="b6-1-wokwi-header">#ifndef BLUETOOTH_SERIAL_H
+    <h3>6A.1 — Crie o arquivo <code>BluetoothSerial.h</code> no Wokwi</h3>
+    <p class="mbb6-aux-intro">No Wokwi, crie uma nova aba de arquivo e digite exatamente <code>BluetoothSerial.h</code>, respeitando as letras maiúsculas e minúsculas. Clique em <strong>Copiar</strong> no quadro abaixo e cole o conteúdo nesse arquivo. Ao final, seu projeto terá <code>sketch.ino</code> e <code>BluetoothSerial.h</code>.</p>
+    <div class="mbb6-aux-codebox">
+      <div class="mbb6-aux-toolbar"><button type="button" class="mbb6-aux-copy" onclick="copyCode('b6-1-wokwi-header', this)" aria-label="Copiar o conteúdo completo do arquivo BluetoothSerial.h">Copiar</button></div>
+      <pre id="b6-1-wokwi-header">#ifndef BLUETOOTH_SERIAL_H
 #define BLUETOOTH_SERIAL_H
 
 #include &lt;Arduino.h&gt;
@@ -254,7 +261,9 @@ public:
 };
 
 #endif</pre>
-    <div class="explain" style="margin-top:12px">
+    </div>
+    <p class="mbb6-aux-note"><strong>Não confunda:</strong> <code>BluetoothSerial.h</code> é o nome do arquivo. <code>BLUETOOTH_SERIAL_H</code>, escrito nos comandos <code>#ifndef</code> e <code>#define</code>, é apenas um identificador interno usado para evitar inclusões repetidas.</p>
+    <div class="explain">
       <p><strong>O que esse arquivo faz:</strong> disponibiliza no Wokwi os comandos <code>SerialBT.begin()</code>, <code>SerialBT.available()</code>, <code>SerialBT.read()</code> e <code>SerialBT.println()</code>, encaminhando a comunicação ao Monitor Serial durante a simulação.</p>
       <p><strong>Importante:</strong> ele não cria Bluetooth dentro do Wokwi. Ele apenas simula a interface necessária para testar a lógica do programa.</p>
     </div>
@@ -292,7 +301,7 @@ public:
 
   const descarteAuxiliar = document.createElement('p');
   descarteAuxiliar.className = 'mbb6-warning';
-  descarteAuxiliar.innerHTML = '<strong>Na ESP32 física:</strong> use apenas o <code>sketch.ino</code>. O arquivo auxiliar <code>BluetoothSerial.h</code> do Wokwi não é necessário, pois a biblioteca Bluetooth real é fornecida pelo suporte do ESP32.';
+  descarteAuxiliar.innerHTML = '<strong>Na ESP32 física:</strong> remova do projeto a aba auxiliar <code>BluetoothSerial.h</code> criada para o Wokwi antes de compilar o <code>sketch.ino</code>. Como a inclusão usa aspas, manter esse arquivo local pode ocultar a biblioteca real e continuar usando o Monitor Serial. Na placa física, use a biblioteca Bluetooth real fornecida pelo suporte do ESP32.';
   testeFisico.appendChild(descarteAuxiliar);
 
   if(resultadoFisico){

@@ -1,0 +1,47 @@
+[
+  {
+    "name": "protocolos",
+    "width": 390,
+    "ampliacoes": 2
+  },
+  {
+    "name": "projeto-iot",
+    "width": 390,
+    "ampliacoes": 2
+  },
+  {
+    "name": "seguranca",
+    "width": 390,
+    "ampliacoes": 2
+  },
+  {
+    "name": "protocolos",
+    "width": 768,
+    "ampliacoes": 1
+  },
+  {
+    "name": "projeto-iot",
+    "width": 768,
+    "ampliacoes": 1
+  },
+  {
+    "name": "seguranca",
+    "width": 768,
+    "ampliacoes": 1
+  },
+  {
+    "name": "protocolos",
+    "width": 1366,
+    "ampliacoes": 1
+  },
+  {
+    "name": "projeto-iot",
+    "width": 1366,
+    "ampliacoes": 1
+  },
+  {
+    "name": "seguranca",
+    "width": 1366,
+    "ampliacoes": 0
+  }
+]

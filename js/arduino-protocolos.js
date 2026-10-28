@@ -85,21 +85,24 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   function showPanel(hash, updateUrl){
-    const panel = document.querySelector(hash);
-    if(!panel || !panel.classList.contains('mbb8-panel')) return;
+    const alvo = document.getElementById(hash.slice(1));
+    const panel = alvo?.closest('.mbb8-panel') || panels[0];
+    if(!panel) return;
 
     panels.forEach(item => item.classList.toggle('active-panel', item === panel));
-    links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === hash));
+    links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + panel.id));
 
     if(updateUrl){
       history.replaceState(null, '', hash);
+      // O Meu MbB acompanha a etapa pelo evento de mudança da âncora.
+      window.dispatchEvent(new Event('hashchange'));
     }
 
     const irDiretoAoTopico = updateUrl || location.hash === hash;
     closeDrawer();
 
     if(irDiretoAoTopico){
-      requestAnimationFrame(() => panel.scrollIntoView({ block: 'start' }));
+      requestAnimationFrame(() => (alvo && panel.contains(alvo) ? alvo : panel).scrollIntoView({ block: 'start' }));
     }else{
       window.scrollTo(0, 0);
     }
@@ -119,11 +122,13 @@ document.addEventListener('DOMContentLoaded', function(){
     if(event.key === 'Escape') closeDrawer();
   });
 
-  const initialHash = location.hash && document.querySelector(location.hash)
+  const initialHash = location.hash && document.getElementById(location.hash.slice(1))
     ? location.hash
     : '#b8-prep';
 
   showPanel(initialHash, false);
+  if (location.hash) requestAnimationFrame(() => showPanel(location.hash, false));
+  window.addEventListener('hashchange', () => showPanel(location.hash || '#' + panels[0].id, false));
 });
 
 function manterModuloAtivoVisivel(){

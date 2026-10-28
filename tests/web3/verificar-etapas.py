@@ -1,6 +1,6 @@
 """Reconstrói cada etapa em pasta limpa; não confunde build com teste de navegador."""
 from pathlib import Path
-import argparse, importlib.util, os, shutil, subprocess, tempfile, socket, time
+import argparse, importlib.util, os, shutil, subprocess, tempfile, socket, time, json, signal, urllib.request
 
 ROOT=Path(__file__).resolve().parents[2]
 spec=importlib.util.spec_from_file_location('etapas',ROOT/'scripts/web3_etapas.py')
@@ -47,6 +47,8 @@ def conferir(codigo,app,dependencias,nativo):
             executar(['composer','dump-autoload','--no-scripts','--no-interaction'],app)
             executar(['php','artisan','key:generate'],app)
             executar(['php','artisan','migrate','--force'],app)
+            executar(['php','artisan','view:cache'],app)
+            executar(['php','artisan','route:list'],app)
             if codigo=='m6':
                 controller=app/'app/Http/Controllers/EnderecoController.php';final=controller.read_bytes();controller.unlink()
                 executar(['php','artisan','make:controller','EnderecoController'],app)
@@ -54,12 +56,34 @@ def conferir(codigo,app,dependencias,nativo):
                 controller.write_bytes(final)
             if int(codigo[1:])>=5:executar(['php','artisan','cafe:importar-cardapio'],app)
             if list((app/'tests/Feature').glob('*Test.php')):executar(['vendor/bin/phpunit'],app)
+            if int(codigo[1:])>=3:executar(['php','tests/alterar-localmente.php'],app)
+            with socket.socket() as sock:sock.bind(('127.0.0.1',0));porta=sock.getsockname()[1]
+            web=subprocess.Popen(['php','artisan','serve','--host=127.0.0.1',f'--port={porta}'],cwd=app,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+            origem=f'http://127.0.0.1:{porta}'
+            try:
+                for _ in range(100):
+                    try:
+                        with socket.create_connection(('127.0.0.1',porta),timeout=.2):break
+                    except OSError:time.sleep(.05)
+                else:raise AssertionError('O servidor Laravel não iniciou')
+                def ler(caminho):
+                    with urllib.request.urlopen(origem+caminho,timeout=8) as resposta:return resposta.read().decode()
+                assert 'Café Aurora' in ler('/atendimento')
+                api=json.loads(ler('/api/atendimento'))
+                assert set(api)=={'nomeNegocio','mensagemStatus','mensagemTempo'}
+                if int(codigo[1:])>=3:assert '47 minutos' in api['mensagemTempo']
+                assert 'Café Aurora' in ler('/balcao.php')
+                if int(codigo[1:])>=5:
+                    assert 'Café coado' in ler('/cardapio.php')
+                    assert len(json.loads(ler('/api/produtos'))['data'])==3
+            finally:
+                os.killpg(web.pid,signal.SIGTERM);web.wait(timeout=10)
         if int(codigo[1:])>=8:
-            servidor=subprocess.Popen(['php','-S','localhost:9001','apoio/soap/servidor.php'],cwd=app,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+            servidor=subprocess.Popen(['php','-S','127.0.0.1:9001','apoio/soap/servidor.php'],cwd=app,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
             try:
                 for _ in range(80):
                     try:
-                        with socket.create_connection(('localhost',9001),timeout=.2):break
+                        with socket.create_connection(('127.0.0.1',9001),timeout=.2):break
                     except OSError:time.sleep(.05)
                 else:raise AssertionError('O servidor SOAP não iniciou')
                 saida=executar(['php','apoio/soap/cliente.php'],app)

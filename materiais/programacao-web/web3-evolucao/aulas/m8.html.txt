@@ -3,12 +3,12 @@
 <h3>Confira a extensão e separe os servidores</h3>
 <p>No terminal do Laragon ou do VS Code, execute <code>php --ri soap</code>. Se a extensão não estiver carregada, confira o <code>php.ini</code> indicado por <code>php --ini</code>, habilite a extensão SOAP da instalação e reinicie os servidores PHP. Não baixe DLLs de procedência desconhecida para resolver a mensagem.</p>
 <p>Mantenha o Laravel na porta 8000. Em outro terminal, na raiz da aplicação, iniciaremos apenas o servidor SOAP na porta 9001. Separar as portas evita que o servidor embutido fique esperando uma chamada que precisaria atender a si mesmo.</p>
-<pre class="code-block"><code>php -d opcache.enable=0 -S localhost:9001 apoio/soap/servidor.php</code></pre>
+<pre class="code-block"><code>php -d opcache.enable=0 -S 127.0.0.1:9001 apoio/soap/servidor.php</code></pre>
 <p>Deixe esse terminal em execução. Em um terceiro terminal, ainda na raiz, execute <code>php apoio/soap/cliente.php</code>. Deve aparecer o resultado da consulta e, abaixo, a requisição e a resposta em XML. O banco de atendimento precisa ter sido preparado nas etapas anteriores.</p>
 <h3>Leia primeiro o que estamos combinando</h3>
 <p><strong>XML</strong> representa dados com elementos e atributos. <strong>SOAP</strong> define uma estrutura de mensagens, incluindo um envelope. <strong>WSDL</strong> descreve o serviço: operação, tipos envolvidos e endereço de acesso. Aqui a operação é <code>consultar</code>; ela oferece os mesmos três campos do atendimento.</p>
 {{arquivo:contratos/atendimento.wsdl}}
-<p>Localize a operação e o endereço <code>localhost:9001</code> antes de estudar todos os elementos. Não precisamos decorar a estrutura XML para perceber o acordo entre os programas. O cliente sabe que operação pedir e como interpretar sua resposta porque recebeu esse contrato.</p>
+<p>Localize a operação e o endereço <code>127.0.0.1:9001</code> antes de estudar todos os elementos. Usamos o mesmo endereço no servidor e no contrato; <code>localhost</code> pode resolver para outro endereço local no computador. O cliente sabe que operação pedir e como interpretar sua resposta porque recebeu esse contrato.</p>
 {{arquivo:apoio/soap/servidor.php}}
 {{arquivo:apoio/soap/cliente.php}}
 <p>O servidor reaproveita <code>obterAtendimento()</code>. O cliente usa <code>SoapClient</code>, pede <code>consultar()</code> e permite examinar as mensagens trocadas. <code>trace</code> foi ativado para nossa observação local; não é uma orientação para registrar indiscriminadamente dados de clientes em produção.</p>

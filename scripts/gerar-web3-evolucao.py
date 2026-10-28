@@ -80,7 +80,7 @@ def pagina(a):
 <dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
 <div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>{html.escape(percurso)}</h2>{menu(a)}<a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
 <main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
-<div class="chapter-header"><span class="chapter-kicker">Web III · {html.escape(percurso)}</span><h2 id="titulo-aula" tabindex="-1">{html.escape(a['titulo'])}</h2><p class="chapter-meta">Café Aurora · cerca de {a['horas']} horas-aula de estudo, prática e verificação</p><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<div class="chapter-header"><span class="chapter-kicker">Web III · {html.escape(percurso)}</span><h2 id="titulo-aula" tabindex="-1">{html.escape(a['titulo'])}</h2><p class="web3-status">Web III — Em desenvolvimento.</p></div>
 {corpo}
 <nav class="chapter-footer" aria-label="Anterior e próxima aula">{anterior}{proxima}</nav>
 </article></main></div>

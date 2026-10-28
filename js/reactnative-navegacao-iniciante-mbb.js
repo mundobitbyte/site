@@ -414,18 +414,27 @@
 
   const exercicios = navStep('nav-exercicios');
   if (exercicios) {
-    exercicios.title = '99 — Exercícios: agora você repete o ciclo sozinho';
-    exercicios.objective = 'Praticar a inclusão de novas telas seguindo o mesmo procedimento usado no módulo.';
-    exercicios.kicker = 'Use a Central de Consultas pronta';
-    exercicios.lead = 'Em cada exercício, mantenha tudo que já funciona. Crie apenas a nova tela solicitada e integre-a ao projeto. Antes de começar, escreva em uma folha ou comentário os quatro passos: criar arquivo → importar → registrar Stack.Screen → criar botão com navigate().';
-    exercicios.highlight = 'Sempre que criar uma tela nova, teste primeiro se as telas antigas continuam funcionando. Só depois considere o exercício concluído.';
+    exercicios.title = '99 — Exercícios: amplie a Central de Consultas';
+    exercicios.objective = 'Criar novas telas a partir do aplicativo da etapa 10, preservando as consultas existentes.';
+    exercicios.kicker = 'Do projeto pronto à sua próxima conquista';
+    exercicios.lead = 'Na etapa 10 — Projeto Completo, você já tem uma Central de Consultas funcionando. Vamos partir dela e ampliar o aplicativo, uma tela de cada vez.';
+    exercicios.highlight = 'Em cada nova tela: crie o componente → importe no App.js → registre a rota → adicione o botão no Início → execute e teste no Expo Snack.';
+    const ex99Image = (file, caption, alt) => '<figure class="nav-ex99-figure"><img src="../img/reactnative/exercicios99/' + file + (file === 'central-base-4-telas' || file === 'central-ampliada-7-telas' ? '.png' : '.webp') + '" alt="' + alt + '" loading="lazy" decoding="async"><figcaption>' + caption + '</figcaption></figure>';
+    const ex99BaseImage = ex99Image('central-base-4-telas', 'Esta é a tela inicial do aplicativo da etapa 10.', 'Central de Consultas original com três opções');
+    const ex99SobreImage = ex99Image('tela-sobre', 'Exemplo de apresentação da tela Sobre.', 'Tela Sobre da Central de Consultas');
+    const ex99ConversorImage = ex99Image('tela-conversor', 'Exemplo da conversão de quilômetros para milhas.', 'Tela Conversor');
+    const ex99ContadorImage = ex99Image('tela-contador', 'Exemplo da tela Contador.', 'Tela Contador');
+    const ex99CentralAmpliadaImage = ex99Image('central-ampliada-7-telas', 'Resultado da ampliação: seis botões na tela inicial.', 'Central ampliada com seis botões');
     exercicios.boxes = [
-      ['1. Sobre', 'Crie screens/Sobre.js. Coloque nome e objetivo do aplicativo. Depois importe Sobre em App.js, registre name="Sobre" e acrescente em Inicio.js um botão que chama navigation.navigate("Sobre").'],
-      ['2. Conversor', 'Crie screens/Conversor.js com uma conversão simples de quilômetros para milhas. Integre usando os mesmos quatro passos.'],
-      ['3. Contador', 'Crie screens/Contador.js usando useState para aumentar e diminuir um valor. Registre a tela e crie o acesso em Inicio.js.'],
-      ['4. Diagnóstico', 'Depois de uma nova tela funcionar, troque de propósito o texto de navigate() para um name que não existe. Observe o erro, compare com Stack.Screen e corrija.'],
-      ['5. Organização', 'Explique por escrito: por que Inicio.js fica em screens? Em que situação um CartaoServico.js faria mais sentido dentro de components?'],
-      ['6. Projeto pessoal', 'Pense em uma função útil para um aplicativo seu. Crie a tela, registre a rota, crie o acesso e anote quais arquivos foram alterados.'],
+      ["Comece aqui — recupere a Central de Consultas", "Abra a etapa <strong>10. Projeto Completo</strong> e execute seus arquivos no <strong>Expo Snack</strong>. Confira a tela inicial com os três serviços: <strong>Buscar CEP</strong>, <strong>Cotação do Dólar</strong> e <strong>Clima Atual</strong>. Esse será seu ponto de partida.<br><br>" + ex99BaseImage + "<br><br><strong>✓ Checkpoint:</strong> os três botões abrem suas respectivas telas? Só avance depois de verificar."],
+      ["1. Sobre — apresente o aplicativo", "A Central de Consultas já oferece serviços úteis. Agora falta explicar a quem abrir o aplicativo o que ele faz.<br><br><strong>Na tela:</strong> mostre <strong>Central de Consultas</strong>, uma breve apresentação das consultas de CEP, dólar e clima, seu nome como desenvolvedor e a tecnologia <strong>React Native com Expo</strong>. Você pode organizar os serviços em pequenos blocos, como na referência.<br><br><strong>Construa:</strong> crie <code>screens/Sobre.js</code> com <code>View</code> e <code>Text</code>. Em <code>App.js</code>, importe o componente e registre a rota <code>Sobre</code> com título visível <code>Sobre</code>. Em <code>screens/Inicio.js</code>, acrescente um botão que use <code>navigation.navigate('Sobre')</code>.<br><br><em>Veja abaixo uma possibilidade de apresentação. O desafio é construir sua própria tela.</em><br><br>" + ex99SobreImage + "<br><br><strong>✓ Checkpoint:</strong> o botão Sobre abre a nova tela e a seta do cabeçalho permite voltar? As consultas antigas continuam funcionando?"],
+      ["2. Conversor — quilômetros para milhas", "Uma distância em quilômetros precisa ser exibida em milhas. Vamos acrescentar uma ferramenta para isso.<br><br><strong>Na tela:</strong> crie um <strong>campo de quilômetros</strong>, os botões <strong>Converter</strong> e <strong>Limpar</strong> e uma área para mostrar o resultado com <strong>duas casas decimais</strong>.<br><br><strong>Fórmula:</strong> <strong>milhas = quilômetros × 0,621371</strong>.<br><br><strong>Construa:</strong> crie <code>screens/Conversor.js</code> com <code>TextInput</code>, <code>Text</code>, <code>Button</code> e <code>useState</code>. Trate entradas vazias ou inválidas. Depois importe, registre a rota <code>Conversor</code> em <code>App.js</code> e adicione seu acesso em <code>Inicio.js</code>.<br><br><em>Compare sua interface com este exemplo de resultado:</em><br><br>" + ex99ConversorImage + "<br><br><strong>✓ Checkpoint:</strong> <strong>10 km → aproximadamente 6,21 milhas</strong>? Limpar funciona? As telas anteriores continuam acessíveis?"],
+      ["3. Contador — um número que muda", "Agora a Central de Consultas ganhará uma ferramenta cujo valor muda quando o usuário toca nos botões.<br><br><strong>Na tela:</strong> mostre o título <strong>Contador</strong>, o valor inicial <strong>0</strong> e três botões: <strong>Aumentar</strong>, <strong>Diminuir</strong> e <strong>Zerar</strong>.<br><br><strong>Construa:</strong> crie <code>screens/Contador.js</code> e use <code>useState</code> para guardar o valor. Faça os botões somarem 1, subtraírem 1 ou voltarem a 0. Importe e registre <code>Contador</code> em <code>App.js</code>; crie o botão correspondente em <code>Inicio.js</code>.<br><br><em>Este é um exemplo de como o contador pode aparecer:</em><br><br>" + ex99ContadorImage + "<br><br><strong>✓ Checkpoint:</strong> aumente três vezes e diminua uma: aparece <strong>2</strong>? Zerar retorna a <strong>0</strong>?"],
+      ["Confira a conquista — Central de Consultas ampliada", "Você criou as três novas telas. Compare sua tela inicial com esta referência: agora são <strong>seis botões de serviços e ferramentas</strong>. Junto com a tela inicial, seu aplicativo tem <strong>sete telas</strong>.<br><br>" + ex99CentralAmpliadaImage + "<br><br><strong>✓ Checkpoint final:</strong> abra as seis opções, retorne ao Início e confirme que nenhuma consulta deixou de funcionar. Agora você pode investigar erros, explicar a organização e criar uma ferramenta pessoal."],
+      ["4. Diagnóstico — encontre uma rota errada", "Com as novas telas funcionando, vamos investigar um erro de navegação.<br><br><strong>Faça:</strong> altere temporariamente <code>navigation.navigate('Conversor')</code> para <code>navigation.navigate('ConversorTeste')</code> em <code>Inicio.js</code>. Observe o aviso, compare esse nome com a rota registrada em <code>App.js</code> e corrija.<br><br><strong>✓ Checkpoint:</strong> você consegue explicar por que a rota não foi encontrada? Depois da correção, o botão funciona novamente?"],
+      ["5. Organização — explique suas escolhas", "Observe os arquivos criados na pasta <code>screens/</code> e os registros em <code>App.js</code>.<br><br><strong>Explique por escrito:</strong> qual é o papel de <code>NavigationContainer</code>, <code>Stack.Navigator</code> e <code>Stack.Screen</code>? Qual é a diferença entre o nome da rota <code>ClimaAtual</code> e o título exibido <strong>Clima Atual</strong>? Quando vale criar um componente reutilizável em <code>components/</code>?<br><br><strong>✓ Checkpoint:</strong> descreva o caminho de um toque no botão da tela inicial até a abertura de outra tela."],
+      ["6. Projeto pessoal — sua ideia na Central", "Escolha uma ferramenta que você gostaria de acrescentar: calculadora de desconto, conversor de temperatura ou outra ideia simples.<br><br><strong>Planeje:</strong> título da tela, dados que serão digitados, botões, resultado esperado e um teste para verificar.<br><br><strong>Construa:</strong> crie o novo arquivo em <code>screens/</code>, desenvolva a funcionalidade, importe e registre a rota em <code>App.js</code> e acrescente um botão em <code>Inicio.js</code>.<br><br><strong>✓ Checkpoint:</strong> a nova ferramenta funciona? Você manteve todas as telas anteriores? Registre os arquivos criados ou modificados."],
+
     ];
   }
 
@@ -517,6 +526,18 @@
       .nav-beginner-inline-guide li + li {
         margin-top: 4px;
       }
+      /* No roteiro 99, os negritos no texto são ênfases, não novos títulos. */
+      .module-page-box > span strong { display: inline !important; font-size: inherit !important; font-weight: 700 !important; margin: 0 !important; color: #0f3f86; }
+      .module-page-box > span code { display: inline; overflow-wrap: anywhere; }
+      .module-page-box > span { display: block; line-height: 1.6; }
+      .module-page-grid:has(.nav-ex99-figure) { grid-template-columns: minmax(0,1fr) !important; }
+      .module-page-grid:has(.nav-ex99-figure) > .module-page-box { max-width: 100%; }
+      .nav-ex99-figure { margin: 14px auto 8px; max-width: 270px; text-align: center; }
+      .nav-ex99-figure img { display: block; width: 100%; height: auto; max-height: 320px; object-fit: contain; margin: 0 auto; border: 1px solid #dbe3ef; border-radius: 12px; background: #fff; }
+      .nav-ex99-images { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 14px; margin-top: 8px; }
+      .nav-ex99-images .nav-ex99-figure { flex: 0 1 205px; margin: 8px 0; }
+      .nav-ex99-figure figcaption { margin-top: 6px; font-size: 12px; line-height: 1.45; color: #526174; }
+      @media (max-width: 600px) { .nav-ex99-figure { max-width: 100%; } .nav-ex99-figure img { max-height: 280px; } }
       @media (max-width: 1050px) {
         .nav-beginner-guide-grid { grid-template-columns: 1fr; }
         .nav-beginner-guide-footer { grid-template-columns: 1fr; }
