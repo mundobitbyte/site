@@ -1,0 +1,172 @@
+[
+  {
+    "arquivo": "wokwi-mdns.pcap",
+    "quadros": 135,
+    "pacotes": 6,
+    "nomes": [
+      "ambiente-mbb._http._tcp.local",
+      "ambiente-mbb.local",
+      "_services._dns-sd._udp.local",
+      "_http._tcp.local"
+    ],
+    "anuncios": [
+      {
+        "pacote": 4,
+        "segundos": 4.268703,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "SRV",
+        "nome": "ambiente-mbb._http._tcp.local",
+        "valor": "ambiente-mbb.local · porta 80"
+      },
+      {
+        "pacote": 4,
+        "segundos": 4.268703,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "A",
+        "nome": "ambiente-mbb.local",
+        "valor": "10.10.0.2"
+      },
+      {
+        "pacote": 5,
+        "segundos": 5.368485,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "SRV",
+        "nome": "ambiente-mbb._http._tcp.local",
+        "valor": "ambiente-mbb.local · porta 80"
+      },
+      {
+        "pacote": 5,
+        "segundos": 5.368485,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "A",
+        "nome": "ambiente-mbb.local",
+        "valor": "10.10.0.2"
+      },
+      {
+        "pacote": 6,
+        "segundos": 6.468755,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "SRV",
+        "nome": "ambiente-mbb._http._tcp.local",
+        "valor": "ambiente-mbb.local · porta 80"
+      },
+      {
+        "pacote": 6,
+        "segundos": 6.468755,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "A",
+        "nome": "ambiente-mbb.local",
+        "valor": "10.10.0.2"
+      }
+    ]
+  },
+  {
+    "arquivo": "wokwi-mdns-sala.pcap",
+    "quadros": 148,
+    "pacotes": 6,
+    "nomes": [
+      "ambiente-sala._http._tcp.local",
+      "ambiente-sala.local",
+      "_services._dns-sd._udp.local",
+      "_http._tcp.local"
+    ],
+    "anuncios": [
+      {
+        "pacote": 4,
+        "segundos": 4.268655,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "SRV",
+        "nome": "ambiente-sala._http._tcp.local",
+        "valor": "ambiente-sala.local · porta 80"
+      },
+      {
+        "pacote": 4,
+        "segundos": 4.268655,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "A",
+        "nome": "ambiente-sala.local",
+        "valor": "10.10.0.2"
+      },
+      {
+        "pacote": 5,
+        "segundos": 5.368437,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "SRV",
+        "nome": "ambiente-sala._http._tcp.local",
+        "valor": "ambiente-sala.local · porta 80"
+      },
+      {
+        "pacote": 5,
+        "segundos": 5.368437,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "A",
+        "nome": "ambiente-sala.local",
+        "valor": "10.10.0.2"
+      },
+      {
+        "pacote": 6,
+        "segundos": 6.468712,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "SRV",
+        "nome": "ambiente-sala._http._tcp.local",
+        "valor": "ambiente-sala.local · porta 80"
+      },
+      {
+        "pacote": 6,
+        "segundos": 6.468712,
+        "origem": "10.10.0.2",
+        "destino": "224.0.0.251",
+        "origemPorta": 5353,
+        "destinoPorta": 5353,
+        "mensagem": "Resposta/anúncio",
+        "tipo": "A",
+        "nome": "ambiente-sala.local",
+        "valor": "10.10.0.2"
+      }
+    ]
+  }
+]

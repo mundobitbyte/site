@@ -42,7 +42,13 @@ fs.mkdirSync(dest,{recursive:true});
      summary.etapas.push(result);
      assert(result.active&&!result.drawer,JSON.stringify(result));
      assert(result.overflow<=2&&!result.duplicates.length&&!result.spilled.length,JSON.stringify(result));
-     if(hash!=='#topo'&&name!=='revisao-modulos')assert(result.top>=result.fixedBottom-2,`Âncora encoberta: ${JSON.stringify(result)}`);
+     if(hash!=='#topo'&&name!=='revisao-modulos'&&result.top<result.fixedBottom-2){
+      const debug=await page.locator(hash).evaluate(e=>({scrollMargin:getComputedStyle(e).scrollMarginTop,scrollTop:document.scrollingElement.scrollTop,ancestrais:Array.from((function*(n){for(;n;n=n.parentElement)yield n})(e)).map(n=>({tag:n.tagName,id:n.id,top:n.getBoundingClientRect().top,scroll:n.scrollTop,overflow:getComputedStyle(n).overflow}))}));
+      console.log('DIAGNOSTICO_ANCORA',JSON.stringify(debug));
+      await page.screenshot({path:`${dest}/ancora-falhou.jpg`,type:'jpeg',quality:70});
+      console.log('MBB_EVIDENCIA ancora-falhou.jpg '+fs.readFileSync(`${dest}/ancora-falhou.jpg`).toString('base64'));
+      assert.fail(`Âncora encoberta: ${JSON.stringify(result)}`);
+     }
      const buttons=page.locator(`${hash} button[onclick*="copyCode"]`);
      for(let i=0;i<await buttons.count();i++){
       const button=buttons.nth(i);

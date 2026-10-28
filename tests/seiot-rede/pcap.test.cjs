@@ -21,3 +21,10 @@ test('arquivos incompletos, PCAPNG e tipos não suportados são recusados',()=>{
 test('captura vazia não é inventada como evidência de mDNS',()=>{
  const d=analisarPcap(captura.subarray(0,24));assert.equal(d.pacotesMdns,0);assert.deepEqual(d.registros,[]);
 });
+test('checkpoint executado: outro nome altera os registros A e SRV da captura real',()=>{
+ const sala=analisarPcap(fs.readFileSync('docs/validacoes/seiot-rede-20261028/wokwi-mdns-sala.pcap'));
+ assert.equal(sala.quadros,148);assert.equal(sala.pacotesMdns,6);
+ assert(sala.registros.some(r=>r.tipo==='A'&&r.nome==='ambiente-sala.local'&&r.valor==='10.10.0.2'));
+ assert(sala.registros.some(r=>r.tipo==='SRV'&&r.valor==='ambiente-sala.local · porta 80'));
+ assert(!sala.registros.some(r=>r.nome.includes('ambiente-mbb')));
+});
