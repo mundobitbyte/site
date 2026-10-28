@@ -90,19 +90,19 @@
     // HTTP — Wokwi prioriza o papel de cliente, que funciona no gateway padrão.
     // O guia de ambientes é preparado no script principal; não o substituir por uma versão antiga.
 
-    const testeServidor = acharCard('b6-3', '5. Testando o servidor');
+    const testeServidor = acharCard('b6-3', '8. Testando o servidor');
     if (testeServidor) {
       // Preserve o título e a nota mais completos definidos no HTML e no script principal.
       const jaExplicado = Array.from(testeServidor.querySelectorAll('p')).some(p => /Wokwi/i.test(p.textContent));
       if (!jaExplicado) {
         const nota = document.createElement('p');
         nota.className = 'mbb6-note';
-        nota.innerHTML = '<strong>Wokwi padrão:</strong> o navegador não acessa o servidor HTTP simulado pelo gateway público. Para executar o pedido HTTP no simulador, siga a Parte B, código 7A.';
+        nota.innerHTML = '<strong>Wokwi padrão:</strong> o navegador não acessa o servidor HTTP simulado pelo gateway público. Para executar o pedido HTTP no simulador, siga a Parte A, código 3A.';
         testeServidor.appendChild(nota);
       }
     }
 
-    const parteB = acharCard('b6-3', 'Parte B');
+    const parteB = acharCard('b6-3', 'Parte A');
     if (parteB) {
       const explicacao = parteB.querySelector('.explain');
       if (explicacao && !explicacao.querySelector('[data-mbb6-http-wokwi-principal]')) {
@@ -121,7 +121,7 @@
         const card = document.createElement('article');
         card.className = 'card code wide';
         card.innerHTML = `
-          <h3>7A. Código para praticar cliente HTTP no Wokwi <button type="button" onclick="copyCode('b6-3-client-wokwi-code',this)">Copiar</button></h3>
+          <h3>3A. Código para praticar cliente HTTP no Wokwi <button type="button" onclick="copyCode('b6-3-client-wokwi-code',this)">Copiar</button></h3>
           <pre id="b6-3-client-wokwi-code">#include &lt;WiFi.h&gt;
 #include &lt;HTTPClient.h&gt;
 
@@ -171,16 +171,16 @@ void loop() {
           h3.childNodes.forEach(node => {
             if (node.nodeType === Node.TEXT_NODE) node.textContent = '';
           });
-          h3.insertBefore(document.createTextNode('7B. Código equivalente para uma rede Wi-Fi real '), botao || null);
+          h3.insertBefore(document.createTextNode('3B. Código equivalente para uma rede Wi-Fi real '), botao || null);
         }
       }
     }
 
-    const testeCliente = acharCard('b6-3', '9. Testando o cliente');
+    const testeCliente = acharCard('b6-3', '5. Testando o cliente');
     if (testeCliente) {
       const ol = testeCliente.querySelector('ol');
       if (ol) {
-        ol.innerHTML = '<li><strong>Escolha apenas um código:</strong> 7A para Wokwi com <code>Wokwi-GUEST</code> ou 7B para a placa física, substituindo SSID e senha da rede real.</li><li>Execute a simulação ou envie o programa para a placa.</li><li>Abra o Monitor Serial em 115200 e acompanhe a conexão.</li><li>Observe o código retornado pelo pedido GET e, quando disponível, o conteúdo recebido. Um valor negativo indica erro da biblioteca; uma resposta HTTP positiva não é necessariamente o status 200.</li>';
+        ol.innerHTML = '<li><strong>Escolha apenas um código:</strong> 3A para Wokwi com <code>Wokwi-GUEST</code> ou 3B para a placa física, substituindo SSID e senha da rede real.</li><li>Execute a simulação ou envie o programa para a placa.</li><li>Abra o Monitor Serial em 115200 e acompanhe a conexão.</li><li>Observe o código retornado pelo pedido GET e, quando disponível, o conteúdo recebido. Um valor negativo indica erro da biblioteca; uma resposta HTTP positiva não é necessariamente o status 200.</li>';
       }
     }
 
