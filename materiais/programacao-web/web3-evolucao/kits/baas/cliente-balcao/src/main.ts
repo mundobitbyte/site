@@ -2,6 +2,7 @@ import { obterAtendimento, acompanharAtendimento } from "./dados.js";
 import { elemento, apresentar, retirarAviso, comPrazo } from "./tela.js";
 import "./operador.js";
 import "./midia.js";
+import "./catalogo.js";
 import "./integracoes.js";
 import "./notificacoes.js";
 

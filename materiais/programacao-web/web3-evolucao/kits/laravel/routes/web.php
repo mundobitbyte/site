@@ -16,6 +16,7 @@ Route::middleware(['auth','can:alterar-atendimento'])->group(function () {
 });
 
 Route::get('/api/produtos',[\App\Http\Controllers\CatalogoController::class,'listar']);
+Route::get('/cardapio',[\App\Http\Controllers\CatalogoController::class,'pagina']);
 Route::get('/endereco',[\App\Http\Controllers\EnderecoController::class,'mostrar']);
 Route::middleware(['auth','can:alterar-atendimento'])->group(function () {
     Route::get('/operador/produtos/{produto}',[\App\Http\Controllers\CatalogoController::class,'editar'])->name('operador.produto');

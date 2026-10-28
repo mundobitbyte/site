@@ -14,9 +14,9 @@
     <nav aria-label="Navegação principal">
       <ul>
         <li><a href="index.html">Início</a></li>
-        <li><a href="balcao.html#titulo-imagem">Cardápio</a></li>
+        <li><a href="cardapio.html">Cardápio</a></li>
         <li><a href="sobre.html" aria-current="page">Sobre</a></li>
-        <li><a href="balcao.html#titulo-operador">Contato</a></li>
+        <li><a href="balcao.html#titulo-operador">Equipe</a></li>
       </ul>
     </nav>
   </header>

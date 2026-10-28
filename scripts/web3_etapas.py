@@ -38,19 +38,22 @@ def mvc(n):
   por(d,'resources/views/atendimento.blade.php',"@extends('layout')\n@section('titulo','Atendimento')\n@section('conteudo')\n<h1>{{ $atendimento->nome }}</h1>\n@php($dados=$atendimento->mensagens())\n<p>{{ $dados['mensagemStatus'] }}</p><p>{{ $dados['mensagemTempo'] }}</p>\n@endsection\n")
   por(d,'tests/alterar-localmente.php',"<?php\nrequire_once dirname(__DIR__).'/src/repositorio-atendimento.php';\n$aviso=new Atendimento('Café Aurora',true,47);\nsalvarConfiguracaoAtendimento(conectarBanco(),$aviso);\necho 'Alteração local gravada.',PHP_EOL;\n")
  if n>=4:
-  aplicar(d,'laravel',lambda p:p.startswith(('app/Http/Requests/','app/Models/User','app/Providers/','app/Http/Controllers/Sessao','app/Console/Commands/Criar','resources/views/entrar','resources/views/editar-atendimento','tests/Feature/Atendimento','resources/views/layout')))
+  aplicar(d,'laravel',lambda p:p.startswith(('app/Http/Requests/','app/Models/User','app/Providers/','app/Http/Controllers/Sessao','app/Http/Controllers/AtendimentoController','app/Console/Commands/Criar','resources/views/entrar','resources/views/editar-atendimento','tests/Feature/Atendimento','resources/views/layout')))
   por(d,'routes/web.php',texto('laravel','routes/web.php').split("Route::get('/api/produtos'")[0])
  if n>=5:
-  aplicar(d,'laravel',lambda p:p.startswith(('app/Models/Categoria','app/Models/Produto','app/Console/Commands/Importar','app/Http/Controllers/Catalogo','resources/views/editar-produto','database/migrations/2026_10_26_000002','tests/Feature/Catalogo')))
-  d['routes/web.php']+=b"\nRoute::get('/api/produtos',[\\App\\Http\\Controllers\\CatalogoController::class,'listar']);\nRoute::middleware(['auth','can:alterar-atendimento'])->group(function(){\nRoute::get('/operador/produtos/{produto}',[\\App\\Http\\Controllers\\CatalogoController::class,'editar'])->name('operador.produto');\nRoute::post('/operador/produtos/{produto}',[\\App\\Http\\Controllers\\CatalogoController::class,'salvar']);\n});\n"
+  aplicar(d,'laravel',lambda p:p.startswith(('app/Models/Categoria','app/Models/Produto','app/Console/Commands/Importar','app/Http/Controllers/Catalogo','resources/views/editar-produto','resources/views/cardapio','public/cardapio.php','database/migrations/2026_10_26_000002','tests/Feature/Catalogo')))
+  d['routes/web.php']+=b"\nRoute::get('/api/produtos',[\\App\\Http\\Controllers\\CatalogoController::class,'listar']);\nRoute::get('/cardapio',[\\App\\Http\\Controllers\\CatalogoController::class,'pagina']);\nRoute::middleware(['auth','can:alterar-atendimento'])->group(function(){\nRoute::get('/operador/produtos/{produto}',[\\App\\Http\\Controllers\\CatalogoController::class,'editar'])->name('operador.produto');\nRoute::post('/operador/produtos/{produto}',[\\App\\Http\\Controllers\\CatalogoController::class,'salvar']);\n});\n"
+  d['resources/views/inicio-legado.blade.php']=d['resources/views/inicio-legado.blade.php'].replace(b'cardapio.php',b'/cardapio')
  if n>=6:
   aplicar(d,'laravel',lambda p:p.startswith(('app/Services/','app/Http/Controllers/Endereco','resources/views/endereco','resources/views/cardapio','tests/Feature/Cep','public/cardapio.php','public/js/script.js')))
-  d['routes/web.php']+=b"\nRoute::get('/endereco',[\\App\\Http\\Controllers\\EnderecoController::class,'mostrar']);\nRoute::get('/cardapio',[\\App\\Http\\Controllers\\CatalogoController::class,'pagina']);\n"
+  d['routes/web.php']+=b"\nRoute::get('/endereco',[\\App\\Http\\Controllers\\EnderecoController::class,'mostrar']);\n"
   d['resources/views/inicio-legado.blade.php']=d['resources/views/inicio-legado.blade.php'].replace(b'cardapio.php',b'/cardapio')
   d['resources/views/layout.blade.php']=d['resources/views/layout.blade.php'].replace(b'/cardapio.php',b'/cardapio')
  if n>=7:aplicar(d,'laravel',lambda p:p.startswith(('public/mobile','public/js/mobile')))
  if n>=8:aplicar(d,'laravel',lambda p:p.startswith(('contratos/','apoio/soap/')))
  if n>=9:aplicar(d,'laravel',lambda p:p.startswith('lang/') or p in ['app/Http/Controllers/AtendimentoController.php','resources/views/atendimento.blade.php','resources/views/layout.blade.php','tests/Feature/AtendimentoTest.php'])
+ if n<5 and 'resources/views/layout.blade.php' in d:
+  d['resources/views/layout.blade.php']=d['resources/views/layout.blade.php'].replace(b'href="/cardapio"',b'href="/cardapio.php"')
  if n<9 and 'tests/Feature/AtendimentoTest.php' in d:
   t=d['tests/Feature/AtendimentoTest.php'].decode()
   if '    public function test_idioma' in t:por(d,'tests/Feature/AtendimentoTest.php',t[:t.index('    public function test_idioma')]+'}\n')
@@ -188,6 +191,8 @@ if(modo==="local")connectFirestoreEmulator(banco,"127.0.0.1",8080);
  if n<2:
   for p in list(d):
    if p.endswith('.html'):d[p]=d[p].replace(b'balcao.html#titulo-operador',b'balcao.html')
+ if n<6:
+  d['public/cardapio.html']=re.sub(b'<section aria-labelledby="titulo-atualizar-fotos".*?</section>',b'',d['public/cardapio.html'],flags=re.S)
  return d
 
 def pacote(etapa):return {'m':mvc,'s':spa,'b':baas}[etapa[0]](int(etapa[1:]))

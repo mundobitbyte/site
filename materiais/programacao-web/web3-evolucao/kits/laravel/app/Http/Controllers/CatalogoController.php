@@ -7,6 +7,10 @@ use Illuminate\Validation\Rule;
 
 class CatalogoController
 {
+    public function pagina()
+    {
+        return view('cardapio', ['produtos'=>Produto::query()->orderBy('nome')->get()]);
+    }
     public function listar(Request $r)
     {
         $entrada=$r->validate(['categoria'=>['nullable','string',Rule::exists('categorias','id')]]);

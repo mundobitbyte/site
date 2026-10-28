@@ -19,6 +19,12 @@ class CatalogoTest extends TestCase
         $this->getJson('/api/produtos?categoria=bebida')->assertOk()->assertJsonCount(1,'data')->assertJsonMissingPath('data.0.rascunho');
         $this->getJson('/api/produtos?categoria[]=bebida')->assertUnprocessable();
     }
+    public function test_pagina_publica_reflete_o_preco_atual_e_escapa_texto(): void
+    {
+        $this->artisan('cafe:importar-cardapio')->assertSuccessful();
+        Produto::findOrFail('cafe-coado')->update(['preco_centavos'=>850,'nome'=>'<script>alert(1)</script>']);
+        $this->get('/cardapio')->assertOk()->assertSee('8,50')->assertSee('&lt;script&gt;',false)->assertDontSee('<script>alert(1)</script>',false);
+    }
     public function test_escrita_e_valores_nao_autorizados_preservam_produto(): void
     {
         $this->artisan('cafe:importar-cardapio');

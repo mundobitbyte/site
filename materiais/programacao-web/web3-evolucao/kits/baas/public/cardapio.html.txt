@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Conheça os cafés e produtos artesanais do Café Aurora.">
+  <title>Cardápio — Café Aurora</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-categoria-inicial="todos">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header>
+    <p><a href="index.html">Café Aurora</a></p>
+    <nav aria-label="Navegação principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="cardapio.html" aria-current="page">Cardápio</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="http://localhost:8000/contato.php">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="conteudo" tabindex="-1">
+    <h1>Cardápio</h1><p>O formulário de mensagens permanece na aplicação PHP do Web II, em localhost:8000.</p>
+    <p>Conheça alguns dos destaques preparados no Café Aurora.</p>
+    <div class="filtros" role="group" aria-label="Filtrar produtos" data-filtros hidden>
+      <span>Filtrar por:</span>
+      <button type="button" data-filtro="todos" aria-pressed="true" aria-controls="lista-produtos">Todos</button>
+      <button type="button" data-filtro="bebida" aria-pressed="false" aria-controls="lista-produtos">Bebidas</button>
+      <button type="button" data-filtro="comida" aria-pressed="false" aria-controls="lista-produtos">Comidas</button>
+    </div>
+    <p class="status-filtro" data-status-filtro role="status"></p>
+    <section aria-labelledby="produtos">
+      <h2 id="produtos">Destaques da casa</h2>
+      <p class="status-carregamento" data-status-carregamento role="status">Cardápio disponível.</p>
+      <div class="grade-produtos" id="lista-produtos">
+        
+        <article data-categoria="bebida">
+          <h3>Café coado</h3>
+          <img src="img/cafe-coado.webp" alt="Xícara de café coado ao lado de uma pequena jarra" width="960" height="640" loading="lazy">
+          <p>Preparado na hora com grãos selecionados. <strong>R$ 8,00</strong></p>
+        </article>
+        
+        
+        <article data-categoria="comida">
+          <h3>Pão artesanal</h3>
+          <img src="img/pao-artesanal.webp" alt="Pão artesanal cortado sobre uma mesa de madeira" width="960" height="640" loading="lazy">
+          <p>Fermentação lenta e produção diária. <strong>R$ 12,00</strong></p>
+        </article>
+        <article data-categoria="comida">
+          <h3>Bolo caseiro de laranja</h3>
+          <img src="img/bolo-caseiro.webp" alt="Bolo caseiro de laranja com uma fatia servida" width="960" height="640" loading="lazy">
+          <p>Receita da casa com laranjas frescas. <strong>R$ 9,00 a fatia</strong></p>
+        </article>
+        
+      </div>
+    </section>
+    <section aria-labelledby="simulacao-pedido">
+      <h2 id="simulacao-pedido">Simule seu pedido</h2>
+      <p id="aviso-pedido">Marque produtos para calcular o total. Esta simulação não envia nem reserva pedidos.</p>
+      <fieldset class="pedido" data-pedido aria-describedby="aviso-pedido" hidden>
+        <legend>Produtos</legend>
+        <label><input type="checkbox" value="cafe-coado" data-item-pedido> Café coado — R$ 8,00</label>
+        <label><input type="checkbox" value="pao-artesanal" data-item-pedido> Pão artesanal — R$ 12,00</label>
+        <label><input type="checkbox" value="bolo-laranja" data-item-pedido> Bolo de laranja — R$ 9,00</label>
+      </fieldset>
+      <p class="resumo-pedido" data-resumo-pedido role="status"></p>
+      <p class="status-persistencia" data-status-persistencia role="status">Nenhum pedido salvo neste navegador.</p>
+      <button type="button" data-limpar-pedido hidden>Limpar seleção</button>
+      <noscript><p>A simulação precisa de JavaScript, mas todo o cardápio continua disponível acima.</p></noscript>
+    </section>
+  <section aria-labelledby="titulo-atualizar-fotos"><h2 id="titulo-atualizar-fotos">Fotos da equipe</h2><p>O cardápio conhecido continua disponível. Consulte o serviço para conferir uma foto enviada pela equipe.</p><button type="button" id="consultar-midia-cardapio">Consultar foto atual</button><p id="retorno-midia-cardapio" role="status"></p></section></main>
+  <footer><p>&copy; 2026 Café Aurora. Projeto educacional fictício.</p></footer>
+  <script src="js/script.js" defer></script>
+<script type="module" src="js/balcao/main.js"></script></body>
+</html>

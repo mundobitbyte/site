@@ -2,7 +2,7 @@ name: Validação dos percursos Web III
 on:
   pull_request:
     branches: [main]
-    paths: ['materiais/programacao-web/web3-evolucao/**','tests/web3/**','scripts/gerar-web3-evolucao.py','.github/workflows/web3-percursos-validacao.yml']
+    paths: ['materiais/programacao-web/web3-evolucao/**','tests/web3/**','scripts/gerar-web3-evolucao.py','scripts/web3_etapas.py','.github/workflows/web3-percursos-validacao.yml']
 permissions:
   contents: read
 jobs:
@@ -40,6 +40,7 @@ jobs:
         working-directory: /tmp/cafe-percursos/spa/cliente-balcao
         run: |
           npm ci --no-audit --no-fund
+          npm test
           npm run build
       - name: BaaS — instalar dependências e construir cliente e funções
         working-directory: /tmp/cafe-percursos/baas
@@ -54,3 +55,18 @@ jobs:
         run: |
           npm test
           npm run test:integracoes
+      - name: Reconstruir cada checkpoint, sem reaproveitar arquivos gerados
+        run: |
+          python3 - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0,'scripts')
+          from web3_etapas import base
+          pasta=Path('/tmp/cafe-percursos/base')
+          for p,b in base().items():
+              arquivo=pasta/p
+              arquivo.parent.mkdir(parents=True,exist_ok=True)
+              arquivo.write_bytes(b)
+          PY
+          npm ci --prefix /tmp/cafe-percursos/base/cliente-balcao --no-audit --no-fund
+          python3 tests/web3/verificar-etapas.py /tmp/cafe-percursos

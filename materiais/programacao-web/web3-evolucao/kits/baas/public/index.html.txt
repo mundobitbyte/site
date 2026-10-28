@@ -14,9 +14,9 @@
     <nav aria-label="Navegação principal">
       <ul>
         <li><a href="index.html" aria-current="page">Início</a></li>
-        <li><a href="balcao.html#titulo-imagem">Cardápio</a></li>
+        <li><a href="cardapio.html">Cardápio</a></li>
         <li><a href="sobre.html">Sobre</a></li>
-        <li><a href="balcao.html#titulo-operador">Contato</a></li>
+        <li><a href="balcao.html#titulo-operador">Equipe</a></li>
       </ul>
     </nav>
   </header>
@@ -27,7 +27,7 @@
     <section aria-labelledby="destaques">
       <h2 id="destaques">Destaques da casa</h2>
       <p>Cafés selecionados, pães artesanais e receitas preparadas diariamente.</p>
-      <p><a href="balcao.html#titulo-imagem">Conheça o cardápio</a></p>
+      <p><a href="cardapio.html">Conheça o cardápio</a></p>
     </section>
     <section aria-labelledby="ambiente">
       <h2 id="ambiente">Um ambiente acolhedor</h2>

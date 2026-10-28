@@ -1,0 +1,24 @@
+import { afterEach, expect, test, vi } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+const mocks=vi.hoisted(()=>({gravar:vi.fn(async()=>{})}));
+vi.mock("../servicos/api.js",()=>({gravarProduto:mocks.gravar}));
+import { EditorProduto } from "./EditorProduto.js";
+import type { Produto } from "../servicos/api.js";
+afterEach(()=>{cleanup();mocks.gravar.mockClear();});
+test("rascunho exige confirmação separada e continua editável depois da atualização da lista",async()=>{
+  const produto:Produto={id:"cafe",nome:"Café",categoria:"bebida",precoCentavos:800,imagem:"cafe.webp",alt:"Xícara de café",descricao:"Descrição pública anterior.",disponivel:true,rascunho:null};
+  const sessao={autenticado:true,csrfToken:"ficticio"};
+  const atualizar=vi.fn(async()=>{});
+  const ui=render(<EditorProduto produto={produto} sessao={sessao} aoSalvar={atualizar}/>);
+  const publicar=screen.getByRole("button",{name:"Publicar rascunho salvo"}) as HTMLButtonElement;
+  expect(publicar.disabled).toBe(true);
+  fireEvent.change(screen.getByRole("textbox",{name:"Descrição"}),{target:{value:"Descrição revisada pela equipe."}});
+  fireEvent.click(screen.getByRole("button",{name:"Salvar rascunho"}));
+  await screen.findByText("Rascunho salvo. O visitante ainda vê a descrição anterior.");
+  expect(mocks.gravar).toHaveBeenLastCalledWith(sessao,"cafe","Descrição revisada pela equipe.","rascunho");
+  ui.rerender(<EditorProduto produto={{...produto,rascunho:"Descrição revisada pela equipe."}} sessao={sessao} aoSalvar={atualizar}/>);
+  expect(publicar.disabled).toBe(false);
+  fireEvent.click(publicar);
+  await screen.findByText("Descrição publicada após confirmação.");
+  expect(mocks.gravar).toHaveBeenLastCalledWith(sessao,"cafe","Descrição revisada pela equipe.","publicar");
+});
