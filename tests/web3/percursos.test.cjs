@@ -10,9 +10,16 @@ function pagina({direta=false,bloqueado=false,escolhido='mvc'}={}){
  const opcoes=direta?[]:['mvc','spa','baas'].map(p=>({dataset:{escolherPercurso:p},href:`https://exemplo.test/web3-${p}-1.html`,addEventListener(t,f){this[t]=f;}}));
  const retomar={hidden:true},retorno={textContent:''};
  const documento={body:{dataset:{moduleTitle:'Web III · Aula de teste'}},querySelector:()=>({}),querySelectorAll:()=>opcoes,getElementById:id=>id==='retomar-percurso'?retomar:retorno};
- vm.runInNewContext(script,{document:documento,window:{addEventListener(t,f){eventos[t]=f;}},localStorage:{getItem(){if(bloqueado)throw new Error('indisponível');return escolhido;},setItem(k,v){if(bloqueado)throw new Error('indisponível');gravacoes.push([k,v]);}}});
- return {opcoes,retomar,retorno,gravacoes,documento,eventos};
+ vm.runInNewContext(script,{document:documento,window:{addEventListener(t,f){eventos[t]=f;}},localStorage:{getItem(){if(bloqueado)throw new Error('indisponível');return escolhido;},setItem(k,v){if(bloqueado)throw new Error('indisponível');escolhido=v;gravacoes.push([k,v]);}}});
+ return {opcoes,retomar,retorno,gravacoes,documento,eventos,definirEscolha(v){escolhido=v;}};
 }
+test('voltar pelo navegador reapresenta a escolha sem exigir recarregamento',()=>{
+ const p=pagina({escolhido:''});assert.equal(p.retomar.hidden,true);
+ p.opcoes[1].click();assert.equal(p.retomar.hidden,false);assert.match(p.retomar.href,/spa/);
+ p.definirEscolha('baas');p.eventos.pageshow();assert.match(p.retomar.href,/baas/);
+ p.definirEscolha('invalida');p.eventos.pageshow();assert.equal(p.retomar.hidden,true);
+ assert.deepEqual(p.gravacoes,[['mbb:web3:percurso:v1','spa']]);
+});
 test('abrir aula diretamente ou pesquisar outro caminho não reescreve a escolha nem a conclusão',()=>{
  const p=pagina({direta:true});assert.deepEqual(p.gravacoes,[]);assert.equal(p.retomar.hidden,true);
  const q=pagina({escolhido:'spa'});assert.deepEqual(q.gravacoes,[]);assert.match(q.retomar.href,/spa/);

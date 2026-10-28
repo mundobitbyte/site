@@ -133,3 +133,6 @@ Na prévia foram observadas as entradas React/Firebase e o resultado da pesquisa
 
 
 A execução nativa de 096c433 confirmou todos os ambientes: 14 testes Laravel/62 asserções, React, reconstrução das 29 etapas, emuladores e regras intermediárias. O último controle falhou por comparar registros de conectividade com uma base anterior às atualizações paralelas. A preservação agora usa o ancestral comum efetivamente integrado com origin/main; assim continua detectando alterações deste PR sem acusar revisões autorizadas de outros módulos como regressão do Web III. Essa correção foi conferida localmente e seguirá para CI completo.
+
+
+Os sete workflows do head 02d6b1cb970cd5d9dabd41f41b7845ce7f993a85 passaram, incluindo o controle final de preservação. Na conferência manual seguinte foi corrigida a reabertura do percurso ao voltar pelo navegador: o link passa a acompanhar a escolha no clique e no evento pageshow, sem exigir recarregamento. Um teste de regressão verifica retorno, mudança e preferência inválida, sem gravar conclusão. Essa alteração de navegação requer os checks no novo head antes do merge.
