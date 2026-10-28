@@ -38,3 +38,33 @@ Primeiro checkpoint local 5f82e1d: classe de atendimento, persistência/API prot
 - Push real, provedor IA real, hospedagem cloud e faturamento não foram executados/contratados. O rascunho controlado é identificado como exercício, sem chamada de IA nem publicação automática.
 
 Os kits continuam sendo fontes de construção. Não representam capítulos completos nem cobertura curricular homologada. Material, progressão, navegação, testes React e revisão transversal permanecem em trabalho.
+
+
+## Conferência curricular — 28/10/2026
+
+O professor informou que sua referência pedagógica combina os dois documentos enviados e confirmou o arquivo de 2ª/3ª séries. Essa declaração identifica a referência de trabalho dessas séries; não comprova equivalência oficial entre planos ou vinculação de todas as turmas ao mesmo código.
+
+### Plano 1062
+
+- Anexo `1 DS(4).pdf`: 101 páginas; Ensino Médio com habilitação em Desenvolvimento de Sistemas, eixo Informação e Comunicação, área Desenvolvimento de Sistemas, período parcial matutino/vespertino, 3.300 horas.
+- Fonte oficial consultada: <https://bkpsitecpsnew.blob.core.windows.net/uploadsitecps/sites/226/2026/02/Desenvolvimento-de-Sistemas-2026-MTec-1062-1a-serie.pdf>, vinculada em <https://etecguaianazes.cps.sp.gov.br/plano-pedagogico/>.
+- Comparação local efetiva: anexo e PDF oficial têm SHA-256 idêntico `bd7433612582398c4793b3446f38d1cfa98c1ff4a8bf1425f9df11f9daadc3d5`; texto normalizado idêntico nas 101 páginas. Não é evidência de truncamento do envio do professor.
+- Sumário, p. 2: a seção 5.5 detalha apenas a 1ª série. Matrizes nas pp. 20–23 abrangem as três séries; na matriz presencial sem espanhol, Web I/II/III têm 120/80/80 horas-aula de 50 minutos. Matriz não substitui competências, habilidades e bases tecnológicas detalhadas.
+- Histórico da capa: versão original, sem atualizações registradas. Não foi localizada, na pesquisa pública realizada nesta data, versão do MESMO plano 1062 com detalhamento curricular das três séries. Isso não demonstra inexistência de outra versão em acervo interno.
+- Corroboração: publicações de São Mateus, Ribeirão Preto e Jaraguá também disponibilizam o documento identificado como primeira série. Links de outras séries remetem a outros planos, que não devem ser apresentados como continuação comprovada do 1062.
+- Pendente: obter da coordenação/Cfac a revisão integral aplicável à coorte, com competências, habilidades e bases da 2ª e 3ª séries e histórico de revisões. Nenhum contato enviado.
+
+### Plano 612 — referência de 2º/3º DS confirmada pelo professor
+
+- Anexo `2 e 3 DS(2).pdf`: 323 páginas, plano 612, identificação datada de 16/10/2021, Ensino Médio integrado em período integral, 3.600 horas.
+- Página 160, III.11 Programação Web III: 80 horas-aula práticas; frameworks multicamadas e recursos móveis; requisições assíncronas/AJAX; consumo de APIs e exposição de serviços; REST, WSDL/SOAP, XML/JSON; MVC; ORM; URLs/roteamento; templates; scaffolding; formulários/validação; autenticação/autorização; internacionalização e segurança.
+- A classificação curricular de SOAP/WSDL como manutenção de estado não autoriza ensinar que SOAP é intrinsecamente stateful. Preservar o tópico obrigatório e explicar tecnicamente a distinção.
+- Esse documento fundamenta o percurso MVC/serviços. Não comprova obrigatoriedade de React/SPA, Firebase/BaaS ou TypeScript em Web III; tecnologias e complementos devem ter justificativa pedagógica separada.
+
+### Consequências para a construção
+
+Manter história e arquivos contínuos do Café Aurora; mapear cada requisito comprovado do 612 no percurso MVC/serviços. Não somar todas as trilhas como obrigação do mesmo aluno. As estimativas de estudo do material não equivalem à carga oficial de 80 horas-aula; retomar conhecimentos por diagnóstico e separar recuperação/aprofundamento sem comprimir requisitos. Não declarar o planejamento homologado para o Web III do 1062 enquanto faltarem as ementas dessas séries, nem para o técnico modular sem seu documento aplicável. Não publicar atribuições curriculares definitivas baseadas nessa lacuna.
+
+### Estado da recuperação técnica
+
+A cópia temporária anterior foi removida pela manutenção do ambiente. O checkpoint do GitHub foi restaurado. Ajustes recuperados no commit local 442dfee: templates de aplicações como fontes `.html.txt`, preservação da lista SPA durante edição, modo de build/teste Vite, chave estrangeira Laravel explícita, confirmação de gravações BaaS e limite de rascunho controlado. Nova verificação executada neste ambiente: suíte Meu MbB, 29 testes aprovados, zero falhas. Isso não revalida os ambientes PHP/emuladores; PHP e Composer não estão disponíveis no ambiente restaurado. O gerador progressivo `scripts/web3_etapas.py` foi parcialmente recuperado e continua interno, sem homologação ou geração de material publicado. As páginas didáticas mais recentes ainda precisam ser reconstruídas; não são apresentadas como disponíveis.

@@ -32,6 +32,8 @@ def montar(destino: Path):
     shutil.copytree(KITS/'baas',destino/'baas')
     for pasta in ['css','img']:
         shutil.copytree(destino/'spa/public'/pasta,destino/'baas/public'/pasta,dirs_exist_ok=True)
+    for fonte in destino.rglob('*.html.txt'):
+        fonte.rename(fonte.with_suffix(''))
     print(f'Aplicações de teste preparadas em {destino}')
 
 if __name__=='__main__':

@@ -3,7 +3,7 @@ import type { Configuracao, Produto, Sessao } from "../servicos/api.js";
 import { gravarConfiguracao, lerConfiguracao, mudarSessao } from "../servicos/api.js";
 import { EditorProduto } from "./EditorProduto.js";
 
-interface Props { sessao: Sessao; aoMudarSessao: (s: Sessao) => void; produtos: Produto[]; aoRecarregarProdutos: () => Promise<void> }
+interface Props { sessao: Sessao; aoMudarSessao: (s: Sessao) => void; produtos: Produto[]; aoRecarregarProdutos: (preservar?: boolean) => Promise<void> }
 
 export function Operador({ sessao, aoMudarSessao, produtos, aoRecarregarProdutos }: Props) {
   const [usuario, setUsuario] = useState("");
@@ -63,7 +63,7 @@ export function Operador({ sessao, aoMudarSessao, produtos, aoRecarregarProdutos
         <p><label htmlFor="prazo">Minutos para retirada</label><input id="prazo" type="number" min="0" max="240" step="1" value={prazo} onChange={e => setPrazo(e.target.value)} aria-describedby="ajuda-prazo" /><span id="ajuda-prazo">Vazio significa que a equipe ainda não informou a estimativa.</span></p>
         <button disabled={ocupado}>Salvar aviso</button>
       </form>}
-      {produtos.map(p => <EditorProduto key={p.id} produto={p} sessao={sessao} aoSalvar={aoRecarregarProdutos} />)}
+      {produtos.map(p => <EditorProduto key={p.id} produto={p} sessao={sessao} aoSalvar={() => aoRecarregarProdutos(true)} />)}
     </>}
     <p role="status">{aviso}</p>
   </section>;

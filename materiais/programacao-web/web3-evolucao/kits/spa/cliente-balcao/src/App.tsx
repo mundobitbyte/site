@@ -38,9 +38,10 @@ export function App() {
     }
   }
 
-  async function carregarProdutos() {
+  async function carregarProdutos(preservar = false) {
     const ordem = ++ordemProdutos.current;
-    setProdutos([]); setAvisoProdutos("Consultando o cardápio…");
+    if (!preservar) setProdutos([]);
+    setAvisoProdutos("Consultando o cardápio…");
     try {
       const recebidos = await lerProdutos();
       if (ordem === ordemProdutos.current) { setProdutos(recebidos); setAvisoProdutos(""); }

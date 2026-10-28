@@ -43,7 +43,7 @@ export const prepararRascunho = onCall(limites, async p => {
   const emulador = process.env.FUNCTIONS_EMULATOR === "true";
   // O modo de exercício é deliberado e não é uma chamada a IA.
   if (emulador && process.env.IA_MODO !== "ollama") {
-    return { texto: `${pedido.produto}, preparado com ${pedido.ingredientes}. Confira os ingredientes e revise antes de publicar.`, origem: "resposta-controlada" };
+    return { texto: conferirRascunho(`${pedido.produto}, preparado com ${pedido.ingredientes}.`.slice(0,390)), origem: "resposta-controlada" };
   }
   if (!emulador || process.env.IA_MODO !== "ollama") throw new HttpsError("failed-precondition", "Configure um provedor aprovado no servidor antes da integração real.");
   try {

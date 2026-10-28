@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-  define: { "process.env.NODE_ENV": JSON.stringify("production") },
+  define: command === "build" ? { "process.env.NODE_ENV": JSON.stringify("production") } : {},
   publicDir: false,
   build: {
     outDir: "../public/js/balcao", emptyOutDir: false,
@@ -10,4 +10,4 @@ export default defineConfig({
     minify: false, sourcemap: false,
   },
   test: { environment: "jsdom" },
-});
+}));

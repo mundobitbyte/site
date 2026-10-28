@@ -9,7 +9,7 @@ return new class extends Migration {
         Schema::create('categorias', function (Blueprint $t) { $t->string('id')->primary(); $t->string('nome'); });
         Schema::create('produtos', function (Blueprint $t) {
             $t->string('id')->primary(); $t->string('nome',100);
-            $t->foreignIdFor(\App\Models\Categoria::class, 'categoria')->constrained('categorias');
+            $t->string('categoria'); $t->foreign('categoria')->references('id')->on('categorias');
             $t->unsignedInteger('preco_centavos'); $t->string('imagem'); $t->string('alt');
             $t->text('descricao'); $t->boolean('disponivel')->default(true); $t->text('rascunho')->nullable();
         });
