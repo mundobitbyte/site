@@ -129,9 +129,11 @@ def baas(n):
  aplicar(d,'baas',lambda p:p in ['.firebaserc','package.json','package-lock.json','firestore.rules','storage.rules','firebase.json','scripts/preparar.mjs','scripts/preparar-local.mjs','public/sobre.html','public/cardapio.html','public/js/script.js','public/css/atendimento-baas.css','cliente-balcao/package.json','cliente-balcao/package-lock.json','cliente-balcao/tsconfig.json','cliente-balcao/vite.config.mjs','cliente-balcao/src/ambiente.ts','cliente-balcao/src/atendimento.ts','cliente-balcao/src/tela.ts'])
  config=json.loads(d['firebase.json'])
  if n<8:config.pop('functions',None);config['emulators'].pop('functions',None)
+ if n<6:config.pop('storage',None);config['emulators'].pop('storage',None);d.pop('storage.rules',None)
  por(d,'firebase.json',json.dumps(config,ensure_ascii=False,indent=2)+'\n')
  config=json.loads(d['package.json'])
  if n<3:config['scripts'].pop('test',None)
+ elif n<6:config['scripts']['test']=config['scripts']['test'].replace('firestore,auth,storage','firestore,auth')
  if n<10:config['scripts'].pop('test:integracoes',None)
  por(d,'package.json',json.dumps(config,ensure_ascii=False,indent=2)+'\n')
  config=json.loads(d['cliente-balcao/package.json'])
@@ -141,10 +143,17 @@ def baas(n):
  if n<5:dados=dados[:dados.index('export function acompanharAtendimento')]
  por(d,'cliente-balcao/src/dados.ts',dados)
  if n<3:por(d,'firestore.rules',"rules_version = '2'; service cloud.firestore {match /databases/{database}/documents {match /atendimento/atual {allow read:if true;allow write:if false;}match /{document=**} {allow read,write:if false;}}}")
+ else:
+  regras=d['firestore.rules'].decode()
+  for minimo,colecao in [(6,'produtos'),(9,'inscricoes')]:
+   if n<minimo:regras=re.sub(r'    match /'+colecao+r'/\{[^}]+\} \{.*?^    \}\n','',regras,flags=re.S|re.M)
+  por(d,'firestore.rules',regras)
  if n>=2:aplicar(d,'baas',lambda p:p.endswith('/operador.ts'))
  if n>=3:
   t=texto('baas','tests/permissoes.test.mjs')
-  if n<6:t=t[:t.index("test('imagem exige")].replace(",storage:{rules:await readFile('storage.rules','utf8')}","")
+  partes=re.split(r"(?=^test\()",t,flags=re.M)
+  t=partes[0]+''.join(parte for parte in partes[1:] if not ((n<6 and (parte.startswith("test('imagem") or parte.startswith("test('produto"))) or (n<9 and parte.startswith("test('inscrição"))))
+  if n<6:t=t.replace(",storage:{rules:await readFile('storage.rules','utf8')}","");t=re.sub(r"^import .* from 'firebase/storage';\n",'',t,flags=re.M)
   por(d,'tests/permissoes.test.mjs',t)
  if n>=6:aplicar(d,'baas',lambda p:p.endswith(('/midia.ts','/imagens.ts','/catalogo.ts','/catalogo-interface.ts')))
  if n>=7:aplicar(d,'baas',lambda p:p.endswith('configuracao-nuvem.exemplo.ts.txt'))

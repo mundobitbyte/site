@@ -107,3 +107,14 @@ O commit remoto 95f1d11b preservou os 31 conteúdos e 29 ZIPs. A primeira valida
 A principal estava em 946ac0838eaa617669fc8a895d4e72e0391c01cb, com atualizações de Banco de Dados, React Native e Arduino. Elas foram incorporadas à branch, sem reescrita desses módulos. A comparação de preservação do catálogo passa a usar essa base mais recente. A divergência do índice novo não foi atribuída às alterações de outros autores; o índice foi regenerado a partir do conteúdo integrado.
 
 As estimativas de horas das etapas novas ficam no planejamento docente, sem apresentá-las no cabeçalho do aluno como carga aprovada. A matriz de cada turma continua pendente de fechamento.
+
+
+## Dependências e progressão dos serviços
+
+A auditoria inicial do kit BaaS sinalizou 17 pacotes na cadeia de dependências (11 de severidade alta e 6 moderada). O SDK foi atualizado para 12.19.0 e a CLI para 15.34.1, mantendo a API didática. Foram removidas as antigas substituições de núcleo Firebase; as travas agora aplicam versões corrigidas de @grpc/grpc-js 1.14.6, @opentelemetry/core 2.8.0 e uuid 11.1.1 (as duas últimas no ferramental CLI). Não foi usado audit fix --force nem downgrade automático sugerido pelo relatório.
+
+Instalações limpas e verificação da CLI foram executadas com Node 22.23.4. A compatibilidade dos caminhos utilizados será validada novamente nos emuladores do CI; o escopo é a bancada ensinada, não toda funcionalidade da CLI em produção. Os quatro relatórios npm (SPA, Functions, raiz BaaS e cliente BaaS) retornaram zero alertas nesta execução; contagens e hashes em docs/validacoes/web3-20261028/dependencias.json. Avisos de pacote descontinuado não foram apresentados como vulnerabilidades comprovadas quando a auditoria não os apontou.
+
+As configurações e regras também passaram a acompanhar a progressão: atendimento inicialmente, Storage/produtos na etapa 6 e inscrições na etapa 9. Testes das regras intermediárias foram acrescentados para as etapas 3 e 6. A descrição pública exige de 10 a 400 caracteres e texto não vazio no serviço, além da validação do formulário.
+
+Na prévia, a abertura do código e a leitura em quadro de largura útil 375 px foram observadas sem overflow global. A ferramenta de navegador não confirmou os bytes do clipboard nem a conclusão do download pelo controle de evento; esses dois ensaios não são declarados aprovados por equivalência. Os ZIPs foram auditados no sistema de arquivos e a disponibilidade HTTPS precisa ser conferida na publicação. Nenhuma conta real foi acessada para contornar esses limites.

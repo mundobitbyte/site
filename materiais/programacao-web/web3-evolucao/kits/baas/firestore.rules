@@ -21,7 +21,9 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['nome', 'descricao', 'imagemCaminho'])
         && request.resource.data.nome is string && request.resource.data.nome.size() >= 1
         && request.resource.data.nome.size() <= 100
-        && request.resource.data.descricao is string && request.resource.data.descricao.size() <= 400
+        && request.resource.data.nome.matches('.*[^ ].*')
+        && request.resource.data.descricao is string && request.resource.data.descricao.size() >= 10 && request.resource.data.descricao.size() <= 400
+        && request.resource.data.descricao.matches('.*[^ ].*')
         && request.resource.data.imagemCaminho is string
         && request.resource.data.imagemCaminho.matches('imagens/' + request.auth.uid + '/[a-zA-Z0-9_-]+');
       allow delete: if false;

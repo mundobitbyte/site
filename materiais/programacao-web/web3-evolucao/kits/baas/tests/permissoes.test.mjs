@@ -25,6 +25,19 @@ test('inscrição é escrita pelo dono, nunca listada pelo cliente',async()=>{
  await assertFails(getDoc(doc(eu,'inscricoes/eu')));await assertFails(setDoc(doc(outro,'inscricoes/eu'),{token:'troca'}));
  await assertSucceeds(deleteDoc(doc(eu,'inscricoes/eu')));
 });
+test('produto só aceita descrição revisada válida e caminho de imagem do operador',async()=>{
+ const op=ambiente.authenticatedContext('editor',{operador:true}).firestore();const leitor=ambiente.authenticatedContext('leitor',{operador:false}).firestore();
+ const produto={nome:'Café coado',descricao:'Café preparado na hora.',imagemCaminho:'imagens/editor/foto01'};
+ await assertSucceeds(setDoc(doc(op,'produtos/cafe-coado'),produto));
+ await assertFails(setDoc(doc(leitor,'produtos/cafe-coado'),produto));
+ await assertFails(setDoc(doc(op,'produtos/cafe-coado'),{...produto,descricao:'curta'}));
+ await assertFails(setDoc(doc(op,'produtos/cafe-coado'),{...produto,descricao:' '.repeat(15)}));
+ await assertFails(setDoc(doc(op,'produtos/cafe-coado'),{...produto,nome:'   '}));
+ await assertFails(setDoc(doc(op,'produtos/cafe-coado'),{...produto,descricao:'x'.repeat(401)}));
+ await assertFails(setDoc(doc(op,'produtos/cafe-coado'),{...produto,imagemCaminho:'imagens/outro/foto01'}));
+ await assertFails(setDoc(doc(op,'produtos/cafe-coado'),{...produto,rascunho:'Não é público.'}));
+ await assertSucceeds(getDoc(doc(ambiente.unauthenticatedContext().firestore(),'produtos/cafe-coado')));
+});
 test('imagem exige operador, dono, formato e limite; sobrescrita é recusada',async()=>{
  const op=ambiente.authenticatedContext('op',{operador:true}).storage();const anon=ambiente.unauthenticatedContext().storage();
  const bytes=new Uint8Array([137,80,78,71]);

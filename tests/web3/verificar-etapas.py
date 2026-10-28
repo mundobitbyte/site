@@ -36,6 +36,9 @@ def conferir(codigo,app,dependencias,nativo):
         (app/'functions/node_modules').symlink_to(dependencias/'baas/functions/node_modules',target_is_directory=True)
         executar(['npm','test','--prefix','functions'],app)
     if not nativo:return
+    if codigo in ['b3','b6']:
+        (app/'node_modules').symlink_to(dependencias/'baas/node_modules',target_is_directory=True)
+        executar(['npm','test'],app)
     for arquivo in app.rglob('*.php'):
         if 'vendor' not in arquivo.parts:executar(['php','-l',str(arquivo)],app)
     if codigo.startswith('m'):

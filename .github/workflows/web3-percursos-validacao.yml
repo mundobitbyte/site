@@ -34,6 +34,7 @@ jobs:
         working-directory: /tmp/cafe-percursos/mvc
         run: |
           composer install --no-interaction --no-plugins
+          composer audit --no-interaction
           php artisan key:generate
           php artisan migrate --force
           php artisan cafe:importar-cardapio
@@ -42,6 +43,7 @@ jobs:
         working-directory: /tmp/cafe-percursos/spa/cliente-balcao
         run: |
           npm ci --no-audit --no-fund
+          npm audit --audit-level=high
           npm test
           npm run build
       - name: Reconstruir etapas MVC/SPA com o Node do TypeScript Essencial
@@ -70,9 +72,12 @@ jobs:
         working-directory: /tmp/cafe-percursos/baas
         run: |
           npm ci --no-audit --no-fund
+          npm audit --audit-level=high
           npm ci --prefix cliente-balcao --no-audit --no-fund
+          npm audit --prefix cliente-balcao --audit-level=high
           npm run build --prefix cliente-balcao
           npm ci --prefix functions --no-audit --no-fund
+          npm audit --prefix functions --audit-level=high
           npm test --prefix functions
       - name: BaaS — emuladores de regras e integrações reais locais
         working-directory: /tmp/cafe-percursos/baas

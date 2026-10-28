@@ -36,25 +36,6 @@ service cloud.firestore {
       allow create, update: if operador() &amp;&amp; atendimentoValido();
       allow delete: if false;
     }
-    match /produtos/{id} {
-      allow read: if true;
-      allow create, update: if operador()
-        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;nome&#x27;, &#x27;descricao&#x27;, &#x27;imagemCaminho&#x27;])
-        &amp;&amp; request.resource.data.nome is string &amp;&amp; request.resource.data.nome.size() &gt;= 1
-        &amp;&amp; request.resource.data.nome.size() &lt;= 100
-        &amp;&amp; request.resource.data.descricao is string &amp;&amp; request.resource.data.descricao.size() &lt;= 400
-        &amp;&amp; request.resource.data.imagemCaminho is string
-        &amp;&amp; request.resource.data.imagemCaminho.matches(&#x27;imagens/&#x27; + request.auth.uid + &#x27;/[a-zA-Z0-9_-]+&#x27;);
-      allow delete: if false;
-    }
-    match /inscricoes/{uid} {
-      allow read: if false;
-      allow create, update: if request.auth != null &amp;&amp; request.auth.uid == uid
-        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;token&#x27;])
-        &amp;&amp; request.resource.data.token is string &amp;&amp; request.resource.data.token.size() &gt;= 1
-        &amp;&amp; request.resource.data.token.size() &lt;= 4096;
-      allow delete: if request.auth != null &amp;&amp; request.auth.uid == uid;
-    }
     match /{document=**} { allow read, write: if false; }
   }
 }</code></pre></details>
@@ -65,7 +46,6 @@ service cloud.firestore {
 import { readFile } from &#x27;node:fs/promises&#x27;;
 import { initializeTestEnvironment,assertSucceeds,assertFails } from &#x27;@firebase/rules-unit-testing&#x27;;
 import { doc,setDoc,getDoc,deleteDoc } from &#x27;firebase/firestore&#x27;;
-import { ref,uploadBytes,deleteObject } from &#x27;firebase/storage&#x27;;
 let ambiente;
 const dados={nomeNegocio:&#x27;Café Aurora&#x27;,pedidosAbertos:true,tempoEstimado:30};
 before(async()=&gt;{ambiente=await initializeTestEnvironment({projectId:&#x27;demo-cafe-aurora-web3&#x27;,firestore:{rules:await readFile(&#x27;firestore.rules&#x27;,&#x27;utf8&#x27;)}});await ambiente.withSecurityRulesDisabled(c=&gt;setDoc(doc(c.firestore(),&#x27;atendimento/atual&#x27;),dados));});
@@ -81,12 +61,6 @@ test(&#x27;operador grava somente contrato válido e não apaga atendimento&#x27
  for(const prazo of [-1,241,&#x27;30&#x27;])await assertFails(setDoc(r,{...dados,tempoEstimado:prazo}));
  await assertFails(setDoc(r,{...dados,nomeNegocio:&#x27;   &#x27;}));await assertFails(setDoc(r,{...dados,segredo:&#x27;extra&#x27;}));await assertFails(deleteDoc(r));
  await assertFails(getDoc(doc(b,&#x27;historico/qualquer&#x27;)));
-});
-test(&#x27;inscrição é escrita pelo dono, nunca listada pelo cliente&#x27;,async()=&gt;{
- const eu=ambiente.authenticatedContext(&#x27;eu&#x27;).firestore();const outro=ambiente.authenticatedContext(&#x27;outro&#x27;).firestore();
- await assertSucceeds(setDoc(doc(eu,&#x27;inscricoes/eu&#x27;),{token:&#x27;token-ficticio&#x27;}));
- await assertFails(getDoc(doc(eu,&#x27;inscricoes/eu&#x27;)));await assertFails(setDoc(doc(outro,&#x27;inscricoes/eu&#x27;),{token:&#x27;troca&#x27;}));
- await assertSucceeds(deleteDoc(doc(eu,&#x27;inscricoes/eu&#x27;)));
 });</code></pre></details>
 <p>Observe os testes de visitante, leitor e operador. Mensagens <code>PERMISSION_DENIED</code> podem aparecer justamente nas operações que devem ser recusadas. O resultado importante é a verificação do teste: uma recusa esperada não é um teste falhando.</p>
 <p>A suíte não usa sua conta pessoal nem altera um projeto real. Ela verifica regras carregadas no ambiente local; não demonstra que regras idênticas já foram publicadas na nuvem.</p>
