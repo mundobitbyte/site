@@ -1,0 +1,13 @@
+<p>A orientação de retirada aparece, mas ocupa espaço mesmo quando a pessoa só quer consultar o atendimento. Marina propõe um botão: quem precisar pode abrir a explicação e fechá-la depois.</p>
+<p>O pedido é pequeno e sua primeira solução também será. Não precisamos consultar o servidor, criar uma conta ou instalar outra biblioteca para mudar a apresentação de uma orientação.</p>
+<h3>Uma pergunta com duas respostas</h3>
+<p>Vamos representar “a orientação está aberta?” com um booleano. Em React, uma informação que pode mudar e provocar uma nova apresentação é um <strong>estado</strong>. <code>useState(false)</code> cria esse estado começando fechado.</p>
+{{arquivo:cliente-balcao/src/App.tsx}}
+<p>A desestruturação entrega dois valores: <code>mostrar</code> contém o estado atual; <code>setMostrar</code> solicita sua atualização. Não alteramos <code>mostrar</code> diretamente, pois React precisa acompanhar a mudança para atualizar a interface.</p>
+<p>O botão recebe uma função em <code>onClick</code>. Ela só será chamada quando houver o evento; não escrevemos uma chamada que execute a mudança durante a montagem da tela. <code>!mostrar</code> inverte verdadeiro e falso.</p>
+<h3>Veja a mudança antes de acrescentar outra</h3>
+<p>Substitua o conteúdo de <code>App.tsx</code>, faça <code>npm run build</code> em <code>cliente-balcao</code> e recarregue o balcão pelo PHP. Use o botão três vezes. A orientação precisa abrir, fechar e abrir novamente sem recarregar o documento inteiro.</p>
+<p>Observe <code>hidden={!mostrar}</code>: a apresentação acompanha o estado. Em <code>aria-expanded</code>, informamos a mesma condição a tecnologias assistivas. <code>aria-controls</code> liga o botão ao identificador da orientação. A informação visual e a informação acessível precisam concordar.</p>
+<p>Agora recarregue a página. O estado volta ao valor inicial. Esse é um estado em memória, não um dado salvo no banco. Abrir uma explicação também não atualiza o prazo de retirada. Esse contraste será útil na próxima aula: consultar um serviço é uma ação diferente de abrir uma ajuda.</p>
+<h3 id="checkpoint">Consegue prever a próxima apresentação?</h3>
+<p>Antes de cada clique, diga qual valor <code>mostrar</code> terá e se o conteúdo ficará visível. Confira o botão com Tab e Enter. Explique por que não precisamos buscar o elemento pelo DOM e alterar seu texto manualmente. Com essa interação compreendida, podemos recolocar a consulta real do atendimento dentro de um componente.</p>

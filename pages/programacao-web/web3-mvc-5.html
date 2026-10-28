@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: O cardápio tem relações. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-mvc-5.html">
+<title>Web III — O cardápio tem relações | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · O cardápio tem relações">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Servidor com Laravel</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Servidor com Laravel</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link" href="web3-mvc-1.html#capitulo-2">O aviso ganha um objeto</a><a class="chapter-link" href="web3-mvc-2.html#capitulo-2">As mesmas telas, outra organização</a><a class="chapter-link" href="web3-mvc-3.html#capitulo-2">O prazo precisa permanecer</a><a class="chapter-link" href="web3-mvc-4.html#capitulo-2">Quem pode mudar o aviso?</a><a class="chapter-link active" aria-current="page" href="web3-mvc-5.html#capitulo-2">O cardápio tem relações</a><a class="chapter-link" href="web3-mvc-6.html#capitulo-2">Uma consulta atravessa serviços</a><a class="chapter-link" href="web3-mvc-7.html#capitulo-2">O Café cabe na rotina do celular</a><a class="chapter-link" href="web3-mvc-8.html#capitulo-2">Outro programa pede o mesmo aviso</a><a class="chapter-link" href="web3-mvc-9.html#capitulo-2">O aviso muda de idioma</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Servidor com Laravel</span><h2 id="titulo-aula" tabindex="-1">O cardápio tem relações</h2><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>Marina mudou o preço do café coado. O aviso está atualizado, mas o cardápio ainda guarda produtos no JSON e também possui uma apresentação antiga em HTML. Se alterarmos só um desses lugares, voltaremos ao problema de duas respostas para a mesma informação.</p>
+<p>Vamos aproveitar os três produtos, as descrições, as imagens e as categorias que já existem. O objetivo não é inventar outro cardápio: é permitir que o mesmo cardápio seja consultado e atualizado a partir do banco.</p>
+<h3 id="passo-1">Importe e veja os produtos conhecidos</h3>
+<p>Acrescente os arquivos desta etapa, execute <code>php artisan migrate</code> e depois <code>php artisan cafe:importar-cardapio</code> na raiz. A primeira ação acrescenta as tabelas; a segunda lê <code>public/dados/produtos.json</code> e inclui os produtos que ainda não existem.</p>
+<p>Abra <code>http://localhost:8000/cardapio</code>. Você deve reconhecer café coado, pão artesanal e bolo de laranja com as imagens anteriores. A antiga entrada <code>/cardapio.php</code> redireciona para essa página, em vez de continuar mostrando preços fixos. Uma mudança só está concluída quando o visitante consegue encontrá-la.</p>
+<h3 id="passo-2">Um produto pertence a uma categoria</h3>
+<p>A categoria “comida” aparece em dois produtos. Podemos representá-la uma vez e relacionar os produtos a ela. A tabela de produtos guarda a identificação da categoria; a chave estrangeira impede uma referência a uma categoria inexistente.</p>
+<p>Nosso identificador de categoria é texto, como <code>bebida</code>, e não um número criado automaticamente. Por isso a migration declara explicitamente esse tipo e a relação. Não troque por uma chave numérica sem revisar os registros que já usam esses nomes.</p>
+<details class="web3-arquivo"><summary>Conferir database/migrations/2026_10_26_000002_preparar_catalogo.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="database/migrations/2026_10_26_000002_preparar_catalogo.php">&lt;?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::create(&#x27;categorias&#x27;, function (Blueprint $t) { $t-&gt;string(&#x27;id&#x27;)-&gt;primary(); $t-&gt;string(&#x27;nome&#x27;); });
+        Schema::create(&#x27;produtos&#x27;, function (Blueprint $t) {
+            $t-&gt;string(&#x27;id&#x27;)-&gt;primary(); $t-&gt;string(&#x27;nome&#x27;,100);
+            $t-&gt;string(&#x27;categoria&#x27;); $t-&gt;foreign(&#x27;categoria&#x27;)-&gt;references(&#x27;id&#x27;)-&gt;on(&#x27;categorias&#x27;);
+            $t-&gt;unsignedInteger(&#x27;preco_centavos&#x27;); $t-&gt;string(&#x27;imagem&#x27;); $t-&gt;string(&#x27;alt&#x27;);
+            $t-&gt;text(&#x27;descricao&#x27;); $t-&gt;boolean(&#x27;disponivel&#x27;)-&gt;default(true); $t-&gt;text(&#x27;rascunho&#x27;)-&gt;nullable();
+        });
+    }
+    public function down(): void { Schema::dropIfExists(&#x27;produtos&#x27;); Schema::dropIfExists(&#x27;categorias&#x27;); }
+};</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir app/Models/Categoria.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Models/Categoria.php">&lt;?php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Categoria extends Model
+{
+    public $timestamps = false;
+    public $incrementing = false;
+    protected $keyType = &#x27;string&#x27;;
+    protected $fillable = [&#x27;id&#x27;,&#x27;nome&#x27;];
+    public function produtos(): HasMany { return $this-&gt;hasMany(Produto::class, &#x27;categoria&#x27;); }
+}</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir app/Models/Produto.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Models/Produto.php">&lt;?php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Produto extends Model
+{
+    public $timestamps = false;
+    public $incrementing = false;
+    protected $keyType = &#x27;string&#x27;;
+    protected $fillable = [&#x27;id&#x27;,&#x27;nome&#x27;,&#x27;categoria&#x27;,&#x27;preco_centavos&#x27;,&#x27;imagem&#x27;,&#x27;alt&#x27;,&#x27;descricao&#x27;,&#x27;disponivel&#x27;];
+    protected function casts(): array { return [&#x27;preco_centavos&#x27;=&gt;&#x27;integer&#x27;,&#x27;disponivel&#x27;=&gt;&#x27;boolean&#x27;]; }
+    public function grupo(): BelongsTo { return $this-&gt;belongsTo(Categoria::class, &#x27;categoria&#x27;); }
+    public function dadosPublicos(): array
+    {
+        return [&#x27;id&#x27;=&gt;$this-&gt;id,&#x27;nome&#x27;=&gt;$this-&gt;nome,&#x27;categoria&#x27;=&gt;$this-&gt;categoria,
+            &#x27;precoCentavos&#x27;=&gt;$this-&gt;preco_centavos,&#x27;imagem&#x27;=&gt;$this-&gt;imagem,&#x27;alt&#x27;=&gt;$this-&gt;alt,
+            &#x27;descricao&#x27;=&gt;$this-&gt;descricao,&#x27;disponivel&#x27;=&gt;$this-&gt;disponivel];
+    }
+}</code></pre></details>
+<p><strong>ORM</strong> significa mapeamento objeto-relacional. Com Eloquent, o ORM do Laravel, podemos consultar um <code>Produto</code> como objeto e acessar sua categoria pela relação <code>grupo</code>. Isso não elimina tabelas, SQL ou a necessidade de conferir consultas. Organiza a passagem entre objetos PHP e registros.</p>
+<p>O preço passa de <code>preco: 8</code>, no JSON conhecido, para <code>preco_centavos: 800</code>, no banco. Guardar centavos inteiros evita usar frações decimais como unidade de cálculo de dinheiro neste exercício. A API publica <code>precoCentavos</code>; a view divide por 100 apenas ao formatar a apresentação.</p>
+<details class="web3-arquivo"><summary>Conferir app/Console/Commands/ImportarCardapio.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Console/Commands/ImportarCardapio.php">&lt;?php
+namespace App\Console\Commands;
+use App\Models\Categoria;
+use App\Models\Produto;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+
+class ImportarCardapio extends Command
+{
+    protected $signature = &#x27;cafe:importar-cardapio&#x27;;
+    protected $description = &#x27;Importa o JSON conhecido sem sobrescrever produtos já existentes&#x27;;
+    public function handle(): int
+    {
+        $lista=json_decode(file_get_contents(public_path(&#x27;dados/produtos.json&#x27;)),true,32,JSON_THROW_ON_ERROR);
+        DB::transaction(function () use ($lista) {
+            foreach ($lista as $p) {
+                Categoria::firstOrCreate([&#x27;id&#x27;=&gt;$p[&#x27;categoria&#x27;]], [&#x27;nome&#x27;=&gt;ucfirst($p[&#x27;categoria&#x27;])]);
+                Produto::firstOrCreate([&#x27;id&#x27;=&gt;$p[&#x27;id&#x27;]], [&#x27;nome&#x27;=&gt;$p[&#x27;nome&#x27;],&#x27;categoria&#x27;=&gt;$p[&#x27;categoria&#x27;],
+                    &#x27;preco_centavos&#x27;=&gt;(int)round($p[&#x27;preco&#x27;]*100),&#x27;imagem&#x27;=&gt;basename($p[&#x27;imagem&#x27;]),
+                    &#x27;alt&#x27;=&gt;$p[&#x27;alt&#x27;],&#x27;descricao&#x27;=&gt;$p[&#x27;descricao&#x27;],&#x27;disponivel&#x27;=&gt;true]);
+            }
+        });
+        $this-&gt;info(&#x27;Catálogo conferido. Produtos existentes foram preservados.&#x27;);
+        return self::SUCCESS;
+    }
+}</code></pre></details>
+<p>Observe <code>firstOrCreate</code>: localizar o produto vem antes de incluí-lo. Reexecutar a importação não deve duplicar os três produtos nem desfazer uma edição feita pela equipe. O JSON continua como origem do primeiro preenchimento, não como uma ordem para sobrescrever o banco a cada consulta.</p>
+<h3 id="passo-3">Altere o preço e percorra o caminho inteiro</h3>
+<p>Entre como operador e abra <code>/operador/produtos/cafe-coado</code>. Mude 800 para 850 centavos e salve. Agora abra <code>/cardapio</code> como visitante: o preço deve ser R$ 8,50. Reexecute a importação e confira que continua assim.</p>
+<details class="web3-arquivo"><summary>Conferir app/Http/Controllers/CatalogoController.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Http/Controllers/CatalogoController.php">&lt;?php
+namespace App\Http\Controllers;
+use App\Models\Categoria;
+use App\Models\Produto;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
+class CatalogoController
+{
+    public function pagina()
+    {
+        return view(&#x27;cardapio&#x27;, [&#x27;produtos&#x27;=&gt;Produto::query()-&gt;orderBy(&#x27;nome&#x27;)-&gt;get()]);
+    }
+    public function listar(Request $r)
+    {
+        $entrada=$r-&gt;validate([&#x27;categoria&#x27;=&gt;[&#x27;nullable&#x27;,&#x27;string&#x27;,Rule::exists(&#x27;categorias&#x27;,&#x27;id&#x27;)]]);
+        $lista=Produto::query()-&gt;with(&#x27;grupo&#x27;)
+            -&gt;when($entrada[&#x27;categoria&#x27;]??null,fn($q,$categoria)=&gt;$q-&gt;where(&#x27;categoria&#x27;,$categoria))-&gt;orderBy(&#x27;nome&#x27;)-&gt;get();
+        return response()-&gt;json([&#x27;data&#x27;=&gt;$lista-&gt;map(fn(Produto $p)=&gt;$p-&gt;dadosPublicos())]);
+    }
+    public function editar(Produto $produto) { return view(&#x27;editar-produto&#x27;,[&#x27;produto&#x27;=&gt;$produto,&#x27;categorias&#x27;=&gt;Categoria::all()]); }
+    public function salvar(Request $r, Produto $produto)
+    {
+        $dados=$r-&gt;validate([&#x27;nome&#x27;=&gt;[&#x27;required&#x27;,&#x27;string&#x27;,&#x27;max:100&#x27;],&#x27;categoria&#x27;=&gt;[&#x27;required&#x27;,&#x27;string&#x27;,Rule::exists(&#x27;categorias&#x27;,&#x27;id&#x27;)],
+            &#x27;preco_centavos&#x27;=&gt;[&#x27;required&#x27;,&#x27;integer&#x27;,&#x27;between:0,1000000&#x27;],&#x27;descricao&#x27;=&gt;[&#x27;required&#x27;,&#x27;string&#x27;,&#x27;between:10,400&#x27;],
+            &#x27;disponivel&#x27;=&gt;[&#x27;required&#x27;,&#x27;boolean&#x27;]]);
+        $produto-&gt;update($dados);
+        return redirect()-&gt;route(&#x27;operador.produto&#x27;,$produto)-&gt;with(&#x27;aviso&#x27;,&#x27;Produto atualizado.&#x27;);
+    }
+}</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir resources/views/editar-produto.blade.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="resources/views/editar-produto.blade.php">@extends(&#x27;layout&#x27;)
+@section(&#x27;titulo&#x27;,&#x27;Atualizar produto&#x27;)
+@section(&#x27;conteudo&#x27;)
+&lt;h1&gt;Atualizar {{ $produto-&gt;nome }}&lt;/h1&gt;
+@if(session(&#x27;aviso&#x27;))&lt;p role=&quot;status&quot;&gt;{{ session(&#x27;aviso&#x27;) }}&lt;/p&gt;@endif
+@if($errors-&gt;any())&lt;div role=&quot;alert&quot;&gt;&lt;p&gt;Confira os campos:&lt;/p&gt;&lt;ul&gt;@foreach($errors-&gt;all() as $erro)&lt;li&gt;{{ $erro }}&lt;/li&gt;@endforeach&lt;/ul&gt;&lt;/div&gt;@endif
+&lt;form method=&quot;post&quot; action=&quot;{{ route(&#x27;operador.produto&#x27;,$produto) }}&quot;&gt;@csrf
+&lt;label for=&quot;nome&quot;&gt;Nome&lt;/label&gt;&lt;input id=&quot;nome&quot; name=&quot;nome&quot; maxlength=&quot;100&quot; required value=&quot;{{ old(&#x27;nome&#x27;,$produto-&gt;nome) }}&quot;&gt;
+&lt;label for=&quot;categoria&quot;&gt;Categoria&lt;/label&gt;&lt;select id=&quot;categoria&quot; name=&quot;categoria&quot;&gt;@foreach($categorias as $c)&lt;option value=&quot;{{ $c-&gt;id }}&quot; @selected(old(&#x27;categoria&#x27;,$produto-&gt;categoria)===$c-&gt;id)&gt;{{ $c-&gt;nome }}&lt;/option&gt;@endforeach&lt;/select&gt;
+&lt;label for=&quot;preco&quot;&gt;Preço em centavos (800 representa R$ 8,00)&lt;/label&gt;&lt;input id=&quot;preco&quot; type=&quot;number&quot; name=&quot;preco_centavos&quot; min=&quot;0&quot; max=&quot;1000000&quot; required value=&quot;{{ old(&#x27;preco_centavos&#x27;,$produto-&gt;preco_centavos) }}&quot;&gt;
+&lt;label for=&quot;descricao&quot;&gt;Descrição&lt;/label&gt;&lt;textarea id=&quot;descricao&quot; name=&quot;descricao&quot; minlength=&quot;10&quot; maxlength=&quot;400&quot; required&gt;{{ old(&#x27;descricao&#x27;,$produto-&gt;descricao) }}&lt;/textarea&gt;
+&lt;label for=&quot;disponivel&quot;&gt;Disponibilidade&lt;/label&gt;&lt;select id=&quot;disponivel&quot; name=&quot;disponivel&quot;&gt;&lt;option value=&quot;1&quot; @selected((string)old(&#x27;disponivel&#x27;,(int)$produto-&gt;disponivel)===&#x27;1&#x27;)&gt;Disponível&lt;/option&gt;&lt;option value=&quot;0&quot; @selected((string)old(&#x27;disponivel&#x27;,(int)$produto-&gt;disponivel)===&#x27;0&#x27;)&gt;Indisponível&lt;/option&gt;&lt;/select&gt;
+&lt;button type=&quot;submit&quot;&gt;Salvar produto&lt;/button&gt;&lt;/form&gt;
+@endsection</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir resources/views/cardapio.blade.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="resources/views/cardapio.blade.php">@extends(&#x27;layout&#x27;)
+@section(&#x27;titulo&#x27;,&#x27;Cardápio&#x27;)
+@section(&#x27;conteudo&#x27;)
+&lt;h1&gt;Cardápio do Café Aurora&lt;/h1&gt;
+&lt;p&gt;Os mesmos produtos do nosso projeto, agora consultados no banco.&lt;/p&gt;
+&lt;div class=&quot;grade-produtos&quot;&gt;
+@forelse($produtos as $produto)
+&lt;article&gt;
+  &lt;h2&gt;{{ $produto-&gt;nome }}&lt;/h2&gt;
+  &lt;img src=&quot;{{ asset(&#x27;img/&#x27;.$produto-&gt;imagem) }}&quot; alt=&quot;{{ $produto-&gt;alt }}&quot; width=&quot;960&quot; height=&quot;640&quot; loading=&quot;lazy&quot;&gt;
+  &lt;p&gt;{{ $produto-&gt;descricao }}&lt;/p&gt;
+  &lt;p&gt;R$ {{ number_format($produto-&gt;preco_centavos / 100, 2, &#x27;,&#x27;, &#x27;.&#x27;) }}&lt;/p&gt;
+  @unless($produto-&gt;disponivel)&lt;p&gt;Indisponível neste momento.&lt;/p&gt;@endunless
+&lt;/article&gt;
+@empty
+&lt;p&gt;O cardápio ainda não foi importado. A equipe precisa conferir os produtos.&lt;/p&gt;
+@endforelse
+&lt;/div&gt;
+@endsection</code></pre></details>
+<p>Na API <code>/api/produtos</code>, o conjunto fica dentro de <code>data</code>. Essa é uma nova resposta do catálogo, não uma mudança no contrato do atendimento. Abra <code>/api/produtos?categoria=bebida</code> e compare com a lista completa. O parâmetro passa por validação antes de ser usado na consulta.</p>
+<p>Em <code>with('grupo')</code>, o Laravel antecipa a consulta das categorias relacionadas. Sem esse cuidado, percorrer uma lista pode gerar uma consulta adicional para cada produto. Para perceber o problema, imagine o mesmo código com cem produtos; não precisamos criar cem registros artificiais para entender a consequência.</p>
+<h3 id="checkpoint">Uma mudança não pode se perder no trajeto</h3>
+<p>Verifique importação repetida, relação com categoria, edição autorizada e preço atualizado na página pública e na API. Confirme que uma pessoa sem sessão não altera o produto e que preço negativo é recusado. Rode <code>composer test</code>. Na próxima etapa, a informação que consultaremos será de outro serviço; será preciso tratar também o que o Café não controla.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa5.zip" download>Baixar referência da etapa 5</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>app/Console/Commands/ImportarCardapio.php</code></li><li><code>app/Http/Controllers/CatalogoController.php</code></li><li><code>app/Models/Categoria.php</code></li><li><code>app/Models/Produto.php</code></li><li><code>database/migrations/2026_10_26_000002_preparar_catalogo.php</code></li><li><code>public/cardapio.php</code></li><li><code>resources/views/cardapio.blade.php</code></li><li><code>resources/views/editar-produto.blade.php</code></li><li><code>resources/views/inicio-legado.blade.php</code></li><li><code>resources/views/layout.blade.php</code></li><li><code>routes/web.php</code></li><li><code>tests/Feature/CatalogoTest.php</code></li></ul></details></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-mvc-4.html#capitulo-2">← Quem pode mudar o aviso?</a><a href="web3-mvc-6.html#capitulo-2">Uma consulta atravessa serviços →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

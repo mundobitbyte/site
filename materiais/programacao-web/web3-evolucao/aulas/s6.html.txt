@@ -1,0 +1,15 @@
+<p>Atendimento e cardápio já funcionam no balcão. Mantê-los sempre abertos, porém, ocupa espaço e torna difícil compartilhar um endereço que leve à área desejada. Vamos organizar a navegação sem exigir outra página PHP para cada apresentação.</p>
+<p>Uma <strong>SPA</strong>, aplicação de página única, pode alternar áreas dentro do mesmo documento. Isso não significa que o servidor deixou de existir ou que tudo funciona sem rede: continuamos consultando os serviços PHP.</p>
+<h3>Um endereço para cada área</h3>
+<p>Usaremos o trecho depois de <code>#</code>, chamado fragmento ou hash. <code>balcao.php#atendimento</code> e <code>balcao.php#cardapio</code> abrem o mesmo documento e indicam qual apresentação mostrar. O navegador mantém seu histórico, e o servidor continua recebendo <code>balcao.php</code>.</p>
+{{arquivo:cliente-balcao/src/App.tsx}}
+<p><code>rotaAtual</code> aceita os nomes que definimos e volta ao atendimento se o fragmento não corresponder a uma área. O estado <code>rota</code> acompanha essa escolha. A interface monta o componente correspondente sem duplicar a origem dos dados.</p>
+<h3>Reaja à navegação e limpe o que instalou</h3>
+<p><code>useEffect</code> permite sincronizar a interface com algo externo à apresentação, como o evento <code>hashchange</code> do navegador. O efeito registra a função de atualização e devolve uma função para remover o ouvinte quando ele não for mais necessário. Assim não acumulamos vários ouvintes para a mesma ação.</p>
+<p>Outro efeito atualiza o foco do título e consulta o catálogo quando entramos na área que precisa dele. O título focável e <code>aria-current</code> ajudam a perceber qual área foi aberta, inclusive sem depender apenas da cor do link.</p>
+<p>Não estamos instalando um roteador adicional nesta etapa. Para essas poucas áreas, o fragmento deixa o comportamento observável e mantém os endereços compatíveis com o servidor PHP já preparado.</p>
+<h3>Experimente o histórico de verdade</h3>
+<p>Faça o build. Abra o atendimento, siga para o cardápio e use Voltar e Avançar do navegador. Depois cole <code>http://localhost:8000/balcao.php#cardapio</code> em outra aba. A área correta deve abrir também nesse acesso direto.</p>
+<p>O arquivo <code>public/cardapio.php</code> desta etapa redireciona para a área React. Assim o menu da página inicial continua levando ao cardápio atual quando começarmos a editar descrições. Não manteremos uma apresentação antiga como se fosse a fonte atualizada.</p>
+<h3 id="checkpoint">A pessoa sabe onde está e consegue voltar?</h3>
+<p>Confira links, endereço direto, histórico, indicação da área atual e foco do título. Um fragmento desconhecido deve voltar ao atendimento de forma previsível. A próxima área será reservada à equipe; mudar o hash não poderá dar permissão de edição a um visitante.</p>

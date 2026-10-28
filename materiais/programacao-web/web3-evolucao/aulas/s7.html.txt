@@ -1,0 +1,16 @@
+<p>Marina precisa entrar para alterar as informações. Podemos acrescentar “Operador” ao menu, mas esse nome sozinho não protege nada: qualquer pessoa consegue escrever <code>#operador</code> no endereço.</p>
+<p>A interface pode orientar o acesso. Quem decide se uma operação é permitida continua sendo o servidor. Vamos primeiro confirmar entrada e saída, antes de colocar o formulário de alteração na tela.</p>
+<h3>Prepare uma identidade local</h3>
+<p>Se já criou o administrador local no Web II, preserve esse arquivo e utilize a identidade de exercício que escolheu. Em uma cópia nova, execute <code>php src/criar-administrador.php</code> na raiz e responda às perguntas do terminal. Esse acesso pertence à aplicação do Café, não ao Meu MbB. Não use credenciais pessoais.</p>
+<p>Abra <code>http://localhost:8000/api/sessao.php</code> em uma janela sem login. O servidor informa se há uma sessão autenticada e fornece um token CSRF. O token não é uma senha nem um comprovante de identidade: ele ajuda a verificar a origem do envio associado à sessão.</p>
+<h3>Consulte a sessão e apresente a entrada</h3>
+{{arquivo:cliente-balcao/src/componentes/Operador.tsx}}
+<p>O estado recebido em <code>sessao</code> orienta a apresentação. Sem autenticação, mostramos o formulário. Ao entrar, enviamos a tentativa para o PHP e consultamos novamente a sessão confirmada pelo servidor. A senha é retirada do estado depois da entrada; não é salva em localStorage.</p>
+<p>Em <code>servicos/api.ts</code>, acompanhe agora <code>consultarSessao</code>, <code>mudarSessao</code> e <code>pedir</code>. <code>credentials: "same-origin"</code> mantém a sessão para a própria origem. A escrita envia JSON e o token no cabeçalho <code>X-CSRF-Token</code>.</p>
+{{arquivo:cliente-balcao/src/servicos/api.ts}}
+<p>Fazer uma pergunta ao servidor e conferir a resposta é mais confiável que manter um booleano decidido pelo próprio navegador. Mesmo com a tela aberta, uma sessão pode ter expirado; o serviço precisa poder recusar a próxima ação.</p>
+<h3>Entre, saia e tente novamente</h3>
+<p>Faça o build e abra a área Operador. Tente uma senha incorreta: a mensagem deve orientar sem abrir a edição. Depois entre com os dados locais corretos e use “Sair da edição”. Volte pelo histórico e confirme que a apresentação acompanha a condição atual.</p>
+<p>O serviço <code>api/configuracao-atendimento.php</code> já exige autenticação para ler a configuração privada e valida sessão/token para gravar. A consulta pública de mensagens continua acessível ao visitante. Não precisamos divulgar campos privados para mostrar o aviso do balcão.</p>
+<h3 id="checkpoint">Abrir uma área não concede acesso</h3>
+<p>Mostre tentativa recusada, entrada confirmada, saída e consulta pública ainda funcionando. Não salve senhas nos arquivos entregues. Com a identidade estabelecida, poderemos acrescentar a edição do aviso sem confundir o que a equipe informa com as mensagens que o visitante recebe.</p>

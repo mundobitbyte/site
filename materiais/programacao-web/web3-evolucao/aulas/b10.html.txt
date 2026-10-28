@@ -1,0 +1,17 @@
+<p>Marina quer ajuda para começar a descrição de um produto, mas não quer publicar ingredientes errados ou promessas que a equipe não confirmou. Uma resposta automática pode ser um rascunho; a decisão de publicar continua sendo humana.</p>
+<p>Vamos construir essa passagem com uma resposta controlada antes de depender de um modelo de IA. Assim conseguimos testar pedido, resposta, falha, revisão e publicação sem exigir serviço pago ou hardware específico.</p>
+<h3>Prepare um texto e confira sua origem</h3>
+<p>Faça os builds, inicie os emuladores e entre como operador. A etapa da imagem deve ter criado o documento de <code>cafe-coado</code>. No pedido de rascunho, informe somente nome e ingredientes fictícios conhecidos, sem dados pessoais.</p>
+<p>Use “Solicitar rascunho”. O modo padrão deve informar “Resposta controlada do exercício — não houve chamada a IA”. Esse texto exercita o contrato da integração; não é uma demonstração de geração por um modelo.</p>
+{{arquivo:cliente-balcao/src/integracoes.ts}}
+<p>Revise a resposta, descarte uma vez e confira que nenhum produto mudou. Peça outra, corrija os fatos e use “Publicar texto que revisei” somente quando decidir. A função que prepara a resposta não publica automaticamente. Em uma janela de visitante, abra <code>/cardapio.html</code> e use “Consultar atualização do produto”: a descrição revisada precisa aparecer ao lado da foto, preservando o preço do cardápio.</p>
+<h3>O provedor fica atrás de uma fronteira de servidor</h3>
+{{arquivo:functions/src/index.ts}}
+<p>A função valida identidade e entrada, limita a resposta e informa sua origem. O exemplo opcional usa Ollama local, por um endereço fixo no servidor, quando <code>IA_MODO=ollama</code>. Ele exige instalação, modelo disponível e recursos do computador; essa integração real ainda precisa de homologação no laboratório. Não é requisito para concluir a prática controlada.</p>
+<p>Mesmo uma resposta de um modelo real pode inventar fatos ou ignorar a orientação. Não inclua chaves de provedores no cliente nem trate a sugestão como declaração verificada sobre ingredientes, saúde ou alérgenos. A pessoa responsável pelo cardápio precisa conferir o texto.</p>
+<h3>Repita as integrações em um ambiente limpo</h3>
+<p>Pare os emuladores interativos. Na raiz, execute <code>npm test</code>, <code>npm test --prefix functions</code> e <code>npm run test:integracoes</code>. O último comando inicia os serviços e verifica identidade/papel, entrada inválida, escrita, gatilho, ausência de mudança, resposta controlada sem publicação automática e recusa de push emulado.</p>
+{{arquivo:tests/integracoes.local.mjs}}
+<p>Esses testes não comprovam hospedagem em nuvem, recebimento real de push ou execução de Ollama. Registre essas condições como não executadas quando não houver o ambiente correspondente. Depois reinicie a bancada de uso e confira manualmente consulta, edição e imagem.</p>
+<h3 id="checkpoint">Seu resultado pode ser explicado sem exagero?</h3>
+<p>Demonstre uma resposta controlada, revisão, descarte e publicação por ação explícita. Entregue a reconstrução e os testes locais, com as pendências reais. O percurso de serviços termina nesta bancada; siga para a entrega comum. Não é necessário desenvolver os caminhos Laravel e React para demonstrar o que você construiu aqui.</p>

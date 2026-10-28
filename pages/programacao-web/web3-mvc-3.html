@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: O prazo precisa permanecer. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-mvc-3.html">
+<title>Web III — O prazo precisa permanecer | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · O prazo precisa permanecer">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Servidor com Laravel</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Servidor com Laravel</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link" href="web3-mvc-1.html#capitulo-2">O aviso ganha um objeto</a><a class="chapter-link" href="web3-mvc-2.html#capitulo-2">As mesmas telas, outra organização</a><a class="chapter-link active" aria-current="page" href="web3-mvc-3.html#capitulo-2">O prazo precisa permanecer</a><a class="chapter-link" href="web3-mvc-4.html#capitulo-2">Quem pode mudar o aviso?</a><a class="chapter-link" href="web3-mvc-5.html#capitulo-2">O cardápio tem relações</a><a class="chapter-link" href="web3-mvc-6.html#capitulo-2">Uma consulta atravessa serviços</a><a class="chapter-link" href="web3-mvc-7.html#capitulo-2">O Café cabe na rotina do celular</a><a class="chapter-link" href="web3-mvc-8.html#capitulo-2">Outro programa pede o mesmo aviso</a><a class="chapter-link" href="web3-mvc-9.html#capitulo-2">O aviso muda de idioma</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Servidor com Laravel</span><h2 id="titulo-aula" tabindex="-1">O prazo precisa permanecer</h2><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>Marina quer informar 47 minutos uma vez e encontrar esse valor na próxima consulta. Trocar o número em <code>new AvisoAtendimento(...)</code> serviu para investigar a regra; não serve como rotina da cozinha. O dado precisa permanecer guardado.</p>
+<p>No Web II você usou um banco para preservar mensagens. Vamos acrescentar o atendimento ao mesmo banco SQLite, sem apagar a tabela de mensagens. O formulário da equipe virá depois. Primeiro precisamos conseguir gravar e ler com segurança.</p>
+<h3 id="passo-1">Guarde o dado, não a frase</h3>
+<p>Precisamos de uma linha para o atendimento atual: <code>id</code> identifica essa linha; <code>nome</code>, <code>aberto</code> e <code>minutos</code> guardam os valores. Veja a correspondência com <code>nomeNegocio</code>, <code>pedidosAbertos</code> e <code>tempoEstimado</code>. Os nomes da tabela não surgiram de outra situação; representam os três dados que já conhecemos.</p>
+<p>Uma <strong>migration</strong> descreve uma mudança na estrutura do banco e permite que o Laravel registre quais mudanças já executou. Ela não é o arquivo do banco nem uma cópia de segurança. A migration fornecida cria a tabela se necessário, preserva dados existentes e inclui a linha inicial somente quando ela não existe.</p>
+<details class="web3-arquivo"><summary>Conferir database/migrations/2026_10_26_000001_preparar_atendimento.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="database/migrations/2026_10_26_000001_preparar_atendimento.php">&lt;?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        if (!Schema::hasTable(&#x27;atendimento&#x27;)) {
+            Schema::create(&#x27;atendimento&#x27;, function (Blueprint $t) { $t-&gt;unsignedInteger(&#x27;id&#x27;)-&gt;primary(); $t-&gt;string(&#x27;nome&#x27;,100); $t-&gt;boolean(&#x27;aberto&#x27;); $t-&gt;unsignedSmallInteger(&#x27;minutos&#x27;)-&gt;nullable(); });
+        }
+        DB::table(&#x27;atendimento&#x27;)-&gt;insertOrIgnore([&#x27;id&#x27;=&gt;1,&#x27;nome&#x27;=&gt;&#x27;Café Aurora&#x27;,&#x27;aberto&#x27;=&gt;true,&#x27;minutos&#x27;=&gt;30]);
+        if (!Schema::hasTable(&#x27;users&#x27;)) {
+            Schema::create(&#x27;users&#x27;, function (Blueprint $t) { $t-&gt;id(); $t-&gt;string(&#x27;name&#x27;); $t-&gt;string(&#x27;email&#x27;)-&gt;unique(); $t-&gt;string(&#x27;password&#x27;); $t-&gt;string(&#x27;papel&#x27;)-&gt;default(&#x27;leitor&#x27;); $t-&gt;rememberToken(); $t-&gt;timestamps(); });
+        }
+    }
+    public function down(): void
+    {
+        // A tabela de atendimento pode ter vindo da etapa anterior; esta migration não a apaga.
+        // Restaurar esta experiência usa a cópia preservada, sem excluir mensagens ou usuários.
+    }
+};</code></pre></details>
+<p>Antes de executar, faça a cópia do seu arquivo <code>dados/cafe-aurora.sqlite</code> com o servidor parado. Na raiz, execute <code>php src/inicializar-banco.php</code> se estiver começando por um checkpoint sem banco. Esse preparo já é conhecido do Web II. Depois execute <code>php artisan migrate</code>. Não use <code>migrate:fresh</code>: esse comando pode apagar tabelas e não faz parte desta sequência.</p>
+<h3 id="passo-2">Do registro ao objeto e às telas</h3>
+<p>O model <code>AtendimentoAtual</code> informa ao Laravel qual tabela representa. Seus <em>casts</em> convertem a situação para booleano e o prazo para inteiro, preservando <code>null</code>. Quando pedimos mensagens, ele reutiliza nossa classe <code>AvisoAtendimento</code>. Não criamos uma segunda regra de prazo no controller.</p>
+<details class="web3-arquivo"><summary>Conferir app/Models/AtendimentoAtual.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Models/AtendimentoAtual.php">&lt;?php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
+class AtendimentoAtual extends Model
+{
+    protected $table = &#x27;atendimento&#x27;;
+    public $timestamps = false;
+    protected $fillable = [&#x27;nome&#x27;, &#x27;aberto&#x27;, &#x27;minutos&#x27;];
+    protected function casts(): array { return [&#x27;aberto&#x27; =&gt; &#x27;boolean&#x27;, &#x27;minutos&#x27; =&gt; &#x27;integer&#x27;]; }
+
+    public function mensagens(): array
+    {
+        require_once base_path(&#x27;src/AvisoAtendimento.php&#x27;);
+        return (new \AvisoAtendimento($this-&gt;nome, $this-&gt;aberto, $this-&gt;minutos))-&gt;mensagens();
+    }
+}</code></pre></details>
+<p>Para que o PHP já existente e o Laravel encontrem a mesma informação, o repositório cuida de ler e gravar a linha. <strong>Repositório</strong>, aqui, é um arquivo de funções que conversa com o banco; não é o repositório GitHub. As consultas preparadas recebem valores separados do SQL.</p>
+<details class="web3-arquivo"><summary>Conferir src/repositorio-atendimento.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="src/repositorio-atendimento.php">&lt;?php
+require_once __DIR__ . &quot;/banco.php&quot;;
+require_once __DIR__ . &quot;/AvisoAtendimento.php&quot;;
+
+function prepararAtendimento(PDO $pdo): void
+{
+    $pdo-&gt;exec(&quot;CREATE TABLE IF NOT EXISTS atendimento (
+        id INTEGER PRIMARY KEY CHECK(id = 1),
+        nome TEXT NOT NULL CHECK(length(nome) BETWEEN 1 AND 100),
+        aberto INTEGER NOT NULL CHECK(aberto IN (0, 1)),
+        minutos INTEGER CHECK(minutos IS NULL OR minutos BETWEEN 0 AND 240)
+    )&quot;);
+    $pdo-&gt;exec(&quot;INSERT OR IGNORE INTO atendimento(id, nome, aberto, minutos) VALUES(1, &#x27;Café Aurora&#x27;, 1, 30)&quot;);
+}
+
+function lerConfiguracaoAtendimento(PDO $pdo): array
+{
+    $linha = $pdo-&gt;query(&quot;SELECT nome, aberto, minutos FROM atendimento WHERE id = 1&quot;)-&gt;fetch();
+    if (!$linha) {
+        throw new RuntimeException(&quot;Prepare a tabela de atendimento pelo terminal.&quot;);
+    }
+    return [&quot;nomeNegocio&quot; =&gt; $linha[&quot;nome&quot;], &quot;pedidosAbertos&quot; =&gt; (bool) $linha[&quot;aberto&quot;],
+        &quot;tempoEstimado&quot; =&gt; $linha[&quot;minutos&quot;] === null ? null : (int) $linha[&quot;minutos&quot;]];
+}
+
+function conferirConfiguracaoAtendimento(mixed $dados): AvisoAtendimento
+{
+    if (!is_array($dados) || array_is_list($dados) ||
+        array_diff(array_keys($dados), [&quot;nomeNegocio&quot;, &quot;pedidosAbertos&quot;, &quot;tempoEstimado&quot;]) ||
+        !isset($dados[&quot;nomeNegocio&quot;], $dados[&quot;pedidosAbertos&quot;]) ||
+        !array_key_exists(&quot;tempoEstimado&quot;, $dados) ||
+        !is_string($dados[&quot;nomeNegocio&quot;]) || !is_bool($dados[&quot;pedidosAbertos&quot;]) ||
+        ($dados[&quot;tempoEstimado&quot;] !== null &amp;&amp; !is_int($dados[&quot;tempoEstimado&quot;]))) {
+        throw new InvalidArgumentException(&quot;Confira os três campos e seus tipos.&quot;);
+    }
+    return new AvisoAtendimento(trim($dados[&quot;nomeNegocio&quot;]), $dados[&quot;pedidosAbertos&quot;], $dados[&quot;tempoEstimado&quot;]);
+}
+
+function salvarConfiguracaoAtendimento(PDO $pdo, AvisoAtendimento $atendimento): void
+{
+    $consulta = $pdo-&gt;prepare(&quot;UPDATE atendimento SET nome = :nome, aberto = :aberto, minutos = :minutos WHERE id = 1&quot;);
+    $consulta-&gt;bindValue(&quot;:nome&quot;, $atendimento-&gt;nomeNegocio);
+    $consulta-&gt;bindValue(&quot;:aberto&quot;, (int) $atendimento-&gt;pedidosAbertos, PDO::PARAM_INT);
+    $consulta-&gt;bindValue(&quot;:minutos&quot;, $atendimento-&gt;tempoEstimado,
+        $atendimento-&gt;tempoEstimado === null ? PDO::PARAM_NULL : PDO::PARAM_INT);
+    $consulta-&gt;execute();
+}</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir src/atendimento.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="src/atendimento.php">&lt;?php
+require_once __DIR__ . &quot;/repositorio-atendimento.php&quot;;
+
+function obterAtendimento(): array
+{
+    $dados = lerConfiguracaoAtendimento(conectarBanco());
+    return conferirConfiguracaoAtendimento($dados)-&gt;mensagens();
+}</code></pre></details>
+<p>Compare o controller desta etapa com o anterior. Ele passou a consultar <code>AtendimentoAtual::findOrFail(1)</code>: procura a linha 1 ou comunica sua ausência. A view recebe esse registro, enquanto a API continua devolvendo as três mensagens.</p>
+<details class="web3-arquivo"><summary>Conferir app/Http/Controllers/AtendimentoController.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Http/Controllers/AtendimentoController.php">&lt;?php
+namespace App\Http\Controllers;
+use App\Http\Requests\AtualizarAtendimentoRequest;
+use App\Models\AtendimentoAtual;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
+
+class AtendimentoController
+{
+    public function mostrar(): View
+    {
+        return view(&#x27;atendimento&#x27;, [&#x27;atendimento&#x27;=&gt;AtendimentoAtual::findOrFail(1)]);
+    }
+    public function publico(): JsonResponse
+    {
+        return response()-&gt;json(AtendimentoAtual::findOrFail(1)-&gt;mensagens())-&gt;header(&#x27;Cache-Control&#x27;,&#x27;no-store&#x27;);
+    }
+}</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir resources/views/atendimento.blade.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="resources/views/atendimento.blade.php">@extends(&#x27;layout&#x27;)
+@section(&#x27;titulo&#x27;,&#x27;Atendimento&#x27;)
+@section(&#x27;conteudo&#x27;)
+&lt;h1&gt;{{ $atendimento-&gt;nome }}&lt;/h1&gt;
+@php($dados=$atendimento-&gt;mensagens())
+&lt;p&gt;{{ $dados[&#x27;mensagemStatus&#x27;] }}&lt;/p&gt;&lt;p&gt;{{ $dados[&#x27;mensagemTempo&#x27;] }}&lt;/p&gt;
+@endsection</code></pre></details>
+<h3 id="passo-3">Faça o prazo permanecer</h3>
+<p>Acrescente o pequeno script de verificação abaixo. Ele será executado só pelo terminal e informa um objeto válido ao repositório. Ainda não é um endereço aberto ao visitante.</p>
+<details class="web3-arquivo"><summary>Conferir tests/alterar-localmente.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="tests/alterar-localmente.php">&lt;?php
+require_once dirname(__DIR__).&#x27;/src/repositorio-atendimento.php&#x27;;
+$aviso=new AvisoAtendimento(&#x27;Café Aurora&#x27;,true,47);
+salvarConfiguracaoAtendimento(conectarBanco(),$aviso);
+echo &#x27;Alteração local gravada.&#x27;,PHP_EOL;</code></pre></details>
+<p>Execute <code>php tests/alterar-localmente.php</code> na raiz. Com o servidor Laravel em execução, consulte <code>/atendimento</code>, <code>/api/atendimento.php</code> e o balcão. O prazo deve ser 47 minutos. Pare e reinicie o servidor: o dado precisa permanecer. Execute o preparo novamente e confirme que não voltou sozinho para 30.</p>
+<p>Abra também a área de mensagens do Web II e confira que os registros anteriores continuam presentes. O checkpoint de download não carrega mensagens particulares, banco ou credenciais: ele permite reconstruir uma referência limpa, não substituir seus dados.</p>
+<h3 id="checkpoint">Persistiu sem contrariar a regra?</h3>
+<p>Confira aberto com prazo, aberto sem prazo e encerrado. Para os dois últimos testes, altere os valores no script local; não edite as frases de saída. Zero é válido, negativo é recusado. Guarde as evidências do antes e depois. O próximo problema já apareceu: se a equipe poderá editar por uma tela, precisamos reconhecer quem está autorizado.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa3.zip" download>Baixar referência da etapa 3</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>app/Http/Controllers/AtendimentoController.php</code></li><li><code>app/Models/AtendimentoAtual.php</code></li><li><code>database/migrations/2026_10_26_000001_preparar_atendimento.php</code></li><li><code>resources/views/atendimento.blade.php</code></li><li><code>src/atendimento.php</code></li><li><code>src/inicializar-atendimento.php</code></li><li><code>src/repositorio-atendimento.php</code></li><li><code>tests/alterar-localmente.php</code></li></ul></details></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-mvc-2.html#capitulo-2">← As mesmas telas, outra organização</a><a href="web3-mvc-4.html#capitulo-2">Quem pode mudar o aviso? →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

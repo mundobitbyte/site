@@ -1,0 +1,20 @@
+<p>Um cliente pergunta pelo endereço enquanto a equipe confere um CEP. O Café não precisa manter uma cópia de todos os endereços do Brasil. Pode consultar um serviço público e aproveitar somente os campos necessários.</p>
+<p>Você já viu o balcão consumir uma API do próprio Café. Agora o servidor PHP será o consumidor de outra API. A diferença traz uma responsabilidade: o serviço externo pode responder com erro, devolver um formato inesperado ou não responder a tempo.</p>
+<h3>Faça uma consulta pequena</h3>
+<p>Abra <code>http://localhost:8000/endereco</code> e informe <code>01001000</code>, o CEP de exemplo da documentação do ViaCEP. O formulário aceita oito algarismos, sem hífen. Essa atividade consulta um endereço; não cria entrega, pedido ou cadastro de cliente.</p>
+<p>O <a href="https://viacep.com.br/" target="_blank" rel="noopener noreferrer">ViaCEP documenta consultas em JSON e XML</a>. Vamos usar JSON e poucos testes, sem varreduras de CEPs. Antes de depender da resposta, nosso código confere o formato da entrada.</p>
+{{arquivo:app/Services/ConsultaCep.php}}
+<p>O cliente HTTP do Laravel envia a consulta. <code>connectTimeout(2)</code> limita a espera pela conexão e <code>timeout(4)</code> limita a operação. Esses números são limites escolhidos para a experiência; não garantem que um serviço externo responderá.</p>
+<p>Uma resposta HTTP bem-sucedida ainda pode informar um CEP inexistente. Por isso verificamos o campo <code>erro</code>, o tipo da resposta e os campos que realmente serão apresentados. Receber JSON não significa receber informação válida.</p>
+<h3>Separe consulta e apresentação</h3>
+<p>A classe <code>ConsultaCep</code> reúne o acesso externo. Antes de acrescentar o novo controller à sua aplicação, execute <code>php artisan make:controller EnderecoController</code> na raiz. Observe o arquivo gerado em <code>app/Http/Controllers</code>: o framework criou um esqueleto, mas ainda não sabe consultar CEP. Complete-o com o código abaixo. Se estiver conferindo o ZIP final, o arquivo já estará completo; compare com o esqueleto, sem sobrescrever sua solução por engano.</p>
+<p>O controller recebe o formulário e escolhe como devolver o resultado ou a orientação de falha. A view apresenta texto com escape, preservando o valor digitado quando o usuário precisa corrigir algo.</p>
+{{arquivo:app/Http/Controllers/EnderecoController.php}}
+{{arquivo:resources/views/endereco.blade.php}}
+<p>Teste oito algarismos para um CEP inexistente, depois uma entrada com letras. Compare as mensagens: um formato recusado pelo Café não é a mesma situação de um endereço não encontrado pelo serviço. Em nenhum caso a página deve inventar um endereço ou continuar mostrando uma consulta anterior como se fosse a nova.</p>
+<h3>Teste também quando o serviço falha</h3>
+<p>Não é adequado derrubar um serviço real para testar a nossa recuperação. Os testes abaixo fornecem respostas controladas ao cliente HTTP: resposta válida, estrutura inadequada e erro de conexão. Eles verificam o comportamento do nosso código, sem afirmar que uma chamada real ocorreu.</p>
+{{arquivo:tests/Feature/CepTest.php}}
+<p>Execute <code>composer test</code>. Se sua rede bloquear a consulta real, a prática de validação e recuperação continua possível com os testes controlados. Registre separadamente “teste automatizado aprovado” e “consulta real realizada”. Uma evidência não substitui a outra.</p>
+<h3 id="checkpoint">Quando podemos confiar na apresentação?</h3>
+<p>Confirme formato, CEP inexistente, resposta inválida e indisponibilidade. Explique por que consultar o serviço no servidor evita colocar futuras credenciais de integração dentro do JavaScript do visitante. Nosso exemplo de ViaCEP não pede chave. Depois dessa consulta entre sistemas, voltaremos ao cliente do Café: como aproveitar recursos do celular sem impedir quem não os tem?</p>

@@ -1,0 +1,16 @@
+<p>Marina está revisando a descrição do café coado. Ainda não quer que o cliente veja o texto: precisa conferir os ingredientes com a equipe. Se todo “Salvar” publicasse imediatamente, não haveria espaço para essa revisão.</p>
+<p>Vamos separar edição local, rascunho salvo e publicação confirmada. São estados diferentes. A interface precisa deixar claro o que já chegou ao servidor e o que o visitante consegue consultar.</p>
+<h3>Salve sem publicar</h3>
+<p>Após o build, entre como operador e localize a descrição do café. Escreva uma frase com 10 a 400 caracteres e use “Salvar rascunho”. Em uma janela sem login, abra o cardápio: a descrição pública deve continuar igual.</p>
+{{arquivo:cliente-balcao/src/componentes/EditorProduto.tsx}}
+<p>O componente começa com o rascunho que já existe ou, na ausência dele, com a descrição pública. O texto digitado fica no estado local. <code>conferirDescricao</code> retira espaços nas extremidades e confere o tamanho antes do envio.</p>
+<p>A operação informa ao serviço qual ação está sendo solicitada: <code>rascunho</code> ou <code>publicar</code>. O serviço valida identidade, token, produto e descrição. Para o visitante, a resposta pública não deve incluir o rascunho privado.</p>
+<h3>Publique o texto que foi conferido</h3>
+<p>Depois da confirmação do rascunho, o botão “Publicar rascunho salvo” fica disponível. Se você alterar o texto outra vez, precisa salvar essa revisão antes de publicá-la. Isso evita publicar por engano uma versão diferente daquela que a equipe acabou de conferir.</p>
+<p>Use o botão de publicação e consulte novamente o cardápio na janela de visitante. A nova descrição deve aparecer. O endereço antigo <code>/cardapio.php</code> já leva à área que consulta o banco atual; não mantemos o catálogo preso ao JSON inicial.</p>
+<p>Ao atualizar a lista após uma gravação, <code>carregarProdutos(true)</code> preserva os componentes até chegar a nova resposta. Esvaziar a lista nesse momento desmontaria o editor e poderia apagar o texto em que a pessoa está trabalhando. A identificação estável do produto também participa dessa continuidade.</p>
+<h3>Cancelamento e falha também precisam ser claros</h3>
+<p>Altere um texto e use “Cancelar edição local”. O componente volta ao último rascunho ou à descrição recebida; não apaga uma publicação no banco. Depois tente salvar uma frase curta demais. A interface precisa recusar e preservar a possibilidade de corrigir.</p>
+<p>Se a gravação falhar por indisponibilidade, não mostre “publicado”. Restaure a conexão, consulte o estado e repita a ação conscientemente. A interface auxilia a equipe; a confirmação continua vindo do servidor.</p>
+<h3 id="checkpoint">Qual versão o cliente vê agora?</h3>
+<p>Demonstre rascunho privado, confirmação separada de publicação, cancelamento local e correção de texto inválido. Mostre o resultado como operador e como visitante. Falta reunir verificações que possam ser repetidas e preparar a aplicação em outra pasta.</p>

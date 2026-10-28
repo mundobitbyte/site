@@ -1,0 +1,15 @@
+/* Apenas as aulas novas: preserva a identidade e os mecanismos globais do portal. */
+.web3-evolucao .web-content, .web3-evolucao .chapter { min-width: 0; }
+.web3-evolucao .chapter > p { line-height: 1.8; max-width: 85ch; }
+.web3-evolucao .chapter > h3 { margin-top: 2rem; }
+.web3-evolucao .chapter-menu > a { display: block; }
+.web3-evolucao .web3-arquivo { margin: 1.2rem 0; padding: .8rem; border: 1px solid var(--line); border-radius: 8px; }
+.web3-evolucao .web3-arquivo summary { cursor: pointer; overflow-wrap: anywhere; font-weight: 700; }
+.web3-evolucao .code-block { overflow-x: auto; white-space: pre; max-width: 100%; min-width: 0; }
+.web3-evolucao .code-block code { overflow-wrap: normal; }
+.web3-evolucao .chapter p code, .web3-evolucao .chapter li code { font-size: .95rem; }
+.web3-evolucao .code-block code { font-size: .9rem; }
+.web3-evolucao .web3-escolhas { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,230px),1fr)); gap: 1rem; }
+.web3-evolucao .web3-escolhas section { border: 1px solid var(--line); border-radius: 8px; padding: 1rem; }
+.web3-evolucao [hidden] { display: none !important; }
+.web3-evolucao .table-wrap { max-width: 100%; overflow-x: auto; }

@@ -81,7 +81,7 @@ def pagina(aula):
     anterior = ('<a href="web3-typescript.html#ts-checkpoint-final">← TypeScript Essencial</a>' if n == 1 else
                 f'<a href="{nome(n-1)}#capitulo-2">← Aula {n-1} — {AULAS[n-2]["titulo"]}</a>')
     proxima = (f'<a href="{nome(n+1)}#capitulo-2">Aula {n+1} — {AULAS[n]["titulo"]} →</a>' if n < len(AULAS)
-               else '<a href="web3.html">Voltar ao Web III</a>')
+               else '<a href="web3-percursos.html#capitulo-2">Quem informa o aviso? Escolher percurso →</a>')
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>

@@ -1,0 +1,17 @@
+<p>A foto do café coado precisa ser atualizada. O formulário de atendimento guarda textos, booleanos e números; uma imagem é um arquivo binário. Guardar tudo no mesmo documento de dados confundiria responsabilidades.</p>
+<p>Vamos usar Storage para o arquivo e Firestore para a referência que liga esse arquivo ao produto. A imagem original continua disponível enquanto a nova não for confirmada.</p>
+<h3>Envie uma imagem do produto</h3>
+<p>Acrescente os arquivos da etapa, faça o build e reinicie os emuladores para carregar também as configurações de Storage. Execute o preparo e entre como operador. No balcão, escolha uma imagem fictícia de café, em PNG, JPEG ou WebP, de até 2 MiB, e escreva a descrição conhecida do produto.</p>
+{{arquivo:cliente-balcao/src/imagens.ts}}
+<p>O caminho inclui a identidade do operador e um identificador aleatório. Não usamos o nome digitado do arquivo como endereço confiável. A extensão e o tipo declarado ajudam a filtrar a entrada; a regra de Storage também verifica permissão, tamanho e tipo permitido.</p>
+{{arquivo:storage.rules}}
+<p>O exemplo não permite sobrescrever um objeto já existente pelo cliente. Uma nova foto recebe outro identificador. As imagens desta bancada são públicas e fictícias; não use esse mesmo desenho para documentos ou fotos pessoais que precisem de acesso restrito.</p>
+<h3>Relacione o arquivo com o produto</h3>
+<p>Depois do upload, o código grava em <code>produtos/cafe-coado</code> o nome, a descrição e <code>imagemCaminho</code>. Não grava o conteúdo inteiro da imagem nesse documento. Se a associação falhar, tenta remover o arquivo enviado; isso é uma compensação entre serviços, não uma transação atômica que garanta os dois passos de uma vez.</p>
+{{arquivo:cliente-balcao/src/midia.ts}}
+<p>Abra <code>http://localhost:5000/cardapio.html</code>. O cardápio conhecido continua funcionando com seu JSON e suas imagens. Use “Consultar atualização do produto” para obter a referência enviada pela equipe e aplicar a foto ao café coado.</p>
+{{arquivo:cliente-balcao/src/catalogo.ts}}
+{{arquivo:cliente-balcao/src/catalogo-interface.ts}}
+<p>Se o serviço não confirmar a referência ou a imagem não carregar, a apresentação anterior é preservada com uma orientação. Receber um endereço de download não comprova que o arquivo já apareceu na tela.</p>
+<h3 id="checkpoint">O arquivo e sua referência concordam?</h3>
+<p>Confira upload autorizado, associação ao produto, apresentação no cardápio e recusa para leitor. Com os emuladores interativos parados, execute <code>npm test</code>: a suíte inclui agora regras de imagem, limite e sobrescrita. Depois retome a bancada. O próximo passo será entender o que muda quando esses arquivos saem do computador de desenvolvimento.</p>

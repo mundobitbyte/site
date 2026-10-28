@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: Entrar não basta para alterar. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-spa-7.html">
+<title>Web III — Entrar não basta para alterar | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · Entrar não basta para alterar">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Interface com React</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Interface com React</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link" href="web3-spa-1.html#capitulo-2">Uma área do balcão ganha componentes</a><a class="chapter-link" href="web3-spa-2.html#capitulo-2">Abrir uma orientação muda o estado</a><a class="chapter-link" href="web3-spa-3.html#capitulo-2">O componente consulta o atendimento</a><a class="chapter-link" href="web3-spa-4.html#capitulo-2">Os produtos chegam à interface</a><a class="chapter-link" href="web3-spa-5.html#capitulo-2">Encontrar sem perder a lista</a><a class="chapter-link" href="web3-spa-6.html#capitulo-2">O balcão ganha caminhos</a><a class="chapter-link active" aria-current="page" href="web3-spa-7.html#capitulo-2">Entrar não basta para alterar</a><a class="chapter-link" href="web3-spa-8.html#capitulo-2">A equipe informa o prazo</a><a class="chapter-link" href="web3-spa-9.html#capitulo-2">Rascunho não é publicação</a><a class="chapter-link" href="web3-spa-10.html#capitulo-2">Outra pasta também precisa funcionar</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Interface com React</span><h2 id="titulo-aula" tabindex="-1">Entrar não basta para alterar</h2><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>Marina precisa entrar para alterar as informações. Podemos acrescentar “Operador” ao menu, mas esse nome sozinho não protege nada: qualquer pessoa consegue escrever <code>#operador</code> no endereço.</p>
+<p>A interface pode orientar o acesso. Quem decide se uma operação é permitida continua sendo o servidor. Vamos primeiro confirmar entrada e saída, antes de colocar o formulário de alteração na tela.</p>
+<h3 id="passo-1">Prepare uma identidade local</h3>
+<p>Se já criou o administrador local no Web II, preserve esse arquivo e utilize a identidade de exercício que escolheu. Em uma cópia nova, execute <code>php src/criar-administrador.php</code> na raiz e responda às perguntas do terminal. Esse acesso pertence à aplicação do Café, não ao Meu MbB. Não use credenciais pessoais.</p>
+<p>Abra <code>http://localhost:8000/api/sessao.php</code> em uma janela sem login. O servidor informa se há uma sessão autenticada e fornece um token CSRF. O token não é uma senha nem um comprovante de identidade: ele ajuda a verificar a origem do envio associado à sessão.</p>
+<h3 id="passo-2">Consulte a sessão e apresente a entrada</h3>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/componentes/Operador.tsx</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/componentes/Operador.tsx">import { useEffect, useState } from &quot;react&quot;;
+import type { Configuracao, Produto, Sessao } from &quot;../servicos/api.js&quot;;
+import { gravarConfiguracao, lerConfiguracao, mudarSessao } from &quot;../servicos/api.js&quot;;
+
+
+interface Props { sessao: Sessao; aoMudarSessao: (s: Sessao) =&gt; void; produtos: Produto[]; aoRecarregarProdutos: (preservar?: boolean) =&gt; Promise&lt;void&gt; }
+
+export function Operador({ sessao, aoMudarSessao, produtos, aoRecarregarProdutos }: Props) {
+  const [usuario, setUsuario] = useState(&quot;&quot;);
+  const [senha, setSenha] = useState(&quot;&quot;);
+  const [config, setConfig] = useState&lt;Configuracao | null&gt;(null);
+  const [prazo, setPrazo] = useState(&quot;&quot;);
+  const [aviso, setAviso] = useState(&quot;&quot;);
+  const [ocupado, setOcupado] = useState(false);
+  useEffect(() =&gt; {
+    let ativo = true;
+    if (!sessao.autenticado) { setConfig(null); return; }
+    void lerConfiguracao().then(d =&gt; {
+      if (ativo) { setConfig(d); setPrazo(d.tempoEstimado === null ? &quot;&quot; : String(d.tempoEstimado)); }
+    }).catch(() =&gt; { if (ativo) setAviso(&quot;Não foi possível consultar a configuração. Atualize sua sessão.&quot;); });
+    return () =&gt; { ativo = false; };
+  }, [sessao.autenticado]);
+
+  async function entrar(evento: React.FormEvent) {
+    evento.preventDefault(); setOcupado(true);
+    try {
+      const atual = await mudarSessao(sessao, { acao: &quot;entrar&quot;, usuario, senha });
+      setSenha(&quot;&quot;); aoMudarSessao(atual); setAviso(&quot;Sessão confirmada pelo servidor.&quot;);
+      await aoRecarregarProdutos();
+    } catch (e) { setAviso(e instanceof Error ? e.message : &quot;Falha no acesso.&quot;); }
+    finally { setOcupado(false); }
+  }
+  async function salvar(evento: React.FormEvent) {
+    evento.preventDefault(); if (!config) return; setOcupado(true);
+    try {
+      if (prazo !== &quot;&quot; &amp;&amp; !/^(0|[1-9][0-9]{0,2})$/.test(prazo)) throw new Error(&quot;Informe minutos inteiros ou deixe vazio.&quot;);
+      const minutos = prazo === &quot;&quot; ? null : Number(prazo);
+      if (minutos !== null &amp;&amp; minutos &gt; 240) throw new Error(&quot;O limite combinado neste formulário é 240 minutos.&quot;);
+      await gravarConfiguracao(sessao, { ...config, tempoEstimado: minutos });
+      setAviso(&quot;Aviso salvo no servidor. Consulte o balcão para conferir.&quot;);
+    } catch (e) { setAviso(e instanceof Error ? e.message : &quot;Não foi possível salvar.&quot;); }
+    finally { setOcupado(false); }
+  }
+  async function sair() {
+    setOcupado(true);
+    try {
+      aoMudarSessao(await mudarSessao(sessao, { acao: &quot;sair&quot; }));
+      setConfig(null); setAviso(&quot;Você saiu da área de edição.&quot;);
+      await aoRecarregarProdutos();
+    } catch { setAviso(&quot;Não foi possível sair. Tente novamente.&quot;); }
+    finally { setOcupado(false); }
+  }
+  return &lt;section&gt;&lt;h2&gt;Área do operador&lt;/h2&gt;
+    {!sessao.autenticado ? &lt;form onSubmit={e =&gt; void entrar(e)}&gt;
+      &lt;p&gt;&lt;label htmlFor=&quot;usuario&quot;&gt;Usuário local&lt;/label&gt;&lt;input id=&quot;usuario&quot; value={usuario} autoComplete=&quot;username&quot; required onChange={e =&gt; setUsuario(e.target.value)} /&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;label htmlFor=&quot;senha&quot;&gt;Senha&lt;/label&gt;&lt;input id=&quot;senha&quot; type=&quot;password&quot; value={senha} autoComplete=&quot;current-password&quot; required onChange={e =&gt; setSenha(e.target.value)} /&gt;&lt;/p&gt;
+      &lt;button disabled={ocupado || !sessao.csrfToken}&gt;Entrar&lt;/button&gt;
+    &lt;/form&gt; : &lt;&gt;
+      &lt;button disabled={ocupado} onClick={() =&gt; void sair()}&gt;Sair da edição&lt;/button&gt;
+
+    &lt;/&gt;}
+    &lt;p role=&quot;status&quot;&gt;{aviso}&lt;/p&gt;
+  &lt;/section&gt;;
+}</code></pre></details>
+<p>O estado recebido em <code>sessao</code> orienta a apresentação. Sem autenticação, mostramos o formulário. Ao entrar, enviamos a tentativa para o PHP e consultamos novamente a sessão confirmada pelo servidor. A senha é retirada do estado depois da entrada; não é salva em localStorage.</p>
+<p>Em <code>servicos/api.ts</code>, acompanhe agora <code>consultarSessao</code>, <code>mudarSessao</code> e <code>pedir</code>. <code>credentials: "same-origin"</code> mantém a sessão para a própria origem. A escrita envia JSON e o token no cabeçalho <code>X-CSRF-Token</code>.</p>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/servicos/api.ts</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/servicos/api.ts">export interface Produto {
+  id: string;
+  nome: string;
+  categoria: string;
+  precoCentavos: number;
+  imagem: string;
+  alt: string;
+  descricao: string;
+  disponivel: boolean;
+  rascunho?: string | null;
+}
+export interface Sessao { autenticado: boolean; csrfToken: string }
+export interface Configuracao { nomeNegocio: string; pedidosAbertos: boolean; tempoEstimado: number | null }
+
+function objeto(v: unknown): v is Record&lt;string, unknown&gt; {
+  return typeof v === &quot;object&quot; &amp;&amp; v !== null &amp;&amp; !Array.isArray(v);
+}
+
+export async function pedir(caminho: string, opcoes: RequestInit = {}): Promise&lt;unknown&gt; {
+  const controlador = new AbortController();
+  const limite = setTimeout(() =&gt; controlador.abort(), 8000);
+  try {
+    const resposta = await fetch(caminho, { ...opcoes, credentials: &quot;same-origin&quot;, cache: &quot;no-store&quot;, signal: controlador.signal });
+    const tipo = resposta.headers.get(&quot;Content-Type&quot;);
+    if (tipo === null || tipo.split(&quot;;&quot;)[0].trim().toLowerCase() !== &quot;application/json&quot;) throw new Error(&quot;O serviço não devolveu JSON.&quot;);
+    const dados: unknown = await resposta.json();
+    if (!resposta.ok) throw new Error(objeto(dados) &amp;&amp; typeof dados.erro === &quot;string&quot; ? dados.erro : `Falha HTTP ${resposta.status}.`);
+    return dados;
+  } finally { clearTimeout(limite); }
+}
+
+export async function consultarSessao(): Promise&lt;Sessao&gt; {
+  const d = await pedir(&quot;api/sessao.php&quot;);
+  if (!objeto(d) || typeof d.autenticado !== &quot;boolean&quot; || typeof d.csrfToken !== &quot;string&quot;) throw new Error(&quot;Resposta de sessão inválida.&quot;);
+  return { autenticado: d.autenticado, csrfToken: d.csrfToken };
+}
+
+export async function mudarSessao(sessao: Sessao, dados: { acao: &quot;entrar&quot; | &quot;sair&quot;; usuario?: string; senha?: string }): Promise&lt;Sessao&gt; {
+  await pedir(&quot;api/sessao.php&quot;, { method: &quot;POST&quot;, headers: { &quot;Content-Type&quot;: &quot;application/json&quot;, &quot;X-CSRF-Token&quot;: sessao.csrfToken }, body: JSON.stringify(dados) });
+  return consultarSessao();
+}
+
+export async function lerProdutos(): Promise&lt;Produto[]&gt; {
+  const d = await pedir(&quot;api/cardapio.php&quot;);
+  if (!objeto(d) || !Array.isArray(d.produtos)) throw new Error(&quot;Lista de produtos inválida.&quot;);
+  return d.produtos.map((p: unknown) =&gt; {
+    if (!objeto(p) || typeof p.id !== &quot;string&quot; || typeof p.nome !== &quot;string&quot; || typeof p.categoria !== &quot;string&quot; || typeof p.imagem !== &quot;string&quot; || typeof p.alt !== &quot;string&quot; || typeof p.descricao !== &quot;string&quot; ||
+        typeof p.precoCentavos !== &quot;number&quot; || !Number.isSafeInteger(p.precoCentavos) || p.precoCentavos &lt; 0 || typeof p.disponivel !== &quot;boolean&quot;) throw new Error(&quot;Produto inválido.&quot;);
+    if (typeof p.imagem !== &quot;string&quot; || !/^[a-zA-Z0-9_-]+\.webp$/.test(p.imagem)) throw new Error(&quot;Imagem de produto inválida.&quot;);
+    if (!(p.rascunho === undefined || p.rascunho === null || typeof p.rascunho === &quot;string&quot;)) throw new Error(&quot;Rascunho inválido.&quot;);
+    return { id: p.id, nome: p.nome, categoria: p.categoria, precoCentavos: p.precoCentavos,
+      imagem: p.imagem, alt: p.alt, descricao: p.descricao, disponivel: p.disponivel, rascunho: p.rascunho };
+  });
+}
+
+export async function gravarProduto(sessao: Sessao, id: string, descricao: string, acao: &quot;rascunho&quot; | &quot;publicar&quot;): Promise&lt;void&gt; {
+  await pedir(&quot;api/cardapio.php&quot;, { method: &quot;POST&quot;, headers: { &quot;Content-Type&quot;: &quot;application/json&quot;, &quot;X-CSRF-Token&quot;: sessao.csrfToken }, body: JSON.stringify({ id, descricao, acao }) });
+}
+
+export async function lerConfiguracao(): Promise&lt;Configuracao&gt; {
+  const d = await pedir(&quot;api/configuracao-atendimento.php&quot;);
+  const a = objeto(d) ? d.atendimento : null;
+  if (!objeto(a) || typeof a.nomeNegocio !== &quot;string&quot; || typeof a.pedidosAbertos !== &quot;boolean&quot; ||
+      !(a.tempoEstimado === null || typeof a.tempoEstimado === &quot;number&quot; &amp;&amp; Number.isInteger(a.tempoEstimado))) throw new Error(&quot;Configuração inválida.&quot;);
+  return { nomeNegocio: a.nomeNegocio, pedidosAbertos: a.pedidosAbertos, tempoEstimado: a.tempoEstimado };
+}
+
+export async function gravarConfiguracao(sessao: Sessao, atendimento: Configuracao): Promise&lt;void&gt; {
+  await pedir(&quot;api/configuracao-atendimento.php&quot;, { method: &quot;POST&quot;, headers: { &quot;Content-Type&quot;: &quot;application/json&quot;, &quot;X-CSRF-Token&quot;: sessao.csrfToken }, body: JSON.stringify(atendimento) });
+}</code></pre></details>
+<p>Fazer uma pergunta ao servidor e conferir a resposta é mais confiável que manter um booleano decidido pelo próprio navegador. Mesmo com a tela aberta, uma sessão pode ter expirado; o serviço precisa poder recusar a próxima ação.</p>
+<h3 id="passo-3">Entre, saia e tente novamente</h3>
+<p>Faça o build e abra a área Operador. Tente uma senha incorreta: a mensagem deve orientar sem abrir a edição. Depois entre com os dados locais corretos e use “Sair da edição”. Volte pelo histórico e confirme que a apresentação acompanha a condição atual.</p>
+<p>O serviço <code>api/configuracao-atendimento.php</code> já exige autenticação para ler a configuração privada e valida sessão/token para gravar. A consulta pública de mensagens continua acessível ao visitante. Não precisamos divulgar campos privados para mostrar o aviso do balcão.</p>
+<h3 id="checkpoint">Abrir uma área não concede acesso</h3>
+<p>Mostre tentativa recusada, entrada confirmada, saída e consulta pública ainda funcionando. Não salve senhas nos arquivos entregues. Com a identidade estabelecida, poderemos acrescentar a edição do aviso sem confundir o que a equipe informa com as mensagens que o visitante recebe.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-spa-etapa7.zip" download>Baixar referência da etapa 7</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>cliente-balcao/src/App.tsx</code></li><li><code>cliente-balcao/src/componentes/Operador.tsx</code></li></ul></details></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-spa-6.html#capitulo-2">← O balcão ganha caminhos</a><a href="web3-spa-8.html#capitulo-2">A equipe informa o prazo →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

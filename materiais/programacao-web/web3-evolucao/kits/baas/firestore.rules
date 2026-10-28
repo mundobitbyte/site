@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function operador() { return request.auth != null && request.auth.token.operador == true; }
+    function atendimentoValido() {
+      let d = request.resource.data;
+      return d.keys().hasAll(['nomeNegocio', 'pedidosAbertos', 'tempoEstimado'])
+        && d.keys().hasOnly(['nomeNegocio', 'pedidosAbertos', 'tempoEstimado'])
+        && d.nomeNegocio is string && d.nomeNegocio.size() >= 1 && d.nomeNegocio.size() <= 100
+        && d.nomeNegocio.matches('.*[^ ].*') && d.pedidosAbertos is bool
+        && (d.tempoEstimado == null || (d.tempoEstimado is int && d.tempoEstimado >= 0 && d.tempoEstimado <= 240));
+    }
+    match /atendimento/atual {
+      allow read: if true;
+      allow create, update: if operador() && atendimentoValido();
+      allow delete: if false;
+    }
+    match /produtos/{id} {
+      allow read: if true;
+      allow create, update: if operador()
+        && request.resource.data.keys().hasOnly(['nome', 'descricao', 'imagemCaminho'])
+        && request.resource.data.nome is string && request.resource.data.nome.size() >= 1
+        && request.resource.data.nome.size() <= 100
+        && request.resource.data.nome.matches('.*[^ ].*')
+        && request.resource.data.descricao is string && request.resource.data.descricao.size() >= 10 && request.resource.data.descricao.size() <= 400
+        && request.resource.data.descricao.matches('.*[^ ].*')
+        && request.resource.data.imagemCaminho is string
+        && request.resource.data.imagemCaminho.matches('imagens/' + request.auth.uid + '/[a-zA-Z0-9_-]+');
+      allow delete: if false;
+    }
+    match /inscricoes/{uid} {
+      allow read: if false;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['token'])
+        && request.resource.data.token is string && request.resource.data.token.size() >= 1
+        && request.resource.data.token.size() <= 4096;
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

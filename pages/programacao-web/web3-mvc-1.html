@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: O aviso ganha um objeto. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-mvc-1.html">
+<title>Web III — O aviso ganha um objeto | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · O aviso ganha um objeto">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Servidor com Laravel</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Servidor com Laravel</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link active" aria-current="page" href="web3-mvc-1.html#capitulo-2">O aviso ganha um objeto</a><a class="chapter-link" href="web3-mvc-2.html#capitulo-2">As mesmas telas, outra organização</a><a class="chapter-link" href="web3-mvc-3.html#capitulo-2">O prazo precisa permanecer</a><a class="chapter-link" href="web3-mvc-4.html#capitulo-2">Quem pode mudar o aviso?</a><a class="chapter-link" href="web3-mvc-5.html#capitulo-2">O cardápio tem relações</a><a class="chapter-link" href="web3-mvc-6.html#capitulo-2">Uma consulta atravessa serviços</a><a class="chapter-link" href="web3-mvc-7.html#capitulo-2">O Café cabe na rotina do celular</a><a class="chapter-link" href="web3-mvc-8.html#capitulo-2">Outro programa pede o mesmo aviso</a><a class="chapter-link" href="web3-mvc-9.html#capitulo-2">O aviso muda de idioma</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Servidor com Laravel</span><h2 id="titulo-aula" tabindex="-1">O aviso ganha um objeto</h2><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>Marina acabou de informar 47 minutos para a retirada. Antes de criar uma tela para ela, precisamos garantir que uma alteração no prazo não faça a página inicial dizer uma coisa e o balcão dizer outra.</p>
+<p>Você já resolveu parte disso: as duas telas consultam a mesma função <code>obterAtendimento()</code>. Vamos preservar essa conquista. A nova organização ficará atrás dessa função; quem a utiliza continuará recebendo as três mensagens conhecidas.</p>
+<h3 id="passo-1">Faça uma mudança pequena e veja o efeito</h3>
+<p>Na sua cópia final do Capítulo 2, abra <code>src/atendimento.php</code>. Mantenha o PHP em execução e anote onde estão nome, situação e prazo. Crie ao lado dele um arquivo chamado <code>AvisoAtendimento.php</code>. Usamos um nome distinto de <code>atendimento.php</code> para que os dois arquivos também funcionem no Windows: um arquivo descreverá o atendimento; o outro continuará oferecendo a função usada pelas telas.</p>
+<p>Por enquanto, leia a construção central: <code>new AvisoAtendimento("Café Aurora", true, 47)</code>. <code>new</code> cria um objeto. Os três valores descrevem um atendimento específico: o Café, pedidos abertos e a estimativa informada pela equipe. Um objeto reúne dados e as operações que fazem sentido para eles.</p>
+<p>Em PHP, uma <strong>classe</strong> descreve esse conjunto. O método <code>__construct</code> recebe os valores na criação. <code>$this</code> significa “este objeto”; <code>$this-&gt;tempoEstimado</code> acessa o prazo dele. Não é um novo servidor, banco ou serviço de nuvem: é uma organização do PHP que você já executa.</p>
+<details class="web3-arquivo"><summary>Conferir src/AvisoAtendimento.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="src/AvisoAtendimento.php">&lt;?php
+/** A regra do Café recebe valores e prepara as mensagens dos consumidores. */
+class AvisoAtendimento
+{
+    public string $nomeNegocio;
+    public bool $pedidosAbertos;
+    public ?int $tempoEstimado;
+
+    public function __construct(string $nomeNegocio, bool $pedidosAbertos, ?int $tempoEstimado)
+    {
+        if (trim($nomeNegocio) === &quot;&quot; || mb_strlen($nomeNegocio) &gt; 100) {
+            throw new InvalidArgumentException(&quot;Informe um nome de até 100 caracteres.&quot;);
+        }
+        if ($tempoEstimado !== null &amp;&amp; ($tempoEstimado &lt; 0 || $tempoEstimado &gt; 240)) {
+            throw new InvalidArgumentException(&quot;Informe de 0 a 240 minutos ou ausência de estimativa.&quot;);
+        }
+        $this-&gt;nomeNegocio = $nomeNegocio;
+        $this-&gt;pedidosAbertos = $pedidosAbertos;
+        $this-&gt;tempoEstimado = $tempoEstimado;
+    }
+
+    public function mensagens(): array
+    {
+        if (!$this-&gt;pedidosAbertos) {
+            $situacao = &quot;Pedidos para retirada estão encerrados.&quot;;
+            $tempo = &quot;Consulte novamente durante o horário de atendimento.&quot;;
+        } elseif ($this-&gt;tempoEstimado === null) {
+            $situacao = &quot;Pedidos para retirada estão abertos.&quot;;
+            $tempo = &quot;Consulte a equipe para saber o prazo de retirada.&quot;;
+        } else {
+            $situacao = &quot;Pedidos para retirada estão abertos.&quot;;
+            $tempo = &quot;Tempo estimado: {$this-&gt;tempoEstimado} minutos.&quot;;
+        }
+        return [&quot;nomeNegocio&quot; =&gt; $this-&gt;nomeNegocio, &quot;mensagemStatus&quot; =&gt; $situacao, &quot;mensagemTempo&quot; =&gt; $tempo];
+    }
+}</code></pre></details>
+<p>Não tente memorizar o arquivo inteiro. Primeiro encontre as três propriedades, depois o construtor e, por último, <code>mensagens()</code>. <code>public</code> permite o acesso às propriedades neste primeiro exemplo; <code>string</code> e <code>bool</code> indicam os tipos. Em <code>?int</code>, o ponto de interrogação permite inteiro ou <code>null</code>. Aqui há verificação em tempo de execução no PHP; os tipos do TypeScript não protegem um formulário enviado diretamente ao servidor.</p>
+<p>O construtor também recusa nome vazio e prazo fora de 0 a 240 minutos. Esse intervalo é uma regra combinada para nosso exercício, não um limite do PHP. Uma exceção interrompe a criação de um objeto inválido. Na tela da equipe, aprenderemos a transformar essa recusa em uma orientação compreensível.</p>
+<h3 id="passo-2">Mude a organização sem mudar a resposta</h3>
+<p>Agora atualize a função conhecida. Ela inclui a classe, cria o objeto e pede suas mensagens:</p>
+<details class="web3-arquivo"><summary>Conferir src/atendimento.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="src/atendimento.php">&lt;?php
+require_once __DIR__ . &quot;/AvisoAtendimento.php&quot;;
+
+function obterAtendimento(): array
+{
+    $atendimento = new AvisoAtendimento(&quot;Café Aurora&quot;, true, 30);
+    return $atendimento-&gt;mensagens();
+}</code></pre></details>
+<p>O arquivo de referência começa com 30 minutos para manter a base conhecida. Troque apenas esse valor por <code>47</code>, salve e consulte <code>http://localhost:8000/api/atendimento.php</code>. Depois consulte o balcão e recarregue a página inicial. As duas apresentações devem concordar. Alteramos PHP: não há motivo para reconstruir o TypeScript.</p>
+<p>Experimente <code>0</code>, depois <code>null</code> e, por fim, pedidos encerrados com <code>false</code>. Observe a ordem das decisões em <code>mensagens()</code>: fechar os pedidos tem prioridade sobre informar um prazo. Não basta o programa aceitar os tipos; a mensagem precisa fazer sentido para quem vai retirar o pedido.</p>
+<h3 id="passo-3">Uma verificação que pode ser repetida</h3>
+<p>Na pasta <code>tests</code>, crie <code>atendimento-test.php</code>. O teste faz as mesmas perguntas que você acabou de conferir, sem abrir cada tela:</p>
+<details class="web3-arquivo"><summary>Conferir tests/atendimento-test.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="tests/atendimento-test.php">&lt;?php
+require_once dirname(__DIR__) . &#x27;/src/AvisoAtendimento.php&#x27;;
+function conferir(bool $condicao, string $nome): void {
+    if (!$condicao) { throw new RuntimeException(&#x27;Falhou: &#x27;.$nome); }
+    echo &#x27;Passou: &#x27;.$nome, PHP_EOL;
+}
+$dados = (new AvisoAtendimento(&#x27;Café Aurora&#x27;, true, 47))-&gt;mensagens();
+conferir(array_keys($dados) === [&#x27;nomeNegocio&#x27;,&#x27;mensagemStatus&#x27;,&#x27;mensagemTempo&#x27;], &#x27;contrato de três campos&#x27;);
+conferir(str_contains($dados[&#x27;mensagemTempo&#x27;], &#x27;47 minutos&#x27;), &#x27;estimativa informada pela equipe&#x27;);
+conferir(str_contains((new AvisoAtendimento(&#x27;Café Aurora&#x27;, true, 0))-&gt;mensagens()[&#x27;mensagemTempo&#x27;], &#x27;0 minutos&#x27;), &#x27;zero não é ausência&#x27;);
+conferir(str_contains((new AvisoAtendimento(&#x27;Café Aurora&#x27;, true, null))-&gt;mensagens()[&#x27;mensagemTempo&#x27;], &#x27;Consulte a equipe&#x27;), &#x27;ausência não inventa prazo&#x27;);
+conferir(str_contains((new AvisoAtendimento(&#x27;Café Aurora&#x27;, false, 47))-&gt;mensagens()[&#x27;mensagemStatus&#x27;], &#x27;encerrados&#x27;), &#x27;fechamento tem prioridade&#x27;);
+foreach ([[&#x27;&#x27;,true,30],[&#x27;Café Aurora&#x27;,true,-1],[&#x27;Café Aurora&#x27;,true,241]] as $entrada) {
+    $recusou=false;
+    try { new AvisoAtendimento(...$entrada); } catch (InvalidArgumentException) { $recusou=true; }
+    conferir($recusou, &#x27;recusa de configuração inválida&#x27;);
+}</code></pre></details>
+<p>No terminal, na raiz da aplicação, execute <code>php tests/atendimento-test.php</code>. Cada “Passou” corresponde a uma condição verificada. Uma falha precisa ser investigada; não apague a condição apenas para obter uma mensagem verde. O teste não verifica a aparência das telas nem substitui a consulta no navegador.</p>
+<h3 id="checkpoint">Antes de entregar a próxima mudança</h3>
+<p>Confirme os três campos públicos, os estados aberto/encerrado e a diferença entre zero e prazo ausente. Volte a 30 minutos ao comparar com o download. Explique com suas palavras por que as telas não precisaram saber que agora existe uma classe. Na próxima etapa, vamos organizar também a chegada dos pedidos e a montagem das páginas, usando Laravel.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa1.zip" download>Baixar referência da etapa 1</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-percursos.html#capitulo-2">← Escolha do percurso</a><a href="web3-mvc-2.html#capitulo-2">As mesmas telas, outra organização →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

@@ -1,0 +1,20 @@
+<p>Marina alterou o atendimento e quer consultar um registro das mudanças. A própria página poderia tentar escrever esse histórico, mas um cliente diferente poderia omitir o passo. A operação precisa acontecer em um ambiente que o visitante não controla.</p>
+<p>Functions permite executar código de servidor em resposta a chamadas e eventos. “Serverless” descreve uma forma de execução gerenciada; servidores continuam existindo. Vamos exercitar esse desenho no emulador, sem implantar funções em nuvem.</p>
+<h3>Prepare a função antes de iniciar os serviços</h3>
+<p>Acrescente a pasta <code>functions</code> e a configuração desta etapa. Com os emuladores parados, execute na raiz:</p>
+<pre class="code-block"><code>npm ci --prefix functions
+npm run build --prefix functions
+npm run build --prefix cliente-balcao</code></pre>
+<p>Functions usa Node 22 e lê o JavaScript gerado em <code>functions/lib</code>. O cliente continua com sua saída em <code>public/js/balcao</code>. Alterou o TypeScript da função? Reconstrua a função antes de reiniciar os emuladores. Depois execute <code>npm run emuladores</code> e prepare os dados em outro terminal.</p>
+<h3>Uma chamada que confere identidade e entrada</h3>
+<p>Entre como operador no balcão, preencha uma estimativa diferente e use “Salvar por função”. A chamada inclui a identidade; a função confere a claim e valida os dados novamente. O SDK Admin usado dentro da função tem privilégios e não depende das regras de cliente, por isso essa validação não pode ser omitida.</p>
+{{arquivo:functions/src/index.ts}}
+{{arquivo:cliente-balcao/src/integracoes.ts}}
+<p><code>onCall</code> define uma operação chamável. <code>onDocumentUpdated</code> acompanha alterações no documento. No emulador, localize <code>historico</code> depois de mudar um valor de verdade. O registro relaciona antes e depois.</p>
+<h3>Um evento pode ser recebido mais de uma vez</h3>
+<p>Um sistema distribuído pode reenviar eventos. Criar sempre um registro com identificador aleatório duplicaria o histórico. Nosso exemplo deriva o identificador do evento e usa uma criação que recusa duplicata. Repetir a entrega do mesmo evento não deve criar outro registro.</p>
+<p>Também comparamos antes e depois. Salvar os mesmos valores não deve produzir uma mudança fictícia. O histórico contém somente dados de exercício e não é apresentado como auditoria completa de uma aplicação de produção.</p>
+{{arquivo:functions/src/regras.ts}}
+<p>Com os emuladores interativos parados, execute <code>npm test --prefix functions</code> para conferir as regras puras e sua compilação. Os testes de integração do conjunto serão reunidos na etapa final.</p>
+<h3 id="checkpoint">Quem pode chamar e o que aconteceu depois?</h3>
+<p>Mostre chamada autorizada, recusa sem permissão, entrada inválida e histórico de uma alteração real. Registre separadamente a confirmação da função e a observação do evento. Agora podemos discutir avisos fora da página, sem confundir atualização em tempo real com notificação push.</p>

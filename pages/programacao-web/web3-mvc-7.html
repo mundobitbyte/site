@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: O Café cabe na rotina do celular. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-mvc-7.html">
+<title>Web III — O Café cabe na rotina do celular | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · O Café cabe na rotina do celular">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Servidor com Laravel</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Servidor com Laravel</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link" href="web3-mvc-1.html#capitulo-2">O aviso ganha um objeto</a><a class="chapter-link" href="web3-mvc-2.html#capitulo-2">As mesmas telas, outra organização</a><a class="chapter-link" href="web3-mvc-3.html#capitulo-2">O prazo precisa permanecer</a><a class="chapter-link" href="web3-mvc-4.html#capitulo-2">Quem pode mudar o aviso?</a><a class="chapter-link" href="web3-mvc-5.html#capitulo-2">O cardápio tem relações</a><a class="chapter-link" href="web3-mvc-6.html#capitulo-2">Uma consulta atravessa serviços</a><a class="chapter-link active" aria-current="page" href="web3-mvc-7.html#capitulo-2">O Café cabe na rotina do celular</a><a class="chapter-link" href="web3-mvc-8.html#capitulo-2">Outro programa pede o mesmo aviso</a><a class="chapter-link" href="web3-mvc-9.html#capitulo-2">O aviso muda de idioma</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Servidor com Laravel</span><h2 id="titulo-aula" tabindex="-1">O Café cabe na rotina do celular</h2><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>Uma cliente abre o Café pelo celular para consultar a retirada e enviar o cardápio a outra pessoa. O site já se adapta à tela menor. Podemos aproveitar o compartilhamento do aparelho sem transformar essa possibilidade em uma obrigação para todos os navegadores.</p>
+<p>Vamos acrescentar uma página pequena de atendimento móvel. Ela reutiliza a API que já existe. Não vamos criar outro prazo nem um cadastro exclusivo para celular.</p>
+<h3 id="passo-1">Consulte antes de compartilhar</h3>
+<p>Com o Laravel em execução, abra <code>http://localhost:8000/mobile.html</code>. Use o botão de consulta e confira a mensagem recebida. No VS Code, acompanhe <code>public/js/mobile.js</code>: o endereço consultado é <code>/api/atendimento</code>, com o mesmo contrato de três campos.</p>
+<details class="web3-arquivo"><summary>Conferir public/mobile.html</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="public/mobile.html">&lt;!doctype html&gt;&lt;html lang=&quot;pt-BR&quot;&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;title&gt;Café Aurora — outra tela&lt;/title&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;css/styles.css&quot;&gt;&lt;body&gt;&lt;main&gt;&lt;h1&gt;O Café em outra tela&lt;/h1&gt;&lt;p&gt;Esta interface usa o mesmo serviço. O compartilhamento depende do navegador e, fora do localhost, de HTTPS.&lt;/p&gt;&lt;button id=&quot;consultar&quot;&gt;Consultar atendimento&lt;/button&gt;&lt;p id=&quot;retorno&quot; role=&quot;status&quot;&gt;&lt;/p&gt;&lt;button id=&quot;compartilhar&quot;&gt;Compartilhar o cardápio&lt;/button&gt;&lt;p id=&quot;compartilhamento&quot; role=&quot;status&quot;&gt;&lt;/p&gt;&lt;p&gt;&lt;a id=&quot;alternativa&quot; href=&quot;cardapio.php&quot;&gt;Abrir o cardápio e copiar o endereço&lt;/a&gt;&lt;/p&gt;&lt;/main&gt;&lt;script type=&quot;module&quot; src=&quot;js/mobile.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir public/js/mobile.js</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="public/js/mobile.js">const consultar = document.querySelector(&quot;#consultar&quot;);
+const retorno = document.querySelector(&quot;#retorno&quot;);
+consultar.addEventListener(&quot;click&quot;, async () =&gt; {
+  consultar.disabled = true;
+  retorno.textContent = &quot;Consultando…&quot;;
+  try {
+    const resposta = await fetch(&quot;/api/atendimento&quot;, { signal: AbortSignal.timeout(8000) });
+    const dados = await resposta.json();
+    if (!resposta.ok || !dados || [&quot;nomeNegocio&quot;, &quot;mensagemStatus&quot;, &quot;mensagemTempo&quot;].some(c =&gt; typeof dados[c] !== &quot;string&quot;)) throw new Error();
+    retorno.textContent = `${dados.nomeNegocio}. ${dados.mensagemStatus} ${dados.mensagemTempo}`;
+  } catch { retorno.textContent = &quot;Não foi possível confirmar o atendimento. Tente novamente.&quot;; }
+  finally { consultar.disabled = false; consultar.focus(); }
+});
+document.querySelector(&quot;#compartilhar&quot;).addEventListener(&quot;click&quot;, async () =&gt; {
+  const texto = document.querySelector(&quot;#compartilhamento&quot;);
+  const url = new URL(&quot;cardapio.php&quot;, location.href).href;
+  if (!navigator.share) { texto.textContent = &quot;Este navegador não oferece compartilhamento nativo. Use o link abaixo.&quot;; return; }
+  try { await navigator.share({ title: &quot;Café Aurora&quot;, url }); texto.textContent = &quot;Solicitação de compartilhamento concluída. Isso não comprova leitura pelo destinatário.&quot;; }
+  catch (e) { texto.textContent = e.name === &quot;AbortError&quot; ? &quot;Compartilhamento cancelado.&quot; : &quot;Compartilhamento indisponível. Use o link abaixo.&quot;; }
+});</code></pre></details>
+<p>A página tem um retorno textual para informar consulta, falha e conclusão. O botão fica indisponível durante a espera e volta a funcionar depois. Não há razão para manter o cliente preso em “Consultando…” quando a conexão falha.</p>
+<h3 id="passo-2">Um recurso que depende do navegador</h3>
+<p><code>navigator.share</code> faz parte da Web Share API: permite solicitar ao navegador o compartilhamento de um título e endereço. Não escolhemos nem controlamos o aplicativo que receberá o pedido. A pessoa continua decidindo se quer compartilhar e com quem.</p>
+<p>O código confere se o recurso existe antes de usá-lo. Quando não existe, a página mantém um link que pode ser aberto e copiado. A recusa de permissão, a falta de suporte e o cancelamento não devem impedir o uso normal do cardápio.</p>
+<p>Experimente o botão no navegador disponível. Se a janela de compartilhamento abrir, cancele uma vez e observe a orientação. Se não abrir, use o link alternativo. Não é necessário enviar uma mensagem real a alguém para concluir o exercício.</p>
+<p>Recursos desse tipo dependem de suporte e contexto seguro, geralmente HTTPS; <code>localhost</code> recebe tratamento especial para desenvolvimento. Abrir pelo celular o IP de outro computador em HTTP não oferece automaticamente as mesmas condições. Não troque uma falha de ambiente por uma informação falsa de que o código compartilhou.</p>
+<h3 id="checkpoint">Funciona também sem o recurso extra?</h3>
+<p>Verifique consulta bem-sucedida, falha de consulta, ausência de compartilhamento nativo e link alternativo. Use teclado e ampliação de texto; o controle precisa continuar compreensível. Registre qual navegador usou e se o compartilhamento abriu ou ficou indisponível. Nosso próximo consumidor será outro programa, que pede um contrato XML em vez da resposta JSON do balcão.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa7.zip" download>Baixar referência da etapa 7</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>public/js/mobile.js</code></li><li><code>public/mobile.html</code></li></ul></details></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-mvc-6.html#capitulo-2">← Uma consulta atravessa serviços</a><a href="web3-mvc-8.html#capitulo-2">Outro programa pede o mesmo aviso →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

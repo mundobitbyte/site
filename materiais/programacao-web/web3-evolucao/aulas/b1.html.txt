@@ -1,0 +1,30 @@
+<p>O balcão sabe consultar, mas a equipe ainda depende de editar o PHP para mudar o aviso. Neste percurso, vamos investigar outra possibilidade: usar serviços que oferecem dados, identidade e operações de servidor, começando em um ambiente local de exercício.</p>
+<p><strong>BaaS</strong> significa backend como serviço. Isso não faz o backend desaparecer: parte da infraestrutura e das operações passa a ser oferecida por uma plataforma. Firebase reúne diferentes serviços; vamos acrescentá-los por necessidade, sem pedir cartão ou contratar um plano para começar.</p>
+<h3>Prepare uma bancada para os serviços</h3>
+<p>Preserve seu Café PHP anterior. Extraia a referência desta etapa em uma pasta nova para os serviços. Ela reaproveita HTML, CSS, imagens e produtos do mesmo Café; você não vai reconstruir essas páginas à mão. As mensagens do Web II continuam na aplicação PHP preservada, não em uma hospedagem estática que prometa executar PHP.</p>
+<p>Use Node 22 e Java 21 neste percurso. Confira <code>node --version</code>, <code>npm --version</code> e <code>java -version</code> antes de continuar. O TypeScript Essencial utilizou Node 24; aqui a escolha de Node 22 corresponde ao runtime das Functions que acrescentaremos mais adiante. Se o laboratório não tiver essa combinação, prepare-a com o professor antes da aula. Não tente corrigir incompatibilidade com <code>--force</code>.</p>
+<details><summary>Como preparar essa combinação no Windows sem substituir o Node do projeto anterior?</summary>
+<p>O Java é usado pelos emuladores; você não vai programar em Java nesta atividade. Podemos usar ferramentas extraídas de arquivos ZIP e selecioná-las somente nos terminais desta bancada.</p>
+<ol><li>No <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer">site oficial do Node.js</a>, escolha a linha 22 e o arquivo ZIP para a arquitetura do computador. A referência validada é 22.23.4. Em Windows x64, use o pacote win-x64.</li>
+<li>No <a href="https://adoptium.net/temurin/releases/?version=21" target="_blank" rel="noopener noreferrer">site do Eclipse Temurin</a>, escolha JDK 21, Windows e a arquitetura correspondente, em formato ZIP.</li>
+<li>Crie <code>ferramentas</code> dentro da sua pasta de usuário. Extraia e organize as pastas para que existam <code>%USERPROFILE%\ferramentas\node22\node.exe</code> e <code>%USERPROFILE%\ferramentas\java21\bin\java.exe</code>. O nome original da pasta extraída pode ser mais longo; ajuste a pasta, sem mover apenas o executável para fora de seus demais arquivos.</li>
+<li>No VS Code, abra um terminal com perfil <strong>Prompt de Comando / Command Prompt</strong>. O comando abaixo usa a sintaxe desse terminal, não a do PowerShell.</li></ol>
+<pre class="code-block"><code>set "PATH=%USERPROFILE%\ferramentas\node22;%USERPROFILE%\ferramentas\java21\bin;%PATH%"
+node --version
+npm --version
+java -version
+where node
+where java</code></pre>
+<p><code>PATH</code> é a lista de lugares em que o terminal procura programas. O comando coloca as ferramentas desta bancada na frente somente nessa janela. As primeiras localizações mostradas por <code>where</code> precisam corresponder às pastas que você preparou. Se estiverem diferentes, confira a extração antes de instalar dependências.</p>
+<p>Repita o comando <code>set</code> em cada segundo terminal usado para preparar dados ou Functions. Deixe o primeiro livre para manter os emuladores em execução. Ao fechar esses terminais, a seleção temporária termina; o ambiente anterior do VS Code não foi substituído. No laboratório já preparado, use os caminhos informados pelo professor.</p></details>
+<p>A suíte de emuladores executa versões locais dos serviços. Na raiz da nova pasta, use <code>npm ci</code>. Em <code>cliente-balcao</code>, use <code>npm ci</code> e <code>npm run build</code>. Depois volte à raiz e execute <code>npm run emuladores</code>. Deixe esse terminal aberto; a primeira execução pode precisar baixar componentes.</p>
+<h3>Uma consulta ao serviço de dados</h3>
+<p>Em outro terminal na raiz, execute <code>npm run preparar</code>. O preparo inclui um atendimento fictício e identidades de exercício, sem sobrescrever o aviso já existente. Ele está limitado aos endereços locais e ao projeto <code>demo-cafe-aurora-web3</code>; não administra um projeto de nuvem.</p>
+<p>Abra <code>http://localhost:5000</code> e consulte o atendimento. A interface dos emuladores fica em <code>http://localhost:4000</code>. Não usamos a porta 8000 do PHP para esta nova consulta.</p>
+{{arquivo:cliente-balcao/src/ambiente.ts}}
+{{arquivo:cliente-balcao/src/servico.ts}}
+<p>O SDK, conjunto de bibliotecas do serviço, é conectado explicitamente ao emulador Firestore. O Firestore organiza dados em coleções e documentos. Nosso endereço lógico é a coleção <code>atendimento</code>, documento <code>atual</code>.</p>
+{{arquivo:cliente-balcao/src/dados.ts}}
+<p>O documento guarda os valores brutos conhecidos: nome, situação e minutos. O código confere esses valores e prepara as três mensagens para a apresentação. Não tenta extrair um número da frase do prazo.</p>
+<h3 id="checkpoint">Você sabe de onde veio o aviso?</h3>
+<p>Mostre o documento no emulador e a consulta nas duas páginas. Encerre o emulador e observe a falha; inicie e prepare novamente para recuperar. Reiniciar não equivale a persistir dados em nuvem. A consulta funciona sem conta de visitante; a próxima necessidade é reconhecer a equipe que poderá alterar.</p>

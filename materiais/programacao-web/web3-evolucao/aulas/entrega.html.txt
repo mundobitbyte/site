@@ -1,0 +1,13 @@
+<p>Marina não precisa saber quantas pastas você criou. Ela precisa confiar que uma mudança feita pela equipe aparece para o cliente, que uma pessoa sem permissão não altera o Café e que uma falha não vira uma informação inventada.</p>
+<p>Você conclui esta entrega com o percurso indicado para sua turma. Não precisa produzir outras duas aplicações. Preserve o projeto anterior, sua solução atual e as evidências que conseguiu obter.</p>
+<h3>Escolha uma história que possa demonstrar</h3>
+<p>Prepare uma sequência curta: a equipe modifica um dado, o visitante consulta e a informação aparece; uma tentativa inválida é recusada; uma indisponibilidade é informada; a aplicação volta a funcionar quando a condição é corrigida. Explique onde cada parte acontece, sem depender de decorar nomes de arquivos.</p>
+<p>No percurso MVC/serviços, inclua persistência, acesso autorizado, catálogo, integração externa, comparação JSON/XML, recurso móvel com alternativa e idioma. Nos demais percursos, a evidência deve corresponder ao que foi efetivamente construído; um recurso de nuvem não testado não se transforma em entrega concluída por estar previsto no código.</p>
+<h3>Confira o que o visitante consegue fazer</h3>
+<p>Use o teclado desde o primeiro link. Confira rótulos, ordem de foco, mensagens de erro e ampliação de texto. Em uma tela estreita, procure por conteúdo cortado e botões que se sobrepõem. Desconecte uma integração de teste e observe se a página conserva uma orientação útil.</p>
+<p>Compare o estado atual com o início do Web III: os produtos e imagens conhecidos continuam reconhecíveis? O projeto ganhou autonomia e organização sem obrigar o visitante a entender ferramentas de desenvolvimento? Uma mudança de tecnologia só se justifica quando ajuda a resolver uma necessidade.</p>
+<h3>Entregue uma evidência honesta</h3>
+<p>Inclua arquivos-fonte, instruções para preparar uma cópia limpa, versões verificadas, decisões e um registro dos testes. Separe “passou”, “falhou” e “não foi executado”. Não inclua banco com mensagens pessoais, senhas, arquivo <code>.env</code>, <code>vendor</code> ou <code>node_modules</code>.</p>
+<p>Peça a um colega para seguir as instruções em outra pasta. Se ele precisar adivinhar um comando ou receber de você um arquivo que não estava na entrega, há uma informação a corrigir. Não é necessário contratar hospedagem paga para comprovar a aplicação local.</p>
+<h3 id="checkpoint">Explique uma decisão sua</h3>
+<p>Apresente uma escolha que você manteria e uma que revisaria após o teste com outra pessoa. O resultado não é apenas uma tela pronta: é conseguir construir, verificar, explicar limites e continuar evoluindo o mesmo projeto com responsabilidade.</p>

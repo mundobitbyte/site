@@ -1,0 +1,11 @@
+// Somente depois de escolher um projeto de exercício autorizado e conferir as regras, custos e origem HTTPS.
+// Substitua src/ambiente.ts pelos dados públicos do aplicativo Web registrado nesse projeto.
+// Estes valores não são uma credencial Admin; nunca coloque chave privada ou conta de serviço no cliente.
+export const modo: "local" | "nuvem" = "nuvem";
+export const configuracao = {
+  apiKey: "COPIAR_DA_CONFIGURACAO_PUBLICA_DO_APP",
+  authDomain: "PROJETO_DE_EXERCICIO.firebaseapp.com",
+  projectId: "PROJETO_DE_EXERCICIO",
+  storageBucket: "COPIAR_O_BUCKET_REAL"
+};
+export const chaveVapid = "COPIAR_CHAVE_PUBLICA_WEB_PUSH";

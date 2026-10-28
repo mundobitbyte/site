@@ -1,0 +1,16 @@
+<p>A assinatura atualiza o atendimento enquanto a página acompanha o serviço. Um aviso fora dessa experiência exige outro caminho: permissão do navegador, inscrição e mensageria. Não é a mesma coisa que receber um <code>onSnapshot</code>.</p>
+<p>Vamos separar uma notificação local de um envio push real. A primeira pode ajudar a observar a autorização do navegador; a segunda depende de serviços e de um ambiente que não faz parte do nosso emulador.</p>
+<h3>Observe a autorização sem prometer um envio remoto</h3>
+<p>Faça os builds do cliente e das Functions e retome os emuladores. No balcão, use “Experimentar notificação local” se quiser verificar esse recurso. A solicitação só ocorre depois do clique. Você pode recusar e continuar consultando o Café normalmente.</p>
+<p>Quando permitido e suportado, o próprio navegador cria um aviso identificado como demonstração local. Ele não chegou do Firebase Cloud Messaging e não comprova entrega com a página fechada. A interface também informa falta de suporte ou recusa.</p>
+{{arquivo:cliente-balcao/src/notificacoes.ts}}
+<h3>Leia o trajeto do push real</h3>
+<p>O código de integração real verifica suporte, pede permissão após uma ação, registra um service worker e solicita um token de inscrição. O token identifica uma inscrição de navegador; não deve aparecer em uma lista pública de clientes. O serviço guarda a inscrição somente para sua identidade.</p>
+{{arquivo:cliente-balcao/src/mensageria-sw.js}}
+<p>Um <strong>service worker</strong> é um script com um contexto próprio, usado aqui para tratar mensagens em segundo plano. Ele tem outro arquivo de saída, <code>public/firebase-messaging-sw.js</code>, preparado pelo segundo build. Não é o mesmo <code>main.js</code> da página.</p>
+<p>No modo local, “Permitir avisos neste navegador” informa que o envio remoto não foi emulado. “Enviar um aviso de teste para mim” também deve ser recusado pela função. Não trocamos essa recusa por uma mensagem falsa de envio concluído.</p>
+<h3>Faça o registro corresponder ao que ocorreu</h3>
+<p>Um teste real exige projeto configurado, origem segura, inscrição válida, chave pública VAPID e serviço de envio preparado pelo professor. O código limita o ensaio ao próprio operador. Aceitação pelo serviço não comprova que o navegador recebeu ou que a pessoa leu.</p>
+<p>Sem esse ambiente, registre “push real não executado”. A prática local permite examinar suporte, consentimento e alternativas. O atendimento continua utilizável sem notificação; não pressionamos o cliente a autorizar um recurso para consultar o Café.</p>
+<h3 id="checkpoint">Você consegue distinguir os três acontecimentos?</h3>
+<p>Explique atualização na página, notificação local e push remoto. Registre suporte e escolha de permissão se os testou. Demonstre a recusa explícita de envio remoto no emulador. Na última etapa, outra integração exigirá o mesmo cuidado com a origem do resultado: um rascunho de texto não pode ser confundido com uma publicação confiável.</p>

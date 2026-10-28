@@ -1,0 +1,59 @@
+{
+  "data": "2026-10-28",
+  "fonte": "npm audit --json, registro consultado nesta execução; não é garantia de ausência de falhas não catalogadas",
+  "resultados": {
+    "spa": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "functions": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "baas": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "cliente-baas": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    }
+  },
+  "versoes": {
+    "firebase": "12.19.0",
+    "firebase-tools": "15.34.1",
+    "rules-unit-testing": "5.0.2",
+    "grpc-override": "1.14.6",
+    "opentelemetry-core-override": "2.8.0",
+    "uuid-override": "11.1.1",
+    "symfony/mime": "8.1.10"
+  },
+  "travas": {
+    "baas/package-lock.json": "4569a8d9837fad70d57e2a944a99ed5e00ec2745feb0d708c107b45f2b11b1a5",
+    "baas/cliente-balcao/package-lock.json": "e88b51e4c24c7875f467b3b0f160b6962eb70f14f3c0ae71bd4d9e9ce791a6a8",
+    "baas/functions/package-lock.json": "ae13dbeab941432d33b9dd66a227151f45f123f833e933ede28a51d6dca49f1a",
+    "spa/cliente-balcao/package-lock.json": "7f46d24d04892246230669247d898a8cd41d113c1983adb83933dc9ecd423467",
+    "laravel/composer.lock": "85f6612fa37d9f1c921ae1e7a15f564f23a8c4501b13113ed3baa4e48db8239c"
+  },
+  "composer": {
+    "estado": "Instalação, auditoria sem alertas e testes Laravel aprovados no CI do commit 096c433e61d4dd8aaf5b4b2d4acafc19ebccd869",
+    "correcao": "symfony/mime 8.1.7 → 8.1.10; metadados de distribuição oficiais do Packagist; requisitos e conflitos idênticos",
+    "alerta_anterior": "PKSA-wtxr-p26d-nn42 / CVE-2026-45070 (moderado), divulgado em 28/10/2026"
+  }
+}

@@ -1,0 +1,97 @@
+name: Validação dos percursos Web III
+on:
+  pull_request:
+    branches: [main]
+    paths: ['materiais/programacao-web/web3-evolucao/**','tests/web3/**','scripts/gerar-web3-evolucao.py','scripts/web3_etapas.py','.github/workflows/web3-percursos-validacao.yml']
+permissions:
+  contents: read
+jobs:
+  ambientes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5.12'
+          extensions: pdo_sqlite, mbstring, soap, dom, xml, curl
+          tools: composer
+          coverage: none
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.1'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Conferir backend nativo e preparar aplicações isoladas
+        run: |
+          python3 tests/web3/evolucao-backend.py
+          python3 tests/web3/preparar-percursos.py /tmp/cafe-percursos
+      - name: Laravel — instalação com trava, testes e configuração
+        working-directory: /tmp/cafe-percursos/mvc
+        run: |
+          composer install --no-interaction --no-plugins
+          composer audit --no-interaction
+          php artisan key:generate
+          php artisan migrate --force
+          php artisan cafe:importar-cardapio
+          vendor/bin/phpunit
+      - name: React e TypeScript — build
+        working-directory: /tmp/cafe-percursos/spa/cliente-balcao
+        run: |
+          npm ci --no-audit --no-fund
+          npm audit --audit-level=high
+          npm test
+          npm run build
+      - name: Reconstruir etapas MVC/SPA com o Node do TypeScript Essencial
+        run: |
+          python3 - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0,'scripts')
+          from web3_etapas import base
+          pasta=Path('/tmp/cafe-percursos/base')
+          for p,b in base().items():
+              arquivo=pasta/p
+              arquivo.parent.mkdir(parents=True,exist_ok=True)
+              arquivo.write_bytes(b)
+          PY
+          npm ci --prefix /tmp/cafe-percursos/base/cliente-balcao --no-audit --no-fund
+          python3 tests/web3/verificar-etapas.py /tmp/cafe-percursos --somente m1 m2 m3 m4 m5 m6 m7 m8 m9 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10
+      - name: Descrição confirmada chega ao cardápio sem executar HTML
+        run: |
+          /tmp/cafe-percursos/spa/cliente-balcao/node_modules/.bin/tsc materiais/programacao-web/web3-evolucao/kits/baas/cliente-balcao/src/catalogo-interface.ts --target es2022 --module commonjs --skipLibCheck --outDir /tmp/cafe-catalogo-dom
+          MBB_TEST_NODE_MODULES=/tmp/cafe-percursos/spa/cliente-balcao/node_modules MBB_CATALOGO_MODULO=/tmp/cafe-catalogo-dom/catalogo-interface.js node --test tests/web3/catalogo-dom.test.cjs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.4'
+      - name: BaaS — instalar dependências e construir cliente e funções
+        working-directory: /tmp/cafe-percursos/baas
+        run: |
+          npm ci --no-audit --no-fund
+          npm audit --audit-level=high
+          npm ci --prefix cliente-balcao --no-audit --no-fund
+          npm audit --prefix cliente-balcao --audit-level=high
+          npm run build --prefix cliente-balcao
+          npm ci --prefix functions --no-audit --no-fund
+          npm audit --prefix functions --audit-level=high
+          npm test --prefix functions
+      - name: BaaS — emuladores de regras e integrações reais locais
+        working-directory: /tmp/cafe-percursos/baas
+        run: |
+          npm test
+          npm run test:integracoes
+      - name: Reconstruir etapas BaaS com o Node das Functions
+        run: |
+          python3 tests/web3/verificar-etapas.py /tmp/cafe-percursos --somente b1 b2 b3 b4 b5 b6 b7 b8 b9 b10
+      - name: Conferir material entregue, navegação e preservação
+        run: |
+          python3 tests/web3/auditar-etapas.py
+          node --test tests/web3/percursos.test.cjs
+          python3 scripts/gerar-web3-evolucao.py
+          node meu-mbb/atualizar-pesquisa.cjs
+          node meu-mbb/gerar-visitas.cjs
+          git diff --exit-code -- pages/programacao-web downloads/programacao-web meu-mbb/catalogo.json meu-mbb/visitas-diretas.json

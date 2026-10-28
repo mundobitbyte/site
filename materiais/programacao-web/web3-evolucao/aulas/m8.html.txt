@@ -1,0 +1,20 @@
+<p>O Café vai participar de uma integração com um sistema mais antigo. Esse sistema consegue consultar o atendimento, mas sua interface foi definida com SOAP e XML. Reescrever o balcão para atender a ele seria inverter o problema: podemos oferecer outra forma de acesso à mesma informação.</p>
+<p>Já expusemos uma API HTTP com JSON. Agora vamos comparar uma consulta equivalente definida por um contrato WSDL. A integração é uma bancada local de aprendizagem; não representa um fornecedor real contratado pelo Café.</p>
+<h3>Confira a extensão e separe os servidores</h3>
+<p>No terminal do Laragon ou do VS Code, execute <code>php --ri soap</code>. Se a extensão não estiver carregada, confira o <code>php.ini</code> indicado por <code>php --ini</code>, habilite a extensão SOAP da instalação e reinicie os servidores PHP. Não baixe DLLs de procedência desconhecida para resolver a mensagem.</p>
+<p>Mantenha o Laravel na porta 8000. Em outro terminal, na raiz da aplicação, iniciaremos apenas o servidor SOAP na porta 9001. Separar as portas evita que o servidor embutido fique esperando uma chamada que precisaria atender a si mesmo.</p>
+<pre class="code-block"><code>php -d opcache.enable=0 -S 127.0.0.1:9001 apoio/soap/servidor.php</code></pre>
+<p>Deixe esse terminal em execução. Em um terceiro terminal, ainda na raiz, execute <code>php apoio/soap/cliente.php</code>. Deve aparecer o resultado da consulta e, abaixo, a requisição e a resposta em XML. O banco de atendimento precisa ter sido preparado nas etapas anteriores.</p>
+<h3>Leia primeiro o que estamos combinando</h3>
+<p><strong>XML</strong> representa dados com elementos e atributos. <strong>SOAP</strong> define uma estrutura de mensagens, incluindo um envelope. <strong>WSDL</strong> descreve o serviço: operação, tipos envolvidos e endereço de acesso. Aqui a operação é <code>consultar</code>; ela oferece os mesmos três campos do atendimento.</p>
+{{arquivo:contratos/atendimento.wsdl}}
+<p>Localize a operação e o endereço <code>127.0.0.1:9001</code> antes de estudar todos os elementos. Usamos o mesmo endereço no servidor e no contrato; <code>localhost</code> pode resolver para outro endereço local no computador. O cliente sabe que operação pedir e como interpretar sua resposta porque recebeu esse contrato.</p>
+{{arquivo:apoio/soap/servidor.php}}
+{{arquivo:apoio/soap/cliente.php}}
+<p>O servidor reaproveita <code>obterAtendimento()</code>. O cliente usa <code>SoapClient</code>, pede <code>consultar()</code> e permite examinar as mensagens trocadas. <code>trace</code> foi ativado para nossa observação local; não é uma orientação para registrar indiscriminadamente dados de clientes em produção.</p>
+<h3>Compare e provoque uma falha recuperável</h3>
+<p>Consulte também <code>http://localhost:8000/api/atendimento</code>. Compare os valores do JSON com os do XML. Mude o prazo pela tela autorizada, consulte novamente os dois consumidores e confirme que concordam.</p>
+<p>Depois encerre apenas o servidor da porta 9001 e repita o cliente. Ele deve informar falha, sem inventar uma resposta. Reinicie o servidor e confira a recuperação. A falha SOAP não deve impedir a consulta JSON do balcão.</p>
+<p>REST é um estilo arquitetural; JSON e XML são formatos; SOAP é um protocolo de mensagens; WSDL descreve um serviço. SOAP não exige, por si, manter estado entre consultas. Nesta operação, não precisamos abrir uma sessão para consultar o atendimento. Essa distinção evita transformar uma comparação curricular em uma regra técnica incorreta.</p>
+<h3 id="checkpoint">Dois contratos, uma origem</h3>
+<p>Identifique operação, endereço e campos no WSDL; mostre a requisição e a resposta XML; compare com o JSON; registre indisponibilidade e recuperação. Encerre o servidor extra quando terminar. Agora falta cuidar de outra forma de apresentação: mudar o idioma sem mudar os dados da cozinha.</p>
