@@ -442,7 +442,7 @@ void loop() {
           <div><strong>Wokwi + Private IoT Gateway — Parte A opcional</strong><span>Se o recurso privado estiver disponível e habilitado, um servidor HTTP simulado na porta 80 pode ser acessado em <code>http://localhost:9080/</code>. Não é necessário contratar esse serviço para acompanhar a aula.</span></div>
           <div><strong>O que vamos observar?</strong><span>Como servidor: página e LED respondem aos links. Como cliente: o Monitor Serial mostra o retorno do pedido <code>GET</code>. Falhar um acesso de entrada no Wokwi público não significa que o programa do servidor esteja errado.</span></div>
         </div>
-        <p class="mbb6-note"><strong>Bibliotecas:</strong> <code>WiFi.h</code> cuida da rede, <code>WebServer.h</code> permite atender pedidos e <code>HTTPClient.h</code> permite enviá-los. Essas bibliotecas integram o ambiente Arduino para ESP32 corretamente instalado e são disponibilizadas nos projetos ESP32 do Wokwi. Na placa física, substitua o nome e a senha da rede; no Wokwi, use apenas o código 7A já configurado para a rede virtual.</p>
+        <p class="mbb6-note"><strong>Bibliotecas:</strong> <code>WiFi.h</code> cuida da rede, <code>WebServer.h</code> permite atender pedidos e <code>HTTPClient.h</code> permite enviá-los. Essas bibliotecas integram o ambiente Arduino para ESP32 corretamente instalado e são disponibilizadas nos projetos ESP32 do Wokwi. Na placa física, substitua o nome e a senha da rede. No Wokwi padrão, escolha o código 7A já configurado; se usar o gateway privado para experimentar o servidor da Parte A, adapte a conexão desse programa para <code>Wokwi-GUEST</code> sem senha.</p>
       `;
       cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
     }
