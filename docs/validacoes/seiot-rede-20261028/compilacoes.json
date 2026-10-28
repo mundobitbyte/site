@@ -1,0 +1,23 @@
+[
+  {
+    "arquivo": "materiais/arduino/conectividade/mdns-wokwi.ino",
+    "sha256": "2857dbccfef53417605ab215c0b71e71d51592626dd7f0f5c3d32f0bd7935c96",
+    "compilador": "ESP32 Arduino no Wokwi",
+    "resultado": "compilou e iniciou",
+    "wifi_fisico_testado": false
+  },
+  {
+    "arquivo": "materiais/arduino/conectividade/mdns-fisico.ino",
+    "sha256": "b07f4dbab7662a0281c1c13a2509df77e4177f8f7e3cb6568c00d43cd511466f",
+    "compilador": "ESP32 Arduino no Wokwi",
+    "resultado": "compilou e iniciou",
+    "wifi_fisico_testado": false
+  },
+  {
+    "arquivo": "materiais/arduino/conectividade/http-leitura-fisico.ino",
+    "sha256": "945ebc461fb8461744398de01eb07c070c3408103d621c6f9dabe1b72b770a61",
+    "compilador": "ESP32 Arduino no Wokwi",
+    "resultado": "compilou e iniciou",
+    "wifi_fisico_testado": false
+  }
+]

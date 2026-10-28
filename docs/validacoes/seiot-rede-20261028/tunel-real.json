@@ -1,0 +1,13 @@
+{
+  "execucao": "https://github.com/mundobitbyte/site/actions/runs/40771082789",
+  "ambiente": "Linux isolado no GitHub Actions",
+  "simulado": false,
+  "cliente": "cloudflared 2026.10.5",
+  "servidor": "aviso fictício somente leitura",
+  "url_temporaria": "https://kept-gale-minerals-category.trycloudflare.com",
+  "http_publico": 200,
+  "conteudo_igual": true,
+  "sha256": "971a702b46c832a78514c0f2ba1f189854508d5b686087c118db66ea6f787145",
+  "tunel_encerrado": true,
+  "acesso_local_preservado": true
+}

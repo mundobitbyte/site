@@ -121,3 +121,12 @@ Na prévia, a abertura do código e a leitura em quadro de largura útil 375 px 
 
 
 A auditoria Composer acrescentada ao CI identificou o alerta moderado CVE-2026-45070 em symfony/mime 8.1.7, divulgado em 28/10/2026. A trava foi atualizada pontualmente para 8.1.10 com metadados oficiais de distribuição do Packagist, sem mudanças de requisitos ou conflitos. A instalação, a auditoria e os testes nativos serão repetidos antes da publicação. O alerta não foi ignorado nem silenciado.
+
+
+## Integração final e limites da validação
+
+A main foi atualizada novamente para ec9d3fb1074b30071be4e95ea067912a9d00dc05 (Banco de Dados e conectividade). As alterações foram incorporadas sem conflito; catálogo e índice de visitas foram regenerados a partir do conjunto. A auditoria de preservação compara os mecanismos e registros anteriores com essa base. O material do Web III contém 31 páginas (ponte, 29 etapas específicas e entrega) e 29 ZIPs; não são 31 capítulos ou três percursos obrigatórios para o mesmo aluno.
+
+O CI do commit 096c433e61d4dd8aaf5b4b2d4acafc19ebccd869 confirmou instalação, auditoria sem alertas e testes do Laravel depois da correção do Mime. A integração completa com a main atualizada requer sua própria execução; seu resultado ficará registrado no PR 195, com links dos checks e commit efetivamente integrado. Não se usa um resultado anterior como prova do novo conjunto.
+
+Na prévia foram observadas as entradas React/Firebase e o resultado da pesquisa pública que abre a aula React em seu título. Continuam fora do escopo executado: piloto presencial de duração, Windows/Laragon, leitor de tela, aparelho físico, sincronização com conta real do Meu MbB, notificações do sistema, FCM em nuvem, deploy Firebase e modelo Ollama real. Os testes de conta são automatizados e não equivalem a entrar em uma conta real. A primeira versão integral permanece identificada como em desenvolvimento.

@@ -11,7 +11,7 @@ Escopo: ponte comum; percursos MVC/serviços com PHP/Laravel e Laragon no Window
 
 Referências: MODO_MBB.md, planejamento detalhado de 23/10, sequência de 25/10 e encaminhamento aprovado de 26/10. As decisões posteriores do professor prevalecem sobre estados de autorização antigos nos documentos.
 
-## Andamento
+## Andamento inicial
 
 - [x] Base e autorização conferidas; worktree isolada criada.
 - [ ] Kits progressivos e ambientes homologados.
@@ -68,3 +68,8 @@ Manter história e arquivos contínuos do Café Aurora; mapear cada requisito co
 ### Estado da recuperação técnica
 
 A cópia temporária anterior foi removida pela manutenção do ambiente. O checkpoint do GitHub foi restaurado. Ajustes recuperados no commit local 442dfee: templates de aplicações como fontes `.html.txt`, preservação da lista SPA durante edição, modo de build/teste Vite, chave estrangeira Laravel explícita, confirmação de gravações BaaS e limite de rascunho controlado. Nova verificação executada neste ambiente: suíte Meu MbB, 29 testes aprovados, zero falhas. Isso não revalida os ambientes PHP/emuladores; PHP e Composer não estão disponíveis no ambiente restaurado. O gerador progressivo `scripts/web3_etapas.py` foi parcialmente recuperado e continua interno, sem homologação ou geração de material publicado. As páginas didáticas mais recentes ainda precisam ser reconstruídas; não são apresentadas como disponíveis.
+
+
+## Atualização em 28/10 — material integral construído
+
+O registro acima preserva os checkpoints históricos. Os textos foram reconstruídos e a construção atual contém 31 páginas e 29 downloads cumulativos. A revisão curricular, horas estimadas, ambientes, integrações, testes efetivamente executados e limites estão detalhados em `docs/web3-revisao-20261028.md`. As versões antigas de Firebase descritas no segundo checkpoint foram substituídas; consulte a prova de dependências de 28/10. O resultado final de CI e a publicação devem ser conferidos no PR 195, evitando interpretar pendências históricas como estado atual ou declarar publicação antes da integração.

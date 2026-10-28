@@ -52,7 +52,7 @@
     "laravel/composer.lock": "85f6612fa37d9f1c921ae1e7a15f564f23a8c4501b13113ed3baa4e48db8239c"
   },
   "composer": {
-    "estado": "aguardando nova auditoria no CI",
+    "estado": "Instalação, auditoria sem alertas e testes Laravel aprovados no CI do commit 096c433e61d4dd8aaf5b4b2d4acafc19ebccd869",
     "correcao": "symfony/mime 8.1.7 → 8.1.10; metadados de distribuição oficiais do Packagist; requisitos e conflitos idênticos",
     "alerta_anterior": "PKSA-wtxr-p26d-nn42 / CVE-2026-45070 (moderado), divulgado em 28/10/2026"
   }

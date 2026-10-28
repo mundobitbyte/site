@@ -350,7 +350,9 @@
   }
 }
 </style>
-<script src="../js/arduino-conectividade-aprofundamento-mbb-20261026.js?v=20261027-1" defer></script>
+<script src="../js/arduino-conectividade-aprofundamento-mbb-20261026.js?v=20261028-rede-pratica" defer></script>
+<link rel="stylesheet" href="../css/arduino-conectividade-rede.css?v=20261028-1">
+<script src="../js/arduino-mdns-pcap.js?v=20261028-1" defer></script>
 </head>
 <body>
 <header>
@@ -408,8 +410,8 @@
         <tr><td>Wi-Fi</td><td>✓ Teste completo em rede 2,4 GHz compatível</td><td>✓ Teste completo com <code>Wokwi-GUEST</code></td></tr>
         <tr><td>HTTP — cliente</td><td>✓ Faz requisição para outro servidor</td><td>✓ Conexões de saída funcionam no gateway público</td></tr>
         <tr><td>HTTP — servidor</td><td>✓ Navegador controla o LED na mesma rede</td><td>△ Navegador só entra com Private IoT Gateway (recurso pago e opcional)</td></tr>
-        <tr><td>mDNS</td><td>✓ Pode ser testado na rede local; depende também do sistema e da rede</td><td>— Não é um teste confiável no gateway público</td></tr>
-        <tr><td>Tunelamento</td><td>✓ Teste completo com um computador na mesma rede</td><td>— Não é prática do Wokwi padrão</td></tr>
+        <tr><td>mDNS</td><td>✓ Pode ser testado na rede local; depende também do sistema e da rede</td><td>✓ Compila, inicia e emite anúncios observáveis no PCAP; resolução pelo navegador não comprovada</td></tr>
+        <tr><td>Tunelamento</td><td>✓ Opção somente leitura, com um computador que alcance a placa</td><td>— Sem entrada pelo gateway público; a etapa 6.5 oferece prática gratuita com servidor no computador</td></tr>
       </table>
     </div>
   </div>
@@ -437,6 +439,32 @@
       <p><strong>GPIO</strong> vem de <em>General Purpose Input/Output</em>, ou <strong>entrada/saída de uso geral</strong>. É o nome dado aos pinos do microcontrolador que podem receber ou enviar sinais.</p>
       <p>Nomes como <strong>GPIO 23</strong>, <strong>GPIO 18</strong> e <strong>GPIO 4</strong> identificam esses sinais internos. O número do GPIO não indica a posição física do pino na placa; por isso, os números impressos ao lado dos conectores não aparecem necessariamente em sequência.</p>
       <p>Além disso, um mesmo GPIO pode assumir funções diferentes, como entrada/saída digital, leitura analógica, PWM ou comunicação.</p>
+    </article>
+
+    <article class="card wide">
+      <h3>2A. Guia rápido dos pinos do ESP32 usados no curso</h3>
+      <p>Antes de ligar qualquer fio, vamos reconhecer os nomes impressos ao lado dos conectores. Na placa física e no Wokwi, a posição pode variar conforme o modelo: procure sempre a <strong>identificação do pino</strong>, como <code>23</code>, <code>GPIO23</code> ou <code>D23</code>, em vez de contar posições.</p>
+      <p><strong>Onde ficam no ESP32 do Wokwi?</strong> Com a entrada USB voltada para baixo, <strong>GPIO 23 e 22</strong> aparecem perto do alto da fileira direita, <strong>GPIO 21</strong> fica abaixo dos pinos TX0/RX0, e <strong>GPIO 34</strong> está na parte superior da fileira esquerda. O <strong>3V3</strong> aparece no alto à esquerda, enquanto há mais de um <strong>GND</strong>. Na placa física, confira sempre os nomes impressos, pois a disposição pode mudar.</p>
+      <div class="mbb6-table-scroll">
+        <table>
+          <thead><tr><th scope="col">Pino na placa</th><th scope="col">O que faz e quando vamos utilizar</th></tr></thead>
+          <tbody>
+            <tr><td><strong>GPIO 23</strong></td><td><strong>Saída digital:</strong> envia o sinal para acender ou apagar o LED. Será usado no circuito-base do Módulo 6 e no projeto final.</td></tr>
+            <tr><td><strong>GPIO 34</strong></td><td><strong>Entrada analógica (ADC1):</strong> lê o sinal do LDR no Módulo 10. É <strong>somente entrada</strong>, sem pull-up ou pull-down interno; não serve para acionar o LED como saída.</td></tr>
+            <tr><td><strong>GPIO 21</strong></td><td><strong>Dados I2C (SDA):</strong> no Módulo 8, transporta os dados entre o ESP32 e o dispositivo I2C, como um LCD com interface compatível.</td></tr>
+            <tr><td><strong>GPIO 22</strong></td><td><strong>Relógio I2C (SCL):</strong> no Módulo 8, fornece o sinal que sincroniza a comunicação I2C.</td></tr>
+            <tr><td><strong>GPIO 32 e 33</strong></td><td><strong>Entradas ou saídas digitais e entradas analógicas (ADC1):</strong> são alternativas úteis para outros sensores e experiências; não precisamos conectá-los no primeiro circuito.</td></tr>
+            <tr><td><strong>TX0 (GPIO 1) e RX0 (GPIO 3)</strong></td><td><strong>Comunicação serial:</strong> normalmente usados para gravação e mensagens de diagnóstico da placa. Utilizaremos o Monitor Serial sem precisar colocar fios neles.</td></tr>
+            <tr><td><strong>3V3</strong></td><td><strong>Alimentação de 3,3 V:</strong> disponível para componentes compatíveis, respeitando os limites elétricos. Não é um GPIO.</td></tr>
+            <tr><td><strong>GND</strong></td><td><strong>Referência elétrica comum:</strong> participa do retorno da corrente no circuito com LED e nas montagens com sensores. Pode haver vários pinos GND.</td></tr>
+            <tr><td><strong>5V / VIN</strong></td><td><strong>Alimentação da placa:</strong> a identificação e o uso dependem do modelo. <strong>Nunca aplique 5 V diretamente a um GPIO do ESP32.</strong></td></tr>
+            <tr><td><strong>EN</strong></td><td><strong>Habilitar/reiniciar:</strong> está relacionado ao funcionamento e à reinicialização do chip; não é uma saída comum para o LED.</td></tr>
+            <tr><td><strong>BOOT (GPIO 0)</strong></td><td><strong>Inicialização e gravação:</strong> o botão BOOT costuma atuar sobre o GPIO 0. Esse pino exige cuidado porque influencia a inicialização; não será usado no circuito-base.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mbb6-note"><strong>Atenção aos pinos especiais:</strong> GPIO 34, 35, 36 e 39 são somente entradas; GPIO 6 a 11 normalmente estão ligados à memória flash. Alguns GPIOs, como 0, 2, 5, 12 e 15, influenciam a inicialização. Para as nossas primeiras montagens, siga os pinos especificados nas atividades.</p>
+      <p class="mbb6-note"><strong>Missão de reconhecimento:</strong> observe a placa no Wokwi e localize <strong>GPIO 23</strong> e <strong>GND</strong>. Qual deles enviará o sinal para o LED e qual será a referência elétrica do circuito? No próximo passo, você os reconhecerá novamente na montagem.</p>
     </article>
 
     <article class="card">
@@ -510,7 +538,7 @@
       </div>
       <div class="mbb6-checkpoint"><strong>Checkpoint 1:</strong> você encontrou a placa ESP32 e a aba <code>sketch.ino</code>? Agora vamos executar o exemplo, ainda sem acrescentar componentes.</div>
     </article>
-    <article class="card worked wide" data-mbb6-role="hello-esp32"><h3>5. Primeiro programa: Hello, ESP32!</h3><ol><li>No editor aberto, mantenha o código de exemplo em <code>sketch.ino</code>. O modelo inicial pode aparecer como ESP32 DevKit C V4; ele também usa o ESP32 original. Não é necessário substituir a placa apenas porque a aparência difere da imagem. Na DevKit v1, uma inscrição como D23 identifica o GPIO 23 usado pelo código.</li><li>Clique no botão verde <strong>▶</strong> para iniciar a simulação. Aguarde a compilação.</li><li>Abra o <strong>Monitor Serial</strong> na área de simulação, se ele não aparecer automaticamente.</li><li>Procure a mensagem <code>Hello, ESP32!</code>. Ela é escrita uma vez pelo <code>setup()</code>, com <code>Serial.println()</code>.</li></ol><p class="mbb6-note"><strong>Se não apareceu:</strong> confira se iniciou a simulação e se abriu o Monitor Serial. Este teste não precisa de LED nem de resistor.</p><div class="mbb6-checkpoint"><strong>Checkpoint 2:</strong> a mensagem apareceu? Você já executou seu primeiro programa no ESP32 simulado!</div></article>
+    <article class="card worked wide" data-mbb6-role="hello-esp32"><h3>5. Primeiro programa: Hello, ESP32!</h3><ol><li>No editor aberto, mantenha o código de exemplo em <code>sketch.ino</code>. O modelo inicial pode aparecer como ESP32 DevKit C V4; ele também usa o ESP32 original. Não é necessário substituir a placa apenas porque a aparência difere da imagem. Na DevKit v1, uma inscrição como D23 identifica o GPIO 23 usado pelo código.</li><li>Clique no botão verde <strong style="display:inline-block;background:#15803d;color:#fff;border-radius:4px;padding:1px 6px;line-height:1.15">▶</strong> para iniciar a simulação. Aguarde a compilação.</li><li>Abra o <strong>Monitor Serial</strong> na área de simulação, se ele não aparecer automaticamente.</li><li>Procure a mensagem <code>Hello, ESP32!</code>. Ela é escrita uma vez pelo <code>setup()</code>, com <code>Serial.println()</code>.</li></ol><p class="mbb6-note"><strong>Se não apareceu:</strong> confira se iniciou a simulação e se abriu o Monitor Serial. Este teste não precisa de LED nem de resistor.</p><div class="mbb6-checkpoint"><strong>Checkpoint 2:</strong> a mensagem apareceu? Você já executou seu primeiro programa no ESP32 simulado!</div></article>
     <article class="card wide mbb6-bridge"><h3>6. Uma nova missão para o ESP32</h3><p>Até aqui, nosso programa mostrou uma mensagem na tela. <strong>Agora queremos observar uma ação fora do código:</strong> fazer um LED acender e apagar. Para isso, vamos montar um circuito na mesma placa que você acabou de testar.</p></article>
     <article class="card wide"><h3>7. Montando o circuito-base</h3><p>Clique no botão azul <strong>+</strong> ao lado do botão de simulação para abrir os componentes. Procure <strong>LED</strong> e adicione-o; repita para <strong>resistor</strong>. Ajuste o resistor para <strong>220 Ω</strong> e faça as ligações como na figura abaixo. Pare a simulação antes de editar a montagem.</p><div class="mbb6-connections"><div><strong>GPIO 23</strong><span>liga-se ao ânodo do LED.</span></div><div><strong>Cátodo do LED</strong><span>liga-se ao resistor de 220 Ω.</span></div><div><strong>Resistor 220 Ω</strong><span>liga-se ao GND do ESP32.</span></div><div><strong>Montagem</strong><span>este circuito será reutilizado nas próximas experiências de comunicação.</span></div></div></article>
     <article class="card code wide"><h3>8. Código do LED — substitua o Hello World <button type="button" onclick="copyCode('b6-prep-code',this)">Copiar</button></h3><pre id="b6-prep-code">const int LED = 23;
@@ -588,8 +616,17 @@ void loop() {
   <div class="cards">
     <article class="card wide"><h3>1. O que ganhamos ao entrar na rede?</h3><p>O ESP32 deixa de conversar apenas com um dispositivo próximo e passa a participar da mesma infraestrutura usada por celulares e computadores. Isso prepara o caminho para páginas Web, APIs, envio de dados e outros serviços de rede que veremos a partir daqui.</p></article>
     <article class="card"><h3>2. Como a conexão Wi-Fi funciona</h3><p>O ESP32 entrará na rede como uma <strong>estação</strong>, isto é, como mais um dispositivo conectado ao ponto de acesso ou roteador.</p><div class="mbb6-route"><span>ESP32</span><b>→</b><span>ponto de acesso / roteador</span><b>→</b><span>endereço IP</span></div><ul><li><strong>SSID</strong> (<em>Service Set Identifier</em>) é o nome da rede Wi-Fi;</li><li>a senha autoriza a entrada na rede quando ela é protegida;</li><li><strong>IP</strong> (<em>Internet Protocol</em>) é o endereço usado para identificar o ESP32 naquela rede.</li></ul><p>Em uma rede comum, o roteador normalmente fornece esse endereço IP automaticamente quando o ESP32 se conecta.</p><p class="mbb6-note"><strong>Rede Wi-Fi não é sinônimo de Internet.</strong> Dois dispositivos podem se comunicar pela mesma rede local mesmo que ela não tenha acesso à Internet.</p></article>
-    <article class="card"><h3>3. Circuito e rede para o teste</h3><p>O circuito continua igual. O LED permanece no GPIO 23, mas nesta etapa ele não é o foco. O resultado observável será a conexão mostrada no Monitor Serial.</p><p class="mbb6-warning"><strong>Para o primeiro teste:</strong> use uma rede Wi-Fi de 2,4 GHz simples, sem página de login e sem autenticação corporativa. Redes escolares e redes de visitantes podem impor restrições adicionais. Não publique nem compartilhe o código depois de substituir <code>SENHA_DA_REDE</code> por uma senha real.</p></article>
-    <article class="card code wide"><h3>4. Código completo <button type="button" onclick="copyCode('b6-2-code',this)">Copiar</button></h3><pre id="b6-2-code">#include &lt;WiFi.h&gt;
+    <article class="card"><h3>3. Circuito e rede para o teste</h3><p>O circuito continua igual. O LED permanece no GPIO 23, mas nesta etapa ele não é o foco. O resultado observável será a conexão mostrada no Monitor Serial.</p><p class="mbb6-warning"><strong>Se utilizar um ESP32 físico:</strong> escolha uma rede Wi-Fi de 2,4 GHz simples, sem página de login e sem autenticação corporativa. Redes escolares e redes de visitantes podem impor restrições adicionais. Não publique nem compartilhe o código depois de substituir <code>SENHA_DA_REDE</code> por uma senha real.</p></article>
+    <article class="card wide" data-mbb6-role="wifi-escolha">
+      <h3>4. Escolha seu ambiente — um teste, dois caminhos</h3>
+      <p><strong>Nos dois casos, a missão é a mesma:</strong> conectar o ESP32 a uma rede Wi-Fi e encontrar o endereço IP no Monitor Serial. <strong>Escolha apenas um dos códigos abaixo</strong>, de acordo com o ambiente em que está trabalhando.</p>
+      <div class="mbb6-connections">
+        <div><strong>4A. Wokwi — sem placa física</strong><span>Use o programa para a rede virtual <code>Wokwi-GUEST</code>, sem senha. Execute no simulador e observe a confirmação e o IP no Monitor Serial.</span></div>
+        <div><strong>4B. ESP32 físico — com placa real</strong><span>Use o programa da sua rede Wi-Fi de <strong>2,4 GHz</strong>. Informe o nome (SSID) e a senha da rede de teste antes de enviar o código à placa.</span></div>
+      </div>
+      <p class="mbb6-note"><strong>Uma biblioteca, nos dois programas:</strong> a linha <code>#include &lt;WiFi.h&gt;</code> permite utilizar os comandos de conexão Wi-Fi do ESP32. <strong>Biblioteca</strong> é um conjunto de recursos prontos que o programa utiliza. No Arduino IDE, ela já acompanha o pacote de placas ESP32 instalado e selecionado corretamente; não é necessário instalar outra <code>WiFi.h</code> separadamente. O projeto ESP32 do Wokwi também oferece esse recurso.</p>
+    </article>
+    <article class="card code wide"><h3>4B. Código completo — ESP32 físico <button type="button" onclick="copyCode('b6-2-code',this)">Copiar</button></h3><pre id="b6-2-code">#include &lt;WiFi.h&gt;
 
 const char* ssid = "NOME_DA_REDE";
 const char* senha = "SENHA_DA_REDE";
@@ -620,27 +657,106 @@ void setup() {
 
 void loop() {
 }</pre></article>
-    <article class="card wide"><h3>5. Entendendo as novidades</h3><div class="explain"><p><code>WiFi.mode(WIFI_STA)</code> coloca o ESP32 em modo <em>station</em> (estação), para entrar em uma rede existente.</p><p><code>WiFi.begin(ssid, senha)</code> inicia a tentativa de conexão usando o nome e a senha da rede.</p><p><code>WiFi.status()</code> permite verificar se a conexão já foi estabelecida.</p><p><code>WiFi.localIP()</code> mostra o endereço IP recebido pelo ESP32 dentro daquela rede.</p></div></article>
-    <article class="card" data-mbb6-role="mdns-teste"><h3>6. Testando</h3><ol><li>Substitua <code>NOME_DA_REDE</code> e <code>SENHA_DA_REDE</code>.</li><li>Carregue o programa.</li><li>Abra o Monitor Serial em 115200.</li><li>Aguarde a mensagem de conexão.</li><li>Anote o endereço IP mostrado.</li></ol></article>
-    <article class="card worked"><h3>7. Resultado esperado</h3><pre>Conectando ao Wi-Fi....
+    <article class="card wide"><h3>5. Entendendo as novidades</h3><div class="explain"><p>Observe a sequência comum aos dois programas: <strong>iniciar o Monitor Serial → entrar na rede Wi-Fi → aguardar a conexão → mostrar o IP</strong>. A diferença está nos dados da rede: a placa física usa o nome e a senha informados; o Wokwi usa <code>Wokwi-GUEST</code>, sem senha.</p><p><strong>Por que aparece um IP?</strong> É o endereço que identifica o ESP32 naquela rede e permitirá discutir os pedidos HTTP no próximo tópico. <strong>Receber um IP local não comprova acesso à Internet.</strong> Logo abaixo vamos compreender os comandos desse processo.</p></div></article>
+    <article class="card" data-mbb6-role="mdns-teste"><h3>6. Testando — ESP32 físico</h3><ol><li>Substitua <code>NOME_DA_REDE</code> e <code>SENHA_DA_REDE</code>.</li><li>Carregue o programa.</li><li>Abra o Monitor Serial em 115200.</li><li>Aguarde a mensagem de conexão.</li><li>Anote o endereço IP mostrado.</li></ol></article>
+    <article class="card worked"><h3>7. Resultado esperado — ESP32 físico</h3><pre>Conectando ao Wi-Fi....
 Wi-Fi conectado.
 Endereco IP: 192.168.1.37</pre><p>O endereço será diferente em cada rede.</p></article>
-    <article class="card errors wide"><h3>8. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>Fica somente nos pontos</td><td>Nome da rede, senha, sinal e compatibilidade com 2,4 GHz.</td></tr><tr><td>Rede da escola aparece, mas não conecta</td><td>Ela pode usar página de login, WPA2/WPA3-Enterprise ou outra política que este exemplo simples não trata. Para o primeiro teste, use uma rede 2,4 GHz simples ou um hotspot de teste.</td></tr><tr><td>Monitor Serial mostra caracteres ilegíveis</td><td>Configure o Monitor Serial para 115200.</td></tr></table></article>
-    <article class="card wide" data-mbb6-role="wifi-wokwi"><h3>9. Teste no Wokwi</h3><p>No Wokwi, use a rede virtual <code>Wokwi-GUEST</code>. Execute a simulação e observe no Monitor Serial a confirmação da conexão e o endereço IP recebido.</p></article>
-    <article class="card worked wide"><h3>10. Conferência da etapa</h3><p><strong>ESP32 física:</strong> o Monitor Serial deve mostrar “Wi-Fi conectado” e um IP da rede usada. <strong>Wokwi:</strong> o Monitor Serial deve mostrar a conexão ao <code>Wokwi-GUEST</code> e, no gateway público, normalmente o IP <code>10.10.0.2</code>.</p><div class="mbb6-checkpoint"><strong>Se chegou até aqui:</strong> o ESP32 já participa de uma rede. Agora falta escolher como ele vai trocar informações com outros dispositivos.</div></article>
-    <article class="card worked wide mbb6-bridge"><h3>11. Próximo problema</h3><p>Conseguimos colocar o ESP32 na rede e identificá-lo por um endereço IP. Isso é necessário, mas ainda não entrega nenhuma interface ao usuário. <strong>Agora precisamos escolher uma forma de conversa que o navegador já entenda.</strong> É aí que entra o HTTP.</p></article>
+    <article class="card errors wide"><h3>8. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>Fica somente nos pontos</td><td>Nome da rede, senha, sinal e compatibilidade com 2,4 GHz.</td></tr><tr><td>Rede da escola aparece, mas não conecta</td><td>Ela pode usar página de login, WPA2/WPA3-Enterprise ou outra política que este exemplo simples não trata. Para o primeiro teste, use uma rede 2,4 GHz simples ou um hotspot de teste.</td></tr><tr><td>Monitor Serial mostra caracteres ilegíveis</td><td>Configure o Monitor Serial para 115200.</td></tr><tr><td>Wokwi não mostra a conexão</td><td>Confirme que selecionou o código <strong>4A</strong>, criou um projeto ESP32 e iniciou a simulação. Verifique a rede <code>Wokwi-GUEST</code> e o Monitor Serial.</td></tr></table></article>
+    <article class="card wide" data-mbb6-role="wifi-wokwi"><h3>4A. Wi-Fi no Wokwi</h3><p>Vamos começar pelo simulador, com a rede <code>Wokwi-GUEST</code>, e observar a confirmação no Monitor Serial.</p></article>
+    <article class="card worked wide"><h3>9. Conferência da etapa</h3><p><strong>ESP32 física:</strong> o Monitor Serial deve mostrar “Wi-Fi conectado” e um IP da rede usada. <strong>Wokwi:</strong> o Monitor Serial deve mostrar a conexão ao <code>Wokwi-GUEST</code> e, no gateway público, normalmente o IP <code>10.10.0.2</code>.</p><div class="mbb6-checkpoint"><strong>Se chegou até aqui:</strong> o ESP32 já participa de uma rede. Agora falta escolher como ele vai trocar informações com outros dispositivos.</div></article>
+    <article class="card worked wide mbb6-bridge"><h3>10. Próximo problema</h3><p>Conseguimos colocar o ESP32 na rede e identificá-lo por um endereço IP. Isso é necessário, mas ainda não entrega nenhuma interface ao usuário. <strong>Agora precisamos escolher uma forma de conversa que o navegador já entenda.</strong> É aí que entra o HTTP.</p></article>
   </div>
 </section>
 
 <section class="project mbb6-panel" id="b6-3">
   <div class="projectHead"><span class="badge">6.3</span><div><h2>HTTP: pedidos e respostas na Web</h2><p><strong>HTTP</strong> significa <em>Hypertext Transfer Protocol</em>. É um protocolo de aplicação usado para organizar pedidos e respostas entre clientes e servidores.</p></div></div>
-  <div class="mbb6-context"><strong>Estar no Wi-Fi ainda não diz como dois dispositivos vão conversar.</strong> Agora queremos algo muito familiar: abrir o navegador do celular e controlar o LED por uma página. O navegador já sabe falar HTTP, então esse protocolo passa a ser a ponte entre a interface Web e o ESP32. Depois faremos o caminho inverso: o próprio ESP32 será o cliente e buscará uma informação em outro servidor.</div>
+  <div class="mbb6-context"><strong>O ESP32 já entrou no Wi-Fi. Como trocar informações agora?</strong> Começaremos no Wokwi: o ESP32 enviará um pedido HTTP e receberá uma resposta. Depois, com uma placa física, faremos o caminho inverso: o navegador pedirá uma página ao ESP32 para controlar o LED. Assim descobriremos, na prática, os papéis de cliente e servidor.</div>
   <div class="cards">
-    <article class="card wide"><h3>1. O que vamos construir agora?</h3><p>Primeiro o ESP32 oferecerá uma pequena página: o celular pede, o ESP32 responde e o LED muda de estado. Depois inverteremos os papéis para perceber uma ideia importante: <strong>o ESP32 pode tanto oferecer um serviço quanto consumir um serviço de outro sistema.</strong></p></article>
-    <article class="card wide"><h3>2. Cliente e servidor são papéis</h3><p>O <strong>cliente</strong> inicia um pedido (<em>request</em>). O <strong>servidor</strong> recebe esse pedido e devolve uma resposta (<em>response</em>). O papel depende da situação:</p><table><tr><th>Situação</th><th>Cliente</th><th>Servidor</th></tr><tr><td>Celular abre a página do ESP32</td><td>Celular</td><td>ESP32</td></tr><tr><td>ESP32 consulta uma página na Web</td><td>ESP32</td><td>Servidor Web</td></tr></table><p class="mbb6-note"><strong>Importante:</strong> HTTP não exige que a comunicação atravesse a Internet. Ele também pode funcionar somente dentro da rede local, como no servidor criado pelo ESP32.</p></article>
+    
+    <article class="card wide"><h3>1. O que vamos construir agora?</h3><p>Primeiro, no Wokwi, o ESP32 consultará um servidor e mostrará a resposta no Monitor Serial. Depois, com uma placa física, criaremos uma página para controlar o LED. É a mesma comunicação HTTP vista de dois lados: <strong>o ESP32 pode tanto oferecer um serviço quanto consumir um serviço de outro sistema.</strong></p></article>
+    <article class="card wide"><h3>2. Cliente e servidor são papéis</h3><p>O <strong>cliente</strong> inicia um pedido (<em>request</em>). O <strong>servidor</strong> recebe esse pedido e devolve uma resposta (<em>response</em>). O papel depende da situação:</p><table><tr><th>Situação</th><th>Cliente</th><th>Servidor</th></tr><tr><td>ESP32 consulta uma página na Web</td><td>ESP32</td><td>Servidor Web</td></tr><tr><td>Celular abre a página do ESP32</td><td>Celular</td><td>ESP32</td></tr></table><p class="mbb6-note"><strong>Importante:</strong> HTTP não exige que a comunicação atravesse a Internet. Ele também pode funcionar somente dentro da rede local, como no servidor criado pelo ESP32.</p></article>
+    <article class="card wide"><h3 class="mbb6-subtitle">Parte A — ESP32 como cliente HTTP (comece pelo Wokwi)</h3><div class="explain"><p><strong>Depois do Wi-Fi, começamos por um pedido que funciona no Wokwi padrão.</strong> Em muitos projetos IoT, o dispositivo não fica esperando alguém abrir sua página: ele próprio envia ou busca informações em um serviço externo. Para perceber essa mudança de papel, agora o ESP32 fará o pedido.</p><div class="mbb6-route"><span>ESP32</span><b>→ requisição GET →</b><span>Servidor Web</span><b>→ resposta →</b><span>ESP32</span></div></div></article>
+    <article class="card code wide" data-mbb6-http-wokwi-first="1"><h3>3A. Código — cliente HTTP no Wokwi <button type="button" onclick="copyCode('b6-3-client-wokwi-code',this)">Copiar</button></h3><pre id="b6-3-client-wokwi-code">#include &lt;WiFi.h&gt;
+#include &lt;HTTPClient.h&gt;
 
-    <article class="card wide"><h3 class="mbb6-subtitle">Parte A — ESP32 como servidor HTTP</h3><div class="explain"><p><strong>Problema:</strong> pelo Bluetooth enviávamos L e D. Agora queremos abrir uma página no navegador e tocar em links para controlar o mesmo LED.</p><div class="mbb6-route"><span>Navegador</span><b>→ pedido HTTP →</b><span>ESP32</span><b>→</b><span>LED</span></div></div></article>
-    <article class="card code wide"><h3>3. Código — servidor HTTP <button type="button" onclick="copyCode('b6-3-server-code',this)">Copiar</button></h3><pre id="b6-3-server-code">#include &lt;WiFi.h&gt;
+void setup() {
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin("Wokwi-GUEST", "", 6);
+
+  Serial.print("Conectando");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(100);
+    Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.println("Wi-Fi conectado.");
+
+  HTTPClient http;
+  http.begin("http://example.com/index.html");
+
+  int codigo = http.GET();
+
+  Serial.print("Codigo HTTP: ");
+  Serial.println(codigo);
+
+  if (codigo &gt; 0) {
+    String resposta = http.getString();
+    Serial.println("Resposta recebida:");
+    Serial.println(resposta);
+  }
+
+  http.end();
+}
+
+void loop() {
+}</pre><div class="explain" style="margin-top:12px"><p><strong>Faça agora:</strong> copie este código para o <code>sketch.ino</code> do ESP32 no Wokwi, execute a simulação e abra o Monitor Serial.</p><p><strong>Observe:</strong> o ESP32 usa a rede <code>Wokwi-GUEST</code>, envia uma requisição <code>GET</code> e mostra o código HTTP e a resposta recebida. A rede virtual não precisa da senha de casa ou da escola.</p></div></article>
+    <article class="card code wide"><h3>3B. Código — cliente HTTP (ESP32 físico) <button type="button" onclick="copyCode('b6-3-client-code',this)">Copiar</button></h3><pre id="b6-3-client-code">#include &lt;WiFi.h&gt;
+#include &lt;HTTPClient.h&gt;
+
+const char* ssid = "NOME_DA_REDE";
+const char* senha = "SENHA_DA_REDE";
+
+void setup() {
+  Serial.begin(115200);
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, senha);
+
+  Serial.print("Conectando");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.println("Wi-Fi conectado.");
+
+  HTTPClient http;
+  http.begin("http://example.com/");
+
+  int codigo = http.GET();
+
+  Serial.print("Codigo HTTP: ");
+  Serial.println(codigo);
+
+  if (codigo &gt; 0) {
+    String resposta = http.getString();
+    Serial.println("Resposta recebida:");
+    Serial.println(resposta);
+  }
+
+  http.end();
+}
+
+void loop() {
+}</pre></article>
+    <article class="card"><h3>4. Como o cliente funciona</h3><div class="explain"><p><code>HTTPClient http</code> cria o cliente HTTP.</p><p><code>http.begin()</code> informa a <strong>URL</strong> (endereço do recurso) que será consultada.</p><p><code>http.GET()</code> envia um pedido do tipo <strong>GET</strong>, usado para solicitar um recurso.</p><p>O valor retornado por <code>GET()</code> permite observar o código de resposta HTTP; <code>200</code>, por exemplo, indica uma resposta bem-sucedida.</p><p><code>http.getString()</code> lê o conteúdo recebido e <code>http.end()</code> libera os recursos usados pela conexão.</p></div></article>
+    <article class="card"><h3>5. Testando o cliente — escolha um ambiente</h3><ol><li>Use o código 3A no Wokwi ou o 3B na placa física, com a rede correspondente.</li><li>Execute a simulação ou carregue o programa na placa.</li><li>Abra o Monitor Serial em 115200.</li><li>Observe o retorno de <code>GET()</code> e, quando disponível, o texto recebido. Um código negativo indica falha da biblioteca; uma resposta HTTP positiva não significa necessariamente sucesso.</li></ol><p class="mbb6-note"><strong>No Wokwi padrão, este teste também é possível:</strong> o pedido parte do ESP32 simulado para a Internet. O endereço <code>example.com</code> é usado apenas como destino simples; a resposta pode variar com o serviço, portanto o objetivo é verificar se houve um código HTTP positivo e conteúdo recebido.</p><div class="mbb6-checkpoint"><strong>Checkpoint HTTP:</strong> a Parte A (cliente) permite observar o retorno de uma requisição, inclusive no Wokwi padrão. A Parte B (servidor) permite controlar o LED pelo navegador com uma placa física na rede local; no Wokwi exige Private IoT Gateway opcional para acesso de entrada. Registre somente os testes que realmente executou.</div></article>
+    <article class="card wide"><h3 class="mbb6-subtitle">Parte B — ESP32 como servidor HTTP (ESP32 físico)</h3><div class="explain"><p><strong>Problema:</strong> já vimos o ESP32 fazer um pedido HTTP. Agora queremos abrir uma página no navegador e tocar em links para controlar o mesmo LED.</p><div class="mbb6-route"><span>Navegador</span><b>→ pedido HTTP →</b><span>ESP32</span><b>→</b><span>LED</span></div></div></article>
+    <article class="card code wide"><h3>6. Código — servidor HTTP (ESP32 físico; Wokwi com gateway privado) <button type="button" onclick="copyCode('b6-3-server-code',this)">Copiar</button></h3><pre id="b6-3-server-code">#include &lt;WiFi.h&gt;
 #include &lt;WebServer.h&gt;
 
 const char* ssid = "NOME_DA_REDE";
@@ -718,66 +834,111 @@ void setup() {
 void loop() {
   servidor.handleClient();
 }</pre></article>
-    <article class="card"><h3>4. Como o servidor funciona</h3><div class="explain"><p><code>WebServer servidor(80)</code> cria o servidor HTTP na <strong>porta 80</strong>, porta padrão usada por HTTP sem criptografia.</p><p><code>servidor.on("/", ...)</code>, <code>servidor.on("/ligar", ...)</code> e <code>servidor.on("/desligar", ...)</code> associam caminhos do endereço a funções do programa.</p><p>Quando o navegador pede <code>/ligar</code>, a função correspondente acende o LED e devolve a página atualizada.</p><p><code>servidor.send(200, "text/html", ...)</code> envia a resposta: <code>200</code> indica sucesso e <code>text/html</code> informa que o conteúdo é uma página HTML.</p><p><code>servidor.handleClient()</code> verifica continuamente se chegaram novos pedidos.</p></div></article>
-    <article class="card" data-mbb6-role="http-servidor-teste"><h3>5. Testando o servidor</h3><ol><li>Use celular e ESP32 na mesma rede.</li><li>Carregue o programa e copie o IP mostrado.</li><li>No navegador, abra <code>http://IP_DO_ESP32</code>.</li><li>Use os links para ligar e desligar o LED.</li></ol></article>
-    <article class="card worked wide"><h3>6. Resultado esperado</h3><p>A página mostra o estado do LED. Ao tocar em <strong>Ligar LED</strong> ou <strong>Desligar LED</strong>, o navegador faz um pedido ao ESP32, que executa a ação e devolve uma nova página.</p></article>
+    <article class="card"><h3>7. Como o servidor funciona</h3><div class="explain"><p><code>WebServer servidor(80)</code> cria o servidor HTTP na <strong>porta 80</strong>, porta padrão usada por HTTP sem criptografia.</p><p><code>servidor.on("/", ...)</code>, <code>servidor.on("/ligar", ...)</code> e <code>servidor.on("/desligar", ...)</code> associam caminhos do endereço a funções do programa.</p><p>Quando o navegador pede <code>/ligar</code>, a função correspondente acende o LED e devolve a página atualizada.</p><p><code>servidor.send(200, "text/html", ...)</code> envia a resposta: <code>200</code> indica sucesso e <code>text/html</code> informa que o conteúdo é uma página HTML.</p><p><code>servidor.handleClient()</code> verifica continuamente se chegaram novos pedidos.</p></div></article>
+    <article class="card" data-mbb6-role="http-servidor-teste"><h3>8. Testando o servidor — ESP32 físico</h3><ol><li>Use celular e ESP32 na mesma rede.</li><li>Carregue o programa e copie o IP mostrado.</li><li>No navegador, abra <code>http://IP_DO_ESP32</code>.</li><li>Use os links para ligar e desligar o LED.</li></ol></article>
+    <article class="card worked wide"><h3>9. Resultado esperado — servidor HTTP</h3><p>A página mostra o estado do LED. Ao tocar em <strong>Ligar LED</strong> ou <strong>Desligar LED</strong>, o navegador faz um pedido ao ESP32, que executa a ação e devolve uma nova página.</p></article>
+    <article class="card errors wide"><h3>10. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>A página do ESP32 não abre</td><td>Celular/computador e ESP32 devem estar na mesma rede e o endereço deve usar o IP mostrado no Monitor Serial. Redes de escola, empresa ou “guest” podem isolar os clientes e impedir que um dispositivo acesse o outro; nesse caso, teste em uma rede simples que permita comunicação local.</td></tr><tr><td>O servidor abre, mas o LED não muda</td><td>Confira o GPIO 23 e se os caminhos /ligar e /desligar estão corretos.</td></tr><tr><td>A requisição do cliente retorna erro</td><td>Confirme se o Wi-Fi está conectado, se há acesso à Internet e se o servidor consultado responde. Um retorno negativo de <code>http.GET()</code> indica erro na operação; respostas HTTP como 404 são respostas válidas, mas não representam o recurso encontrado.</td></tr></table></article>
+    <article class="card worked wide mbb6-bridge"><h3>11. Próximo problema</h3><p>Já fizemos pedidos HTTP no Wokwi e conhecemos o servidor que controla o LED na placa física. Para encontrar esse servidor, ainda dependemos de um número que pode mudar: o endereço IP. <strong>O próximo passo não é criar outro servidor; é tornar o servidor que já existe mais fácil de encontrar.</strong></p></article>
+  </div>
+</section>
 
-    <article class="card wide"><h3 class="mbb6-subtitle">Parte B — ESP32 como cliente HTTP</h3><div class="explain"><p><strong>Agora vamos inverter a conversa.</strong> Em muitos projetos IoT, o dispositivo não fica esperando alguém abrir sua página: ele próprio envia ou busca informações em um serviço externo. Para perceber essa mudança de papel, agora o ESP32 fará o pedido.</p><div class="mbb6-route"><span>ESP32</span><b>→ requisição GET →</b><span>Servidor Web</span><b>→ resposta →</b><span>ESP32</span></div></div></article>
-    <article class="card code wide"><h3>7. Código — cliente HTTP <button type="button" onclick="copyCode('b6-3-client-code',this)">Copiar</button></h3><pre id="b6-3-client-code">#include &lt;WiFi.h&gt;
-#include &lt;HTTPClient.h&gt;
+<section class="project mbb6-panel" id="b6-4" data-mbb-rede-pratica="1">
+  <div class="projectHead"><span class="badge">6.4</span><div><h2>mDNS: um nome para encontrar o Ambiente MbB</h2><p>Vamos investigar anúncios reais na captura do Wokwi e separar anúncio de resolução de nomes.</p></div></div>
+  <div class="mbb6-context">Em 6.3, o ESP32 fez pedidos HTTP; com a placa física, também atendemos ao navegador. Agora imagine que o IP do servidor mude: precisamos encontrá-lo novamente. Queremos usar <code>ambiente-mbb.local</code> sem decorar números.</div>
+  <div class="cards">
+    <article class="card wide"><h3>1. Quem sabe o endereço desse nome?</h3><p><strong>mDNS</strong> significa <em>Multicast DNS</em>: dispositivos compatíveis perguntam e respondem na própria rede, sem um servidor DNS central. No IPv4, as mensagens usam o endereço multicast <code>224.0.0.251</code> e a porta UDP <code>5353</code>. Multicast é o envio a um grupo de participantes; a porta identifica o serviço de comunicação.</p><p>O ESP32 pode anunciar seu nome e seu serviço HTTP. <strong>Isso não cria outro servidor HTTP.</strong> Depois de descobrir o IP, o cliente ainda faz a requisição HTTP habitual. O sufixo <code>.local</code> vale na rede local e não publica o dispositivo na Internet.</p><p class="mbb6-note"><strong>Nossa bancada gratuita:</strong> manteremos ESP32, LED no GPIO 23 e resistor de 220 Ω. No Wokwi, executaremos o servidor e examinaremos seus pacotes. O gateway público não dá ao navegador do computador uma entrada para esse servidor; abrir <code>ambiente-mbb.local</code> não será o teste obrigatório.</p></article>
+    <article class="card wide"><h3>2. As linhas novas</h3><div class="mbb6-table-scroll"><table><thead><tr><th scope="col">Linha</th><th scope="col">O que acrescenta</th></tr></thead><tbody>
+      <tr><td><code>#include &lt;ESPmDNS.h&gt;</code></td><td>Disponibiliza a biblioteca mDNS, já incluída no ambiente Arduino para ESP32 do Wokwi.</td></tr>
+      <tr><td><code>MDNS.begin("ambiente-mbb")</code></td><td>Tenta iniciar o nome-base, sem escrever <code>.local</code> no argumento. Retorna verdadeiro se a inicialização foi aceita; isso não prova uma consulta de outro aparelho.</td></tr>
+      <tr><td><code>if (!MDNS.begin(...))</code></td><td><code>!</code> inverte o resultado: entramos no primeiro bloco quando a inicialização falha.</td></tr>
+      <tr><td><code>MDNS.addService("http", "tcp", 80)</code></td><td>Configura o anúncio do serviço HTTP sobre TCP na porta 80. TCP é o protocolo de transporte usado aqui pelo HTTP; o anúncio mDNS em si usa UDP.</td></tr>
+    </tbody></table></div><p>O restante retoma o servidor da etapa anterior. Na versão abaixo, <code>condição ? valor1 : valor2</code> escolhe o texto LIGADO ou DESLIGADO conforme a leitura do GPIO; equivale ao <code>if/else</code> já utilizado. O terceiro argumento de <code>WiFi.begin(ssid, senha, 6)</code> informa o canal da rede virtual, agilizando a conexão no Wokwi.</p></article>
+    <article class="card code wide"><h3>3. Programa completo — Wokwi gratuito <button type="button" onclick="copyCode('b6-4-wokwi-code',this)">Copiar</button></h3><p>No projeto ESP32 da preparação, preserve a montagem e substitua somente o conteúdo de <code>sketch.ino</code>.</p><pre id="b6-4-wokwi-code">#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+#include &lt;ESPmDNS.h&gt;
 
-const char* ssid = "NOME_DA_REDE";
-const char* senha = "SENHA_DA_REDE";
+const char* ssid = "Wokwi-GUEST";
+const char* senha = "";
+const int LED = 23;
+WebServer servidor(80);
+
+String criarPagina() {
+  String estado = digitalRead(LED) == HIGH ? "LIGADO" : "DESLIGADO";
+  String pagina = "&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset='UTF-8'&gt;";
+  pagina += "&lt;title&gt;Ambiente MbB&lt;/title&gt;&lt;/head&gt;&lt;body&gt;";
+  pagina += "&lt;h1&gt;Ambiente MbB&lt;/h1&gt;&lt;p&gt;LED: " + estado + "&lt;/p&gt;";
+  pagina += "&lt;p&gt;&lt;a href='/ligar'&gt;Ligar LED&lt;/a&gt;&lt;/p&gt;";
+  pagina += "&lt;p&gt;&lt;a href='/desligar'&gt;Desligar LED&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;";
+  return pagina;
+}
+
+void mostrarPagina() {
+  servidor.send(200, "text/html", criarPagina());
+}
+
+void ligarLED() {
+  digitalWrite(LED, HIGH);
+  mostrarPagina();
+}
+
+void desligarLED() {
+  digitalWrite(LED, LOW);
+  mostrarPagina();
+}
 
 void setup() {
   Serial.begin(115200);
-
+  pinMode(LED, OUTPUT);
+  digitalWrite(LED, LOW);
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, senha);
-
+  WiFi.begin(ssid, senha, 6);
   Serial.print("Conectando");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-
   Serial.println();
-  Serial.println("Wi-Fi conectado.");
-
-  HTTPClient http;
-  http.begin("http://example.com/");
-
-  int codigo = http.GET();
-
-  Serial.print("Codigo HTTP: ");
-  Serial.println(codigo);
-
-  if (codigo &gt; 0) {
-    String resposta = http.getString();
-    Serial.println("Resposta recebida:");
-    Serial.println(resposta);
+  Serial.print("IP virtual: ");
+  Serial.println(WiFi.localIP());
+  if (!MDNS.begin("ambiente-mbb")) {
+    Serial.println("Falha ao iniciar mDNS.");
+  } else {
+    MDNS.addService("http", "tcp", 80);
+    Serial.println("Inicializacao mDNS aceita; servico HTTP configurado.");
+    Serial.println("Isso nao comprova resolucao do nome por outro dispositivo.");
+    Serial.println("Exporte o PCAP para investigar os pacotes mDNS.");
   }
-
-  http.end();
+  servidor.on("/", mostrarPagina);
+  servidor.on("/ligar", ligarLED);
+  servidor.on("/desligar", desligarLED);
+  servidor.begin();
 }
 
 void loop() {
+  servidor.handleClient();
+  delay(10);
 }</pre></article>
-    <article class="card"><h3>8. Como o cliente funciona</h3><div class="explain"><p><code>HTTPClient http</code> cria o cliente HTTP.</p><p><code>http.begin()</code> informa a <strong>URL</strong> (endereço do recurso) que será consultada.</p><p><code>http.GET()</code> envia um pedido do tipo <strong>GET</strong>, usado para solicitar um recurso.</p><p>O valor retornado por <code>GET()</code> permite observar o código de resposta HTTP; <code>200</code>, por exemplo, indica uma resposta bem-sucedida.</p><p><code>http.getString()</code> lê o conteúdo recebido e <code>http.end()</code> libera os recursos usados pela conexão.</p></div></article>
-    <article class="card"><h3>9. Testando o cliente</h3><ol><li>Configure a rede.</li><li>Carregue o programa.</li><li>Abra o Monitor Serial em 115200.</li><li>Observe o código HTTP e o conteúdo recebido.</li></ol><p class="mbb6-note"><strong>No Wokwi padrão, este teste também é possível:</strong> o pedido parte do ESP32 simulado para a Internet. O endereço <code>example.com</code> é usado apenas como destino simples; a resposta pode variar com o serviço, portanto o objetivo é verificar se houve um código HTTP positivo e conteúdo recebido.</p><div class="mbb6-checkpoint"><strong>Checkpoint HTTP:</strong> na placa física, a Parte A deve permitir controlar o LED pelo navegador e a Parte B deve mostrar uma resposta recebida. No Wokwi padrão, a Parte B funciona; a Parte A só pode ser acessada pelo navegador com o Private IoT Gateway, recurso pago e opcional. Sem ele, registre somente as evidências realmente executadas no gateway público.</div></article>
-    <article class="card errors wide"><h3>10. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>A página do ESP32 não abre</td><td>Celular/computador e ESP32 devem estar na mesma rede e o endereço deve usar o IP mostrado no Monitor Serial. Redes de escola, empresa ou “guest” podem isolar os clientes e impedir que um dispositivo acesse o outro; nesse caso, teste em uma rede simples que permita comunicação local.</td></tr><tr><td>O servidor abre, mas o LED não muda</td><td>Confira o GPIO 23 e se os caminhos /ligar e /desligar estão corretos.</td></tr><tr><td>A requisição do cliente retorna erro</td><td>Confirme primeiro se o Wi-Fi está conectado e se a rede permite acesso à Internet.</td></tr></table></article>
-    <article class="card worked wide mbb6-bridge"><h3>11. Próximo problema</h3><p>Já conseguimos controlar o LED pelo navegador. Tecnicamente funciona, mas ainda dependemos de um número que pode mudar: o endereço IP. <strong>O próximo passo não é criar outro servidor; é tornar o servidor que já existe mais fácil de encontrar.</strong></p></article>
-  </div>
-</section>
-
-<section class="project mbb6-panel" id="b6-4">
-  <div class="projectHead"><span class="badge">6.4</span><div><h2>mDNS: encontrando o ESP32 por nome</h2><p><strong>mDNS</strong> significa <em>Multicast DNS</em>. Ele permite descobrir nomes dentro da rede local sem depender de um servidor DNS configurado manualmente.</p></div></div>
-  <div class="mbb6-context"><strong>Nosso servidor já funciona; agora o problema é de uso.</strong> Digitar um IP como <code>192.168.1.37</code> funciona, mas é pouco amigável e esse número pode mudar. Em vez de decorar endereços, queremos procurar o dispositivo por um nome. <strong>É aqui que o mDNS faz sentido:</strong> ele melhora a forma de encontrar o ESP32 dentro da rede local, sem mudar o circuito nem o servidor HTTP.</div>
-  <div class="cards">
-    <article class="card wide"><h3>1. Do técnico ao utilizável</h3><p>Durante o desenvolvimento, copiar o IP do Monitor Serial é aceitável. Para alguém usar o sistema no dia a dia, porém, lembrar um nome como <code>ambiente-mbb.local</code> é muito mais natural. Nesta etapa não acrescentamos uma nova função ao LED; melhoramos a forma de chegar ao serviço que já existe.</p></article>
-    <article class="card"><h3>2. Como o mDNS funciona</h3><p><strong>DNS</strong> (<em>Domain Name System</em>) relaciona nomes a endereços IP. O mDNS leva essa ideia para a própria rede local usando mensagens multicast.</p><div class="mbb6-route"><span>Navegador procura ambiente-mbb.local</span><b>→</b><span>ESP32 responde com seu IP</span><b>→</b><span>HTTP continua normalmente</span></div><p>O nome facilita encontrar o dispositivo; ele não substitui o endereço IP internamente.</p></article>
-    <article class="card"><h3>3. O que muda e o que não muda</h3><table><tr><th>Antes</th><th>Com mDNS</th></tr><tr><td><code>http://192.168.1.37</code></td><td><code>http://ambiente-mbb.local</code></td></tr></table><p>Nada muda no circuito nem no servidor HTTP. O mDNS acrescenta apenas uma forma mais fácil de localizar o ESP32 na rede local.</p><p class="mbb6-note"><strong><code>.local</code> é local:</strong> esse nome não é um endereço público da Internet.</p></article>
-    <article class="card code wide"><h3>4. Código completo <button type="button" onclick="copyCode('b6-4-code',this)">Copiar</button></h3><pre id="b6-4-code">#include &lt;WiFi.h&gt;
+    <article class="card worked wide"><h3>4. Execute e recolha a evidência</h3><ol>
+      <li>Abra seu projeto no <a href="https://wokwi.com/projects/new/esp32" target="_blank" rel="noopener noreferrer">Wokwi</a>, com o circuito-base. Não instale bibliotecas extras nem informe a senha real da sua rede.</li>
+      <li>Cole o programa, inicie a simulação e acompanhe o Monitor Serial em <strong>115200</strong>. Procure o IP virtual e a mensagem <code>Inicializacao mDNS aceita; servico HTTP configurado.</code></li>
+      <li>Aguarde pelo menos <strong>10 segundos no relógio da simulação</strong>, contado desde o início. Com o simulador lento, isso demora mais no relógio do computador.</li>
+      <li>Enquanto o Wi-Fi estiver conectado, clique no ícone de Wi-Fi da área de simulação e escolha <strong>Download PCAP file</strong> (baixar arquivo PCAP). PCAP é um arquivo de captura de pacotes, não uma imagem.</li>
+      <li>Selecione o arquivo baixado no leitor abaixo. Procure <code>ambiente-mbb.local</code>, o IP virtual e o serviço na porta 80.</li>
+    </ol><p class="mbb6-note"><strong>Se aparecer erro de gateway:</strong> pare e reinicie a simulação. Só exporte após reconectar e esperar novamente. Uma mensagem antiga no Serial não prova que a rede permaneceu conectada.</p></article>
+    <article class="card wide mbb6-pcap"><h3>5. Abra sua captura, sem instalar um analisador</h3><label for="mdns-pcap-arquivo"><strong>Arquivo PCAP exportado pelo Wokwi</strong></label><input id="mdns-pcap-arquivo" type="file" accept=".pcap,.cap,application/vnd.tcpdump.pcap" aria-describedby="mdns-pcap-ajuda"><p id="mdns-pcap-ajuda">A leitura acontece neste navegador; o arquivo não é enviado ao site. Limite: 5 MB. O leitor aceita PCAP clássico Ethernet ou Wi-Fi 802.11 e examina mDNS em IPv4/UDP; PCAPNG e outros formatos exigem um analisador próprio.</p><div id="mdns-pcap-resultado" role="status" aria-live="polite">Selecione sua captura para ver os registros que ela realmente contém.</div><details><summary>Como interpretar os registros</summary><p><strong>A</strong> relaciona um nome a um IPv4. <strong>SRV</strong> informa o computador e a porta do serviço. <strong>PTR</strong> ajuda a descobrir a instância do serviço. <code>_http._tcp.local</code> identifica o tipo de serviço HTTP sobre TCP. Essa descoberta de serviços é chamada <strong>DNS-SD</strong>.</p><p>Uma <strong>sondagem</strong> é uma pergunta enviada pelo próprio dispositivo antes de assumir o nome, para verificar conflitos. Não a confunda com uma consulta feita por um segundo aparelho. Um <strong>anúncio</strong> publica registros sem depender dessa consulta externa.</p><p>Na captura da validação desta aula foram observados seis pacotes mDNS: três sondagens e três anúncios. A quantidade da sua captura pode variar. Se não aparecer nenhum, verifique o código, espere mais tempo de simulação e exporte novamente. Uma captura vazia não comprova que o protocolo nunca funciona.</p></details></article>
+    <article class="card wide"><h3>6. O que conseguimos comprovar?</h3><div class="mbb6-table-scroll"><table><thead><tr><th scope="col">Evidência</th><th scope="col">Conclusão possível</th></tr></thead><tbody>
+      <tr><td>Mensagem no Serial</td><td>A execução passou pela inicialização. Ainda não vimos um pacote nem outro cliente.</td></tr>
+      <tr><td>Captura com anúncios A e SRV</td><td>A pilha simulada emitiu mensagens mDNS com nome, IP e serviço. Isso foi observado no Wokwi gratuito.</td></tr>
+      <tr><td>Outro processo consulta e recebe a resposta</td><td>Há descoberta/resolução real entre participantes. A atividade opcional no computador permite verificar isso.</td></tr>
+      <tr><td>Navegador abre o nome <code>.local</code></td><td>Além da resolução pelo sistema do cliente, o servidor HTTP foi alcançado. Isso depende do dispositivo e da rede; não foi comprovado no Wokwi público.</td></tr>
+    </tbody></table></div><div class="mbb6-checkpoint"><strong>Checkpoint sem placa:</strong> anote o nome, o IP e a porta encontrados na sua captura. Depois pare a simulação, troque apenas <code>"ambiente-mbb"</code> por <code>"ambiente-sala"</code> em <code>MDNS.begin()</code>, execute e exporte outra captura. O que mudou nos registros A e SRV? Por que nenhum desses anúncios, sozinho, prova que seu navegador resolve o nome?</div></article>
+    <article class="card wide"><h3>7. Consulta mDNS real no computador — opcional</h3><details><summary>Quero experimentar pergunta e resposta sem ESP32 físico</summary><p>Usaremos dois processos Python: um anuncia e outro consulta por mDNS na interface local do <strong>mesmo computador</strong>. São mensagens de rede reais, sem ESP32 e sem acessar o Wokwi. Não é uma comprovação da resolução <code>.local</code> nativa do navegador nem de comunicação entre dois computadores da rede.</p><p><a href="../downloads/arduino/ambiente-mbb-rede-local.zip" download>Baixar os programas completos da bancada</a>. Extraia o ZIP em uma pasta. É preciso <strong>Python 3</strong>, gratuito; veja a preparação na etapa 6.5. No Windows, abra o PowerShell nessa pasta: na barra de endereço do Explorador, digite <code>powershell</code> e pressione Enter.</p><p>Primeiro, crie um ambiente separado e instale <strong>zeroconf</strong>, a biblioteca que implementa mDNS/DNS-SD. Execute uma linha por vez:</p>
+      <div class="mbb6-terminal"><button type="button" onclick="copyCode('b6-4-python-instalar',this)">Copiar</button><pre id="b6-4-python-instalar">py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install zeroconf==0.151.3</pre></div>
+      <p><code>-m venv .venv</code> cria o ambiente na pasta <code>.venv</code>; <code>-m pip install</code> instala a biblioteca nesse ambiente. Não é necessário ativá-lo nem alterar a política do PowerShell. Abra <strong>três terminais nessa mesma pasta</strong>:</p>
+      <div class="mbb6-table-scroll"><table><thead><tr><th scope="col">Terminal</th><th scope="col">Comando e resultado</th></tr></thead><tbody><tr><td>1 — página</td><td><code>.\.venv\Scripts\python.exe servidor.py</code><br>Abra <code>http://127.0.0.1:8000/</code>; verá o aviso fictício Ambiente MbB.</td></tr><tr><td>2 — anúncio</td><td><code>.\.venv\Scripts\python.exe mdns_local.py anunciar</code><br>Espere <code>Anúncio ativo</code>. Deixe aberto.</td></tr><tr><td>3 — consulta</td><td><code>.\.venv\Scripts\python.exe mdns_local.py consultar</code><br>Deve mostrar nome <code>ambiente-mbb.local.</code>, endereço <code>127.0.0.1</code>, porta <code>8000</code> e a URL descoberta.</td></tr></tbody></table></div>
+      <p>Abra a URL que a consulta devolveu. Depois pressione <code>Ctrl+C</code> <strong>somente no terminal 2</strong>, aguarde alguns segundos e execute uma nova consulta no terminal 3: deverá aparecer <code>Nenhuma resposta em 5 segundos</code>. O servidor HTTP no terminal 1 continua funcionando pelo IP. Assim você separa descobrir o serviço de atendê-lo.</p><p><strong>Linux/macOS:</strong> use <code>python3 -m venv .venv</code> e substitua <code>.\.venv\Scripts\python.exe</code> por <code>./.venv/bin/python</code> nos demais comandos. Em algumas distribuições, o componente <code>venv</code> precisa ser disponibilizado pelo responsável do computador.</p><p><strong>Se a consulta falhar:</strong> confira a instalação no mesmo ambiente, o anúncio ativo e a ausência de outra instância com o mesmo nome. Bloqueios de multicast/UDP 5353 ou da interface local podem impedir a atividade. Não desative proteções da máquina; registre a limitação e conclua a investigação do PCAP.</p><p class="mbb6-note">Esta consulta e o teste de ausência de resposta foram executados em Linux. Os comandos do Windows seguem a sintaxe do Python/PowerShell, mas não foram executados nativamente no Windows nesta validação.</p></details></article>
+    <article class="card code wide"><h3>8. Com ESP32 físico — prática adicional</h3><details><summary>Programa completo e teste na rede local</summary><p>Use o mesmo LED no GPIO 23. No código abaixo, substitua <code>NOME_DA_REDE</code> e <code>SENHA_DA_REDE</code>; não compartilhe o arquivo com a senha real. Grave pela Arduino IDE com o pacote ESP32 da Espressif. As três bibliotecas já fazem parte desse pacote.</p><button type="button" onclick="copyCode('b6-4-code',this)">Copiar</button><pre id="b6-4-code">#include &lt;WiFi.h&gt;
 #include &lt;WebServer.h&gt;
 #include &lt;ESPmDNS.h&gt;
 
@@ -843,12 +1004,14 @@ void setup() {
 
   Serial.println();
   Serial.println("Wi-Fi conectado.");
+  Serial.print("IP local: ");
+  Serial.println(WiFi.localIP());
 
   if (!MDNS.begin("ambiente-mbb")) {
     Serial.println("Falha ao iniciar mDNS.");
   } else {
     MDNS.addService("http", "tcp", 80);
-    Serial.println("mDNS iniciado.");
+    Serial.println("Inicializacao mDNS aceita; teste o nome em outro aparelho.");
     Serial.println("Abra: http://ambiente-mbb.local");
   }
 
@@ -860,38 +1023,111 @@ void setup() {
 
 void loop() {
   servidor.handleClient();
-}</pre></article>
-    <article class="card wide"><h3>5. Entendendo as novidades</h3><div class="explain"><p><code>#include &lt;ESPmDNS.h&gt;</code> disponibiliza os recursos de mDNS.</p><p><code>MDNS.begin("ambiente-mbb")</code> registra o nome-base; o acesso será feito como <code>ambiente-mbb.local</code>.</p><p><code>MDNS.addService("http", "tcp", 80)</code> anuncia que o dispositivo oferece HTTP na porta 80 usando <strong>TCP</strong> (<em>Transmission Control Protocol</em>). O papel do TCP será aprofundado no módulo de Protocolos.</p></div></article>
-    <article class="card"><h3>6. Testando</h3><ol><li>Primeiro confirme que o acesso pelo IP ainda funciona.</li><li>No mesmo dispositivo, abra <code>http://ambiente-mbb.local</code>.</li><li>Ligue e desligue o LED.</li><li>Compare a experiência com o acesso pelo IP.</li></ol></article>
-    <article class="card worked"><h3>7. Resultado esperado</h3><p>O mesmo servidor HTTP passa a ser acessado por um nome local legível, sem precisar digitar o endereço IP.</p><div class="mbb6-checkpoint"><strong>Checkpoint mDNS:</strong> primeiro confirme o servidor pelo IP. Se <code>ambiente-mbb.local</code> também abrir, a etapa está completa. Se o IP funciona e <code>.local</code> não, o código do servidor pode estar correto e a limitação pode estar na resolução mDNS do dispositivo ou da rede.</div></article>
-    <article class="card errors wide"><h3>8. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>O IP funciona, mas .local não</td><td>O servidor HTTP pode estar correto. O dispositivo, sistema operacional ou rede pode não resolver mDNS da forma esperada.</td></tr><tr><td>Nem IP nem .local funcionam</td><td>Volte ao teste de Wi-Fi e confirme que os dispositivos estão na mesma rede.</td></tr></table></article>
-    <article class="card worked wide mbb6-bridge"><h3>9. Próximo problema</h3><p>O nome <code>ambiente-mbb.local</code> melhorou a experiência, mas ainda existe uma fronteira: a rede local. <strong>Se o celular estiver em outra rede, esse nome não chega até o ESP32.</strong> Para um teste externo temporário, precisaremos criar outro caminho.</p></article>
+}</pre><ol><li>Abra o Monitor Serial em 115200 e anote o IP.</li><li>No computador ou celular da mesma rede, confirme primeiro <code>http://IP_DO_ESP32</code>, substituindo o marcador pelo número mostrado.</li><li>Abra <code>http://ambiente-mbb.local/</code> num dispositivo com suporte a mDNS. Se abrir, compare com o acesso pelo IP e teste o LED.</li></ol><p>Se o IP abrir e o nome falhar, investigue suporte mDNS do cliente, nomes duplicados e isolamento entre participantes da rede. Se nenhum abrir, confira Wi-Fi, IP e servidor HTTP. Não exponha essas rotas de controle sem autenticação por um túnel.</p><div class="mbb6-checkpoint"><strong>Checkpoint com placa:</strong> explique quais evidências você coletou: inicialização, anúncios, resolução pelo cliente e acesso HTTP. O código da placa não substitui essas verificações.</div></details></article>
+    <article class="card wide mbb6-bridge"><h3>9. O nome ainda tem uma fronteira</h3><p>Encontrar um nome local não torna o serviço público. Na próxima etapa, vamos criar e interromper um caminho temporário até um servidor do computador, sem depender de placa ou gateway pago.</p><details><summary>Fontes e limites conferidos</summary><p><a href="https://docs.wokwi.com/guides/esp32-wifi" target="_blank" rel="noopener noreferrer">Wokwi: rede, gateways e PCAP</a> · <a href="https://github.com/espressif/arduino-esp32/tree/master/libraries/ESPmDNS" target="_blank" rel="noopener noreferrer">Espressif: ESPmDNS</a> · <a href="https://www.rfc-editor.org/info/rfc6762/" target="_blank" rel="noopener noreferrer">RFC 6762</a> · <a href="https://python-zeroconf.readthedocs.io/en/stable/" target="_blank" rel="noopener noreferrer">Python Zeroconf</a>.</p><p>Não encontramos uma forma gratuita documentada e comprovada de fazer consultas mDNS entre ESP32 simulados em projetos Wokwi separados. A captura evidencia a emissão pelo simulador; a consulta Python evidencia outro experimento, no computador.</p></details></article>
   </div>
 </section>
 
-<section class="project mbb6-panel" id="b6-5">
-  <div class="projectHead"><span class="badge">6.5</span><div><h2>Tunelamento: acesso temporário de fora da rede</h2><p>Um serviço local pode ser exposto temporariamente por meio de um túnel criado por um computador da mesma rede.</p></div></div>
-  <div class="mbb6-context"><strong>Até aqui tudo funciona dentro da rede local.</strong> Mas imagine que você queira demonstrar o protótipo usando a Internet móvel do celular ou permitir um acesso externo apenas durante um teste. O endereço IP local e o nome <code>.local</code> não resolvem isso. <strong>O túnel entra justamente para criar um caminho temporário de fora para dentro</strong>, sem transformar esta experiência didática em uma publicação permanente. E, ao fazer isso, surge naturalmente a próxima preocupação: segurança.</div>
+<section class="project mbb6-panel" id="b6-5" data-mbb-rede-pratica="1">
+  <div class="projectHead"><span class="badge">6.5</span><div><h2>Tunelamento: abrir e fechar um caminho temporário</h2><p>Sem ESP32 físico: um servidor no computador, um aviso fictício e uma verificação de acesso externo.</p></div></div>
+  <div class="mbb6-context">O IP privado e o nome <code>.local</code> não bastam para alguém de outra rede alcançar nosso serviço. Vamos demonstrar um <strong>túnel reverso</strong>: o computador inicia uma conexão de saída com um intermediário, que encaminha pedidos externos de volta ao serviço local.</div>
   <div class="cards">
-    <article class="card wide"><h3>1. Quando isso é útil?</h3><p>Um túnel pode ser útil para demonstrar temporariamente um protótipo, testar o acesso a partir de outra rede ou permitir que alguém autorizado veja um serviço local por um período curto. Ele não é uma solução automática para publicar um produto definitivo; aqui serve para compreender a passagem de <strong>acesso local</strong> para <strong>acesso externo</strong>.</p></article>
-    <article class="card wide"><h3>2. Como o túnel funciona</h3><p>Um <strong>túnel</strong> cria um caminho intermediário entre um endereço acessível pela Internet e um serviço que continua dentro da rede local. Neste exemplo, usamos <strong>SSH</strong> (<em>Secure Shell</em>) para manter esse caminho.</p><div class="mbb6-route"><span>Internet</span><b>→</b><span>localhost.run</span><b>→ túnel SSH →</b><span>Computador</span><b>→ rede local →</b><span>ESP32</span></div><p class="mbb6-note"><strong>O ESP32 não fica diretamente na Internet.</strong> O computador da mesma rede cria o túnel e encaminha as requisições recebidas até o servidor HTTP da placa. Ainda assim, o serviço passa a poder ser alcançado da Internet; isso amplia sua exposição.</p></article>
-    <article class="card"><h3>3. Antes de criar o túnel</h3><ol><li>Deixe o servidor HTTP do ESP32 funcionando.</li><li>Anote o IP mostrado no Monitor Serial.</li><li>No computador da mesma rede, abra <code>http://IP_DO_ESP32</code>.</li><li>Somente continue se a página abrir e controlar o LED normalmente.</li></ol></article>
-    <article class="card" data-mbb6-role="tunel-ferramenta"><h3>4. Ferramenta para o teste</h3><p>Usaremos <strong>localhost.run</strong>, um serviço que recebe a conexão SSH do computador e fornece um endereço público temporário. Outras ferramentas de tunelamento existem, mas não precisamos trocar de serviço para compreender o caminho dos dados.</p></article>
-    <article class="card code wide mbb6-terminal"><h3>5. Conferir o SSH <button type="button" onclick="copyCode('b6-5-ssh-code',this)">Copiar</button></h3><pre id="b6-5-ssh-code">ssh -V</pre></article>
-    <article class="card code wide mbb6-terminal"><h3>6. Criar o túnel <button type="button" onclick="copyCode('b6-5-tunnel-code',this)">Copiar</button></h3><pre id="b6-5-tunnel-code">ssh -R 80:192.168.1.37:80 localhost.run</pre><div class="explain"><p>Troque <code>192.168.1.37</code> pelo IP real do seu ESP32.</p><p><code>-R</code> cria um encaminhamento remoto: o endereço público recebido pelo serviço será encaminhado pelo computador até a porta 80 do ESP32.</p></div></article>
-    <article class="card"><h3>7. Testando fora da rede local</h3><ol><li>Execute o comando. Na primeira conexão, o SSH pode perguntar se você confia na identidade do servidor; confira a identidade e a impressão digital da chave com a documentação oficial do serviço antes de aceitar. Se não conseguir verificar ou se aparecer alerta de chave alterada, interrompa e peça orientação ao professor; não desative a verificação de identidade.</li><li>Mantenha o terminal aberto.</li><li>Copie a URL pública exibida pelo serviço.</li><li>No celular, desligue o Wi-Fi e use a Internet móvel.</li><li>Abra a URL pública.</li><li>Ligue e desligue o LED.</li><li>Ao terminar, volte ao terminal e pressione <code>Ctrl+C</code> para encerrar o túnel.</li></ol></article>
-    <article class="card worked"><h3>8. Resultado esperado</h3><p>A página do ESP32 pode ser alcançada temporariamente a partir de outra rede enquanto o túnel estiver ativo. Ao encerrar o comando SSH, o caminho público deixa de encaminhar as requisições para o ESP32.</p><div class="mbb6-checkpoint"><strong>Checkpoint do túnel:</strong> o computador deve abrir o ESP32 localmente antes do túnel; depois, um celular em outra rede deve abrir a URL pública enquanto o terminal estiver ativo. No Wokwi padrão, este teste não é esperado.</div></article>
-    <article class="card errors wide"><h3>9. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>O comando SSH não existe</td><td>Confira se o cliente OpenSSH está disponível no sistema.</td></tr><tr><td>O túnel abre, mas a página não</td><td>Confirme que o computador ainda consegue abrir diretamente o IP do ESP32.</td></tr><tr><td>A URL parou de funcionar</td><td>O túnel depende do terminal aberto e a URL gratuita é temporária.</td></tr><tr><td>A rede bloqueia a conexão SSH</td><td>Teste em outra rede ou use outra ferramenta de tunelamento permitida no ambiente.</td></tr></table></article>
-    <article class="card exercise wide"><h3>10. Limite desta experiência</h3><p>Exponha somente o <strong>LED didático</strong>. Não use esta atividade para abrir temporariamente fechaduras, portões, câmeras, relés de potência ou dados pessoais. Tornar um serviço acessível externamente cria também uma nova pergunta: <strong>quem pode acessá-lo?</strong></p></article>
-    <article class="card worked wide"><h3>11. O que o Bloco 6 construiu</h3><div class="mbb6-route"><span>Bluetooth</span><b>→</b><span>Wi-Fi</span><b>→</b><span>HTTP</span><b>→</b><span>mDNS</span><b>→</b><span>Túnel</span></div><p>O sistema deixou de ser apenas local. Agora consegue conversar com dispositivos próximos, entrar em uma rede, atender ou fazer requisições Web, ser encontrado por nome e, em uma experiência controlada, ser acessado temporariamente de fora da rede.</p></article>
-    <article class="card wide mbb6-bridge"><h3>12. Ponte para Internet das Coisas</h3><p>Temos um objeto físico, um programa embarcado e conectividade. <strong>Quando esse conjunto passa a ser considerado Internet das Coisas? O que diferencia um dispositivo conectado de um sistema IoT?</strong> Essa será a próxima etapa.</p></article>
+    <article class="card wide"><h3>1. Escolha a bancada que você consegue executar</h3><p><strong>Wokwi gratuito:</strong> o gateway público permite conexões de saída TCP/UDP, mas não conexões de entrada ao servidor simulado. Um GET enviado pelo ESP32 a um site externo continua sendo uma consulta de cliente; não é um túnel até o ESP32. Não use <code>10.10.0.2</code> como destino no computador.</p><p>O <strong>Private IoT Gateway</strong> do Wokwi é um recurso pago, com acesso de entrada/encaminhamento de portas e acesso à rede local. Ele não faz parte desta atividade. Aqui, o servidor será o <strong>computador</strong>: demonstramos tunelamento real, sem afirmar que estamos controlando uma placa.</p><p class="mbb6-note"><strong>O que publicar:</strong> somente o aviso fictício fornecido abaixo. Ele não lista pastas, não entrega arquivos do computador e não possui comandos de dispositivos. A URL será pública para quem a obtiver. HTTPS protege o transporte, mas não identifica nem autoriza o visitante. Não aponte o túnel para o servidor do LED da etapa 6.3.</p></article>
+    <article class="card wide"><h3>2. Prepare a pasta de trabalho</h3><ol>
+      <li>Use um computador em que o teste seja autorizado. <a href="../downloads/arduino/ambiente-mbb-rede-local.zip" download>Baixe os programas da bancada</a> e extraia o ZIP. Os arquivos <code>servidor.py</code> e <code>encaminhador_local.py</code> serão usados aqui; <code>mdns_local.py</code> pertence à experiência opcional anterior.</li>
+      <li>É preciso <strong>Python 3</strong>. No Windows, abra o PowerShell na pasta extraída: digite <code>powershell</code> na barra de endereço do Explorador e pressione Enter. Execute <code>py --version</code>. Se não existir, obtenha o instalador gratuito em <a href="https://www.python.org/downloads/" target="_blank" rel="noopener noreferrer">python.org</a>, seguindo a política do computador, e reabra o terminal. Não é necessário instalar bibliotecas Python para esta etapa.</li>
+      <li>Para o túnel externo, baixe o executável oficial <a href="https://github.com/cloudflare/cloudflared/releases/download/2026.10.5/cloudflared-windows-amd64.exe" target="_blank" rel="noopener noreferrer">cloudflared para Windows x64</a> e coloque-o nessa mesma pasta, mantendo o nome <code>cloudflared-windows-amd64.exe</code>. <strong>Quick Tunnels</strong> é a modalidade gratuita: não requer conta nem cartão. O programa é executado no terminal, sem instalar um serviço permanente.</li>
+    </ol><p>Se Python já estiver disponível apenas como <code>python</code>, use esse nome no lugar de <code>py</code>. Em <strong>Linux/macOS</strong>, verifique com <code>python3 --version</code> e use <code>python3</code> nos comandos. Para o cloudflared, obtenha a versão da sua arquitetura pela <a href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/" target="_blank" rel="noopener noreferrer">página oficial de downloads</a>. No Linux, marque o binário como executável com <code>chmod +x cloudflared-linux-amd64</code>; no macOS, extraia o arquivo baixado. Execute o binário correspondente como <code>./cloudflared-linux-amd64</code> ou <code>./cloudflared</code> em vez do comando Windows.</p><p class="mbb6-note"><strong>Sem permissão para baixar/executar a ferramenta ou com rede bloqueada?</strong> Faça os passos do servidor local e a alternativa de encaminhamento local no item 7. Não altere firewall, roteador, proteções ou regras da escola para viabilizar o teste.</p></article>
+    <article class="card code wide"><h3>3. Servidor completo — no computador <button type="button" onclick="copyCode('b6-5-python-code',this)">Copiar</button></h3><p>O ZIP já contém este código em <code>servidor.py</code>. Se preferir digitá-lo, salve como texto UTF-8 com esse nome, sem acrescentar <code>.txt</code>.</p><pre id="b6-5-python-code">"""Aviso fictício e somente leitura. Não publica arquivos do computador."""
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+PAGINA = """&lt;!doctype html&gt;
+&lt;html lang="pt-BR"&gt;&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
+&lt;title&gt;Ambiente MbB — aviso de teste&lt;/title&gt;
+&lt;style&gt;body{font-family:Arial;max-width:650px;margin:3rem auto;padding:1rem;
+background:#eef8fa;color:#134956}article{background:white;padding:2rem;border-radius:1rem}&lt;/style&gt;
+&lt;article&gt;&lt;h1&gt;Ambiente MbB&lt;/h1&gt;&lt;p&gt;Mensagem fictícia: bancada disponível para estudo.&lt;/p&gt;
+&lt;p&gt;Este servidor está no computador. Ele não controla um ESP32.&lt;/p&gt;&lt;/article&gt;&lt;/html&gt;""".encode("utf-8")
+
+
+class PaginaDeTeste(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path != "/":
+            self.send_error(404, "Caminho inexistente")
+            return
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(PAGINA)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(PAGINA)
+        print("Pedido GET / atendido.", flush=True)
+
+    def log_message(self, formato, *valores):
+        pass  # Não registra IPs nem cabeçalhos dos visitantes.
+
+
+if __name__ == "__main__":
+    servidor = ThreadingHTTPServer(("127.0.0.1", 8000), PaginaDeTeste)
+    print("Abra http://127.0.0.1:8000/ neste computador. Ctrl+C encerra.", flush=True)
+    try:
+        servidor.serve_forever()
+    except KeyboardInterrupt:
+        print("Servidor encerrado.")
+    finally:
+        servidor.server_close()</pre><details><summary>Entenda o servidor antes de executá-lo</summary><p><code>http.server</code> é a biblioteca HTTP do próprio Python. <code>BaseHTTPRequestHandler</code> permite definir a resposta e <code>ThreadingHTTPServer</code> atende pedidos. <code>PAGINA</code> guarda apenas o aviso fictício, convertido para bytes UTF-8 por <code>.encode()</code>.</p><p><code>do_GET()</code> atende a leitura da página; só o caminho <code>/</code> recebe status <code>200</code>. Outros caminhos recebem <code>404</code>. Não usamos o servidor que publica automaticamente uma pasta. <code>Content-Type</code> informa HTML/UTF-8, <code>Content-Length</code> informa o tamanho e <code>Cache-Control: no-store</code> pede que a resposta não seja armazenada.</p><p><code>127.0.0.1</code> é a interface local do computador, também conhecida como <em>loopback</em>; <code>8000</code> é a porta escolhida. <code>serve_forever()</code> aguarda pedidos até <code>Ctrl+C</code>; <code>finally</code> garante o fechamento da porta. O programa não é um servidor de produção.</p></details></article>
+    <article class="card worked wide"><h3>4. Primeiro, faça funcionar localmente</h3><p>No <strong>terminal 1</strong>, dentro da pasta extraída, execute:</p><div class="mbb6-terminal"><button type="button" onclick="copyCode('b6-5-local-code',this)">Copiar</button><pre id="b6-5-local-code">py servidor.py</pre></div><p>Deixe esse terminal aberto. No navegador <strong>desse computador</strong>, acesse <code>http://127.0.0.1:8000/</code>. Deve aparecer <strong>Ambiente MbB</strong> e <strong>Mensagem fictícia: bancada disponível para estudo.</strong> Cada acesso à página gera <code>Pedido GET / atendido.</code> no terminal.</p><div class="mbb6-checkpoint"><strong>Checkpoint local:</strong> a página abriu? Se não, resolva essa etapa antes de criar o túnel. No celular, <code>localhost</code> ou <code>127.0.0.1</code> aponta para o próprio celular, não para este computador.</div></article>
+    <article class="card wide"><h3>5. Crie o caminho externo</h3><p id="b6-5-ssh-code">Abra um <strong>terminal 2 na mesma pasta</strong>. Confira o cliente com <code>.\cloudflared-windows-amd64.exe --version</code>; depois execute:</p><div class="mbb6-terminal"><button type="button" onclick="copyCode('b6-5-tunnel-code',this)">Copiar</button><pre id="b6-5-tunnel-code">.\cloudflared-windows-amd64.exe tunnel --url http://127.0.0.1:8000 --protocol http2</pre></div><p><code>.\</code> significa “nesta pasta” no PowerShell; <code>tunnel</code> inicia o cliente; <code>--url</code> indica o serviço local que receberá os pedidos. <code>--protocol http2</code> escolhe HTTP/2 para a conexão do cliente com a Cloudflare. Isso não transforma o servidor local em HTTPS.</p><p>O cliente deve fornecer uma URL HTTPS aleatória terminada em <code>.trycloudflare.com</code>. Aguarde a indicação de conexão estabelecida; receber a URL, sozinho, não comprova o acesso. Copie a <strong>URL real exibida</strong>, não o endereço de outro aluno. Mantenha os dois terminais abertos.</p><p>No navegador, abra essa URL: deve aparecer o mesmo aviso. Se estiver autorizado e tiver outra rede disponível, use um celular com Wi-Fi desligado e dados móveis para repetir o acesso. Isso acrescenta uma verificação independente do computador. Não é necessário contratar dados móveis para concluir a bancada.</p><div class="mbb6-route"><span>Navegador externo</span><b>→ HTTPS →</b><span>Cloudflare</span><b>→ conexão do cloudflared →</b><span>Computador: porta 8000</span></div><p>O computador iniciou a conexão com o intermediário; as requisições externas percorrem esse caminho e chegam ao Python. O ESP32 e o nome <code>.local</code> não participam deste experimento.</p></article>
+    <article class="card worked wide"><h3>6. Feche o caminho e comprove a diferença</h3><ol><li>No <strong>terminal 2</strong>, pressione <code>Ctrl+C</code> e aguarde o cliente encerrar.</li><li>Abra a URL pública novamente, em uma nova aba privada ou atualizando a página. Ela deve deixar de entregar o aviso; a mensagem de erro e o tempo de atualização podem variar conforme o serviço. Uma aba já desenhada na tela não é uma nova requisição.</li><li>No computador, recarregue <code>http://127.0.0.1:8000/</code>: deve continuar funcionando, pois o Python no terminal 1 ainda está aberto.</li><li>Encerre também o <strong>terminal 1</strong> com <code>Ctrl+C</code>. Agora o acesso local também deve falhar.</li></ol><div class="mbb6-checkpoint"><strong>Checkpoint do túnel:</strong> registre quatro estados: local antes do túnel; público durante; público depois de encerrar; local depois de encerrar só o túnel. Qual processo você fechou em cada teste? Por que parar o túnel não desliga automaticamente o servidor?</div><p class="mbb6-note">Quick Tunnels é destinado a testes, não tem garantia de disponibilidade e fornece endereço temporário. Se iniciar novamente, confira a nova URL. Não deixe o experimento aberto após a aula.</p></article>
+    <article class="card wide"><h3>7. Se o túnel externo não estiver disponível</h3><p>Você ainda pode observar <strong>encaminhamento HTTP real dentro do computador</strong>, sem instalar o cloudflared. Esta alternativa não cria um túnel público nem demonstra criptografia ou acesso de outra rede; permite investigar quem recebe e quem repassa o pedido.</p><p>Inicie <code>py servidor.py</code> no terminal 1. No terminal 2, execute:</p><div class="mbb6-terminal"><button type="button" onclick="copyCode('b6-5-ponte-code',this)">Copiar</button><pre id="b6-5-ponte-code">py encaminhador_local.py</pre></div><ol><li>Abra <code>http://127.0.0.1:9000/</code>. O encaminhador recebe na porta 9000 e busca a página na porta 8000.</li><li>Compare com <code>http://127.0.0.1:8000/</code> e observe os registros dos dois terminais.</li><li>Pare somente o encaminhador com <code>Ctrl+C</code>. Refaça os acessos: 9000 deve falhar e 8000 continuar respondendo.</li><li>Encerre o servidor. Explique onde o caminho foi interrompido, sem dizer que publicou algo na Internet.</li></ol><p>O programa completo está no ZIP e pode ser aberto em um editor de texto. Se o computador nem permitir Python, registre essa restrição: ler o código não equivale a executar o encaminhamento.</p></article>
+    <article class="card errors wide"><h3>8. Quando não funcionar</h3><div class="mbb6-table-scroll"><table><thead><tr><th scope="col">O que apareceu</th><th scope="col">O que verificar</th></tr></thead><tbody><tr><td>Comando não encontrado / arquivo inexistente</td><td>Confira o Python, a pasta atual, os nomes e se o ZIP foi extraído. No PowerShell, o executável da pasta precisa de <code>.\</code>.</td></tr><tr><td>Porta 8000 ou 9000 em uso</td><td>Encerre apenas uma instância anterior desta bancada. Não finalize processos desconhecidos; peça orientação se a porta pertencer a outro programa.</td></tr><tr><td>Local abre, público não</td><td>Confira os dois processos, a URL atual e o destino <code>http://127.0.0.1:8000</code>. Aguarde a conexão do cliente. Falhas do provedor ou bloqueios da rede pedem a alternativa local, não mudanças de proteção.</td></tr><tr><td>cloudflared menciona configuração existente</td><td>Quick Tunnels pode conflitar com um <code>config.yaml</code> prévio na pasta de configuração do cliente. Não sobrescreva a configuração de outro projeto; use a alternativa local ou peça ajuda ao responsável.</td></tr><tr><td>502 no encaminhador local</td><td>O processo da porta 9000 iniciou, mas não alcançou o servidor da porta 8000. Reabra o terminal 1 e confirme o acesso direto.</td></tr></tbody></table></div></article>
+    <article class="card code wide"><h3>9. Com ESP32 físico — opção somente leitura</h3><details><summary>Repetir o mecanismo com o servidor HTTP da placa</summary><p>Esta opção mantém o circuito-base, mas substitui temporariamente o programa de controle por um <strong>aviso fictício sem rotas de comando</strong>. O LED fica desligado. Primeiro configure Wi-Fi, grave e confirme a página pelo IP na mesma rede. Não reutilize as rotas <code>/ligar</code> e <code>/desligar</code> no túnel público.</p><button type="button" onclick="copyCode('b6-5-fisico-code',this)">Copiar</button><pre id="b6-5-fisico-code">#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+
+const char* ssid = "NOME_DA_REDE";
+const char* senha = "SENHA_DA_REDE";
+const int LED = 23;
+WebServer servidor(80);
+
+void mostrarAviso() {
+  servidor.send(200, "text/html; charset=utf-8",
+    "&lt;!doctype html&gt;&lt;html lang='pt-BR'&gt;&lt;meta charset='utf-8'&gt;"
+    "&lt;meta name='viewport' content='width=device-width,initial-scale=1'&gt;"
+    "&lt;h1&gt;Ambiente MbB&lt;/h1&gt;&lt;p&gt;Aviso fictício do ESP32.&lt;/p&gt;"
+    "&lt;p&gt;Somente leitura: nenhum comando de dispositivo.&lt;/p&gt;&lt;/html&gt;");
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(LED, OUTPUT);
+  digitalWrite(LED, LOW);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, senha);
+  Serial.print("Conectando");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.print("IP local: ");
+  Serial.println(WiFi.localIP());
+  servidor.on("/", mostrarAviso);
+  servidor.begin();
+}
+
+void loop() {
+  servidor.handleClient();
+}</pre><p>Depois de confirmar o acesso local, no computador que alcança a placa, use o comando abaixo, substituindo <code>IP_DO_ESP32</code> pelo IP mostrado no Serial. O cliente do túnel continua sendo executado <strong>no computador</strong>.</p><div class="mbb6-terminal"><button type="button" onclick="copyCode('b6-5-fisico-tunel',this)">Copiar</button><pre id="b6-5-fisico-tunel">.\cloudflared-windows-amd64.exe tunnel --url http://IP_DO_ESP32:80 --protocol http2</pre></div><p>Repita a verificação externa e o encerramento do item 6. Essa extensão precisa de placa e rede local compatível; não é requisito para o aluno sem hardware. Para controlar dispositivos remotamente, seria necessário um projeto próprio de autenticação e autorização — HTTPS ou um nome difícil de adivinhar não resolvem isso.</p></details></article>
+    <article class="card wide mbb6-bridge"><h3>10. Do Ambiente MbB à Internet das Coisas</h3><p>Em 6.3 diferenciamos pedir e atender uma página. Em 6.4 investigamos como anunciar e descobrir nomes locais. Agora distinguimos o serviço local do caminho que o torna alcançável externamente — e sabemos interromper esse caminho. Na próxima etapa: o que falta para isso constituir um sistema IoT útil e seguro?</p><details><summary>Por que esta ferramenta? Fontes e validação</summary><p><a href="https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/" target="_blank" rel="noopener noreferrer">Cloudflare Quick Tunnels</a> oferece teste sem conta/cartão com um executável oficial. O <a href="https://localhost.run/docs/forever-free/" target="_blank" rel="noopener noreferrer">localhost.run</a> também documenta túneis gratuitos por SSH, mas exige lidar com a verificação de identidade SSH. O <a href="https://ngrok.com/docs/pricing-limits/free-plan-limits/" target="_blank" rel="noopener noreferrer">ngrok gratuito</a> requer conta e configuração de credenciais. Escolhemos Quick Tunnels para reduzir essas etapas, mantendo a publicação restrita ao aviso fictício.</p><p>Servidor, encaminhamento, acesso público e interrupção do túnel foram testados em Linux isolado, com cloudflared 2026.10.5. Não houve teste nativo no Windows, em rede móvel ou em ESP32 físico. O ensaio externo verifica o mecanismo real, mas não garante disponibilidade em toda rede escolar. <a href="https://docs.python.org/3/library/http.server.html" target="_blank" rel="noopener noreferrer">Referência do servidor HTTP Python</a>.</p></details></article>
   </div>
 </section>
 
 </main>
 </div>
 </div>
-<script src="../js/arduino-conectividade.js?v=20261027-1"></script>
+<script src="../js/arduino-conectividade.js?v=20261028-rede-pratica"></script>
+<script src="../js/arduino-conectividade-mbb-wokwi-20261005.js?v=20261028-rede-pratica" data-mbb-conectividade-wokwi="1"></script>
 <script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>
 <script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body>

@@ -1,0 +1,20 @@
+/* Somente as práticas de rede 6.4/6.5; não altera os demais módulos. */
+:is(#b6-4,#b6-5) .card{min-width:0}
+:is(#b6-4,#b6-5) details{margin-top:1rem;border:1px solid #cbdfe5;border-radius:8px;padding:.85rem 1rem;background:#f7fbfc}
+:is(#b6-4,#b6-5) summary{font-weight:700;cursor:pointer;color:#135c70;line-height:1.5}
+:is(#b6-4,#b6-5) details[open]>summary{margin-bottom:1rem}
+:is(#b6-4,#b6-5) p,:is(#b6-4,#b6-5) li,:is(#b6-4,#b6-5) td{overflow-wrap:anywhere}
+:is(#b6-4,#b6-5) li+li{margin-top:.65rem}
+:is(#b6-4,#b6-5) .mbb6-terminal{background:#f1f5f9;border:1px solid #d6e0e9;border-radius:8px;margin:1rem 0;padding:.75rem;min-width:0}
+:is(#b6-4,#b6-5) .mbb6-terminal pre{background:#f1f5f9;color:#152e45;margin:.5rem 0 0;max-width:100%;overflow-x:auto;white-space:pre}
+:is(#b6-4,#b6-5) .mbb6-terminal button,:is(#b6-4,#b6-5) details>button{padding:.35rem .7rem;border:1px solid #adc4ce;border-radius:5px;background:#fff;color:#15445b;cursor:pointer}
+:is(#b6-4,#b6-5) .mbb6-table-scroll,.mbb6-pcap-scroll{max-width:100%;overflow-x:auto}
+#b6-4 input[type=file]{display:block;max-width:100%;margin:1rem 0;border:1px solid #adc4ce;padding:.65rem;border-radius:6px;background:#fff;color:#143f50}
+#mdns-pcap-resultado{margin-top:1rem;line-height:1.6}
+#mdns-pcap-resultado .mbb6-pcap-scroll{max-height:420px;overflow:auto}
+#mdns-pcap-resultado table{font-size:.9rem;min-width:980px}
+#mdns-pcap-resultado th{position:sticky;top:0;z-index:1}
+#mdns-pcap-resultado td{white-space:nowrap}
+#mdns-pcap-resultado td{vertical-align:top}
+:is(#b6-4,#b6-5) :focus-visible{outline:3px solid #087d9b;outline-offset:3px}
+@media(max-width:640px){:is(#b6-4,#b6-5) details{padding:.65rem}.mbb6-pcap-scroll{border:1px solid #d0dee4}:is(#b6-4,#b6-5) .mbb6-terminal{padding:.5rem}}

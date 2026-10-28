@@ -42,12 +42,19 @@ fs.mkdirSync(dest,{recursive:true});
      summary.etapas.push(result);
      assert(result.active&&!result.drawer,JSON.stringify(result));
      assert(result.overflow<=2&&!result.duplicates.length&&!result.spilled.length,JSON.stringify(result));
-     if(hash!=='#topo'&&name!=='revisao-modulos')assert(result.top>=result.fixedBottom-2,`Âncora encoberta: ${JSON.stringify(result)}`);
+     if(hash!=='#topo'&&name!=='revisao-modulos'&&result.top<result.fixedBottom-2){
+      const debug=await page.locator(hash).evaluate(e=>({scrollMargin:getComputedStyle(e).scrollMarginTop,scrollTop:document.scrollingElement.scrollTop,ancestrais:Array.from((function*(n){for(;n;n=n.parentElement)yield n})(e)).map(n=>({tag:n.tagName,id:n.id,top:n.getBoundingClientRect().top,scroll:n.scrollTop,overflow:getComputedStyle(n).overflow}))}));
+      console.log('DIAGNOSTICO_ANCORA',JSON.stringify(debug));
+      await page.screenshot({path:`${dest}/ancora-falhou.jpg`,type:'jpeg',quality:70});
+      console.log('MBB_EVIDENCIA ancora-falhou.jpg '+fs.readFileSync(`${dest}/ancora-falhou.jpg`).toString('base64'));
+      assert.fail(`Âncora encoberta: ${JSON.stringify(result)}`);
+     }
      const buttons=page.locator(`${hash} button[onclick*="copyCode"]`);
      for(let i=0;i<await buttons.count();i++){
       const button=buttons.nth(i);
       const id=(await button.getAttribute('onclick')).match(/copyCode\('([^']+)'/)[1];
       const text=await page.locator('#'+id).textContent();
+      await button.evaluate(e=>{for(let p=e.parentElement;p;p=p.parentElement)if(p.tagName==="DETAILS")p.open=true;});
       await button.click();
       await page.waitForFunction(({id})=>document.querySelector(`button[onclick*="'${id}'"]`).textContent==='Copiado',{id});
       const clip=await page.evaluate(()=>navigator.clipboard.readText());
@@ -67,6 +74,16 @@ fs.mkdirSync(dest,{recursive:true});
      }
     }
     // Cada recurso visual é carregado ao percorrer as etapas, mesmo quando lazy.
+    for(const img of await page.locator('main img').all()){
+     if(await img.evaluate(e=>e.complete&&e.naturalWidth>0))continue;
+     const panelId=await img.evaluate(e=>e.closest('main > section[id]')?.id);
+     if(panelId&&await page.locator(`#stageMenu a[href="#${panelId}"]`).count()){
+      if(await page.locator('#stageToggle').isVisible())await page.locator('#stageToggle').click();
+      await page.locator(`#stageMenu a[href="#${panelId}"]`).click();
+     }
+     await img.scrollIntoViewIfNeeded();
+     await img.evaluate(e=>e.decode());
+    }
     const images=await page.locator('main img').evaluateAll(es=>es.map(e=>({src:e.getAttribute('src'),ok:e.complete&&e.naturalWidth>0})));
     assert(images.every(e=>e.ok),JSON.stringify(images));
     if(width===1366&&name==='projeto-iot')await page.screenshot({path:`${dest}/projeto-iot-desktop.png`});

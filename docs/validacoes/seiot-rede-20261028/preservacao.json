@@ -1,0 +1,14 @@
+{
+  "base": "168fea611fe768ea7453f755a2c6afde3dae241e",
+  "paineis_identicos": [
+    "b6-0",
+    "b6-prep",
+    "b6-1",
+    "b6-2"
+  ],
+  "codigos_anteriores_preservados": true,
+  "identidades_catalogo_preservadas": 153,
+  "unidades_alteradas": [
+    "mod-pages-arduino-conectividade"
+  ]
+}

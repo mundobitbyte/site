@@ -1,0 +1,53 @@
+[
+  {
+    "width": 390,
+    "pcap": {
+      "quadros": 135,
+      "pacotes": 6,
+      "registros": 30,
+      "scroll": {
+        "cliente": 336,
+        "conteudo": 980,
+        "tab": 0
+      }
+    },
+    "arquivoInvalidoRecusado": true,
+    "envios": 0,
+    "linksLocais": 1,
+    "erros": []
+  },
+  {
+    "width": 768,
+    "pcap": {
+      "quadros": 135,
+      "pacotes": 6,
+      "registros": 30,
+      "scroll": {
+        "cliente": 712,
+        "conteudo": 980,
+        "tab": 0
+      }
+    },
+    "arquivoInvalidoRecusado": true,
+    "envios": 0,
+    "linksLocais": 1,
+    "erros": []
+  },
+  {
+    "width": 1366,
+    "pcap": {
+      "quadros": 135,
+      "pacotes": 6,
+      "registros": 30,
+      "scroll": {
+        "cliente": 1116,
+        "conteudo": 1116,
+        "tab": 0
+      }
+    },
+    "arquivoInvalidoRecusado": true,
+    "envios": 0,
+    "linksLocais": 1,
+    "erros": []
+  }
+]

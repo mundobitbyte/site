@@ -375,20 +375,20 @@ document.addEventListener('DOMContentLoaded', function(){
   // 6.2 Wi-Fi: prática completa em ambos os ambientes e código Wokwi explícito.
   const wifi = document.getElementById('b6-2');
   if(wifi && !wifi.querySelector('[data-mbb6-wifi-wokwi]')){
-    const cardWokwiOriginal = acharPapel('b6-2', 'wifi-wokwi', '9. Teste no Wokwi');
+    const cardWokwiOriginal = acharPapel('b6-2', 'wifi-wokwi', '4A. Wi-Fi no Wokwi');
     if(cardWokwiOriginal){
       cardWokwiOriginal.dataset.mbb6WifiWokwi = '1';
       cardWokwiOriginal.innerHTML = `
-        <h3>9. Teste de Wi-Fi no Wokwi</h3>
-        <p>No Wokwi, conecte o ESP32 à rede virtual aberta <code>Wokwi-GUEST</code>. Ela não usa senha. O canal 6 pode ser informado para evitar a etapa de varredura e acelerar a conexão.</p>
-        <p class="mbb6-note"><strong>O que este teste comprova:</strong> o ESP32 entrou na rede virtual e recebeu um endereço IP. No próximo tópico veremos que receber um IP e aceitar conexões vindas do navegador são coisas diferentes.</p>
+        <h3>4A. Wi-Fi no Wokwi — rede virtual</h3>
+        <p>Se você usa o simulador, escolha <strong>somente o código 4A</strong>. A rede <code>Wokwi-GUEST</code> já existe no ambiente e não exige senha. Não substitua o nome dela pelas credenciais de casa ou da escola.</p>
+        <p>Abra seu projeto ESP32 no Wokwi, copie o código do quadro a seguir para <code>sketch.ino</code>, inicie a simulação e observe o <strong>Monitor Serial</strong>. O LED do circuito-base pode continuar conectado, mas não será acionado neste teste.</p>
       `;
 
       const codigo = document.createElement('article');
       codigo.className = 'card code wide';
       codigo.dataset.mbb6WifiWokwi = 'codigo';
       codigo.innerHTML = `
-        <h3>Código para o Wokwi <button type="button" onclick="copyCode('b6-2-wokwi-code',this)">Copiar</button></h3>
+        <h3>4A. Código completo — Wokwi <button type="button" onclick="copyCode('b6-2-wokwi-code',this)">Copiar</button></h3>
         <pre id="b6-2-wokwi-code">#include &lt;WiFi.h&gt;
 
 void setup() {
@@ -412,10 +412,15 @@ void setup() {
 void loop() {
 }</pre>
         <div class="explain" style="margin-top:12px">
-          <p><strong>Faça:</strong> execute a simulação e abra o Monitor Serial. O Wokwi detecta automaticamente a velocidade serial.</p>
-          <p><strong>O que observar:</strong> a mensagem de conexão e um endereço IP virtual confirmam que o ESP32 entrou na rede Wi-Fi simulada.</p>
+          <p><strong>Entenda os parâmetros:</strong> em <code>WiFi.begin("Wokwi-GUEST", "", 6)</code>, o primeiro texto é o nome da rede, <code>""</code> indica senha vazia e <code>6</code> é o canal usado pelo Wokwi para evitar a busca de redes e acelerar este exemplo. <strong>Outras redes podem utilizar outros canais.</strong></p>
+          <p><strong>O que observar:</strong> surgem pontos enquanto o ESP32 tenta conectar, depois a confirmação e um endereço IP virtual. O Monitor Serial do Wokwi reconhece a velocidade configurada pelo programa.</p>
         </div>
       `;
+      // Apresenta as duas alternativas logo após a escolha: primeiro Wokwi, depois placa física.
+      const codigoFisico = wifi.querySelector('#b6-2-code')?.closest('article.card');
+      if (codigoFisico && cardWokwiOriginal.parentNode === codigoFisico.parentNode) {
+        cardWokwiOriginal.parentNode.insertBefore(cardWokwiOriginal, codigoFisico);
+      }
       cardWokwiOriginal.parentNode.insertBefore(codigo, cardWokwiOriginal.nextSibling);
     }
   }
@@ -429,80 +434,32 @@ void loop() {
       guia.className = 'card wide';
       guia.dataset.mbb6HttpAmbientes = '1';
       guia.innerHTML = `
-        <h3>Antes de testar o servidor — o resultado depende do ambiente</h3>
+        <h3>Antes dos códigos — escolha o papel e o ambiente</h3>
+        <p><strong>HTTP</strong> organiza pedidos e respostas. Na <strong>Parte A</strong>, o ESP32 é cliente e consulta outro servidor; começamos por ela porque funciona no Wokwi padrão. Na <strong>Parte B</strong>, o ESP32 é servidor e o navegador faz pedidos para controlar o LED. <strong>São dois testes diferentes:</strong> você pode executar apenas o que seu ambiente permite.</p>
         <div class="mbb6-connections">
-          <div><strong>ESP32 físico</strong><span>Celular/computador e ESP32 ficam na mesma rede. Abra <code>http://IP_DO_ESP32</code> para testar o servidor.</span></div>
-          <div><strong>Wokwi padrão</strong><span>O código pode conectar à Internet e fazer conexões de saída, mas o gateway público não aceita conexão de entrada do seu navegador para o servidor simulado.</span></div>
-          <div><strong>Wokwi + Private IoT Gateway</strong><span>Com o gateway privado ativo, o servidor HTTP na porta 80 pode ser acessado pelo navegador em <code>http://localhost:9080/</code>. É um recurso para contas compatíveis; no navegador, prefira Chrome, Firefox ou Edge.</span></div>
-          <div><strong>Sem Private Gateway?</strong><span>Não tente “consertar” o código para fazer o navegador entrar. No Wokwi padrão, a limitação é do caminho de rede, não do <code>WebServer</code>.</span></div>
+          <div><strong>Wokwi padrão — comece pela Parte A (3A)</strong><span>Use o código pronto para <code>Wokwi-GUEST</code>. Ele envia um pedido HTTP e mostra o resultado no Monitor Serial. <strong>Não é necessário executar a Parte B.</strong></span></div>
+          <div><strong>ESP32 físico — Partes A e B</strong><span>Na Parte A, use o código 3B para consultar uma página pela rede Wi-Fi real de 2,4 GHz. Na Parte B, o navegador precisa alcançar o servidor ESP32 na mesma rede para controlar o LED.</span></div>
+          <div><strong>Wokwi + Private IoT Gateway — Parte B opcional</strong><span>Se o recurso privado estiver disponível e habilitado, um servidor HTTP simulado na porta 80 pode ser acessado em <code>http://localhost:9080/</code>. Não é necessário contratar esse serviço para acompanhar a aula.</span></div>
+          <div><strong>O que vamos observar?</strong><span>Como servidor: página e LED respondem aos links. Como cliente: o Monitor Serial mostra o retorno do pedido <code>GET</code>. Falhar um acesso de entrada no Wokwi público não significa que o programa do servidor esteja errado.</span></div>
         </div>
-        <p class="mbb6-note"><strong>Se estiver no Wokwi:</strong> nos códigos desta etapa, troque <code>NOME_DA_REDE</code> por <code>Wokwi-GUEST</code> e deixe <code>SENHA_DA_REDE</code> vazia. O Wokwi usa essa rede virtual tanto no gateway público quanto no privado.</p>
-        <p class="mbb6-note"><strong>O que observar:</strong> na placa física ou com Private Gateway, os botões da página devem controlar o LED. No Wokwi padrão, o servidor pode ser estudado e compilado, mas o navegador não consegue iniciar essa conexão de entrada pelo gateway público. Já a Parte B, em que o ESP32 é cliente HTTP, pode ser executada normalmente no gateway público.</p>
+        <p class="mbb6-note"><strong>Bibliotecas:</strong> <code>WiFi.h</code> cuida da rede, <code>WebServer.h</code> permite atender pedidos e <code>HTTPClient.h</code> permite enviá-los. Essas bibliotecas integram o ambiente Arduino para ESP32 corretamente instalado e são disponibilizadas nos projetos ESP32 do Wokwi. Na placa física, substitua o nome e a senha da rede. No Wokwi padrão, escolha o código 3A já configurado; se usar o gateway privado para experimentar o servidor da Parte B, adapte a conexão desse programa para <code>Wokwi-GUEST</code> sem senha.</p>
       `;
       cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
     }
   }
 
-  const testeHttp = acharPapel('b6-3', 'http-servidor-teste', '5. Testando o servidor');
+  const testeHttp = acharPapel('b6-3', 'http-servidor-teste', '8. Testando o servidor');
   if(testeHttp && marcar(testeHttp, 'mbb6HttpTeste')){
     const titulo = testeHttp.querySelector('h3');
-    if(titulo) titulo.textContent = '5. Testando o servidor — placa física';
+    if(titulo) titulo.textContent = '8. Testando o servidor — placa física';
     const nota = document.createElement('p');
     nota.className = 'mbb6-note';
     nota.innerHTML = '<strong>No Wokwi:</strong> só siga exatamente este teste pelo navegador se estiver usando o Private IoT Gateway. Nesse caso, use <code>http://localhost:9080/</code> em vez do IP virtual mostrado pelo ESP32.';
     testeHttp.appendChild(nota);
   }
 
-  // 6.4 mDNS: prática principal física; no Wokwi não promete .local.
-  const mdns = document.getElementById('b6-4');
-  if(mdns && !mdns.querySelector('[data-mbb6-mdns-ambientes]')){
-    const cards = mdns.querySelector('.cards');
-    if(cards){
-      const guia = document.createElement('article');
-      guia.className = 'card wide';
-      guia.dataset.mbb6MdnsAmbientes = '1';
-      guia.innerHTML = `
-        <h3>Onde esta prática faz sentido?</h3>
-        <p><strong>Placa física:</strong> primeiro confirme que o servidor abre pelo IP e só depois teste <code>http://ambiente-mbb.local</code> na mesma rede.</p>
-        <p><strong>Wokwi padrão:</strong> não use <code>.local</code> como teste obrigatório. O navegador não está na mesma rede local do ESP32 simulado e o gateway público não oferece a mesma descoberta mDNS da sua rede local.</p>
-        <p class="mbb6-note"><strong>Mesmo na placa física:</strong> se o acesso por IP funcionar e <code>.local</code> não, o servidor pode estar correto. A resolução mDNS depende também do sistema operacional, do navegador e da rede permitirem esse tipo de descoberta.</p>
-      `;
-      cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
-    }
-  }
+  // As práticas 6.4 e 6.5 são mantidas no HTML, com evidências e códigos próprios.
 
-  const testeMdns = acharPapel('b6-4', 'mdns-teste', '6. Testando');
-  if(testeMdns && marcar(testeMdns, 'mbb6MdnsTeste')){
-    const titulo = testeMdns.querySelector('h3');
-    if(titulo) titulo.textContent = '6. Testando — rede local com ESP32 físico';
-  }
-
-  // 6.5 Tunelamento: não promete execução no Wokwi padrão e antecipa a segurança.
-  const tunel = document.getElementById('b6-5');
-  if(tunel && !tunel.querySelector('[data-mbb6-tunel-ambientes]')){
-    const cards = tunel.querySelector('.cards');
-    if(cards){
-      const guia = document.createElement('article');
-      guia.className = 'card wide';
-      guia.dataset.mbb6TunelAmbientes = '1';
-      guia.innerHTML = `
-        <h3>Antes do túnel — confirme de onde você está partindo</h3>
-        <p><strong>ESP32 físico:</strong> o computador precisa conseguir abrir o servidor do ESP32 pela rede local antes de criar o túnel.</p>
-        <p><strong>Wokwi padrão:</strong> não execute o comando esperando alcançar o IP virtual do ESP32. O computador não possui uma rota de entrada até o servidor do simulador pelo gateway público.</p>
-        <p><strong>Wokwi com Private Gateway:</strong> outros encaminhamentos são possíveis, mas exigem configuração adicional. Para esta prática, basta compreender que o túnel é criado no computador e encaminha temporariamente um serviço que já funciona na rede local.</p>
-        <p class="mbb6-warning"><strong>Segurança:</strong> ao criar um endereço público, alguém que obtiver esse endereço poderá tentar acessar o serviço exposto. Faça o teste apenas com o protótipo didático, sem dados reais, sem credenciais reutilizadas e encerre o túnel ao terminar.</p>
-      `;
-      cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
-    }
-  }
-
-  const ferramentaTunel = acharPapel('b6-5', 'tunel-ferramenta', '4. Ferramenta para o teste');
-  if(ferramentaTunel && marcar(ferramentaTunel, 'mbb6TunelFerramenta')){
-    const nota = document.createElement('p');
-    nota.className = 'mbb6-note';
-    nota.innerHTML = '<strong>Checkpoint antes de continuar:</strong> no computador que criará o túnel, abra primeiro <code>http://IP_DO_ESP32</code>. Se esse acesso local não funcionar, o túnel também não terá para onde encaminhar a requisição. Use o comando documentado pelo serviço: <code>ssh -R 80:IP_DO_ESP32:80 localhost.run</code>.';
-    ferramentaTunel.appendChild(nota);
-  }
 });
 
 function carregarDestaquesMbb(){

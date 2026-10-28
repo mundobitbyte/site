@@ -47,7 +47,7 @@ for aula in manifest['aulas']:
                 assert not re.search(r'(?:public/js/balcao/main\.js|functions/lib/)',p),f'Artefato gerado no ZIP: {p}'
         print(f'PASSOU {aula["chave"]}: links, código ensinado e ZIP ({len(dados)} arquivos)')
 
-baseline='946ac0838eaa617669fc8a895d4e72e0391c01cb'
+baseline='ec9d3fb1074b30071be4e95ea067912a9d00dc05'
 antes=json.loads(subprocess.check_output(['git','show',f'{baseline}:meu-mbb/catalogo.json'],cwd=ROOT))
 atual=json.loads((ROOT/'meu-mbb/catalogo.json').read_text());por_id={x['conteudo_id']:x for x in atual['unidades']}
 for unidade in antes['unidades']:
