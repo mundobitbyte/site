@@ -434,15 +434,15 @@ void loop() {
       guia.className = 'card wide';
       guia.dataset.mbb6HttpAmbientes = '1';
       guia.innerHTML = `
-        <h3>Antes de testar o servidor — o resultado depende do ambiente</h3>
+        <h3>Antes dos códigos — escolha o papel e o ambiente</h3>
+        <p><strong>HTTP</strong> organiza pedidos e respostas. Na <strong>Parte A</strong>, o ESP32 é servidor e o navegador faz pedidos para ligar ou desligar o LED. Na <strong>Parte B</strong>, o ESP32 é cliente e consulta outro servidor. <strong>São dois testes diferentes:</strong> você pode executar apenas o que seu ambiente permite.</p>
         <div class="mbb6-connections">
-          <div><strong>ESP32 físico</strong><span>Celular/computador e ESP32 ficam na mesma rede. Abra <code>http://IP_DO_ESP32</code> para testar o servidor.</span></div>
-          <div><strong>Wokwi padrão</strong><span>O código pode conectar à Internet e fazer conexões de saída, mas o gateway público não aceita conexão de entrada do seu navegador para o servidor simulado.</span></div>
-          <div><strong>Wokwi + Private IoT Gateway</strong><span>Com o gateway privado ativo, o servidor HTTP na porta 80 pode ser acessado pelo navegador em <code>http://localhost:9080/</code>. É um recurso para contas compatíveis; no navegador, prefira Chrome, Firefox ou Edge.</span></div>
-          <div><strong>Sem Private Gateway?</strong><span>Não tente “consertar” o código para fazer o navegador entrar. No Wokwi padrão, a limitação é do caminho de rede, não do <code>WebServer</code>.</span></div>
+          <div><strong>ESP32 físico — Partes A e B</strong><span>Use a rede Wi-Fi real de 2,4 GHz. Na Parte A, o computador ou celular deve alcançar o ESP32 na mesma rede; na Parte B, o ESP32 precisa conseguir acessar o servidor consultado.</span></div>
+          <div><strong>Wokwi padrão — Parte B (código 7A)</strong><span>Use o programa específico com <code>Wokwi-GUEST</code>. Ele envia um pedido HTTP de saída e mostra o resultado no Monitor Serial. <strong>Não é necessário executar a Parte A.</strong></span></div>
+          <div><strong>Wokwi + Private IoT Gateway — Parte A opcional</strong><span>Se o recurso privado estiver disponível e habilitado, um servidor HTTP simulado na porta 80 pode ser acessado em <code>http://localhost:9080/</code>. Não é necessário contratar esse serviço para acompanhar a aula.</span></div>
+          <div><strong>O que vamos observar?</strong><span>Como servidor: página e LED respondem aos links. Como cliente: o Monitor Serial mostra o retorno do pedido <code>GET</code>. Falhar um acesso de entrada no Wokwi público não significa que o programa do servidor esteja errado.</span></div>
         </div>
-        <p class="mbb6-note"><strong>Se estiver no Wokwi:</strong> nos códigos desta etapa, troque <code>NOME_DA_REDE</code> por <code>Wokwi-GUEST</code> e deixe <code>SENHA_DA_REDE</code> vazia. O Wokwi usa essa rede virtual tanto no gateway público quanto no privado.</p>
-        <p class="mbb6-note"><strong>O que observar:</strong> na placa física ou com Private Gateway, os botões da página devem controlar o LED. No Wokwi padrão, o servidor pode ser estudado e compilado, mas o navegador não consegue iniciar essa conexão de entrada pelo gateway público. Já a Parte B, em que o ESP32 é cliente HTTP, pode ser executada normalmente no gateway público.</p>
+        <p class="mbb6-note"><strong>Bibliotecas:</strong> <code>WiFi.h</code> cuida da rede, <code>WebServer.h</code> permite atender pedidos e <code>HTTPClient.h</code> permite enviá-los. Essas bibliotecas integram o ambiente Arduino para ESP32 corretamente instalado e são disponibilizadas nos projetos ESP32 do Wokwi. Na placa física, substitua o nome e a senha da rede; no Wokwi, use apenas o código 7A já configurado para a rede virtual.</p>
       `;
       cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
     }
@@ -467,10 +467,13 @@ void loop() {
       guia.className = 'card wide';
       guia.dataset.mbb6MdnsAmbientes = '1';
       guia.innerHTML = `
-        <h3>Onde esta prática faz sentido?</h3>
-        <p><strong>Placa física:</strong> primeiro confirme que o servidor abre pelo IP e só depois teste <code>http://ambiente-mbb.local</code> na mesma rede.</p>
-        <p><strong>Wokwi padrão:</strong> não use <code>.local</code> como teste obrigatório. O navegador não está na mesma rede local do ESP32 simulado e o gateway público não oferece a mesma descoberta mDNS da sua rede local.</p>
-        <p class="mbb6-note"><strong>Mesmo na placa física:</strong> se o acesso por IP funcionar e <code>.local</code> não, o servidor pode estar correto. A resolução mDNS depende também do sistema operacional, do navegador e da rede permitirem esse tipo de descoberta.</p>
+        <h3>Antes do código — onde o nome .local pode funcionar?</h3>
+        <p>Na etapa anterior, já alcançávamos a página do ESP32 pelo endereço IP. Agora queremos encontrá-la por um nome mais fácil de lembrar. <strong>Não estamos criando outra página nem mudando o circuito:</strong> o mDNS apenas ajuda a localizar o mesmo servidor na rede local.</p>
+        <div class="mbb6-connections">
+          <div><strong>ESP32 físico — prática completa</strong><span>Primeiro faça o servidor abrir pelo IP. Depois execute o código desta etapa e tente <code>http://ambiente-mbb.local</code> em um computador ou celular da mesma rede que ofereça resolução mDNS.</span></div>
+          <div><strong>Wokwi padrão — leitura guiada</strong><span>Observe as linhas novas do mDNS e explique sua função. <strong>Não use a abertura do nome .local no navegador como teste obrigatório</strong>, pois a rede virtual não equivale à rede local do computador.</span></div>
+        </div>
+        <p class="mbb6-note"><strong>Biblioteca:</strong> <code>#include &lt;ESPmDNS.h&gt;</code> disponibiliza o serviço mDNS e normalmente já vem com o pacote de placas ESP32 instalado corretamente. <code>MDNS.begin("ambiente-mbb")</code> configura o nome; <code>MDNS.addService("http", "tcp", 80)</code> anuncia o serviço HTTP. Se o IP funcionar e <code>.local</code> não, confira a rede e o suporte mDNS do dispositivo antes de suspeitar do código HTTP.</p>
       `;
       cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
     }
@@ -491,11 +494,14 @@ void loop() {
       guia.className = 'card wide';
       guia.dataset.mbb6TunelAmbientes = '1';
       guia.innerHTML = `
-        <h3>Antes do túnel — confirme de onde você está partindo</h3>
-        <p><strong>ESP32 físico:</strong> o computador precisa conseguir abrir o servidor do ESP32 pela rede local antes de criar o túnel.</p>
-        <p><strong>Wokwi padrão:</strong> não execute o comando esperando alcançar o IP virtual do ESP32. O computador não possui uma rota de entrada até o servidor do simulador pelo gateway público.</p>
-        <p><strong>Wokwi com Private Gateway:</strong> outros encaminhamentos são possíveis, mas exigem configuração adicional. Para esta prática, basta compreender que o túnel é criado no computador e encaminha temporariamente um serviço que já funciona na rede local.</p>
-        <p class="mbb6-warning"><strong>Segurança:</strong> ao criar um endereço público, alguém que obtiver esse endereço poderá tentar acessar o serviço exposto. Faça o teste apenas com o protótipo didático, sem dados reais, sem credenciais reutilizadas e encerre o túnel ao terminar.</p>
+        <h3>Antes do túnel — entenda o caminho e os riscos</h3>
+        <p>O túnel <strong>não substitui o servidor HTTP, o Wi-Fi ou o mDNS</strong>. Ele encaminha temporariamente pedidos externos para um serviço que já funciona. <strong>Primeiro confirme, no computador, o acesso por IP local.</strong></p>
+        <div class="mbb6-connections">
+          <div><strong>ESP32 físico — demonstração opcional e supervisionada</strong><span>O computador deve abrir <code>http://IP_DO_ESP32</code>. O comando SSH é executado <strong>no terminal desse computador</strong>, não no Wokwi nem no código Arduino.</span></div>
+          <div><strong>Wokwi padrão — compreender, sem executar</strong><span>O gateway público não oferece ao computador uma rota de entrada para o servidor simulado. Portanto, <strong>não aponte o túnel para o IP virtual</strong> esperando que funcione.</span></div>
+        </div>
+        <p class="mbb6-warning"><strong>Segurança:</strong> o servidor didático do LED não exige autenticação: qualquer pessoa que obtenha o endereço público poderá tentar acioná-lo. Não faça a exposição como exercício obrigatório. Uma demonstração real requer autorização e supervisão do professor, protótipo isolado, nenhuma carga perigosa, nenhum dado pessoal e encerramento imediato ao terminar. HTTPS protege o transporte externo quando oferecido, mas <strong>não cria autenticação</strong> para os comandos.</p>
+        <p class="mbb6-note"><strong>Observe o papel de cada elemento:</strong> <code>ssh -V</code> verifica a presença do cliente SSH; <code>ssh -R ... localhost.run</code> solicita o encaminhamento remoto; a URL fornecida pelo serviço é temporária e depende do terminal permanecer aberto. A disponibilidade do serviço e as políticas da rede podem variar.</p>
       `;
       cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
     }
