@@ -51,6 +51,7 @@ jobs:
           MBB_IMPRIMIR_EVIDENCIAS=1 node tests/seiot-rede/navegador.cjs
           node tools/seiot-validacao/navegador.cjs
           node tools/seiot-validacao/meu-mbb-simulado.cjs
+          node -e 'const fs=require("fs"); for(const nome of ["navegador.json","meu-mbb-simulado.json"]) console.log("MBB_EVIDENCIA "+nome+" "+fs.readFileSync(process.env.MBB_EVIDENCIAS+"/"+nome).toString("base64"));'
       - uses: actions/upload-artifact@v4
         if: always()
         with:
