@@ -150,12 +150,12 @@ document.addEventListener('click', function(e){
   document.body.appendChild(script);
 })();
 
-// Capturas carregadas sob demanda também precisam da ampliação global.
+// Capturas e DERs carregados sob demanda também precisam da ampliação global.
 // O seletor global pode iniciar antes de as imagens ganharem dimensões visíveis.
-function atualizarCapturasHeidiSQL(){
+function atualizarVisuaisBancoDados(){
   requestAnimationFrame(() => window.MBBVisualizadorSite?.scan(document));
 }
 document.addEventListener('load', event => {
-  if (event.target.matches?.('.heidi-figure img')) atualizarCapturasHeidiSQL();
+  if (event.target.matches?.('.heidi-figure img,.der-figure img')) atualizarVisuaisBancoDados();
 }, true);
-window.addEventListener('load', atualizarCapturasHeidiSQL, {once:true});
+window.addEventListener('load', atualizarVisuaisBancoDados, {once:true});
