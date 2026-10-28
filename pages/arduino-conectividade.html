@@ -669,13 +669,92 @@ Endereco IP: 192.168.1.37</pre><p>O endereço será diferente em cada rede.</p><
 
 <section class="project mbb6-panel" id="b6-3">
   <div class="projectHead"><span class="badge">6.3</span><div><h2>HTTP: pedidos e respostas na Web</h2><p><strong>HTTP</strong> significa <em>Hypertext Transfer Protocol</em>. É um protocolo de aplicação usado para organizar pedidos e respostas entre clientes e servidores.</p></div></div>
-  <div class="mbb6-context"><strong>Estar no Wi-Fi ainda não diz como dois dispositivos vão conversar.</strong> Agora queremos algo muito familiar: abrir o navegador do celular e controlar o LED por uma página. O navegador já sabe falar HTTP, então esse protocolo passa a ser a ponte entre a interface Web e o ESP32. Depois faremos o caminho inverso: o próprio ESP32 será o cliente e buscará uma informação em outro servidor.</div>
+  <div class="mbb6-context"><strong>O ESP32 já entrou no Wi-Fi. Como trocar informações agora?</strong> Começaremos no Wokwi: o ESP32 enviará um pedido HTTP e receberá uma resposta. Depois, com uma placa física, faremos o caminho inverso: o navegador pedirá uma página ao ESP32 para controlar o LED. Assim descobriremos, na prática, os papéis de cliente e servidor.</div>
   <div class="cards">
-    <article class="card wide"><h3>1. O que vamos construir agora?</h3><p>Primeiro o ESP32 oferecerá uma pequena página: o celular pede, o ESP32 responde e o LED muda de estado. Depois inverteremos os papéis para perceber uma ideia importante: <strong>o ESP32 pode tanto oferecer um serviço quanto consumir um serviço de outro sistema.</strong></p></article>
-    <article class="card wide"><h3>2. Cliente e servidor são papéis</h3><p>O <strong>cliente</strong> inicia um pedido (<em>request</em>). O <strong>servidor</strong> recebe esse pedido e devolve uma resposta (<em>response</em>). O papel depende da situação:</p><table><tr><th>Situação</th><th>Cliente</th><th>Servidor</th></tr><tr><td>Celular abre a página do ESP32</td><td>Celular</td><td>ESP32</td></tr><tr><td>ESP32 consulta uma página na Web</td><td>ESP32</td><td>Servidor Web</td></tr></table><p class="mbb6-note"><strong>Importante:</strong> HTTP não exige que a comunicação atravesse a Internet. Ele também pode funcionar somente dentro da rede local, como no servidor criado pelo ESP32.</p></article>
+    
+    <article class="card wide"><h3>1. O que vamos construir agora?</h3><p>Primeiro, no Wokwi, o ESP32 consultará um servidor e mostrará a resposta no Monitor Serial. Depois, com uma placa física, criaremos uma página para controlar o LED. É a mesma comunicação HTTP vista de dois lados: <strong>o ESP32 pode tanto oferecer um serviço quanto consumir um serviço de outro sistema.</strong></p></article>
+    <article class="card wide"><h3>2. Cliente e servidor são papéis</h3><p>O <strong>cliente</strong> inicia um pedido (<em>request</em>). O <strong>servidor</strong> recebe esse pedido e devolve uma resposta (<em>response</em>). O papel depende da situação:</p><table><tr><th>Situação</th><th>Cliente</th><th>Servidor</th></tr><tr><td>ESP32 consulta uma página na Web</td><td>ESP32</td><td>Servidor Web</td></tr><tr><td>Celular abre a página do ESP32</td><td>Celular</td><td>ESP32</td></tr></table><p class="mbb6-note"><strong>Importante:</strong> HTTP não exige que a comunicação atravesse a Internet. Ele também pode funcionar somente dentro da rede local, como no servidor criado pelo ESP32.</p></article>
+    <article class="card wide"><h3 class="mbb6-subtitle">Parte A — ESP32 como cliente HTTP (comece pelo Wokwi)</h3><div class="explain"><p><strong>Depois do Wi-Fi, começamos por um pedido que funciona no Wokwi padrão.</strong> Em muitos projetos IoT, o dispositivo não fica esperando alguém abrir sua página: ele próprio envia ou busca informações em um serviço externo. Para perceber essa mudança de papel, agora o ESP32 fará o pedido.</p><div class="mbb6-route"><span>ESP32</span><b>→ requisição GET →</b><span>Servidor Web</span><b>→ resposta →</b><span>ESP32</span></div></div></article>
+    <article class="card code wide" data-mbb6-http-wokwi-first="1"><h3>3A. Código — cliente HTTP no Wokwi <button type="button" onclick="copyCode('b6-3-client-wokwi-code',this)">Copiar</button></h3><pre id="b6-3-client-wokwi-code">#include &lt;WiFi.h&gt;
+#include &lt;HTTPClient.h&gt;
 
-    <article class="card wide"><h3 class="mbb6-subtitle">Parte A — ESP32 como servidor HTTP</h3><div class="explain"><p><strong>Problema:</strong> pelo Bluetooth enviávamos L e D. Agora queremos abrir uma página no navegador e tocar em links para controlar o mesmo LED.</p><div class="mbb6-route"><span>Navegador</span><b>→ pedido HTTP →</b><span>ESP32</span><b>→</b><span>LED</span></div></div></article>
-    <article class="card code wide"><h3>3. Código — servidor HTTP (ESP32 físico; Wokwi com gateway privado) <button type="button" onclick="copyCode('b6-3-server-code',this)">Copiar</button></h3><pre id="b6-3-server-code">#include &lt;WiFi.h&gt;
+void setup() {
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin("Wokwi-GUEST", "", 6);
+
+  Serial.print("Conectando");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(100);
+    Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.println("Wi-Fi conectado.");
+
+  HTTPClient http;
+  http.begin("http://example.com/index.html");
+
+  int codigo = http.GET();
+
+  Serial.print("Codigo HTTP: ");
+  Serial.println(codigo);
+
+  if (codigo &gt; 0) {
+    String resposta = http.getString();
+    Serial.println("Resposta recebida:");
+    Serial.println(resposta);
+  }
+
+  http.end();
+}
+
+void loop() {
+}</pre><div class="explain" style="margin-top:12px"><p><strong>Faça agora:</strong> copie este código para o <code>sketch.ino</code> do ESP32 no Wokwi, execute a simulação e abra o Monitor Serial.</p><p><strong>Observe:</strong> o ESP32 usa a rede <code>Wokwi-GUEST</code>, envia uma requisição <code>GET</code> e mostra o código HTTP e a resposta recebida. A rede virtual não precisa da senha de casa ou da escola.</p></div></article>
+    <article class="card code wide"><h3>3B. Código — cliente HTTP (ESP32 físico) <button type="button" onclick="copyCode('b6-3-client-code',this)">Copiar</button></h3><pre id="b6-3-client-code">#include &lt;WiFi.h&gt;
+#include &lt;HTTPClient.h&gt;
+
+const char* ssid = "NOME_DA_REDE";
+const char* senha = "SENHA_DA_REDE";
+
+void setup() {
+  Serial.begin(115200);
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, senha);
+
+  Serial.print("Conectando");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.println("Wi-Fi conectado.");
+
+  HTTPClient http;
+  http.begin("http://example.com/");
+
+  int codigo = http.GET();
+
+  Serial.print("Codigo HTTP: ");
+  Serial.println(codigo);
+
+  if (codigo &gt; 0) {
+    String resposta = http.getString();
+    Serial.println("Resposta recebida:");
+    Serial.println(resposta);
+  }
+
+  http.end();
+}
+
+void loop() {
+}</pre></article>
+    <article class="card"><h3>4. Como o cliente funciona</h3><div class="explain"><p><code>HTTPClient http</code> cria o cliente HTTP.</p><p><code>http.begin()</code> informa a <strong>URL</strong> (endereço do recurso) que será consultada.</p><p><code>http.GET()</code> envia um pedido do tipo <strong>GET</strong>, usado para solicitar um recurso.</p><p>O valor retornado por <code>GET()</code> permite observar o código de resposta HTTP; <code>200</code>, por exemplo, indica uma resposta bem-sucedida.</p><p><code>http.getString()</code> lê o conteúdo recebido e <code>http.end()</code> libera os recursos usados pela conexão.</p></div></article>
+    <article class="card"><h3>5. Testando o cliente — escolha um ambiente</h3><ol><li>Use o código 3A no Wokwi ou o 3B na placa física, com a rede correspondente.</li><li>Execute a simulação ou carregue o programa na placa.</li><li>Abra o Monitor Serial em 115200.</li><li>Observe o retorno de <code>GET()</code> e, quando disponível, o texto recebido. Um código negativo indica falha da biblioteca; uma resposta HTTP positiva não significa necessariamente sucesso.</li></ol><p class="mbb6-note"><strong>No Wokwi padrão, este teste também é possível:</strong> o pedido parte do ESP32 simulado para a Internet. O endereço <code>example.com</code> é usado apenas como destino simples; a resposta pode variar com o serviço, portanto o objetivo é verificar se houve um código HTTP positivo e conteúdo recebido.</p><div class="mbb6-checkpoint"><strong>Checkpoint HTTP:</strong> a Parte A (cliente) permite observar o retorno de uma requisição, inclusive no Wokwi padrão. A Parte B (servidor) permite controlar o LED pelo navegador com uma placa física na rede local; no Wokwi exige Private IoT Gateway opcional para acesso de entrada. Registre somente os testes que realmente executou.</div></article>
+    <article class="card wide"><h3 class="mbb6-subtitle">Parte B — ESP32 como servidor HTTP (ESP32 físico)</h3><div class="explain"><p><strong>Problema:</strong> já vimos o ESP32 fazer um pedido HTTP. Agora queremos abrir uma página no navegador e tocar em links para controlar o mesmo LED.</p><div class="mbb6-route"><span>Navegador</span><b>→ pedido HTTP →</b><span>ESP32</span><b>→</b><span>LED</span></div></div></article>
+    <article class="card code wide"><h3>6. Código — servidor HTTP (ESP32 físico; Wokwi com gateway privado) <button type="button" onclick="copyCode('b6-3-server-code',this)">Copiar</button></h3><pre id="b6-3-server-code">#include &lt;WiFi.h&gt;
 #include &lt;WebServer.h&gt;
 
 const char* ssid = "NOME_DA_REDE";
@@ -753,53 +832,9 @@ void setup() {
 void loop() {
   servidor.handleClient();
 }</pre></article>
-    <article class="card"><h3>4. Como o servidor funciona</h3><div class="explain"><p><code>WebServer servidor(80)</code> cria o servidor HTTP na <strong>porta 80</strong>, porta padrão usada por HTTP sem criptografia.</p><p><code>servidor.on("/", ...)</code>, <code>servidor.on("/ligar", ...)</code> e <code>servidor.on("/desligar", ...)</code> associam caminhos do endereço a funções do programa.</p><p>Quando o navegador pede <code>/ligar</code>, a função correspondente acende o LED e devolve a página atualizada.</p><p><code>servidor.send(200, "text/html", ...)</code> envia a resposta: <code>200</code> indica sucesso e <code>text/html</code> informa que o conteúdo é uma página HTML.</p><p><code>servidor.handleClient()</code> verifica continuamente se chegaram novos pedidos.</p></div></article>
-    <article class="card" data-mbb6-role="http-servidor-teste"><h3>5. Testando o servidor — ESP32 físico</h3><ol><li>Use celular e ESP32 na mesma rede.</li><li>Carregue o programa e copie o IP mostrado.</li><li>No navegador, abra <code>http://IP_DO_ESP32</code>.</li><li>Use os links para ligar e desligar o LED.</li></ol></article>
-    <article class="card worked wide"><h3>6. Resultado esperado</h3><p>A página mostra o estado do LED. Ao tocar em <strong>Ligar LED</strong> ou <strong>Desligar LED</strong>, o navegador faz um pedido ao ESP32, que executa a ação e devolve uma nova página.</p></article>
-
-    <article class="card wide"><h3 class="mbb6-subtitle">Parte B — ESP32 como cliente HTTP</h3><div class="explain"><p><strong>Agora vamos inverter a conversa.</strong> Em muitos projetos IoT, o dispositivo não fica esperando alguém abrir sua página: ele próprio envia ou busca informações em um serviço externo. Para perceber essa mudança de papel, agora o ESP32 fará o pedido.</p><div class="mbb6-route"><span>ESP32</span><b>→ requisição GET →</b><span>Servidor Web</span><b>→ resposta →</b><span>ESP32</span></div></div></article>
-    <article class="card code wide"><h3>7B. Código — cliente HTTP (ESP32 físico) <button type="button" onclick="copyCode('b6-3-client-code',this)">Copiar</button></h3><pre id="b6-3-client-code">#include &lt;WiFi.h&gt;
-#include &lt;HTTPClient.h&gt;
-
-const char* ssid = "NOME_DA_REDE";
-const char* senha = "SENHA_DA_REDE";
-
-void setup() {
-  Serial.begin(115200);
-
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, senha);
-
-  Serial.print("Conectando");
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println();
-  Serial.println("Wi-Fi conectado.");
-
-  HTTPClient http;
-  http.begin("http://example.com/");
-
-  int codigo = http.GET();
-
-  Serial.print("Codigo HTTP: ");
-  Serial.println(codigo);
-
-  if (codigo &gt; 0) {
-    String resposta = http.getString();
-    Serial.println("Resposta recebida:");
-    Serial.println(resposta);
-  }
-
-  http.end();
-}
-
-void loop() {
-}</pre></article>
-    <article class="card"><h3>8. Como o cliente funciona</h3><div class="explain"><p><code>HTTPClient http</code> cria o cliente HTTP.</p><p><code>http.begin()</code> informa a <strong>URL</strong> (endereço do recurso) que será consultada.</p><p><code>http.GET()</code> envia um pedido do tipo <strong>GET</strong>, usado para solicitar um recurso.</p><p>O valor retornado por <code>GET()</code> permite observar o código de resposta HTTP; <code>200</code>, por exemplo, indica uma resposta bem-sucedida.</p><p><code>http.getString()</code> lê o conteúdo recebido e <code>http.end()</code> libera os recursos usados pela conexão.</p></div></article>
-    <article class="card"><h3>9. Testando o cliente — escolha um ambiente</h3><ol><li>Use o código 7A no Wokwi ou o 7B na placa física, com a rede correspondente.</li><li>Execute a simulação ou carregue o programa na placa.</li><li>Abra o Monitor Serial em 115200.</li><li>Observe o retorno de <code>GET()</code> e, quando disponível, o texto recebido. Um código negativo indica falha da biblioteca; uma resposta HTTP positiva não significa necessariamente sucesso.</li></ol><p class="mbb6-note"><strong>No Wokwi padrão, este teste também é possível:</strong> o pedido parte do ESP32 simulado para a Internet. O endereço <code>example.com</code> é usado apenas como destino simples; a resposta pode variar com o serviço, portanto o objetivo é verificar se houve um código HTTP positivo e conteúdo recebido.</p><div class="mbb6-checkpoint"><strong>Checkpoint HTTP:</strong> na placa física, a Parte A deve permitir controlar o LED pelo navegador e a Parte B deve mostrar uma resposta recebida. No Wokwi padrão, a Parte B funciona; a Parte A só pode ser acessada pelo navegador com o Private IoT Gateway, recurso pago e opcional. Sem ele, registre somente as evidências realmente executadas no gateway público.</div></article>
+    <article class="card"><h3>7. Como o servidor funciona</h3><div class="explain"><p><code>WebServer servidor(80)</code> cria o servidor HTTP na <strong>porta 80</strong>, porta padrão usada por HTTP sem criptografia.</p><p><code>servidor.on("/", ...)</code>, <code>servidor.on("/ligar", ...)</code> e <code>servidor.on("/desligar", ...)</code> associam caminhos do endereço a funções do programa.</p><p>Quando o navegador pede <code>/ligar</code>, a função correspondente acende o LED e devolve a página atualizada.</p><p><code>servidor.send(200, "text/html", ...)</code> envia a resposta: <code>200</code> indica sucesso e <code>text/html</code> informa que o conteúdo é uma página HTML.</p><p><code>servidor.handleClient()</code> verifica continuamente se chegaram novos pedidos.</p></div></article>
+    <article class="card" data-mbb6-role="http-servidor-teste"><h3>8. Testando o servidor — ESP32 físico</h3><ol><li>Use celular e ESP32 na mesma rede.</li><li>Carregue o programa e copie o IP mostrado.</li><li>No navegador, abra <code>http://IP_DO_ESP32</code>.</li><li>Use os links para ligar e desligar o LED.</li></ol></article>
+    <article class="card worked wide"><h3>9. Resultado esperado — servidor HTTP</h3><p>A página mostra o estado do LED. Ao tocar em <strong>Ligar LED</strong> ou <strong>Desligar LED</strong>, o navegador faz um pedido ao ESP32, que executa a ação e devolve uma nova página.</p></article>
     <article class="card errors wide"><h3>10. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>A página do ESP32 não abre</td><td>Celular/computador e ESP32 devem estar na mesma rede e o endereço deve usar o IP mostrado no Monitor Serial. Redes de escola, empresa ou “guest” podem isolar os clientes e impedir que um dispositivo acesse o outro; nesse caso, teste em uma rede simples que permita comunicação local.</td></tr><tr><td>O servidor abre, mas o LED não muda</td><td>Confira o GPIO 23 e se os caminhos /ligar e /desligar estão corretos.</td></tr><tr><td>A requisição do cliente retorna erro</td><td>Confirme se o Wi-Fi está conectado, se há acesso à Internet e se o servidor consultado responde. Um retorno negativo de <code>http.GET()</code> indica erro na operação; respostas HTTP como 404 são respostas válidas, mas não representam o recurso encontrado.</td></tr></table></article>
     <article class="card worked wide mbb6-bridge"><h3>11. Próximo problema</h3><p>Já conseguimos controlar o LED pelo navegador. Tecnicamente funciona, mas ainda dependemos de um número que pode mudar: o endereço IP. <strong>O próximo passo não é criar outro servidor; é tornar o servidor que já existe mais fácil de encontrar.</strong></p></article>
   </div>
