@@ -1,0 +1,128 @@
+- banner:
+  - banner:
+    - link:
+      - /url: /
+    - button "Save":
+      - generic: Save
+    - button:
+    - button "Share": Share
+    - navigation:
+      - link "Docs":
+        - /url: https://docs.wokwi.com/?utm_source=wokwi
+    - button "toggle dark mode":
+    - button "Sign in Sign up":
+      - generic: Sign in
+      - text: Sign up
+- main:
+  - button "sketch.ino"
+  - button "diagram.json"
+  - button "Library Manager"
+  - button
+  - code:
+    - generic: 
+    - generic: "45"
+    - generic: "46"
+    - generic: "47"
+    - generic: "48"
+    - generic: "49"
+    - generic: 
+    - generic: "50"
+    - generic: "51"
+    - generic: "52"
+    - generic: "53"
+    - generic: "54"
+    - generic: "55"
+    - generic: "56"
+    - generic: "57"
+    - generic: "58"
+    - generic: "59"
+    - generic: 
+    - generic: "60"
+    - generic: "61"
+    - generic: "62"
+    - generic: "63"
+    - generic: "64"
+    - generic: "65"
+    - generic: "66"
+    - generic: "67"
+    - generic: "68"
+    - generic: "69"
+    - generic: 
+    - generic: "70"
+    - generic: "71"
+    - generic: 
+    - generic: "72"
+    - generic: "73"
+    - generic: "74"
+    - generic: "75"
+    - generic: "76"
+    - generic: "77"
+    - generic: "78"
+    - generic: "79"
+    - generic: "80"
+    - generic: "81"
+    - generic: "82"
+    - generic: "83"
+    - generic: 
+    - generic: "84"
+    - generic: "85"
+    - generic: "86"
+    - generic: "87"
+    - generic: "void desligarLED() {"
+    - generic: digitalWrite(LED, LOW);
+    - generic: mostrarPagina();
+    - generic: "}"
+    - generic: "void setup() {"
+    - generic: Serial.begin(115200);
+    - generic: pinMode(LED, OUTPUT);
+    - generic: digitalWrite(LED, LOW);
+    - generic: WiFi.mode(WIFI_STA);
+    - generic: WiFi.begin(ssid, senha);
+    - generic: Serial.print("Conectando");
+    - generic: "while (WiFi.status() != WL_CONNECTED) {"
+    - generic: delay(500);
+    - generic: Serial.print(".");
+    - generic: "}"
+    - generic: Serial.println();
+    - generic: Serial.println("Wi-Fi conectado.");
+    - generic: "Serial.print(\"IP local: \");"
+    - generic: Serial.println(WiFi.localIP());
+    - generic: "if (!MDNS.begin(\"ambiente-mbb\")) {"
+    - generic: Serial.println("Falha ao iniciar mDNS.");
+    - generic: "} else {"
+    - generic: MDNS.addService("http", "tcp", 80);
+    - generic: Serial.println("Inicializacao mDNS aceita; teste o nome em outro aparelho.");
+    - generic: "Serial.println(\"Abra: http://ambiente-mbb.local\");"
+    - generic: "}"
+    - generic: servidor.on("/", mostrarPagina);
+    - generic: servidor.on("/ligar", ligarLED);
+    - generic: servidor.on("/desligar", desligarLED);
+    - generic: servidor.begin();
+    - generic: "}"
+    - generic: "void loop() {"
+    - generic: servidor.handleClient();
+    - generic: "}"
+    - textbox "Editor content;Press Alt+F1 for Accessibility Options.": "servidor.begin(); } void loop() { servidor.handleClient(); }"
+    - generic: "45"
+    - generic: 
+    - list:
+      - generic: "void desligarLED() {"
+  - button "Simulation"
+  - button "Restart the simulation" [active]:
+  - button "Stop the simulation":
+  - button "Pause":
+  - button "Connecting to WiFi...":
+  - generic: 00:04.033
+  - generic: 3%
+  - tabpanel:
+    - generic: "ets Jul 29 2019 12:21:46 rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT) configsip: 0, SPIWP:0xee clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00 mode:DIO, clock div:2 load:0x3fff0030,len:1156 load:0x40078000,len:11456 ho 0 tail 12 room 4 load:0x40080400,len:2972 entry 0x400805dc Conectando...."
+    - textbox
+    - button "Serial plotter"
+    - button "Auto scroll"
+    - button
+    - button "Collapse"
+- alert
+- alert
+- alert
+- tooltip "Restart the simulation":
+  - generic: Restart the simulation

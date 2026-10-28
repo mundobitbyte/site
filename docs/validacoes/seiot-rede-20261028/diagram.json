@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "author": "Mundo bit Byte",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "id": "esp",
+      "type": "board-esp32-devkit-c-v4",
+      "top": 0,
+      "left": 0
+    },
+    {
+      "id": "led",
+      "type": "wokwi-led",
+      "top": -50,
+      "left": 220,
+      "attrs": {
+        "color": "red"
+      }
+    },
+    {
+      "id": "resistor",
+      "type": "wokwi-resistor",
+      "top": 110,
+      "left": 230,
+      "attrs": {
+        "value": "220"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      ""
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      ""
+    ],
+    [
+      "esp:23",
+      "led:A",
+      "green"
+    ],
+    [
+      "led:C",
+      "resistor:1",
+      "green"
+    ],
+    [
+      "resistor:2",
+      "esp:GND.1",
+      "black"
+    ]
+  ]
+}
