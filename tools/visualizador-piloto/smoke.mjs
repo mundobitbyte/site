@@ -177,15 +177,21 @@ async function testProgramacaoGraphic() {
 async function testBancoDer() {
   const { page, errors } = await newPage(390, 844);
   await page.goto(`${base}/pages/bancodedados.html`, { waitUntil:'networkidle0' });
-  await page.click('#btn-modelagem');
-  await wait(220);
-  const state = await page.evaluate(() => {
-    const der = document.querySelector('svg .der-entity')?.closest('svg');
-    const target = der?.closest('[data-mbb-ampliavel="grafico"]');
-    return { found:Boolean(der), marked:Boolean(target), trigger:target?.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]') || false };
-  });
-  assert(state.found, 'Banco de Dados: DER não encontrado.');
-  assert(state.marked && state.trigger, 'Banco de Dados: DER técnico não recebeu ampliador.');
+  for (const [module, expected] of [['modelagem', 7], ['modelagem-logica', 5]]) {
+    await page.click(`#btn-${module}`);
+    const diagrams = await page.$$(`#mod-${module} .der-figure img`);
+    assert(diagrams.length === expected, `Banco de Dados: esperados ${expected} diagramas em ${module}.`);
+    for (const diagram of diagrams) {
+      await diagram.evaluate(async img => { img.scrollIntoView({block:'center'}); await img.decode(); });
+      await page.evaluate(async () => { await window.MBBVisualizadorSite?.scan(document); });
+      await wait(120);
+      const state = await diagram.evaluate(img => {
+        const target = img.closest('[data-mbb-ampliavel="grafico"]');
+        return { loaded:img.naturalWidth > 0, trigger:target?.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]') || false };
+      });
+      assert(state.loaded && state.trigger, `Banco de Dados: diagrama de ${module} não carregou com ampliador.`);
+    }
+  }
   assert(errors.length === 0, `Banco de Dados: erros JavaScript: ${errors.join(' | ')}`);
   await page.close();
 }

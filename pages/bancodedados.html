@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Apostila Interativa — Banco de Dados</title>
 
-<link href="../css/bancodedados.css" rel="stylesheet"/><link href="../css/bancodedados-heidisql.css?v=20261026-final" rel="stylesheet"/></head>
+<link href="../css/bancodedados.css" rel="stylesheet"/><link href="../css/bancodedados-modelagem.css?v=20261028" rel="stylesheet"/><link href="../css/bancodedados-heidisql.css?v=20261026-final" rel="stylesheet"/></head>
 <body>
 <header><div class="header-left"><a class="btn-voltar portal-link" href="../index.html">← Mundo bit Byte</a><h1>Banco de Dados</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header>
 <div class="app"><nav><h3>Módulos</h3>
@@ -509,6 +509,7 @@ Frequência
 </section>
 <article class="chapter">
 <h2>BLOCO 1 — O que é Modelagem</h2>
+<p>Um comércio precisa saber quais produtos vende, como eles são classificados e quais fornecedores os oferecem. Antes de abrir o MySQL, precisamos decidir o que guardar e quais regras esse cadastro deve respeitar. Vamos construir esse modelo por partes no <strong>brModelo 2.0</strong> e acompanhar o mesmo comércio até o SQL do capítulo 4.</p>
 <p>Um dos maiores erros de quem começa Banco de Dados é acreditar que desenvolver um banco significa abrir o MySQL, criar tabelas e começar digitando SQL.</p>
 <p>Em sistemas profissionais, normalmente acontece o contrário: antes de existir tabela, comando, banco físico ou código, existe planejamento estrutural.</p>
 <p>Esse planejamento recebe o nome de <strong>modelagem</strong>.</p>
@@ -530,17 +531,13 @@ Frequência
 <h3>Analogia importante</h3>
 <p>Ninguém constrói uma casa, um hospital ou uma ponte levantando paredes aleatoriamente. Primeiro se analisa, planeja, desenha e organiza. Banco de Dados funciona da mesma forma.</p>
 <div class="visual"><pre>
-Problema real
+Regras do comércio
 ↓
-Análise
+Modelo conceitual: o que existe e como se relaciona
 ↓
-Modelagem
+Modelo lógico: tabelas, colunas e chaves
 ↓
-Estrutura lógica
-↓
-Banco físico
-↓
-SQL
+Modelo físico: implementação no MySQL
 </pre></div>
 <h3>Pensar como usuário é diferente de pensar como analista</h3>
 <p>O usuário normalmente pensa em ações: cadastrar cliente, lançar nota, consultar pedido, emitir relatório.</p>
@@ -568,35 +565,11 @@ SQL
 <p>Nem tudo vira entidade. Entidade representa algo relevante para o sistema e que precisa ter informações armazenadas.</p>
 </div></div>
 <h3>Como identificar entidades?</h3>
-<p>O analista observa o problema real e procura elementos principais, normalmente substantivos importantes do processo.</p>
-<pre>
-Um cliente realiza pedidos em uma loja.
-</pre>
-<p>Possíveis entidades:</p>
-<ul>
-<li>Cliente;</li>
-<li>Pedido;</li>
-<li>Produto;</li>
-<li>Pagamento.</li>
-</ul>
+<p>Observe duas necessidades do comércio: cadastrar um <strong>produto</strong> e informar sua <strong>categoria</strong>. Produto e Categoria têm responsabilidades diferentes: o preço é do produto; o nome da categoria pode servir para classificar vários produtos.</p>
+<p><strong>No brModelo:</strong> inicie um modelo conceitual e adicione duas entidades, <strong>PRODUTO</strong> e <strong>CATEGORIA</strong>. Ainda não é necessário ligá-las. Salve o arquivo como <strong>comercio-conceitual</strong>, mantendo o formato próprio do programa. Acrescentaremos os próximos elementos nesse mesmo modelo.</p>
+<p>O desenho que vamos construir é um <strong>DER — Diagrama Entidade Relacionamento</strong>. As figuras da aula mostram os modelos, com uma simbologia próxima da usada no brModelo; não são capturas da interface. Confira o nome e a função de cada elemento ao reproduzi-lo no programa.</p>
 <h3>Entidade não é tabela ainda</h3>
 <p>Na modelagem conceitual, ainda não estamos criando tabelas físicas. Estamos analisando o mundo real e representando seus elementos importantes.</p>
-<div class="visual"><pre>
-Mundo real
-↓
-Entidades
-↓
-Relacionamentos
-↓
-Modelo conceitual
-↓
-Modelo lógico
-↓
-Banco físico
-</pre></div>
-<h3>Entidade associativa: quando a relação também precisa guardar dados</h3>
-<p>Alguns relacionamentos precisam ser representados por um elemento próprio. É o caso de <strong>ItemPedido</strong>, que liga Pedido e Produto e pode guardar informações da própria relação, como quantidade e preço praticado.</p>
-<p>Esse tipo de estrutura é especialmente importante em relacionamentos N:N. Mais adiante veremos como ela se transforma em uma tabela associativa no modelo lógico.</p>
 <h2>BLOCO 3 — Atributos</h2>
 <p>As entidades sozinhas ainda não bastam. Depois de identificar uma entidade, precisamos definir quais informações ela precisa armazenar.</p>
 <p>Essas informações são chamadas de <strong>atributos</strong>.</p>
@@ -604,29 +577,17 @@ Banco físico
 <h3>Ideia principal</h3>
 <p>Atributo é uma característica de uma entidade.</p>
 </div></div>
-<h3>Exemplo: entidade Aluno</h3>
-<pre>
-Aluno
- ├── id_aluno
- ├── nome
- ├── telefone
- ├── email
- └── data_nascimento
-</pre>
-<h3>Exemplo: entidade Produto</h3>
-<pre>
-Produto
- ├── id_produto
- ├── nome
- ├── preco
- ├── estoque
- └── estoque_minimo
-</pre>
+<h3>Quais dados pertencem a cada entidade?</h3>
+<p>Categoria precisa de um identificador e de um nome. Produto precisa de identificador, descrição, preço, quantidade em estoque e estoque mínimo. Usaremos os nomes <code>descricao</code>, <code>preco</code>, <code>qtde</code> e <code>estoque_minimo</code> para manter a continuidade até o capítulo 4.</p>
+<p>O <strong>identificador</strong> distingue uma ocorrência das demais: dois produtos podem ter descrições iguais, mas seus identificadores serão diferentes. Nos desenhos, o círculo preenchido destaca o identificador; o círculo vazio representa um atributo comum. A escolha de uma chave primária para a tabela será tratada na modelagem lógica.</p>
+<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER inicial: Categoria e Produto com seus atributos e identificadores"><img src="../img/bancodedados/modelagem/conceitual-atributos.svg" width="360" height="590" alt="DER inicial: Categoria e Produto com seus atributos e identificadores" loading="lazy" decoding="async"/><figcaption>Cada atributo está ligado à sua entidade. Aqui ainda não há tabelas, tipos SQL ou chaves estrangeiras.</figcaption></figure>
+
+<p><strong>No brModelo:</strong> adicione os atributos às duas entidades e defina seus identificadores. Compare o desenho com a figura: preço e quantidade devem estar em Produto; nome da categoria deve estar em Categoria. Essa é a primeira conferência do seu modelo.</p>
 <div class="card note"><div class="card-body"><h3>Atributo ou entidade?</h3><p>Se “categoria” tiver identidade e informações próprias e vários produtos puderem pertencer a ela, é melhor modelá-la como <strong>entidade Categoria</strong> relacionada a Produto, e não como um simples atributo textual repetido.</p></div></div>
 <h3>Tipos de atributos</h3>
 <table class="sql-table">
 <tr><th>Tipo</th><th>Descrição</th><th>Exemplo</th></tr>
-<tr><td>Simples</td><td>não precisa ser dividido</td><td>idade, salário, CPF</td></tr>
+<tr><td>Simples</td><td>não precisa ser dividido</td><td>salário, CPF</td></tr>
 <tr><td>Composto</td><td>pode ser dividido em partes</td><td>endereço → rua, número, bairro</td></tr>
 <tr><td>Multivalorado</td><td>pode possuir vários valores</td><td>telefones de uma pessoa</td></tr>
 <tr><td>Derivado</td><td>pode ser calculado a partir de outro dado</td><td>idade calculada pela data de nascimento</td></tr>
@@ -645,13 +606,13 @@ Produto
 <tr><th>nome</th><th>telefone</th><th>bairro</th></tr>
 <tr><td>João</td><td>19 99999-8888</td><td>Centro</td></tr>
 </table>
-<p>Cada atributo deve armazenar apenas um tipo de informação.</p>
+<p>Separar as informações permite trabalhar com cada uma delas. Um atributo multivalorado, como vários telefones, deve ser representado explicitamente no conceitual; no próximo capítulo veremos por que ele não vira uma lista dentro de uma única célula. O cadastro de fornecedores deste comércio guarda apenas um telefone por fornecedor.</p>
 <h2>BLOCO 4 — Relacionamentos</h2>
-<p>As entidades não vivem isoladas. No mundo real, alunos pertencem a turmas, clientes fazem pedidos, produtos pertencem a categorias e médicos realizam consultas.</p>
+<p>Os dois cadastros já têm atributos, mas ainda falta mostrar a qual categoria um produto pertence. Precisamos de uma ligação que tenha significado para o negócio.</p>
 <p>Relacionamento é a associação entre entidades.</p>
 <h3>Antes de desenhar: descubra a regra de negócio</h3>
 <p>Relacionamentos e cardinalidades não devem ser escolhidos por aparência. Eles nascem das <strong>regras de negócio</strong>: frases que explicam como o sistema realmente funciona.</p>
-<div class="card idea"><div class="card-body"><h3>Exemplo: cliente e pedidos</h3><p>“Um cliente pode realizar vários pedidos, mas cada pedido pertence a um único cliente.” Essa frase já indica o relacionamento Cliente–Pedido e prepara a cardinalidade 1:N.</p></div></div>
+<p>Nosso comércio adota esta regra: <strong>uma categoria pode classificar vários produtos; cada produto pertence a uma única categoria</strong>. O relacionamento pode receber o nome <strong>CLASSIFICA</strong>. A frase define o significado; as quantidades serão representadas na próxima etapa.</p>
 <p>Antes de traçar uma linha no DER, pergunte: <strong>quem se relaciona com quem, isso é obrigatório e quantas ocorrências podem participar?</strong></p>
 <table class="sql-table">
 <tr><th>Mundo real</th><th>Modelagem</th></tr>
@@ -662,18 +623,11 @@ Produto
 </table>
 <h3>Por que relacionamentos são importantes?</h3>
 <p>Sem relacionamentos, as tabelas ficam isoladas, os dados não conversam e o sistema perde sentido.</p>
-<div class="visual"><pre>
-Cliente
-   ↓
-Pedido
-   ↓
-Produto
-   ↓
-Pagamento
-</pre></div>
+<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER: Categoria ligada a Produto pelo relacionamento Classifica"><img src="../img/bancodedados/modelagem/conceitual-relacionamento.svg" width="400" height="390" alt="DER: Categoria ligada a Produto pelo relacionamento Classifica" loading="lazy" decoding="async"/><figcaption>O losango nomeia a associação. As duas linhas ligam as entidades ao relacionamento.</figcaption></figure>
+<p><strong>No brModelo:</strong> acrescente o relacionamento CLASSIFICA e conecte-o às duas entidades. Leia o desenho como uma frase: “Categoria classifica Produto”. Não coloque <code>id_categoria</code> como atributo de Produto nesta etapa: o vínculo já está representado pelo relacionamento.</p>
 <p>Relacionamentos reduzem redundância, melhoram organização, ajudam na integridade e representam regras reais do negócio.</p>
 <h3>Relacionamento também comunica regra</h3>
-<p>A ligação entre Cliente e Pedido não é apenas visual. Ela significa que um pedido pertence a um cliente, e que o sistema deve respeitar essa relação.</p>
+<p>A ligação não diz apenas que Categoria e Produto existem. Ela afirma que a categoria classifica o produto. Precisamos agora indicar quantas ocorrências podem participar e se a participação é obrigatória.</p>
 <h2>BLOCO 5 — Cardinalidade</h2>
 <p>Depois de identificar o relacionamento, precisamos responder uma pergunta essencial: quantas ocorrências de uma entidade podem se relacionar com outra?</p>
 <p>Isso é chamado de <strong>cardinalidade</strong>.</p>
@@ -681,173 +635,43 @@ Pagamento
 <h3>Ideia principal</h3>
 <p>Cardinalidade define quantas ocorrências de uma entidade podem se relacionar com outra.</p>
 </div></div>
-<h3>Relacionamento 1:1</h3>
-<p>Uma ocorrência se relaciona com apenas uma outra ocorrência.</p>
-<pre>
-FUNCIONARIO 1 ─── 1 CRACHA
-</pre>
-<p>Esse exemplo só será 1:1 se a regra da organização disser que cada funcionário possui no máximo um crachá ativo e cada crachá pertence a um único funcionário.</p>
-<h3>Relacionamento 1:N</h3>
-<p>É um dos relacionamentos mais comuns.</p>
-<pre>
-Cliente 1 ─── N Pedido
-</pre>
-<p>Um cliente pode fazer vários pedidos, mas cada pedido pertence a um cliente.</p>
-<h3>Relacionamento N:N</h3>
-<p>Uma ocorrência de uma entidade pode se relacionar com várias ocorrências da outra, e vice-versa.</p>
-<pre>
-Aluno N ─── N Disciplina
-</pre>
-<p>Em bancos relacionais, normalmente resolvemos N:N criando uma tabela intermediária.</p>
-<pre>
-Aluno
-↓
-Matricula
-↓
-Disciplina
-</pre>
-<h3>A tabela intermediária pode ter informações próprias</h3>
-<table class="sql-table">
-<tr><th>id_aluno</th><th>id_disciplina</th><th>nota</th><th>frequencia</th></tr>
-<tr><td>1</td><td>10</td><td>8.5</td><td>92%</td></tr>
-</table>
-<p>Cardinalidade depende das regras do negócio. Não deve ser inventada sem entender o funcionamento real do sistema.</p>
-<h3>Cardinalidade mínima e máxima: é obrigatório ou opcional?</h3>
-<p>Além de saber se a relação é 1:1, 1:N ou N:N, precisamos descobrir se a participação é <strong>obrigatória</strong> ou <strong>opcional</strong>.</p>
-<table class="sql-table">
-<tr><th>Notação</th><th>Leitura</th></tr>
-<tr><td>0..1</td><td>pode não existir ou existir uma ocorrência</td></tr>
-<tr><td>1..1</td><td>deve existir exatamente uma ocorrência</td></tr>
-<tr><td>0..N</td><td>pode não existir nenhuma ou podem existir várias</td></tr>
-<tr><td>1..N</td><td>deve existir pelo menos uma e podem existir várias</td></tr>
-</table>
-<div class="card note"><div class="card-body"><h3>Exemplo de leitura</h3><p>Um cliente novo pode ainda não ter feito pedidos: Cliente → Pedido pode ser 0..N. Já um pedido válido deve pertencer a exatamente um cliente: Pedido → Cliente é 1..1.</p></div></div>
-<p>Essa leitura evita um erro comum: saber apenas “um para muitos”, mas não saber se o relacionamento é obrigatório.</p>
-<h2>BLOCO 6 — DER (Diagrama Entidade Relacionamento)</h2>
-<p>Depois de entender entidades, atributos, relacionamentos e cardinalidade, precisamos representar tudo isso visualmente.</p>
-<p>DER significa <strong>Diagrama Entidade Relacionamento</strong>.</p>
-<div class="card idea"><div class="card-body">
-<h3>Ideia principal</h3>
-<p>O DER funciona como um mapa estrutural do sistema.</p>
-</div></div>
-<h3>O que o DER mostra?</h3>
-<ul>
-<li>entidades;</li>
-<li>atributos;</li>
-<li>relacionamentos;</li>
-<li>cardinalidades;</li>
-<li>organização lógica do sistema.</li>
-</ul>
-<h3>Exemplo simplificado</h3>
-<pre>
-CLIENTE 1 ─── N PEDIDO
-PEDIDO  1 ─── N ITEM_PEDIDO
-PRODUTO 1 ─── N ITEM_PEDIDO
-CATEGORIA 1 ─── N PRODUTO
-</pre>
-<p>O DER não é SQL, não é MySQL e ainda não é o banco físico. Ele é uma representação visual da estrutura pensada.</p>
-<div class="visual"><pre>
-Problema real
-↓
-Modelagem
-↓
-DER
-↓
-Banco físico
-↓
-SQL
-</pre></div>
-<h3>Por que o DER é importante?</h3>
-<p>Ele ajuda a visualizar o sistema inteiro, comunicar a estrutura para outras pessoas, encontrar erros antes da implementação e documentar o projeto.</p>
-<h2>BLOCO 6.1 — Exemplo visual de DER: Sistema Comercial</h2>
-<p>A seguir temos um exemplo visual de DER para um sistema comercial simples. O objetivo é mostrar, de forma parecida com ferramentas de modelagem, como entidades, atributos, relacionamentos, chaves primárias e cardinalidades aparecem no desenho.</p>
-<div class="visual" style="background:#fff; padding:20px;">
-<svg aria-label="DER Sistema Comercial com Produto, Fornecedor e Categoria" role="img" style="max-width:1180px; display:block; margin:auto;" viewbox="0 0 1180 690" width="100%">
-<defs>
+<h3>Primeiro, leia o mínimo e o máximo</h3>
+<p>O máximo distingue 1:1, 1:N e N:N; o mínimo informa se a participação é opcional ou obrigatória. <strong>N</strong> significa que podem existir várias ocorrências, sem fixar uma quantidade específica.</p>
+<table class="sql-table"><tr><th>Notação</th><th>Leitura</th></tr><tr><td>0..1</td><td>nenhuma ou uma ocorrência</td></tr><tr><td>1..1</td><td>exatamente uma ocorrência</td></tr><tr><td>0..N</td><td>nenhuma ou várias ocorrências</td></tr><tr><td>1..N</td><td>uma ou várias ocorrências, com pelo menos uma obrigatória</td></tr></table>
+<p>Nos DERs deste capítulo, escrevemos esses pares como <strong>(0,1), (1,1), (0,n) e (1,n)</strong>. A marcação fica junto à entidade cuja participação descreve. Para lê-la, fixe uma ocorrência dessa entidade e pergunte: “de quantos vínculos deste relacionamento ela pode participar?”.</p>
+<h3>Relacionamento 1:N — Categoria e Produto</h3>
+<p>Uma categoria recém-cadastrada pode ainda não ter produtos: sua participação é <strong>(0,n)</strong>. Um produto precisa pertencer a exatamente uma categoria: sua participação é <strong>(1,1)</strong>. Os máximos formam uma relação <strong>um para muitos</strong>: uma categoria para vários produtos.</p>
+<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER 1:N: Categoria participa de zero a muitos produtos; Produto tem exatamente uma categoria"><img src="../img/bancodedados/modelagem/conceitual-categoria-produto.svg" width="400" height="390" alt="DER 1:N: Categoria participa de zero a muitos produtos; Produto tem exatamente uma categoria" loading="lazy" decoding="async"/><figcaption>As marcações expressam a participação da entidade ao lado delas. Categoria pode existir antes de receber produtos.</figcaption></figure>
 
-</defs>
-<!-- Relacionamento fornecedor-produto -->
-<polygon class="der-rel" points="235,42 365,105 235,168 105,105"></polygon>
-<text class="der-text" text-anchor="middle" x="235" y="113">TEM</text>
-<!-- Fornecedor -->
-<rect class="der-entity" height="112" width="245" x="505" y="58"></rect>
-<text class="der-text" text-anchor="middle" x="627" y="124">FORNECEDOR</text>
-<!-- Produto -->
-<rect class="der-entity" height="165" width="250" x="95" y="255"></rect>
-<text class="der-text" text-anchor="middle" x="220" y="348">PRODUTO</text>
-<!-- Relacionamento categoria-produto -->
-<polygon class="der-rel" points="690,276 820,340 690,404 560,340"></polygon>
-<text class="der-text" text-anchor="middle" x="690" y="348">TEM</text>
-<!-- Categoria -->
-<rect class="der-entity" height="110" width="260" x="635" y="515"></rect>
-<text class="der-text" text-anchor="middle" x="765" y="579">CATEGORIA</text>
-<!-- Linhas relacionamentos -->
-<path class="der-line" d="M365 105 H505"></path>
-<text class="der-small" text-anchor="middle" x="430" y="92">(1,1)</text>
-<path class="der-line" d="M235 168 V255"></path>
-<text class="der-small" x="265" y="245">(1,n)</text>
-<path class="der-line" d="M345 340 H560"></path>
-<text class="der-small" x="395" y="322">(1,n)</text>
-<path class="der-line" d="M690 404 V515"></path>
-<text class="der-small" x="715" y="485">(1,1)</text>
-<!-- Atributos Fornecedor -->
-<path class="der-line" d="M750 82 H792 V75 H815"></path>
-<circle class="der-pk" cx="832" cy="75" r="10"></circle>
-<text class="der-small" x="848" y="82">ID_FORNECEDOR</text>
-<path class="der-line" d="M750 115 H792 V115 H815"></path>
-<circle class="der-attr" cx="832" cy="115" r="10"></circle>
-<text class="der-small" x="848" y="122">NOME</text>
-<path class="der-line" d="M750 148 H792 V155 H815"></path>
-<circle class="der-attr" cx="832" cy="155" r="10"></circle>
-<text class="der-small" x="848" y="162">TELEFONE</text>
-<!-- Atributos Produto -->
-<path class="der-line" d="M195 420 V485 H160"></path>
-<circle class="der-attr" cx="145" cy="485" r="10"></circle>
-<text class="der-small" text-anchor="end" x="102" y="492">QTDE</text>
-<path class="der-line" d="M225 420 V505 H185"></path>
-<circle class="der-attr" cx="170" cy="505" r="10"></circle>
-<text class="der-small" x="185" y="512">PRECO</text>
-<path class="der-line" d="M260 420 V485 H300"></path>
-<circle class="der-attr" cx="315" cy="485" r="10"></circle>
-<text class="der-small" x="330" y="492">DESCRICAO</text>
-<path class="der-line" d="M300 420 V445 H355"></path>
-<circle class="der-pk" cx="372" cy="445" r="10"></circle>
-<text class="der-small" x="388" y="452">ID_PRODUTO</text>
-<!-- Atributos Categoria -->
-<path class="der-line" d="M895 545 H950 V540 H985"></path>
-<circle class="der-pk" cx="1002" cy="540" r="10"></circle>
-<text class="der-small" x="1018" y="547">ID_CATEGORIA</text>
-<path class="der-line" d="M895 585 H950 V585 H985"></path>
-<circle class="der-attr" cx="1002" cy="585" r="10"></circle>
-<text class="der-small" x="1018" y="592">NOME</text>
-<!-- Legenda -->
-<rect fill="#f8fbff" height="38" rx="10" stroke="#d6e0ee" width="970" x="105" y="640"></rect>
-<text class="der-muted" x="130" y="664">LEGENDA:</text>
-<rect class="der-entity" height="20" width="38" x="225" y="650"></rect>
-<text class="der-muted" x="275" y="665">Entidade</text>
-<polygon class="der-rel" points="405,640 445,660 405,680 365,660"></polygon>
-<text class="der-muted" x="462" y="665">Relacionamento</text>
-<circle class="der-pk" cx="625" cy="660" r="9"></circle>
-<text class="der-muted" x="642" y="665">Chave Primária (PK)</text>
-<circle class="der-attr" cx="830" cy="660" r="9"></circle>
-<text class="der-muted" x="847" y="665">Atributo</text>
-<text class="der-muted" x="970" y="665">(1,1) (1,n) Cardinalidade</text>
-</svg>
-</div>
-<div class="card note"><div class="card-body">
-<h3>Leitura do modelo</h3>
-<ul>
-<li><strong>FORNECEDOR (1) — (N) PRODUTO:</strong> um fornecedor pode fornecer vários produtos, mas cada produto está ligado a um fornecedor neste modelo simplificado.</li>
-<li><strong>Regra simplificada:</strong> este desenho considera um fornecedor por produto apenas para a primeira leitura do DER. Se o negócio permitir vários fornecedores para o mesmo produto, a regra muda para N:N e o modelo precisará ser refinado — exatamente o que faremos no próximo capítulo.</li>
-<li><strong>CATEGORIA (1) — (N) PRODUTO:</strong> uma categoria pode possuir vários produtos, mas cada produto pertence a uma categoria.</li>
-<li><strong>PRODUTO</strong> possui atributos como descrição, preço e quantidade em estoque.</li>
-<li>As chaves primárias estão destacadas em azul escuro.</li>
-</ul>
-</div></div>
-<div class="card idea"><div class="card-body">
-<h3>Importante</h3>
-<p>Este DER representa o modelo conceitual do sistema. No próximo capítulo, esse desenho poderá ser transformado em tabelas relacionais, com chaves primárias, chaves estrangeiras e outras restrições.</p>
-</div></div>
+<p><strong>No brModelo:</strong> defina as cardinalidades de CLASSIFICA. Confira pelos dois sentidos: uma categoria aceita vários produtos; um produto não aceita duas categorias neste modelo. Explique também por que o mínimo da categoria é zero.</p>
+<h3>Relacionamento 1:1 — prática complementar</h3>
+<p>Para experimentar o <strong>um para um</strong>, use um modelo separado: cada funcionário pode ter <strong>no máximo um crachá ativo</strong>, e cada crachá pertence a um único funcionário. Um funcionário ainda sem crachá pode existir. Estamos modelando apenas os crachás ativos, não seu histórico.</p>
+<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER 1:1: Funcionário pode ter zero ou um crachá ativo; Crachá pertence a um funcionário"><img src="../img/bancodedados/modelagem/conceitual-um-para-um.svg" width="400" height="390" alt="DER 1:1: Funcionário pode ter zero ou um crachá ativo; Crachá pertence a um funcionário" loading="lazy" decoding="async"/><figcaption>Os máximos são um nos dois lados; os mínimos são diferentes. Esta prática não acrescenta entidades ao comércio.</figcaption></figure>
+
+<p><strong>Pratique:</strong> desenhe FUNCIONÁRIO, CRACHÁ ATIVO e POSSUI em outro arquivo. Defina as participações e explique o que mudaria se a organização quisesse guardar vários crachás antigos do mesmo funcionário. Salve esse exercício separadamente e continue o modelo do comércio.</p>
+<h3>Relacionamento N:N — Produto e Fornecedor</h3>
+<p>Agora precisamos saber de quem compramos. Um produto pode ser oferecido por vários fornecedores; um fornecedor pode oferecer vários produtos. Surge o <strong>muitos para muitos</strong>. Os cadastros podem existir antes de registrar uma parceria: a participação mínima é zero nos dois lados.</p>
+<p>Adicione FORNECEDOR com <code>id_fornecedor</code>, <code>nome</code> e <code>telefone</code>. O preço de custo e o prazo de entrega podem mudar conforme o fornecedor de um mesmo produto. Por isso, <code>preco_custo</code> e <code>prazo_entrega</code> são atributos do relacionamento <strong>FORNECE</strong>.</p>
+<figure class="der-figure der-figure-compact" data-mbb-titulo="DER N:N: Produto e Fornecedor ligados por Fornece, com custo e prazo no relacionamento"><img src="../img/bancodedados/modelagem/conceitual-produto-fornecedor.svg" width="520" height="420" alt="DER N:N: Produto e Fornecedor ligados por Fornece, com custo e prazo no relacionamento" loading="lazy" decoding="async"/><figcaption>Custo e prazo descrevem a parceria. Um mesmo produto pode ter custos diferentes com fornecedores diferentes.</figcaption></figure>
+
+<p><strong>No brModelo:</strong> acrescente FORNECEDOR, o relacionamento FORNECE e seus atributos. Marque as participações e mostre no desenho onde registraríamos o custo de um produto comprado de um fornecedor específico. A transformação desse relacionamento em tabela será feita no tópico 3.</p>
+<h3>Quando a informação ainda não existe — Cidade e Fornecedor</h3>
+<p>Queremos registrar a cidade do fornecedor, mas a base que usaremos não informa a cidade dos fornecedores. Um fornecedor pode ter <strong>zero ou uma cidade informada</strong>; uma cidade pode reunir <strong>zero a vários fornecedores</strong>. Não vamos inventar uma cidade para preencher essa ausência.</p>
+<p>Adicione CIDADE com <code>id_cidade</code>, <code>nome_cidade</code> e <code>estado</code>. O estado ajuda a distinguir cidades de mesmo nome em unidades da federação diferentes.</p>
+<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER: Fornecedor com cidade opcional; Cidade pode ter vários fornecedores"><img src="../img/bancodedados/modelagem/conceitual-cidade-fornecedor.svg" width="400" height="390" alt="DER: Fornecedor com cidade opcional; Cidade pode ter vários fornecedores" loading="lazy" decoding="async"/><figcaption>A participação opcional representa a ausência de informação no cadastro. Se houver cidade informada, ela será uma só.</figcaption></figure>
+
+<p><strong>Pratique:</strong> ligue FORNECEDOR e CIDADE por LOCALIZA-SE e confira os dois sentidos. Compare com Produto–Categoria: por que o fornecedor admite ausência de cidade, mas o produto precisa de categoria?</p>
+<h2>BLOCO 6 — DER (Diagrama Entidade Relacionamento)</h2>
+<p>Você já construiu partes de um <strong>DER — Diagrama Entidade Relacionamento</strong>. Agora podemos reuni-las: retângulos representam entidades; círculos representam atributos; círculos preenchidos destacam identificadores; losangos representam relacionamentos; os pares indicam participações mínimas e máximas.</p>
+<p>O desenho comunica regras do negócio. Ele não é um comando SQL nem um banco físico: é uma representação que pode ser discutida e corrigida antes da implementação.</p>
+<p>Antes de olhar o conjunto completo, confira se seu arquivo contém os quatro cadastros e os três relacionamentos que acabamos de trabalhar.</p>
+<h2>BLOCO 6.1 — Exemplo visual de DER: Sistema Comercial</h2>
+<p>Este é o resultado da construção por etapas. Compare-o com seu arquivo no brModelo; use <strong>Ampliar</strong> para examinar os atributos e as marcações sem reduzir a leitura a uma miniatura.</p>
+<figure class="der-figure" data-mbb-titulo="DER conceitual completo do comércio: Categoria, Produto, Fornecedor e Cidade"><img src="../img/bancodedados/modelagem/conceitual-comercio.svg" width="1200" height="1180" alt="DER conceitual completo do comércio: Categoria, Produto, Fornecedor e Cidade" loading="lazy" decoding="async"/><figcaption>O modelo reúne o 1:N de classificação, o N:N de fornecimento e a cidade opcional do fornecedor. Não há uma entidade de crachá no comércio.</figcaption></figure>
+
+<h3>Conferência das regras</h3>
+<ul><li>Cada produto pertence a uma categoria; uma categoria pode ainda não ter produtos.</li><li>Produto e fornecedor podem participar de várias parcerias; custo e prazo ficam no vínculo correspondente.</li><li>Um fornecedor pode estar sem cidade informada; uma cidade pode ter vários fornecedores.</li><li>Os identificadores distinguem as ocorrências de cada entidade. Ainda não duplicamos seus valores como FKs dentro de outra entidade.</li></ul>
+<p><strong>Conquista MbB:</strong> mostre no seu desenho onde aparecem essas quatro afirmações. Corrija qualquer marcação que não corresponda à frase e salve o modelo. No próximo tópico, transformaremos essas mesmas regras em tabelas, sem trocar o cenário ou mudar a cardinalidade do fornecimento.</p>
 <h2>BLOCO 7 — Problemas Clássicos de Modelagem</h2>
 <p>Muitos problemas em sistemas começam na modelagem: lentidão, redundância, inconsistência, dificuldade de manutenção e retrabalho.</p>
 <div class="grid2">
@@ -874,20 +698,6 @@ SQL
 <tr><td>João</td><td>1A</td><td>Professor A</td><td>Banco de Dados</td><td>8.0</td></tr>
 </table>
 <p>Essa estrutura mistura aluno, turma, professor, disciplina e nota em uma única tabela. Isso pode gerar redundância, inconsistência e dificuldade de manutenção.</p>
-<h3>Fluxo correto</h3>
-<div class="visual"><pre>
-Problema real
-↓
-Análise
-↓
-Modelagem
-↓
-DER
-↓
-Banco físico
-↓
-SQL
-</pre></div>
 <p>Modelagem ruim custa caro, porque corrigir a estrutura do banco depois pode afetar todo o sistema.</p>
 <h2>BLOCO 8 — Pensando Como Analista</h2>
 <p>O verdadeiro trabalho do analista é transformar problemas reais em estruturas organizadas de informação.</p>
@@ -905,20 +715,12 @@ SQL
 </ul>
 <h3>O analista aprende a separar responsabilidades</h3>
 <p>Em vez de criar uma “tabela geral”, o analista separa alunos, professores, disciplinas, turmas, notas e frequência.</p>
-<div class="visual"><pre>
-Aluno
-↓
-Turma
-↓
-Disciplina
-↓
-Nota
-</pre></div>
+<p>Esse é outro domínio: suas relações precisam ser descobertas pelas regras da escola, não copiadas automaticamente do comércio. Use os exemplos para transferir o raciocínio, mantendo claro qual problema está modelando.</p>
 <h3>Modelagem é pensamento, não ferramenta</h3>
 <p>A ferramenta pode ser Draw.io, brModelo, MySQL Workbench, Oracle Data Modeler ou papel e caneta. O principal é o raciocínio estrutural.</p>
 <p>O objetivo não é decorar diagramas. O objetivo é desenvolver pensamento analítico.</p>
 <h2>Checagem antes de avançar</h2>
-<ol><li>Identifique entidades, atributos e relacionamentos em um sistema simples.</li><li>Escreva uma regra de negócio antes de definir uma cardinalidade.</li><li>Diferencie 1:1, 1:N e N:N.</li><li>Explique o que 0..N e 1..1 acrescentam à leitura da cardinalidade.</li></ol>
+<ol><li>Mostre as quatro entidades e seus identificadores no modelo do comércio.</li><li>Leia cada relacionamento nos dois sentidos e justifique seus mínimos e máximos.</li><li>Explique por que custo e prazo pertencem ao relacionamento FORNECE.</li><li>Compare o 1:1 do exercício separado com o 1:N e o N:N do comércio.</li><li>Confirme que seu arquivo está salvo e que o desenho corresponde às regras, antes de transformá-lo em tabelas.</li></ol>
 <div class="card note"><div class="card-body"><h3>Prática completa</h3><p>Os exercícios graduados deste capítulo estão em <strong>99 Exercícios → Capítulo 2</strong>.</p></div></div>
 <h2>FECHAMENTO DO CAPÍTULO 2</h2>
 <p>A partir deste ponto, o aluno já consegue transformar problemas reais em estruturas organizadas de informação.</p>
@@ -961,8 +763,9 @@ SQL no SGBD
 <li><strong>PRODUTO</strong> — representa os itens vendidos ou controlados em estoque;</li>
 <li><strong>CATEGORIA</strong> — agrupa produtos semelhantes;</li>
 <li><strong>FORNECEDOR</strong> — representa quem fornece produtos;</li>
-<li><strong>PRODUTO_FORNECEDOR</strong> — será usada quando um produto puder ter vários fornecedores.</li>
+<li><strong>CIDADE</strong> — guarda nome e estado das cidades, quando conhecidos.</li>
 </ul>
+<p>O relacionamento N:N FORNECE também precisará de uma estrutura própria: <strong>produto_fornecedor</strong>. Primeiro vamos converter as entidades e o 1:N; depois construiremos essa associação com as duas chaves.</p>
 <h3>Entidade vira tabela</h3>
 <p>Na modelagem conceitual, falávamos em entidades. Na modelagem lógica, essas entidades começam a se transformar em tabelas.</p>
 <table class="sql-table">
@@ -970,24 +773,26 @@ SQL no SGBD
 <tr><td>PRODUTO</td><td>produto</td></tr>
 <tr><td>CATEGORIA</td><td>categoria</td></tr>
 <tr><td>FORNECEDOR</td><td>fornecedor</td></tr>
+<tr><td>CIDADE</td><td>cidade</td></tr>
 </table>
 <h3>Atributo vira coluna</h3>
 <p>Os atributos da entidade passam a ser colunas da tabela.</p>
 <table class="sql-table">
 <tr><th>Entidade</th><th>Atributos conceituais</th><th>Colunas lógicas</th></tr>
-<tr><td>PRODUTO</td><td>descrição, preço, quantidade</td><td>descricao, preco, qtde</td></tr>
+<tr><td>PRODUTO</td><td>descrição, preço, quantidade, estoque mínimo</td><td>descricao, preco, qtde, estoque_minimo</td></tr>
 <tr><td>CATEGORIA</td><td>nome</td><td>nome</td></tr>
 <tr><td>FORNECEDOR</td><td>nome, telefone</td><td>nome, telefone</td></tr>
+<tr><td>CIDADE</td><td>nome da cidade, estado</td><td>nome_cidade, estado</td></tr>
 </table>
 <h3>Ocorrência vira registro</h3>
 <p>Cada ocorrência de uma entidade vira um registro, ou seja, uma linha dentro da tabela.</p>
 <table class="sql-table">
 <tr><th>id_produto</th><th>descricao</th><th>preco</th><th>qtde</th></tr>
-<tr><td>1</td><td>Mouse Gamer</td><td>89.90</td><td>15</td></tr>
-<tr><td>2</td><td>Teclado Mecânico</td><td>259.90</td><td>8</td></tr>
+<tr><td>12</td><td>BALA 7 BELO</td><td>0.00</td><td>12</td></tr>
+<tr><td>13</td><td>PIRULITO</td><td>1.00</td><td>25</td></tr>
 </table>
-<p>Cada linha representa um produto real armazenado no banco.</p>
-<h3>Relacionamento vira chave estrangeira</h3>
+<p>Essas duas ocorrências fazem parte dos dados didáticos que serão inseridos no capítulo 4. Por enquanto, usamos suas linhas apenas para entender a representação; nenhum comando precisa ser executado aqui.</p>
+<h3>No 1:N, a chave estrangeira fica no lado N</h3>
 <p>No DER, víamos uma linha conectando CATEGORIA e PRODUTO. Na modelagem lógica, esse relacionamento precisa aparecer dentro das tabelas.</p>
 <pre>
 CATEGORIA 1 ─── N PRODUTO
@@ -995,17 +800,18 @@ CATEGORIA 1 ─── N PRODUTO
 <p>A forma lógica de representar isso é colocar a chave da categoria dentro da tabela produto.</p>
 <table class="sql-table">
 <tr><th>id_produto</th><th>descricao</th><th>preco</th><th>qtde</th><th>id_categoria</th></tr>
-<tr><td>1</td><td>Mouse Gamer</td><td>89.90</td><td>15</td><td>2</td></tr>
+<tr><td>12</td><td>BALA 7 BELO</td><td>0.00</td><td>12</td><td>1</td></tr>
 </table>
-<p>Agora o relacionamento deixou de ser apenas visual. Ele virou estrutura relacional.</p>
+<p>O relacionamento conceitual é traduzido por uma coluna que referencia a categoria. O mesmo valor de <code>id_categoria</code> pode aparecer em vários produtos: essa repetição do vínculo é esperada e não significa repetir os dados descritivos da categoria.</p>
 <div class="card note"><div class="card-body">
 <h3>Leitura correta</h3>
 <p>O produto possui uma coluna id_categoria porque cada produto pertence a uma categoria. Essa coluna será a chave estrangeira da tabela produto.</p>
 </div></div>
 <h2>BLOCO 2 — PK e FK na Estrutura Relacional</h2>
-<p>Agora precisamos aprofundar dois conceitos centrais da modelagem lógica: <strong>PK</strong> e <strong>FK</strong>.</p>
+<p><strong>PK</strong> é a sigla de <em>Primary Key</em> (chave primária); <strong>FK</strong>, de <em>Foreign Key</em> (chave estrangeira). Vamos entender por que uma identifica e a outra relaciona.</p>
 <h3>PK — Chave Primária</h3>
-<p>PK significa <strong>Primary Key</strong>, ou chave primária. Sua função é identificar cada registro de forma única dentro de uma tabela.</p>
+<p>A chave primária identifica cada registro de forma única dentro de uma tabela.</p>
+<p>Para comparar estruturas, usaremos agora <strong>exemplos simulados</strong> com Mouse, Tech e Alpha. Esses produtos, fornecedores, custos e cidades ilustram as regras e a normalização; não são a carga de dados do capítulo 4.</p>
 <table class="sql-table">
 <tr><th>id_produto</th><th>descricao</th></tr>
 <tr><td>1</td><td>Mouse</td></tr>
@@ -1024,7 +830,7 @@ CATEGORIA 1 ─── N PRODUTO
 <li>deve permanecer estável sempre que possível.</li>
 </ul>
 <h3>FK — Chave Estrangeira</h3>
-<p>FK significa <strong>Foreign Key</strong>, ou chave estrangeira. Sua função é conectar uma tabela à outra.</p>
+<p>A chave estrangeira estabelece a referência entre tabelas. Observe se cada referência encontra a categoria correspondente:</p>
 <table class="sql-table">
 <tr><th>id_categoria</th><th>nome</th></tr>
 <tr><td>1</td><td>Informática</td></tr>
@@ -1058,9 +864,25 @@ categoria.id_categoria
 <tr><td>PK</td><td>identifica o registro dentro da própria tabela</td></tr>
 <tr><td>FK</td><td>relaciona o registro com outra tabela</td></tr>
 </table>
+<h3>Pratique o 1:N no modelo lógico</h3>
+<p>Nas figuras, já anotamos os tipos escolhidos para o MySQL: <code>INT</code> representa números inteiros; <code>VARCHAR(n)</code>, textos com limite de caracteres; <code>DECIMAL(10,2)</code>, números decimais com até dez algarismos no total, sendo dois após a vírgula. Se o brModelo apresentar nomes genéricos de tipos, registre a correspondência com esses tipos do MySQL ao conferir o desenho.</p>
+<p>Todo produto precisa de categoria. Vamos registrar essa obrigatoriedade como <strong>NOT NULL</strong> (“não nulo”) em <code>produto.id_categoria</code>: essa coluna não poderá ficar sem valor.</p>
+<p>No brModelo, mantenha seu conceitual salvo e crie um modelo lógico separado, <strong>comercio-logico</strong>. Represente Categoria e Produto com seus campos, defina as PKs e confira a referência de <code>produto.id_categoria</code> para <code>categoria.id_categoria</code>. Se o programa gerar uma conversão, revise o resultado: a geração não substitui a conferência das regras.</p>
+<figure class="der-figure der-figure-compact" data-mbb-titulo="Modelo lógico 1:N: produto.id_categoria referencia categoria.id_categoria"><img src="../img/bancodedados/modelagem/logico-categoria-produto.svg" width="480" height="620" alt="Modelo lógico 1:N: produto.id_categoria referencia categoria.id_categoria" loading="lazy" decoding="async"/><figcaption>A chave dourada indica a PK; a cinza indica a FK. A obrigatoriedade de id_categoria corresponde à regra de todo produto ter uma categoria.</figcaption></figure>
+
+<p>O limite de cada campo aparece no desenho. O comando para criar essas tabelas será estudado no capítulo 4.</p>
+<h3>O vínculo pode ser opcional: Cidade e Fornecedor</h3>
+<p>Acrescente as tabelas Cidade e Fornecedor ao modelo lógico. A PK de Cidade será referenciada por <code>fornecedor.id_cidade</code>. Como a cidade pode estar sem informação, essa FK aceita <strong>NULL</strong>, a ausência de um valor informado. Se houver um ID preenchido, ele deve corresponder a uma cidade existente. Para a sigla do estado, <code>CHAR(2)</code> representa texto de tamanho fixo com dois caracteres.</p>
+<figure class="der-figure der-figure-compact" data-mbb-titulo="Modelo lógico: id_cidade de Fornecedor é uma FK opcional para Cidade"><img src="../img/bancodedados/modelagem/logico-cidade-fornecedor.svg" width="480" height="580" alt="Modelo lógico: id_cidade de Fornecedor é uma FK opcional para Cidade" loading="lazy" decoding="async"/><figcaption>id_cidade em fornecedor aceita NULL. Em produto, id_categoria será obrigatório, por meio de NOT NULL.</figcaption></figure>
+
+<p><strong>No brModelo:</strong> confira as PKs, a FK e sua obrigatoriedade. Explique por que uma cidade sem fornecedor pode existir e por que um fornecedor com cidade desconhecida não deve receber um ID inventado.</p>
+<h3>Conversão do 1:1 — retome o arquivo complementar</h3>
+<p>No exercício de crachá ativo, a tabela de crachás pode guardar <code>id_funcionario</code> como FK. A regra <strong>NOT NULL</strong> exige um funcionário para cada crachá, e <strong>UNIQUE</strong> impede que dois crachás ativos apontem para o mesmo funcionário. A FK, sozinha, não impediria essa repetição.</p>
+<figure class="der-figure der-figure-compact" data-mbb-titulo="Modelo lógico complementar 1:1: Crachá ativo com FK obrigatória e única para Funcionário"><img src="../img/bancodedados/modelagem/logico-um-para-um.svg" width="480" height="550" alt="Modelo lógico complementar 1:1: Crachá ativo com FK obrigatória e única para Funcionário" loading="lazy" decoding="async"/><figcaption>Os campos e tamanhos deste exercício são ilustrativos. A unicidade da FK limita o funcionário a um crachá ativo; a FK obrigatória vincula cada crachá a um funcionário.</figcaption></figure>
+
+<p><strong>Pratique em um arquivo separado:</strong> modele essa conversão e explique a função de cada regra. Não acrescente crachás ou funcionários ao modelo do comércio. Não precisamos criar essas tabelas no MySQL para continuar a aula.</p>
 <h2>BLOCO 3 — Relacionamento N:N e Tabela Associativa</h2>
-<p>Nem todo relacionamento é simples. No DER original, podemos simplificar dizendo que um fornecedor possui vários produtos e que um produto pertence a um fornecedor. Porém, em um sistema comercial mais realista, isso pode ser diferente.</p>
-<p>Um produto pode ter vários fornecedores, e um fornecedor pode fornecer vários produtos.</p>
+<p>Retome FORNECE no DER comercial: já definimos que um produto pode ter vários fornecedores e um fornecedor pode oferecer vários produtos. Precisamos representar essa mesma regra no modelo lógico.</p>
 <pre>
 PRODUTO N ─── N FORNECEDOR
 </pre>
@@ -1103,14 +925,17 @@ FORNECEDOR
 <p>Às vezes, a tabela associativa não serve apenas para ligar duas tabelas. Ela também pode guardar informações próprias da relação.</p>
 <table class="sql-table">
 <tr><th>id_produto</th><th>id_fornecedor</th><th>preco_custo</th><th>prazo_entrega</th></tr>
-<tr><td>10</td><td>1</td><td>55.00</td><td>5 dias</td></tr>
-<tr><td>10</td><td>2</td><td>58.00</td><td>3 dias</td></tr>
+<tr><td>10</td><td>1</td><td>55.00</td><td>5</td></tr>
+<tr><td>10</td><td>2</td><td>58.00</td><td>3</td></tr>
 </table>
-<p>O preço de custo não pertence apenas ao produto. Ele depende da combinação entre produto e fornecedor.</p>
+<p>O preço de custo não pertence apenas ao produto. Ele depende da combinação entre produto e fornecedor. <code>prazo_entrega</code> guarda a quantidade inteira de <strong>dias</strong>: por isso as células mostram 5 e 3, sem misturar o número com a unidade. No banco do capítulo 4, custo e prazo podem ficar <code>NULL</code> enquanto não forem conhecidos.</p>
 <div class="card idea"><div class="card-body">
 <h3>Ideia principal</h3>
 <p>Quando uma informação depende da relação entre duas entidades, ela deve ficar na tabela associativa.</p>
 </div></div>
+<figure class="der-figure" data-mbb-titulo="Modelo lógico do N:N: Produto e Fornecedor ligados por Produto_fornecedor"><img src="../img/bancodedados/modelagem/logico-produto-fornecedor.svg" width="1200" height="850" alt="Modelo lógico do N:N: Produto e Fornecedor ligados por Produto_fornecedor" loading="lazy" decoding="async"/><figcaption>As duas colunas da PK composta também são FKs. Cada linha da associação precisa dos dois registros referenciados, mas produto e fornecedor podem existir antes de ter uma parceria.</figcaption></figure>
+
+<p><strong>No brModelo:</strong> adicione <code>produto_fornecedor</code>, defina sua chave composta e ligue cada ID à PK correspondente. Transfira custo e prazo do relacionamento conceitual para essa tabela. Confira que <strong>produto não tem id_fornecedor</strong>. Salve o modelo: o N:N agora está representado por duas relações 1:N.</p>
 <h2>BLOCO 4 — Redundância e o Nascimento da Normalização</h2>
 <p>Agora que já temos tabelas, PK, FK e relacionamentos, começamos a enxergar problemas estruturais com mais clareza.</p>
 <p>O principal deles é a <strong>redundância</strong>.</p>
@@ -1192,11 +1017,11 @@ FORNECEDOR
 <div class="card note"><div class="card-body"><h3>Dependência funcional, sem complicar</h3><p>Dizemos que um dado depende de outro quando conhecer o identificador correto determina qual valor deve aparecer. Por exemplo: <strong>id_fornecedor → nome_fornecedor</strong>. O ID do fornecedor determina qual é o seu nome.</p></div></div>
 <p>Em uma tabela associativa com chave composta, precisamos perguntar se cada atributo depende da <strong>combinação inteira</strong> da chave ou somente de uma parte dela.</p>
 <p>A Segunda Forma Normal resolve justamente problemas de dependência parcial.</p>
+<p>A 2FN pressupõe a 1FN. Para avaliá-la, consideramos as <strong>chaves candidatas</strong>: conjuntos mínimos de atributos capazes de identificar uma linha. A PK é uma dessas chaves escolhida como principal. Nos exemplos a seguir, o par produto–fornecedor é a chave candidata usada para a análise.</p>
 <div class="card idea"><div class="card-body">
 <h3>Ideia central da 2FN</h3>
-<p>Um atributo deve depender da chave inteira, e não apenas de parte dela.</p>
+<p>Os atributos que não fazem parte de nenhuma chave candidata não devem depender de apenas uma parte de uma chave candidata composta. Neste exemplo, confira se cada dado descritivo depende do par inteiro.</p>
 </div></div>
-<p>A 2FN aparece principalmente em tabelas com chave composta, como tabelas associativas.</p>
 <h3>Exemplo problemático</h3>
 <table class="sql-table">
 <tr><th>id_produto</th><th>id_fornecedor</th><th>nome_fornecedor</th><th>preco_custo</th></tr>
@@ -1221,10 +1046,10 @@ FORNECEDOR
 <p>Se uma informação depende apenas de parte da chave composta, ela provavelmente está na tabela errada.</p>
 </div></div>
 <h2>BLOCO 7 — Terceira Forma Normal (3FN)</h2>
-<p>A Terceira Forma Normal resolve problemas de dependência transitiva.</p>
+<p>Depois de atender à 2FN, verificamos a <strong>Terceira Forma Normal</strong>. Nos exemplos desta aula, o problema é um dado descritivo depender de outro dado que não é chave, formando uma dependência transitiva.</p>
 <div class="card idea"><div class="card-body">
 <h3>Ideia central da 3FN</h3>
-<p>Um atributo não deve depender de outro atributo não-chave. Ele deve depender da chave da tabela.</p>
+<p>No exemplo de fornecedor, mantenha os fatos sobre a cidade na tabela cidade. O ID do fornecedor identifica o fornecedor; o ID da cidade determina o nome da cidade e o estado. A 3FN pressupõe que a tabela já atenda à 2FN.</p>
 </div></div>
 <h3>Exemplo problemático</h3>
 <table class="sql-table">
@@ -1258,6 +1083,7 @@ nome_cidade / estado
 <tr><td>10</td><td>Mouse Gamer</td><td>2</td><td>Periféricos</td></tr>
 </table>
 <p>O nome da categoria depende de id_categoria, não diretamente de id_produto. Portanto, deve ficar na tabela categoria.</p>
+<p><strong>Confira no modelo:</strong> compare cada decomposição com as tabelas que você desenhou. O ID da categoria pode se repetir em produto; o nome da categoria permanece em categoria. O mesmo raciocínio vale para a cidade do fornecedor. Repetir uma referência não é o mesmo que repetir desnecessariamente os fatos que ela identifica.</p>
 <h2>BLOCO 8 — Refinamento Lógico e Visão Profissional</h2>
 <p>Depois de aplicar modelagem lógica e normalização, o sistema comercial começa a ficar realmente organizado.</p>
 <table class="sql-table">
@@ -1268,22 +1094,19 @@ nome_cidade / estado
 <tr><td>produto</td><td>guardar os dados dos produtos</td></tr>
 <tr><td>produto_fornecedor</td><td>guardar a relação entre produto e fornecedor</td></tr>
 </table>
-<div class="visual"><pre>
-CATEGORIA 1 ─── N PRODUTO
-CIDADE    1 ─── N FORNECEDOR
-PRODUTO   1 ─── N PRODUTO_FORNECEDOR
-FORNECEDOR 1 ─ N PRODUTO_FORNECEDOR
-</pre></div>
+<figure class="der-figure" data-mbb-titulo="Modelo lógico completo do comércio: cinco tabelas, 19 campos, PKs e FKs"><img src="../img/bancodedados/modelagem/logico-comercio.svg" width="1200" height="1180" alt="Modelo lógico completo do comércio: cinco tabelas, 19 campos, PKs e FKs" loading="lazy" decoding="async"/><figcaption>Compare com seu arquivo: custo e prazo estão na associação, estoque_minimo está em produto, e id_cidade é opcional em fornecedor. Use Ampliar para ler todos os campos.</figcaption></figure>
 <h3>Modelo lógico refinado</h3>
 <table class="sql-table">
-<tr><th>Tabela</th><th>Colunas principais</th></tr>
+<tr><th>Tabela</th><th>Todos os campos do modelo</th></tr>
 <tr><td>categoria</td><td>id_categoria, nome</td></tr>
 <tr><td>cidade</td><td>id_cidade, nome_cidade, estado</td></tr>
 <tr><td>fornecedor</td><td>id_fornecedor, nome, telefone, id_cidade</td></tr>
-<tr><td>produto</td><td>id_produto, descricao, preco, qtde, id_categoria</td></tr>
+<tr><td>produto</td><td>id_produto, descricao, preco, qtde, id_categoria, estoque_minimo</td></tr>
 <tr><td>produto_fornecedor</td><td>id_produto, id_fornecedor, preco_custo, prazo_entrega</td></tr>
 </table>
-<p>Agora cada tabela possui responsabilidade clara. Essa é uma característica importante de uma boa modelagem lógica.</p>
+<p><strong>Última conferência no brModelo:</strong> localize as cinco tabelas e os 19 campos. Confira as quatro referências: produto → categoria; fornecedor → cidade; e as duas de produto_fornecedor. Verifique a PK composta, a ausência de id_fornecedor em produto e a possibilidade de NULL na cidade do fornecedor.</p>
+<p>O modelo também prevê regras de preenchimento e validação. Nome da categoria será único; cidade não repetirá a combinação nome–estado; preço, quantidades, custo e prazo não aceitarão valores negativos; quantidade e estoque mínimo terão padrão zero. O capítulo 4 apresentará <code>UNIQUE</code>, <code>CHECK</code> e <code>DEFAULT</code> junto à criação de cada tabela, retomando essas necessidades.</p>
+<p>Salve seu arquivo. Na implementação, criaremos primeiro <strong>categoria</strong> e <strong>cidade</strong>, que não dependem de outras tabelas; depois <strong>fornecedor</strong> e <strong>produto</strong>; por último <strong>produto_fornecedor</strong>. Essa ordem permite criar as referências a tabelas que já existem.</p>
 <h3>Equilíbrio profissional</h3>
 <p>Normalizar não significa criar tabelas infinitas. O objetivo é equilíbrio: reduzir redundância, manter clareza e permitir manutenção futura.</p>
 <div class="card solution"><div class="card-body">
@@ -4275,5 +4098,5 @@ PRODUTO 1 ─── N ITEM_PEDIDO</pre><ol><li>Um cliente pode possuir vários p
 </section>
 </main></div>
 
-<script src="../js/bancodedados.js?v=heidisql-final-20261026"></script><script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+<script src="../js/bancodedados.js?v=modelagem-der-20261028"></script><script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body></html>
