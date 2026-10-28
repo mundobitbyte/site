@@ -43,6 +43,34 @@ class PraticaReal(unittest.TestCase):
             p.terminate()
             p.wait(timeout=5)
 
+    def test_encaminhamento_local_e_encerramento(self):
+        origem = subprocess.Popen([sys.executable, str(KIT / "servidor.py")], stdout=subprocess.DEVNULL)
+        ponte = subprocess.Popen([sys.executable, str(KIT / "encaminhador_local.py")], stdout=subprocess.DEVNULL)
+        try:
+            pagina = esperar_http()
+            for _ in range(40):
+                try:
+                    with GET("http://127.0.0.1:9000/", timeout=2) as resposta:
+                        self.assertEqual(resposta.read(), pagina)
+                    break
+                except OSError:
+                    time.sleep(0.1)
+            else:
+                self.fail("Encaminhador não iniciou")
+            with self.assertRaises(HTTPError) as erro:
+                GET("http://127.0.0.1:9000/ligar", timeout=2)
+            self.assertEqual(erro.exception.code, 404)
+            ponte.terminate()
+            ponte.wait(timeout=5)
+            with self.assertRaises(OSError):
+                GET("http://127.0.0.1:9000/", timeout=2)
+            self.assertEqual(esperar_http(), pagina)
+        finally:
+            for processo in [ponte, origem]:
+                if processo.poll() is None:
+                    processo.terminate()
+                    processo.wait(timeout=5)
+
     def test_mdns_dois_processos_e_ausencia(self):
         p = subprocess.Popen([sys.executable, "-u", str(KIT / "mdns_local.py"), "anunciar"],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
