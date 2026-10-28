@@ -675,7 +675,7 @@ Endereco IP: 192.168.1.37</pre><p>O endereço será diferente em cada rede.</p><
     <article class="card wide"><h3>2. Cliente e servidor são papéis</h3><p>O <strong>cliente</strong> inicia um pedido (<em>request</em>). O <strong>servidor</strong> recebe esse pedido e devolve uma resposta (<em>response</em>). O papel depende da situação:</p><table><tr><th>Situação</th><th>Cliente</th><th>Servidor</th></tr><tr><td>Celular abre a página do ESP32</td><td>Celular</td><td>ESP32</td></tr><tr><td>ESP32 consulta uma página na Web</td><td>ESP32</td><td>Servidor Web</td></tr></table><p class="mbb6-note"><strong>Importante:</strong> HTTP não exige que a comunicação atravesse a Internet. Ele também pode funcionar somente dentro da rede local, como no servidor criado pelo ESP32.</p></article>
 
     <article class="card wide"><h3 class="mbb6-subtitle">Parte A — ESP32 como servidor HTTP</h3><div class="explain"><p><strong>Problema:</strong> pelo Bluetooth enviávamos L e D. Agora queremos abrir uma página no navegador e tocar em links para controlar o mesmo LED.</p><div class="mbb6-route"><span>Navegador</span><b>→ pedido HTTP →</b><span>ESP32</span><b>→</b><span>LED</span></div></div></article>
-    <article class="card code wide"><h3>3. Código — servidor HTTP (ESP32 físico) <button type="button" onclick="copyCode('b6-3-server-code',this)">Copiar</button></h3><pre id="b6-3-server-code">#include &lt;WiFi.h&gt;
+    <article class="card code wide"><h3>3. Código — servidor HTTP (ESP32 físico; Wokwi com gateway privado) <button type="button" onclick="copyCode('b6-3-server-code',this)">Copiar</button></h3><pre id="b6-3-server-code">#include &lt;WiFi.h&gt;
 #include &lt;WebServer.h&gt;
 
 const char* ssid = "NOME_DA_REDE";
