@@ -87,7 +87,7 @@ export function App() {
 }</code></pre></details>
 <p><code>rotaAtual</code> aceita os nomes que definimos e volta ao atendimento se o fragmento não corresponder a uma área. O estado <code>rota</code> acompanha essa escolha. A interface monta o componente correspondente sem duplicar a origem dos dados.</p>
 <h3 id="passo-2">Reaja à navegação e limpe o que instalou</h3>
-<p><code>useEffect</code> permite sincronizar a interface com algo externo à apresentação, como o evento <code>hashchange</code> do navegador. O efeito registra a função de atualização e devolve uma função para remover o ouvinte quando ele não for mais necessário. Assim não acumulamos vários ouvintes para a mesma ação.</p>
+<p><code>useEffect</code> permite sincronizar a interface com algo externo à apresentação, como o evento <code>hashchange</code> do navegador. O efeito registra a função de atualização e devolve uma função para remover o ouvinte quando ele não for mais necessário. Assim não acumulamos vários ouvintes para a mesma ação. O segundo argumento indica as dependências: <code>[]</code> mantém o registro durante aquela montagem; <code>[rota]</code> pede nova sincronização quando a área muda. A função devolvida pelo efeito faz a limpeza antes de substituí-lo ou desmontá-lo.</p>
 <p>Outro efeito atualiza o foco do título e consulta o catálogo quando entramos na área que precisa dele. O título focável e <code>aria-current</code> ajudam a perceber qual área foi aberta, inclusive sem depender apenas da cor do link.</p>
 <p>Não estamos instalando um roteador adicional nesta etapa. Para essas poucas áreas, o fragmento deixa o comportamento observável e mantém os endereços compatíveis com o servidor PHP já preparado.</p>
 <h3 id="passo-3">Experimente o histórico de verdade</h3>

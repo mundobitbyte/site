@@ -113,7 +113,7 @@ export function Cardapio({ produtos, busca, categoria, aoBuscar, aoCategorizar }
     &lt;/article&gt;)}&lt;/div&gt;
   &lt;/section&gt;;
 }</code></pre></details>
-<p><code>map</code> transforma cada produto em um artigo. A propriedade <code>key</code> usa seu identificador estável para que React acompanhe os itens; a posição na lista não identifica um produto. As fotos e os textos alternativos vêm do mesmo Café. O preço inteiro em centavos é dividido por 100 apenas na formatação em reais.</p>
+<p>Em JSX, <code>className</code> ocupa o papel do atributo HTML <code>class</code>; as classes continuam ligando o artigo ao CSS conhecido. <code>map</code> transforma cada produto em um artigo. A propriedade <code>key</code> usa seu identificador estável para que React acompanhe os itens; a posição na lista não identifica um produto. As fotos e os textos alternativos vêm do mesmo Café. O preço inteiro em centavos é dividido por 100 apenas na formatação em reais.</p>
 <h3 id="passo-3">Busque e reconheça os três produtos</h3>
 <details class="web3-arquivo"><summary>Conferir cliente-balcao/src/App.tsx</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/App.tsx">import {useState,useRef} from &quot;react&quot;;
 import {obterAtendimento} from &quot;./atendimento.js&quot;;
