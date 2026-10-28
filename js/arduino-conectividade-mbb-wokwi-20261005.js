@@ -88,32 +88,18 @@
     }
 
     // HTTP — Wokwi prioriza o papel de cliente, que funciona no gateway padrão.
-    const httpAmbientes = document.querySelector('[data-mbb6-http-ambientes]');
-    if (httpAmbientes) {
-      httpAmbientes.innerHTML = `
-        <h3>Antes de testar — o ESP32 pode ter dois papéis</h3>
-        <p>HTTP não significa apenas “abrir uma página no ESP32”. Um dispositivo pode atuar como <strong>cliente</strong>, fazendo uma requisição a outro servidor, ou como <strong>servidor</strong>, esperando que alguém faça uma requisição a ele.</p>
-        <div class="mbb6-connections">
-          <div><strong>No Wokwi: cliente HTTP</strong><span>Este é o teste que conseguimos executar por completo: o ESP32 sai para a Internet, faz uma requisição e mostra a resposta no Monitor Serial.</span></div>
-          <div><strong>No Wokwi padrão: servidor HTTP</strong><span>Podemos estudar e compilar o servidor, mas o navegador do computador não entra diretamente no servidor simulado pelo gateway padrão.</span></div>
-          <div><strong>No ESP32 físico</strong><span>Com computador ou celular na mesma rede, o navegador pode abrir <code>http://IP_DO_ESP32</code> e controlar o LED.</span></div>
-        </div>
-        <p class="mbb6-note"><strong>Ordem prática:</strong> no Wokwi, dê prioridade à <strong>Parte B — ESP32 como cliente HTTP</strong>. Ela permite observar uma requisição real e sua resposta. A Parte A mostra o outro papel e pode ser experimentada integralmente em uma rede local com um ESP32 físico.</p>
-        <details><summary>Opção avançada no Wokwi</summary><p>O Wokwi oferece um IoT Gateway que pode encaminhar uma porta do ESP32 simulado para o computador. Quando esse recurso estiver disponível e configurado, também é possível testar o servidor pelo navegador. Essa opção não é necessária para compreender cliente e servidor HTTP.</p></details>
-      `;
-    }
+    // O guia de ambientes é preparado no script principal; não o substituir por uma versão antiga.
 
     const testeServidor = acharCard('b6-3', '5. Testando o servidor');
     if (testeServidor) {
-      const h3 = testeServidor.querySelector('h3');
-      if (h3) h3.textContent = '5. Testando o servidor — em uma rede local';
-      let nota = Array.from(testeServidor.querySelectorAll('p')).find(p => /Wokwi/i.test(p.textContent));
-      if (!nota) {
-        nota = document.createElement('p');
+      // Preserve o título e a nota mais completos definidos no HTML e no script principal.
+      const jaExplicado = Array.from(testeServidor.querySelectorAll('p')).some(p => /Wokwi/i.test(p.textContent));
+      if (!jaExplicado) {
+        const nota = document.createElement('p');
         nota.className = 'mbb6-note';
+        nota.innerHTML = '<strong>Wokwi padrão:</strong> o navegador não acessa o servidor HTTP simulado pelo gateway público. Para executar o pedido HTTP no simulador, siga a Parte B, código 7A.';
         testeServidor.appendChild(nota);
       }
-      nota.innerHTML = '<strong>No Wokwi padrão:</strong> não use a abertura da página no navegador como evidência. Continue até a Parte B e faça a experiência de cliente HTTP, que é executável no simulador.';
     }
 
     const parteB = acharCard('b6-3', 'Parte B');
@@ -194,40 +180,18 @@ void loop() {
     if (testeCliente) {
       const ol = testeCliente.querySelector('ol');
       if (ol) {
-        ol.innerHTML = '<li>No Wokwi, use o código 7A com <code>Wokwi-GUEST</code>.</li><li>Execute a simulação.</li><li>Abra o Monitor Serial em 115200.</li><li>Observe o código HTTP e parte do conteúdo recebido.</li>';
+        ol.innerHTML = '<li><strong>Escolha apenas um código:</strong> 7A para Wokwi com <code>Wokwi-GUEST</code> ou 7B para a placa física, substituindo SSID e senha da rede real.</li><li>Execute a simulação ou envie o programa para a placa.</li><li>Abra o Monitor Serial em 115200 e acompanhe a conexão.</li><li>Observe o código retornado pelo pedido GET e, quando disponível, o conteúdo recebido. Um valor negativo indica erro da biblioteca; uma resposta HTTP positiva não é necessariamente o status 200.</li>';
       }
     }
 
     // mDNS — no Wokwi, aprende-se o problema que ele resolve e lê-se o código sem prometer .local no navegador.
-    const mdns = document.querySelector('[data-mbb6-mdns-ambientes]');
-    if (mdns) {
-      mdns.innerHTML = `
-        <h3>O problema agora é o nome, não a conexão</h3>
-        <p>Até aqui usamos um endereço IP para localizar o dispositivo. Em uma rede local real, esse IP pode mudar. O mDNS permite anunciar um nome como <code>ambiente-mbb.local</code>, que é mais fácil de reconhecer.</p>
-        <p><strong>No Wokwi:</strong> estude a mudança no código e identifique o papel de <code>MDNS.begin()</code> e <code>MDNS.addService()</code>. O navegador do computador não deve ser usado para exigir que <code>.local</code> funcione no ambiente padrão do simulador.</p>
-        <p><strong>Em uma rede local com ESP32 físico:</strong> primeiro confirme o servidor pelo IP; depois tente <code>http://ambiente-mbb.local</code>. Se o IP funcionar e o nome não, o servidor pode estar correto — a descoberta mDNS também depende da rede e do sistema operacional.</p>
-        <p class="mbb6-note"><strong>Evidência no Wokwi:</strong> conseguir explicar por que o nome <code>.local</code> existe, quais linhas o registram e por que ele não substitui o Wi-Fi nem o HTTP.</p>
-      `;
-    }
+    // Preserve a orientação mDNS do script principal, inclusive a distinção entre Wokwi e placa física.
 
-    const testeMdns = acharCard('b6-4', '6. Testando');
-    if (testeMdns) {
-      const h3 = testeMdns.querySelector('h3');
-      if (h3) h3.textContent = '6. Testando o nome — quando houver uma rede local real';
-    }
+    // O título de teste mDNS já especifica a rede local com ESP32 físico: não sobrescrever.
+
 
     // Tunelamento — no Wokwi padrão, compreensão do caminho; execução integral exige um servidor alcançável pelo computador.
-    const tunel = document.querySelector('[data-mbb6-tunel-ambientes]');
-    if (tunel) {
-      tunel.innerHTML = `
-        <h3>Antes do túnel — descubra o que precisa existir</h3>
-        <p>Um túnel não cria o servidor. Ele apenas cria um caminho externo até um serviço que <strong>já funciona e já pode ser alcançado pelo computador</strong>.</p>
-        <div class="mbb6-route"><span>Internet</span><b>→</b><span>túnel</span><b>→</b><span>computador</span><b>→</b><span>ESP32 na rede local</span></div>
-        <p><strong>No Wokwi padrão:</strong> o computador não alcança diretamente o servidor HTTP simulado pela rede virtual. Portanto, não faz sentido executar o comando de túnel apontando para o IP virtual e esperar o mesmo resultado de uma rede local.</p>
-        <p><strong>O que aprender aqui:</strong> identifique quem cria o túnel, qual serviço está sendo exposto, para onde as requisições são encaminhadas e por que o servidor precisa funcionar antes.</p>
-        <p class="mbb6-warning"><strong>Segurança:</strong> um endereço público aumenta a exposição do serviço. Use apenas o LED didático, sem dados reais ou credenciais reutilizadas, e encerre qualquer túnel temporário quando o teste terminar.</p>
-      `;
-    }
+    // Preserve os avisos do script principal sobre exposição pública e supervisão.
 
     const antesTunel = acharCard('b6-5', '3. Antes de criar o túnel');
     if (antesTunel) {
