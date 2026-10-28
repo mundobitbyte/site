@@ -47,7 +47,9 @@ for aula in manifest['aulas']:
                 assert not re.search(r'(?:public/js/balcao/main\.js|functions/lib/)',p),f'Artefato gerado no ZIP: {p}'
         print(f'PASSOU {aula["chave"]}: links, código ensinado e ZIP ({len(dados)} arquivos)')
 
-baseline='ec9d3fb1074b30071be4e95ea067912a9d00dc05'
+# A base efetivamente integrada acompanha o trabalho paralelo dos outros módulos.
+# Alterações feitas por este PR continuam fora desse ancestral e são comparadas.
+baseline=subprocess.check_output(['git','merge-base','HEAD','origin/main'],cwd=ROOT,text=True).strip()
 antes=json.loads(subprocess.check_output(['git','show',f'{baseline}:meu-mbb/catalogo.json'],cwd=ROOT))
 atual=json.loads((ROOT/'meu-mbb/catalogo.json').read_text());por_id={x['conteudo_id']:x for x in atual['unidades']}
 for unidade in antes['unidades']:
