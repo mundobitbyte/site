@@ -48,6 +48,7 @@ fs.mkdirSync(dest,{recursive:true});
       const button=buttons.nth(i);
       const id=(await button.getAttribute('onclick')).match(/copyCode\('([^']+)'/)[1];
       const text=await page.locator('#'+id).textContent();
+      await button.evaluate(e=>{for(let p=e.parentElement;p;p=p.parentElement)if(p.tagName==="DETAILS")p.open=true;});
       await button.click();
       await page.waitForFunction(({id})=>document.querySelector(`button[onclick*="'${id}'"]`).textContent==='Copiado',{id});
       const clip=await page.evaluate(()=>navigator.clipboard.readText());

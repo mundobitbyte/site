@@ -2,9 +2,9 @@ name: Prática real mDNS e servidor local
 on:
   push:
     branches: [pratica-mdns-tunel-mbb-20261028]
-    paths: ['materiais/arduino/conectividade/**', 'tests/seiot-rede/**', '.github/workflows/seiot-rede-pratica.yml', 'js/arduino-mdns-pcap.js', 'docs/validacoes/seiot-rede-20261028/**']
+    paths: ['materiais/arduino/conectividade/**', 'tests/seiot-rede/**', '.github/workflows/seiot-rede-pratica.yml', 'js/arduino-mdns-pcap.js', 'pages/arduino-conectividade.html', 'css/arduino-conectividade-rede.css', 'tools/seiot-validacao/**', 'docs/validacoes/seiot-rede-20261028/**']
   pull_request:
-    paths: ['materiais/arduino/conectividade/**', 'tests/seiot-rede/**', '.github/workflows/seiot-rede-pratica.yml', 'js/arduino-mdns-pcap.js', 'docs/validacoes/seiot-rede-20261028/**']
+    paths: ['materiais/arduino/conectividade/**', 'tests/seiot-rede/**', '.github/workflows/seiot-rede-pratica.yml', 'js/arduino-mdns-pcap.js', 'pages/arduino-conectividade.html', 'css/arduino-conectividade-rede.css', 'tools/seiot-validacao/**', 'docs/validacoes/seiot-rede-20261028/**']
 permissions:
   contents: read
 jobs:
@@ -26,3 +26,32 @@ jobs:
           python -c 'import hashlib,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"cloudflared"; assert hashlib.sha256(p.read_bytes()).hexdigest()=="e1bc0cf084fd9e590554fe769a86b1db46701c3f847a43d902f7b974a4e16298"'
           chmod +x "$RUNNER_TEMP/cloudflared"
           MBB_CLOUDFLARED="$RUNNER_TEMP/cloudflared" python tests/seiot-rede/tunel_real.py
+
+  navegador:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Preparar navegador de teste
+        run: |
+          npm install --no-save --prefix "$RUNNER_TEMP/mbb-browser" playwright@1.51.1
+          node "$RUNNER_TEMP/mbb-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Conferir navegação, Copiar, pesquisa, Meu MbB e captura real
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/mbb-browser/node_modules"
+          export MBB_EVIDENCIAS="$RUNNER_TEMP/mbb-evidencias"
+          export MBB_RESULTADO="$MBB_EVIDENCIAS/meu-mbb-simulado.json"
+          python3 -m http.server 4179 --bind 127.0.0.1 > "$RUNNER_TEMP/mbb-http.log" 2>&1 &
+          servidor_pid=$!
+          trap 'kill "$servidor_pid"' EXIT
+          node tools/seiot-validacao/navegador.cjs
+          node tools/seiot-validacao/meu-mbb-simulado.cjs
+          MBB_IMPRIMIR_EVIDENCIAS=1 node tests/seiot-rede/navegador.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pratica-rede-navegador
+          path: ${{ runner.temp }}/mbb-evidencias/

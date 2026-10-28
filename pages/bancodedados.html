@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Apostila Interativa — Banco de Dados</title>
 
-<link href="../css/bancodedados.css" rel="stylesheet"/><link href="../css/bancodedados-modelagem.css?v=20261028" rel="stylesheet"/><link href="../css/bancodedados-heidisql.css?v=20261026-final" rel="stylesheet"/></head>
+<link href="../css/bancodedados.css" rel="stylesheet"/><link href="../css/bancodedados-modelagem.css?v=conversao-20261028" rel="stylesheet"/><link href="../css/bancodedados-heidisql.css?v=20261026-final" rel="stylesheet"/></head>
 <body>
 <header><div class="header-left"><a class="btn-voltar portal-link" href="../index.html">← Mundo bit Byte</a><h1>Banco de Dados</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header>
 <div class="app"><nav><h3>Módulos</h3>
@@ -644,15 +644,15 @@ Modelo físico: implementação no MySQL
 <h3>Primeiro, leia o mínimo e o máximo</h3>
 <p>O máximo distingue 1:1, 1:N e N:N; o mínimo informa se a participação é opcional ou obrigatória. <strong>N</strong> significa que podem existir várias ocorrências, sem fixar uma quantidade específica.</p>
 <table class="sql-table"><tr><th>Notação</th><th>Leitura</th></tr><tr><td>0..1</td><td>nenhuma ou uma ocorrência</td></tr><tr><td>1..1</td><td>exatamente uma ocorrência</td></tr><tr><td>0..N</td><td>nenhuma ou várias ocorrências</td></tr><tr><td>1..N</td><td>uma ou várias ocorrências, com pelo menos uma obrigatória</td></tr></table>
-<p>Nos DERs deste capítulo, escrevemos esses pares como <strong>(0,1), (1,1), (0,n) e (1,n)</strong>. A marcação fica junto à entidade cuja participação descreve. Para lê-la, fixe uma ocorrência dessa entidade e pergunte: “de quantos vínculos deste relacionamento ela pode participar?”.</p>
+<p>Nos DERs deste capítulo, escrevemos esses pares como <strong>(0,1), (1,1), (0,n) e (1,n)</strong>, na posição usada pelo brModelo. A marcação junto a uma entidade informa quantas ocorrências <strong>dessa entidade</strong> podem se relacionar com <strong>uma ocorrência da entidade do outro lado</strong>. Para saber quantos produtos uma categoria pode ter, por exemplo, leia a marcação junto a PRODUTO.</p>
 <h3>Relacionamento 1:N — Categoria e Produto</h3>
-<p>Uma categoria recém-cadastrada pode ainda não ter produtos: sua participação é <strong>(0,n)</strong>. Um produto precisa pertencer a exatamente uma categoria: sua participação é <strong>(1,1)</strong>. Os máximos formam uma relação <strong>um para muitos</strong>: uma categoria para vários produtos.</p>
-<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER 1:N: Categoria participa de zero a muitos produtos; Produto tem exatamente uma categoria"><img src="../img/bancodedados/modelagem/conceitual-categoria-produto.svg" width="400" height="390" alt="DER 1:N: Categoria participa de zero a muitos produtos; Produto tem exatamente uma categoria" loading="lazy" decoding="async"/><figcaption>As marcações expressam a participação da entidade ao lado delas. Categoria pode existir antes de receber produtos.</figcaption></figure>
+<p>Uma categoria recém-cadastrada pode ainda não ter produtos: marque <strong>(0,n) junto a PRODUTO</strong>. Um produto precisa pertencer a exatamente uma categoria: marque <strong>(1,1) junto a CATEGORIA</strong>. Os máximos formam uma relação <strong>um para muitos</strong>: uma categoria para vários produtos.</p>
+<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER 1:N: Categoria participa de zero a muitos produtos; Produto tem exatamente uma categoria"><img src="../img/bancodedados/modelagem/conceitual-categoria-produto.svg?v=brmodelo2-20261028" width="400" height="390" alt="DER 1:N: Categoria participa de zero a muitos produtos; Produto tem exatamente uma categoria" loading="lazy" decoding="async"/><figcaption>Leia (1,1) junto a Categoria para saber quantas categorias cada produto tem; leia (0,n) junto a Produto para saber quantos produtos uma categoria pode classificar.</figcaption></figure>
 
 <p><strong>No brModelo:</strong> defina as cardinalidades de CLASSIFICA. Confira pelos dois sentidos: uma categoria aceita vários produtos; um produto não aceita duas categorias neste modelo. Explique também por que o mínimo da categoria é zero.</p>
 <h3>Relacionamento 1:1 — prática complementar</h3>
-<p>Para experimentar o <strong>um para um</strong>, use um modelo separado: cada funcionário pode ter <strong>no máximo um crachá ativo</strong>, e cada crachá pertence a um único funcionário. Um funcionário ainda sem crachá pode existir. Estamos modelando apenas os crachás ativos, não seu histórico.</p>
-<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER 1:1: Funcionário pode ter zero ou um crachá ativo; Crachá pertence a um funcionário"><img src="../img/bancodedados/modelagem/conceitual-um-para-um.svg" width="400" height="390" alt="DER 1:1: Funcionário pode ter zero ou um crachá ativo; Crachá pertence a um funcionário" loading="lazy" decoding="async"/><figcaption>Os máximos são um nos dois lados; os mínimos são diferentes. Esta prática não acrescenta entidades ao comércio.</figcaption></figure>
+<p>Para experimentar o <strong>um para um</strong>, use um modelo separado: cada funcionário pode ter <strong>no máximo um crachá ativo</strong>, e cada crachá pertence a um único funcionário. Marque <strong>(0,1) junto a CRACHÁ ATIVO</strong> e <strong>(1,1) junto a FUNCIONÁRIO</strong>. Um funcionário ainda sem crachá pode existir. Estamos modelando apenas os crachás ativos, não seu histórico.</p>
+<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER 1:1: Funcionário pode ter zero ou um crachá ativo; Crachá pertence a um funcionário"><img src="../img/bancodedados/modelagem/conceitual-um-para-um.svg?v=brmodelo2-20261028" width="400" height="390" alt="DER 1:1: Funcionário pode ter zero ou um crachá ativo; Crachá pertence a um funcionário" loading="lazy" decoding="async"/><figcaption>Os máximos são um nos dois lados; os mínimos são diferentes. Esta prática não acrescenta entidades ao comércio.</figcaption></figure>
 
 <p><strong>Pratique:</strong> desenhe FUNCIONÁRIO, CRACHÁ ATIVO e POSSUI em outro arquivo. Defina as participações e explique o que mudaria se a organização quisesse guardar vários crachás antigos do mesmo funcionário. Salve esse exercício separadamente e continue o modelo do comércio.</p>
 <h3>Relacionamento N:N — Produto e Fornecedor</h3>
@@ -662,9 +662,9 @@ Modelo físico: implementação no MySQL
 
 <p><strong>No brModelo:</strong> acrescente FORNECEDOR, o relacionamento FORNECE e seus atributos. Marque as participações e mostre no desenho onde registraríamos o custo de um produto comprado de um fornecedor específico. A transformação desse relacionamento em tabela será feita no tópico 3.</p>
 <h3>Quando a informação ainda não existe — Cidade e Fornecedor</h3>
-<p>Queremos registrar a cidade do fornecedor, mas a base que usaremos não informa a cidade dos fornecedores. Um fornecedor pode ter <strong>zero ou uma cidade informada</strong>; uma cidade pode reunir <strong>zero a vários fornecedores</strong>. Não vamos inventar uma cidade para preencher essa ausência.</p>
+<p>Queremos registrar a cidade do fornecedor, mas a base que usaremos não informa a cidade dos fornecedores. Um fornecedor pode ter <strong>zero ou uma cidade informada</strong>: marque <strong>(0,1) junto a CIDADE</strong>. Uma cidade pode reunir <strong>zero a vários fornecedores</strong>: marque <strong>(0,n) junto a FORNECEDOR</strong>. Não vamos inventar uma cidade para preencher essa ausência.</p>
 <p>Adicione CIDADE com <code>id_cidade</code>, <code>nome_cidade</code> e <code>estado</code>. O estado ajuda a distinguir cidades de mesmo nome em unidades da federação diferentes.</p>
-<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER: Fornecedor com cidade opcional; Cidade pode ter vários fornecedores"><img src="../img/bancodedados/modelagem/conceitual-cidade-fornecedor.svg" width="400" height="390" alt="DER: Fornecedor com cidade opcional; Cidade pode ter vários fornecedores" loading="lazy" decoding="async"/><figcaption>A participação opcional representa a ausência de informação no cadastro. Se houver cidade informada, ela será uma só.</figcaption></figure>
+<figure class="der-figure der-figure-compact der-figure-narrow" data-mbb-titulo="DER: Fornecedor com cidade opcional; Cidade pode ter vários fornecedores"><img src="../img/bancodedados/modelagem/conceitual-cidade-fornecedor.svg?v=brmodelo2-20261028" width="400" height="390" alt="DER: Fornecedor com cidade opcional; Cidade pode ter vários fornecedores" loading="lazy" decoding="async"/><figcaption>A participação opcional representa a ausência de informação no cadastro. Se houver cidade informada, ela será uma só.</figcaption></figure>
 
 <p><strong>Pratique:</strong> ligue FORNECEDOR e CIDADE por LOCALIZA-SE e confira os dois sentidos. Compare com Produto–Categoria: por que o fornecedor admite ausência de cidade, mas o produto precisa de categoria?</p>
 <h2>BLOCO 6 — DER (Diagrama Entidade Relacionamento)</h2>
@@ -673,7 +673,7 @@ Modelo físico: implementação no MySQL
 <p>Antes de olhar o conjunto completo, confira se seu arquivo contém os quatro cadastros e os três relacionamentos que acabamos de trabalhar.</p>
 <h2>BLOCO 6.1 — Exemplo visual de DER: Sistema Comercial</h2>
 <p>Este é o resultado da construção por etapas. Compare-o com seu arquivo no brModelo; use <strong>Ampliar</strong> para examinar os atributos e as marcações sem reduzir a leitura a uma miniatura.</p>
-<figure class="der-figure" data-mbb-titulo="DER conceitual completo do comércio: Categoria, Produto, Fornecedor e Cidade"><img src="../img/bancodedados/modelagem/conceitual-comercio.svg" width="1200" height="1180" alt="DER conceitual completo do comércio: Categoria, Produto, Fornecedor e Cidade" loading="lazy" decoding="async"/><figcaption>O modelo reúne o 1:N de classificação, o N:N de fornecimento e a cidade opcional do fornecedor. Não há uma entidade de crachá no comércio.</figcaption></figure>
+<figure class="der-figure" data-mbb-titulo="DER conceitual completo do comércio: Categoria, Produto, Fornecedor e Cidade"><img src="../img/bancodedados/modelagem/conceitual-comercio.svg?v=brmodelo2-20261028" width="1200" height="1180" alt="DER conceitual completo do comércio: Categoria, Produto, Fornecedor e Cidade" loading="lazy" decoding="async"/><figcaption>O modelo reúne o 1:N de classificação, o N:N de fornecimento e a cidade opcional do fornecedor. Não há uma entidade de crachá no comércio.</figcaption></figure>
 
 <h3>Conferência das regras</h3>
 <ul><li>Cada produto pertence a uma categoria; uma categoria pode ainda não ter produtos.</li><li>Produto e fornecedor podem participar de várias parcerias; custo e prazo ficam no vínculo correspondente.</li><li>Um fornecedor pode estar sem cidade informada; uma cidade pode ter vários fornecedores.</li><li>Os identificadores distinguem as ocorrências de cada entidade. Ainda não duplicamos seus valores como FKs dentro de outra entidade.</li></ul>
@@ -771,7 +771,7 @@ SQL no SGBD
 <li><strong>FORNECEDOR</strong> — representa quem fornece produtos;</li>
 <li><strong>CIDADE</strong> — guarda nome e estado das cidades, quando conhecidos.</li>
 </ul>
-<p>O relacionamento N:N FORNECE também precisará de uma estrutura própria: <strong>produto_fornecedor</strong>. Primeiro vamos converter as entidades e o 1:N; depois construiremos essa associação com as duas chaves.</p>
+<p>O relacionamento N:N FORNECE também precisará de uma estrutura própria: <strong>produto_fornecedor</strong>. Primeiro veremos como as entidades e o 1:N chegam ao modelo lógico; depois conferiremos essa associação e suas duas chaves.</p>
 <h3>Entidade vira tabela</h3>
 <p>Na modelagem conceitual, falávamos em entidades. Na modelagem lógica, essas entidades começam a se transformar em tabelas.</p>
 <table class="sql-table">
@@ -813,6 +813,45 @@ CATEGORIA 1 ─── N PRODUTO
 <h3>Leitura correta</h3>
 <p>O produto possui uma coluna id_categoria porque cada produto pertence a uma categoria. Essa coluna será a chave estrangeira da tabela produto.</p>
 </div></div>
+<h2 id="bd-brmodelo-gerar-logico">BLOCO 1.1 — Gerando o esquema lógico no brModelo 2.0</h2>
+<p>Seu conceitual do Comércio já representa entidades, atributos e relacionamentos. Agora precisamos organizar essas informações em <strong>tabelas, campos e chaves</strong>. O brModelo gera um ponto de partida para o modelo lógico; vamos acompanhar uma escolha e conferir seu efeito.</p>
+<ol>
+<li><p><strong>Abra e preserve o conceitual.</strong> Retome seu <strong>comercio-conceitual</strong> do capítulo anterior; se estiver fechado, use <strong>Sistema → Abrir</strong>. Confira as entidades, os atributos e as cardinalidades e use <strong>Sistema → Salvar</strong> para guardar os últimos ajustes. Se ainda não tiver nome, escolha uma pasta para a atividade, o tipo <strong>Arquivo binário do brModelo</strong> e o nome <strong>comercio-conceitual</strong>; confirme o salvamento. O arquivo será <code>comercio-conceitual.brM</code>.</p></li>
+<li><p><strong>Inicie a conversão.</strong> Com esse conceitual selecionado, acesse <strong>Esquema Conceitual → Gerar Esquema Lógico</strong>. A opção fica na parte inferior do menu.</p>
+<figure class="brmodelo-capture" data-mbb-ampliavel="grafico" data-mbb-titulo="brModelo 2.0 — Gerar Esquema Lógico"><img src="../img/bancodedados/modelagem/brmodelo-2-gerar-esquema-logico.webp" width="338" height="338" alt="Captura de tela do brModelo 2.0 com o menu Esquema Conceitual aberto e a opção Gerar Esquema Lógico destacada" loading="lazy" decoding="async"/><figcaption>O comando fica no menu <strong>Esquema Conceitual</strong>. Use seu modelo do comércio para realizar a conversão.</figcaption></figure>
+</li>
+<li><p><strong>Entenda a escolha Cidade–Fornecedor antes de confirmá-la.</strong> Uma cidade pode ter vários fornecedores. Cada fornecedor pode estar associado a uma cidade; no nosso projeto, essa informação pode ficar desconhecida. É um relacionamento <strong>1:N</strong> (um para muitos). A <strong>chave primária (PK)</strong> identifica cada cidade; sua cópia em Fornecedor funciona como <strong>chave estrangeira (FK)</strong>, apontando para a cidade correspondente.</p>
+<figure class="der-figure" data-mbb-titulo="Conversão Cidade–Fornecedor: do relacionamento 1:N à chave estrangeira"><picture><source media="(max-width: 650px)" srcset="../img/bancodedados/modelagem/conversao-cidade-fornecedor-mobile.webp"/><img src="../img/bancodedados/modelagem/conversao-cidade-fornecedor.webp" width="960" height="680" alt="Antes, Fornecedor e Cidade ligados por LOCALIZA-SE, com zero a muitos fornecedores por cidade e zero ou uma cidade por fornecedor. Depois, id_cidade é PK em Cidade e FK em Fornecedor, que mantém sua própria PK id_fornecedor." loading="lazy" decoding="async"/></picture><figcaption><strong>Esquema didático, não captura do programa.</strong> Cidade mantém id_cidade, nome_cidade e estado; Fornecedor mantém id_fornecedor, nome e telefone e recebe id_cidade como FK. O vínculo não exige uma terceira tabela nem a repetição do nome da cidade em Fornecedor.</figcaption></figure>
+<p>Com as cardinalidades do nosso DER, o brModelo abre a janela <strong>Interação</strong>. O texto identifica um relacionamento <strong>(0,1)&lt;--&gt;(0,n)</strong> entre <strong>CIDADE</strong> e <strong>FORNECEDOR</strong>. Em <strong>O que você deseja fazer?</strong>, selecione <strong>A) - Adicionar a(s) chave(s) da tabela de menor card. à tabela de maior card.</strong> e clique em <strong>OK</strong>.</p>
+<p>A abreviação “card.” significa cardinalidade: aqui, Cidade é o lado 1 e Fornecedor é o lado N. A opção A leva <code>id_cidade</code> para Fornecedor. A alternativa <strong>B) - Criar uma tabela para o relacionamento.</strong> faria uma tabela adicional, desnecessária para a representação adotada. Não selecione a opção de aceitar todas as sugestões: acompanhe cada escolha. <strong>Finalizar conversão</strong> interrompe a operação; para confirmar a escolha e continuar, use <strong>OK</strong>.</p>
+<p>No vínculo Categoria–Produto do nosso DER, a inclusão da chave ocorre automaticamente. Se a pergunta de Cidade–Fornecedor não aparecer ou mostrar outros pares, confira as cardinalidades do seu conceitual antes de prosseguir: o resultado depende delas.</p></li>
+<li><p><strong>Confira o resultado visível.</strong> Terminadas as escolhas, o brModelo apresenta outro documento, agora lógico. Compare com o conceitual:</p>
+<ul>
+<li><strong>Entidades → tabelas:</strong> localize Categoria, Produto, Cidade e Fornecedor.</li>
+<li><strong>Atributos → campos e PKs:</strong> confira os nomes e os identificadores <code>id_categoria</code>, <code>id_produto</code>, <code>id_cidade</code> e <code>id_fornecedor</code>, cada um em sua tabela de origem.</li>
+<li><strong>Vínculos → FKs:</strong> Fornecedor deve ter <code>id_cidade</code> apontando para Cidade, e Produto deve ter <code>id_categoria</code> apontando para Categoria. Cidade e Fornecedor continuam sendo duas tabelas distintas; a cidade desconhecida não recebe um ID inventado.</li>
+<li><strong>FORNECE → tabela associativa:</strong> no N:N (muitos para muitos), cada produto pode ter vários fornecedores e vice-versa. A tabela registra cada combinação usando os dois IDs, além de <code>preco_custo</code> e <code>prazo_entrega</code>. Assim, não precisamos guardar uma lista de fornecedores em um único campo.</li>
+</ul>
+<p>O resultado deve ter <strong>cinco tabelas</strong>. A associativa pode vir com o nome FORNECE; não crie outra para a mesma função. No bloco 3, vamos ajustá-la para <code>produto_fornecedor</code> e definir/conferir sua chave composta. A geração não garante essa PK. Nos próximos blocos também conferiremos nomes, tipos e obrigatoriedade: esta é a primeira conferência, não o modelo já refinado.</p></li>
+<li><p><strong>Salve o lógico sem substituir o conceitual.</strong> A versão 2.0 mantém os esquemas em <strong>documentos independentes</strong>; a conversão não grava automaticamente o novo documento.</p>
+<ol>
+<li>Com as <strong>tabelas do lógico</strong> na tela, acesse <strong>Sistema → Salvar</strong>. Como esse documento é novo, abre-se a escolha do arquivo.</li>
+<li>Selecione a mesma pasta da atividade, mantenha <strong>Arquivo binário do brModelo</strong> e digite <strong>comercio-logico</strong>. Confirme em <strong>Salvar</strong>. O programa usa a extensão <code>.brM</code>: o resultado é <code>comercio-logico.brM</code>. Use um nome novo; se houver aviso de substituição de arquivo, cancele e confira o nome e a pasta.</li>
+<li>Confira <strong>comercio-logico</strong> no título da janela. No Explorador de Arquivos do Windows, confirme que a pasta contém <strong>os dois arquivos</strong>: <code>comercio-conceitual.brM</code> e <code>comercio-logico.brM</code>. Se as extensões estiverem ocultas, os nomes aparecem sem <code>.brM</code>.</li>
+<li>Na seta de <strong>Modelos abertos</strong>, selecione <strong>comercio-conceitual</strong> e depois <strong>comercio-logico</strong> para comparar o DER e as tabelas. Para conferir o arquivo gravado, use <strong>Sistema → Fechar</strong> com o lógico selecionado e reabra <code>comercio-logico.brM</code> por <strong>Sistema → Abrir</strong>: as tabelas e os vínculos devem reaparecer. Deixe o lógico selecionado para continuar a aula.</li>
+</ol>
+<p>Preservar o conceitual permite comparar, revisar e manter as regras do Comércio junto com sua representação lógica. Salvar um documento não salva os ajustes do outro.</p></li>
+</ol>
+<div class="card practice"><div class="card-body">
+<h3>Checkpoint — explique antes de seguir</h3>
+<ul>
+<li>Por que <code>id_cidade</code> aparece em Fornecedor?</li>
+<li>Por que FORNECE precisa de uma tabela associativa?</li>
+<li>Por que manter o arquivo conceitual?</li>
+</ul>
+<details><summary>Conferir as respostas</summary><p>No 1:N, a PK de Cidade entra em Fornecedor como FK, identificando a cidade de cada fornecedor. No N:N, a associativa registra as combinações entre produtos e fornecedores. O conceitual preservado permite comparar, revisar e manter os dois modelos.</p></details>
+</div></div>
+<p><strong>Conquista MbB:</strong> você gerou o lógico, justificou uma escolha, conferiu seu efeito e salvou dois arquivos que pode reabrir e comparar. Agora vamos aprofundar a função das chaves nas tabelas já geradas.</p>
 <h2>BLOCO 2 — PK e FK na Estrutura Relacional</h2>
 <p><strong>PK</strong> é a sigla de <em>Primary Key</em> (chave primária); <strong>FK</strong>, de <em>Foreign Key</em> (chave estrangeira). Vamos entender por que uma identifica e a outra relaciona.</p>
 <h3>PK — Chave Primária</h3>
@@ -873,12 +912,12 @@ categoria.id_categoria
 <h3>Pratique o 1:N no modelo lógico</h3>
 <p>Nas figuras, já anotamos os tipos escolhidos para o MySQL: <code>INT</code> representa números inteiros; <code>VARCHAR(n)</code>, textos com limite de caracteres; <code>DECIMAL(10,2)</code>, números decimais com até dez algarismos no total, sendo dois após a vírgula. Se o brModelo apresentar nomes genéricos de tipos, registre a correspondência com esses tipos do MySQL ao conferir o desenho.</p>
 <p>Todo produto precisa de categoria. Vamos registrar essa obrigatoriedade como <strong>NOT NULL</strong> (“não nulo”) em <code>produto.id_categoria</code>: essa coluna não poderá ficar sem valor.</p>
-<p>No brModelo, mantenha seu conceitual salvo e crie um modelo lógico separado, <strong>comercio-logico</strong>. Represente Categoria e Produto com seus campos, defina as PKs e confira a referência de <code>produto.id_categoria</code> para <code>categoria.id_categoria</code>. Se o programa gerar uma conversão, revise o resultado: a geração não substitui a conferência das regras.</p>
+<p>No brModelo, retome o esquema lógico que você acabou de gerar e salvar como <strong>comercio-logico</strong>. Localize Categoria e Produto, confira seus campos e as PKs e verifique a referência de <code>produto.id_categoria</code> para <code>categoria.id_categoria</code>. Se o programa tiver usado nomes diferentes para os campos gerados, ajuste-os aos nomes do modelo da aula. Trabalhe nas tabelas já geradas, sem criá-las novamente.</p>
 <figure class="der-figure der-figure-compact" data-mbb-titulo="Modelo lógico 1:N: produto.id_categoria referencia categoria.id_categoria"><img src="../img/bancodedados/modelagem/logico-categoria-produto.svg" width="480" height="620" alt="Modelo lógico 1:N: produto.id_categoria referencia categoria.id_categoria" loading="lazy" decoding="async"/><figcaption>A chave dourada indica a PK; a cinza indica a FK. A obrigatoriedade de id_categoria corresponde à regra de todo produto ter uma categoria.</figcaption></figure>
 
 <p>O limite de cada campo aparece no desenho. O comando para criar essas tabelas será estudado no capítulo 4.</p>
 <h3>O vínculo pode ser opcional: Cidade e Fornecedor</h3>
-<p>Acrescente as tabelas Cidade e Fornecedor ao modelo lógico. A PK de Cidade será referenciada por <code>fornecedor.id_cidade</code>. Como a cidade pode estar sem informação, essa FK aceita <strong>NULL</strong>, a ausência de um valor informado. Se houver um ID preenchido, ele deve corresponder a uma cidade existente. Para a sigla do estado, <code>CHAR(2)</code> representa texto de tamanho fixo com dois caracteres.</p>
+<p>Localize Cidade e Fornecedor no esquema lógico gerado. A PK de Cidade será referenciada por <code>fornecedor.id_cidade</code>. Como a cidade pode estar sem informação, essa FK aceita <strong>NULL</strong>, a ausência de um valor informado. Se houver um ID preenchido, ele deve corresponder a uma cidade existente. Para a sigla do estado, <code>CHAR(2)</code> representa texto de tamanho fixo com dois caracteres.</p>
 <figure class="der-figure der-figure-compact" data-mbb-titulo="Modelo lógico: id_cidade de Fornecedor é uma FK opcional para Cidade"><img src="../img/bancodedados/modelagem/logico-cidade-fornecedor.svg" width="480" height="580" alt="Modelo lógico: id_cidade de Fornecedor é uma FK opcional para Cidade" loading="lazy" decoding="async"/><figcaption>id_cidade em fornecedor aceita NULL. Em produto, id_categoria será obrigatório, por meio de NOT NULL.</figcaption></figure>
 
 <p><strong>No brModelo:</strong> confira as PKs, a FK e sua obrigatoriedade. Explique por que uma cidade sem fornecedor pode existir e por que um fornecedor com cidade desconhecida não deve receber um ID inventado.</p>
@@ -886,7 +925,7 @@ categoria.id_categoria
 <p>No exercício de crachá ativo, a tabela de crachás pode guardar <code>id_funcionario</code> como FK. A regra <strong>NOT NULL</strong> exige um funcionário para cada crachá, e <strong>UNIQUE</strong> impede que dois crachás ativos apontem para o mesmo funcionário. A FK, sozinha, não impediria essa repetição.</p>
 <figure class="der-figure der-figure-compact" data-mbb-titulo="Modelo lógico complementar 1:1: Crachá ativo com FK obrigatória e única para Funcionário"><img src="../img/bancodedados/modelagem/logico-um-para-um.svg" width="480" height="550" alt="Modelo lógico complementar 1:1: Crachá ativo com FK obrigatória e única para Funcionário" loading="lazy" decoding="async"/><figcaption>Os campos e tamanhos deste exercício são ilustrativos. A unicidade da FK limita o funcionário a um crachá ativo; a FK obrigatória vincula cada crachá a um funcionário.</figcaption></figure>
 
-<p><strong>Pratique em um arquivo separado:</strong> modele essa conversão e explique a função de cada regra. Não acrescente crachás ou funcionários ao modelo do comércio. Não precisamos criar essas tabelas no MySQL para continuar a aula.</p>
+<p><strong>Pratique em um arquivo separado:</strong> abra o conceitual do exercício de crachá ativo e gere seu esquema lógico pelo mesmo comando. Na escolha de conversão, mantenha as duas tabelas e adicione a chave de Funcionário em Crachá ativo, em vez de fundir os cadastros. Confira a obrigatoriedade e a unicidade dessa FK e explique a função de cada regra. Não acrescente crachás ou funcionários ao modelo do comércio. Não precisamos criar essas tabelas no MySQL para continuar a aula.</p>
 <h2>BLOCO 3 — Relacionamento N:N e Tabela Associativa</h2>
 <p>Retome FORNECE no DER comercial: já definimos que um produto pode ter vários fornecedores e um fornecedor pode oferecer vários produtos. Precisamos representar essa mesma regra no modelo lógico.</p>
 <pre>
@@ -941,7 +980,7 @@ FORNECEDOR
 </div></div>
 <figure class="der-figure" data-mbb-titulo="Modelo lógico do N:N: Produto e Fornecedor ligados por Produto_fornecedor"><img src="../img/bancodedados/modelagem/logico-produto-fornecedor.svg" width="1200" height="850" alt="Modelo lógico do N:N: Produto e Fornecedor ligados por Produto_fornecedor" loading="lazy" decoding="async"/><figcaption>As duas colunas da PK composta também são FKs. Cada linha da associação precisa dos dois registros referenciados, mas produto e fornecedor podem existir antes de ter uma parceria.</figcaption></figure>
 
-<p><strong>No brModelo:</strong> adicione <code>produto_fornecedor</code>, defina sua chave composta e ligue cada ID à PK correspondente. Transfira custo e prazo do relacionamento conceitual para essa tabela. Confira que <strong>produto não tem id_fornecedor</strong>. Salve o modelo: o N:N agora está representado por duas relações 1:N.</p>
+<p><strong>No brModelo:</strong> identifique a tabela gerada para FORNECE e, se necessário, ajuste seu nome para <code>produto_fornecedor</code>. Marque <code>id_produto</code> e <code>id_fornecedor</code> como integrantes da <strong>chave primária composta</strong>, mantendo também suas funções de FKs: não suponha que a geração já definiu essa chave. Confira a referência de cada ID à PK correspondente e a presença de custo e prazo nessa tabela. Não mantenha duas tabelas para a mesma associação. Confira que <strong>produto não tem id_fornecedor</strong> e salve o modelo: o N:N está representado por duas relações 1:N.</p>
 <h2>BLOCO 4 — Redundância e o Nascimento da Normalização</h2>
 <p>Agora que já temos tabelas, PK, FK e relacionamentos, começamos a enxergar problemas estruturais com mais clareza.</p>
 <p>O principal deles é a <strong>redundância</strong>.</p>
@@ -4104,5 +4143,5 @@ PRODUTO 1 ─── N ITEM_PEDIDO</pre><ol><li>Um cliente pode possuir vários p
 </section>
 </main></div>
 
-<script src="../js/bancodedados.js?v=modelagem-der-20261028"></script><script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+<script src="../js/bancodedados.js?v=modelagem-conversao-20261028"></script><script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
 </body></html>

@@ -184,43 +184,8 @@ void loop() {
       }
     }
 
-    // mDNS — no Wokwi, aprende-se o problema que ele resolve e lê-se o código sem prometer .local no navegador.
-    // Preserve a orientação mDNS do script principal, inclusive a distinção entre Wokwi e placa física.
+    // 6.4 e 6.5 possuem práticas estáticas; não substituir seus resultados observáveis.
 
-    // O título de teste mDNS já especifica a rede local com ESP32 físico: não sobrescrever.
-
-
-    // Tunelamento — no Wokwi padrão, compreensão do caminho; execução integral exige um servidor alcançável pelo computador.
-    // Preserve os avisos do script principal sobre exposição pública e supervisão.
-
-    const antesTunel = acharCard('b6-5', '3. Antes de criar o túnel');
-    if (antesTunel) {
-      const h3 = antesTunel.querySelector('h3');
-      if (h3) h3.textContent = '3. Condição para executar o túnel em uma rede real';
-    }
-
-    const ferramentaTunel = acharCard('b6-5', '4. Ferramenta escolhida');
-    if (ferramentaTunel) {
-      const p = ferramentaTunel.querySelector('p');
-      if (p) p.innerHTML = 'Uma forma simples de observar esse mecanismo é usar <strong>localhost.run</strong>, que cria um túnel temporário por SSH. O comando mostrado a seguir faz sentido quando o computador já consegue acessar diretamente o servidor HTTP do ESP32 na rede local.';
-      const notas = ferramentaTunel.querySelectorAll('.mbb6-note');
-      notas.forEach(n => {
-        n.innerHTML = '<strong>Checkpoint:</strong> antes do túnel, o computador precisa conseguir abrir <code>http://IP_DO_ESP32</code>. Se esse acesso local não existe, ainda não há um serviço alcançável para encaminhar.';
-      });
-    }
-
-    const testeTunel = acharCard('b6-5', '7. Testando de verdade');
-    if (testeTunel) {
-      const h3 = testeTunel.querySelector('h3');
-      if (h3) h3.textContent = '7. Executando quando houver um ESP32 acessível na rede local';
-    }
-
-    // Fecha o bloco preservando a diferença entre conceito e evidência executável.
-    const fechamento = acharCard('b6-5', '11. O que o Bloco 6 construiu');
-    if (fechamento) {
-      const p = fechamento.querySelector('p');
-      if (p) p.innerHTML = 'O sistema ganhou diferentes formas de comunicação. No Wokwi conseguimos praticar a lógica de comandos, a conexão Wi-Fi e requisições HTTP de saída. Bluetooth real, descoberta <code>.local</code> e exposição por túnel dependem de recursos de rede ou hardware que o simulador padrão não reproduz da mesma forma. Saber distinguir essas camadas também faz parte de compreender conectividade.';
-    }
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', aplicar);

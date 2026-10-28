@@ -1,0 +1,193 @@
+{
+  "base": "f9a5eaf0f4edb6fe1ec8c4d9c5fbc16697e4af2f",
+  "cardAndLinksByteIdentical": true,
+  "existingHeadingsAndSqlPreserved": true,
+  "newRegisteredAnchor": "bd-brmodelo-gerar-logico",
+  "originalScreenshot": {
+    "width": 338,
+    "height": 338,
+    "webpBytes": 6220,
+    "rgbaIdentical": true
+  },
+  "nativeV2Review": "static source, executable not run",
+  "browser": [
+    {
+      "width": 1440,
+      "chapterHeadings": 22,
+      "derImages": 12,
+      "zoomAndFocusReturn": 12,
+      "legacyAnchors": 5,
+      "sqlCopies": 48,
+      "modules": 12,
+      "pageErrors": [],
+      "globalOverflow": false
+    },
+    {
+      "width": 390,
+      "chapterHeadings": 22,
+      "derImages": 12,
+      "zoomAndFocusReturn": 12,
+      "legacyAnchors": 5,
+      "sqlCopies": 48,
+      "modules": 12,
+      "pageErrors": [],
+      "globalOverflow": false
+    },
+    {
+      "width": 360,
+      "chapterHeadings": 22,
+      "derImages": 12,
+      "zoomAndFocusReturn": 12,
+      "legacyAnchors": 5,
+      "sqlCopies": 48,
+      "modules": 12,
+      "pageErrors": [],
+      "globalOverflow": false
+    },
+    {
+      "width": 320,
+      "chapterHeadings": 22,
+      "derImages": 12,
+      "zoomAndFocusReturn": 12,
+      "legacyAnchors": 5,
+      "sqlCopies": 48,
+      "modules": 12,
+      "pageErrors": [],
+      "globalOverflow": false
+    },
+    {
+      "svgAssets": [
+        {
+          "file": "conceitual-atributos.svg",
+          "title": "Entidades e atributos do comércio",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-categoria-produto.svg",
+          "title": "Categoria e Produto: um para muitos",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-cidade-fornecedor.svg",
+          "title": "Fornecedor e cidade: participação opcional",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-comercio.svg",
+          "title": "DER conceitual completo do comércio",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-produto-fornecedor.svg",
+          "title": "Produto e Fornecedor: muitos para muitos",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-relacionamento.svg",
+          "title": "Categoria classifica Produto",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-um-para-um.svg",
+          "title": "Funcionário e crachá ativo: um para um",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "logico-categoria-produto.svg",
+          "title": "Categoria e Produto no modelo lógico",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "logico-cidade-fornecedor.svg",
+          "title": "Cidade e Fornecedor no modelo lógico",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "logico-comercio.svg",
+          "title": "Modelo lógico completo do comércio",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "logico-produto-fornecedor.svg",
+          "title": "Conversão do muitos para muitos",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "logico-um-para-um.svg",
+          "title": "Conversão do exemplo um para um",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        }
+      ]
+    },
+    {
+      "search": "brModelo: resultado e link do capítulo funcionaram sem login",
+      "destination": "http://127.0.0.1:4173/pages/bancodedados.html#bd-brmodelo-gerar-logico"
+    }
+  ],
+  "conversion": [
+    {
+      "width": 1440,
+      "instructions": 5,
+      "menuPath": true,
+      "originalCapture": 338,
+      "zoomAndFocus": true,
+      "searchAndDirectAnchor": true,
+      "globalOverflow": false,
+      "pageErrors": []
+    },
+    {
+      "width": 390,
+      "instructions": 5,
+      "menuPath": true,
+      "originalCapture": 338,
+      "zoomAndFocus": true,
+      "searchAndDirectAnchor": true,
+      "globalOverflow": false,
+      "pageErrors": []
+    },
+    {
+      "width": 360,
+      "instructions": 5,
+      "menuPath": true,
+      "originalCapture": 338,
+      "zoomAndFocus": true,
+      "searchAndDirectAnchor": true,
+      "globalOverflow": false,
+      "pageErrors": []
+    },
+    {
+      "width": 320,
+      "instructions": 5,
+      "menuPath": true,
+      "originalCapture": 338,
+      "zoomAndFocus": true,
+      "searchAndDirectAnchor": true,
+      "globalOverflow": false,
+      "pageErrors": []
+    }
+  ]
+}

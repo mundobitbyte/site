@@ -458,62 +458,8 @@ void loop() {
     testeHttp.appendChild(nota);
   }
 
-  // 6.4 mDNS: prática principal física; no Wokwi não promete .local.
-  const mdns = document.getElementById('b6-4');
-  if(mdns && !mdns.querySelector('[data-mbb6-mdns-ambientes]')){
-    const cards = mdns.querySelector('.cards');
-    if(cards){
-      const guia = document.createElement('article');
-      guia.className = 'card wide';
-      guia.dataset.mbb6MdnsAmbientes = '1';
-      guia.innerHTML = `
-        <h3>Antes do código — onde o nome .local pode funcionar?</h3>
-        <p>Na etapa anterior, já alcançávamos a página do ESP32 pelo endereço IP. Agora queremos encontrá-la por um nome mais fácil de lembrar. <strong>Não estamos criando outra página nem mudando o circuito:</strong> o mDNS apenas ajuda a localizar o mesmo servidor na rede local.</p>
-        <div class="mbb6-connections">
-          <div><strong>ESP32 físico — prática completa</strong><span>Primeiro faça o servidor abrir pelo IP. Depois execute o código desta etapa e tente <code>http://ambiente-mbb.local</code> em um computador ou celular da mesma rede que ofereça resolução mDNS.</span></div>
-          <div><strong>Wokwi padrão — leitura guiada</strong><span>Observe as linhas novas do mDNS e explique sua função. <strong>Não use a abertura do nome .local no navegador como teste obrigatório</strong>, pois a rede virtual não equivale à rede local do computador.</span></div>
-        </div>
-        <p class="mbb6-note"><strong>Biblioteca:</strong> <code>#include &lt;ESPmDNS.h&gt;</code> disponibiliza o serviço mDNS e normalmente já vem com o pacote de placas ESP32 instalado corretamente. <code>MDNS.begin("ambiente-mbb")</code> configura o nome; <code>MDNS.addService("http", "tcp", 80)</code> anuncia o serviço HTTP. Se o IP funcionar e <code>.local</code> não, confira a rede e o suporte mDNS do dispositivo antes de suspeitar do código HTTP.</p>
-      `;
-      cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
-    }
-  }
+  // As práticas 6.4 e 6.5 são mantidas no HTML, com evidências e códigos próprios.
 
-  const testeMdns = acharPapel('b6-4', 'mdns-teste', '6. Testando');
-  if(testeMdns && marcar(testeMdns, 'mbb6MdnsTeste')){
-    const titulo = testeMdns.querySelector('h3');
-    if(titulo) titulo.textContent = '6. Testando — rede local com ESP32 físico';
-  }
-
-  // 6.5 Tunelamento: não promete execução no Wokwi padrão e antecipa a segurança.
-  const tunel = document.getElementById('b6-5');
-  if(tunel && !tunel.querySelector('[data-mbb6-tunel-ambientes]')){
-    const cards = tunel.querySelector('.cards');
-    if(cards){
-      const guia = document.createElement('article');
-      guia.className = 'card wide';
-      guia.dataset.mbb6TunelAmbientes = '1';
-      guia.innerHTML = `
-        <h3>Antes do túnel — entenda o caminho e os riscos</h3>
-        <p>O túnel <strong>não substitui o servidor HTTP, o Wi-Fi ou o mDNS</strong>. Ele encaminha temporariamente pedidos externos para um serviço que já funciona. <strong>Primeiro confirme, no computador, o acesso por IP local.</strong></p>
-        <div class="mbb6-connections">
-          <div><strong>ESP32 físico — demonstração opcional e supervisionada</strong><span>O computador deve abrir <code>http://IP_DO_ESP32</code>. O comando SSH é executado <strong>no terminal desse computador</strong>, não no Wokwi nem no código Arduino.</span></div>
-          <div><strong>Wokwi padrão — compreender, sem executar</strong><span>O gateway público não oferece ao computador uma rota de entrada para o servidor simulado. Portanto, <strong>não aponte o túnel para o IP virtual</strong> esperando que funcione.</span></div>
-        </div>
-        <p class="mbb6-warning"><strong>Segurança:</strong> o servidor didático do LED não exige autenticação: qualquer pessoa que obtenha o endereço público poderá tentar acioná-lo. Não faça a exposição como exercício obrigatório. Uma demonstração real requer autorização e supervisão do professor, protótipo isolado, nenhuma carga perigosa, nenhum dado pessoal e encerramento imediato ao terminar. HTTPS protege o transporte externo quando oferecido, mas <strong>não cria autenticação</strong> para os comandos.</p>
-        <p class="mbb6-note"><strong>Observe o papel de cada elemento:</strong> <code>ssh -V</code> verifica a presença do cliente SSH; <code>ssh -R ... localhost.run</code> solicita o encaminhamento remoto; a URL fornecida pelo serviço é temporária e depende do terminal permanecer aberto. A disponibilidade do serviço e as políticas da rede podem variar.</p>
-      `;
-      cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
-    }
-  }
-
-  const ferramentaTunel = acharPapel('b6-5', 'tunel-ferramenta', '4. Ferramenta para o teste');
-  if(ferramentaTunel && marcar(ferramentaTunel, 'mbb6TunelFerramenta')){
-    const nota = document.createElement('p');
-    nota.className = 'mbb6-note';
-    nota.innerHTML = '<strong>Checkpoint antes de continuar:</strong> no computador que criará o túnel, abra primeiro <code>http://IP_DO_ESP32</code>. Se esse acesso local não funcionar, o túnel também não terá para onde encaminhar a requisição. Use o comando documentado pelo serviço: <code>ssh -R 80:IP_DO_ESP32:80 localhost.run</code>.';
-    ferramentaTunel.appendChild(nota);
-  }
 });
 
 function carregarDestaquesMbb(){
