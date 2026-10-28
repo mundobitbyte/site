@@ -136,3 +136,6 @@ A execução nativa de 096c433 confirmou todos os ambientes: 14 testes Laravel/6
 
 
 Os sete workflows do head 02d6b1cb970cd5d9dabd41f41b7845ce7f993a85 passaram, incluindo o controle final de preservação. Na conferência manual seguinte foi corrigida a reabertura do percurso ao voltar pelo navegador: o link passa a acompanhar a escolha no clique e no evento pageshow, sem exigir recarregamento. Um teste de regressão verifica retorno, mudança e preferência inválida, sem gravar conclusão. Essa alteração de navegação requer os checks no novo head antes do merge.
+
+
+A checagem de pesquisa do head c953491 detectou que o índice derivado das 31 aulas não havia sido regenerado após a alteração do JavaScript de navegação. O índice foi regenerado pelo mecanismo existente e os checks locais passaram. Essa falha de preparação não é apresentada como falha do mecanismo de pesquisa nem ocultada como resultado aprovado.
