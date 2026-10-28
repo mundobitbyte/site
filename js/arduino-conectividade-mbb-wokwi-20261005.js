@@ -92,15 +92,14 @@
 
     const testeServidor = acharCard('b6-3', '5. Testando o servidor');
     if (testeServidor) {
-      const h3 = testeServidor.querySelector('h3');
-      if (h3) h3.textContent = '5. Testando o servidor — em uma rede local';
-      let nota = Array.from(testeServidor.querySelectorAll('p')).find(p => /Wokwi/i.test(p.textContent));
-      if (!nota) {
-        nota = document.createElement('p');
+      // Preserve o título e a nota mais completos definidos no HTML e no script principal.
+      const jaExplicado = Array.from(testeServidor.querySelectorAll('p')).some(p => /Wokwi/i.test(p.textContent));
+      if (!jaExplicado) {
+        const nota = document.createElement('p');
         nota.className = 'mbb6-note';
+        nota.innerHTML = '<strong>Wokwi padrão:</strong> o navegador não acessa o servidor HTTP simulado pelo gateway público. Para executar o pedido HTTP no simulador, siga a Parte B, código 7A.';
         testeServidor.appendChild(nota);
       }
-      nota.innerHTML = '<strong>No Wokwi padrão:</strong> não use a abertura da página no navegador como evidência. Continue até a Parte B e faça a experiência de cliente HTTP, que é executável no simulador.';
     }
 
     const parteB = acharCard('b6-3', 'Parte B');
@@ -188,11 +187,8 @@ void loop() {
     // mDNS — no Wokwi, aprende-se o problema que ele resolve e lê-se o código sem prometer .local no navegador.
     // Preserve a orientação mDNS do script principal, inclusive a distinção entre Wokwi e placa física.
 
-    const testeMdns = acharCard('b6-4', '6. Testando');
-    if (testeMdns) {
-      const h3 = testeMdns.querySelector('h3');
-      if (h3) h3.textContent = '6. Testando o nome — quando houver uma rede local real';
-    }
+    // O título de teste mDNS já especifica a rede local com ESP32 físico: não sobrescrever.
+
 
     // Tunelamento — no Wokwi padrão, compreensão do caminho; execução integral exige um servidor alcançável pelo computador.
     // Preserve os avisos do script principal sobre exposição pública e supervisão.
