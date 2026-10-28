@@ -439,6 +439,31 @@
       <p>Além disso, um mesmo GPIO pode assumir funções diferentes, como entrada/saída digital, leitura analógica, PWM ou comunicação.</p>
     </article>
 
+    <article class="card wide">
+      <h3>2A. Guia rápido dos pinos do ESP32 usados no curso</h3>
+      <p>Antes de ligar qualquer fio, vamos reconhecer os nomes impressos ao lado dos conectores. Na placa física e no Wokwi, a posição pode variar conforme o modelo: procure sempre a <strong>identificação do pino</strong>, como <code>23</code>, <code>GPIO23</code> ou <code>D23</code>, em vez de contar posições.</p>
+      <div class="mbb6-table-scroll">
+        <table>
+          <thead><tr><th scope="col">Pino na placa</th><th scope="col">O que faz e quando vamos utilizar</th></tr></thead>
+          <tbody>
+            <tr><td><strong>GPIO 23</strong></td><td><strong>Saída digital:</strong> envia o sinal para acender ou apagar o LED. Será usado no circuito-base do Módulo 6 e no projeto final.</td></tr>
+            <tr><td><strong>GPIO 34</strong></td><td><strong>Entrada analógica (ADC1):</strong> lê o sinal do LDR no Módulo 10. É <strong>somente entrada</strong>, sem pull-up ou pull-down interno; não serve para acionar o LED como saída.</td></tr>
+            <tr><td><strong>GPIO 21</strong></td><td><strong>Dados I2C (SDA):</strong> no Módulo 8, transporta os dados entre o ESP32 e o dispositivo I2C, como um LCD com interface compatível.</td></tr>
+            <tr><td><strong>GPIO 22</strong></td><td><strong>Relógio I2C (SCL):</strong> no Módulo 8, fornece o sinal que sincroniza a comunicação I2C.</td></tr>
+            <tr><td><strong>GPIO 32 e 33</strong></td><td><strong>Entradas ou saídas digitais e entradas analógicas (ADC1):</strong> são alternativas úteis para outros sensores e experiências; não precisamos conectá-los no primeiro circuito.</td></tr>
+            <tr><td><strong>TX0 (GPIO 1) e RX0 (GPIO 3)</strong></td><td><strong>Comunicação serial:</strong> normalmente usados para gravação e mensagens de diagnóstico da placa. Utilizaremos o Monitor Serial sem precisar colocar fios neles.</td></tr>
+            <tr><td><strong>3V3</strong></td><td><strong>Alimentação de 3,3 V:</strong> disponível para componentes compatíveis, respeitando os limites elétricos. Não é um GPIO.</td></tr>
+            <tr><td><strong>GND</strong></td><td><strong>Referência elétrica comum:</strong> participa do retorno da corrente no circuito com LED e nas montagens com sensores. Pode haver vários pinos GND.</td></tr>
+            <tr><td><strong>5V / VIN</strong></td><td><strong>Alimentação da placa:</strong> a identificação e o uso dependem do modelo. <strong>Nunca aplique 5 V diretamente a um GPIO do ESP32.</strong></td></tr>
+            <tr><td><strong>EN</strong></td><td><strong>Habilitar/reiniciar:</strong> está relacionado ao funcionamento e à reinicialização do chip; não é uma saída comum para o LED.</td></tr>
+            <tr><td><strong>BOOT (GPIO 0)</strong></td><td><strong>Inicialização e gravação:</strong> o botão BOOT costuma atuar sobre o GPIO 0. Esse pino exige cuidado porque influencia a inicialização; não será usado no circuito-base.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mbb6-note"><strong>Atenção aos pinos especiais:</strong> GPIO 34, 35, 36 e 39 são somente entradas; GPIO 6 a 11 normalmente estão ligados à memória flash. Alguns GPIOs, como 0, 2, 5, 12 e 15, influenciam a inicialização. Para as nossas primeiras montagens, siga os pinos especificados nas atividades.</p>
+      <p class="mbb6-note"><strong>Missão de reconhecimento:</strong> observe a placa no Wokwi e localize <strong>GPIO 23</strong> e <strong>GND</strong>. Qual deles enviará o sinal para o LED e qual será a referência elétrica do circuito? No próximo passo, você os reconhecerá novamente na montagem.</p>
+    </article>
+
     <article class="card">
       <h3>3. Por que existem vários GND?</h3>
       <p><strong>GND</strong> vem de <em>ground</em> (terra). É a referência elétrica comum do circuito e o caminho de retorno da corrente. Os vários pinos GND da placa pertencem ao mesmo terra elétrico e existem para facilitar as conexões durante a montagem.</p>
