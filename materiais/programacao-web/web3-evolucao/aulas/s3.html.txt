@@ -1,0 +1,14 @@
+<p>Abrir a orientação muda apenas a tela. Para saber se os pedidos continuam abertos, precisamos perguntar ao servidor. Vamos recolocar no balcão React a consulta que você já construiu no Capítulo 2.</p>
+<p>O arquivo <code>atendimento.ts</code> continua com a função de consulta, o prazo máximo de espera e a conferência de <code>unknown</code>. Reutilizá-lo preserva uma regra importante: a interface não apresenta como atendimento uma resposta incompleta.</p>
+<h3>Três estados que o visitante percebe</h3>
+<p>Precisamos representar os dados confirmados, se há uma consulta em andamento e a orientação de retorno. Quando a consulta começa, retiramos o aviso anterior; quando termina com sucesso, mostramos a nova resposta; quando falha, explicamos como tentar novamente.</p>
+{{arquivo:cliente-balcao/src/App.tsx}}
+<p><code>Dados | null</code> admite ausência de atendimento confirmado. A interface TypeScript <code>Atendimento</code> foi importada com o apelido <code>Dados</code> porque agora também existe um componente chamado <code>Atendimento</code>. O primeiro descreve dados; o segundo apresenta a interface.</p>
+<p><code>useRef</code> guarda uma referência entre apresentações sem ser, por si, uma informação mostrada. Usamos <code>consultaAtiva.current</code> para impedir outro pedido enquanto o primeiro está em andamento. Já <code>consultando</code> controla o estado visual do botão.</p>
+{{arquivo:cliente-balcao/src/componentes/Atendimento.tsx}}
+<p>O componente recebe os dados e a ação de consultar por props. Ele não precisa conhecer o endereço da API. <code>disabled</code> informa a espera; <code>role="status"</code> identifica o retorno para tecnologias assistivas. Observe como dados, ação e apresentação se relacionam sem misturar seus papéis.</p>
+<h3>Repita uma experiência que você já conhece</h3>
+<p>Faça o build e consulte o balcão. Mude o prazo no PHP de referência e consulte novamente, sem recarregar o documento. Depois teste pedidos encerrados e prazo ausente. O contrato continua com <code>nomeNegocio</code>, <code>mensagemStatus</code> e <code>mensagemTempo</code>; não substituímos esses campos pelos valores brutos da configuração.</p>
+<p>Use uma das respostas inválidas ensinadas no Capítulo 2 e confira se a mensagem antiga desaparece, o erro é comunicado e o botão volta a funcionar. Restaure a API válida e consulte outra vez. Não precisamos estudar novamente toda a aula de Promise ou fetch: estamos reaproveitando o que ela permitiu construir.</p>
+<h3 id="checkpoint">A mudança de interface preservou o comportamento?</h3>
+<p>Mostre consulta, espera, recusa de resposta inválida e recuperação. Compare com a experiência anterior em JavaScript/TypeScript: mudou a organização da tela; a responsabilidade de conferir a resposta permaneceu. Agora podemos consumir outra informação do Café: a lista de produtos.</p>

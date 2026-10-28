@@ -1,0 +1,18 @@
+<p>Uma visitante consegue abrir a página, mas não compreende as mensagens em português. O atendimento não mudou de nome, situação ou prazo; o que precisa mudar é a forma de apresentar essas informações.</p>
+<p>Vamos traduzir uma tela primeiro. Traduzir todo o site de uma vez esconderia o que estamos aprendendo e criaria uma promessa de cobertura que ainda não cumprimos. A API usada pelo balcão continuará com o contrato e as mensagens em português já combinados.</p>
+<h3>Veja a mesma informação em outra apresentação</h3>
+<p>Acrescente os dicionários em <code>lang/pt_BR</code> e <code>lang/en</code> e aplique a view e o controller desta etapa. Abra <code>http://localhost:8000/atendimento?idioma=en</code>. Depois use o link “Português”. O número de minutos precisa permanecer o mesmo.</p>
+<p><strong>Internacionalização</strong> prepara o programa para diferentes idiomas e convenções. <strong>Localização</strong> fornece a apresentação de uma língua ou região. Em vez de colocar a frase pronta na view, usamos uma chave como <code>atendimento.prazo</code> e substituímos o valor variável quando apresentamos a mensagem.</p>
+{{arquivo:lang/pt_BR/atendimento.php}}
+{{arquivo:lang/en/atendimento.php}}
+<p>O marcador <code>:minutos</code> não é um novo campo do banco. É o lugar onde a tradução receberá o prazo que já conhecemos. Se os pedidos estão encerrados, a view escolhe a mensagem de encerramento antes de apresentar uma estimativa.</p>
+{{arquivo:resources/views/atendimento.blade.php}}
+{{arquivo:app/Http/Controllers/AtendimentoController.php}}
+<p>O parâmetro <code>idioma</code> aceita apenas <code>pt_BR</code> ou <code>en</code>. Não usamos a entrada do visitante para montar livremente o nome de um arquivo. O layout também informa o idioma no atributo <code>lang</code>, importante para tecnologias assistivas e pronúncia.</p>
+<h3>Volte ao conjunto antes de concluir</h3>
+<p>Informe prazo vazio pela área da equipe e abra os dois idiomas. Depois encerre os pedidos e repita. Consulte o balcão: ele deve continuar funcionando com o contrato anterior, independentemente do último idioma aberto em outra aba.</p>
+<p>Execute <code>composer test</code>. A suíte verifica a regra, a proteção da edição, o catálogo, respostas externas controladas e os idiomas trabalhados. Registre testes automatizados separadamente das verificações de celular, teclado, rede e extensões do seu computador.</p>
+<p>Percorra também início, cardápio, mensagens do Web II e saída da área da equipe. Nossas alterações não autorizam perder uma funcionalidade anterior. Se um dado já salvo desapareceu, investigue a cópia do banco e os comandos usados; não tente reconstruí-lo inventando registros.</p>
+<h3 id="checkpoint">O Café está pronto para ser demonstrado?</h3>
+<p>Você deve conseguir explicar uma consulta completa: rota, controller, model, classe de regra, banco, view ou JSON. Demonstre uma edição autorizada, uma tentativa recusada e uma falha de serviço com recuperação. Escolha uma alteração pequena e mostre por que ela aparece em todos os consumidores previstos.</p>
+<p>Seu percurso MVC/serviços termina aqui. A próxima página reúne as evidências e a revisão da entrega. Não é necessário começar os percursos SPA ou BaaS para concluir este caminho.</p>

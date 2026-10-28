@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: Uma identidade para a equipe. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-baas-2.html">
+<title>Web III — Uma identidade para a equipe | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · Uma identidade para a equipe">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Serviços com Firebase</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Serviços com Firebase</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link" href="web3-baas-1.html#capitulo-2">A mesma informação em outro serviço</a><a class="chapter-link active" aria-current="page" href="web3-baas-2.html#capitulo-2">Uma identidade para a equipe</a><a class="chapter-link" href="web3-baas-3.html#capitulo-2">A regra fica no serviço</a><a class="chapter-link" href="web3-baas-4.html#capitulo-2">A gravação precisa ser confirmada</a><a class="chapter-link" href="web3-baas-5.html#capitulo-2">O balcão acompanha a mudança</a><a class="chapter-link" href="web3-baas-6.html#capitulo-2">A foto tem um lugar e uma referência</a><a class="chapter-link" href="web3-baas-7.html#capitulo-2">Os arquivos não levam os serviços junto</a><a class="chapter-link" href="web3-baas-8.html#capitulo-2">Uma operação no ambiente confiável</a><a class="chapter-link" href="web3-baas-9.html#capitulo-2">Aviso local não é push remoto</a><a class="chapter-link" href="web3-baas-10.html#capitulo-2">Um rascunho ainda pede revisão</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Serviços com Firebase</span><h2 id="titulo-aula" tabindex="-1">Uma identidade para a equipe</h2><p class="chapter-meta">Café Aurora · cerca de 6 horas-aula de estudo, prática e verificação</p><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>A consulta pública funciona. Marina, porém, não quer que qualquer pessoa possa se passar pela equipe. Vamos acrescentar reconhecimento de identidade, ainda sem liberar a alteração do aviso.</p>
+<p>Firebase Authentication oferece operações de autenticação. Vamos usá-las no emulador. Essas identidades são diferentes da conta do Meu MbB e do administrador da aplicação PHP anterior; cada sistema tem seu próprio contexto.</p>
+<h3 id="passo-1">Entre com uma identidade de exercício</h3>
+<p>Acrescente os arquivos da etapa, faça o build do cliente e mantenha os emuladores abertos. Se eles foram reiniciados, rode <code>npm run preparar</code> em outro terminal para recuperar os dados fictícios.</p>
+<p>Abra <code>http://localhost:5000/balcao.html</code>. O preparo oferece <code>operador@example.test</code> e <code>leitor@example.test</code>, com a senha fictícia <code>senha-ficticia-aurora</code>. Esses dados existem somente na bancada local. Não reutilize essa senha fora do emulador.</p>
+<p>Entre como leitor. A página deve identificar a conta reconhecida. Use Sair e repita como operador. Nesta etapa, não há formulário de alteração disponível: reconhecer uma pessoa não é o mesmo que autorizar uma escrita.</p>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/servico.ts</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/servico.ts">import {initializeApp} from &quot;firebase/app&quot;;
+import {getFirestore,connectFirestoreEmulator} from &quot;firebase/firestore&quot;;
+import {modo,configuracao} from &quot;./ambiente.js&quot;;
+if(modo===&quot;local&quot; &amp;&amp; ![&quot;localhost&quot;,&quot;127.0.0.1&quot;].includes(location.hostname))throw new Error(&quot;Abra pelo endereço do emulador local.&quot;);
+export const app=initializeApp(configuracao);
+export const banco=getFirestore(app);
+if(modo===&quot;local&quot;)connectFirestoreEmulator(banco,&quot;127.0.0.1&quot;,8080);
+import {getAuth,connectAuthEmulator} from &quot;firebase/auth&quot;;
+export const auth=getAuth(app);
+if(modo===&quot;local&quot;)connectAuthEmulator(auth,&quot;http://127.0.0.1:9099&quot;,{disableWarnings:true});</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/operador.ts</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/operador.ts">import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from &quot;firebase/auth&quot;;
+import { doc,getDocFromServer } from &quot;firebase/firestore&quot;;
+import { auth,banco } from &quot;./servico.js&quot;;
+import { alterarAtendimento } from &quot;./dados.js&quot;;
+import { conferirConfiguracao } from &quot;./atendimento.js&quot;;
+import { elemento,comPrazo } from &quot;./tela.js&quot;;
+
+const login = document.querySelector&lt;HTMLFormElement&gt;(&quot;#entrar&quot;);
+const formulario = document.querySelector&lt;HTMLFormElement&gt;(&quot;#alterar&quot;);
+const retorno = document.querySelector&lt;HTMLElement&gt;(&quot;#retorno-operador&quot;);
+login?.addEventListener(&quot;submit&quot;, async evento =&gt; {
+  evento.preventDefault(); const botao = login.querySelector&lt;HTMLButtonElement&gt;(&quot;button&quot;)!; botao.disabled = true;
+  try {
+    await signInWithEmailAndPassword(auth,elemento&lt;HTMLInputElement&gt;(&quot;#email&quot;).value,elemento&lt;HTMLInputElement&gt;(&quot;#senha&quot;).value);
+    elemento&lt;HTMLInputElement&gt;(&quot;#senha&quot;).value = &quot;&quot;;
+    if (retorno) retorno.textContent = &quot;Identidade reconhecida. A permissão será conferida pelo serviço.&quot;;
+  } catch { if (retorno) retorno.textContent = &quot;Entrada não confirmada. Confira os dados e o emulador de identidade.&quot;; }
+  finally { botao.disabled = false; }
+});
+document.querySelector(&quot;#sair&quot;)?.addEventListener(&quot;click&quot;, async () =&gt; {
+  try { await signOut(auth); if (retorno) retorno.textContent = &quot;Você saiu do Café.&quot;; }
+  catch { if (retorno) retorno.textContent = &quot;Não foi possível confirmar a saída.&quot;; }
+});
+onAuthStateChanged(auth, async usuario =&gt; {
+  const identidade = document.querySelector(&quot;#identidade&quot;);
+  if (identidade) identidade.textContent = usuario ? `Identidade: ${usuario.email}.` : &quot;Visitante: consulta pública disponível.&quot;;
+  const campos = formulario?.querySelector&lt;HTMLFieldSetElement&gt;(&quot;fieldset&quot;);
+  if (campos) campos.disabled = true;
+  const sessao = usuario?.uid;
+  if (!usuario || !formulario) return;
+  try {
+    const token = await usuario.getIdTokenResult();
+    if (token.claims.operador !== true) { if (retorno) retorno.textContent = &quot;Sua identidade permite consultar, mas não alterar.&quot;; return; }
+    const foto = await comPrazo(getDocFromServer(doc(banco,&quot;atendimento&quot;,&quot;atual&quot;)));
+    if (auth.currentUser?.uid !== sessao) return;
+    const d = conferirConfiguracao(foto.data());
+    elemento&lt;HTMLInputElement&gt;(&quot;#nome&quot;).value = d.nomeNegocio;
+    elemento&lt;HTMLSelectElement&gt;(&quot;#aberto&quot;).value = d.pedidosAbertos ? &quot;1&quot; : &quot;0&quot;;
+    elemento&lt;HTMLInputElement&gt;(&quot;#minutos&quot;).value = d.tempoEstimado === null ? &quot;&quot; : String(d.tempoEstimado);
+    if (campos) campos.disabled = false;
+  } catch { if (retorno) retorno.textContent = &quot;Configuração não confirmada. Entre novamente ou confira o serviço.&quot;; }
+});
+formulario?.addEventListener(&quot;submit&quot;, async evento =&gt; {
+  evento.preventDefault(); const botao = formulario.querySelector&lt;HTMLButtonElement&gt;(&quot;button&quot;)!; botao.disabled = true;
+  const minutos = elemento&lt;HTMLInputElement&gt;(&quot;#minutos&quot;).value.trim();
+  try {
+    const dados = conferirConfiguracao({ nomeNegocio: elemento&lt;HTMLInputElement&gt;(&quot;#nome&quot;).value.trim(),pedidosAbertos:elemento&lt;HTMLSelectElement&gt;(&quot;#aberto&quot;).value === &quot;1&quot;,tempoEstimado:minutos === &quot;&quot; ? null : Number(minutos) });
+    if (retorno) retorno.textContent = &quot;Aguardando confirmação da gravação…&quot;;
+    await alterarAtendimento(dados);
+    if (retorno) retorno.textContent = &quot;Alteração confirmada. Consulte a outra tela para conferir.&quot;;
+  } catch { if (retorno) retorno.textContent = &quot;Alteração não confirmada. Confira os campos, a permissão e a conexão antes de tentar novamente.&quot;; }
+  finally { botao.disabled = false; }
+});</code></pre></details>
+<h3 id="passo-2">Acompanhe a identidade sem guardar a senha</h3>
+<p><code>signInWithEmailAndPassword</code> pede a confirmação da identidade ao serviço. <code>onAuthStateChanged</code> acompanha entrada e saída. O campo de senha é limpo depois da entrada; nosso código não a grava em localStorage nem em um documento público.</p>
+<p>O preparo atribui ao operador uma informação de permissão chamada <em>claim</em>. Ela não é escolhida pelo formulário do navegador. Na próxima etapa, veremos como o serviço verifica essa informação mesmo que alguém altere os controles da página.</p>
+<p>Teste uma senha incorreta e confira a orientação. A consulta pública do atendimento deve continuar funcionando depois da tentativa recusada e depois da saída. Não transforme uma falha de entrada em um bloqueio do Café inteiro.</p>
+<h3 id="checkpoint">O que foi confirmado, exatamente?</h3>
+<p>Registre entrada recusada, leitor reconhecido, operador reconhecido e saída. Explique por que escrever “operador” no HTML não concederia uma permissão no serviço. Agora precisamos expressar quem pode ler, quem pode escrever e quais dados serão aceitos.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-baas-etapa2.zip" download>Baixar referência da etapa 2</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>cliente-balcao/src/main.ts</code></li><li><code>cliente-balcao/src/operador.ts</code></li><li><code>cliente-balcao/src/servico.ts</code></li><li><code>public/balcao.html</code></li><li><code>public/index.html</code></li><li><code>public/sobre.html</code></li></ul></details></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-baas-1.html#capitulo-2">← A mesma informação em outro serviço</a><a href="web3-baas-3.html#capitulo-2">A regra fica no serviço →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

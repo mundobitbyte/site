@@ -5,6 +5,17 @@ import { app,auth,banco,funcoes } from "./servico.js";
 import { modo,chaveVapid } from "./ambiente.js";
 import { elemento } from "./tela.js";
 
+document.querySelector("#notificacao-local")?.addEventListener("click", async () => {
+  const retorno=elemento("#retorno-avisos");
+  if (!("Notification" in window) || !window.isSecureContext) { retorno.textContent="Notificação local indisponível neste navegador/contexto. A consulta continua funcionando."; return; }
+  try {
+    const permissao=await Notification.requestPermission();
+    if(permissao!=="granted") { retorno.textContent="Você não autorizou a demonstração local. Nenhum envio push foi realizado."; return; }
+    new Notification("Café Aurora — demonstração local", {body:"Este aviso foi criado neste navegador. Não veio do Firebase Cloud Messaging."});
+    retorno.textContent="Notificação local solicitada ao navegador. Não houve envio pelo FCM; confira separadamente se o sistema a exibiu.";
+  } catch { retorno.textContent="O navegador não confirmou a notificação local. A consulta continua disponível."; }
+});
+
 document.querySelector("#permitir-avisos")?.addEventListener("click",async()=>{
   const retorno=elemento("#retorno-avisos");
   if(modo!=="nuvem"||!chaveVapid){retorno.textContent="O envio real não é emulado. Use um ambiente HTTPS de mensageria aprovado para esta etapa.";return;}

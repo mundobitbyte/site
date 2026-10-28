@@ -45,8 +45,8 @@ def cafe():
 
 class Evolucao(unittest.TestCase):
     def test_objeto_preserva_os_cinco_estados(self):
-        fonte=KITS/'objetos/src/Atendimento.php'
-        codigo='require $argv[1]; foreach([[true,30],[false,30],[true,null],[false,null],[true,0]] as [$a,$m]) echo json_encode((new Atendimento("Café Aurora",$a,$m))->mensagens(), JSON_UNESCAPED_UNICODE)."\\n";'
+        fonte=KITS/'objetos/src/AvisoAtendimento.php'
+        codigo='require $argv[1]; foreach([[true,30],[false,30],[true,null],[false,null],[true,0]] as [$a,$m]) echo json_encode((new AvisoAtendimento("Café Aurora",$a,$m))->mensagens(), JSON_UNESCAPED_UNICODE)."\\n";'
         linhas=subprocess.check_output(['php','-r',codigo,str(fonte)],text=True).splitlines()
         resultados=[json.loads(l) for l in linhas]
         self.assertIn('30 minutos',resultados[0]['mensagemTempo'])

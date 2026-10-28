@@ -17,5 +17,8 @@
   "overrides": {
     "@firebase/app": "0.14.9",
     "@firebase/app-compat": "0.5.9"
+  },
+  "engines": {
+    "node": ">=22.23.4 <23"
   }
 }

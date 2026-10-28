@@ -69,7 +69,7 @@
       <button type="button" data-limpar-pedido hidden>Limpar seleção</button>
       <noscript><p>A simulação precisa de JavaScript, mas todo o cardápio continua disponível acima.</p></noscript>
     </section>
-  <section aria-labelledby="titulo-atualizar-fotos"><h2 id="titulo-atualizar-fotos">Fotos da equipe</h2><p>O cardápio conhecido continua disponível. Consulte o serviço para conferir uma foto enviada pela equipe.</p><button type="button" id="consultar-midia-cardapio">Consultar foto atual</button><p id="retorno-midia-cardapio" role="status"></p></section></main>
+  <section aria-labelledby="titulo-atualizar-fotos"><h2 id="titulo-atualizar-fotos">Informações da equipe</h2><p>O cardápio conhecido continua disponível. Consulte o serviço para conferir uma foto enviada pela equipe.</p><button type="button" id="consultar-midia-cardapio">Consultar atualização do produto</button><p id="retorno-midia-cardapio" role="status"></p></section></main>
   <footer><p>&copy; 2026 Café Aurora. Projeto educacional fictício.</p></footer>
   <script src="js/script.js" defer></script>
 <script type="module" src="js/balcao/main.js"></script></body>

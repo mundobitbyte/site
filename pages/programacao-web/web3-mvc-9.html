@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: O aviso muda de idioma. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-mvc-9.html">
+<title>Web III — O aviso muda de idioma | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · O aviso muda de idioma">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Servidor com Laravel</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Servidor com Laravel</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link" href="web3-mvc-1.html#capitulo-2">O aviso ganha um objeto</a><a class="chapter-link" href="web3-mvc-2.html#capitulo-2">As mesmas telas, outra organização</a><a class="chapter-link" href="web3-mvc-3.html#capitulo-2">O prazo precisa permanecer</a><a class="chapter-link" href="web3-mvc-4.html#capitulo-2">Quem pode mudar o aviso?</a><a class="chapter-link" href="web3-mvc-5.html#capitulo-2">O cardápio tem relações</a><a class="chapter-link" href="web3-mvc-6.html#capitulo-2">Uma consulta atravessa serviços</a><a class="chapter-link" href="web3-mvc-7.html#capitulo-2">O Café cabe na rotina do celular</a><a class="chapter-link" href="web3-mvc-8.html#capitulo-2">Outro programa pede o mesmo aviso</a><a class="chapter-link active" aria-current="page" href="web3-mvc-9.html#capitulo-2">O aviso muda de idioma</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Servidor com Laravel</span><h2 id="titulo-aula" tabindex="-1">O aviso muda de idioma</h2><p class="chapter-meta">Café Aurora · cerca de 4 horas-aula de estudo, prática e verificação</p><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>Uma visitante consegue abrir a página, mas não compreende as mensagens em português. O atendimento não mudou de nome, situação ou prazo; o que precisa mudar é a forma de apresentar essas informações.</p>
+<p>Vamos traduzir uma tela primeiro. Traduzir todo o site de uma vez esconderia o que estamos aprendendo e criaria uma promessa de cobertura que ainda não cumprimos. A API usada pelo balcão continuará com o contrato e as mensagens em português já combinados.</p>
+<h3 id="passo-1">Veja a mesma informação em outra apresentação</h3>
+<p>Acrescente os dicionários em <code>lang/pt_BR</code> e <code>lang/en</code> e aplique a view e o controller desta etapa. Abra <code>http://localhost:8000/atendimento?idioma=en</code>. Depois use o link “Português”. O número de minutos precisa permanecer o mesmo.</p>
+<p><strong>Internacionalização</strong> prepara o programa para diferentes idiomas e convenções. <strong>Localização</strong> fornece a apresentação de uma língua ou região. Em vez de colocar a frase pronta na view, usamos uma chave como <code>atendimento.prazo</code> e substituímos o valor variável quando apresentamos a mensagem.</p>
+<details class="web3-arquivo"><summary>Conferir lang/pt_BR/atendimento.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="lang/pt_BR/atendimento.php">&lt;?php
+return [&#x27;titulo&#x27;=&gt;&#x27;Atendimento&#x27;,&#x27;aberto&#x27;=&gt;&#x27;Pedidos para retirada estão abertos.&#x27;,&#x27;fechado&#x27;=&gt;&#x27;Pedidos para retirada estão encerrados.&#x27;,&#x27;semPrazo&#x27;=&gt;&#x27;Consulte a equipe para saber o prazo de retirada.&#x27;,&#x27;foraHorario&#x27;=&gt;&#x27;Consulte novamente durante o horário de atendimento.&#x27;,&#x27;prazo&#x27;=&gt;&#x27;Tempo estimado: :minutos minutos.&#x27;];</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir lang/en/atendimento.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="lang/en/atendimento.php">&lt;?php
+return [&#x27;titulo&#x27;=&gt;&#x27;Service&#x27;,&#x27;aberto&#x27;=&gt;&#x27;Takeaway orders are open.&#x27;,&#x27;fechado&#x27;=&gt;&#x27;Takeaway orders are closed.&#x27;,&#x27;semPrazo&#x27;=&gt;&#x27;Ask our team about the collection time.&#x27;,&#x27;foraHorario&#x27;=&gt;&#x27;Please check again during opening hours.&#x27;,&#x27;prazo&#x27;=&gt;&#x27;Estimated time: :minutos minutes.&#x27;];</code></pre></details>
+<p>O marcador <code>:minutos</code> não é um novo campo do banco. É o lugar onde a tradução receberá o prazo que já conhecemos. Se os pedidos estão encerrados, a view escolhe a mensagem de encerramento antes de apresentar uma estimativa.</p>
+<details class="web3-arquivo"><summary>Conferir resources/views/atendimento.blade.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="resources/views/atendimento.blade.php">@extends(&#x27;layout&#x27;)
+@section(&#x27;titulo&#x27;,__(&#x27;atendimento.titulo&#x27;))
+@section(&#x27;conteudo&#x27;)
+&lt;h1&gt;{{ __(&#x27;atendimento.titulo&#x27;) }} — {{ $atendimento-&gt;nome }}&lt;/h1&gt;
+&lt;p&gt;{{ __($atendimento-&gt;aberto ? &#x27;atendimento.aberto&#x27; : &#x27;atendimento.fechado&#x27;) }}&lt;/p&gt;
+&lt;p&gt;{{ __(!$atendimento-&gt;aberto ? &#x27;atendimento.foraHorario&#x27; : ($atendimento-&gt;minutos === null ? &#x27;atendimento.semPrazo&#x27; : &#x27;atendimento.prazo&#x27;), [&#x27;minutos&#x27;=&gt;$atendimento-&gt;minutos]) }}&lt;/p&gt;
+&lt;nav aria-label=&quot;Idioma&quot;&gt;&lt;a href=&quot;?idioma=pt_BR&quot; lang=&quot;pt-BR&quot;&gt;Português&lt;/a&gt; · &lt;a href=&quot;?idioma=en&quot; lang=&quot;en&quot;&gt;English&lt;/a&gt;&lt;/nav&gt;
+&lt;p&gt;&lt;a href=&quot;/balcao.php&quot;&gt;Consultar no balcão&lt;/a&gt;&lt;/p&gt;
+@endsection</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir app/Http/Controllers/AtendimentoController.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Http/Controllers/AtendimentoController.php">&lt;?php
+namespace App\Http\Controllers;
+use App\Http\Requests\AtualizarAtendimentoRequest;
+use App\Models\AtendimentoAtual;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
+
+class AtendimentoController
+{
+    public function mostrar(\Illuminate\Http\Request $pedido): View
+    {
+        $idioma=$pedido-&gt;query(&#x27;idioma&#x27;,&#x27;pt_BR&#x27;);
+        abort_unless(in_array($idioma,[&#x27;pt_BR&#x27;,&#x27;en&#x27;],true),400);
+        app()-&gt;setLocale($idioma);
+        return view(&#x27;atendimento&#x27;, [&#x27;atendimento&#x27; =&gt; AtendimentoAtual::findOrFail(1)]);
+    }
+    public function publico(): JsonResponse
+    {
+        return response()-&gt;json(AtendimentoAtual::findOrFail(1)-&gt;mensagens())-&gt;header(&#x27;Cache-Control&#x27;,&#x27;no-store&#x27;);
+    }
+    public function editar(): View
+    {
+        return view(&#x27;editar-atendimento&#x27;, [&#x27;atendimento&#x27; =&gt; AtendimentoAtual::findOrFail(1)]);
+    }
+    public function salvar(AtualizarAtendimentoRequest $pedido): RedirectResponse
+    {
+        AtendimentoAtual::findOrFail(1)-&gt;update($pedido-&gt;validated());
+        return redirect()-&gt;route(&#x27;operador.atendimento&#x27;)-&gt;with(&#x27;aviso&#x27;, &#x27;Aviso salvo; consulte o balcão para conferir.&#x27;);
+    }
+}</code></pre></details>
+<p>O parâmetro <code>idioma</code> aceita apenas <code>pt_BR</code> ou <code>en</code>. Não usamos a entrada do visitante para montar livremente o nome de um arquivo. O layout também informa o idioma no atributo <code>lang</code>, importante para tecnologias assistivas e pronúncia.</p>
+<h3 id="passo-2">Volte ao conjunto antes de concluir</h3>
+<p>Informe prazo vazio pela área da equipe e abra os dois idiomas. Depois encerre os pedidos e repita. Consulte o balcão: ele deve continuar funcionando com o contrato anterior, independentemente do último idioma aberto em outra aba.</p>
+<p>Execute <code>composer test</code>. A suíte verifica a regra, a proteção da edição, o catálogo, respostas externas controladas e os idiomas trabalhados. Registre testes automatizados separadamente das verificações de celular, teclado, rede e extensões do seu computador.</p>
+<p>Percorra também início, cardápio, mensagens do Web II e saída da área da equipe. Nossas alterações não autorizam perder uma funcionalidade anterior. Se um dado já salvo desapareceu, investigue a cópia do banco e os comandos usados; não tente reconstruí-lo inventando registros.</p>
+<h3 id="checkpoint">O Café está pronto para ser demonstrado?</h3>
+<p>Você deve conseguir explicar uma consulta completa: rota, controller, model, classe de regra, banco, view ou JSON. Demonstre uma edição autorizada, uma tentativa recusada e uma falha de serviço com recuperação. Escolha uma alteração pequena e mostre por que ela aparece em todos os consumidores previstos.</p>
+<p>Seu percurso MVC/serviços termina aqui. A próxima página reúne as evidências e a revisão da entrega. Não é necessário começar os percursos SPA ou BaaS para concluir este caminho.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa9.zip" download>Baixar referência da etapa 9</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>lang/en/atendimento.php</code></li><li><code>lang/pt_BR/atendimento.php</code></li><li><code>resources/views/atendimento.blade.php</code></li><li><code>tests/Feature/AtendimentoTest.php</code></li></ul></details></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-mvc-8.html#capitulo-2">← Outro programa pede o mesmo aviso</a><a href="web3-entrega.html#capitulo-2">Conferir a entrega →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

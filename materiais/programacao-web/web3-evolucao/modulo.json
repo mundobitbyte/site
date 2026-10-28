@@ -1,0 +1,298 @@
+{
+  "estado": "construcao-em-branch",
+  "percursos": {
+    "mvc": {
+      "nome": "Servidor com Laravel",
+      "descricao": "A equipe edita, o servidor organiza e diferentes consumidores consultam a mesma informação."
+    },
+    "spa": {
+      "nome": "Interface com React",
+      "descricao": "O balcão evolui por componentes e estados, preservando os serviços PHP."
+    },
+    "baas": {
+      "nome": "Serviços com Firebase",
+      "descricao": "O atendimento evolui com serviços gerenciados, começando em emuladores locais."
+    }
+  },
+  "aulas": [
+    {
+      "chave": "ponte",
+      "id": "web3-ponte-percursos",
+      "titulo": "O botão consulta. Quem informa o aviso?",
+      "pagina": "web3-percursos.html",
+      "horas": 2
+    },
+    {
+      "chave": "m1",
+      "id": "web3-mvc-01",
+      "titulo": "O aviso ganha um objeto",
+      "pagina": "web3-mvc-1.html",
+      "percurso": "mvc",
+      "numero": 1,
+      "horas": 8
+    },
+    {
+      "chave": "m2",
+      "id": "web3-mvc-02",
+      "titulo": "As mesmas telas, outra organização",
+      "pagina": "web3-mvc-2.html",
+      "percurso": "mvc",
+      "numero": 2,
+      "horas": 10
+    },
+    {
+      "chave": "m3",
+      "id": "web3-mvc-03",
+      "titulo": "O prazo precisa permanecer",
+      "pagina": "web3-mvc-3.html",
+      "percurso": "mvc",
+      "numero": 3,
+      "horas": 8
+    },
+    {
+      "chave": "m4",
+      "id": "web3-mvc-04",
+      "titulo": "Quem pode mudar o aviso?",
+      "pagina": "web3-mvc-4.html",
+      "percurso": "mvc",
+      "numero": 4,
+      "horas": 10
+    },
+    {
+      "chave": "m5",
+      "id": "web3-mvc-05",
+      "titulo": "O cardápio tem relações",
+      "pagina": "web3-mvc-5.html",
+      "percurso": "mvc",
+      "numero": 5,
+      "horas": 12
+    },
+    {
+      "chave": "m6",
+      "id": "web3-mvc-06",
+      "titulo": "Uma consulta atravessa serviços",
+      "pagina": "web3-mvc-6.html",
+      "percurso": "mvc",
+      "numero": 6,
+      "horas": 8
+    },
+    {
+      "chave": "m7",
+      "id": "web3-mvc-07",
+      "titulo": "O Café cabe na rotina do celular",
+      "pagina": "web3-mvc-7.html",
+      "percurso": "mvc",
+      "numero": 7,
+      "horas": 4
+    },
+    {
+      "chave": "m8",
+      "id": "web3-mvc-08",
+      "titulo": "Outro programa pede o mesmo aviso",
+      "pagina": "web3-mvc-8.html",
+      "percurso": "mvc",
+      "numero": 8,
+      "horas": 6
+    },
+    {
+      "chave": "m9",
+      "id": "web3-mvc-09",
+      "titulo": "O aviso muda de idioma",
+      "pagina": "web3-mvc-9.html",
+      "percurso": "mvc",
+      "numero": 9,
+      "horas": 4
+    },
+    {
+      "chave": "s1",
+      "id": "web3-spa-01",
+      "titulo": "Uma área do balcão ganha componentes",
+      "pagina": "web3-spa-1.html",
+      "percurso": "spa",
+      "numero": 1,
+      "horas": 8
+    },
+    {
+      "chave": "s2",
+      "id": "web3-spa-02",
+      "titulo": "Abrir uma orientação muda o estado",
+      "pagina": "web3-spa-2.html",
+      "percurso": "spa",
+      "numero": 2,
+      "horas": 4
+    },
+    {
+      "chave": "s3",
+      "id": "web3-spa-03",
+      "titulo": "O componente consulta o atendimento",
+      "pagina": "web3-spa-3.html",
+      "percurso": "spa",
+      "numero": 3,
+      "horas": 6
+    },
+    {
+      "chave": "s4",
+      "id": "web3-spa-04",
+      "titulo": "Os produtos chegam à interface",
+      "pagina": "web3-spa-4.html",
+      "percurso": "spa",
+      "numero": 4,
+      "horas": 8
+    },
+    {
+      "chave": "s5",
+      "id": "web3-spa-05",
+      "titulo": "Encontrar sem perder a lista",
+      "pagina": "web3-spa-5.html",
+      "percurso": "spa",
+      "numero": 5,
+      "horas": 4
+    },
+    {
+      "chave": "s6",
+      "id": "web3-spa-06",
+      "titulo": "O balcão ganha caminhos",
+      "pagina": "web3-spa-6.html",
+      "percurso": "spa",
+      "numero": 6,
+      "horas": 6
+    },
+    {
+      "chave": "s7",
+      "id": "web3-spa-07",
+      "titulo": "Entrar não basta para alterar",
+      "pagina": "web3-spa-7.html",
+      "percurso": "spa",
+      "numero": 7,
+      "horas": 8
+    },
+    {
+      "chave": "s8",
+      "id": "web3-spa-08",
+      "titulo": "A equipe informa o prazo",
+      "pagina": "web3-spa-8.html",
+      "percurso": "spa",
+      "numero": 8,
+      "horas": 6
+    },
+    {
+      "chave": "s9",
+      "id": "web3-spa-09",
+      "titulo": "Rascunho não é publicação",
+      "pagina": "web3-spa-9.html",
+      "percurso": "spa",
+      "numero": 9,
+      "horas": 8
+    },
+    {
+      "chave": "s10",
+      "id": "web3-spa-10",
+      "titulo": "Outra pasta também precisa funcionar",
+      "pagina": "web3-spa-10.html",
+      "percurso": "spa",
+      "numero": 10,
+      "horas": 8
+    },
+    {
+      "chave": "b1",
+      "id": "web3-baas-01",
+      "titulo": "A mesma informação em outro serviço",
+      "pagina": "web3-baas-1.html",
+      "percurso": "baas",
+      "numero": 1,
+      "horas": 8
+    },
+    {
+      "chave": "b2",
+      "id": "web3-baas-02",
+      "titulo": "Uma identidade para a equipe",
+      "pagina": "web3-baas-2.html",
+      "percurso": "baas",
+      "numero": 2,
+      "horas": 6
+    },
+    {
+      "chave": "b3",
+      "id": "web3-baas-03",
+      "titulo": "A regra fica no serviço",
+      "pagina": "web3-baas-3.html",
+      "percurso": "baas",
+      "numero": 3,
+      "horas": 6
+    },
+    {
+      "chave": "b4",
+      "id": "web3-baas-04",
+      "titulo": "A gravação precisa ser confirmada",
+      "pagina": "web3-baas-4.html",
+      "percurso": "baas",
+      "numero": 4,
+      "horas": 8
+    },
+    {
+      "chave": "b5",
+      "id": "web3-baas-05",
+      "titulo": "O balcão acompanha a mudança",
+      "pagina": "web3-baas-5.html",
+      "percurso": "baas",
+      "numero": 5,
+      "horas": 6
+    },
+    {
+      "chave": "b6",
+      "id": "web3-baas-06",
+      "titulo": "A foto tem um lugar e uma referência",
+      "pagina": "web3-baas-6.html",
+      "percurso": "baas",
+      "numero": 6,
+      "horas": 10
+    },
+    {
+      "chave": "b7",
+      "id": "web3-baas-07",
+      "titulo": "Os arquivos não levam os serviços junto",
+      "pagina": "web3-baas-7.html",
+      "percurso": "baas",
+      "numero": 7,
+      "horas": 6
+    },
+    {
+      "chave": "b8",
+      "id": "web3-baas-08",
+      "titulo": "Uma operação no ambiente confiável",
+      "pagina": "web3-baas-8.html",
+      "percurso": "baas",
+      "numero": 8,
+      "horas": 10
+    },
+    {
+      "chave": "b9",
+      "id": "web3-baas-09",
+      "titulo": "Aviso local não é push remoto",
+      "pagina": "web3-baas-9.html",
+      "percurso": "baas",
+      "numero": 9,
+      "horas": 8
+    },
+    {
+      "chave": "b10",
+      "id": "web3-baas-10",
+      "titulo": "Um rascunho ainda pede revisão",
+      "pagina": "web3-baas-10.html",
+      "percurso": "baas",
+      "numero": 10,
+      "horas": 12
+    },
+    {
+      "chave": "entrega",
+      "id": "web3-entrega-percurso",
+      "titulo": "O Café pode ser conferido por outra pessoa",
+      "pagina": "web3-entrega.html",
+      "horas": 8
+    }
+  ],
+  "horas": {
+    "comum_publicado": 42,
+    "observacao": "Estimativas de estudo a validar; não equivalem às 80 horas-aula oficiais do plano 612. Recursos em nuvem, push e IA reais dependem de ambiente e homologação separados."
+  }
+}

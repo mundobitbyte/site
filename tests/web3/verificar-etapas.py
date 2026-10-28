@@ -1,6 +1,6 @@
 """Reconstrói cada etapa em pasta limpa; não confunde build com teste de navegador."""
 from pathlib import Path
-import argparse, importlib.util, os, shutil, subprocess, tempfile
+import argparse, importlib.util, os, shutil, subprocess, tempfile, socket, time
 
 ROOT=Path(__file__).resolve().parents[2]
 spec=importlib.util.spec_from_file_location('etapas',ROOT/'scripts/web3_etapas.py')
@@ -12,7 +12,9 @@ def executar(cmd,cwd):
     return r.stdout
 
 def conferir(codigo,app,dependencias,nativo):
-    for p,b in mod.pacote(codigo).items():
+    pacote=mod.pacote(codigo)
+    assert len({p.casefold() for p in pacote})==len(pacote), f'{codigo}: nomes de arquivo colidem no Windows'
+    for p,b in pacote.items():
         arquivo=app/p;arquivo.parent.mkdir(parents=True,exist_ok=True);arquivo.write_bytes(b)
     if codigo.startswith('s'):
         html=(app/'public/balcao.php').read_text()
@@ -45,8 +47,24 @@ def conferir(codigo,app,dependencias,nativo):
             executar(['composer','dump-autoload','--no-scripts','--no-interaction'],app)
             executar(['php','artisan','key:generate'],app)
             executar(['php','artisan','migrate','--force'],app)
+            if codigo=='m6':
+                controller=app/'app/Http/Controllers/EnderecoController.php';final=controller.read_bytes();controller.unlink()
+                executar(['php','artisan','make:controller','EnderecoController'],app)
+                assert controller.exists() and 'class EnderecoController' in controller.read_text()
+                controller.write_bytes(final)
             if int(codigo[1:])>=5:executar(['php','artisan','cafe:importar-cardapio'],app)
             if list((app/'tests/Feature').glob('*Test.php')):executar(['vendor/bin/phpunit'],app)
+        if int(codigo[1:])>=8:
+            servidor=subprocess.Popen(['php','-S','localhost:9001','apoio/soap/servidor.php'],cwd=app,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+            try:
+                for _ in range(80):
+                    try:
+                        with socket.create_connection(('localhost',9001),timeout=.2):break
+                    except OSError:time.sleep(.05)
+                else:raise AssertionError('O servidor SOAP não iniciou')
+                saida=executar(['php','apoio/soap/cliente.php'],app)
+                assert 'REQUISIÇÃO XML' in saida and 'RESPOSTA XML' in saida and 'mensagemTempo' in saida
+            finally:servidor.terminate();servidor.wait(timeout=10)
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('dependencias',type=Path);p.add_argument('--sem-php',action='store_true');p.add_argument('--somente',nargs='*');args=p.parse_args()

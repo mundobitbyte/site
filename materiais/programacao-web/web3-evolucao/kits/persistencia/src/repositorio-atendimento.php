@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/banco.php";
-require_once __DIR__ . "/Atendimento.php";
+require_once __DIR__ . "/AvisoAtendimento.php";
 
 function prepararAtendimento(PDO $pdo): void
 {
@@ -23,7 +23,7 @@ function lerConfiguracaoAtendimento(PDO $pdo): array
         "tempoEstimado" => $linha["minutos"] === null ? null : (int) $linha["minutos"]];
 }
 
-function conferirConfiguracaoAtendimento(mixed $dados): Atendimento
+function conferirConfiguracaoAtendimento(mixed $dados): AvisoAtendimento
 {
     if (!is_array($dados) || array_is_list($dados) ||
         array_diff(array_keys($dados), ["nomeNegocio", "pedidosAbertos", "tempoEstimado"]) ||
@@ -33,10 +33,10 @@ function conferirConfiguracaoAtendimento(mixed $dados): Atendimento
         ($dados["tempoEstimado"] !== null && !is_int($dados["tempoEstimado"]))) {
         throw new InvalidArgumentException("Confira os três campos e seus tipos.");
     }
-    return new Atendimento(trim($dados["nomeNegocio"]), $dados["pedidosAbertos"], $dados["tempoEstimado"]);
+    return new AvisoAtendimento(trim($dados["nomeNegocio"]), $dados["pedidosAbertos"], $dados["tempoEstimado"]);
 }
 
-function salvarConfiguracaoAtendimento(PDO $pdo, Atendimento $atendimento): void
+function salvarConfiguracaoAtendimento(PDO $pdo, AvisoAtendimento $atendimento): void
 {
     $consulta = $pdo->prepare("UPDATE atendimento SET nome = :nome, aberto = :aberto, minutos = :minutos WHERE id = 1");
     $consulta->bindValue(":nome", $atendimento->nomeNegocio);

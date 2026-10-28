@@ -20,7 +20,7 @@ if (($_SERVER["REQUEST_METHOD"] ?? "GET") === "POST") {
                 ($minutos !== "" && !preg_match('/^(0|[1-9][0-9]{0,2})$/D', $minutos))) {
                 throw new InvalidArgumentException("Confira os campos.");
             }
-            $atendimento = new Atendimento(trim($nome), $aberto === "1", $minutos === "" ? null : (int) $minutos);
+            $atendimento = new AvisoAtendimento(trim($nome), $aberto === "1", $minutos === "" ? null : (int) $minutos);
             salvarConfiguracaoAtendimento($pdo, $atendimento);
             header("Location: atendimento.php?salvo=1", true, 303);
             exit;

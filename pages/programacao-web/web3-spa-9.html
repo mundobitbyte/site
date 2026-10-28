@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: Rascunho não é publicação. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-spa-9.html">
+<title>Web III — Rascunho não é publicação | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · Rascunho não é publicação">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Interface com React</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Interface com React</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link" href="web3-spa-1.html#capitulo-2">Uma área do balcão ganha componentes</a><a class="chapter-link" href="web3-spa-2.html#capitulo-2">Abrir uma orientação muda o estado</a><a class="chapter-link" href="web3-spa-3.html#capitulo-2">O componente consulta o atendimento</a><a class="chapter-link" href="web3-spa-4.html#capitulo-2">Os produtos chegam à interface</a><a class="chapter-link" href="web3-spa-5.html#capitulo-2">Encontrar sem perder a lista</a><a class="chapter-link" href="web3-spa-6.html#capitulo-2">O balcão ganha caminhos</a><a class="chapter-link" href="web3-spa-7.html#capitulo-2">Entrar não basta para alterar</a><a class="chapter-link" href="web3-spa-8.html#capitulo-2">A equipe informa o prazo</a><a class="chapter-link active" aria-current="page" href="web3-spa-9.html#capitulo-2">Rascunho não é publicação</a><a class="chapter-link" href="web3-spa-10.html#capitulo-2">Outra pasta também precisa funcionar</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Interface com React</span><h2 id="titulo-aula" tabindex="-1">Rascunho não é publicação</h2><p class="chapter-meta">Café Aurora · cerca de 8 horas-aula de estudo, prática e verificação</p><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>Marina está revisando a descrição do café coado. Ainda não quer que o cliente veja o texto: precisa conferir os ingredientes com a equipe. Se todo “Salvar” publicasse imediatamente, não haveria espaço para essa revisão.</p>
+<p>Vamos separar edição local, rascunho salvo e publicação confirmada. São estados diferentes. A interface precisa deixar claro o que já chegou ao servidor e o que o visitante consegue consultar.</p>
+<h3 id="passo-1">Salve sem publicar</h3>
+<p>Após o build, entre como operador e localize a descrição do café. Escreva uma frase com 10 a 400 caracteres e use “Salvar rascunho”. Em uma janela sem login, abra o cardápio: a descrição pública deve continuar igual.</p>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/componentes/EditorProduto.tsx</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/componentes/EditorProduto.tsx">import { useState } from &quot;react&quot;;
+import type { Produto, Sessao } from &quot;../servicos/api.js&quot;;
+import { gravarProduto } from &quot;../servicos/api.js&quot;;
+import { conferirDescricao } from &quot;../regras.js&quot;;
+
+export function EditorProduto({ produto, sessao, aoSalvar }: { produto: Produto; sessao: Sessao; aoSalvar: () =&gt; Promise&lt;void&gt; }) {
+  const [texto, setTexto] = useState(produto.rascunho ?? produto.descricao);
+  const [aviso, setAviso] = useState(&quot;&quot;);
+  const [ocupado, setOcupado] = useState(false);
+  async function salvar(acao: &quot;rascunho&quot; | &quot;publicar&quot;) {
+    setOcupado(true);
+    try {
+      const descricao = conferirDescricao(texto);
+      await gravarProduto(sessao, produto.id, descricao, acao);
+      setTexto(descricao);
+      await aoSalvar();
+      setAviso(acao === &quot;publicar&quot; ? &quot;Descrição publicada após confirmação.&quot; : &quot;Rascunho salvo. O visitante ainda vê a descrição anterior.&quot;);
+    } catch (e) { setAviso(e instanceof Error ? e.message : &quot;Não foi possível salvar.&quot;); }
+    finally { setOcupado(false); }
+  }
+  return &lt;section&gt;&lt;h3&gt;Editar {produto.nome}&lt;/h3&gt;
+    &lt;p&gt;&lt;label htmlFor={`descricao-${produto.id}`}&gt;Descrição&lt;/label&gt;&lt;textarea id={`descricao-${produto.id}`} value={texto} maxLength={400} onChange={e =&gt; setTexto(e.target.value)} /&gt;&lt;/p&gt;
+    &lt;button disabled={ocupado} onClick={() =&gt; void salvar(&quot;rascunho&quot;)}&gt;Salvar rascunho&lt;/button&gt;{&quot; &quot;}
+    &lt;button disabled={ocupado || produto.rascunho == null || texto !== produto.rascunho} onClick={() =&gt; void salvar(&quot;publicar&quot;)}&gt;Publicar rascunho salvo&lt;/button&gt;{&quot; &quot;}
+    &lt;button disabled={ocupado} onClick={() =&gt; { setTexto(produto.rascunho ?? produto.descricao); setAviso(&quot;Edição local cancelada.&quot;); }}&gt;Cancelar edição local&lt;/button&gt;
+    &lt;p role=&quot;status&quot;&gt;{aviso}&lt;/p&gt;
+  &lt;/section&gt;;
+}</code></pre></details>
+<p>O componente começa com o rascunho que já existe ou, na ausência dele, com a descrição pública. O texto digitado fica no estado local. <code>conferirDescricao</code> retira espaços nas extremidades e confere o tamanho antes do envio.</p>
+<p>A operação informa ao serviço qual ação está sendo solicitada: <code>rascunho</code> ou <code>publicar</code>. O serviço valida identidade, token, produto e descrição. Para o visitante, a resposta pública não deve incluir o rascunho privado.</p>
+<h3 id="passo-2">Publique o texto que foi conferido</h3>
+<p>Depois da confirmação do rascunho, o botão “Publicar rascunho salvo” fica disponível. Se você alterar o texto outra vez, precisa salvar essa revisão antes de publicá-la. Isso evita publicar por engano uma versão diferente daquela que a equipe acabou de conferir.</p>
+<p>Use o botão de publicação e consulte novamente o cardápio na janela de visitante. A nova descrição deve aparecer. O endereço antigo <code>/cardapio.php</code> já leva à área que consulta o banco atual; não mantemos o catálogo preso ao JSON inicial.</p>
+<p>Ao atualizar a lista após uma gravação, <code>carregarProdutos(true)</code> preserva os componentes até chegar a nova resposta. Esvaziar a lista nesse momento desmontaria o editor e poderia apagar o texto em que a pessoa está trabalhando. A identificação estável do produto também participa dessa continuidade.</p>
+<h3 id="passo-3">Cancelamento e falha também precisam ser claros</h3>
+<p>Altere um texto e use “Cancelar edição local”. O componente volta ao último rascunho ou à descrição recebida; não apaga uma publicação no banco. Depois tente salvar uma frase curta demais. A interface precisa recusar e preservar a possibilidade de corrigir.</p>
+<p>Se a gravação falhar por indisponibilidade, não mostre “publicado”. Restaure a conexão, consulte o estado e repita a ação conscientemente. A interface auxilia a equipe; a confirmação continua vindo do servidor.</p>
+<h3 id="checkpoint">Qual versão o cliente vê agora?</h3>
+<p>Demonstre rascunho privado, confirmação separada de publicação, cancelamento local e correção de texto inválido. Mostre o resultado como operador e como visitante. Falta reunir verificações que possam ser repetidas e preparar a aplicação em outra pasta.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-spa-etapa9.zip" download>Baixar referência da etapa 9</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>cliente-balcao/src/componentes/EditorProduto.tsx</code></li><li><code>cliente-balcao/src/componentes/Operador.tsx</code></li></ul></details></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-spa-8.html#capitulo-2">← A equipe informa o prazo</a><a href="web3-spa-10.html#capitulo-2">Outra pasta também precisa funcionar →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

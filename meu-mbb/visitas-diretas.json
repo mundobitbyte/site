@@ -2379,5 +2379,399 @@
       "checkpoint-cap2-aula7",
       "continuar-cap2"
     ]
+  },
+  "pages/programacao-web/web3-percursos.html": {
+    "conteudo_id": "web3-ponte-percursos",
+    "titulo": "Web III — O botão consulta. Quem informa o aviso?",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-percursos.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "qual-caminho-seguir",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-mvc-1.html": {
+    "conteudo_id": "web3-mvc-01",
+    "titulo": "Web III — O aviso ganha um objeto",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-mvc-1.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-mvc-2.html": {
+    "conteudo_id": "web3-mvc-02",
+    "titulo": "Web III — As mesmas telas, outra organização",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-mvc-2.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-mvc-3.html": {
+    "conteudo_id": "web3-mvc-03",
+    "titulo": "Web III — O prazo precisa permanecer",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-mvc-3.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-mvc-4.html": {
+    "conteudo_id": "web3-mvc-04",
+    "titulo": "Web III — Quem pode mudar o aviso?",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-mvc-4.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-mvc-5.html": {
+    "conteudo_id": "web3-mvc-05",
+    "titulo": "Web III — O cardápio tem relações",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-mvc-5.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-mvc-6.html": {
+    "conteudo_id": "web3-mvc-06",
+    "titulo": "Web III — Uma consulta atravessa serviços",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-mvc-6.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-mvc-7.html": {
+    "conteudo_id": "web3-mvc-07",
+    "titulo": "Web III — O Café cabe na rotina do celular",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-mvc-7.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-mvc-8.html": {
+    "conteudo_id": "web3-mvc-08",
+    "titulo": "Web III — Outro programa pede o mesmo aviso",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-mvc-8.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-mvc-9.html": {
+    "conteudo_id": "web3-mvc-09",
+    "titulo": "Web III — O aviso muda de idioma",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-mvc-9.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-entrega.html": {
+    "conteudo_id": "web3-entrega-percurso",
+    "titulo": "Web III — O Café pode ser conferido por outra pessoa",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-entrega.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-spa-1.html": {
+    "conteudo_id": "web3-spa-01",
+    "titulo": "Web III — Uma área do balcão ganha componentes",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-spa-1.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-spa-2.html": {
+    "conteudo_id": "web3-spa-02",
+    "titulo": "Web III — Abrir uma orientação muda o estado",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-spa-2.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-spa-3.html": {
+    "conteudo_id": "web3-spa-03",
+    "titulo": "Web III — O componente consulta o atendimento",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-spa-3.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-spa-4.html": {
+    "conteudo_id": "web3-spa-04",
+    "titulo": "Web III — Os produtos chegam à interface",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-spa-4.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-spa-5.html": {
+    "conteudo_id": "web3-spa-05",
+    "titulo": "Web III — Encontrar sem perder a lista",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-spa-5.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-spa-6.html": {
+    "conteudo_id": "web3-spa-06",
+    "titulo": "Web III — O balcão ganha caminhos",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-spa-6.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-spa-7.html": {
+    "conteudo_id": "web3-spa-07",
+    "titulo": "Web III — Entrar não basta para alterar",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-spa-7.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-spa-8.html": {
+    "conteudo_id": "web3-spa-08",
+    "titulo": "Web III — A equipe informa o prazo",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-spa-8.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-spa-9.html": {
+    "conteudo_id": "web3-spa-09",
+    "titulo": "Web III — Rascunho não é publicação",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-spa-9.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-spa-10.html": {
+    "conteudo_id": "web3-spa-10",
+    "titulo": "Web III — Outra pasta também precisa funcionar",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-spa-10.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-baas-1.html": {
+    "conteudo_id": "web3-baas-01",
+    "titulo": "Web III — A mesma informação em outro serviço",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-baas-1.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-baas-2.html": {
+    "conteudo_id": "web3-baas-02",
+    "titulo": "Web III — Uma identidade para a equipe",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-baas-2.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-baas-3.html": {
+    "conteudo_id": "web3-baas-03",
+    "titulo": "Web III — A regra fica no serviço",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-baas-3.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-baas-4.html": {
+    "conteudo_id": "web3-baas-04",
+    "titulo": "Web III — A gravação precisa ser confirmada",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-baas-4.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-baas-5.html": {
+    "conteudo_id": "web3-baas-05",
+    "titulo": "Web III — O balcão acompanha a mudança",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-baas-5.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-baas-6.html": {
+    "conteudo_id": "web3-baas-06",
+    "titulo": "Web III — A foto tem um lugar e uma referência",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-baas-6.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-baas-7.html": {
+    "conteudo_id": "web3-baas-07",
+    "titulo": "Web III — Os arquivos não levam os serviços junto",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-baas-7.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-baas-8.html": {
+    "conteudo_id": "web3-baas-08",
+    "titulo": "Web III — Uma operação no ambiente confiável",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-baas-8.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-baas-9.html": {
+    "conteudo_id": "web3-baas-09",
+    "titulo": "Web III — Aviso local não é push remoto",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-baas-9.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
+  },
+  "pages/programacao-web/web3-baas-10.html": {
+    "conteudo_id": "web3-baas-10",
+    "titulo": "Web III — Um rascunho ainda pede revisão",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/programacao-web/web3-baas-10.html",
+    "ancoras": [
+      "titulo-aula",
+      "passo-1",
+      "passo-2",
+      "passo-3",
+      "checkpoint"
+    ]
   }
 }

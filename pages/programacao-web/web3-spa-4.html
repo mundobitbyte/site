@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: Os produtos chegam à interface. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-spa-4.html">
+<title>Web III — Os produtos chegam à interface | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · Os produtos chegam à interface">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Interface com React</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Interface com React</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link" href="web3-spa-1.html#capitulo-2">Uma área do balcão ganha componentes</a><a class="chapter-link" href="web3-spa-2.html#capitulo-2">Abrir uma orientação muda o estado</a><a class="chapter-link" href="web3-spa-3.html#capitulo-2">O componente consulta o atendimento</a><a class="chapter-link active" aria-current="page" href="web3-spa-4.html#capitulo-2">Os produtos chegam à interface</a><a class="chapter-link" href="web3-spa-5.html#capitulo-2">Encontrar sem perder a lista</a><a class="chapter-link" href="web3-spa-6.html#capitulo-2">O balcão ganha caminhos</a><a class="chapter-link" href="web3-spa-7.html#capitulo-2">Entrar não basta para alterar</a><a class="chapter-link" href="web3-spa-8.html#capitulo-2">A equipe informa o prazo</a><a class="chapter-link" href="web3-spa-9.html#capitulo-2">Rascunho não é publicação</a><a class="chapter-link" href="web3-spa-10.html#capitulo-2">Outra pasta também precisa funcionar</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Interface com React</span><h2 id="titulo-aula" tabindex="-1">Os produtos chegam à interface</h2><p class="chapter-meta">Café Aurora · cerca de 8 horas-aula de estudo, prática e verificação</p><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>O cliente confirmou o atendimento e agora quer saber o que há no cardápio. Os produtos já existem no projeto. Vamos mostrá-los no balcão sem criar outro conjunto de nomes, fotos ou preços.</p>
+<p>Neste percurso, o foco é construir a interface. Os serviços PHP de apoio vêm no checkpoint e guardam os dados em SQLite. Você vai preparar esses serviços, conhecer seu contrato e usá-los; não precisa desenvolver antes o percurso Laravel.</p>
+<h3 id="passo-1">Prepare a fonte da lista uma vez</h3>
+<p>Acrescente os arquivos novos da etapa à sua aplicação e preserve o banco anterior. Na raiz, execute os preparos abaixo. Eles criam o que ainda não existe; não devem apagar mensagens ou substituir produtos editados:</p>
+<pre class="code-block"><code>php src/inicializar-banco.php
+php src/inicializar-atendimento.php
+php src/inicializar-cardapio.php</code></pre>
+<p>Reinicie o servidor PHP da aplicação se necessário e abra <code>http://localhost:8000/api/cardapio.php</code>. A lista vem dentro de <code>produtos</code>. Cada produto oferece identificador, nome, categoria, preço em centavos, imagem, texto alternativo, descrição e disponibilidade.</p>
+<p>O atendimento também passa a ser lido do banco preparado, em vez de exigir a edição do prazo no arquivo. Para os testes desta etapa, a referência começa com pedidos abertos e 30 minutos. A edição autorizada aparecerá adiante.</p>
+<h3 id="passo-2">De uma lista de dados para uma lista de componentes</h3>
+<p>A função <code>lerProdutos</code> confere cada item recebido antes de devolver um <code>Produto[]</code>. O tipo TypeScript ajuda o desenvolvimento, mas é essa conferência que recusa uma estrutura inesperada em tempo de execução.</p>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/servicos/api.ts</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/servicos/api.ts">export interface Produto {
+  id: string;
+  nome: string;
+  categoria: string;
+  precoCentavos: number;
+  imagem: string;
+  alt: string;
+  descricao: string;
+  disponivel: boolean;
+  rascunho?: string | null;
+}
+export interface Sessao { autenticado: boolean; csrfToken: string }
+export interface Configuracao { nomeNegocio: string; pedidosAbertos: boolean; tempoEstimado: number | null }
+
+function objeto(v: unknown): v is Record&lt;string, unknown&gt; {
+  return typeof v === &quot;object&quot; &amp;&amp; v !== null &amp;&amp; !Array.isArray(v);
+}
+
+export async function pedir(caminho: string, opcoes: RequestInit = {}): Promise&lt;unknown&gt; {
+  const controlador = new AbortController();
+  const limite = setTimeout(() =&gt; controlador.abort(), 8000);
+  try {
+    const resposta = await fetch(caminho, { ...opcoes, credentials: &quot;same-origin&quot;, cache: &quot;no-store&quot;, signal: controlador.signal });
+    const tipo = resposta.headers.get(&quot;Content-Type&quot;);
+    if (tipo === null || tipo.split(&quot;;&quot;)[0].trim().toLowerCase() !== &quot;application/json&quot;) throw new Error(&quot;O serviço não devolveu JSON.&quot;);
+    const dados: unknown = await resposta.json();
+    if (!resposta.ok) throw new Error(objeto(dados) &amp;&amp; typeof dados.erro === &quot;string&quot; ? dados.erro : `Falha HTTP ${resposta.status}.`);
+    return dados;
+  } finally { clearTimeout(limite); }
+}
+
+export async function consultarSessao(): Promise&lt;Sessao&gt; {
+  const d = await pedir(&quot;api/sessao.php&quot;);
+  if (!objeto(d) || typeof d.autenticado !== &quot;boolean&quot; || typeof d.csrfToken !== &quot;string&quot;) throw new Error(&quot;Resposta de sessão inválida.&quot;);
+  return { autenticado: d.autenticado, csrfToken: d.csrfToken };
+}
+
+export async function mudarSessao(sessao: Sessao, dados: { acao: &quot;entrar&quot; | &quot;sair&quot;; usuario?: string; senha?: string }): Promise&lt;Sessao&gt; {
+  await pedir(&quot;api/sessao.php&quot;, { method: &quot;POST&quot;, headers: { &quot;Content-Type&quot;: &quot;application/json&quot;, &quot;X-CSRF-Token&quot;: sessao.csrfToken }, body: JSON.stringify(dados) });
+  return consultarSessao();
+}
+
+export async function lerProdutos(): Promise&lt;Produto[]&gt; {
+  const d = await pedir(&quot;api/cardapio.php&quot;);
+  if (!objeto(d) || !Array.isArray(d.produtos)) throw new Error(&quot;Lista de produtos inválida.&quot;);
+  return d.produtos.map((p: unknown) =&gt; {
+    if (!objeto(p) || typeof p.id !== &quot;string&quot; || typeof p.nome !== &quot;string&quot; || typeof p.categoria !== &quot;string&quot; || typeof p.imagem !== &quot;string&quot; || typeof p.alt !== &quot;string&quot; || typeof p.descricao !== &quot;string&quot; ||
+        typeof p.precoCentavos !== &quot;number&quot; || !Number.isSafeInteger(p.precoCentavos) || p.precoCentavos &lt; 0 || typeof p.disponivel !== &quot;boolean&quot;) throw new Error(&quot;Produto inválido.&quot;);
+    if (typeof p.imagem !== &quot;string&quot; || !/^[a-zA-Z0-9_-]+\.webp$/.test(p.imagem)) throw new Error(&quot;Imagem de produto inválida.&quot;);
+    if (!(p.rascunho === undefined || p.rascunho === null || typeof p.rascunho === &quot;string&quot;)) throw new Error(&quot;Rascunho inválido.&quot;);
+    return { id: p.id, nome: p.nome, categoria: p.categoria, precoCentavos: p.precoCentavos,
+      imagem: p.imagem, alt: p.alt, descricao: p.descricao, disponivel: p.disponivel, rascunho: p.rascunho };
+  });
+}
+
+export async function gravarProduto(sessao: Sessao, id: string, descricao: string, acao: &quot;rascunho&quot; | &quot;publicar&quot;): Promise&lt;void&gt; {
+  await pedir(&quot;api/cardapio.php&quot;, { method: &quot;POST&quot;, headers: { &quot;Content-Type&quot;: &quot;application/json&quot;, &quot;X-CSRF-Token&quot;: sessao.csrfToken }, body: JSON.stringify({ id, descricao, acao }) });
+}
+
+export async function lerConfiguracao(): Promise&lt;Configuracao&gt; {
+  const d = await pedir(&quot;api/configuracao-atendimento.php&quot;);
+  const a = objeto(d) ? d.atendimento : null;
+  if (!objeto(a) || typeof a.nomeNegocio !== &quot;string&quot; || typeof a.pedidosAbertos !== &quot;boolean&quot; ||
+      !(a.tempoEstimado === null || typeof a.tempoEstimado === &quot;number&quot; &amp;&amp; Number.isInteger(a.tempoEstimado))) throw new Error(&quot;Configuração inválida.&quot;);
+  return { nomeNegocio: a.nomeNegocio, pedidosAbertos: a.pedidosAbertos, tempoEstimado: a.tempoEstimado };
+}
+
+export async function gravarConfiguracao(sessao: Sessao, atendimento: Configuracao): Promise&lt;void&gt; {
+  await pedir(&quot;api/configuracao-atendimento.php&quot;, { method: &quot;POST&quot;, headers: { &quot;Content-Type&quot;: &quot;application/json&quot;, &quot;X-CSRF-Token&quot;: sessao.csrfToken }, body: JSON.stringify(atendimento) });
+}</code></pre></details>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/componentes/Cardapio.tsx</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/componentes/Cardapio.tsx">import type { Produto } from &quot;../servicos/api.js&quot;;
+
+
+interface Props { produtos: Produto[]; busca: string; categoria: string; aoBuscar: (v: string) =&gt; void; aoCategorizar: (v: string) =&gt; void }
+
+export function Cardapio({ produtos, busca, categoria, aoBuscar, aoCategorizar }: Props) {
+  const filtrados = produtos;
+  return &lt;section aria-labelledby=&quot;titulo-cardapio&quot;&gt;&lt;h2 id=&quot;titulo-cardapio&quot;&gt;Cardápio do Café&lt;/h2&gt;
+    &lt;p role=&quot;status&quot;&gt;{filtrados.length} produto(s) encontrado(s).&lt;/p&gt;
+    &lt;div className=&quot;produtos&quot;&gt;{filtrados.map(p =&gt; &lt;article key={p.id}&gt;
+      &lt;img src={`img/${p.imagem}`} alt={p.alt} width=&quot;240&quot; height=&quot;160&quot; /&gt;
+      &lt;h3&gt;{p.nome}&lt;/h3&gt;&lt;p&gt;{p.descricao}&lt;/p&gt;
+      &lt;p&gt;{new Intl.NumberFormat(&quot;pt-BR&quot;, { style: &quot;currency&quot;, currency: &quot;BRL&quot; }).format(p.precoCentavos / 100)}&lt;/p&gt;
+      {!p.disponivel &amp;&amp; &lt;p&gt;Indisponível neste momento.&lt;/p&gt;}
+    &lt;/article&gt;)}&lt;/div&gt;
+  &lt;/section&gt;;
+}</code></pre></details>
+<p><code>map</code> transforma cada produto em um artigo. A propriedade <code>key</code> usa seu identificador estável para que React acompanhe os itens; a posição na lista não identifica um produto. As fotos e os textos alternativos vêm do mesmo Café. O preço inteiro em centavos é dividido por 100 apenas na formatação em reais.</p>
+<h3 id="passo-3">Busque e reconheça os três produtos</h3>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/App.tsx</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/App.tsx">import {useState,useRef} from &quot;react&quot;;
+import {obterAtendimento} from &quot;./atendimento.js&quot;;
+import type {Atendimento as Dados} from &quot;./atendimento.js&quot;;
+import {Atendimento} from &quot;./componentes/Atendimento.js&quot;;
+import {Cardapio} from &quot;./componentes/Cardapio.js&quot;;
+import {lerProdutos} from &quot;./servicos/api.js&quot;;
+import type {Produto} from &quot;./servicos/api.js&quot;;
+export function App(){
+ const [produtos,setProdutos]=useState&lt;Produto[]&gt;([]);
+ const [avisoProdutos,setAvisoProdutos]=useState(&quot;&quot;);
+
+ const [dados,setDados]=useState&lt;Dados|null&gt;(null);
+ const [consultando,setConsultando]=useState(false);
+ const [aviso,setAviso]=useState(&quot;Consulte para confirmar o atendimento.&quot;);
+ const consultaAtiva=useRef(false);
+  async function consultar() {
+    if (consultaAtiva.current) return;
+    const foco = document.activeElement;
+    consultaAtiva.current = true; setConsultando(true); setDados(null); setAviso(&quot;Consultando o atendimento…&quot;);
+    try { setDados(await obterAtendimento()); setAviso(&quot;Atendimento consultado agora.&quot;); }
+    catch { setAviso(&quot;Não foi possível consultar. Tente novamente.&quot;); }
+    finally {
+      consultaAtiva.current = false; setConsultando(false);
+      requestAnimationFrame(() =&gt; { if (foco instanceof HTMLButtonElement &amp;&amp; document.activeElement === document.body) foco.focus({ preventScroll: true }); });
+    }
+  }
+
+ async function carregarProdutos(){setProdutos([]);setAvisoProdutos(&quot;Consultando…&quot;);try{setProdutos(await lerProdutos());setAvisoProdutos(&quot;&quot;);}catch{setAvisoProdutos(&quot;Cardápio não confirmado. Tente novamente.&quot;);}}
+ return &lt;&gt;&lt;h1&gt;Café Aurora · Balcão&lt;/h1&gt;&lt;Atendimento dados={dados} consultando={consultando} aviso={aviso} aoConsultar={()=&gt;void consultar()}/&gt;&lt;button onClick={()=&gt;void carregarProdutos()}&gt;Consultar cardápio&lt;/button&gt;&lt;p role=&quot;status&quot;&gt;{avisoProdutos}&lt;/p&gt;&lt;Cardapio produtos={produtos} busca=&quot;&quot; categoria=&quot;todas&quot; aoBuscar={()=&gt;{}} aoCategorizar={()=&gt;{}}/&gt;&lt;/&gt;;
+}</code></pre></details>
+<p>Faça o build, abra o balcão e use “Consultar cardápio”. Reconheça os três produtos conhecidos. Em outra aba, abra a API e compare valores. Não basta o componente aparecer: ele precisa estar ligado à lista que o servidor realmente devolve.</p>
+<p>Interrompa o servidor PHP apenas depois de a página carregar e tente consultar outra vez. A orientação de falha deve aparecer sem inventar um cardápio atual. Reinicie o servidor e confirme a recuperação.</p>
+<h3 id="checkpoint">A lista tem uma origem identificável?</h3>
+<p>Explique a diferença entre a interface <code>Produto</code>, a resposta recebida e o artigo mostrado. Confira imagens, preços e disponibilidade. A próxima melhoria será encontrar um produto nessa lista, sem pedir outra lista inteira a cada tecla.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-spa-etapa4.zip" download>Baixar referência da etapa 4</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>cliente-balcao/src/App.tsx</code></li><li><code>cliente-balcao/src/componentes/Cardapio.tsx</code></li><li><code>cliente-balcao/src/servicos/api.ts</code></li><li><code>public/admin/atendimento.php</code></li><li><code>public/api/cardapio.php</code></li><li><code>public/api/configuracao-atendimento.php</code></li><li><code>public/api/sessao.php</code></li><li><code>public/index.php</code></li><li><code>src/AvisoAtendimento.php</code></li><li><code>src/atendimento.php</code></li><li><code>src/inicializar-atendimento.php</code></li><li><code>src/inicializar-cardapio.php</code></li><li><code>src/repositorio-atendimento.php</code></li><li><code>src/repositorio-cardapio.php</code></li><li><code>tests/atendimento-test.php</code></li></ul></details></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-spa-3.html#capitulo-2">← O componente consulta o atendimento</a><a href="web3-spa-5.html#capitulo-2">Encontrar sem perder a lista →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: A equipe informa o prazo. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-spa-8.html">
+<title>Web III — A equipe informa o prazo | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · A equipe informa o prazo">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Interface com React</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Interface com React</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link" href="web3-spa-1.html#capitulo-2">Uma área do balcão ganha componentes</a><a class="chapter-link" href="web3-spa-2.html#capitulo-2">Abrir uma orientação muda o estado</a><a class="chapter-link" href="web3-spa-3.html#capitulo-2">O componente consulta o atendimento</a><a class="chapter-link" href="web3-spa-4.html#capitulo-2">Os produtos chegam à interface</a><a class="chapter-link" href="web3-spa-5.html#capitulo-2">Encontrar sem perder a lista</a><a class="chapter-link" href="web3-spa-6.html#capitulo-2">O balcão ganha caminhos</a><a class="chapter-link" href="web3-spa-7.html#capitulo-2">Entrar não basta para alterar</a><a class="chapter-link active" aria-current="page" href="web3-spa-8.html#capitulo-2">A equipe informa o prazo</a><a class="chapter-link" href="web3-spa-9.html#capitulo-2">Rascunho não é publicação</a><a class="chapter-link" href="web3-spa-10.html#capitulo-2">Outra pasta também precisa funcionar</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Interface com React</span><h2 id="titulo-aula" tabindex="-1">A equipe informa o prazo</h2><p class="chapter-meta">Café Aurora · cerca de 6 horas-aula de estudo, prática e verificação</p><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>A entrada funciona, mas Marina ainda não consegue informar o novo prazo. Vamos acrescentar o formulário de atendimento à área já protegida, sem criar outra tela de login ou outro banco.</p>
+<p>Há duas formas da informação em circulação. O visitante recebe três mensagens prontas. A equipe edita <code>nomeNegocio</code>, <code>pedidosAbertos</code> e <code>tempoEstimado</code>. Não vamos tentar transformar a frase “Tempo estimado…” de volta em um número.</p>
+<h3 id="passo-1">Leia a configuração que já está salva</h3>
+<p>Ao confirmar a sessão, <code>lerConfiguracao</code> busca os dados atuais. <code>config</code> guarda essa configuração; o campo de prazo fica em um estado de texto porque um input entrega texto e também precisa representar vazio.</p>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/componentes/Operador.tsx</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/componentes/Operador.tsx">import { useEffect, useState } from &quot;react&quot;;
+import type { Configuracao, Produto, Sessao } from &quot;../servicos/api.js&quot;;
+import { gravarConfiguracao, lerConfiguracao, mudarSessao } from &quot;../servicos/api.js&quot;;
+
+
+interface Props { sessao: Sessao; aoMudarSessao: (s: Sessao) =&gt; void; produtos: Produto[]; aoRecarregarProdutos: (preservar?: boolean) =&gt; Promise&lt;void&gt; }
+
+export function Operador({ sessao, aoMudarSessao, produtos, aoRecarregarProdutos }: Props) {
+  const [usuario, setUsuario] = useState(&quot;&quot;);
+  const [senha, setSenha] = useState(&quot;&quot;);
+  const [config, setConfig] = useState&lt;Configuracao | null&gt;(null);
+  const [prazo, setPrazo] = useState(&quot;&quot;);
+  const [aviso, setAviso] = useState(&quot;&quot;);
+  const [ocupado, setOcupado] = useState(false);
+  useEffect(() =&gt; {
+    let ativo = true;
+    if (!sessao.autenticado) { setConfig(null); return; }
+    void lerConfiguracao().then(d =&gt; {
+      if (ativo) { setConfig(d); setPrazo(d.tempoEstimado === null ? &quot;&quot; : String(d.tempoEstimado)); }
+    }).catch(() =&gt; { if (ativo) setAviso(&quot;Não foi possível consultar a configuração. Atualize sua sessão.&quot;); });
+    return () =&gt; { ativo = false; };
+  }, [sessao.autenticado]);
+
+  async function entrar(evento: React.FormEvent) {
+    evento.preventDefault(); setOcupado(true);
+    try {
+      const atual = await mudarSessao(sessao, { acao: &quot;entrar&quot;, usuario, senha });
+      setSenha(&quot;&quot;); aoMudarSessao(atual); setAviso(&quot;Sessão confirmada pelo servidor.&quot;);
+      await aoRecarregarProdutos();
+    } catch (e) { setAviso(e instanceof Error ? e.message : &quot;Falha no acesso.&quot;); }
+    finally { setOcupado(false); }
+  }
+  async function salvar(evento: React.FormEvent) {
+    evento.preventDefault(); if (!config) return; setOcupado(true);
+    try {
+      if (prazo !== &quot;&quot; &amp;&amp; !/^(0|[1-9][0-9]{0,2})$/.test(prazo)) throw new Error(&quot;Informe minutos inteiros ou deixe vazio.&quot;);
+      const minutos = prazo === &quot;&quot; ? null : Number(prazo);
+      if (minutos !== null &amp;&amp; minutos &gt; 240) throw new Error(&quot;O limite combinado neste formulário é 240 minutos.&quot;);
+      await gravarConfiguracao(sessao, { ...config, tempoEstimado: minutos });
+      setAviso(&quot;Aviso salvo no servidor. Consulte o balcão para conferir.&quot;);
+    } catch (e) { setAviso(e instanceof Error ? e.message : &quot;Não foi possível salvar.&quot;); }
+    finally { setOcupado(false); }
+  }
+  async function sair() {
+    setOcupado(true);
+    try {
+      aoMudarSessao(await mudarSessao(sessao, { acao: &quot;sair&quot; }));
+      setConfig(null); setAviso(&quot;Você saiu da área de edição.&quot;);
+      await aoRecarregarProdutos();
+    } catch { setAviso(&quot;Não foi possível sair. Tente novamente.&quot;); }
+    finally { setOcupado(false); }
+  }
+  return &lt;section&gt;&lt;h2&gt;Área do operador&lt;/h2&gt;
+    {!sessao.autenticado ? &lt;form onSubmit={e =&gt; void entrar(e)}&gt;
+      &lt;p&gt;&lt;label htmlFor=&quot;usuario&quot;&gt;Usuário local&lt;/label&gt;&lt;input id=&quot;usuario&quot; value={usuario} autoComplete=&quot;username&quot; required onChange={e =&gt; setUsuario(e.target.value)} /&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;label htmlFor=&quot;senha&quot;&gt;Senha&lt;/label&gt;&lt;input id=&quot;senha&quot; type=&quot;password&quot; value={senha} autoComplete=&quot;current-password&quot; required onChange={e =&gt; setSenha(e.target.value)} /&gt;&lt;/p&gt;
+      &lt;button disabled={ocupado || !sessao.csrfToken}&gt;Entrar&lt;/button&gt;
+    &lt;/form&gt; : &lt;&gt;
+      &lt;button disabled={ocupado} onClick={() =&gt; void sair()}&gt;Sair da edição&lt;/button&gt;
+      {config &amp;&amp; &lt;form onSubmit={e =&gt; void salvar(e)}&gt;
+        &lt;p&gt;&lt;label htmlFor=&quot;nome-cafe&quot;&gt;Nome do Café&lt;/label&gt;&lt;input id=&quot;nome-cafe&quot; value={config.nomeNegocio} maxLength={100} required onChange={e =&gt; setConfig({ ...config, nomeNegocio: e.target.value })} /&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;label htmlFor=&quot;pedidos&quot;&gt;Situação dos pedidos&lt;/label&gt;&lt;select id=&quot;pedidos&quot; value={config.pedidosAbertos ? &quot;aberto&quot; : &quot;encerrado&quot;} onChange={e =&gt; setConfig({ ...config, pedidosAbertos: e.target.value === &quot;aberto&quot; })}&gt;&lt;option value=&quot;aberto&quot;&gt;Abertos&lt;/option&gt;&lt;option value=&quot;encerrado&quot;&gt;Encerrados&lt;/option&gt;&lt;/select&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;label htmlFor=&quot;prazo&quot;&gt;Minutos para retirada&lt;/label&gt;&lt;input id=&quot;prazo&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;240&quot; step=&quot;1&quot; value={prazo} onChange={e =&gt; setPrazo(e.target.value)} aria-describedby=&quot;ajuda-prazo&quot; /&gt;&lt;span id=&quot;ajuda-prazo&quot;&gt;Vazio significa que a equipe ainda não informou a estimativa.&lt;/span&gt;&lt;/p&gt;
+        &lt;button disabled={ocupado}&gt;Salvar aviso&lt;/button&gt;
+      &lt;/form&gt;}
+    &lt;/&gt;}
+    &lt;p role=&quot;status&quot;&gt;{aviso}&lt;/p&gt;
+  &lt;/section&gt;;
+}</code></pre></details>
+<p>O formulário é controlado pelos estados. Em <code>setConfig({ ...config, nomeNegocio: ... })</code>, o espalhamento preserva os outros campos e muda apenas o nome. Não criamos um objeto incompleto que perderia a situação dos pedidos.</p>
+<h3 id="passo-2">Vazio não significa zero</h3>
+<p>Faça o build, entre e apague os minutos. Salve e consulte o atendimento público: a equipe ainda não informou prazo. Agora escreva zero, salve e consulte novamente. São condições diferentes, por isso a conversão acontece de forma explícita antes do envio.</p>
+<p>A verificação local recusa texto inadequado e valores acima do limite do exercício. O servidor repete a validação, pois o visitante pode enviar uma requisição sem usar esse formulário. Tipo TypeScript e atributo <code>min</code> ajudam no navegador; não substituem a regra do PHP.</p>
+<p>A mensagem “salvo” aparece depois de o serviço confirmar a escrita. Ela não deve aparecer só porque a pessoa apertou o botão. O cliente do Café ainda precisa fazer uma nova consulta para receber o aviso atualizado.</p>
+<h3 id="passo-3">Teste a recusa sem perder o dado anterior</h3>
+<p>Informe um valor inválido e confirme que o valor salvo não mudou. Teste pedidos encerrados com prazo preenchido: o aviso de encerramento precisa prevalecer. Saia da edição e tente voltar ao formulário. A consulta pública deve continuar funcionando mesmo sem acesso privado.</p>
+<p>Se a sessão ficar indisponível durante a edição, a aplicação informa que não confirmou a operação. O texto digitado não se transforma em dado válido por estar visível no formulário. Volte a entrar e consulte a configuração para conferir o estado real.</p>
+<h3 id="checkpoint">A confirmação corresponde ao banco?</h3>
+<p>Registre alteração aceita, entrada recusada, zero, prazo ausente e encerramento. Mostre a mudança em outra aba de visitante. A próxima tarefa terá outro cuidado: permitir revisar uma descrição do catálogo sem publicá-la antes da decisão da equipe.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-spa-etapa8.zip" download>Baixar referência da etapa 8</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>cliente-balcao/src/componentes/Operador.tsx</code></li></ul></details></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-spa-7.html#capitulo-2">← Entrar não basta para alterar</a><a href="web3-spa-9.html#capitulo-2">Rascunho não é publicação →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: Uma área do balcão ganha componentes. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-spa-1.html">
+<title>Web III — Uma área do balcão ganha componentes | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · Uma área do balcão ganha componentes">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Interface com React</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Interface com React</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link active" aria-current="page" href="web3-spa-1.html#capitulo-2">Uma área do balcão ganha componentes</a><a class="chapter-link" href="web3-spa-2.html#capitulo-2">Abrir uma orientação muda o estado</a><a class="chapter-link" href="web3-spa-3.html#capitulo-2">O componente consulta o atendimento</a><a class="chapter-link" href="web3-spa-4.html#capitulo-2">Os produtos chegam à interface</a><a class="chapter-link" href="web3-spa-5.html#capitulo-2">Encontrar sem perder a lista</a><a class="chapter-link" href="web3-spa-6.html#capitulo-2">O balcão ganha caminhos</a><a class="chapter-link" href="web3-spa-7.html#capitulo-2">Entrar não basta para alterar</a><a class="chapter-link" href="web3-spa-8.html#capitulo-2">A equipe informa o prazo</a><a class="chapter-link" href="web3-spa-9.html#capitulo-2">Rascunho não é publicação</a><a class="chapter-link" href="web3-spa-10.html#capitulo-2">Outra pasta também precisa funcionar</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Interface com React</span><h2 id="titulo-aula" tabindex="-1">Uma área do balcão ganha componentes</h2><p class="chapter-meta">Café Aurora · cerca de 8 horas-aula de estudo, prática e verificação</p><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>O balcão já consulta o aviso sem recarregar a página. Marina quer acrescentar uma orientação de retirada e, depois, permitir consultas ao cardápio na mesma área. Se continuarmos distribuindo mudanças de texto e visibilidade pelo arquivo inteiro, ficará difícil saber qual parte da interface cada função controla.</p>
+<p>Vamos experimentar React em uma área delimitada: o balcão. A página inicial, o cardápio anterior e o sistema de mensagens continuam existindo. Você não vai converter o Café inteiro nem precisa ter concluído o módulo de React Native.</p>
+<h3 id="passo-1">Faça uma orientação aparecer</h3>
+<p>Preserve sua pasta final do Capítulo 2. Acrescente os arquivos de apoio do download e compare <code>public/balcao.php</code>: o lugar que React controlará é <code>&lt;div id="cafe-app"&gt;</code>. O restante da página continua sendo HTML/PHP.</p>
+<p><strong>React</strong> é uma biblioteca para construir interfaces por componentes. Um componente descreve uma parte da apresentação. Nesta primeira experiência ele recebe um título e um texto e devolve a orientação que veremos no navegador.</p>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/App.tsx</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/App.tsx">interface OrientacaoProps { titulo: string; texto: string }
+function Orientacao({titulo,texto}:OrientacaoProps){return &lt;section&gt;&lt;h2&gt;{titulo}&lt;/h2&gt;&lt;p&gt;{texto}&lt;/p&gt;&lt;/section&gt;;}
+export function App(){return &lt;&gt;&lt;h1&gt;Café Aurora · Balcão&lt;/h1&gt;&lt;Orientacao titulo=&quot;Antes de retirar&quot; texto=&quot;Consulte o atendimento para confirmar a abertura dos pedidos e o prazo informado pela equipe.&quot;/&gt;&lt;/&gt;;}</code></pre></details>
+<p><code>OrientacaoProps</code> é uma interface TypeScript para os valores recebidos, chamados <em>props</em>. A função <code>Orientacao</code> usa esses valores. A sintaxe parecida com HTML se chama JSX; com TypeScript, o arquivo recebe extensão <code>.tsx</code>. É sintaxe processada pelo build, não HTML colocado dentro de uma string.</p>
+<p>Troque apenas o texto da orientação por uma frase útil para a retirada. Antes de acrescentar outra funcionalidade, vamos ver essa pequena mudança funcionando.</p>
+<h3 id="passo-2">O editor continua sendo o VS Code</h3>
+<p>Você escreve TSX no VS Code. npm instala as dependências; Vite transforma os arquivos-fonte em JavaScript para o navegador. São papéis diferentes. Continue com Node 24, já preparado no TypeScript Essencial, e execute em <code>cliente-balcao</code>:</p>
+<pre class="code-block"><code>npm ci
+npm run build</code></pre>
+<p>Na raiz, inicie <code>php -d opcache.enable=0 -S localhost:8000 -t public</code> e abra <code>http://localhost:8000/balcao.php</code>. O texto precisa aparecer dentro do balcão. Alterou TSX? Novo build e recarregamento. Não estamos usando Live Preview para executar PHP nem o servidor de desenvolvimento do Vite para substituir o servidor PHP.</p>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/main.tsx</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/main.tsx">import { createRoot } from &quot;react-dom/client&quot;;
+import { App } from &quot;./App.js&quot;;
+
+const raiz = document.querySelector(&quot;#cafe-app&quot;);
+if (!(raiz instanceof HTMLElement)) throw new Error(&quot;Confira a área cafe-app em balcao.php.&quot;);
+createRoot(raiz).render(&lt;App /&gt;);</code></pre></details>
+<p><code>createRoot</code> liga React ao elemento <code>cafe-app</code> e <code>render</code> apresenta <code>App</code>. O antigo <code>main.ts</code> foi preservado como referência em <code>main-anterior.ts.txt</code>. Ele não deve continuar controlando os elementos que React passará a renderizar.</p>
+<h3 id="checkpoint">Uma parte mudou; o projeto continua</h3>
+<p>Mostre sua orientação, explique de onde vêm título e texto e confira início e cardápio pelos links anteriores. Esta primeira tela React ainda não consulta o aviso; a API continua existindo e voltará à interface depois que aprendermos a mudar uma pequena parte da apresentação por interação.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-spa-etapa1.zip" download>Baixar referência da etapa 1</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-percursos.html#capitulo-2">← Escolha do percurso</a><a href="web3-spa-2.html#capitulo-2">Abrir uma orientação muda o estado →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

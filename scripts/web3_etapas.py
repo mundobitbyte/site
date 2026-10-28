@@ -36,7 +36,7 @@ def mvc(n):
   if n==3:c=c[:c.index('    public function editar()')]+'}\n'
   por(d,'app/Http/Controllers/AtendimentoController.php',c)
   por(d,'resources/views/atendimento.blade.php',"@extends('layout')\n@section('titulo','Atendimento')\n@section('conteudo')\n<h1>{{ $atendimento->nome }}</h1>\n@php($dados=$atendimento->mensagens())\n<p>{{ $dados['mensagemStatus'] }}</p><p>{{ $dados['mensagemTempo'] }}</p>\n@endsection\n")
-  por(d,'tests/alterar-localmente.php',"<?php\nrequire_once dirname(__DIR__).'/src/repositorio-atendimento.php';\n$aviso=new Atendimento('Café Aurora',true,47);\nsalvarConfiguracaoAtendimento(conectarBanco(),$aviso);\necho 'Alteração local gravada.',PHP_EOL;\n")
+  por(d,'tests/alterar-localmente.php',"<?php\nrequire_once dirname(__DIR__).'/src/repositorio-atendimento.php';\n$aviso=new AvisoAtendimento('Café Aurora',true,47);\nsalvarConfiguracaoAtendimento(conectarBanco(),$aviso);\necho 'Alteração local gravada.',PHP_EOL;\n")
  if n>=4:
   aplicar(d,'laravel',lambda p:p.startswith(('app/Http/Requests/','app/Models/User','app/Providers/','app/Http/Controllers/Sessao','app/Http/Controllers/AtendimentoController','app/Console/Commands/Criar','resources/views/entrar','resources/views/editar-atendimento','tests/Feature/Atendimento','resources/views/layout')))
   por(d,'routes/web.php',texto('laravel','routes/web.php').split("Route::get('/api/produtos'")[0])
@@ -104,6 +104,7 @@ export function App(){
   aplicar(d,'spa',lambda p:p.endswith(('/componentes/Cardapio.tsx','/regras.ts')))
   app=app.replace('export function App(){','export function App(){\n const [busca,setBusca]=useState("");\n const [categoria,setCategoria]=useState("todas");').replace('busca="" categoria="todas" aoBuscar={()=>{}} aoCategorizar={()=>{}}','busca={busca} categoria={categoria} aoBuscar={setBusca} aoCategorizar={setCategoria}')
  if n>=6:
+  aplicar(d,'spa',lambda p:p=='public/cardapio.php')
   app=texto('spa','cliente-balcao/src/App.tsx')
   if n==6:
    app=app.replace('import { Operador } from "./componentes/Operador.js";','').replace('consultarSessao, lerProdutos','lerProdutos').replace('Produto, Sessao','Produto').replace('["atendimento", "cardapio", "operador"]','["atendimento", "cardapio"]')
@@ -145,7 +146,7 @@ def baas(n):
   t=texto('baas','tests/permissoes.test.mjs')
   if n<6:t=t[:t.index("test('imagem exige")].replace(",storage:{rules:await readFile('storage.rules','utf8')}","")
   por(d,'tests/permissoes.test.mjs',t)
- if n>=6:aplicar(d,'baas',lambda p:p.endswith(('/midia.ts','/imagens.ts','/catalogo.ts')))
+ if n>=6:aplicar(d,'baas',lambda p:p.endswith(('/midia.ts','/imagens.ts','/catalogo.ts','/catalogo-interface.ts')))
  if n>=7:aplicar(d,'baas',lambda p:p.endswith('configuracao-nuvem.exemplo.ts.txt'))
  if n>=8:
   aplicar(d,'baas',lambda p:p.startswith('functions/') or p.endswith('/integracoes.ts'))

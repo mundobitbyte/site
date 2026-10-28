@@ -11,7 +11,7 @@ class AtendimentoAtual extends Model
 
     public function mensagens(): array
     {
-        require_once base_path('src/Atendimento.php');
-        return (new \Atendimento($this->nome, $this->aberto, $this->minutos))->mensagens();
+        require_once base_path('src/AvisoAtendimento.php');
+        return (new \AvisoAtendimento($this->nome, $this->aberto, $this->minutos))->mensagens();
     }
 }

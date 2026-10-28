@@ -1,6 +1,6 @@
 <?php
 /** A regra do Café recebe valores e prepara as mensagens dos consumidores. */
-class Atendimento
+class AvisoAtendimento
 {
     public string $nomeNegocio;
     public bool $pedidosAbertos;

@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . "/Atendimento.php";
+require_once __DIR__ . "/AvisoAtendimento.php";
 
 function obterAtendimento(): array
 {
-    $atendimento = new Atendimento("Café Aurora", true, 30);
+    $atendimento = new AvisoAtendimento("Café Aurora", true, 30);
     return $atendimento->mensagens();
 }

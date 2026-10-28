@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Café Aurora: O balcão ganha caminhos. Aprendizagem prática no Web III.">
+<link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-spa-6.html">
+<title>Web III — O balcão ganha caminhos | Mundo bit Byte</title>
+<link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+</head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · O balcão ganha caminhos">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
+<nav class="level-menu" aria-label="Níveis de Programação Web"><a class="level-menu-item" href="web1.html">Web I — Sites</a><a class="level-menu-item" href="web2.html">Web II — Sistemas</a><a class="level-menu-item active" href="web3.html">Web III <small>Em desenvolvimento</small></a></nav>
+<div class="ts-mobile-tools" hidden><button type="button" class="ts-menu-toggle" id="ts-menu-toggle" aria-controls="ts-topics-dialog" aria-expanded="false"><span aria-hidden="true">☰</span> Aulas</button><span class="ts-current-topic">Interface com React</span></div>
+<dialog class="ts-topics-dialog" id="ts-topics-dialog" aria-labelledby="ts-dialog-titulo"><div class="ts-dialog-header"><h2 id="ts-dialog-titulo">Aulas do percurso</h2><button type="button" class="ts-menu-close" id="ts-menu-close" aria-label="Fechar menu de aulas">×</button></div><div id="ts-dialog-menu"></div></dialog>
+<div class="web-layout"><nav class="chapter-menu" id="ts-topic-menu" aria-label="Aulas disponíveis"><h2>Interface com React</h2><a class="chapter-link" href="web3-percursos.html#capitulo-2">O botão consulta. Quem informa o aviso?</a><a class="chapter-link" href="web3-spa-1.html#capitulo-2">Uma área do balcão ganha componentes</a><a class="chapter-link" href="web3-spa-2.html#capitulo-2">Abrir uma orientação muda o estado</a><a class="chapter-link" href="web3-spa-3.html#capitulo-2">O componente consulta o atendimento</a><a class="chapter-link" href="web3-spa-4.html#capitulo-2">Os produtos chegam à interface</a><a class="chapter-link" href="web3-spa-5.html#capitulo-2">Encontrar sem perder a lista</a><a class="chapter-link active" aria-current="page" href="web3-spa-6.html#capitulo-2">O balcão ganha caminhos</a><a class="chapter-link" href="web3-spa-7.html#capitulo-2">Entrar não basta para alterar</a><a class="chapter-link" href="web3-spa-8.html#capitulo-2">A equipe informa o prazo</a><a class="chapter-link" href="web3-spa-9.html#capitulo-2">Rascunho não é publicação</a><a class="chapter-link" href="web3-spa-10.html#capitulo-2">Outra pasta também precisa funcionar</a><a class="chapter-link" href="web3-entrega.html#capitulo-2">O Café pode ser conferido por outra pessoa</a><a class="cap2-voltar" href="web3-percursos.html">Escolher percurso</a><a class="cap2-voltar" href="web3-capitulo2-aula7.html">← Capítulo 2</a></nav>
+<main class="web-content" id="conteudo" tabindex="-1"><article class="chapter" id="capitulo-2" data-chapter>
+<div class="chapter-header"><span class="chapter-kicker">Web III · Interface com React</span><h2 id="titulo-aula" tabindex="-1">O balcão ganha caminhos</h2><p class="chapter-meta">Café Aurora · cerca de 6 horas-aula de estudo, prática e verificação</p><p class="web3-status">Web III — Em desenvolvimento.</p></div>
+<p>Atendimento e cardápio já funcionam no balcão. Mantê-los sempre abertos, porém, ocupa espaço e torna difícil compartilhar um endereço que leve à área desejada. Vamos organizar a navegação sem exigir outra página PHP para cada apresentação.</p>
+<p>Uma <strong>SPA</strong>, aplicação de página única, pode alternar áreas dentro do mesmo documento. Isso não significa que o servidor deixou de existir ou que tudo funciona sem rede: continuamos consultando os serviços PHP.</p>
+<h3 id="passo-1">Um endereço para cada área</h3>
+<p>Usaremos o trecho depois de <code>#</code>, chamado fragmento ou hash. <code>balcao.php#atendimento</code> e <code>balcao.php#cardapio</code> abrem o mesmo documento e indicam qual apresentação mostrar. O navegador mantém seu histórico, e o servidor continua recebendo <code>balcao.php</code>.</p>
+<details class="web3-arquivo"><summary>Conferir cliente-balcao/src/App.tsx</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="cliente-balcao/src/App.tsx">import { useEffect, useRef, useState } from &quot;react&quot;;
+import { obterAtendimento } from &quot;./atendimento.js&quot;;
+import type { Atendimento as Dados } from &quot;./atendimento.js&quot;;
+import { Atendimento } from &quot;./componentes/Atendimento.js&quot;;
+import { Cardapio } from &quot;./componentes/Cardapio.js&quot;;
+
+import { lerProdutos } from &quot;./servicos/api.js&quot;;
+import type { Produto } from &quot;./servicos/api.js&quot;;
+
+const rotas = [&quot;atendimento&quot;, &quot;cardapio&quot;];
+function rotaAtual(): string {
+  const hash = location.hash.slice(1);
+  return rotas.includes(hash) ? hash : &quot;atendimento&quot;;
+}
+
+export function App() {
+  const [rota, setRota] = useState(rotaAtual);
+  const [dados, setDados] = useState&lt;Dados | null&gt;(null);
+  const [consultando, setConsultando] = useState(false);
+  const [aviso, setAviso] = useState(&quot;Consulte o atendimento para receber o aviso atual.&quot;);
+  const [produtos, setProdutos] = useState&lt;Produto[]&gt;([]);
+  const [avisoProdutos, setAvisoProdutos] = useState(&quot;&quot;);
+  const [busca, setBusca] = useState(&quot;&quot;);
+  const [categoria, setCategoria] = useState(&quot;todas&quot;);
+  const consultaAtiva = useRef(false);
+  const ordemProdutos = useRef(0);
+
+  async function consultar() {
+    if (consultaAtiva.current) return;
+    const foco = document.activeElement;
+    consultaAtiva.current = true; setConsultando(true); setDados(null); setAviso(&quot;Consultando o atendimento…&quot;);
+    try { setDados(await obterAtendimento()); setAviso(&quot;Atendimento consultado agora.&quot;); }
+    catch { setAviso(&quot;Não foi possível consultar. Tente novamente.&quot;); }
+    finally {
+      consultaAtiva.current = false; setConsultando(false);
+      requestAnimationFrame(() =&gt; { if (foco instanceof HTMLButtonElement &amp;&amp; document.activeElement === document.body) foco.focus({ preventScroll: true }); });
+    }
+  }
+
+  async function carregarProdutos(preservar = false) {
+    const ordem = ++ordemProdutos.current;
+    if (!preservar) setProdutos([]);
+    setAvisoProdutos(&quot;Consultando o cardápio…&quot;);
+    try {
+      const recebidos = await lerProdutos();
+      if (ordem === ordemProdutos.current) { setProdutos(recebidos); setAvisoProdutos(&quot;&quot;); }
+    } catch { if (ordem === ordemProdutos.current) setAvisoProdutos(&quot;Não foi possível consultar o cardápio. Tente novamente.&quot;); }
+  }
+
+  useEffect(() =&gt; {
+    function mudar() { setRota(rotaAtual()); }
+    window.addEventListener(&quot;hashchange&quot;, mudar);
+    return () =&gt; window.removeEventListener(&quot;hashchange&quot;, mudar);
+  }, []);
+  useEffect(() =&gt; {
+    document.getElementById(&quot;titulo-rota&quot;)?.focus({ preventScroll: true });
+    if (rota !== &quot;atendimento&quot;) void carregarProdutos();
+  }, [rota]);
+
+  return &lt;&gt;
+    &lt;h1 id=&quot;titulo-rota&quot; tabIndex={-1}&gt;Café Aurora · {rota === &quot;cardapio&quot; ? &quot;Cardápio&quot; : rota === &quot;operador&quot; ? &quot;Operador&quot; : &quot;Balcão&quot;}&lt;/h1&gt;
+    &lt;nav aria-label=&quot;Áreas do Café&quot;&gt;&lt;a href=&quot;#atendimento&quot; aria-current={rota === &quot;atendimento&quot; ? &quot;page&quot; : undefined}&gt;Atendimento&lt;/a&gt;{&quot; · &quot;}&lt;a href=&quot;#cardapio&quot; aria-current={rota === &quot;cardapio&quot; ? &quot;page&quot; : undefined}&gt;Cardápio&lt;/a&gt;&lt;/nav&gt;
+    {rota === &quot;atendimento&quot; &amp;&amp; &lt;Atendimento dados={dados} consultando={consultando} aviso={aviso} aoConsultar={() =&gt; void consultar()} /&gt;}
+    {rota === &quot;cardapio&quot; &amp;&amp; &lt;&gt;&lt;button onClick={() =&gt; void carregarProdutos()}&gt;Consultar cardápio&lt;/button&gt;&lt;p role=&quot;status&quot;&gt;{avisoProdutos}&lt;/p&gt;&lt;Cardapio produtos={produtos} busca={busca} categoria={categoria} aoBuscar={setBusca} aoCategorizar={setCategoria} /&gt;&lt;/&gt;}
+  &lt;/&gt;;
+}</code></pre></details>
+<p><code>rotaAtual</code> aceita os nomes que definimos e volta ao atendimento se o fragmento não corresponder a uma área. O estado <code>rota</code> acompanha essa escolha. A interface monta o componente correspondente sem duplicar a origem dos dados.</p>
+<h3 id="passo-2">Reaja à navegação e limpe o que instalou</h3>
+<p><code>useEffect</code> permite sincronizar a interface com algo externo à apresentação, como o evento <code>hashchange</code> do navegador. O efeito registra a função de atualização e devolve uma função para remover o ouvinte quando ele não for mais necessário. Assim não acumulamos vários ouvintes para a mesma ação.</p>
+<p>Outro efeito atualiza o foco do título e consulta o catálogo quando entramos na área que precisa dele. O título focável e <code>aria-current</code> ajudam a perceber qual área foi aberta, inclusive sem depender apenas da cor do link.</p>
+<p>Não estamos instalando um roteador adicional nesta etapa. Para essas poucas áreas, o fragmento deixa o comportamento observável e mantém os endereços compatíveis com o servidor PHP já preparado.</p>
+<h3 id="passo-3">Experimente o histórico de verdade</h3>
+<p>Faça o build. Abra o atendimento, siga para o cardápio e use Voltar e Avançar do navegador. Depois cole <code>http://localhost:8000/balcao.php#cardapio</code> em outra aba. A área correta deve abrir também nesse acesso direto.</p>
+<p>O arquivo <code>public/cardapio.php</code> desta etapa redireciona para a área React. Assim o menu da página inicial continua levando ao cardápio atual quando começarmos a editar descrições. Não manteremos uma apresentação antiga como se fosse a fonte atualizada.</p>
+<h3 id="checkpoint">A pessoa sabe onde está e consegue voltar?</h3>
+<p>Confira links, endereço direto, histórico, indicação da área atual e foco do título. Um fragmento desconhecido deve voltar ao atendimento de forma previsível. A próxima área será reservada à equipe; mudar o hash não poderá dar permissão de edição a um visitante.</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-spa-etapa6.zip" download>Baixar referência da etapa 6</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>cliente-balcao/src/App.tsx</code></li><li><code>public/cardapio.php</code></li></ul></details></aside>
+<nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-spa-5.html#capitulo-2">← Encontrar sem perder a lista</a><a href="web3-spa-7.html#capitulo-2">Entrar não basta para alterar →</a></nav>
+</article></main></div>
+<script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body></html>

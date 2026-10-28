@@ -88,6 +88,7 @@ function criarCard(produto) {
   imagem.width = 960;
   imagem.height = 640;
   imagem.loading = "lazy";
+  descricao.dataset.descricaoProduto = "";
   descricao.textContent = `${produto.descricao} `;
   preco.textContent = formatarPreco(produto.preco);
 
