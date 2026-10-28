@@ -118,3 +118,6 @@ Instalações limpas e verificação da CLI foram executadas com Node 22.23.4. A
 As configurações e regras também passaram a acompanhar a progressão: atendimento inicialmente, Storage/produtos na etapa 6 e inscrições na etapa 9. Testes das regras intermediárias foram acrescentados para as etapas 3 e 6. A descrição pública exige de 10 a 400 caracteres e texto não vazio no serviço, além da validação do formulário.
 
 Na prévia, a abertura do código e a leitura em quadro de largura útil 375 px foram observadas sem overflow global. A ferramenta de navegador não confirmou os bytes do clipboard nem a conclusão do download pelo controle de evento; esses dois ensaios não são declarados aprovados por equivalência. Os ZIPs foram auditados no sistema de arquivos e a disponibilidade HTTPS precisa ser conferida na publicação. Nenhuma conta real foi acessada para contornar esses limites.
+
+
+A auditoria Composer acrescentada ao CI identificou o alerta moderado CVE-2026-45070 em symfony/mime 8.1.7, divulgado em 28/10/2026. A trava foi atualizada pontualmente para 8.1.10 com metadados oficiais de distribuição do Packagist, sem mudanças de requisitos ou conflitos. A instalação, a auditoria e os testes nativos serão repetidos antes da publicação. O alerta não foi ignorado nem silenciado.
