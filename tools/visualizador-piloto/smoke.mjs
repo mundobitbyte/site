@@ -192,6 +192,16 @@ async function testBancoDer() {
       assert(state.loaded && state.trigger, `Banco de Dados: diagrama de ${module} não carregou com ampliador.`);
     }
   }
+  const conversion = await page.$('.brmodelo-capture img');
+  assert(Boolean(conversion), 'Banco de Dados: captura da conversão no brModelo ausente.');
+  if (conversion) {
+    await conversion.evaluate(async img => { img.scrollIntoView({block:'center'}); await img.decode(); });
+    const state = await conversion.evaluate(img => ({
+      loaded:img.naturalWidth === 338,
+      trigger:img.closest('[data-mbb-ampliavel="grafico"]')?.nextElementSibling?.matches?.('[data-mbb-visualizador-trigger]') || false
+    }));
+    assert(state.loaded && state.trigger, 'Banco de Dados: captura original da conversão não carregou com ampliador.');
+  }
   assert(errors.length === 0, `Banco de Dados: erros JavaScript: ${errors.join(' | ')}`);
   await page.close();
 }
