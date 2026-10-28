@@ -435,23 +435,23 @@ void loop() {
       guia.dataset.mbb6HttpAmbientes = '1';
       guia.innerHTML = `
         <h3>Antes dos códigos — escolha o papel e o ambiente</h3>
-        <p><strong>HTTP</strong> organiza pedidos e respostas. Na <strong>Parte A</strong>, o ESP32 é servidor e o navegador faz pedidos para ligar ou desligar o LED. Na <strong>Parte B</strong>, o ESP32 é cliente e consulta outro servidor. <strong>São dois testes diferentes:</strong> você pode executar apenas o que seu ambiente permite.</p>
+        <p><strong>HTTP</strong> organiza pedidos e respostas. Na <strong>Parte A</strong>, o ESP32 é cliente e consulta outro servidor; começamos por ela porque funciona no Wokwi padrão. Na <strong>Parte B</strong>, o ESP32 é servidor e o navegador faz pedidos para controlar o LED. <strong>São dois testes diferentes:</strong> você pode executar apenas o que seu ambiente permite.</p>
         <div class="mbb6-connections">
-          <div><strong>ESP32 físico — Partes A e B</strong><span>Use a rede Wi-Fi real de 2,4 GHz. Na Parte A, o computador ou celular deve alcançar o ESP32 na mesma rede; na Parte B, o ESP32 precisa conseguir acessar o servidor consultado.</span></div>
-          <div><strong>Wokwi padrão — Parte B (código 7A)</strong><span>Use o programa específico com <code>Wokwi-GUEST</code>. Ele envia um pedido HTTP de saída e mostra o resultado no Monitor Serial. <strong>Não é necessário executar a Parte A.</strong></span></div>
-          <div><strong>Wokwi + Private IoT Gateway — Parte A opcional</strong><span>Se o recurso privado estiver disponível e habilitado, um servidor HTTP simulado na porta 80 pode ser acessado em <code>http://localhost:9080/</code>. Não é necessário contratar esse serviço para acompanhar a aula.</span></div>
+          <div><strong>Wokwi padrão — comece pela Parte A (3A)</strong><span>Use o código pronto para <code>Wokwi-GUEST</code>. Ele envia um pedido HTTP e mostra o resultado no Monitor Serial. <strong>Não é necessário executar a Parte B.</strong></span></div>
+          <div><strong>ESP32 físico — Partes A e B</strong><span>Na Parte A, use o código 3B para consultar uma página pela rede Wi-Fi real de 2,4 GHz. Na Parte B, o navegador precisa alcançar o servidor ESP32 na mesma rede para controlar o LED.</span></div>
+          <div><strong>Wokwi + Private IoT Gateway — Parte B opcional</strong><span>Se o recurso privado estiver disponível e habilitado, um servidor HTTP simulado na porta 80 pode ser acessado em <code>http://localhost:9080/</code>. Não é necessário contratar esse serviço para acompanhar a aula.</span></div>
           <div><strong>O que vamos observar?</strong><span>Como servidor: página e LED respondem aos links. Como cliente: o Monitor Serial mostra o retorno do pedido <code>GET</code>. Falhar um acesso de entrada no Wokwi público não significa que o programa do servidor esteja errado.</span></div>
         </div>
-        <p class="mbb6-note"><strong>Bibliotecas:</strong> <code>WiFi.h</code> cuida da rede, <code>WebServer.h</code> permite atender pedidos e <code>HTTPClient.h</code> permite enviá-los. Essas bibliotecas integram o ambiente Arduino para ESP32 corretamente instalado e são disponibilizadas nos projetos ESP32 do Wokwi. Na placa física, substitua o nome e a senha da rede. No Wokwi padrão, escolha o código 7A já configurado; se usar o gateway privado para experimentar o servidor da Parte A, adapte a conexão desse programa para <code>Wokwi-GUEST</code> sem senha.</p>
+        <p class="mbb6-note"><strong>Bibliotecas:</strong> <code>WiFi.h</code> cuida da rede, <code>WebServer.h</code> permite atender pedidos e <code>HTTPClient.h</code> permite enviá-los. Essas bibliotecas integram o ambiente Arduino para ESP32 corretamente instalado e são disponibilizadas nos projetos ESP32 do Wokwi. Na placa física, substitua o nome e a senha da rede. No Wokwi padrão, escolha o código 3A já configurado; se usar o gateway privado para experimentar o servidor da Parte B, adapte a conexão desse programa para <code>Wokwi-GUEST</code> sem senha.</p>
       `;
       cards.insertBefore(guia, cards.firstElementChild?.nextSibling || cards.firstElementChild);
     }
   }
 
-  const testeHttp = acharPapel('b6-3', 'http-servidor-teste', '5. Testando o servidor');
+  const testeHttp = acharPapel('b6-3', 'http-servidor-teste', '8. Testando o servidor');
   if(testeHttp && marcar(testeHttp, 'mbb6HttpTeste')){
     const titulo = testeHttp.querySelector('h3');
-    if(titulo) titulo.textContent = '5. Testando o servidor — placa física';
+    if(titulo) titulo.textContent = '8. Testando o servidor — placa física';
     const nota = document.createElement('p');
     nota.className = 'mbb6-note';
     nota.innerHTML = '<strong>No Wokwi:</strong> só siga exatamente este teste pelo navegador se estiver usando o Private IoT Gateway. Nesse caso, use <code>http://localhost:9080/</code> em vez do IP virtual mostrado pelo ESP32.';
