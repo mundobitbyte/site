@@ -375,20 +375,20 @@ document.addEventListener('DOMContentLoaded', function(){
   // 6.2 Wi-Fi: prática completa em ambos os ambientes e código Wokwi explícito.
   const wifi = document.getElementById('b6-2');
   if(wifi && !wifi.querySelector('[data-mbb6-wifi-wokwi]')){
-    const cardWokwiOriginal = acharPapel('b6-2', 'wifi-wokwi', '9. Teste no Wokwi');
+    const cardWokwiOriginal = acharPapel('b6-2', 'wifi-wokwi', '4A. Wi-Fi no Wokwi');
     if(cardWokwiOriginal){
       cardWokwiOriginal.dataset.mbb6WifiWokwi = '1';
       cardWokwiOriginal.innerHTML = `
-        <h3>9. Teste de Wi-Fi no Wokwi</h3>
-        <p>No Wokwi, conecte o ESP32 à rede virtual aberta <code>Wokwi-GUEST</code>. Ela não usa senha. O canal 6 pode ser informado para evitar a etapa de varredura e acelerar a conexão.</p>
-        <p class="mbb6-note"><strong>O que este teste comprova:</strong> o ESP32 entrou na rede virtual e recebeu um endereço IP. No próximo tópico veremos que receber um IP e aceitar conexões vindas do navegador são coisas diferentes.</p>
+        <h3>4A. Wi-Fi no Wokwi — rede virtual</h3>
+        <p>Se você usa o simulador, escolha <strong>somente o código 4A</strong>. A rede <code>Wokwi-GUEST</code> já existe no ambiente e não exige senha. Não substitua o nome dela pelas credenciais de casa ou da escola.</p>
+        <p>Abra seu projeto ESP32 no Wokwi, copie o código do quadro a seguir para <code>sketch.ino</code>, inicie a simulação e observe o <strong>Monitor Serial</strong>. O LED do circuito-base pode continuar conectado, mas não será acionado neste teste.</p>
       `;
 
       const codigo = document.createElement('article');
       codigo.className = 'card code wide';
       codigo.dataset.mbb6WifiWokwi = 'codigo';
       codigo.innerHTML = `
-        <h3>Código para o Wokwi <button type="button" onclick="copyCode('b6-2-wokwi-code',this)">Copiar</button></h3>
+        <h3>4A. Código completo — Wokwi <button type="button" onclick="copyCode('b6-2-wokwi-code',this)">Copiar</button></h3>
         <pre id="b6-2-wokwi-code">#include &lt;WiFi.h&gt;
 
 void setup() {
@@ -412,10 +412,15 @@ void setup() {
 void loop() {
 }</pre>
         <div class="explain" style="margin-top:12px">
-          <p><strong>Faça:</strong> execute a simulação e abra o Monitor Serial. O Wokwi detecta automaticamente a velocidade serial.</p>
-          <p><strong>O que observar:</strong> a mensagem de conexão e um endereço IP virtual confirmam que o ESP32 entrou na rede Wi-Fi simulada.</p>
+          <p><strong>Entenda os parâmetros:</strong> em <code>WiFi.begin("Wokwi-GUEST", "", 6)</code>, o primeiro texto é o nome da rede, <code>""</code> indica senha vazia e <code>6</code> é o canal usado pelo Wokwi para evitar a busca de redes e acelerar este exemplo. <strong>Outras redes podem utilizar outros canais.</strong></p>
+          <p><strong>O que observar:</strong> surgem pontos enquanto o ESP32 tenta conectar, depois a confirmação e um endereço IP virtual. O Monitor Serial do Wokwi reconhece a velocidade configurada pelo programa.</p>
         </div>
       `;
+      // Apresenta as duas alternativas logo após a escolha: primeiro Wokwi, depois placa física.
+      const codigoFisico = wifi.querySelector('#b6-2-code')?.closest('article.card');
+      if (codigoFisico && cardWokwiOriginal.parentNode === codigoFisico.parentNode) {
+        cardWokwiOriginal.parentNode.insertBefore(cardWokwiOriginal, codigoFisico);
+      }
       cardWokwiOriginal.parentNode.insertBefore(codigo, cardWokwiOriginal.nextSibling);
     }
   }
