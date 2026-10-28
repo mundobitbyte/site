@@ -28,7 +28,7 @@ jobs:
           MBB_CLOUDFLARED="$RUNNER_TEMP/cloudflared" python tests/seiot-rede/tunel_real.py
 
   navegador:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
