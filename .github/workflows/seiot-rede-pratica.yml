@@ -29,7 +29,7 @@ jobs:
           MBB_CLOUDFLARED="$RUNNER_TEMP/cloudflared" python tests/seiot-rede/tunel_real.py
 
   navegador:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
           node-version: '22'
       - name: Preparar navegador de teste
         run: |
-          npm install --no-save --prefix "$RUNNER_TEMP/mbb-browser" playwright@1.51.1
+          npm install --no-save --prefix "$RUNNER_TEMP/mbb-browser" playwright@1.62.1
           node "$RUNNER_TEMP/mbb-browser/node_modules/playwright/cli.js" install --with-deps chromium
       - name: Conferir navegação, Copiar, pesquisa, Meu MbB e captura real
         run: |
