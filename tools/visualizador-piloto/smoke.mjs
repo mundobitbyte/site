@@ -177,7 +177,7 @@ async function testProgramacaoGraphic() {
 async function testBancoDer() {
   const { page, errors } = await newPage(390, 844);
   await page.goto(`${base}/pages/bancodedados.html`, { waitUntil:'networkidle0' });
-  for (const [module, expected] of [['modelagem', 7], ['modelagem-logica', 5]]) {
+  for (const [module, expected] of [['modelagem', 7], ['modelagem-logica', 6]]) {
     await page.click(`#btn-${module}`);
     const diagrams = await page.$$(`#mod-${module} .der-figure img`);
     assert(diagrams.length === expected, `Banco de Dados: esperados ${expected} diagramas em ${module}.`);

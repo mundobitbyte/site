@@ -1,0 +1,210 @@
+{
+  "base": "97b7dbc8510c4d8a7e67319809915843efae55a2",
+  "htmlOutsideTargetByteIdentical": true,
+  "allPreBlocksAndSQLUnchanged": true,
+  "allH2AndAnchorsUnchanged": true,
+  "originalCaptureUnchanged": true,
+  "catalogChanges": [
+    "/unidades/56/texto_busca",
+    "/unidades/56/topicos_busca/26/texto_busca"
+  ],
+  "courseExecutableSHA256": "4aedac0ad68682524bbd29a6888eff2958c4c6be4ecf2a0e3c981bd029a9a320",
+  "nativeUIStringsFoundInCourseExecutable": [
+    "Adicionar a(s) chave(s) da tabela de menor card. à tabela de maior card.",
+    "Interação",
+    "Gerar Esquema Lógico",
+    "Arquivo binário do brModelo",
+    "Salvar &Como...",
+    "Modelos abertos",
+    "O que você deseja fazer?",
+    "Finalizar conversão",
+    "Criar uma tabela para o relacionamento."
+  ],
+  "brModeloWindowsGUIExecuted": false,
+  "MySQLExecuted": false,
+  "browserRegression": [
+    {
+      "width": 1440,
+      "chapterHeadings": 22,
+      "derImages": 13,
+      "zoomAndFocusReturn": 13,
+      "legacyAnchors": 5,
+      "sqlCopies": 48,
+      "modules": 12,
+      "pageErrors": [],
+      "globalOverflow": false
+    },
+    {
+      "width": 390,
+      "chapterHeadings": 22,
+      "derImages": 13,
+      "zoomAndFocusReturn": 13,
+      "legacyAnchors": 5,
+      "sqlCopies": 48,
+      "modules": 12,
+      "pageErrors": [],
+      "globalOverflow": false
+    },
+    {
+      "width": 360,
+      "chapterHeadings": 22,
+      "derImages": 13,
+      "zoomAndFocusReturn": 13,
+      "legacyAnchors": 5,
+      "sqlCopies": 48,
+      "modules": 12,
+      "pageErrors": [],
+      "globalOverflow": false
+    },
+    {
+      "width": 320,
+      "chapterHeadings": 22,
+      "derImages": 13,
+      "zoomAndFocusReturn": 13,
+      "legacyAnchors": 5,
+      "sqlCopies": 48,
+      "modules": 12,
+      "pageErrors": [],
+      "globalOverflow": false
+    },
+    {
+      "svgAssets": [
+        {
+          "file": "conceitual-atributos.svg",
+          "title": "Entidades e atributos do comércio",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-categoria-produto.svg",
+          "title": "Categoria e Produto: um para muitos",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-cidade-fornecedor.svg",
+          "title": "Fornecedor e cidade: participação opcional",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-comercio.svg",
+          "title": "DER conceitual completo do comércio",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-produto-fornecedor.svg",
+          "title": "Produto e Fornecedor: muitos para muitos",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-relacionamento.svg",
+          "title": "Categoria classifica Produto",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "conceitual-um-para-um.svg",
+          "title": "Funcionário e crachá ativo: um para um",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "logico-categoria-produto.svg",
+          "title": "Categoria e Produto no modelo lógico",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "logico-cidade-fornecedor.svg",
+          "title": "Cidade e Fornecedor no modelo lógico",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "logico-comercio.svg",
+          "title": "Modelo lógico completo do comércio",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "logico-produto-fornecedor.svg",
+          "title": "Conversão do muitos para muitos",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        },
+        {
+          "file": "logico-um-para-um.svg",
+          "title": "Conversão do exemplo um para um",
+          "clipped": [],
+          "scripts": 0,
+          "external": []
+        }
+      ]
+    },
+    {
+      "search": "brModelo: resultado e link do capítulo funcionaram sem login",
+      "destination": "http://127.0.0.1:4173/pages/bancodedados.html#bd-brmodelo-gerar-logico"
+    }
+  ],
+  "focusedBrowser": [
+    {
+      "width": 1440,
+      "instructions": 5,
+      "menuPath": true,
+      "originalCapture": 338,
+      "zoomAndFocus": true,
+      "searchAndDirectAnchor": true,
+      "globalOverflow": false,
+      "pageErrors": []
+    },
+    {
+      "width": 390,
+      "instructions": 5,
+      "menuPath": true,
+      "originalCapture": 338,
+      "zoomAndFocus": true,
+      "searchAndDirectAnchor": true,
+      "globalOverflow": false,
+      "pageErrors": []
+    },
+    {
+      "width": 360,
+      "instructions": 5,
+      "menuPath": true,
+      "originalCapture": 338,
+      "zoomAndFocus": true,
+      "searchAndDirectAnchor": true,
+      "globalOverflow": false,
+      "pageErrors": []
+    },
+    {
+      "width": 320,
+      "instructions": 5,
+      "menuPath": true,
+      "originalCapture": 338,
+      "zoomAndFocus": true,
+      "searchAndDirectAnchor": true,
+      "globalOverflow": false,
+      "pageErrors": []
+    }
+  ],
+  "nodeTests": {
+    "passed": 29,
+    "failed": 0
+  },
+  "transversalSmoke": "passed in final responsive revision"
+}
