@@ -2415,8 +2415,10 @@
     "ancoras": [
       "titulo-aula",
       "passo-1",
-      "passo-2",
       "passo-3",
+      "primeira-mudanca-blade",
+      "passo-2",
+      "localizar-uma-rota",
       "checkpoint"
     ]
   },
@@ -2657,6 +2659,7 @@
       "titulo-aula",
       "passo-1",
       "passo-2",
+      "guardar-retomar-bancada",
       "checkpoint"
     ]
   },

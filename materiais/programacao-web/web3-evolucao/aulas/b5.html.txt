@@ -1,15 +1,15 @@
 <p>Marina alterou o prazo, mas a pessoa no balcão não apertou Atualizar. Se a página precisa acompanhar o atendimento durante algum tempo, podemos assinar as mudanças em vez de repetir consultas sem parar.</p>
 <p>Uma assinatura mantém uma escuta ativa. Ela precisa ter início, tratamento de falha e encerramento. Não é uma garantia de que o navegador estará sempre conectado.</p>
-<h3>Acompanhe em duas janelas</h3>
+<h3 id="passo-1">Acompanhe em duas janelas</h3>
 <p>Faça o build. Na janela de operador, entre e mantenha o formulário aberto. Em uma janela privativa, abra a página inicial e use “Acompanhar atualizações”. Depois altere o prazo como operador. A janela do visitante deve receber o aviso sem novo clique.</p>
 {{arquivo:cliente-balcao/src/dados.ts}}
 <p><code>onSnapshot</code> registra a escuta e devolve uma função para encerrá-la. A informação recebida continua passando pela conferência. Os metadados indicam se há gravações pendentes ou uma cópia de cache; nosso texto não trata essas condições como confirmação atual do serviço.</p>
-<h3>Acompanhar também inclui saber parar</h3>
+<h3 id="passo-2">Acompanhar também inclui saber parar</h3>
 {{arquivo:cliente-balcao/src/main.ts}}
 <p>O segundo clique encerra a assinatura. O evento <code>pagehide</code> também chama a função de encerramento quando saímos da página. Isso evita manter uma operação que já não atende a uma necessidade da interface.</p>
 <p>A variável <code>revisao</code> ajuda a descartar uma consulta antiga que termine depois de outra ação. Sem esse cuidado, uma resposta atrasada poderia sobrescrever uma apresentação mais recente.</p>
-<h3>Interrompa e recupere</h3>
-<p>Com o acompanhamento ativo, pare os emuladores. Observe se a interface informa que não confirmou a atualização, em vez de apresentar o prazo anterior como atual. Reinicie os emuladores e execute o preparo se necessário. Pare e inicie novamente o acompanhamento para conferir a recuperação.</p>
-<p>Esses emuladores usam dados locais. Reiniciar o processo sem exportação pode exigir novo preparo; não confunda isso com o comportamento de armazenamento de um projeto em nuvem. Não criamos uma obrigação de exportar dados pessoais para continuar a prática.</p>
+<h3 id="passo-3">Interrompa e recupere</h3>
+<p>Com o acompanhamento ativo, pare os emuladores. Observe se a interface informa que não confirmou a atualização, em vez de apresentar o prazo anterior como atual. Retome com <code>npm run retomar</code> para importar a sessão exportada. Se a exportação não terminou ou não existe, o preparo recupera apenas as identidades e o atendimento inicial; ele não restaura uma imagem enviada. Pare e inicie novamente o acompanhamento para conferir a recuperação.</p>
+<p>Esses emuladores usam dados locais. O comando de início deste percurso exporta ao encerrar com Ctrl+C, e <code>npm run retomar</code> importa essa pasta. Uma interrupção forçada pode impedir a exportação. Confira o retorno do terminal; essa cópia de exercício não é uma política de backup de produção. Use somente os dados fictícios combinados para esta bancada.</p>
 <h3 id="checkpoint">O que significa “atual” na sua tela?</h3>
 <p>Demonstre duas janelas, alteração recebida, encerramento da assinatura, falha e recuperação. Explique por que uma mensagem de cache precisa ser distinguida de uma confirmação do serviço. A próxima informação terá outra natureza: uma imagem deve ser armazenada como arquivo e relacionada ao produto.</p>

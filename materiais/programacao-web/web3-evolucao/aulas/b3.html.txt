@@ -1,15 +1,15 @@
 <p>A identidade do operador foi reconhecida. Falta estabelecer a regra de acesso: visitantes podem consultar o aviso; o operador pode alterar uma configuração válida; ninguém deve apagar o atendimento por uma chamada comum do cliente.</p>
 <p>Esconder o formulário não basta. Um programa pode chamar o serviço diretamente. As regras de segurança precisam ser verificadas pelo serviço para cada operação.</p>
-<h3>Leia a regra como uma pergunta do Café</h3>
+<h3 id="passo-1">Leia a regra como uma pergunta do Café</h3>
 <p>Em <code>firestore.rules</code>, encontre o documento <code>atendimento/atual</code>. <code>request.auth</code> representa a identidade autenticada; a claim <code>operador</code> precisa ser verdadeira para criar ou atualizar. A leitura é pública porque o aviso se destina aos clientes.</p>
 {{arquivo:firestore.rules}}
 <p>Permissão não é a única condição. O conjunto de campos precisa ser exatamente o combinado; nome não pode estar vazio; situação precisa ser booleana; minutos devem ser inteiro entre zero e 240 ou <code>null</code>. A checagem no TypeScript ajuda a orientar, mas a regra impede que um cliente diferente ignore essa validação.</p>
-<h3>Prove a recusa antes de abrir a edição</h3>
+<h3 id="passo-2">Prove a recusa antes de abrir a edição</h3>
 <p>Acrescente os testes desta etapa. Pare os emuladores interativos com Ctrl+C para liberar as portas. Na raiz, execute <code>npm test</code>. O comando inicia emuladores de teste, usa identidades controladas e encerra os serviços no final.</p>
 {{arquivo:tests/permissoes.test.mjs}}
 <p>Observe os testes de visitante, leitor e operador. Mensagens <code>PERMISSION_DENIED</code> podem aparecer justamente nas operações que devem ser recusadas. O resultado importante é a verificação do teste: uma recusa esperada não é um teste falhando.</p>
 <p>A suíte não usa sua conta pessoal nem altera um projeto real. Ela verifica regras carregadas no ambiente local; não demonstra que regras idênticas já foram publicadas na nuvem.</p>
-<h3>Retome a bancada de uso</h3>
-<p>Depois dos testes, execute novamente <code>npm run emuladores</code> e, em outro terminal, <code>npm run preparar</code>. Confira que a consulta continua disponível. Não edite uma regra para <code>allow read, write: if true</code> apenas para fazer um erro desaparecer: isso removeria a condição que estamos tentando comprovar.</p>
+<h3 id="passo-3">Retome a bancada de uso</h3>
+<p>Depois dos testes, execute novamente <code>npm run retomar</code> para importar a bancada guardada. Se ela não existia, siga o início e o preparo da primeira etapa. Confira que a consulta continua disponível. Não edite uma regra para <code>allow read, write: if true</code> apenas para fazer um erro desaparecer: isso removeria a condição que estamos tentando comprovar.</p>
 <h3 id="checkpoint">Consegue explicar uma operação recusada?</h3>
 <p>Mostre que visitante e leitor não escrevem, operador grava apenas valores válidos e exclusão não é permitida. Explique onde a verificação acontece. Agora podemos acrescentar um formulário que respeite essas condições e espere confirmação real da gravação.</p>

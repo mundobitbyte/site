@@ -5,7 +5,7 @@
 <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-mvc-4.html">
 <title>Web III — Quem pode mudar o aviso? | Mundo bit Byte</title>
 <link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
-<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=2" rel="stylesheet">
 </head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · Quem pode mudar o aviso?">
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 <header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
@@ -17,8 +17,8 @@
 <div class="chapter-header"><span class="chapter-kicker">Web III · Servidor com Laravel</span><h2 id="titulo-aula" tabindex="-1">Quem pode mudar o aviso?</h2><p class="web3-status">Web III — Em desenvolvimento.</p></div>
 <p>O prazo já permanece no banco. Se criássemos agora um formulário sem proteção, qualquer visitante que descobrisse o endereço poderia trocar o aviso da cozinha. Esconder um link não resolveria: o servidor precisa reconhecer quem está fazendo a alteração.</p>
 <p>Você já encontrou esse problema no painel do Web II. Aqui vamos reencontrar a distinção essencial: autenticação verifica a identidade; autorização verifica se essa identidade pode realizar uma ação. Entrar não transforma automaticamente uma pessoa em operadora.</p>
-<h3 id="passo-1">Primeiro observe a recusa</h3>
-<p>Com os arquivos desta etapa acrescentados à sua aplicação, abra <code>http://localhost:8000/operador/atendimento</code> em uma janela privativa. O endereço deve levar à entrada, sem mostrar o formulário de edição. A consulta pública em <code>/api/atendimento</code> precisa continuar funcionando sem login. A proteção se aplica à escrita, não obriga o cliente do Café a criar uma conta.</p>
+<details class="web3-preparo" id="arquivos-da-etapa"><summary>Preparar os arquivos desta etapa</summary><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa4.zip" download>Baixar a referência da etapa 4</a>. Ela contém a aplicação ao final desta etapa; não é uma nova tarefa nem uma substituição automática da sua solução.</p><p>Continue na sua pasta de trabalho que concluiu a etapa 3 deste percurso. A raiz é o lugar onde aparecem <code>public</code> e <code>cliente-balcao</code>. Não crie uma pasta <code>cafe-aurora-web3</code> dentro dessa raiz.</p><ol><li>Salve os arquivos e pare o servidor antes de copiar dados. Preserve uma cópia da pasta atual.</li><li>Extraia o download em uma pasta de referência separada. Abra o <code>LEIA-ME-ETAPA.md</code> que está dentro de <code>cafe-aurora-web3</code>.</li><li>Compare os caminhos listados abaixo com sua pasta de trabalho. Acrescente os arquivos de apoio que ainda não existem. Para um arquivo já existente, compare a alteração antes de aplicá-la: não apague uma mudança sua sem entender a diferença. Os arquivos discutidos na aula são os que vamos construir e compreender.</li></ol><p>Preserve <code>dados</code>, credenciais locais, <code>.env</code> e as dependências já instaladas. Uma pasta ausente no ZIP não é uma instrução para apagar sua cópia. A aula informa quando executar Composer, npm, migration ou build; copiar arquivos não executa esses preparos.</p><details><summary>Arquivos novos ou modificados para conferir</summary><ul><li><code>app/Console/Commands/CriarOperador.php</code></li><li><code>app/Http/Controllers/AtendimentoController.php</code></li><li><code>app/Http/Controllers/SessaoController.php</code></li><li><code>app/Http/Requests/AtualizarAtendimentoRequest.php</code></li><li><code>app/Models/User.php</code></li><li><code>app/Providers/AppServiceProvider.php</code></li><li><code>resources/views/editar-atendimento.blade.php</code></li><li><code>resources/views/entrar.blade.php</code></li><li><code>resources/views/layout.blade.php</code></li><li><code>routes/web.php</code></li><li><code>tests/Feature/AtendimentoTest.php</code></li></ul></details></details><h3 id="passo-1">Primeiro observe a recusa</h3>
+<p>Use o preparo de arquivos acima para acrescentar as rotas, o comando de criação de operador, o model de usuário, os controllers e as views desta etapa. Mantenha a chave <code>APP_KEY</code> e o banco da etapa anterior. Então abra <code>http://localhost:8000/operador/atendimento</code> em uma janela privativa. O endereço deve levar à entrada, sem mostrar o formulário de edição. A consulta pública em <code>/api/atendimento</code> precisa continuar funcionando sem login. A proteção se aplica à escrita, não obriga o cliente do Café a criar uma conta.</p>
 <p>A rota de edição usa dois filtros, chamados <em>middlewares</em>: <code>auth</code> exige uma sessão; <code>can:alterar-atendimento</code> consulta a permissão definida para o papel de operador.</p>
 <details class="web3-arquivo"><summary>Conferir app/Providers/AppServiceProvider.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Providers/AppServiceProvider.php">&lt;?php
 namespace App\Providers;
@@ -89,7 +89,7 @@ class SessaoController
 <p>Entre pelo endereço <code>/entrar</code>. Em seguida, abra <code>/operador/atendimento</code>. Você deve encontrar os valores que já estavam no banco, não um formulário que começa toda vez com 30 minutos.</p>
 <h3 id="passo-3">Valide antes de gravar</h3>
 <p>No formulário, deixe o prazo vazio e salve. Consulte o balcão: a mensagem deve orientar o visitante a procurar a equipe. Depois informe zero e consulte novamente. Ao encerrar os pedidos, não pode continuar aparecendo uma promessa de retirada em minutos.</p>
-<p>Os atributos do HTML ajudam a preencher os campos, mas podem ser contornados. A classe de requisição também verifica nome, situação e prazo no servidor. <code>nullable</code> aceita ausência; <code>integer</code> exige inteiro; <code>between:0,240</code> aplica a regra do exercício.</p>
+<p>Os atributos do HTML ajudam a preencher os campos, mas podem ser contornados. A classe de requisição também verifica nome, situação e prazo no servidor. <code>nullable</code> aceita ausência; <code>integer</code> exige inteiro; <code>min:0</code> e <code>max:240</code> aplicam os limites do exercício. <code>FormRequest</code> é o apoio do Laravel para reunir essa validação e sua autorização antes da ação de salvar.</p>
 <details class="web3-arquivo"><summary>Conferir app/Http/Requests/AtualizarAtendimentoRequest.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Http/Requests/AtualizarAtendimentoRequest.php">&lt;?php
 namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
@@ -121,11 +121,43 @@ class AtualizarAtendimentoRequest extends FormRequest
 &lt;button type=&quot;submit&quot;&gt;Salvar aviso&lt;/button&gt;&lt;/form&gt;
 &lt;form method=&quot;post&quot; action=&quot;/sair&quot;&gt;@csrf&lt;button type=&quot;submit&quot;&gt;Sair da edição&lt;/button&gt;&lt;/form&gt;
 @endsection</code></pre></details>
+<p>No controller, localize <code>salvar</code>: o Laravel fornece o pedido já validado; <code>validated()</code> entrega somente os campos aceitos; <code>update</code> grava na linha atual e o redirecionamento volta ao formulário com a confirmação.</p>
+<details class="web3-arquivo"><summary>Conferir app/Http/Controllers/AtendimentoController.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Http/Controllers/AtendimentoController.php">&lt;?php
+namespace App\Http\Controllers;
+use App\Http\Requests\AtualizarAtendimentoRequest;
+use App\Models\AtendimentoAtual;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
+
+class AtendimentoController
+{
+    public function mostrar(\Illuminate\Http\Request $pedido): View
+    {
+        $idioma=$pedido-&gt;query(&#x27;idioma&#x27;,&#x27;pt_BR&#x27;);
+        abort_unless(in_array($idioma,[&#x27;pt_BR&#x27;,&#x27;en&#x27;],true),400);
+        app()-&gt;setLocale($idioma);
+        return view(&#x27;atendimento&#x27;, [&#x27;atendimento&#x27; =&gt; AtendimentoAtual::findOrFail(1)]);
+    }
+    public function publico(): JsonResponse
+    {
+        return response()-&gt;json(AtendimentoAtual::findOrFail(1)-&gt;mensagens())-&gt;header(&#x27;Cache-Control&#x27;,&#x27;no-store&#x27;);
+    }
+    public function editar(): View
+    {
+        return view(&#x27;editar-atendimento&#x27;, [&#x27;atendimento&#x27; =&gt; AtendimentoAtual::findOrFail(1)]);
+    }
+    public function salvar(AtualizarAtendimentoRequest $pedido): RedirectResponse
+    {
+        AtendimentoAtual::findOrFail(1)-&gt;update($pedido-&gt;validated());
+        return redirect()-&gt;route(&#x27;operador.atendimento&#x27;)-&gt;with(&#x27;aviso&#x27;, &#x27;Aviso salvo; consulte o balcão para conferir.&#x27;);
+    }
+}</code></pre></details>
 <p>Encontre <code>@csrf</code> na view. O token associa o envio à sessão da aplicação e ajuda a recusar pedidos forjados a partir de outro site. CSRF não substitui autenticação, autorização ou validação; cada proteção responde a uma pergunta diferente.</p>
-<p>Teste um valor negativo e um texto com mais de 100 caracteres para o nome. A aplicação deve recusar a alteração e orientar a correção. O dado anterior precisa permanecer. Depois use “Sair da edição” e tente voltar ao endereço protegido: uma página antiga aberta não é prova de que a sessão continua válida.</p>
+<p>Teste um valor negativo e um texto com mais de 100 caracteres para o nome. A aplicação deve recusar a alteração e orientar a correção. O dado anterior precisa permanecer. Se o próprio navegador impedir o envio por causa de <code>min</code> ou <code>maxlength</code>, você comprovou uma orientação do HTML; a suíte <code>composer test</code> envia também entradas fora do formulário para conferir a recusa no servidor. Não confunda os dois testes. Depois use “Sair da edição” e tente voltar ao endereço protegido: uma página antiga aberta não é prova de que a sessão continua válida.</p>
 <h3 id="checkpoint">A equipe informa; o visitante consulta</h3>
 <p>Comprove acesso recusado sem sessão, alteração aceita para o operador, recusa de dado inválido e saída da conta. Execute <code>composer test</code> na raiz para repetir os testes automatizados disponíveis. Eles usam um banco de teste isolado; a execução não deve apagar seu banco do Café. Agora Marina consegue cuidar do aviso. Ela também quer atualizar o cardápio sem editar o JSON à mão.</p>
-<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa4.zip" download>Baixar referência da etapa 4</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>app/Console/Commands/CriarOperador.php</code></li><li><code>app/Http/Controllers/AtendimentoController.php</code></li><li><code>app/Http/Controllers/SessaoController.php</code></li><li><code>app/Http/Requests/AtualizarAtendimentoRequest.php</code></li><li><code>app/Models/User.php</code></li><li><code>app/Providers/AppServiceProvider.php</code></li><li><code>resources/views/editar-atendimento.blade.php</code></li><li><code>resources/views/entrar.blade.php</code></li><li><code>resources/views/layout.blade.php</code></li><li><code>routes/web.php</code></li><li><code>tests/Feature/AtendimentoTest.php</code></li></ul></details></aside>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa4.zip" download>Baixar referência da etapa 4</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p></aside>
 <nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-mvc-3.html#capitulo-2">← O prazo precisa permanecer</a><a href="web3-mvc-5.html#capitulo-2">O cardápio tem relações →</a></nav>
 </article></main></div>
 <script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>

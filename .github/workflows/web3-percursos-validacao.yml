@@ -84,6 +84,8 @@ jobs:
         run: |
           npm test
           npm run test:integracoes
+      - name: Retomar Auth, Firestore e Storage entre etapas sem perder os dados
+        run: python3 tests/web3/retomada-baas.py /tmp/cafe-percursos/baas
       - name: Reconstruir etapas BaaS com o Node das Functions
         run: |
           python3 tests/web3/verificar-etapas.py /tmp/cafe-percursos --somente b1 b2 b3 b4 b5 b6 b7 b8 b9 b10

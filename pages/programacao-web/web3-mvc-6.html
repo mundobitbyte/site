@@ -5,7 +5,7 @@
 <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/programacao-web/web3-mvc-6.html">
 <title>Web III — Uma consulta atravessa serviços | Mundo bit Byte</title>
 <link href="../../css/programacao-web.css?v=13" rel="stylesheet"><link href="../../css/web3.css?v=1" rel="stylesheet">
-<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=1" rel="stylesheet">
+<link href="../../css/web3-typescript.css?v=2" rel="stylesheet"><link href="../../css/web3-capitulo2.css?v=1" rel="stylesheet"><link href="../../css/web3-evolucao.css?v=2" rel="stylesheet">
 </head><body class="module-page web3-page web3-typescript web3-cap2 web3-evolucao" data-module-title="Web III · Uma consulta atravessa serviços">
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 <header><div class="header-left"><a class="portal-link" href="../programacao-web.html">← Programação Web</a><h1>Programação Web III</h1></div><a class="portal-link" href="../../meu-mbb/index.html">Entrar / Meu MbB</a><div class="brand">Professor Ronaldo Lavestein</div></header>
@@ -17,9 +17,44 @@
 <div class="chapter-header"><span class="chapter-kicker">Web III · Servidor com Laravel</span><h2 id="titulo-aula" tabindex="-1">Uma consulta atravessa serviços</h2><p class="web3-status">Web III — Em desenvolvimento.</p></div>
 <p>Um cliente pergunta pelo endereço enquanto a equipe confere um CEP. O Café não precisa manter uma cópia de todos os endereços do Brasil. Pode consultar um serviço público e aproveitar somente os campos necessários.</p>
 <p>Você já viu o balcão consumir uma API do próprio Café. Agora o servidor PHP será o consumidor de outra API. A diferença traz uma responsabilidade: o serviço externo pode responder com erro, devolver um formato inesperado ou não responder a tempo.</p>
-<h3 id="passo-1">Faça uma consulta pequena</h3>
-<p>Abra <code>http://localhost:8000/endereco</code> e informe <code>01001000</code>, o CEP de exemplo da documentação do ViaCEP. O formulário aceita oito algarismos, sem hífen. Essa atividade consulta um endereço; não cria entrega, pedido ou cadastro de cliente.</p>
-<p>O <a href="https://viacep.com.br/" target="_blank" rel="noopener noreferrer">ViaCEP documenta consultas em JSON e XML</a>. Vamos usar JSON e poucos testes, sem varreduras de CEPs. Antes de depender da resposta, nosso código confere o formato da entrada.</p>
+<details class="web3-preparo" id="arquivos-da-etapa"><summary>Preparar os arquivos desta etapa</summary><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa6.zip" download>Baixar a referência da etapa 6</a>. Ela contém a aplicação ao final desta etapa; não é uma nova tarefa nem uma substituição automática da sua solução.</p><p>Continue na sua pasta de trabalho que concluiu a etapa 5 deste percurso. A raiz é o lugar onde aparecem <code>public</code> e <code>cliente-balcao</code>. Não crie uma pasta <code>cafe-aurora-web3</code> dentro dessa raiz.</p><ol><li>Salve os arquivos e pare o servidor antes de copiar dados. Preserve uma cópia da pasta atual.</li><li>Extraia o download em uma pasta de referência separada. Abra o <code>LEIA-ME-ETAPA.md</code> que está dentro de <code>cafe-aurora-web3</code>.</li><li>Compare os caminhos listados abaixo com sua pasta de trabalho. Acrescente os arquivos de apoio que ainda não existem. Para um arquivo já existente, compare a alteração antes de aplicá-la: não apague uma mudança sua sem entender a diferença. Os arquivos discutidos na aula são os que vamos construir e compreender.</li></ol><p>Preserve <code>dados</code>, credenciais locais, <code>.env</code> e as dependências já instaladas. Uma pasta ausente no ZIP não é uma instrução para apagar sua cópia. A aula informa quando executar Composer, npm, migration ou build; copiar arquivos não executa esses preparos.</p><details><summary>Arquivos novos ou modificados para conferir</summary><ul><li><code>app/Http/Controllers/EnderecoController.php</code></li><li><code>app/Services/ConsultaCep.php</code></li><li><code>resources/views/endereco.blade.php</code></li><li><code>routes/web.php</code></li><li><code>tests/Feature/CepTest.php</code></li></ul></details></details><h3 id="passo-1">Faça uma consulta pequena</h3>
+<p>Prepare os arquivos desta etapa pela comparação indicada acima. Acrescente a classe <code>app/Services/ConsultaCep.php</code> e a view <code>resources/views/endereco.blade.php</code> do apoio. Para construir o novo controller, mantenha a referência dele separada e execute na raiz:</p>
+<pre class="code-block"><code>php artisan make:controller EnderecoController</code></pre>
+<p>Abra <code>app/Http/Controllers/EnderecoController.php</code>. O Laravel criou o esqueleto; ainda falta a ação que recebe o CEP. Complete o arquivo com o conteúdo abaixo. Se você já copiou o controller pronto do ZIP, ele já existe: compare com a referência em vez de gerar outro por cima.</p>
+<details class="web3-arquivo"><summary>Conferir app/Http/Controllers/EnderecoController.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Http/Controllers/EnderecoController.php">&lt;?php
+namespace App\Http\Controllers;
+use App\Services\ConsultaCep;
+use Illuminate\Http\Request;
+
+class EnderecoController
+{
+    public function mostrar(Request $r, ConsultaCep $consulta)
+    {
+        $entrada=$r-&gt;validate([&#x27;cep&#x27;=&gt;[&#x27;nullable&#x27;,&#x27;regex:/^[0-9]{8}$/D&#x27;]]);
+        $endereco=null; $falha=null;
+        if (isset($entrada[&#x27;cep&#x27;])) {
+            try { $endereco=$consulta-&gt;consultar($entrada[&#x27;cep&#x27;]); }
+            catch (\RuntimeException $e) { $falha=$e-&gt;getMessage(); }
+        }
+        return view(&#x27;endereco&#x27;,compact(&#x27;endereco&#x27;,&#x27;falha&#x27;));
+    }
+}</code></pre></details>
+<p>Em <code>routes/web.php</code>, acrescente esta rota depois das anteriores, sem apagar as que o Café já utiliza:</p>
+<pre class="code-block"><code>Route::get('/endereco', [\App\Http\Controllers\EnderecoController::class, 'mostrar']);</code></pre>
+<p>A rota encaminha a consulta para <code>mostrar</code>. O Laravel entrega à ação um objeto <code>ConsultaCep</code>, pelo tipo indicado no parâmetro; esse fornecimento de uma dependência evita que o controller precise montar o serviço. A classe do serviço veio no apoio e será examinada logo depois da primeira consulta.</p>
+<details class="web3-arquivo"><summary>Conferir resources/views/endereco.blade.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="resources/views/endereco.blade.php">@extends(&#x27;layout&#x27;)
+@section(&#x27;titulo&#x27;,&#x27;Conferir um CEP&#x27;)
+@section(&#x27;conteudo&#x27;)
+&lt;h1&gt;Conferir um CEP&lt;/h1&gt;&lt;p&gt;O Café Aurora é fictício. Esta consulta confere um CEP, sem afirmar que o estabelecimento funciona nesse endereço.&lt;/p&gt;
+&lt;form method=&quot;get&quot;&gt;&lt;label for=&quot;cep&quot;&gt;CEP, somente oito algarismos&lt;/label&gt;&lt;input id=&quot;cep&quot; name=&quot;cep&quot; inputmode=&quot;numeric&quot; pattern=&quot;[0-9]{8}&quot; value=&quot;{{ request(&#x27;cep&#x27;) }}&quot; required&gt;&lt;button&gt;Consultar CEP&lt;/button&gt;&lt;/form&gt;
+@if($errors-&gt;any())&lt;p role=&quot;alert&quot;&gt;Informe oito algarismos.&lt;/p&gt;@endif
+@if($falha)&lt;p role=&quot;alert&quot;&gt;{{ $falha }}&lt;/p&gt;@endif
+@if($endereco)&lt;p role=&quot;status&quot;&gt;{{ $endereco[&#x27;logradouro&#x27;] }} — {{ $endereco[&#x27;bairro&#x27;] }}, {{ $endereco[&#x27;localidade&#x27;] }}/{{ $endereco[&#x27;uf&#x27;] }}. CEP {{ $endereco[&#x27;cep&#x27;] }}.&lt;/p&gt;@endif
+@endsection</code></pre></details>
+<p>Com o servidor Laravel em execução, abra <code>http://localhost:8000/endereco</code> e informe <code>01001000</code>, o CEP de exemplo do ViaCEP. O formulário aceita oito algarismos, sem hífen. Se a rede permitir, você verá Praça da Sé, em São Paulo. Essa atividade consulta um endereço; não cria entrega, pedido ou cadastro de cliente. Se a rede bloquear, mantenha o registro dessa condição e faça os testes controlados adiante.</p>
+<h3 id="passo-2">Separe consulta e apresentação</h3>
+<p>O caminho é o que já conhecemos: rota, controller e view. A novidade está atrás do controller. A classe <code>ConsultaCep</code> reúne o acesso ao serviço externo, enquanto a view apresenta somente os campos necessários, com escape, e conserva o CEP digitado para uma correção.</p>
+<p>O <a href="https://viacep.com.br/" target="_blank" rel="noopener noreferrer">ViaCEP documenta consultas em JSON e XML</a>. Vamos usar JSON e poucos testes, sem varreduras de CEPs.</p>
 <details class="web3-arquivo"><summary>Conferir app/Services/ConsultaCep.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Services/ConsultaCep.php">&lt;?php
 namespace App\Services;
 use Illuminate\Support\Facades\Http;
@@ -40,41 +75,11 @@ class ConsultaCep
         return array_intersect_key($d,array_flip([&#x27;cep&#x27;,&#x27;logradouro&#x27;,&#x27;bairro&#x27;,&#x27;localidade&#x27;,&#x27;uf&#x27;]));
     }
 }</code></pre></details>
-<p>O cliente HTTP do Laravel envia a consulta. <code>connectTimeout(2)</code> limita a espera pela conexão e <code>timeout(4)</code> limita a operação. Esses números são limites escolhidos para a experiência; não garantem que um serviço externo responderá.</p>
-<p>Uma resposta HTTP bem-sucedida ainda pode informar um CEP inexistente. Por isso verificamos o campo <code>erro</code>, o tipo da resposta e os campos que realmente serão apresentados. Receber JSON não significa receber informação válida.</p>
-<h3 id="passo-2">Separe consulta e apresentação</h3>
-<p>A classe <code>ConsultaCep</code> reúne o acesso externo. Antes de acrescentar o novo controller à sua aplicação, execute <code>php artisan make:controller EnderecoController</code> na raiz. Observe o arquivo gerado em <code>app/Http/Controllers</code>: o framework criou um esqueleto, mas ainda não sabe consultar CEP. Complete-o com o código abaixo. Se estiver conferindo o ZIP final, o arquivo já estará completo; compare com o esqueleto, sem sobrescrever sua solução por engano.</p>
-<p>O controller recebe o formulário e escolhe como devolver o resultado ou a orientação de falha. A view apresenta texto com escape, preservando o valor digitado quando o usuário precisa corrigir algo.</p>
-<details class="web3-arquivo"><summary>Conferir app/Http/Controllers/EnderecoController.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="app/Http/Controllers/EnderecoController.php">&lt;?php
-namespace App\Http\Controllers;
-use App\Services\ConsultaCep;
-use Illuminate\Http\Request;
-
-class EnderecoController
-{
-    public function mostrar(Request $r, ConsultaCep $consulta)
-    {
-        $entrada=$r-&gt;validate([&#x27;cep&#x27;=&gt;[&#x27;nullable&#x27;,&#x27;regex:/^[0-9]{8}$/D&#x27;]]);
-        $endereco=null; $falha=null;
-        if (isset($entrada[&#x27;cep&#x27;])) {
-            try { $endereco=$consulta-&gt;consultar($entrada[&#x27;cep&#x27;]); }
-            catch (\RuntimeException $e) { $falha=$e-&gt;getMessage(); }
-        }
-        return view(&#x27;endereco&#x27;,compact(&#x27;endereco&#x27;,&#x27;falha&#x27;));
-    }
-}</code></pre></details>
-<details class="web3-arquivo"><summary>Conferir resources/views/endereco.blade.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="resources/views/endereco.blade.php">@extends(&#x27;layout&#x27;)
-@section(&#x27;titulo&#x27;,&#x27;Conferir um CEP&#x27;)
-@section(&#x27;conteudo&#x27;)
-&lt;h1&gt;Conferir um CEP&lt;/h1&gt;&lt;p&gt;O Café Aurora é fictício. Esta consulta confere um CEP, sem afirmar que o estabelecimento funciona nesse endereço.&lt;/p&gt;
-&lt;form method=&quot;get&quot;&gt;&lt;label for=&quot;cep&quot;&gt;CEP, somente oito algarismos&lt;/label&gt;&lt;input id=&quot;cep&quot; name=&quot;cep&quot; inputmode=&quot;numeric&quot; pattern=&quot;[0-9]{8}&quot; value=&quot;{{ request(&#x27;cep&#x27;) }}&quot; required&gt;&lt;button&gt;Consultar CEP&lt;/button&gt;&lt;/form&gt;
-@if($errors-&gt;any())&lt;p role=&quot;alert&quot;&gt;Informe oito algarismos.&lt;/p&gt;@endif
-@if($falha)&lt;p role=&quot;alert&quot;&gt;{{ $falha }}&lt;/p&gt;@endif
-@if($endereco)&lt;p role=&quot;status&quot;&gt;{{ $endereco[&#x27;logradouro&#x27;] }} — {{ $endereco[&#x27;bairro&#x27;] }}, {{ $endereco[&#x27;localidade&#x27;] }}/{{ $endereco[&#x27;uf&#x27;] }}. CEP {{ $endereco[&#x27;cep&#x27;] }}.&lt;/p&gt;@endif
-@endsection</code></pre></details>
-<p>Teste oito algarismos para um CEP inexistente, depois uma entrada com letras. Compare as mensagens: um formato recusado pelo Café não é a mesma situação de um endereço não encontrado pelo serviço. Em nenhum caso a página deve inventar um endereço ou continuar mostrando uma consulta anterior como se fosse a nova.</p>
+<p><code>Http::acceptJson()</code> prepara o pedido de uma resposta JSON. <code>get</code> envia a consulta. <code>connectTimeout(2)</code> limita a espera pela conexão e <code>timeout(4)</code> limita a operação. Esses números são limites da experiência; não prometem que um serviço externo responderá.</p>
+<p>Uma resposta HTTP bem-sucedida ainda pode informar um CEP inexistente. Por isso conferimos <code>erro</code>, a estrutura e os campos que realmente serão apresentados. Receber JSON não significa receber um endereço válido. O controller transforma as recusas esperadas em uma orientação na página.</p>
+<p>Teste um CEP de oito algarismos não encontrado, depois uma entrada com letras. Compare: um formato recusado pelo Café não é a mesma condição de um endereço não encontrado pelo serviço. Em nenhum caso devemos inventar um endereço ou apresentar a consulta anterior como se fosse a nova.</p>
 <h3 id="passo-3">Teste também quando o serviço falha</h3>
-<p>Não é adequado derrubar um serviço real para testar a nossa recuperação. Os testes abaixo fornecem respostas controladas ao cliente HTTP: resposta válida, estrutura inadequada e erro de conexão. Eles verificam o comportamento do nosso código, sem afirmar que uma chamada real ocorreu.</p>
+<p>Não é adequado derrubar um serviço real para testar a recuperação do Café. Os testes abaixo fornecem respostas controladas ao cliente HTTP: resposta válida, estrutura inadequada e erro de conexão. Eles verificam o nosso comportamento sem afirmar que uma chamada real ocorreu.</p>
 <details class="web3-arquivo"><summary>Conferir tests/Feature/CepTest.php</summary><p>Caminho a partir da raiz da aplicação. Abra o arquivo no VS Code e compare com a explicação desta etapa.</p><pre class="code-block"><code data-web3-file="tests/Feature/CepTest.php">&lt;?php
 namespace Tests\Feature;
 use App\Services\ConsultaCep;
@@ -102,8 +107,8 @@ class CepTest extends TestCase
 }</code></pre></details>
 <p>Execute <code>composer test</code>. Se sua rede bloquear a consulta real, a prática de validação e recuperação continua possível com os testes controlados. Registre separadamente “teste automatizado aprovado” e “consulta real realizada”. Uma evidência não substitui a outra.</p>
 <h3 id="checkpoint">Quando podemos confiar na apresentação?</h3>
-<p>Confirme formato, CEP inexistente, resposta inválida e indisponibilidade. Explique por que consultar o serviço no servidor evita colocar futuras credenciais de integração dentro do JavaScript do visitante. Nosso exemplo de ViaCEP não pede chave. Depois dessa consulta entre sistemas, voltaremos ao cliente do Café: como aproveitar recursos do celular sem impedir quem não os tem?</p>
-<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa6.zip" download>Baixar referência da etapa 6</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p><details><summary>Arquivos novos ou modificados desde a etapa anterior</summary><ul><li><code>app/Http/Controllers/EnderecoController.php</code></li><li><code>app/Services/ConsultaCep.php</code></li><li><code>resources/views/endereco.blade.php</code></li><li><code>routes/web.php</code></li><li><code>tests/Feature/CepTest.php</code></li></ul></details></aside>
+<p>Confirme formato, CEP inexistente, resposta inválida e indisponibilidade. Explique por que consultar no servidor evita colocar futuras credenciais de integração no JavaScript do visitante; o ViaCEP deste exemplo não pede chave. Depois dessa consulta entre sistemas, voltaremos ao cliente do Café: como aproveitar recursos do celular sem impedir quem não os tem?</p>
+<aside class="web3-download" aria-label="Referência para comparar"><p><a class="download-link" href="../../downloads/programacao-web/cafe-aurora-web3-mvc-etapa6.zip" download>Baixar referência da etapa 6</a></p><p>Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download.</p></aside>
 <nav class="chapter-footer" aria-label="Anterior e próxima aula"><a href="web3-mvc-5.html#capitulo-2">← O cardápio tem relações</a><a href="web3-mvc-7.html#capitulo-2">O Café cabe na rotina do celular →</a></nav>
 </article></main></div>
 <script src="../../js/programacao-web.js?v=11"></script><script src="../../js/web3-menu-aulas.js?v=2"></script><script src="../../js/web3-percursos.js?v=1"></script><script src="../../js/mbb-busca-global.js?v=mbb-busca-2"></script>

@@ -75,6 +75,14 @@ def conferir(codigo,app,dependencias,nativo):
                 api=json.loads(ler('/api/atendimento'))
                 assert set(api)=={'nomeNegocio','mensagemStatus','mensagemTempo'}
                 if int(codigo[1:])>=3:assert '47 minutos' in api['mensagemTempo']
+                if codigo=='m2':
+                    # Experiência literal da aula: mudar a view não muda a API do balcão.
+                    view=app/'resources/views/atendimento.blade.php';original=view.read_text()
+                    try:
+                        view.write_text(original.replace('</h1>',' · consulta da cozinha</h1>',1))
+                        assert ' · consulta da cozinha' in ler('/atendimento')
+                        assert json.loads(ler('/api/atendimento'))==api
+                    finally:view.write_text(original)
                 assert 'Café Aurora' in ler('/balcao.php')
                 if int(codigo[1:])>=5:
                     assert 'Café coado' in ler('/cardapio.php')
@@ -82,16 +90,20 @@ def conferir(codigo,app,dependencias,nativo):
             finally:
                 os.killpg(web.pid,signal.SIGTERM);web.wait(timeout=10)
         if int(codigo[1:])>=8:
-            servidor=subprocess.Popen(['php','-S','127.0.0.1:9001','apoio/soap/servidor.php'],cwd=app,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-            try:
-                for _ in range(80):
-                    try:
-                        with socket.create_connection(('127.0.0.1',9001),timeout=.2):break
-                    except OSError:time.sleep(.05)
-                else:raise AssertionError('O servidor SOAP não iniciou')
-                saida=executar(['php','apoio/soap/cliente.php'],app)
-                assert 'REQUISIÇÃO XML' in saida and 'RESPOSTA XML' in saida and 'mensagemTempo' in saida
-            finally:servidor.terminate();servidor.wait(timeout=10)
+            for fase in ['consulta','recuperacao']:
+                servidor=subprocess.Popen(['php','-S','127.0.0.1:9001','apoio/soap/servidor.php'],cwd=app,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+                try:
+                    for _ in range(80):
+                        try:
+                            with socket.create_connection(('127.0.0.1',9001),timeout=.2):break
+                        except OSError:time.sleep(.05)
+                    else:raise AssertionError('O servidor SOAP não iniciou')
+                    saida=executar(['php','apoio/soap/cliente.php'],app)
+                    assert 'REQUISIÇÃO XML' in saida and 'RESPOSTA XML' in saida and 'mensagemTempo' in saida
+                finally:servidor.terminate();servidor.wait(timeout=10)
+                if fase=='consulta':
+                    falha=subprocess.run(['php','apoio/soap/cliente.php'],cwd=app,text=True,capture_output=True,timeout=8)
+                    assert falha.returncode!=0 and 'Falha SOAP:' in falha.stderr,'SOAP precisa informar a indisponibilidade'
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('dependencias',type=Path);p.add_argument('--sem-php',action='store_true');p.add_argument('--somente',nargs='*');args=p.parse_args()

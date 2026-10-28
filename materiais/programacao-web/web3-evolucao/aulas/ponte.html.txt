@@ -1,13 +1,13 @@
 <p>O botão do balcão já faz uma consulta de verdade. Ele pede o aviso ao PHP, espera a resposta e conta ao visitante quando não consegue confirmar a informação. Você não precisa reconstruir esse caminho.</p>
 <p>Agora imagine Marina chegando à cozinha: “O movimento aumentou. A retirada passou para 47 minutos. Como eu atualizo isso sem abrir um arquivo de programação?” Até aqui, alguém precisava editar o PHP. O visitante ganhou autonomia para consultar; a equipe ainda precisa de autonomia para informar.</p>
-<h3>Antes de mudar, veja o que já funciona</h3>
+<h3 id="passo-1">Antes de mudar, veja o que já funciona</h3>
 <p>Abra sua pasta final do Capítulo 2 no VS Code. Inicie o servidor PHP como você já fez: <code>php -d opcache.enable=0 -S localhost:8000 -t public</code>. No navegador, abra <code>http://localhost:8000/balcao.php</code> e use “Atualizar atendimento”. A resposta continua vindo de <code>public/api/atendimento.php</code>.</p>
 <p>Se você estiver usando uma cópia nova do checkpoint, entre em <code>cliente-balcao</code>, execute <code>npm ci</code> e depois <code>npm run build</code>. Volte à raiz antes de iniciar o PHP. O download leva os arquivos-fonte; o build produz <code>public/js/balcao/main.js</code>. Live Preview continua útil para HTML estático, mas não executa o PHP desta aplicação.</p>
 <p>Conseguiu consultar? Então siga. A revisão inteira do Web II não é uma condição para continuar. Se a consulta falhar, confira o endereço, o terminal do PHP e a última aula do Capítulo 2. O erro precisa ser resolvido onde apareceu, sem recomeçar o Café do zero.</p>
-<h3>Uma informação tem duas formas</h3>
+<h3 id="passo-2">Uma informação tem duas formas</h3>
 <p>Você já trabalhou com <code>nomeNegocio</code>, <code>pedidosAbertos</code> e <code>tempoEstimado</code>: nome, situação e minutos são os dados que a equipe informa. O serviço consultado pelo balcão devolve outras três propriedades: <code>nomeNegocio</code>, <code>mensagemStatus</code> e <code>mensagemTempo</code>. São mensagens prontas para mostrar.</p>
 <p>Não vamos tentar extrair minutos de uma frase. Guardaremos <code>47</code> como número e prepararemos a mensagem quando ela for necessária. Esses 47 minutos são uma informação fictícia da equipe para nosso teste, não uma medição automática. <code>null</code> continuará significando “a equipe ainda não informou”; zero continuará sendo um valor informado.</p>
-<h3>Qual caminho seguir?</h3>
+<h3 id="qual-caminho-seguir">Qual caminho seguir?</h3>
 <p>O professor indica o percurso da sua turma. Você fará apenas esse percurso e, depois, a entrega comum. Não precisa desenvolver três versões completas do Café nem repetir o início que já concluiu. Os caminhos tratam da mesma necessidade, com organizações diferentes.</p>
 {{selecao}}
 <p id="percurso-status" role="status"></p>

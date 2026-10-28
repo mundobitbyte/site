@@ -1,15 +1,16 @@
 <p>Uma colega recebeu a pasta e conseguiu abrir o HTML, mas não recebeu o atendimento. Os arquivos da página chegaram até ela; os serviços estavam em outro computador. Hospedar arquivos e disponibilizar os dados são partes diferentes da entrega.</p>
 <p>Vamos preparar uma cópia limpa e identificar o ambiente antes de pensar em nuvem. A prática obrigatória continua local e não exige cadastro de faturamento.</p>
-<h3>Reproduza o que a colega precisa receber</h3>
-<p>Extraia a referência em outra pasta. Com Node 22 e Java 21, execute <code>npm ci</code> na raiz e em <code>cliente-balcao</code>. Faça o build do cliente. Encerre os emuladores da pasta anterior antes de iniciar <code>npm run emuladores</code> na nova e executar <code>npm run preparar</code>.</p>
+<h3 id="passo-1">Reproduza o que a colega precisa receber</h3>
+<p>Extraia a referência em outra pasta. Com Node 22 e Java 21, execute <code>npm ci</code> na raiz e em <code>cliente-balcao</code>. Faça o build do cliente. Encerre com Ctrl+C os emuladores da pasta anterior e aguarde sua exportação antes de iniciar <code>npm run emuladores</code> na nova e executar <code>npm run preparar</code>.</p>
+<p>Esta conferência usa dados iniciais em uma pasta limpa. Suas fotos e descrições anteriores continuam na pasta de trabalho, junto de <code>dados-emuladores</code>. Depois da conferência, encerre a cópia limpa e volte à pasta de trabalho com <code>npm run retomar</code> antes de continuar para Functions.</p>
 <p>Abra <code>http://localhost:5000</code>, consulte, entre e altere um prazo. O emulador Hosting serve os arquivos de <code>public</code>; Auth, Firestore e Storage atendem os demais endereços configurados. Essa execução não publica o Café na internet.</p>
 {{arquivo:firebase.json}}
 <p>O build produz arquivos em <code>public/js/balcao</code> e preserva o restante de <code>public</code>. Ele não transforma PHP em JavaScript. O formulário de mensagens anterior continua na aplicação PHP preservada; seu link de exercício usa <code>localhost:8000</code> e depende daquele servidor em execução.</p>
-<h3>Configuração pública não é credencial de administração</h3>
+<h3 id="passo-2">Configuração pública não é credencial de administração</h3>
 <p>O exemplo abaixo mostra quais dados públicos mudariam em um aplicativo registrado em um projeto real. Ele não é uma configuração pronta para usar: os marcadores precisam ser substituídos em um ambiente aprovado pelo professor. Nesta prática, mantenha <code>src/ambiente.ts</code> no modo local.</p>
 {{arquivo:cliente-balcao/configuracao-nuvem.exemplo.ts.txt}}
 <p>Uma configuração pública identifica o projeto e seus serviços. A proteção dos dados continua nas regras e permissões. Uma chave privada de conta de serviço ou uma credencial Admin pertence ao servidor e nunca deve ser colada no cliente nem publicada no repositório.</p>
-<h3>Confira as condições antes de escolher nuvem</h3>
+<h3 id="passo-3">Confira as condições antes de escolher nuvem</h3>
 <p><a href="https://firebase.google.com/docs/storage/faqs-storage-changes-announced-sept-2024" target="_blank" rel="noopener noreferrer">Storage em nuvem exige plano Blaze com faturamento vinculado</a>. A implantação de <a href="https://firebase.google.com/docs/functions/get-started" target="_blank" rel="noopener noreferrer">Functions também depende desse plano</a>. Faixas sem cobrança de uso não significam ausência de conta de faturamento ou garantia de custo zero.</p>
 <p>Por isso não há comando de contratação ou deploy obrigatório nesta aula. Se a escola disponibilizar um ambiente real, sua configuração, permissões, custos e testes precisam ser combinados e verificados separadamente. Sem esse ambiente, registre “nuvem não executada” e conclua a reprodução local.</p>
 <h3 id="checkpoint">Outra pasta consegue executar o mesmo Café?</h3>
