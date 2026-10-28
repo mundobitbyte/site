@@ -2,6 +2,9 @@
 .der-figure{max-width:1040px;margin:1.4rem auto;padding:.8rem;border:1px solid #d9e4f0;border-radius:12px;background:#fff}
 .der-figure-compact{max-width:620px}
 .der-figure-narrow{max-width:440px}
+.brmodelo-capture{max-width:380px;margin:1rem auto;padding:.65rem;border:1px solid #d9e4f0;border-radius:12px;background:#fff}
+.brmodelo-capture img{display:block;width:auto;max-width:100%;height:auto;margin:auto}
+.brmodelo-capture figcaption{padding-top:.6rem;color:#40556e;font-size:.94rem;line-height:1.6}
 .der-figure img{display:block;width:100%;max-width:100%;height:auto;margin:0 auto}
 .der-figure figcaption{padding:.65rem .2rem .1rem;color:#40556e;font-size:.94rem;line-height:1.6;overflow-wrap:anywhere}
 #mod-modelagem [id],#mod-modelagem-logica [id]{scroll-margin-top:16px}

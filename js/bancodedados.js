@@ -156,6 +156,6 @@ function atualizarVisuaisBancoDados(){
   requestAnimationFrame(() => window.MBBVisualizadorSite?.scan(document));
 }
 document.addEventListener('load', event => {
-  if (event.target.matches?.('.heidi-figure img,.der-figure img')) atualizarVisuaisBancoDados();
+  if (event.target.matches?.('.heidi-figure img,.der-figure img,.brmodelo-capture img')) atualizarVisuaisBancoDados();
 }, true);
 window.addEventListener('load', atualizarVisuaisBancoDados, {once:true});
