@@ -74,6 +74,16 @@ fs.mkdirSync(dest,{recursive:true});
      }
     }
     // Cada recurso visual é carregado ao percorrer as etapas, mesmo quando lazy.
+    for(const img of await page.locator('main img').all()){
+     if(await img.evaluate(e=>e.complete&&e.naturalWidth>0))continue;
+     const panelId=await img.evaluate(e=>e.closest('main > section[id]')?.id);
+     if(panelId&&await page.locator(`#stageMenu a[href="#${panelId}"]`).count()){
+      if(await page.locator('#stageToggle').isVisible())await page.locator('#stageToggle').click();
+      await page.locator(`#stageMenu a[href="#${panelId}"]`).click();
+     }
+     await img.scrollIntoViewIfNeeded();
+     await img.evaluate(e=>e.decode());
+    }
     const images=await page.locator('main img').evaluateAll(es=>es.map(e=>({src:e.getAttribute('src'),ok:e.complete&&e.naturalWidth>0})));
     assert(images.every(e=>e.ok),JSON.stringify(images));
     if(width===1366&&name==='projeto-iot')await page.screenshot({path:`${dest}/projeto-iot-desktop.png`});

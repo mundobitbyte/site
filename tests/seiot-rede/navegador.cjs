@@ -30,6 +30,12 @@ fs.mkdirSync(dest,{recursive:true});
    const scroll=await saida.locator('.mbb6-pcap-scroll').evaluate(e=>({cliente:e.clientWidth,conteudo:e.scrollWidth,tab:e.tabIndex}));
    assert.equal(scroll.tab,0);assert(scroll.conteudo>=scroll.cliente);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0);
+   if(width<980){
+    const ampliar=saida.locator('.mbb-visualizador-trigger');
+    await ampliar.waitFor();await ampliar.click();
+    assert(await page.locator('#mbbVisualizador').isVisible());
+    await page.getByRole('button',{name:'Fechar visualizador',exact:true}).click();
+   }
    await saida.scrollIntoViewIfNeeded();
    if(width===390||width===1366)await page.screenshot({path:path.join(dest,`mdns-pcap-${width}.jpg`),type:'jpeg',quality:75});
    await entrada.setInputFiles({name:'incorreto.pcap',mimeType:'application/octet-stream',buffer:Buffer.from([0,1,2])});

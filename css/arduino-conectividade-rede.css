@@ -11,7 +11,10 @@
 :is(#b6-4,#b6-5) .mbb6-table-scroll,.mbb6-pcap-scroll{max-width:100%;overflow-x:auto}
 #b6-4 input[type=file]{display:block;max-width:100%;margin:1rem 0;border:1px solid #adc4ce;padding:.65rem;border-radius:6px;background:#fff;color:#143f50}
 #mdns-pcap-resultado{margin-top:1rem;line-height:1.6}
-#mdns-pcap-resultado table{font-size:.9rem;min-width:600px}
+#mdns-pcap-resultado .mbb6-pcap-scroll{max-height:420px;overflow:auto}
+#mdns-pcap-resultado table{font-size:.9rem;min-width:980px}
+#mdns-pcap-resultado th{position:sticky;top:0;z-index:1}
+#mdns-pcap-resultado td{white-space:nowrap}
 #mdns-pcap-resultado td{vertical-align:top}
 :is(#b6-4,#b6-5) :focus-visible{outline:3px solid #087d9b;outline-offset:3px}
 @media(max-width:640px){:is(#b6-4,#b6-5) details{padding:.65rem}.mbb6-pcap-scroll{border:1px solid #d0dee4}:is(#b6-4,#b6-5) .mbb6-terminal{padding:.5rem}}

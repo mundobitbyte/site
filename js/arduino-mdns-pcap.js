@@ -113,7 +113,8 @@
           aviso.textContent = 'Nenhum pacote mDNS IPv4 encontrado nesta captura. Isso não comprova defeito da biblioteca. Confira início, tempo simulado e exportação; este leitor não analisa tráfego IPv6.';
           saida.appendChild(aviso); return;
         }
-        const faixa = document.createElement('div'); faixa.className = 'mbb6-pcap-scroll'; faixa.tabIndex = 0;
+        const faixa = document.createElement('div'); faixa.className = 'mbb6-pcap-scroll table-responsive'; faixa.tabIndex = 0;
+        faixa.setAttribute('role', 'region'); faixa.setAttribute('aria-label', 'Registros mDNS: role para os lados e para baixo');
         const tabela = document.createElement('table');
         const cab = tabela.createTHead().insertRow();
         for (const texto of ['Tempo simulado (s)','Mensagem','Origem → destino','Tipo','Nome observado','Valor observado']) {
@@ -126,7 +127,7 @@
         }
         faixa.appendChild(tabela); saida.appendChild(faixa);
         const limite = document.createElement('p');
-        limite.textContent = 'A tabela descreve bytes capturados. Anúncios não comprovam que o navegador do computador resolveu o nome .local. Nenhum arquivo foi enviado ao site.';
+        limite.textContent = 'Role a tabela para os lados e para baixo; use Ver tabela completa quando disponível. A tabela descreve bytes capturados. Anúncios não comprovam que o navegador do computador resolveu o nome .local. Nenhum arquivo foi enviado ao site.';
         saida.appendChild(limite);
       } catch (erro) {
         saida.textContent = 'Não foi possível ler: ' + erro.message;
