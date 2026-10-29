@@ -72,3 +72,9 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #d9
   .code-card pre,.result-card .preview-area{max-height:none}
   .new-code pre{font-size:14px;overflow-wrap:anywhere}
 }
+
+/* Materiais do ambiente: link compacto, legível e sem largura fixa. */
+.visualg-download-link{display:inline-flex;max-width:100%;align-items:center;padding:9px 13px;background:var(--primary);color:#fff;border-radius:7px;font-weight:700;text-decoration:none;overflow-wrap:anywhere}
+.visualg-download-link:hover{background:var(--dark)}
+.theory-page small{font-size:.9em;line-height:1.5}
+@media(max-width:600px){.visualg-download-link{display:inline-block;margin:4px 0 8px}.visualg-download-link+small{display:block}}
