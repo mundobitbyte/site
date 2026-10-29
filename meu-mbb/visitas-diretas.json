@@ -1143,7 +1143,7 @@
   "pages/infraestrutura.html": {
     "conteudo_id": "mod-pages-infraestrutura",
     "titulo": "Infraestrutura e Sistemas",
-    "versao_conteudo": 2,
+    "versao_conteudo": 1,
     "localizacao_atual": "pages/infraestrutura.html",
     "ancoras": [
       "diagnostico",

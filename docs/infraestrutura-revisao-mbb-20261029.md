@@ -155,7 +155,7 @@ nos kits. A geração é reproduzível por `scripts/empacotar-infraestrutura.py`
 - Bancada com iframe e viewports 375, 768 e 1280: portal, instalação Linux,
   Netplan, Compose e VLAN, aguardando a aula correta em cada troca. Quinze
   combinações sem overflow global. É teste de viewport, não dispositivo físico.
-- Os IDs de progresso existentes foram mantidos; a versão do curso passou a 2.
+- Os IDs, a versão interna e o status originais foram mantidos, preservando o histórico de estudo.
   O gerador de pesquisa agora extrai as aulas na ordem dos scripts da página,
   incluindo os complementos; 49 destinos de pesquisa e retomada foram conferidos.
 - 68 URLs externas examinadas por HEAD: 65 retornaram 200. Dell segurança e duas
