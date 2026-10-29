@@ -87,13 +87,16 @@
   }
 
   function bindInteractions(root) {
+    root.querySelectorAll('details').forEach((details) => {
+      details.addEventListener('toggle', () => window.dispatchEvent(new Event('mbb:conteudo-pronto')));
+    });
     root.querySelectorAll('[data-choice]').forEach((group) => {
       group.querySelector('[data-check-choice]')?.addEventListener('click', () => checkChoice(group));
     });
 
     root.querySelectorAll('[data-quiz-group]').forEach((group) => {
       const button = group.querySelector('[data-check-quiz]');
-      const result = group.querySelector('[data-quiz-result]');
+      const result = group.querySelector('[data-quiz-result], .quiz-result');
       button?.addEventListener('click', () => {
         const questions = [...group.querySelectorAll('[data-quiz-question]')];
         const unanswered = questions.filter((question) => !question.querySelector('input[type="radio"]:checked'));
@@ -148,7 +151,7 @@
     });
 
     root.querySelectorAll('[data-checklist]').forEach((list) => {
-      const progress = list.parentElement?.querySelector('[data-check-progress]');
+      const progress = list.parentElement?.querySelector('[data-check-progress], .check-progress');
       const update = () => {
         const items = [...list.querySelectorAll('input[type="checkbox"]')];
         const checked = items.filter((item) => item.checked).length;
