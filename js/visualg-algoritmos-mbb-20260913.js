@@ -192,6 +192,8 @@ Se procurado for 120, quantas comparações serão feitas? E se for 999?`,
       out: `Código encontrado na posição 4`,
       note: `<span class="badge">Investigue</span><br>Execute primeiro com 425. Depois teste 120, 680 e 999. Preveja quantas comparações serão necessárias em cada caso antes de executar.`
     };
+    busca.lesson = "<h3>Do vetor completo para uma resposta específica</h3><p>Já conseguimos guardar e percorrer valores. Agora queremos saber onde está um código. A busca linear compara uma posição por vez; não exige que os dados estejam ordenados.</p><p>posicao começa em 0 para indicar ausência, porque os índices deste vetor vão de 1 a 6. Com procurado = 425, o algoritmo compara 120, 245 e 310 sem encontrar; na quarta comparação encontra 425, guarda i em posicao e interrompe o laço. Só depois decide qual mensagem mostrar.</p><p>Não coloque a mensagem de ausência no senao de cada comparação: o primeiro código diferente ainda não prova que o valor não existe nas posições seguintes. Para afirmar ausência, precisamos terminar a busca sem encontrar.</p><p>Execute com 120, 680 e 999. As quantidades de comparações são 1, 6 e 6. Para 999, posicao continua zero e a saída informa que não foi encontrado. Acrescente temporariamente uma saída dentro do laço para conferir quantas posições foram visitadas; depois remova essa saída de investigação.</p><p>Se houver códigos repetidos, o interrompa faz a busca parar na primeira ocorrência. Para contar todas as ocorrências, precisaremos continuar até o fim e usar um contador, retomando outro padrão já estudado.</p>";
+    busca.checkpoint = `<p><strong>Confira sua compreensão:</strong> Se o valor não existir, quando é seguro informar ausência?</p><details><summary>Conferir o raciocínio depois de tentar</summary><p>Depois de percorrer todas as posições sem encontrar. Uma comparação diferente não elimina as posições seguintes.</p></details>`;
     steps.splice(indiceVetor >= 0 ? indiceVetor + 1 : steps.length - 1, 0, busca);
   }
 
@@ -211,25 +213,22 @@ Dois laços aninhados aumentam a quantidade de operações. Em uma matriz 3 x 3 
   const depuracao = getStep(16);
   if (depuracao && typeof depuracao.content === 'string' && !depuracao.content.includes('Depuração interativa no VisuAlg')) {
     const debugHtml = `
-      <h3>Depuração interativa no VisuAlg</h3>
-      <p>Além do teste de mesa, o próprio VisuAlg permite acompanhar uma execução passo a passo. A diretiva <code>debug</code> ativa a depuração interativa.</p>
+      <h3>Depuração interativa no VisuAlg para Windows</h3>
+      <p>Retome o teste de mesa: x começa em 10, y em 5 e a soma deve deixar x em 15. Agora vamos observar esses estados no programa. <strong>pausa</strong> interrompe a execução naquele ponto; <strong>debug condição</strong> faz isso apenas se a condição for verdadeira. Ambos ficam na seção de comandos, depois de <code>inicio</code>.</p>
       <pre class="command">algoritmo "Acompanhando_Debug"
-debug
 var
    x, y: inteiro
 inicio
-   x <- 10
-   y <- 5
-   x <- x + y
+   x &lt;- 10
+   y &lt;- 5
+   pausa
+   x &lt;- x + y
+   debug x = 15
    escreval("x = ", x, " | y = ", y)
 fimalgoritmo</pre>
-      <div class="intro-grid">
-        <div class="intro-box"><strong>p / proximo</strong><br>Avança uma instrução e permite observar a mudança de estado.</div>
-        <div class="intro-box"><strong>nome da variável</strong><br>Permite inspecionar o valor durante a execução.</div>
-        <div class="intro-box"><strong>c / continue</strong><br>Continua a execução sem novas pausas.</div>
-      </div>
-      <div class="example-box"><strong>Método MbB de depuração:</strong><br>PREVER → RASTREAR → EXECUTAR → INSPECIONAR → COMPARAR → CORRIGIR → TESTAR NOVAMENTE.</div>
-      <p>Teste de mesa e depurador não são concorrentes. O teste de mesa desenvolve a capacidade de prever; o depurador permite confrontar essa previsão com o estado real do programa.</p>`;
+      <p>Execute com <strong>F9</strong>. Na primeira pausa, confira x = 10 e y = 5 no painel de variáveis. Avance com <strong>F8</strong> e observe x mudar para 15 depois da atribuição. Continue com F9; <code>debug x = 15</code> pausa porque a comparação é verdadeira. Prossiga até a saída <code>x = 15 | y = 5</code>. A apresentação dos espaços pode variar.</p>
+      <p>Agora altere o valor inicial de x para 9. Antes de executar, preveja: a pausa incondicional permanece, mas a condição do debug será falsa, pois x terminará em 14. Essa diferença permite investigar uma situação específica sem parar em todas as execuções. Para encerrar uma execução em andamento, use <strong>Ctrl+F2</strong>.</p>
+      <p>Se a saída estiver errada, localize a primeira variável divergente, corrija uma causa por vez e repita os testes anteriores. Não use comandos de console de outros interpretadores como se fossem atalhos deste ambiente.</p>`;
     depuracao.content = depuracao.content.replace('<h3>5. Diagnóstico final</h3>', `${debugHtml}<h3>Diagnóstico final</h3>`);
     depuracao.content = depuracao.content.replace('PREVER → EXECUTAR → COMPARAR', 'PREVER → RASTREAR → EXECUTAR → INSPECIONAR → COMPARAR');
   }
@@ -246,3 +245,4 @@ fimalgoritmo</pre>
   buildMenu();
   showStep(0);
 })();
+

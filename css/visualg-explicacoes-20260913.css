@@ -33,3 +33,42 @@
     padding:14px;
   }
 }
+
+
+/* Leitura contínua: contexto antes do código e rastreamento sem painéis espremidos. */
+main{overflow:auto;min-width:0;scroll-behavior:auto}
+.top-row{height:auto;min-height:44px;align-items:flex-start;margin-bottom:14px}
+.top-row h2{max-width:65%}
+.workspace{height:auto;grid-template-columns:minmax(0,1fr) minmax(0,.85fr);grid-template-rows:auto auto auto;align-items:start}
+.visualg-lesson{grid-column:1/-1;grid-row:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(18px,2vw,30px);line-height:1.7;min-width:0}
+.visualg-lesson h3{color:var(--dark);font-size:22px;margin:0 0 12px}
+.visualg-lesson h4{color:var(--dark);font-size:18px;margin:20px 0 8px}
+.visualg-lesson p{max-width:90ch;margin:0 0 14px}
+.visualg-lesson code{font-family:Consolas,monospace;background:#eef4fb;padding:1px 4px;border-radius:4px;overflow-wrap:anywhere}
+.visualg-lesson table{border-collapse:collapse;width:100%;max-width:760px;margin:18px 0;font-size:15px}
+.visualg-lesson caption{text-align:left;font-weight:700;margin-bottom:8px;color:var(--dark)}
+.visualg-lesson th,.visualg-lesson td{padding:9px;border:1px solid var(--line);text-align:left;overflow-wrap:anywhere}
+.visualg-lesson th{background:#eef4fb}
+.code-card,.result-card{grid-row:2;min-width:0;min-height:350px}
+.code-card pre,.result-card .preview-area{max-height:70vh}
+.new-code,.side-bottom{grid-row:3;min-width:0}
+.new-code pre{max-height:none;line-height:1.65}
+.panel-title{height:auto;min-height:40px;gap:10px;padding:8px 12px}
+.panel-title span{min-width:0}
+.btn-copy{flex-shrink:0;min-height:32px}
+.intro-view{grid-column:1/-1;grid-row:auto;min-width:0;max-height:none}
+.intro-view pre{white-space:pre;max-width:100%}
+.intro-view>.btn-copy,.intro-view .btn-copy{margin-top:12px}
+.note details{margin-top:14px}.note details p{margin-top:10px}
+.note summary{cursor:pointer;font-weight:700}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #d97706;outline-offset:3px}
+@media(max-width:1050px){
+  .workspace{display:flex;flex-direction:column;height:auto}
+  .workspace>*,.visualg-lesson,.code-card,.result-card,.new-code,.side-bottom{width:100%;min-width:0}
+  .top-row h2{max-width:100%}
+  .visualg-lesson{padding:18px}
+  .visualg-lesson table{font-size:13px}
+  .visualg-lesson th,.visualg-lesson td{padding:7px 5px}
+  .code-card pre,.result-card .preview-area{max-height:none}
+  .new-code pre{font-size:14px;overflow-wrap:anywhere}
+}

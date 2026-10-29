@@ -55,10 +55,12 @@
         if (typeof closeExerciseMenu === 'function') closeExerciseMenu();
       } else {
         // No desktop, quase encosta a seção no topo do painel, sem mostrar o tópico anterior.
-        const introRect = intro.getBoundingClientRect();
+        const panel = document.querySelector('main');
+        if (!panel) return;
+        const panelRect = panel.getBoundingClientRect();
         const targetRect = target.getBoundingClientRect();
-        const targetTop = intro.scrollTop + (targetRect.top - introRect.top);
-        intro.scrollTo({ top: Math.max(0, targetTop - 24), behavior: 'auto' });
+        const targetTop = panel.scrollTop + targetRect.top - panelRect.top;
+        panel.scrollTo({ top: Math.max(0, targetTop - 24), behavior: 'auto' });
       }
     };
   }
@@ -71,3 +73,4 @@
     if (typeof showStep === 'function') showStep(0);
   }
 })();
+

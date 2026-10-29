@@ -31,6 +31,10 @@
         <div class="intro-box"><strong>Saída</strong><br>O resultado que o programa apresenta.</div>
       </div>
       <div class="example-box"><strong>Exemplo — média de duas notas</strong><br><br><strong>Entrada:</strong> nota1 e nota2.<br><strong>Processamento:</strong> (nota1 + nota2) / 2.<br><strong>Saída:</strong> média calculada.</div>
+      <h3>Antes de abrir o editor, defina uma resposta verificável</h3>
+      <p>Um algoritmo descreve passos ordenados e precisos para resolver um problema. O computador executa o que foi escrito: não completa uma regra que ficou apenas na intenção de quem programou. Para calcular a média, receber 8 e 6 e responder 7 é um teste concreto. Responder apenas uma mensagem de boas-vindas não resolve esse problema, mesmo que o programa execute sem erro.</p>
+      <p>O VisuAlg interpreta uma forma de Portugol, uma escrita didática com comandos em português. Outros ambientes também usam o nome Portugol, mas podem adotar outra sintaxe. Nesta trilha, use <strong>VisuAlg 3 para Windows</strong>. O projeto do desenvolvedor disponibiliza o programa em <a href="https://sourceforge.net/projects/visualg30/" target="_blank" rel="noopener noreferrer">SourceForge</a>. Em um computador da escola, verifique primeiro se ele já está instalado.</p>
+      <p>Abra o editor do VisuAlg, crie um algoritmo e substitua o modelo inicial pelo código completo da aula. Salve com extensão <code>.alg</code>; F9 executa e F8 permite avançar passo a passo. A página da apostila não executa esse código: a área de saída é uma ilustração para comparação. Primeiro vamos mostrar mensagens; em seguida guardaremos e leremos dados, para então construir cálculos e decisões.</p>
       <h3>Como estudar cada exemplo</h3>
       <ol>
         <li><strong>Preveja:</strong> tente imaginar o resultado antes de executar.</li>
@@ -39,6 +43,7 @@
         <li><strong>Modifique:</strong> altere um valor ou uma condição e execute novamente.</li>
         <li><strong>Explique:</strong> diga com suas palavras por que o resultado mudou.</li>
       </ol>
+      <p><strong>Checkpoint:</strong> para calcular o total de uma compra, o que muda se a quantidade passar de 2 para 3? Defina um preço, calcule as duas respostas no papel e explique qual dado mudou. Esse será seu primeiro critério para conferir o programa.</p>
       <div class="exercise-box"><strong>Antes de programar:</strong> uma cantina precisa receber o preço e a quantidade de um produto e informar o total da compra. Identifique apenas a entrada, o processamento e a saída.</div>
     </div>`;
   }
@@ -243,3 +248,4 @@
   buildMenu();
   showStep(0);
 })();
+
