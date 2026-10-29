@@ -9,7 +9,8 @@
     if (!step) return;
     const atual = step.added || '';
     if (atual.includes(marker)) return;
-    step.added = `${atual}\n\n${marker}\n${text}`.trim();
+    const complemento = text.startsWith(marker + '\n') ? text : `${marker}\n${text}`;
+    step.added = `${atual}\n\n${complemento}`.trim();
   }
 
   const variaveis = getStep(4);
