@@ -127,7 +127,7 @@
     const afterPara = steps.findIndex((item) => item.id === 11);
     steps.splice(afterPara + 1, 0, {
       id: 17,
-      menu: '11 Condição',
+      menu: '11 Enquanto',
       title: '11 — Enquanto e Repita: Repetição por Condição',
       objective: 'Escolher o laço adequado quando não sabemos antecipadamente quantas repetições serão necessárias.',
       code: `algoritmo "Repeticao_Condicional"\nvar\n   i: inteiro\n   nota: real\ninicio\n   i <- 1\n   enquanto i <= 3 faca\n      escreval("Tentativa ", i)\n      i <- i + 1\n   fimenquanto\n\n   repita\n      escreva("Digite uma nota entre 0 e 10: ")\n      leia(nota)\n   ate (nota >= 0) e (nota <= 10)\n\n   escreval("Nota válida: ", nota)\nfimalgoritmo`,
