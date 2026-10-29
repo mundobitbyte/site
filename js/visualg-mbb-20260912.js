@@ -51,10 +51,6 @@ inicio
 fimalgoritmo</pre>
       <p>Escolha <strong>Arquivo → Salvar como</strong>, use o nome <code>teste-do-ambiente.alg</code> e guarde em uma pasta de exercícios. Execute com <strong>F9</strong>. A saída esperada é <strong>Meu primeiro algoritmo funcionou.</strong> A página da apostila não executa o algoritmo: o teste acontece no programa que você abriu.</p>
       <p>Agora altere a mensagem para incluir seu nome, salve e execute novamente. <strong>Checkpoint:</strong> você conseguiu localizar o arquivo <code>.alg</code>, reabri-lo e obter a nova mensagem? Se sim, o ambiente passou por este primeiro teste no seu computador. A etapa 2 explicará cada parte da estrutura; ainda não precisamos decorar os comandos.</p>
-      <h4>Material de apoio — Introdução aos Algoritmos</h4>
-      <p>A obra de <strong>Bruno Tonet e Cristian Koliver</strong>, vinculada ao <strong>NAPRO — Núcleo de Apoio à Aprendizagem de Programação, da Universidade de Caxias do Sul</strong>, tem 54 páginas no PDF fornecido. É material didático de apoio; não é apresentado aqui como manual oficial do desenvolvedor do VisuAlg.</p>
-      <p>O PDF ainda não está disponível para baixar neste site, pois sua autorização de redistribuição não foi comprovada. Você pode consultar a <a href="https://materialpublic.imd.ufrn.br/curso/disciplina/3/13/13/17" target="_blank" rel="noopener noreferrer">referência bibliográfica no material institucional da UFRN</a>. Essa página é uma referência, não o download do PDF.</p>
-      <p>Quando tiver acesso autorizado ao material, use o sumário para procurar o assunto da dúvida, como variáveis, entrada e saída ou repetição. Compare o exemplo com o que fez e teste uma pequena alteração de cada vez. Para dúvidas sobre menus e comandos, consulte também a ajuda que acompanha o programa, na pasta <code>Help</code>.</p>
       <h3>Como estudar cada exemplo</h3>
       <ol>
         <li><strong>Preveja:</strong> tente imaginar o resultado antes de executar.</li>
