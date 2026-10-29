@@ -21,4 +21,9 @@ with tempfile.TemporaryDirectory(prefix='mbb-retomada-') as pasta:
   teste=subprocess.run(comando,cwd=app,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=150)
   if teste.returncode:raise RuntimeError(teste.stdout)
   assert (app/'dados-emuladores/firebase-export-metadata.json').is_file()
+  if etapa=='b3':
+   assert (app/'dados-emuladores-legado/firebase-export-metadata.json').is_file()
+   # Recupera o snapshot guardado manualmente por quem ainda usava os comandos antigos.
+   (app/'dados-emuladores').rename(app/'dados-emuladores-auto')
+   (app/'dados-emuladores-legado').rename(app/'dados-emuladores')
   print(f'PASSOU {etapa}: {script}, fase {fase}, importação/exportação e preservação reais locais.',flush=True)
