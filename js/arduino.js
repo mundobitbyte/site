@@ -68,26 +68,6 @@ function montarMenuEtapas(){
   if(ioButton) ioButton.dataset.target = '#p2';
 }
 
-function acrescentarModulos5a10(){
-  const menu = document.getElementById('arduinoModuleMenu');
-  if(!menu) return;
-  const exercicios = menu.querySelector('a[href="arduino-exercicios.html"]');
-  const itens = [
-    ['arduino-programacao-aplicada.html','5. Programação Aplicada'],
-    ['arduino-conectividade.html','6. Conectividade'],
-    ['arduino-iot.html','7. Internet das Coisas'],
-    ['arduino-protocolos.html','8. RTOS e Protocolos'],
-    ['arduino-seguranca.html','9. Proteção e Segurança'],
-    ['arduino-projeto-iot.html','10. Projeto IoT']
-  ];
-  itens.forEach(([href, texto]) => {
-    if(menu.querySelector(`a[href="${href}"]`)) return;
-    const link = document.createElement('a');
-    link.className='module-btn'; link.href=href; link.textContent=texto; link.style.textDecoration='none';
-    if(exercicios) menu.insertBefore(link, exercicios); else menu.appendChild(link);
-  });
-}
-
 function iniciarNavegacaoArduino(){
   const layout = document.getElementById('arduinoLayout');
   const moduleButtons = Array.from(document.querySelectorAll('#arduinoModuleMenu .module-btn'));
@@ -201,7 +181,6 @@ document.addEventListener('DOMContentLoaded', function(){
       if(window.MbbArduinoContexto) window.MbbArduinoContexto.aplicar();
       if(window.MbbArduinoDestaques) window.MbbArduinoDestaques.aplicar();
       montarMenuEtapas();
-      acrescentarModulos5a10();
       iniciarNavegacaoArduino();
       manterModuloAtivoVisivel();
       return;
