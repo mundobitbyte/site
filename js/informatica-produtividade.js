@@ -38,6 +38,7 @@
 
   function showPortal(updateHash = true) {
     closeMenu();
+    currentLessonId = null;
     if (portalView) portalView.hidden = false;
     if (courseView) courseView.hidden = true;
     if (updateHash && window.location.hash !== '#area') history.replaceState(null, '', '#area');
