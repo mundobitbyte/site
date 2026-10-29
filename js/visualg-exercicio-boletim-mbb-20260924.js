@@ -89,8 +89,8 @@
   <ol>
     <li>mostre qual aluno está sendo cadastrado;</li>
     <li>peça o nome e guarde-o na posição correspondente do vetor;</li>
-    <li>peça a nota 1;</li>
-    <li>peça a nota 2;</li>
+    <li>peça a nota 1, repetindo a leitura numérica até que esteja entre 0 e 10;</li>
+    <li>peça a nota 2 com a mesma validação;</li>
     <li>guarde as notas na matriz;</li>
     <li>chame a função <code>calcularMedia</code>;</li>
     <li>guarde a média no vetor de médias.</li>
@@ -181,7 +181,7 @@
     <li>a maior média;</li>
     <li>o nome do aluno correspondente.</li>
   </ol>
-  <p>Essas duas informações precisam ser atualizadas juntas.</p>
+  <p>Essas duas informações precisam ser atualizadas juntas. Em caso de empate, mantenha o primeiro aluno: atualize apenas quando encontrar uma média estritamente maior, usando &gt;.</p>
 
   <h3>8. Apresente o resumo final</h3>
   <p>No final da execução, mostre algo neste formato:</p>
@@ -252,6 +252,89 @@
     <p>Quando todas as respostas forem <strong>sim</strong>, a atividade principal está concluída.</p>
   </div>
 
+  <h3>Teste as fronteiras e explique o resultado</h3>
+  <p>Repita com Ana (6 e 6), Bruno (4 e 4) e Carla (0 e 10). Espere um aprovado, dois em recuperação e nenhum reprovado; a média geral é 5. Teste também todos com zero, todos com dez e duas maiores médias empatadas. Digite -1 e depois 11 antes de uma nota válida: as entradas inválidas não devem avançar para a próxima avaliação.</p>
+  <p>O programa valida o intervalo de entradas numéricas. Letras no lugar de notas exigem outro tratamento e não fazem parte desta solução. Guarde as médias sem arredondar durante os cálculos; formate com duas casas apenas ao mostrar. Confira se os três contadores somam exatamente três.</p>
+  <details class="exercise-solved"><summary>Conferir uma solução completa — depois de construir e testar</summary>
+  <p>Compare por responsabilidade: leitura, cálculo, classificação e resumo. Se sua solução usa outra organização, verifique se produz os mesmos resultados. <code>:1:2</code> na saída define largura mínima e duas casas decimais; não altera o valor armazenado.</p>
+  <pre>algoritmo &quot;Boletim_da_Turma&quot;
+var
+   nomes, situacoes: vetor[1..3] de caractere
+   notas: vetor[1..3,1..2] de real
+   medias: vetor[1..3] de real
+   aluno, avaliacao, melhorAluno: inteiro
+   aprovados, recuperacao, reprovados: inteiro
+   somaMedias, mediaGeral, maiorMedia: real
+
+funcao calcularMedia(n1, n2: real): real
+inicio
+   retorne (n1 + n2) / 2
+fimfuncao
+
+inicio
+   para aluno de 1 ate 3 faca
+      escreva(&quot;Nome do aluno &quot;, aluno, &quot;: &quot;)
+      leia(nomes[aluno])
+      para avaliacao de 1 ate 2 faca
+         repita
+            escreva(&quot;Nota &quot;, avaliacao, &quot; (0 a 10): &quot;)
+            leia(notas[aluno,avaliacao])
+         ate (notas[aluno,avaliacao] &gt;= 0) e (notas[aluno,avaliacao] &lt;= 10)
+      fimpara
+      medias[aluno] &lt;- calcularMedia(notas[aluno,1], notas[aluno,2])
+      se medias[aluno] &gt;= 6 entao
+         situacoes[aluno] &lt;- &quot;Aprovado&quot;
+      senao
+         se medias[aluno] &gt;= 4 entao
+            situacoes[aluno] &lt;- &quot;Recuperação&quot;
+         senao
+            situacoes[aluno] &lt;- &quot;Reprovado&quot;
+         fimse
+      fimse
+   fimpara
+
+   somaMedias &lt;- 0
+   aprovados &lt;- 0
+   recuperacao &lt;- 0
+   reprovados &lt;- 0
+   maiorMedia &lt;- medias[1]
+   melhorAluno &lt;- 1
+
+   para aluno de 1 ate 3 faca
+      escreval(&quot;ALUNO &quot;, aluno)
+      escreval(&quot;Nome: &quot;, nomes[aluno])
+      escreval(&quot;Nota 1: &quot;, notas[aluno,1]:1:2)
+      escreval(&quot;Nota 2: &quot;, notas[aluno,2]:1:2)
+      escreval(&quot;Média: &quot;, medias[aluno]:1:2)
+      escreval(&quot;Situação: &quot;, situacoes[aluno])
+      somaMedias &lt;- somaMedias + medias[aluno]
+      se medias[aluno] &gt;= 6 entao
+         aprovados &lt;- aprovados + 1
+      senao
+         se medias[aluno] &gt;= 4 entao
+            recuperacao &lt;- recuperacao + 1
+         senao
+            reprovados &lt;- reprovados + 1
+         fimse
+      fimse
+      se medias[aluno] &gt; maiorMedia entao
+         maiorMedia &lt;- medias[aluno]
+         melhorAluno &lt;- aluno
+      fimse
+   fimpara
+
+   mediaGeral &lt;- somaMedias / 3
+   escreval(&quot;RESUMO DA TURMA&quot;)
+   escreval(&quot;Média geral: &quot;, mediaGeral:1:2)
+   escreval(&quot;Aprovados: &quot;, aprovados)
+   escreval(&quot;Recuperação: &quot;, recuperacao)
+   escreval(&quot;Reprovados: &quot;, reprovados)
+   escreval(&quot;Maior média: &quot;, maiorMedia:1:2)
+   escreval(&quot;Aluno com maior média: &quot;, nomes[melhorAluno])
+fimalgoritmo
+</pre>
+  <p>Retome a espiral: a função da etapa 13 calcula cada média; os índices das etapas 14 e 15 ligam notas e nomes; os acumuladores da etapa 10 resumem a turma; a condição da etapa 11 valida a entrada. Se o nome da maior média estiver errado, rastreie melhorAluno e maiorMedia na mesma passagem.</p>
+  </details>
   <h3>Desafio extra — somente depois de concluir a atividade principal</h3>
   <p>Acrescente um menu ao programa:</p>
   <div class="example-box">
@@ -276,3 +359,4 @@
     if (typeof showStep === 'function') showStep(0);
   }
 })();
+
