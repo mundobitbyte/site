@@ -1,0 +1,7 @@
+origem;destino;teste;esperado;observado;limite
+SEC-02;192.168.10.1;ping;resposta;;gateway nao prova HTTP
+LAB-06;192.168.10.65;ping;resposta;;gateway nao prova DNS
+VIS-01;192.168.10.129;ping;resposta;;controle positivo do cliente
+SEC-02;192.168.10.20;HTTP;pagina;;funcao simulada
+LAB-06;192.168.10.20;HTTP;pagina;;roteamento nao comprova TLS
+VIS-01;192.168.10.20;ping;sem resposta pela ACL;;confirmar controles positivos antes

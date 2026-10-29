@@ -1,0 +1,11 @@
+# MODELO: revise interface/MAC e os arquivos existentes antes de usar.
+# Não há gateway nem DNS fictício na Host-only.
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3:  # NAT; ajuste pelo MAC observado
+      dhcp4: true
+    enp0s8:  # Host-only; ajuste pelo MAC observado
+      dhcp4: false
+      addresses: [192.168.10.20/26]

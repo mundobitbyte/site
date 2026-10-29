@@ -6,7 +6,7 @@
   <meta name="description" content="Aprenda sistemas, redes, servidores Linux e infraestrutura moderna na prática, com diagnóstico baseado em evidências, recuperação e documentação reutilizável.">
   <link rel="canonical" href="https://www.mundobitbyte.com.br/pages/infraestrutura.html">
   <title>Infraestrutura e Sistemas | Mundo bit Byte</title>
-  <link rel="stylesheet" href="../css/infraestrutura.css?v=4">
+  <link rel="stylesheet" href="../css/infraestrutura.css?v=20261029-1">
   <style>
     /* Ajuste cirúrgico do portal: entrada mais direta, compacta e funcional. */
     .portal-main { padding-top: clamp(22px, 3.5vw, 34px); }
@@ -49,7 +49,8 @@
         <h1>Aprenda a instalar, configurar e resolver problemas em computadores, redes e servidores.</h1>
         <p>Na prática, você vai montar ambientes, testar mudanças, diagnosticar falhas e aprender a recuperar o que estava funcionando.</p>
         <div class="portal-actions">
-          <a class="portal-cta" href="#diagnostico">Começar pelo módulo 1 →</a>
+          <a class="portal-cta" href="#preparacao">Comece aqui: prepare seu percurso →</a>
+          <a class="pill-button" href="#diagnostico">Ir ao módulo 1</a>
         </div>
       </header>
 
@@ -62,6 +63,7 @@
           <li><strong>Aplicar</strong></li>
         </ol>
       </section>
+
 
       <div class="module-grid" aria-label="Módulos da área">
         <a class="module-card available" href="#diagnostico">
@@ -95,6 +97,56 @@
           <span class="card-action">Iniciar projeto final →</span>
         </a>
       </div>
+      <section id="preparacao" class="course-preparation" aria-labelledby="preparation-title">
+        <span class="eyebrow">Comece aqui · nenhum conhecimento profissional é exigido</span>
+        <h2 id="preparation-title">O computador falhou. Por onde começar?</h2>
+        <p>Você tenta imprimir uma atividade e nada sai. O problema pode estar no computador, na conexão, na impressora ou no serviço de impressão. <strong>Infraestrutura de TI é o conjunto de equipamentos, programas, conexões e serviços que sustenta esse trabalho.</strong> Aprender a investigar esse conjunto evita trocar uma peça boa ou apagar um arquivo importante.</p>
+        <p>Na <strong>Escola Horizonte</strong>, Ana atende a secretaria, Caio organiza as aulas e Joana cuida do suporte. Você começa ajudando a entender uma estação de trabalho, depois acompanha seus dados pela rede, prepara um servidor e aprende a operar aplicações. A Feira de Projetos reúne esses desafios no laboratório final.</p>
+        <details open><summary>1. Reconheça as partes pelo que elas fazem</summary>
+          <div class="table-wrap"><table><caption>Da atividade do usuário às suas dependências</caption><thead><tr><th>Parte</th><th>Exemplo na escola</th><th>O que observar</th></tr></thead><tbody>
+          <tr><td>Hardware e armazenamento</td><td>Processador, RAM, SSD, teclado e impressora são peças físicas. O SSD guarda arquivos; a RAM mantém dados em uso.</td><td>Qual recurso participa da tarefa?</td></tr>
+          <tr><td>Software e sistema operacional</td><td>Software é um programa; o Windows administra os recursos usados pelo editor e pelo navegador.</td><td>O programa iniciou? Tem acesso ao recurso?</td></tr>
+          <tr><td>Rede</td><td>Cabos e Wi-Fi permitem que a secretaria troque dados com a impressora e o servidor.</td><td>Quem tenta alcançar qual destino?</td></tr>
+          <tr><td>Servidor e serviço</td><td>Um servidor fornece funções a clientes. A página de avisos e o compartilhamento de arquivos são serviços.</td><td>A máquina responde? A função também funciona?</td></tr>
+          <tr><td>Virtualização</td><td>Uma máquina virtual executa outro sistema dentro do computador, com disco e rede próprios.</td><td>Há recursos e isolamento suficientes?</td></tr>
+          <tr><td>Contêiner</td><td>Uma aplicação roda em processos isolados, compartilhando o núcleo do sistema que os hospeda.</td><td>Onde ficam seus dados ao recriá-la?</td></tr>
+          <tr><td>Local e nuvem</td><td>Um serviço pode estar na escola ou usar recursos de um fornecedor. Em ambos precisa de administração e recuperação.</td><td>Quem mantém cada parte e responde pelos dados?</td></tr>
+          </tbody></table></div>
+          <p>TI significa Tecnologia da Informação. As outras siglas serão explicadas quando ajudarem a resolver uma necessidade. Você não precisa decorar esta tabela antes de começar.</p>
+        </details>
+        <details><summary>2. Confira o computador antes de instalar programas</summary>
+          <ol><li>No Windows, abra <strong>Iniciar → Configurações → Sistema → Sobre</strong>. Anote versão, processador, tipo de sistema e RAM instalada.</li>
+          <li>Abra <strong>Explorador de Arquivos → Este Computador</strong> e anote o espaço livre. Um disco virtual dinâmico cresce conforme o uso: ele não elimina a necessidade de espaço real.</li>
+          <li>Pressione <strong>Ctrl+Shift+Esc → Desempenho → CPU</strong> e procure Virtualização. Se estiver desabilitada, apenas registre; não altere firmware sem conhecer o procedimento do fabricante.</li>
+          <li>Confira se pode instalar programas com uma conta autorizada e baixar arquivos grandes. Em computador emprestado ou institucional, peça ao responsável o ambiente permitido.</li>
+          <li>Use uma pasta <strong>Infraestrutura-Horizonte</strong> em Documentos para seus registros e arquivos fictícios. Não coloque senhas nem documentos de pessoas reais.</li></ol>
+          <p>O curso usa Windows 11 em equipamento compatível. Não force sua instalação para acompanhar as aulas. O download da Microsoft não fornece uma licença gratuita de uso; utilize o Windows já licenciado ou um laboratório autorizado. O suporte regular do Windows 10 terminou em <strong>14/10/2025</strong>; ele aparece apenas como legado.</p>
+        </details>
+        <details><summary>3. Escolha um percurso possível</summary>
+          <div class="table-wrap"><table><caption>Referências de capacidade, sem promessa de compatibilidade</caption><thead><tr><th>Percurso</th><th>Como começar</th><th>O que ainda depende de laboratório</th></tr></thead><tbody>
+          <tr><td>A · até 4 GB de RAM</td><td>Observações nativas seguras, diagramas, registros e interpretação dos exemplos. Packet Tracer somente se atender aos requisitos.</td><td>Instalação de sistemas, serviços e contêineres não é obrigatória nessa máquina. A Cisco informa 4 GB de RAM <strong>livres</strong> para o Packet Tracer atual; 4 GB instalados não garantem isso.</td></tr>
+          <tr><td>B · cerca de 8 GB</td><td>Uma VM Ubuntu Server por vez, se houver margem no host. Comece com 2 GB no convidado para o laboratório simples e avalie uso; 4 GB só quando o host comportar.</td><td>WordPress com banco e múltiplas VMs podem ultrapassar a margem. Reduza o escopo, use o ensaio leve e registre os testes adiados.</td></tr>
+          <tr><td>C · 16 GB ou mais</td><td>Laboratório ampliado com servidor e cliente/VM de aplicação quando CPU, armazenamento e permissões permitirem.</td><td>Memória sozinha não garante virtualização, compatibilidade de arquitetura, desempenho nem segurança.</td></tr>
+          </tbody></table></div>
+          <p>O roteiro principal de VM utiliza um host x86-64 e ISO Ubuntu Server amd64. Equipamentos ARM exigem compatibilidade e imagens próprias; não copie esses parâmetros sem conferir a documentação. <strong>Interpretar uma saída não equivale a executar e validar um servidor.</strong> Em cada entrega, informe o que realizou e o que ficou pendente.</p>
+        </details>
+        <details><summary>4. Instale cada ferramenta quando chegar sua vez</summary>
+          <ul>
+            <li><strong>Módulo 1:</strong> ferramentas nativas do Windows 11. <a href="https://www.microsoft.com/pt-br/software-download/windows11" target="_blank" rel="noopener">Download oficial</a> e <a href="https://www.microsoft.com/windows/windows-11-specifications" target="_blank" rel="noopener">requisitos Microsoft</a>. Não formate o computador pessoal.</li>
+            <li><strong>Módulo 2:</strong> <a href="https://www.netacad.com/resources/lab-downloads" target="_blank" rel="noopener">Cisco Networking Academy — Packet Tracer</a>. Há conta e autenticação gratuitas; consulte a versão e os requisitos na página da Cisco. Referência consultada em 29/10/2026: 9.0.1, CPU amd64 e 4 GB de RAM livres. <a href="https://www.wireshark.org/download.html" target="_blank" rel="noopener">Wireshark oficial</a> é complementar, sem obrigação de capturar tráfego real.</li>
+            <li><strong>Módulo 3:</strong> <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener">VirtualBox, pacote-base</a> e <a href="https://releases.ubuntu.com/24.04/" target="_blank" rel="noopener">Ubuntu Server 24.04 LTS</a>. Não precisa de Extension Pack. Escolha a imagem Server; não a Desktop.</li>
+            <li><strong>Módulo 4:</strong> <a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener">Docker Engine e plugin Compose pelo repositório oficial</a>, dentro da VM Ubuntu. O roteiro não exige Docker Desktop, contratação de nuvem nem cartão.</li>
+          </ul>
+          <p>Registre a versão realmente utilizada. Uma atualização pode mudar rótulos e telas; a finalidade de cada opção e os testes continuam sendo a referência.</p>
+        </details>
+        <details><summary>5. Aprenda, confira e guarde suas evidências</summary>
+          <p>Cada caso começa com uma necessidade. Entenda o conceito, acompanhe a demonstração, faça a prática compatível com seu ambiente e explique o resultado. Os diagnósticos 00 identificam seu ponto de partida; não são provas de conhecimentos que você ainda não estudou.</p>
+          <p>Um checkpoint exige uma evidência: arquivo, comando com contexto, teste funcional ou justificativa. Os kits das oficinas 99 incluem modelos, exemplos comentados e teste de autonomia. <strong>Resolva primeiro; compare depois.</strong> Leve os registros ao próximo módulo e, no final, entregue a passagem de plantão para outra pessoa.</p>
+          <p>As representações didáticas estão identificadas. Uma saída representativa mostra como interpretar; somente a execução no seu ambiente pode demonstrar que ele funciona. Atividades físicas e testes de múltiplas redes requerem recursos próprios e supervisão quando indicada.</p>
+        </details>
+        <p><a class="portal-cta" href="#diagnostico">Preparação conferida: começar o módulo 1 →</a></p>
+      </section>
+
     </main>
   </section>
 
@@ -121,24 +173,26 @@
     </main>
   </section>
 
-  <script src="../js/infraestrutura/conteudo-00-03.js?v=4"></script>
-  <script src="../js/infraestrutura/conteudo-04-06.js?v=4"></script>
-  <script src="../js/infraestrutura/conteudo-07-10.js?v=4"></script>
-  <script src="../js/infraestrutura/conteudo-99.js?v=4"></script>
-  <script src="../js/infraestrutura/redes-00-03.js?v=4"></script>
-  <script src="../js/infraestrutura/redes-04-07.js?v=4"></script>
-  <script src="../js/infraestrutura/redes-08-10.js?v=4"></script>
-  <script src="../js/infraestrutura/redes-99.js?v=4"></script>
-  <script src="../js/infraestrutura/linux-00-03.js?v=4"></script>
-  <script src="../js/infraestrutura/linux-04-07.js?v=4"></script>
-  <script src="../js/infraestrutura/linux-08-10.js?v=4"></script>
-  <script src="../js/infraestrutura/linux-99.js?v=4"></script>
-  <script src="../js/infraestrutura/moderna-00-03.js?v=4"></script>
-  <script src="../js/infraestrutura/moderna-04-07.js?v=4"></script>
-  <script src="../js/infraestrutura/moderna-08-10.js?v=4"></script>
-  <script src="../js/infraestrutura/moderna-99.js?v=4"></script>
-  <script src="../js/infraestrutura/integrador-99.js?v=4"></script>
-  <script src="../js/infraestrutura.js?v=5"></script>
+  <script src="../js/infraestrutura/conteudo-00-03.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/conteudo-04-06.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/conteudo-07-10.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/conteudo-99.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/redes-00-03.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/redes-04-07.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/redes-08-10.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/redes-99.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/linux-00-03.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/linux-04-07.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/linux-08-10.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/linux-99.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/moderna-00-03.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/moderna-04-07.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/moderna-08-10.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/moderna-99.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/integrador-99.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/preparacao-mbb.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura/guias-praticos.js?v=20261029-1"></script>
+  <script src="../js/infraestrutura.js?v=20261029-1"></script>
   <script src="../js/infraestrutura/destaques-mbb.js?v=20260926-1"></script>
 <script src="../js/mbb-busca-global.js?v=mbb-busca-3"></script>
 </body>

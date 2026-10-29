@@ -1,0 +1,4 @@
+cenario;ram_host_gb;ram_disponivel_gb;observacao
+Sem VM;8;4.5;dados ficticios para calculo
+Uma VM;8;2.1;nao medido no computador do aluno
+Duas VMs;8;0.4;nao usar como recomendacao de dimensionamento
