@@ -1,16 +1,16 @@
 <p>Na sua máquina a consulta e a edição funcionaram. Uma colega recebeu os arquivos, porém, e encontrou uma lista vazia. Precisamos descobrir se faltou preparar o banco, instalar dependências, fazer o build ou corrigir algum comportamento da interface.</p>
 <p>Uma captura de tela não responde a essas perguntas. Vamos reunir testes que observam decisões importantes e repetir a preparação em uma pasta limpa.</p>
-<h3>Automatize perguntas que já fizemos</h3>
+<h3 id="passo-1">Automatize perguntas que já fizemos</h3>
 <p>Vitest executa testes do projeto. Testing Library ajuda a observar a interface pelos elementos que a pessoa utiliza. O ambiente jsdom representa o documento para esses testes; não substitui um navegador real nem comprova responsividade.</p>
 {{arquivo:cliente-balcao/src/regras.test.ts}}
 {{arquivo:cliente-balcao/src/App.test.tsx}}
 {{arquivo:cliente-balcao/src/componentes/EditorProduto.test.tsx}}
 <p>Os cinco testes conferem filtro combinado sem perda da lista, limites da descrição, uma consulta em andamento com falha e recuperação, navegação/foco e confirmação separada de publicação. As respostas controladas permitem observar essas decisões sem depender de uma rede externa.</p>
 <p>Em <code>cliente-balcao</code>, execute <code>npm test</code>. Leia cada falha antes de alterar o código. Uma resposta simulada em um teste não demonstra que o PHP real gravou no banco; essa parte precisa ser conferida na integração da aplicação.</p>
-<h3>Prepare uma cópia que não dependa da sua primeira pasta</h3>
-<p>Extraia a referência em uma pasta nova. Prepare o banco pelos três comandos da etapa do catálogo e crie o administrador local pelo comando já trabalhado. Instale com <code>npm ci</code>, faça <code>npm run build</code> e inicie o PHP na raiz da nova cópia. Confira qual terminal está atendendo a porta 8000 para não testar a pasta antiga sem perceber.</p>
+<h3 id="passo-2">Prepare uma cópia que não dependa da sua primeira pasta</h3>
+<p>Extraia a referência em uma pasta nova. Na raiz, execute <code>php src/inicializar-banco.php</code>, <code>php src/inicializar-atendimento.php</code> e <code>php src/inicializar-cardapio.php</code>, um por vez. Depois crie a identidade fictícia com <code>php src/criar-administrador.php</code>. Instale com <code>npm ci</code>, faça <code>npm run build</code> e inicie o PHP na raiz da nova cópia. Confira qual terminal está atendendo a porta 8000 para não testar a pasta antiga sem perceber.</p>
 <p>Consulte, filtre, entre, altere o prazo, salve um rascunho e publique. Use uma janela sem sessão para conferir os dados públicos. Teste também resposta inválida e indisponibilidade; restaure os serviços e demonstre recuperação.</p>
-<h3>Volte à experiência da pessoa</h3>
+<h3 id="passo-3">Volte à experiência da pessoa</h3>
 <p>Use os links com teclado, confira o foco após a navegação e leia as orientações sem depender de cor. Reduza a largura da janela e aumente o texto. As imagens precisam manter alternativas e os campos precisam de rótulos. Registre o navegador e a largura utilizados.</p>
 <p>Abra a página inicial e o formulário de mensagens do projeto anterior. A evolução do balcão não autoriza perder esses caminhos. Não inclua senhas, banco pessoal, dependências instaladas ou JavaScript antigo apenas para esconder um build ausente.</p>
 <h3 id="checkpoint">Você consegue reproduzir e explicar?</h3>

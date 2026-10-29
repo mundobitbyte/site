@@ -1,0 +1,8 @@
+node_modules/
+functions/lib/
+public/js/balcao/
+public/firebase-messaging-sw.js
+dados-emuladores/
+.env
+.env.*
+*-debug.log

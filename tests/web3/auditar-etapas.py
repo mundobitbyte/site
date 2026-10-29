@@ -42,7 +42,7 @@ for aula in manifest['aulas']:
             for p in z.namelist():
                 partes=Path(p).parts
                 assert '..' not in partes and not p.startswith('/')
-                assert not any(x in partes for x in ['.env','vendor','node_modules'])
+                assert not any(x in partes for x in ['.env','vendor','node_modules','dados-emuladores'])
                 assert not p.endswith(('.sqlite','.sqlite3','.db'))
                 assert not re.search(r'(?:public/js/balcao/main\.js|functions/lib/)',p),f'Artefato gerado no ZIP: {p}'
         print(f'PASSOU {aula["chave"]}: links, código ensinado e ZIP ({len(dados)} arquivos)')
@@ -54,11 +54,16 @@ antes=json.loads(subprocess.check_output(['git','show',f'{baseline}:meu-mbb/cata
 atual=json.loads((ROOT/'meu-mbb/catalogo.json').read_text());por_id={x['conteudo_id']:x for x in atual['unidades']}
 for unidade in antes['unidades']:
     novo=por_id[unidade['conteudo_id']]
-    # Somente o texto pesquisável das três páginas com ligação nova pode mudar.
-    if unidade['conteudo_id'] in ['web3-comum-balcao','web3-comum-fonte','web3-cap2-entrega']:
+    # O texto pesquisável das aulas revisadas pode mudar; identidade e metadados permanecem.
+    if unidade['conteudo_id'] in {a['id'] for a in manifest['aulas']} | {'web3-comum-balcao','web3-comum-fonte','web3-cap2-entrega'}:
         campos=lambda x:{k:v for k,v in x.items() if k not in ['texto_busca','topicos_busca']}
         assert campos(novo)==campos(unidade),f'Identidade anterior alterada: {unidade["conteudo_id"]}'
     else:assert novo==unidade,f'Registro anterior alterado: {unidade["conteudo_id"]}'
+for aula in manifest['aulas']:
+    caminho='pages/programacao-web/'+aula['pagina']
+    anterior=Pagina(subprocess.check_output(['git','show',f'{baseline}:{caminho}'],cwd=ROOT,text=True))
+    atual_pagina=Pagina((ROOT/caminho).read_text())
+    assert set(anterior.ids)<=set(atual_pagina.ids),f'Âncora publicada removida: {caminho}'
 protegidos=['pages/programacao-web/web1.html','pages/programacao-web/web2.html','meu-mbb/conta.js','meu-mbb/catalogo-core.js','meu-mbb/firebase-config.js','meu-mbb/firestore.rules','meu-mbb/visitas-diretas.js','js/mbb-busca-global.js']
 for p in protegidos:assert (ROOT/p).read_bytes()==subprocess.check_output(['git','show',f'{baseline}:{p}'],cwd=ROOT),f'Mecanismo protegido alterado: {p}'
 print(f'PASSOU: {len(manifest["aulas"])} páginas, 29 checkpoints e registros/mecanismos anteriores preservados.')

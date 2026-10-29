@@ -1,24 +1,26 @@
 <p>O prazo já permanece no banco. Se criássemos agora um formulário sem proteção, qualquer visitante que descobrisse o endereço poderia trocar o aviso da cozinha. Esconder um link não resolveria: o servidor precisa reconhecer quem está fazendo a alteração.</p>
 <p>Você já encontrou esse problema no painel do Web II. Aqui vamos reencontrar a distinção essencial: autenticação verifica a identidade; autorização verifica se essa identidade pode realizar uma ação. Entrar não transforma automaticamente uma pessoa em operadora.</p>
-<h3>Primeiro observe a recusa</h3>
-<p>Com os arquivos desta etapa acrescentados à sua aplicação, abra <code>http://localhost:8000/operador/atendimento</code> em uma janela privativa. O endereço deve levar à entrada, sem mostrar o formulário de edição. A consulta pública em <code>/api/atendimento</code> precisa continuar funcionando sem login. A proteção se aplica à escrita, não obriga o cliente do Café a criar uma conta.</p>
+<h3 id="passo-1">Primeiro observe a recusa</h3>
+<p>Use o preparo de arquivos acima para acrescentar as rotas, o comando de criação de operador, o model de usuário, os controllers e as views desta etapa. Mantenha a chave <code>APP_KEY</code> e o banco da etapa anterior. Então abra <code>http://localhost:8000/operador/atendimento</code> em uma janela privativa. O endereço deve levar à entrada, sem mostrar o formulário de edição. A consulta pública em <code>/api/atendimento</code> precisa continuar funcionando sem login. A proteção se aplica à escrita, não obriga o cliente do Café a criar uma conta.</p>
 <p>A rota de edição usa dois filtros, chamados <em>middlewares</em>: <code>auth</code> exige uma sessão; <code>can:alterar-atendimento</code> consulta a permissão definida para o papel de operador.</p>
 {{arquivo:app/Providers/AppServiceProvider.php}}
 {{arquivo:routes/web.php}}
 <p>O model de usuário preserva a senha como hash. O comando abaixo cria uma identidade fictícia somente na aplicação local. Não use a senha de sua conta pessoal nem a do Meu MbB:</p>
 <pre class="code-block"><code>php artisan cafe:operador operador@example.test</code></pre>
 <p>Execute na raiz, depois da migration da etapa anterior. O terminal pedirá uma senha local de pelo menos 12 caracteres e não a imprimirá. Guarde-a para o exercício. O comando recusa um usuário já existente, em vez de trocar sua senha silenciosamente. As credenciais não fazem parte do checkpoint.</p>
-<h3>Uma entrada confirmada pelo servidor</h3>
+<h3 id="passo-2">Uma entrada confirmada pelo servidor</h3>
 <p>Acrescente o controller de sessão, o model de usuário e a página de entrada do download. A tentativa de entrada consulta o usuário e a senha no servidor; não basta o navegador guardar <code>autenticado: true</code>. Quando a sessão é confirmada, seu identificador é renovado.</p>
 {{arquivo:app/Http/Controllers/SessaoController.php}}
 {{arquivo:resources/views/entrar.blade.php}}
 <p>Entre pelo endereço <code>/entrar</code>. Em seguida, abra <code>/operador/atendimento</code>. Você deve encontrar os valores que já estavam no banco, não um formulário que começa toda vez com 30 minutos.</p>
-<h3>Valide antes de gravar</h3>
+<h3 id="passo-3">Valide antes de gravar</h3>
 <p>No formulário, deixe o prazo vazio e salve. Consulte o balcão: a mensagem deve orientar o visitante a procurar a equipe. Depois informe zero e consulte novamente. Ao encerrar os pedidos, não pode continuar aparecendo uma promessa de retirada em minutos.</p>
-<p>Os atributos do HTML ajudam a preencher os campos, mas podem ser contornados. A classe de requisição também verifica nome, situação e prazo no servidor. <code>nullable</code> aceita ausência; <code>integer</code> exige inteiro; <code>between:0,240</code> aplica a regra do exercício.</p>
+<p>Os atributos do HTML ajudam a preencher os campos, mas podem ser contornados. A classe de requisição também verifica nome, situação e prazo no servidor. <code>nullable</code> aceita ausência; <code>integer</code> exige inteiro; <code>min:0</code> e <code>max:240</code> aplicam os limites do exercício. <code>FormRequest</code> é o apoio do Laravel para reunir essa validação e sua autorização antes da ação de salvar.</p>
 {{arquivo:app/Http/Requests/AtualizarAtendimentoRequest.php}}
 {{arquivo:resources/views/editar-atendimento.blade.php}}
+<p>No controller, localize <code>salvar</code>: o Laravel fornece o pedido já validado; <code>validated()</code> entrega somente os campos aceitos; <code>update</code> grava na linha atual e o redirecionamento volta ao formulário com a confirmação.</p>
+{{arquivo:app/Http/Controllers/AtendimentoController.php}}
 <p>Encontre <code>@csrf</code> na view. O token associa o envio à sessão da aplicação e ajuda a recusar pedidos forjados a partir de outro site. CSRF não substitui autenticação, autorização ou validação; cada proteção responde a uma pergunta diferente.</p>
-<p>Teste um valor negativo e um texto com mais de 100 caracteres para o nome. A aplicação deve recusar a alteração e orientar a correção. O dado anterior precisa permanecer. Depois use “Sair da edição” e tente voltar ao endereço protegido: uma página antiga aberta não é prova de que a sessão continua válida.</p>
+<p>Teste um valor negativo e um texto com mais de 100 caracteres para o nome. A aplicação deve recusar a alteração e orientar a correção. O dado anterior precisa permanecer. Se o próprio navegador impedir o envio por causa de <code>min</code> ou <code>maxlength</code>, você comprovou uma orientação do HTML; a suíte <code>composer test</code> envia também entradas fora do formulário para conferir a recusa no servidor. Não confunda os dois testes. Depois use “Sair da edição” e tente voltar ao endereço protegido: uma página antiga aberta não é prova de que a sessão continua válida.</p>
 <h3 id="checkpoint">A equipe informa; o visitante consulta</h3>
 <p>Comprove acesso recusado sem sessão, alteração aceita para o operador, recusa de dado inválido e saída da conta. Execute <code>composer test</code> na raiz para repetir os testes automatizados disponíveis. Eles usam um banco de teste isolado; a execução não deve apagar seu banco do Café. Agora Marina consegue cuidar do aviso. Ela também quer atualizar o cardápio sem editar o JSON à mão.</p>

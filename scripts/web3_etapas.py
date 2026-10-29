@@ -126,7 +126,7 @@ export function App(){
 
 def baas(n):
  d={p:b for p,b in base().items() if p.startswith(('public/css/','public/img/')) or p=='public/dados/produtos.json'}
- aplicar(d,'baas',lambda p:p in ['.firebaserc','package.json','package-lock.json','firestore.rules','storage.rules','firebase.json','scripts/preparar.mjs','scripts/preparar-local.mjs','public/sobre.html','public/cardapio.html','public/js/script.js','public/css/atendimento-baas.css','cliente-balcao/package.json','cliente-balcao/package-lock.json','cliente-balcao/tsconfig.json','cliente-balcao/vite.config.mjs','cliente-balcao/src/ambiente.ts','cliente-balcao/src/atendimento.ts','cliente-balcao/src/tela.ts'])
+ aplicar(d,'baas',lambda p:p in ['.gitignore','.firebaserc','package.json','package-lock.json','firestore.rules','storage.rules','firebase.json','scripts/preparar.mjs','scripts/preparar-local.mjs','public/sobre.html','public/cardapio.html','public/js/script.js','public/css/atendimento-baas.css','cliente-balcao/package.json','cliente-balcao/package-lock.json','cliente-balcao/tsconfig.json','cliente-balcao/vite.config.mjs','cliente-balcao/src/ambiente.ts','cliente-balcao/src/atendimento.ts','cliente-balcao/src/tela.ts'])
  config=json.loads(d['firebase.json'])
  if n<8:config.pop('functions',None);config['emulators'].pop('functions',None)
  if n<6:config.pop('storage',None);config['emulators'].pop('storage',None);d.pop('storage.rules',None)

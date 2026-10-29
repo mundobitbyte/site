@@ -1,15 +1,15 @@
 <p>Já sabemos quem pode alterar e quais valores o serviço aceita. Marina pode finalmente usar um formulário para informar o prazo, sem abrir o arquivo de programação.</p>
 <p>Vamos reaproveitar os mesmos três dados. Nome, situação e minutos são configuração; as frases mostradas ao cliente continuam sendo preparadas depois.</p>
-<h3>Leia antes de editar</h3>
+<h3 id="passo-1">Leia antes de editar</h3>
 <p>Faça o build desta etapa e entre como operador no balcão. O formulário começa desabilitado e só é liberado depois de confirmar identidade, permissão e configuração recebida. Não deve começar com um valor inventado enquanto o serviço ainda está sendo consultado.</p>
 {{arquivo:cliente-balcao/src/operador.ts}}
 <p>O código lê os dados do servidor e os confere. A variável que identifica a sessão impede apresentar uma resposta privada depois que a pessoa saiu ou mudou de identidade durante a espera.</p>
-<h3>Mude para 47 minutos e confira na outra tela</h3>
+<h3 id="passo-2">Mude para 47 minutos e confira na outra tela</h3>
 <p>Informe 47 e salve. Esse número representa uma estimativa fictícia dada pela equipe para nosso ensaio. Abra a página inicial em uma janela privativa, consulte e confira a nova mensagem.</p>
 {{arquivo:cliente-balcao/src/dados.ts}}
-<p><code>setDoc</code> envia a configuração. A mensagem de confirmação aparece depois de a gravação ser aceita pelo serviço. Durante uma falha de rede, não podemos anunciar que a alteração já foi confirmada apenas porque ela apareceu em uma cópia local.</p>
+<p><code>updateDoc</code> atualiza o documento de atendimento já preparado. A mensagem de confirmação aparece depois de a gravação ser aceita pelo serviço. Durante uma falha de rede, não podemos anunciar que a alteração já foi confirmada apenas porque ela apareceu em uma cópia local.</p>
 <p>Deixe minutos em branco e salve. O código converte vazio para <code>null</code>, que significa ausência de estimativa. Depois informe zero. Ao fechar os pedidos, a mensagem de encerramento deve prevalecer sobre o prazo.</p>
-<h3>O formulário não substitui a regra</h3>
+<h3 id="passo-3">O formulário não substitui a regra</h3>
 <p>Saia e entre como leitor. A consulta pública continua acessível, mas os controles de alteração não devem ser liberados. Os testes da etapa anterior verificam também a recusa no serviço, independentemente desses controles.</p>
 <p>Informe um valor fora do intervalo e confirme a recusa. Repita <code>npm test</code> com os emuladores de uso parados, depois retome e prepare a bancada. Registre separadamente a orientação do formulário e a decisão das regras.</p>
 <h3 id="checkpoint">A outra tela recebeu o dado salvo?</h3>

@@ -1,9 +1,9 @@
 <p>Marina mudou o preço do café coado. O aviso está atualizado, mas o cardápio ainda guarda produtos no JSON e também possui uma apresentação antiga em HTML. Se alterarmos só um desses lugares, voltaremos ao problema de duas respostas para a mesma informação.</p>
 <p>Vamos aproveitar os três produtos, as descrições, as imagens e as categorias que já existem. O objetivo não é inventar outro cardápio: é permitir que o mesmo cardápio seja consultado e atualizado a partir do banco.</p>
-<h3>Importe e veja os produtos conhecidos</h3>
+<h3 id="passo-1">Importe e veja os produtos conhecidos</h3>
 <p>Acrescente os arquivos desta etapa, execute <code>php artisan migrate</code> e depois <code>php artisan cafe:importar-cardapio</code> na raiz. A primeira ação acrescenta as tabelas; a segunda lê <code>public/dados/produtos.json</code> e inclui os produtos que ainda não existem.</p>
 <p>Abra <code>http://localhost:8000/cardapio</code>. Você deve reconhecer café coado, pão artesanal e bolo de laranja com as imagens anteriores. A antiga entrada <code>/cardapio.php</code> redireciona para essa página, em vez de continuar mostrando preços fixos. Uma mudança só está concluída quando o visitante consegue encontrá-la.</p>
-<h3>Um produto pertence a uma categoria</h3>
+<h3 id="passo-2">Um produto pertence a uma categoria</h3>
 <p>A categoria “comida” aparece em dois produtos. Podemos representá-la uma vez e relacionar os produtos a ela. A tabela de produtos guarda a identificação da categoria; a chave estrangeira impede uma referência a uma categoria inexistente.</p>
 <p>Nosso identificador de categoria é texto, como <code>bebida</code>, e não um número criado automaticamente. Por isso a migration declara explicitamente esse tipo e a relação. Não troque por uma chave numérica sem revisar os registros que já usam esses nomes.</p>
 {{arquivo:database/migrations/2026_10_26_000002_preparar_catalogo.php}}
@@ -13,7 +13,7 @@
 <p>O preço passa de <code>preco: 8</code>, no JSON conhecido, para <code>preco_centavos: 800</code>, no banco. Guardar centavos inteiros evita usar frações decimais como unidade de cálculo de dinheiro neste exercício. A API publica <code>precoCentavos</code>; a view divide por 100 apenas ao formatar a apresentação.</p>
 {{arquivo:app/Console/Commands/ImportarCardapio.php}}
 <p>Observe <code>firstOrCreate</code>: localizar o produto vem antes de incluí-lo. Reexecutar a importação não deve duplicar os três produtos nem desfazer uma edição feita pela equipe. O JSON continua como origem do primeiro preenchimento, não como uma ordem para sobrescrever o banco a cada consulta.</p>
-<h3>Altere o preço e percorra o caminho inteiro</h3>
+<h3 id="passo-3">Altere o preço e percorra o caminho inteiro</h3>
 <p>Entre como operador e abra <code>/operador/produtos/cafe-coado</code>. Mude 800 para 850 centavos e salve. Agora abra <code>/cardapio</code> como visitante: o preço deve ser R$ 8,50. Reexecute a importação e confira que continua assim.</p>
 {{arquivo:app/Http/Controllers/CatalogoController.php}}
 {{arquivo:resources/views/editar-produto.blade.php}}

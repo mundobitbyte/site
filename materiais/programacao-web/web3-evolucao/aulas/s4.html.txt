@@ -1,18 +1,18 @@
 <p>O cliente confirmou o atendimento e agora quer saber o que há no cardápio. Os produtos já existem no projeto. Vamos mostrá-los no balcão sem criar outro conjunto de nomes, fotos ou preços.</p>
 <p>Neste percurso, o foco é construir a interface. Os serviços PHP de apoio vêm no checkpoint e guardam os dados em SQLite. Você vai preparar esses serviços, conhecer seu contrato e usá-los; não precisa desenvolver antes o percurso Laravel.</p>
-<h3>Prepare a fonte da lista uma vez</h3>
+<h3 id="passo-1">Prepare a fonte da lista uma vez</h3>
 <p>Acrescente os arquivos novos da etapa à sua aplicação e preserve o banco anterior. Na raiz, execute os preparos abaixo. Eles criam o que ainda não existe; não devem apagar mensagens ou substituir produtos editados:</p>
 <pre class="code-block"><code>php src/inicializar-banco.php
 php src/inicializar-atendimento.php
 php src/inicializar-cardapio.php</code></pre>
 <p>Reinicie o servidor PHP da aplicação se necessário e abra <code>http://localhost:8000/api/cardapio.php</code>. A lista vem dentro de <code>produtos</code>. Cada produto oferece identificador, nome, categoria, preço em centavos, imagem, texto alternativo, descrição e disponibilidade.</p>
-<p>O atendimento também passa a ser lido do banco preparado, em vez de exigir a edição do prazo no arquivo. Para os testes desta etapa, a referência começa com pedidos abertos e 30 minutos. A edição autorizada aparecerá adiante.</p>
-<h3>De uma lista de dados para uma lista de componentes</h3>
-<p>A função <code>lerProdutos</code> confere cada item recebido antes de devolver um <code>Produto[]</code>. O tipo TypeScript ajuda o desenvolvimento, mas é essa conferência que recusa uma estrutura inesperada em tempo de execução.</p>
+<p>O atendimento também passa a ser lido do banco preparado, em vez de exigir a edição do prazo no arquivo. Por isso, a alteração direta usada na aula anterior deixa de ser o caminho desta etapa: agora a origem é a linha salva em SQLite. Para os testes desta etapa, a referência começa com pedidos abertos e 30 minutos. A edição autorizada aparecerá adiante.</p>
+<h3 id="passo-2">De uma lista de dados para uma lista de componentes</h3>
+<p>O arquivo de apoio também contém funções para a sessão e a edição que utilizaremos mais adiante. Nesta consulta, acompanhe somente o pedido público, a conferência do produto e <code>lerProdutos</code>; não é preciso memorizar as operações que ainda não usamos. A função <code>lerProdutos</code> confere cada item recebido antes de devolver um <code>Produto[]</code>. O tipo TypeScript ajuda o desenvolvimento, mas é essa conferência que recusa uma estrutura inesperada em tempo de execução.</p>
 {{arquivo:cliente-balcao/src/servicos/api.ts}}
 {{arquivo:cliente-balcao/src/componentes/Cardapio.tsx}}
-<p><code>map</code> transforma cada produto em um artigo. A propriedade <code>key</code> usa seu identificador estável para que React acompanhe os itens; a posição na lista não identifica um produto. As fotos e os textos alternativos vêm do mesmo Café. O preço inteiro em centavos é dividido por 100 apenas na formatação em reais.</p>
-<h3>Busque e reconheça os três produtos</h3>
+<p>Em JSX, <code>className</code> ocupa o papel do atributo HTML <code>class</code>; as classes continuam ligando o artigo ao CSS conhecido. <code>map</code> transforma cada produto em um artigo. A propriedade <code>key</code> usa seu identificador estável para que React acompanhe os itens; a posição na lista não identifica um produto. As fotos e os textos alternativos vêm do mesmo Café. O preço inteiro em centavos é dividido por 100 apenas na formatação em reais.</p>
+<h3 id="passo-3">Busque e reconheça os três produtos</h3>
 {{arquivo:cliente-balcao/src/App.tsx}}
 <p>Faça o build, abra o balcão e use “Consultar cardápio”. Reconheça os três produtos conhecidos. Em outra aba, abra a API e compare valores. Não basta o componente aparecer: ele precisa estar ligado à lista que o servidor realmente devolve.</p>
 <p>Interrompa o servidor PHP apenas depois de a página carregar e tente consultar outra vez. A orientação de falha deve aparecer sem inventar um cardápio atual. Reinicie o servidor e confirme a recuperação.</p>

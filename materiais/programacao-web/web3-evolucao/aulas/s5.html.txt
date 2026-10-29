@@ -1,13 +1,13 @@
 <p>O cardápio aparece, mas o cliente quer apenas uma bebida. Já temos os dados no navegador. Consultar novamente o servidor a cada mudança do filtro seria trabalho sem necessidade para esta lista pequena.</p>
 <p>Vamos guardar a busca e a categoria como estados e calcular a lista visível a partir deles. A lista recebida continuará preservada; filtrar não deve apagar produtos.</p>
-<h3>Combine as duas perguntas</h3>
+<h3 id="passo-1">Combine as duas perguntas</h3>
 <p>Um produto precisa corresponder à categoria escolhida e ao texto procurado. A função abaixo devolve uma nova lista com os itens que passam pelos dois critérios.</p>
 {{arquivo:cliente-balcao/src/regras.ts}}
 <p><code>filter</code> seleciona sem modificar a lista original. <code>trim</code> retira espaços do começo e do fim. A conversão para minúsculas permite que “CAFÉ” encontre “Café”; ela não remove acentos. Busque “Café” com acento para conferir o comportamento que construímos, sem prometer uma pesquisa mais ampla.</p>
 <p>A mesma função será útil para os testes automatizados depois. Por enquanto, vamos observar seu efeito na interface com dados reais do nosso serviço.</p>
 {{arquivo:cliente-balcao/src/componentes/Cardapio.tsx}}
 {{arquivo:cliente-balcao/src/App.tsx}}
-<h3>Faça uma busca que encontra e outra que não encontra</h3>
+<h3 id="passo-2">Faça uma busca que encontra e outra que não encontra</h3>
 <p>Faça o build, consulte o cardápio e digite “CAFÉ”. Selecione “Bebidas”: o café continua aparecendo. Depois selecione “Comidas”: a combinação não encontra produtos. Apague a busca e volte a “Todas”: os três itens precisam reaparecer sem uma nova consulta.</p>
 <p>O campo recebe <code>value</code> do estado e comunica a alteração por <code>onChange</code>. Assim a apresentação e os critérios permanecem sincronizados. A quantidade de resultados está em uma região de status; zero resultados é uma resposta possível, não uma falha da rede.</p>
 <p>Abra a aba Rede do navegador antes de digitar novamente. Para esta experiência, a busca trabalha sobre a lista recebida; não deve aparecer um pedido HTTP a cada tecla. Se o catálogo fosse muito grande ou dependesse de paginação, a decisão precisaria ser revista.</p>

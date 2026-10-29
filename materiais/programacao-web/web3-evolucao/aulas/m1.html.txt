@@ -1,18 +1,18 @@
 <p>Marina acabou de informar 47 minutos para a retirada. Antes de criar uma tela para ela, precisamos garantir que uma alteração no prazo não faça a página inicial dizer uma coisa e o balcão dizer outra.</p>
 <p>Você já resolveu parte disso: as duas telas consultam a mesma função <code>obterAtendimento()</code>. Vamos preservar essa conquista. A nova organização ficará atrás dessa função; quem a utiliza continuará recebendo as três mensagens conhecidas.</p>
-<h3>Faça uma mudança pequena e veja o efeito</h3>
+<h3 id="passo-1">Faça uma mudança pequena e veja o efeito</h3>
 <p>Na sua cópia final do Capítulo 2, abra <code>src/atendimento.php</code>. Mantenha o PHP em execução e anote onde estão nome, situação e prazo. Crie ao lado dele um arquivo chamado <code>AvisoAtendimento.php</code>. Usamos um nome distinto de <code>atendimento.php</code> para que os dois arquivos também funcionem no Windows: um arquivo descreverá o atendimento; o outro continuará oferecendo a função usada pelas telas.</p>
 <p>Por enquanto, leia a construção central: <code>new AvisoAtendimento("Café Aurora", true, 47)</code>. <code>new</code> cria um objeto. Os três valores descrevem um atendimento específico: o Café, pedidos abertos e a estimativa informada pela equipe. Um objeto reúne dados e as operações que fazem sentido para eles.</p>
 <p>Em PHP, uma <strong>classe</strong> descreve esse conjunto. O método <code>__construct</code> recebe os valores na criação. <code>$this</code> significa “este objeto”; <code>$this-&gt;tempoEstimado</code> acessa o prazo dele. Não é um novo servidor, banco ou serviço de nuvem: é uma organização do PHP que você já executa.</p>
 {{arquivo:src/AvisoAtendimento.php}}
 <p>Não tente memorizar o arquivo inteiro. Primeiro encontre as três propriedades, depois o construtor e, por último, <code>mensagens()</code>. <code>public</code> permite o acesso às propriedades neste primeiro exemplo; <code>string</code> e <code>bool</code> indicam os tipos. Em <code>?int</code>, o ponto de interrogação permite inteiro ou <code>null</code>. Aqui há verificação em tempo de execução no PHP; os tipos do TypeScript não protegem um formulário enviado diretamente ao servidor.</p>
 <p>O construtor também recusa nome vazio e prazo fora de 0 a 240 minutos. Esse intervalo é uma regra combinada para nosso exercício, não um limite do PHP. Uma exceção interrompe a criação de um objeto inválido. Na tela da equipe, aprenderemos a transformar essa recusa em uma orientação compreensível.</p>
-<h3>Mude a organização sem mudar a resposta</h3>
+<h3 id="passo-2">Mude a organização sem mudar a resposta</h3>
 <p>Agora atualize a função conhecida. Ela inclui a classe, cria o objeto e pede suas mensagens:</p>
 {{arquivo:src/atendimento.php}}
 <p>O arquivo de referência começa com 30 minutos para manter a base conhecida. Troque apenas esse valor por <code>47</code>, salve e consulte <code>http://localhost:8000/api/atendimento.php</code>. Depois consulte o balcão e recarregue a página inicial. As duas apresentações devem concordar. Alteramos PHP: não há motivo para reconstruir o TypeScript.</p>
 <p>Experimente <code>0</code>, depois <code>null</code> e, por fim, pedidos encerrados com <code>false</code>. Observe a ordem das decisões em <code>mensagens()</code>: fechar os pedidos tem prioridade sobre informar um prazo. Não basta o programa aceitar os tipos; a mensagem precisa fazer sentido para quem vai retirar o pedido.</p>
-<h3>Uma verificação que pode ser repetida</h3>
+<h3 id="passo-3">Uma verificação que pode ser repetida</h3>
 <p>Na pasta <code>tests</code>, crie <code>atendimento-test.php</code>. O teste faz as mesmas perguntas que você acabou de conferir, sem abrir cada tela:</p>
 {{arquivo:tests/atendimento-test.php}}
 <p>No terminal, na raiz da aplicação, execute <code>php tests/atendimento-test.php</code>. Cada “Passou” corresponde a uma condição verificada. Uma falha precisa ser investigada; não apague a condição apenas para obter uma mensagem verde. O teste não verifica a aparência das telas nem substitui a consulta no navegador.</p>
