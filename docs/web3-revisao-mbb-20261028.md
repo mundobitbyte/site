@@ -78,3 +78,8 @@ Não há base nova para declarar equivalência oficial. O plano 612 confirmado p
 - https://firebase.google.com/docs/emulator-suite/connect_firestore
 
 A base para publicação é uma sequência revisada e tecnicamente testada. O rótulo em desenvolvimento permanece: não significa que o aluno deva adivinhar preparos ausentes, nem certifica equivalência curricular ou implantação de serviços em nuvem.
+
+
+## Continuidade de referências anteriores — 29/10/2026
+
+A revisão principal foi integrada no commit f3cf8d8e59afeb65cb196ec47146bfc947420569, após sete workflows aprovados. O detalhe de preparo BaaS também passa a orientar quem ainda usa um package.json sem retomar: exportar com a CLI local antes de fechar a sessão, conferir o snapshot e incorporar os dois scripts e a exclusão de dados. Não promete recuperar dados que não chegaram a ser exportados. O ensaio acrescentado guarda um snapshot manual, encerra a sessão e usa esse snapshot na retomada das etapas seguintes, além de conferir a exportação automática.

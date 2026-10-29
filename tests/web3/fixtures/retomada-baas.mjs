@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { initializeApp, getApps, getApp, deleteApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
@@ -33,4 +35,8 @@ if(fase==='conferir') {
  assert.deepEqual(restaurada,imagem,'a imagem precisa voltar com os mesmos bytes');
 }
 await banco.terminate();await deleteApp(app);
+if(fase==='gravar') {
+ const cli=fileURLToPath(new URL('./node_modules/firebase-tools/lib/bin/firebase.js',import.meta.url));
+ execFileSync(process.execPath,[cli,'emulators:export','./dados-emuladores-legado','--project','demo-cafe-aurora-web3'],{stdio:'inherit',timeout:45000});
+}
 console.log(`PASSOU retomada ${fase}: dados fictícios, identidade e serviços locais conferidos.`);
