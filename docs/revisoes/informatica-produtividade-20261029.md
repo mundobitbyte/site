@@ -77,11 +77,11 @@ Testes usam dependências do ambiente, sem adicionar dependências ao site. O te
 
 Não executados: operações reais no Explorador Windows 10/11; instalação e execução de LibreOffice; recálculo do ODS pelo Calc; renderização nativa de ODT/ODP; impressão física; projetor; leitor de tela; compartilhamento/coautoria/revogação com outra conta. A validade ZIP/XML não comprova a apresentação nativa desses arquivos.
 
-Pesquisa global: script e acesso existentes mantidos. Não foi regenerado um índice global nem comprovada a inclusão das duas novas aulas na indexação de conteúdo. Meu MbB: não foram alterados seus arquivos nem o comportamento de autenticação/progresso; não foi feito teste autenticado.
+Pesquisa global: acesso e script existentes mantidos. Regenerado o texto pesquisável de uma única unidade em `meu-mbb/catalogo.json`, incluindo o vocabulário da nova preparação e dos módulos revisados. `atualizar-pesquisa.cjs --check`, `gerar-visitas.cjs --check` e os 29 testes de `meu-mbb/*.test.cjs` passaram. Não foram alterados o gerador, IDs, autenticação ou comportamento de progresso; não foi feito teste autenticado real.
 
 ## Arquivos de código alterados
 
-`pages/informatica-produtividade.html`, `css/informatica-produtividade.css`, `js/informatica-produtividade.js`, `js/informatica-produtividade/preparacao.js`, `js/informatica-produtividade/modulo-01.js` até `modulo-05.js` e `js/informatica-produtividade/projeto-integrador.js`. Acrescentados testes em `tests/produtividade/`; recursos listados acima. Nenhum outro módulo do site foi alterado.
+`pages/informatica-produtividade.html`, `css/informatica-produtividade.css`, `js/informatica-produtividade.js`, `js/informatica-produtividade/preparacao.js`, `js/informatica-produtividade/modulo-01.js` até `modulo-05.js` e `js/informatica-produtividade/projeto-integrador.js`. Acrescentados testes em `tests/produtividade/`; recursos listados acima. Em `meu-mbb/catalogo.json`, apenas o texto pesquisável desta unidade foi regenerado. Nenhum conteúdo de outro módulo foi alterado.
 
 ## Pendências reais e avaliação
 
