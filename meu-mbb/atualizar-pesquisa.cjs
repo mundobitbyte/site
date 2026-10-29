@@ -142,8 +142,30 @@ function topicosEstaticos(html, pagina) {
   }).filter(Boolean);
 }
 
+// Infraestrutura usa aulas JavaScript: leia a mesma ordem da página, inclusive
+// preparação e guias, para pesquisar o conteúdo efetivamente apresentado.
+function topicosInfraestrutura(html) {
+  const contexto = { window: {} };
+  vm.createContext(contexto);
+  const scripts = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)]
+    .map(item => item[1].split('?')[0])
+    .filter(src => src.startsWith('../js/infraestrutura/') && !src.includes('destaques'));
+  for (const src of scripts) {
+    const arquivo = path.resolve(raiz, 'pages', src);
+    if (!arquivo.startsWith(path.join(raiz, 'js/infraestrutura') + path.sep)) throw new Error('Fonte fora do módulo');
+    vm.runInContext(fs.readFileSync(arquivo, 'utf8'), contexto, { timeout: 2000, filename: src });
+  }
+  const grupos = ['infraestruturaLessons', 'infraestruturaNetworkLessons',
+    'infraestruturaLinuxLessons', 'infraestruturaModernLessons', 'infraestruturaIntegratorLessons'];
+  return grupos.flatMap(chave => (contexto.window[chave] || []).map(aula => ({
+    ancora: aula.id, titulo: `${aula.number}. ${aula.menuTitle}`,
+    texto_busca: limpar(`${aula.title} ${aula.objective} ${aula.content}`, 6000)
+  })));
+}
+
 function topicosGerados(unidade, html) {
   const pagina = unidade.localizacao_atual.split('#')[0];
+  if (pagina === 'pages/infraestrutura.html') return topicosInfraestrutura(html);
   if (pagina === 'pages/bancodedados.html') return topicosBanco(html);
   if (pagina === 'pages/reactnative.html') return topicosReactNative();
   if (pagina === 'pages/arduino.html') {

@@ -1,0 +1,35 @@
+! REFERÊNCIA TEXTUAL NÃO EXECUTADA NO PACKET TRACER NESTA REVISÃO
+! Arquivo novo; somente router 2911 do cenário 4.
+! Subinterfaces ligam VLANs ao trunk: encapsulation dot1Q identifica cada VLAN.
+! A ACL aplicada na entrada de visitantes nega as duas redes internas.
+enable
+configure terminal
+hostname RTR-01
+interface GigabitEthernet0/0
+no ip address
+no shutdown
+exit
+interface GigabitEthernet0/0.10
+encapsulation dot1Q 10
+ip address 192.168.10.1 255.255.255.192
+exit
+interface GigabitEthernet0/0.20
+encapsulation dot1Q 20
+ip address 192.168.10.65 255.255.255.192
+exit
+interface GigabitEthernet0/0.30
+encapsulation dot1Q 30
+ip address 192.168.10.129 255.255.255.192
+exit
+ip access-list extended VISITANTES_ENTRADA
+deny ip 192.168.10.128 0.0.0.63 192.168.10.0 0.0.0.63
+deny ip 192.168.10.128 0.0.0.63 192.168.10.64 0.0.0.63
+permit ip any any
+exit
+interface GigabitEthernet0/0.30
+ip access-group VISITANTES_ENTRADA in
+end
+show ip interface brief
+show ip route
+show access-lists
+copy running-config startup-config

@@ -122,3 +122,15 @@ img,svg{max-width:100%;height:auto}
 @media(max-width:900px){
   .terminal-card > pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;min-width:0;max-width:100%;overflow-x:hidden;}
 }
+
+/* Preparação progressiva: leitura principal curta, aprofundamento sob demanda. */
+.course-preparation{margin:18px 0 24px;padding:clamp(16px,3vw,28px);border:1px solid var(--line);border-radius:16px;background:#fff;scroll-margin-top:75px}
+.course-preparation h2{margin:4px 0 12px;line-height:1.25}.course-preparation p{max-width:100ch}
+.course-preparation details,.practical-guide{margin:12px 0;border:1px solid var(--line);border-radius:10px;padding:12px 16px;background:var(--surface-soft)}
+.course-preparation summary,.practical-guide>summary{cursor:pointer;font-weight:800;color:var(--primary-dark);padding:4px 0}
+.learning-entry{margin:20px 0;padding:16px 18px;border-left:4px solid var(--primary);border-radius:0 10px 10px 0;background:var(--primary-soft)}
+.learning-entry h3{margin-top:0}.learning-entry p:last-child{margin-bottom:0}.practical-guide pre{font-size:14px;line-height:1.6}
+.learning-entry p,.practical-guide p,.course-preparation td{overflow-wrap:anywhere}
+.final-reference .action-button{white-space:normal;max-width:100%}
+:where(a,button,input,summary,textarea):focus-visible{outline:3px solid #1967d2;outline-offset:3px}
+@media(max-width:700px){.course-preparation{padding:16px 12px}.learning-entry{padding:12px}.practical-guide{padding:10px}.process-row{min-width:0;overflow-x:auto}.course-preparation .table-wrap{max-width:100%;overflow-x:auto}}

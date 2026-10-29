@@ -1,0 +1,37 @@
+! REFERÊNCIA TEXTUAL NÃO EXECUTADA NO PACKET TRACER NESTA REVISÃO
+! Somente switch 2960 de arquivo novo, com as portas do LEIA-ME.
+enable
+configure terminal
+hostname SW-01
+vlan 10
+name FUNCIONARIOS
+exit
+vlan 20
+name LABORATORIO
+exit
+vlan 30
+name VISITANTES
+exit
+interface FastEthernet0/1
+switchport mode access
+switchport access vlan 10
+exit
+interface FastEthernet0/2
+switchport mode access
+switchport access vlan 20
+exit
+interface FastEthernet0/3
+switchport mode access
+switchport access vlan 30
+exit
+interface FastEthernet0/4
+switchport mode access
+switchport access vlan 10
+exit
+interface GigabitEthernet0/1
+switchport mode trunk
+switchport trunk allowed vlan 10,20,30
+end
+show vlan brief
+show interfaces trunk
+copy running-config startup-config

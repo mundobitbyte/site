@@ -1,0 +1,25 @@
+name: Infraestrutura - navegação e referências
+on:
+  pull_request:
+    paths: ['pages/infraestrutura.html', 'js/infraestrutura.js', 'js/infraestrutura/**', 'css/infraestrutura.css', 'materiais/infraestrutura/**', 'downloads/infraestrutura/**', 'tests/infraestrutura/**', 'scripts/empacotar-infraestrutura.py', '.github/workflows/infraestrutura-validacao.yml']
+  push:
+    branches: [main]
+    paths: ['pages/infraestrutura.html', 'js/infraestrutura.js', 'js/infraestrutura/**', 'css/infraestrutura.css', 'materiais/infraestrutura/**', 'downloads/infraestrutura/**', 'tests/infraestrutura/**', 'scripts/empacotar-infraestrutura.py', '.github/workflows/infraestrutura-validacao.yml']
+permissions:
+  contents: read
+jobs:
+  referencias:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Conteúdo, busca e retomada
+        run: node --test tests/infraestrutura/conteudo.test.cjs meu-mbb/catalogo.test.cjs meu-mbb/visitas-diretas.test.cjs
+      - name: Integridade dos kits e endereçamento
+        run: python3 tests/infraestrutura/arquivos.py
+      - name: Geração reproduzível
+        run: |
+          python3 scripts/empacotar-infraestrutura.py
+          git diff --exit-code -- materiais/infraestrutura downloads/infraestrutura

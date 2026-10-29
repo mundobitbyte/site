@@ -1,0 +1,50 @@
+# Projeto didático local. Leia LEIA-ME antes de executar.
+services:
+  db:
+    image: mariadb:11.8
+    environment:
+      MARIADB_DATABASE: escola_eventos
+      MARIADB_USER: portal
+      MARIADB_PASSWORD_FILE: /run/secrets/db_password
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - back
+    secrets:
+      - db_password
+      - db_root_password
+
+  web:
+    image: wordpress:apache
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: escola_eventos
+      WORDPRESS_DB_USER: portal
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - front
+      - back
+    secrets:
+      - db_password
+
+networks:
+  front:
+  back:
+    internal: true
+
+volumes:
+  db_data:
+  wp_data:
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  db_root_password:
+    file: ./secrets/db_root_password.txt

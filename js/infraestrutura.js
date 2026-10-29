@@ -140,7 +140,7 @@
     });
 
     // MbB: botao de copia para blocos de terminal inseridos a cada aula.
-    root.querySelectorAll('.terminal-card > pre').forEach((pre) => {
+    root.querySelectorAll('.terminal-card > pre:not([data-reference-output])').forEach((pre) => {
       if (pre.previousElementSibling?.classList.contains('terminal-copy-tools')) return;
       const tools = document.createElement('div');
       tools.className = 'terminal-copy-tools';
