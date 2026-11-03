@@ -2827,5 +2827,59 @@
       "passo-3",
       "checkpoint"
     ]
+  },
+  "pages/ia/musica/index.html": {
+    "conteudo_id": "ia-musica-introducao",
+    "titulo": "Inteligência Artificial na Música",
+    "versao_conteudo": 1,
+    "localizacao_atual": "pages/ia/musica/index.html",
+    "ancoras": [
+      ":~:text=Conhe%C3%A7a%20uma%20aplica%C3%A7%C3%A3o%20real",
+      ":~:text=1.%20Uma%20vinheta%20para%20o%20podcast%20da%20escola",
+      ":~:text=Onde%20entra%20a%20intelig%C3%AAncia%20artificial%3F",
+      ":~:text=O%20que%20estamos%20criando%20ou%20modificando%3F",
+      ":~:text=2.%20Preparar%20um%20pedido%20que%20possa%20ser%20avaliado",
+      ":~:text=Sua%20evid%C3%AAncia",
+      ":~:text=3.%20Checkpoint%3A%20justificar%20antes%20de%20gerar%20novamente",
+      ":~:text=4.%20Como%20o%20percurso%20ser%C3%A1%20ampliado",
+      ":~:text=Conhecendo%20o%20Suno",
+      ":~:text=Primeira%20m%C3%BAsica",
+      ":~:text=Letras%20e%20estilos",
+      ":~:text=Composi%C3%A7%C3%B5es%20pr%C3%B3prias",
+      ":~:text=Edi%C3%A7%C3%A3o%20e%20recursos%20avan%C3%A7ados",
+      ":~:text=%C3%89tica%2C%20autoria%20e%20uso%20comercial",
+      ":~:text=Divulga%C3%A7%C3%A3o%20e%20distribui%C3%A7%C3%A3o",
+      ":~:text=Outras%20ferramentas",
+      ":~:text=Fontes%20e%20continuidade"
+    ]
+  },
+  "ronaldo-lavestein/index.html": {
+    "conteudo_id": "acervo-ronaldo-lavestein",
+    "titulo": "Ronaldo Lavestein — Acervo Musical",
+    "versao_conteudo": 1,
+    "localizacao_atual": "ronaldo-lavestein/index.html",
+    "ancoras": [
+      "rl-destaque",
+      "rl-catalogo",
+      ":~:text=Esperando%20Manuela",
+      ":~:text=Olhos%20no%20Espelho",
+      ":~:text=Sou%20Nada%20Sem%20Voc%C3%AA",
+      ":~:text=Voc%C3%AA%20na%20Can%C3%A7%C3%A3o%20do%20R%C3%A1dio",
+      ":~:text=Olhar%20ao%20Redor",
+      ":~:text=Como%20o%20Vento%20na%20Janela%20%E2%80%94%20Sertanejo%20Universit%C3%A1rio",
+      ":~:text=Como%20o%20Vento%20na%20Janela%20%E2%80%94%20Mod%C3%A3o",
+      ":~:text=Como%20Vou%20Viver%20Sem%20Ter%20Voc%C3%AA",
+      ":~:text=Andreia",
+      ":~:text=Recorda%C3%A7%C3%B5es",
+      ":~:text=Pra%20Gente%20Ficar",
+      ":~:text=Fala%20S%C3%A9rio%3F",
+      ":~:text=Feito%20um%20Menino",
+      ":~:text=Perdoa%20Amor",
+      ":~:text=Trem%20da%20Paix%C3%A3o",
+      ":~:text=Menininha%20do%20Papai",
+      ":~:text=Eu%20J%C3%A1%20Cansei%20de%20Viver%20Assim",
+      ":~:text=Caipirinha",
+      ":~:text=Autoria%20humana%2C%20novas%20possibilidades%20de%20produ%C3%A7%C3%A3o"
+    ]
   }
 }
