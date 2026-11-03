@@ -1,6 +1,18 @@
 /* Progressive enhancement: the complete catalogue works without JavaScript. */
 (() => {
   'use strict';
+  // Preserve the entry page even after navigation among catalogue anchors.
+  // Direct visits and external referrers retain the home fallback in the HTML.
+  const voltar = document.getElementById('rl-voltar');
+  try {
+    if (document.referrer) {
+      const origem = new URL(document.referrer);
+      const pagina = path => path.replace(/\/index\.html$/, '/').replace(/\/$/, '');
+      if (origem.origin === location.origin && pagina(origem.pathname) !== pagina(location.pathname)) {
+        voltar.href = origem.href;
+      }
+    }
+  } catch (_) { /* The static home link remains available. */ }
   const normalizar = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
   const busca = document.getElementById('rl-busca');
   const filtro = document.getElementById('rl-filtro');

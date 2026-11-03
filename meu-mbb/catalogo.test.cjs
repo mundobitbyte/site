@@ -72,7 +72,12 @@ test('atalho público de pesquisa está presente em todas as páginas HTML do po
         if (!['.git', 'assets', 'downloads'].includes(entrada.name)) percorrer(path.join(dir, entrada.name));
       } else if (entrada.name.endsWith('.html')) {
         const pagina = path.join(dir, entrada.name);
-        assert.match(fs.readFileSync(pagina, 'utf8'), /mbb-busca-global\.js/, path.relative(raiz, pagina));
+        // The musical portfolio intentionally has only its own catalogue search.
+        if (path.relative(raiz, pagina).replaceAll(path.sep, '/') === 'ronaldo-lavestein/index.html') {
+          assert.doesNotMatch(fs.readFileSync(pagina, 'utf8'), /mbb-busca-global\.js|visitas-diretas\.js/);
+        } else {
+          assert.match(fs.readFileSync(pagina, 'utf8'), /mbb-busca-global\.js/, path.relative(raiz, pagina));
+        }
       }
     }
   }
