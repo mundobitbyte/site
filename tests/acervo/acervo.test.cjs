@@ -44,3 +44,14 @@ test('MP3 público não carrega letras ou instruções privadas nos metadados',(
  assert.ok(Object.keys(probe.format.tags).every(k=>!k.toLowerCase().includes('lyrics')));
  assert.doesNotMatch(JSON.stringify(probe.format.tags),/Instrumental Intro|Preserve original|63f0fab1/);
 });
+
+test('acervo separa a pesquisa musical dos recursos educacionais',()=>{
+ const header=/<header\b[\s\S]*?<\/header>/.exec(html)[0];
+ assert.equal((header.match(/<a\b/g)||[]).length,2);
+ assert.match(header,/class="rl-header-home" href="..\/index.html">Mundo bit Byte/);
+ assert.match(header,/id="rl-voltar"/);
+ assert.match(header,/← Voltar ao portal/);
+ assert.doesNotMatch(header,/Pesquisar|Meu MbB|Inteligência Artificial/);
+ assert.doesNotMatch(html,/mbb-busca-global\.js|visitas-diretas\.js|meu-mbb\//);
+ assert.match(html,/id="rl-busca"/);
+});
