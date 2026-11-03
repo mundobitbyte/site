@@ -4259,7 +4259,7 @@
       "status": "ativo",
       "localizacao_atual": "pages/ia/index.html",
       "obrigatorio": false,
-      "texto_busca": "Inteligência Artificial ← Mundo bit Byte Inteligência Artificial Professor Ronaldo Lavestein Inteligência Artificial Entender → aplicar → comunicar → produzir → programar → refletir. Conteúdo e panorama atualizados em 12/09/2026. 1 · Visualizar Fundamentos de IA Entenda como a IA aprende padrões, gera respostas, pode errar e precisa ser validada. 2 · Visualizar IA na Vida Real Aplique IA a situações reais usando textos, imagens, arquivos e evidências do cotidiano. 3 · Visualizar Comunicação com IA Conduza conversas, use referências, refine resultados e corrija o rumo sem depender de prompts mágicos. 4 · Visualizar IA e Produtividade Transforme informações reais em ações, dependências, comunicação e trabalho verificável. 5 · Visualizar IA e Programação Use IA dentro do desenvolvimento para compreender, planejar, testar, depurar e revisar sem terceirizar o código. 6 · Visualizar IA, Ética e Sociedade Analise decisões que afetam pessoas: dados, vieses, autoria, desinformação, automação e responsabilidade. Depois da trilha · Atualização 2026 Panorama de IA · Setembro de 2026 Depois dos seis módulos, veja o que mudou com multimodalidade, ferramentas, agentes, prompt injection, proveniência, transparência e regulação."
+      "texto_busca": "Inteligência Artificial ← Mundo bit Byte Inteligência Artificial Professor Ronaldo Lavestein Inteligência Artificial Entender → aplicar → comunicar → produzir → programar → refletir. Conteúdo e panorama atualizados em 12/09/2026. 1 · Visualizar Fundamentos de IA Entenda como a IA aprende padrões, gera respostas, pode errar e precisa ser validada. 2 · Visualizar IA na Vida Real Aplique IA a situações reais usando textos, imagens, arquivos e evidências do cotidiano. 3 · Visualizar Comunicação com IA Conduza conversas, use referências, refine resultados e corrija o rumo sem depender de prompts mágicos. 4 · Visualizar IA e Produtividade Transforme informações reais em ações, dependências, comunicação e trabalho verificável. 5 · Visualizar IA e Programação Use IA dentro do desenvolvimento para compreender, planejar, testar, depurar e revisar sem terceirizar o código. 6 · Visualizar IA, Ética e Sociedade Analise decisões que afetam pessoas: dados, vieses, autoria, desinformação, automação e responsabilidade. Aplicação criativa · Introdução disponível Inteligência Artificial na Música Da intenção musical à avaliação crítica: autoria humana, produção e uma primeira atividade prática. Aplicação real Acervo musical — Ronaldo Lavestein Conheça 18 faixas autorais e ouça uma gravação produzida com auxílio de IA. Depois da trilha · Atualização 2026 Panorama de IA · Setembro de 2026 Depois dos seis módulos, veja o que mudou com multimodalidade, ferramentas, agentes, prompt injection, proveniência, transparência e regulação."
     },
     {
       "conteudo_id": "mod-pages-ia-panorama-2026",
@@ -12000,6 +12000,226 @@
           "titulo": "Seu resultado pode ser explicado sem exagero?",
           "ancora": "checkpoint",
           "texto_busca": "Seu resultado pode ser explicado sem exagero? Demonstre uma resposta controlada, revisão, descarte e publicação por ação explícita. Entregue a reconstrução e os testes locais, com as pendências reais. O percurso de serviços termina nesta bancada; siga para a entrega comum. Não é necessário desenvolver os caminhos Laravel e React para demonstrar o que você construiu aqui. Baixar referência da etapa 10 Extraia em outra pasta para comparar com sua solução. O preparo está na aula e no LEIA-ME do download. ← Aviso local não é push remoto Conferir a entrega →"
+        }
+      ]
+    },
+    {
+      "conteudo_id": "ia-musica-introducao",
+      "versao_conteudo": 1,
+      "titulo": "Inteligência Artificial na Música",
+      "area": "Inteligência Artificial",
+      "modulo": "IA na Música",
+      "trilha": "IA na Música",
+      "ordem": 300,
+      "status": "ativo",
+      "localizacao_atual": "pages/ia/musica/index.html",
+      "obrigatorio": false,
+      "texto_busca": "Inteligência Artificial na Música | Mundo bit Byte Mundo bit Byte ← Inteligência Artificial Meu MbB Inteligência Artificial / Música Inteligência Artificial na Música Uma intenção musical precisa ser compreendida antes de ser transformada em um comando. E um resultado precisa ser ouvido antes de ser considerado pronto. Este núcleo começa pela introdução e por uma atividade que você pode realizar sem criar conta ou gastar créditos. O tutorial visual do Suno e os capítulos avançados serão acrescentados progressivamente. Entender a aplicação Preparar um pedido Verificar a aprendizagem Percurso do curso Conheça uma aplicação real No acervo de Ronaldo Lavestein, letras e melodias autorais recebem novas produções com auxílio de IA. A demonstração disponível utiliza voz gerada por IA. O estudo desta página usa outro exemplo, criado apenas para aprender. Explorar o acervo musical → 1. Uma vinheta para o podcast da escola Uma turma vai gravar um podcast sobre tecnologia. Falta uma abertura musical que combine com o programa. Pedir apenas “faça uma música bonita” deixa sem resposta três perguntas: para quê, com qual caráter e com quais elementos? A necessidade é transformar a intenção em critérios. Uma vinheta é uma peça curta usada para identificar ou marcar uma passagem de um programa. Neste exemplo, queremos uma abertura acolhedora e curiosa, com piano e percussão leve, sem voz. Onde entra a inteligência artificial? Ferramentas de geração musical podem transformar descrições em áudio. O Suno é uma dessas ferramentas; sua documentação apresenta criação a partir de ideias e possibilidade de fornecer letras próprias. Descrever uma intenção, porém, não equivale a determinar cada nota ou garantir o resultado. O papel de quem conduz o trabalho inclui escolher a intenção, avaliar o que foi produzido e decidir o que precisa mudar. Ouvir criticamente faz parte da atividade, mesmo quando a ferramenta gera o áudio rapidamente. O que estamos criando ou modificando? Composição: a obra musical, incluindo sua melodia e, quando houver, sua letra. Arranjo: a organização dos instrumentos, das vozes e das partes de uma realização musical. Interpretação: a execução vocal ou instrumental; nos exemplos com voz gerada, é necessário informar essa origem. Produção: o conjunto de escolhas e operações que constrói a gravação final. Uma mesma composição pode receber arranjos e interpretações diferentes. Se a intenção é preservar uma melodia existente, a avaliação deve comparar a gravação de referência e o resultado; o pedido escrito sozinho não comprova fidelidade. 2. Preparar um pedido que possa ser avaliado Antes de abrir uma ferramenta, escreva os critérios. Neste exercício: finalidade — abrir um podcast escolar; caráter — acolhedor e curioso; instrumentação — piano e percussão leve; voz — ausente. Esses critérios tornam uma impressão vaga em algo que você consegue conferir ao ouvir. O exemplo abaixo reúne essas escolhas em uma instrução. Ele é didático e não pertence ao repertório pessoal do artista. Vinheta instrumental para abertura de podcast escolar sobre tecnologia. Caráter acolhedor e curioso, com piano e percussão leve. Sem voz. Copiar exemplo Se o resultado tiver um cantor, o critério “sem voz” não foi atendido. Se tiver piano, mas parecer uma marcha solene, a instrumentação pode estar correta e o caráter ainda precisar de revisão. Avaliar cada critério evita trocar tudo sem saber o motivo. Não é preciso gerar áudio nesta atividade. O tutorial com interface real, acesso, planos e criação no Suno será disponibilizado depois de sua verificação visual. Não há telas simuladas nem sequência de cliques presumida nesta página. Sua evidência Adapte a ideia para outro programa escolar. Escreva um pedido e explique como você verificaria o resultado. Este rascunho fica somente nesta tela; copie-o antes de sair. Meu pedido e critérios de avaliação 3. Checkpoint: justificar antes de gerar novamente Um resultado usa piano e percussão leve, mas tem voz cantada. Você deve considerá-lo aprovado apenas porque gostou da melodia? Conferir o raciocínio Não atende integralmente ao pedido: a ausência de voz era um critério explícito. Você pode gostar da melodia e ainda reconhecer essa falha. Registre o que funcionou e o que precisa mudar antes de reformular a instrução. Agora explique: trocar o piano por violão muda necessariamente a letra e a melodia de uma composição? Conferir a distinção Não necessariamente. A troca pode fazer parte de um novo arranjo. Para afirmar que a composição foi preservada, compare letra e melodia, em vez de concluir apenas pela presença de outro instrumento. Você está pronto para a próxima etapa quando consegue escrever critérios observáveis, distinguir composição e produção e apontar uma falha sem descartar automaticamente tudo o que funcionou. 4. Como o percurso será ampliado A introdução acima já pode ser estudada. As etapas a seguir compõem o plano de expansão; não são aulas concluídas. Conhecendo o Suno Acesso, cadastro, idade mínima, interface, planos e limites verificados em fontes oficiais e capturas reais. Primeira música Preencher os campos, gerar, ouvir e registrar evidências; depois comparar resultados. Letras e estilos Estrofes, refrões, instrumentos, vozes, andamento e limites do controle da geração. Composições próprias Áudio de referência, novos arranjos e análise crítica de fidelidade. Edição e recursos avançados Variações, trechos, extensão, recursos vocais e formatos, conforme disponibilidade confirmada. Ética, autoria e uso comercial Estudo da autoria humana, consentimento e distinção entre licença contratual e proteção legal. Divulgação e distribuição Preparação de gravações, metadados, créditos e plataformas. Outras ferramentas Comparações fundamentadas em finalidade, recursos e limitações. Fontes e continuidade Referência oficial consultada em 03/11/2026: Suno — Can I use my own lyrics? . A consulta documental não substitui a verificação da interface em uma conta real. Site oficial do Suno · Acervo de Ronaldo Lavestein · Voltar ao portal de IA Mundo bit Byte • Professor Ronaldo Lavestein use strict document.getElementById im-copiar .addEventListener click async const status im-copia-status try await navigator.clipboard.writeText im-comando .textContent status.textContent Exemplo copiado. catch Selecione exemplo copie manualmente.",
+      "topicos_busca": [
+        {
+          "titulo": "Conheça uma aplicação real",
+          "ancora": ":~:text=Conhe%C3%A7a%20uma%20aplica%C3%A7%C3%A3o%20real",
+          "texto_busca": "Conheça uma aplicação real No acervo de Ronaldo Lavestein, letras e melodias autorais recebem novas produções com auxílio de IA. A demonstração disponível utiliza voz gerada por IA. O estudo desta página usa outro exemplo, criado apenas para aprender. Explorar o acervo musical →"
+        },
+        {
+          "titulo": "1. Uma vinheta para o podcast da escola",
+          "ancora": ":~:text=1.%20Uma%20vinheta%20para%20o%20podcast%20da%20escola",
+          "texto_busca": "1. Uma vinheta para o podcast da escola Uma turma vai gravar um podcast sobre tecnologia. Falta uma abertura musical que combine com o programa. Pedir apenas “faça uma música bonita” deixa sem resposta três perguntas: para quê, com qual caráter e com quais elementos? A necessidade é transformar a intenção em critérios. Uma vinheta é uma peça curta usada para identificar ou marcar uma passagem de um programa. Neste exemplo, queremos uma abertura acolhedora e curiosa, com piano e percussão leve, sem voz."
+        },
+        {
+          "titulo": "Onde entra a inteligência artificial?",
+          "ancora": ":~:text=Onde%20entra%20a%20intelig%C3%AAncia%20artificial%3F",
+          "texto_busca": "Onde entra a inteligência artificial? Ferramentas de geração musical podem transformar descrições em áudio. O Suno é uma dessas ferramentas; sua documentação apresenta criação a partir de ideias e possibilidade de fornecer letras próprias. Descrever uma intenção, porém, não equivale a determinar cada nota ou garantir o resultado. O papel de quem conduz o trabalho inclui escolher a intenção, avaliar o que foi produzido e decidir o que precisa mudar. Ouvir criticamente faz parte da atividade, mesmo quando a ferramenta gera o áudio rapidamente."
+        },
+        {
+          "titulo": "O que estamos criando ou modificando?",
+          "ancora": ":~:text=O%20que%20estamos%20criando%20ou%20modificando%3F",
+          "texto_busca": "O que estamos criando ou modificando? Composição: a obra musical, incluindo sua melodia e, quando houver, sua letra. Arranjo: a organização dos instrumentos, das vozes e das partes de uma realização musical. Interpretação: a execução vocal ou instrumental; nos exemplos com voz gerada, é necessário informar essa origem. Produção: o conjunto de escolhas e operações que constrói a gravação final. Uma mesma composição pode receber arranjos e interpretações diferentes. Se a intenção é preservar uma melodia existente, a avaliação deve comparar a gravação de referência e o resultado; o pedido escrito sozinho não comprova fidelidade."
+        },
+        {
+          "titulo": "2. Preparar um pedido que possa ser avaliado",
+          "ancora": ":~:text=2.%20Preparar%20um%20pedido%20que%20possa%20ser%20avaliado",
+          "texto_busca": "2. Preparar um pedido que possa ser avaliado Antes de abrir uma ferramenta, escreva os critérios. Neste exercício: finalidade — abrir um podcast escolar; caráter — acolhedor e curioso; instrumentação — piano e percussão leve; voz — ausente. Esses critérios tornam uma impressão vaga em algo que você consegue conferir ao ouvir. O exemplo abaixo reúne essas escolhas em uma instrução. Ele é didático e não pertence ao repertório pessoal do artista. Vinheta instrumental para abertura de podcast escolar sobre tecnologia. Caráter acolhedor e curioso, com piano e percussão leve. Sem voz. Copiar exemplo Se o resultado tiver um cantor, o critério “sem voz” não foi atendido. Se tiver piano, mas parecer uma marcha solene, a instrumentação pode estar correta e o caráter ainda precisar de revisão. Avaliar cada critério evita trocar tudo sem saber o motivo. Não é preciso gerar áudio nesta atividade. O tutorial com interface real, acesso, planos e criação no Suno será disponibilizado depois de sua verificação visual. Não há telas simuladas nem sequência de cliques presumida nesta página."
+        },
+        {
+          "titulo": "Sua evidência",
+          "ancora": ":~:text=Sua%20evid%C3%AAncia",
+          "texto_busca": "Sua evidência Adapte a ideia para outro programa escolar. Escreva um pedido e explique como você verificaria o resultado. Este rascunho fica somente nesta tela; copie-o antes de sair. Meu pedido e critérios de avaliação"
+        },
+        {
+          "titulo": "3. Checkpoint: justificar antes de gerar novamente",
+          "ancora": ":~:text=3.%20Checkpoint%3A%20justificar%20antes%20de%20gerar%20novamente",
+          "texto_busca": "3. Checkpoint: justificar antes de gerar novamente Um resultado usa piano e percussão leve, mas tem voz cantada. Você deve considerá-lo aprovado apenas porque gostou da melodia? Conferir o raciocínio Não atende integralmente ao pedido: a ausência de voz era um critério explícito. Você pode gostar da melodia e ainda reconhecer essa falha. Registre o que funcionou e o que precisa mudar antes de reformular a instrução. Agora explique: trocar o piano por violão muda necessariamente a letra e a melodia de uma composição? Conferir a distinção Não necessariamente. A troca pode fazer parte de um novo arranjo. Para afirmar que a composição foi preservada, compare letra e melodia, em vez de concluir apenas pela presença de outro instrumento. Você está pronto para a próxima etapa quando consegue escrever critérios observáveis, distinguir composição e produção e apontar uma falha sem descartar automaticamente tudo o que funcionou."
+        },
+        {
+          "titulo": "4. Como o percurso será ampliado",
+          "ancora": ":~:text=4.%20Como%20o%20percurso%20ser%C3%A1%20ampliado",
+          "texto_busca": "4. Como o percurso será ampliado A introdução acima já pode ser estudada. As etapas a seguir compõem o plano de expansão; não são aulas concluídas."
+        },
+        {
+          "titulo": "Conhecendo o Suno",
+          "ancora": ":~:text=Conhecendo%20o%20Suno",
+          "texto_busca": "Conhecendo o Suno Acesso, cadastro, idade mínima, interface, planos e limites verificados em fontes oficiais e capturas reais."
+        },
+        {
+          "titulo": "Primeira música",
+          "ancora": ":~:text=Primeira%20m%C3%BAsica",
+          "texto_busca": "Primeira música Preencher os campos, gerar, ouvir e registrar evidências; depois comparar resultados."
+        },
+        {
+          "titulo": "Letras e estilos",
+          "ancora": ":~:text=Letras%20e%20estilos",
+          "texto_busca": "Letras e estilos Estrofes, refrões, instrumentos, vozes, andamento e limites do controle da geração."
+        },
+        {
+          "titulo": "Composições próprias",
+          "ancora": ":~:text=Composi%C3%A7%C3%B5es%20pr%C3%B3prias",
+          "texto_busca": "Composições próprias Áudio de referência, novos arranjos e análise crítica de fidelidade."
+        },
+        {
+          "titulo": "Edição e recursos avançados",
+          "ancora": ":~:text=Edi%C3%A7%C3%A3o%20e%20recursos%20avan%C3%A7ados",
+          "texto_busca": "Edição e recursos avançados Variações, trechos, extensão, recursos vocais e formatos, conforme disponibilidade confirmada."
+        },
+        {
+          "titulo": "Ética, autoria e uso comercial",
+          "ancora": ":~:text=%C3%89tica%2C%20autoria%20e%20uso%20comercial",
+          "texto_busca": "Ética, autoria e uso comercial Estudo da autoria humana, consentimento e distinção entre licença contratual e proteção legal."
+        },
+        {
+          "titulo": "Divulgação e distribuição",
+          "ancora": ":~:text=Divulga%C3%A7%C3%A3o%20e%20distribui%C3%A7%C3%A3o",
+          "texto_busca": "Divulgação e distribuição Preparação de gravações, metadados, créditos e plataformas."
+        },
+        {
+          "titulo": "Outras ferramentas",
+          "ancora": ":~:text=Outras%20ferramentas",
+          "texto_busca": "Outras ferramentas Comparações fundamentadas em finalidade, recursos e limitações."
+        },
+        {
+          "titulo": "Fontes e continuidade",
+          "ancora": ":~:text=Fontes%20e%20continuidade",
+          "texto_busca": "Fontes e continuidade Referência oficial consultada em 03/11/2026: Suno — Can I use my own lyrics? . A consulta documental não substitui a verificação da interface em uma conta real. Site oficial do Suno · Acervo de Ronaldo Lavestein · Voltar ao portal de IA"
+        }
+      ]
+    },
+    {
+      "conteudo_id": "acervo-ronaldo-lavestein",
+      "versao_conteudo": 1,
+      "titulo": "Ronaldo Lavestein — Acervo Musical",
+      "area": "Música",
+      "modulo": "Acervo autoral",
+      "trilha": "Acervo autoral",
+      "ordem": 301,
+      "status": "ativo",
+      "localizacao_atual": "ronaldo-lavestein/index.html",
+      "obrigatorio": false,
+      "texto_busca": "Ronaldo Lavestein — Acervo Musical | Mundo bit Byte Pular para o conteúdo Mundo bit Byte Inteligência Artificial Pesquisar Meu MbB Acervo musical • Mundo bit Byte Ronaldo Lavestein Compositor • Cantor • Instrumentista Composições autorais em diferentes caminhos da música brasileira. Letras e melodias humanas, apresentadas em novas produções musicais com auxílio de inteligência artificial. Ouvir a faixa demonstrativa Explorar o repertório RL Disponível para ouvir no site Você na Canção do Rádio Ronaldo Lavestein • Composição autoral Seu navegador não oferece reprodução de áudio. Não foi possível carregar a demonstração. Verifique sua conexão. Tentar novamente Letra e melodia: Ronaldo Lavestein. Voz gerada por IA; produção com auxílio do Suno. Explore as composições Catálogo autoral 18 faixas, incluindo duas versões de “Como o Vento na Janela”. As demais músicas serão disponibilizadas conforme seus lançamentos. Pesquisar composição Disponibilidade Todas as faixas Áudio demonstrativo Em plataformas digitais Disponibilidade em preparação Limpar pesquisa e filtro 18 faixas Nenhuma faixa encontrada. Experimente outro título ou limpe os filtros. RL 01 / Acervo autoral Esperando Manuela Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 02 / Acervo autoral Olhos no Espelho Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 03 / Acervo autoral Sou Nada Sem Você Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 04 / Acervo autoral Você na Canção do Rádio Letra e melodia: Ronaldo Lavestein Áudio demonstrativo no site Ouvir demonstração ↑ Link desta faixa RL 05 / Acervo autoral Olhar ao Redor Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 06 / Acervo autoral Como o Vento na Janela — Sertanejo Universitário Letra e melodia: Ronaldo Lavestein Sertanejo Universitário Disponibilidade em preparação Link desta faixa RL 07 / Acervo autoral Como o Vento na Janela — Modão Letra e melodia: Ronaldo Lavestein Modão Disponibilidade em preparação Link desta faixa RL 08 / Acervo autoral Como Vou Viver Sem Ter Você Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 09 / Acervo autoral Andreia Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 10 / Acervo autoral Recordações Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 11 / Acervo autoral Pra Gente Ficar Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 12 / Acervo autoral Fala Sério? Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 13 / Acervo autoral Feito um Menino Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 14 / Acervo autoral Perdoa Amor Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 15 / Acervo autoral Trem da Paixão Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 16 / Acervo autoral Menininha do Papai Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 17 / Acervo autoral Eu Já Cansei de Viver Assim Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 18 / Acervo autoral Caipirinha Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa Autoria humana, novas possibilidades de produção As letras e melodias originais são de Ronaldo Lavestein. A gravação demonstrativa utiliza voz gerada por inteligência artificial. A apresentação do artista como cantor e instrumentista não atribui a ele a voz desta gravação. Quer entender essa aplicação da tecnologia? Conheça o núcleo educacional de IA na Música, com exemplos didáticos independentes deste repertório. Explorar IA na Música → Ronaldo Lavestein • Acervo musical no Mundo bit Byte Progressive enhancement the complete catalogue works without JavaScript. use strict const normalizar s.normalize NFD .replace u0300- u036f .toLocaleLowerCase pt-BR busca document.getElementById rl-busca filtro rl-filtro cards ...document.querySelectorAll .rl-card function filtrar let total for card card.hidden card.dataset.titulo .includes busca.value.trim filtro.value todas card.dataset.status total++ rl-contagem .textContent cards.length faixas rl-vazio .hidden busca.addEventListener input filtro.addEventListener change rl-limpar .addEventListener click busca.value busca.focus abrirDestino try decodeURIComponent location.hash.slice catch return .classList.contains rl-card card.scrollIntoView window.addEventListener hashchange audio rl-audio aviso rl-audio-status audio.addEventListener error aviso.hidden false rl-repetir-audio true audio.load audio.play .catch rl-controles",
+      "topicos_busca": [
+        {
+          "titulo": "Você na Canção do Rádio",
+          "ancora": "rl-destaque",
+          "texto_busca": "Você na Canção do Rádio Ronaldo Lavestein • Composição autoral Seu navegador não oferece reprodução de áudio. Não foi possível carregar a demonstração. Verifique sua conexão. Tentar novamente Letra e melodia: Ronaldo Lavestein. Voz gerada por IA; produção com auxílio do Suno. Explore as composições"
+        },
+        {
+          "titulo": "Catálogo autoral",
+          "ancora": "rl-catalogo",
+          "texto_busca": "Catálogo autoral 18 faixas, incluindo duas versões de “Como o Vento na Janela”. As demais músicas serão disponibilizadas conforme seus lançamentos. Pesquisar composição Disponibilidade Todas as faixas Áudio demonstrativo Em plataformas digitais Disponibilidade em preparação Limpar pesquisa e filtro 18 faixas Nenhuma faixa encontrada. Experimente outro título ou limpe os filtros. RL 01 / Acervo autoral"
+        },
+        {
+          "titulo": "Esperando Manuela",
+          "ancora": ":~:text=Esperando%20Manuela",
+          "texto_busca": "Esperando Manuela Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 02 / Acervo autoral"
+        },
+        {
+          "titulo": "Olhos no Espelho",
+          "ancora": ":~:text=Olhos%20no%20Espelho",
+          "texto_busca": "Olhos no Espelho Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 03 / Acervo autoral"
+        },
+        {
+          "titulo": "Sou Nada Sem Você",
+          "ancora": ":~:text=Sou%20Nada%20Sem%20Voc%C3%AA",
+          "texto_busca": "Sou Nada Sem Você Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 04 / Acervo autoral"
+        },
+        {
+          "titulo": "Você na Canção do Rádio",
+          "ancora": ":~:text=Voc%C3%AA%20na%20Can%C3%A7%C3%A3o%20do%20R%C3%A1dio",
+          "texto_busca": "Você na Canção do Rádio Letra e melodia: Ronaldo Lavestein Áudio demonstrativo no site Ouvir demonstração ↑ Link desta faixa RL 05 / Acervo autoral"
+        },
+        {
+          "titulo": "Olhar ao Redor",
+          "ancora": ":~:text=Olhar%20ao%20Redor",
+          "texto_busca": "Olhar ao Redor Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 06 / Acervo autoral"
+        },
+        {
+          "titulo": "Como o Vento na Janela — Sertanejo Universitário",
+          "ancora": ":~:text=Como%20o%20Vento%20na%20Janela%20%E2%80%94%20Sertanejo%20Universit%C3%A1rio",
+          "texto_busca": "Como o Vento na Janela — Sertanejo Universitário Letra e melodia: Ronaldo Lavestein Sertanejo Universitário Disponibilidade em preparação Link desta faixa RL 07 / Acervo autoral"
+        },
+        {
+          "titulo": "Como o Vento na Janela — Modão",
+          "ancora": ":~:text=Como%20o%20Vento%20na%20Janela%20%E2%80%94%20Mod%C3%A3o",
+          "texto_busca": "Como o Vento na Janela — Modão Letra e melodia: Ronaldo Lavestein Modão Disponibilidade em preparação Link desta faixa RL 08 / Acervo autoral"
+        },
+        {
+          "titulo": "Como Vou Viver Sem Ter Você",
+          "ancora": ":~:text=Como%20Vou%20Viver%20Sem%20Ter%20Voc%C3%AA",
+          "texto_busca": "Como Vou Viver Sem Ter Você Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 09 / Acervo autoral"
+        },
+        {
+          "titulo": "Andreia",
+          "ancora": ":~:text=Andreia",
+          "texto_busca": "Andreia Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 10 / Acervo autoral"
+        },
+        {
+          "titulo": "Recordações",
+          "ancora": ":~:text=Recorda%C3%A7%C3%B5es",
+          "texto_busca": "Recordações Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 11 / Acervo autoral"
+        },
+        {
+          "titulo": "Pra Gente Ficar",
+          "ancora": ":~:text=Pra%20Gente%20Ficar",
+          "texto_busca": "Pra Gente Ficar Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 12 / Acervo autoral"
+        },
+        {
+          "titulo": "Fala Sério?",
+          "ancora": ":~:text=Fala%20S%C3%A9rio%3F",
+          "texto_busca": "Fala Sério? Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 13 / Acervo autoral"
+        },
+        {
+          "titulo": "Feito um Menino",
+          "ancora": ":~:text=Feito%20um%20Menino",
+          "texto_busca": "Feito um Menino Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 14 / Acervo autoral"
+        },
+        {
+          "titulo": "Perdoa Amor",
+          "ancora": ":~:text=Perdoa%20Amor",
+          "texto_busca": "Perdoa Amor Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 15 / Acervo autoral"
+        },
+        {
+          "titulo": "Trem da Paixão",
+          "ancora": ":~:text=Trem%20da%20Paix%C3%A3o",
+          "texto_busca": "Trem da Paixão Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 16 / Acervo autoral"
+        },
+        {
+          "titulo": "Menininha do Papai",
+          "ancora": ":~:text=Menininha%20do%20Papai",
+          "texto_busca": "Menininha do Papai Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 17 / Acervo autoral"
+        },
+        {
+          "titulo": "Eu Já Cansei de Viver Assim",
+          "ancora": ":~:text=Eu%20J%C3%A1%20Cansei%20de%20Viver%20Assim",
+          "texto_busca": "Eu Já Cansei de Viver Assim Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa RL 18 / Acervo autoral"
+        },
+        {
+          "titulo": "Caipirinha",
+          "ancora": ":~:text=Caipirinha",
+          "texto_busca": "Caipirinha Letra e melodia: Ronaldo Lavestein Disponibilidade em preparação Link desta faixa"
+        },
+        {
+          "titulo": "Autoria humana, novas possibilidades de produção",
+          "ancora": ":~:text=Autoria%20humana%2C%20novas%20possibilidades%20de%20produ%C3%A7%C3%A3o",
+          "texto_busca": "Autoria humana, novas possibilidades de produção As letras e melodias originais são de Ronaldo Lavestein. A gravação demonstrativa utiliza voz gerada por inteligência artificial. A apresentação do artista como cantor e instrumentista não atribui a ele a voz desta gravação. Quer entender essa aplicação da tecnologia? Conheça o núcleo educacional de IA na Música, com exemplos didáticos independentes deste repertório. Explorar IA na Música →"
         }
       ]
     }

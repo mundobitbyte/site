@@ -1,0 +1,185 @@
+{
+  "artista": "Ronaldo Lavestein",
+  "faixas": [
+    {
+      "id": "esperando-manuela",
+      "titulo": "Esperando Manuela",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "olhos-no-espelho",
+      "titulo": "Olhos no Espelho",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "sou-nada-sem-voce",
+      "titulo": "Sou Nada Sem Você",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "voce-na-cancao-do-radio",
+      "titulo": "Você na Canção do Rádio",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "demo-site",
+      "audio": "../assets/audio/voce-na-cancao-do-radio.mp3",
+      "plataformas": {}
+    },
+    {
+      "id": "olhar-ao-redor",
+      "titulo": "Olhar ao Redor",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "como-o-vento-na-janela-sertanejo-universitario",
+      "titulo": "Como o Vento na Janela — Sertanejo Universitário",
+      "autor": "Ronaldo Lavestein",
+      "estilo": "Sertanejo Universitário",
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "como-o-vento-na-janela-modao",
+      "titulo": "Como o Vento na Janela — Modão",
+      "autor": "Ronaldo Lavestein",
+      "estilo": "Modão",
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "como-vou-viver-sem-ter-voce",
+      "titulo": "Como Vou Viver Sem Ter Você",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "andreia",
+      "titulo": "Andreia",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "recordacoes",
+      "titulo": "Recordações",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "pra-gente-ficar",
+      "titulo": "Pra Gente Ficar",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "fala-serio",
+      "titulo": "Fala Sério?",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "feito-um-menino",
+      "titulo": "Feito um Menino",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "perdoa-amor",
+      "titulo": "Perdoa Amor",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "trem-da-paixao",
+      "titulo": "Trem da Paixão",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "menininha-do-papai",
+      "titulo": "Menininha do Papai",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "eu-ja-cansei-de-viver-assim",
+      "titulo": "Eu Já Cansei de Viver Assim",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    },
+    {
+      "id": "caipirinha",
+      "titulo": "Caipirinha",
+      "autor": "Ronaldo Lavestein",
+      "estilo": null,
+      "capa": null,
+      "status": "em-preparacao",
+      "audio": null,
+      "plataformas": {}
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+name: Validação acervo musical
+on:
+  pull_request:
+    paths:
+      - 'ronaldo-lavestein/**'
+      - 'data/acervo-musical.json'
+      - 'assets/audio/**'
+      - 'css/acervo-*.css'
+      - 'css/ia-musica.css'
+      - 'js/acervo-musical.js'
+      - 'js/ia-musica.js'
+      - 'pages/ia/**'
+      - 'scripts/gerar-acervo.py'
+      - 'scripts/templates/acervo.html.in'
+      - 'tests/acervo/**'
+      - 'meu-mbb/catalogo.json'
+      - 'index.html'
+      - '.github/workflows/acervo-musical-validacao.yml'
+permissions:
+  contents: read
+jobs:
+  acervo-e-integracoes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Disponibilizar inspeção do MP3
+        run: |
+          if ! command -v ffprobe >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+      - name: Verificar scripts e índices
+        run: |
+          node --check js/acervo-musical.js
+          node --check js/ia-musica.js
+          node meu-mbb/atualizar-pesquisa.cjs --check
+          node meu-mbb/gerar-visitas.cjs --check
+      - name: Validar acervo e preservação do Meu MbB
+        run: node --test tests/acervo/acervo.test.cjs meu-mbb/catalogo.test.cjs meu-mbb/retomada.test.cjs meu-mbb/notas.test.cjs meu-mbb/falha-firebase.test.cjs meu-mbb/visitas-diretas.test.cjs meu-mbb/direitos-autorais.test.cjs
