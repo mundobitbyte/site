@@ -55,3 +55,13 @@ test('acervo separa a pesquisa musical dos recursos educacionais',()=>{
  assert.doesNotMatch(html,/mbb-busca-global\.js|visitas-diretas\.js|meu-mbb\//);
  assert.match(html,/id="rl-busca"/);
 });
+
+test('convite ao acervo fica no bloco branco inicial, sem faixa grande no fim da home',()=>{
+ const home=read('index.html');
+ const hero=/<section class="hero hero-with-music">([\s\S]*?)<\/section>/.exec(home);
+ assert.ok(hero);
+ assert.match(hero[1],/id="mbb-music-callout"/);
+ assert.match(hero[1],/href="ronaldo-lavestein\/">Conhecer acervo/);
+ assert.doesNotMatch(home,/mbb-music-banner/);
+ assert.equal((home.match(/id="mbb-music-title"/g)||[]).length,1);
+});
