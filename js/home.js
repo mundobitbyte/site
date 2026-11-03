@@ -108,6 +108,12 @@
     const { focusHeading = false, scrollTop = false } = options;
     const target = area ? moduleViews.find((view) => view.dataset.area === area) : null;
 
+    const musicCallout = document.getElementById('mbb-music-callout');
+    if (musicCallout) {
+      musicCallout.hidden = Boolean(target);
+      musicCallout.closest('.hero')?.classList.toggle('hero-with-music', !target);
+    }
+
     areasView.hidden = Boolean(target);
 
     moduleViews.forEach((view) => {
