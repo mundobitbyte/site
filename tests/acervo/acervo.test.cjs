@@ -61,7 +61,14 @@ test('convite ao acervo fica no bloco branco inicial, sem faixa grande no fim da
  const hero=/<section class="hero hero-with-music">([\s\S]*?)<\/section>/.exec(home);
  assert.ok(hero);
  assert.match(hero[1],/id="mbb-music-callout"/);
- assert.match(hero[1],/href="ronaldo-lavestein\/">Conhecer acervo/);
+ assert.ok(hero[1].includes('href="ronaldo-lavestein/" aria-label="Conhecer o acervo musical de Ronaldo Lavestein">Conhecer'));
  assert.doesNotMatch(home,/mbb-music-banner/);
  assert.equal((home.match(/id="mbb-music-title"/g)||[]).length,1);
+});
+
+test('convite musical é compacto e horizontal no notebook', () => {
+ const css=read('css/acervo-destaque.css');
+ assert.ok(css.includes('grid-template-areas:"eyebrow eyebrow" "heading button" "artist button"'));
+ assert.ok(css.includes('grid-template-columns:minmax(0,1fr) max-content'));
+ assert.ok(css.includes('@media(max-width:800px)'));
 });
