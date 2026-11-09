@@ -26,6 +26,10 @@ jobs:
           cp -a /tmp/acervo-staging/mbb-atualizacao-acervo/assets/. assets/
           for f in assets/audio/olhos-no-espelho.mp3 assets/imagens/acervo/ronaldo-perfil.webp assets/imagens/acervo/acervo-musical.webp assets/imagens/acervo/olhos-no-espelho.webp assets/imagens/acervo/voce-na-cancao-do-radio.webp; do test -s "$f"; done
           file assets/audio/olhos-no-espelho.mp3 assets/imagens/acervo/*.webp
+      - name: Instalar ffprobe para validar os MP3
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
       - name: Validar catálogo e mídia
         run: |
           python3 scripts/gerar-acervo.py
