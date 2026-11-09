@@ -3,3 +3,14 @@
 .rl-card img.rl-art{width:100%;height:auto;object-fit:cover}
 
 .rl-header .rl-header-home,.rl-header nav .rl-header-back{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:6px 12px;border:1px solid #ffffffa6;border-radius:999px;background:#ffffff1f;color:white;font-size:13px;font-weight:750;text-decoration:none;white-space:nowrap}.rl-header .rl-header-home:hover,.rl-header nav .rl-header-back:hover{background:#ffffff3d}
+
+/* Acervo 09/11/2026: retrato discreto e capas reais em cards e players */
+.rl-hero-inner{display:flex;align-items:center;justify-content:space-between;gap:36px}
+.rl-hero-copy{flex:1;min-width:0}
+.rl-portrait{width:clamp(124px,15vw,168px);height:auto;aspect-ratio:1;object-fit:cover;border-radius:50%;border:3px solid #e8bc7866;box-shadow:0 12px 35px #0005;flex-shrink:0}
+.rl-featured img.rl-art{width:100%;height:auto;object-fit:cover;aspect-ratio:1;display:block}
+.rl-featured-new{border-color:#e8bc7870;background:linear-gradient(140deg,#23354a,#1a2632)}
+.rl-card img.rl-art{width:100%;height:auto;aspect-ratio:1;object-fit:cover;display:block}
+.rl-card:has(img.rl-art){transition:border-color .18s ease}
+.rl-card:has(img.rl-art):hover{border-color:#e8bc786b}
+@media(max-width:600px){.rl-hero-inner{gap:16px;align-items:flex-start}.rl-portrait{width:88px;border-width:2px}.rl-hero .rl-wrap{padding:28px 0}.rl-hero h1{font-size:clamp(30px,8vw,45px)}.rl-hero .rl-roles{font-size:12px}.rl-featured img.rl-art{max-width:210px}}

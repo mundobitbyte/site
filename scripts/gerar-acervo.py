@@ -14,8 +14,11 @@ for i, song in enumerate(data['faixas'], 1):
         if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
             raise ValueError('Link de plataforma deve usar HTTPS e não conter credenciais')
         links.append(f'<a class="rl-link" href="{e(url)}" target="_blank" rel="noopener noreferrer">Ouvir no {e(plataforma)}</a>')
-    if song['audio']: links.insert(0, '<a class="rl-link" href="#ouvir">Ouvir demonstração ↑</a>')
-    status = 'Áudio demonstrativo no site' if song['audio'] else 'Disponível em plataforma digital' if links else 'Disponibilidade em preparação'
+    if song['audio']:
+        destino = '#ouvir' if song['status'] == 'demo-site' else '#ouvir-' + song['id']
+        texto = 'Ouvir demonstração ↑' if song['status'] == 'demo-site' else 'Ouvir esta faixa ↑'
+        links.insert(0, f'<a class="rl-link" href="{e(destino)}">{texto}</a>')
+    status = ('Áudio demonstrativo no site' if song['status'] == 'demo-site' else 'Ouça no site') if song['audio'] else 'Disponível em plataforma digital' if links else 'Disponibilidade em preparação'
     art = f'<img class="rl-art" src="{e(song["capa"])}" alt="Capa de {e(song["titulo"])}" loading="lazy" width="300" height="300">' if song['capa'] else '<div class="rl-art" aria-hidden="true"><div class="rl-disc">RL</div></div>'
     style = f'<p class="rl-credit">{e(song["estilo"])}</p>' if song['estilo'] else ''
     filter_status = 'disponivel' if song['plataformas'] and not song['audio'] else song['status']

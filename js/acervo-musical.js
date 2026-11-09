@@ -34,9 +34,13 @@
     if (card?.classList.contains('rl-card')) { busca.value = ''; filtro.value = 'todas'; filtrar(); card.scrollIntoView(); }
   }
   window.addEventListener('hashchange', abrirDestino); abrirDestino();
-  const audio = document.getElementById('rl-audio');
-  const aviso = document.getElementById('rl-audio-status');
-  audio.addEventListener('error', () => { aviso.hidden = false; });
-  document.getElementById('rl-repetir-audio').addEventListener('click', () => { aviso.hidden = true; audio.load(); audio.play().catch(() => { aviso.hidden = false; }); });
+  for (const sufixo of ['', '-olhos']) {
+    const audio = document.getElementById('rl-audio' + sufixo);
+    const aviso = document.getElementById('rl-audio-status' + sufixo);
+    const tentar = document.getElementById('rl-repetir-audio' + sufixo);
+    if (!audio || !aviso || !tentar) continue;
+    audio.addEventListener('error', () => { aviso.hidden = false; });
+    tentar.addEventListener('click', () => { aviso.hidden = true; audio.load(); audio.play().catch(() => { aviso.hidden = false; }); });
+  }
   document.getElementById('rl-controles').hidden = false;
 })();
