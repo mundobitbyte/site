@@ -1,13 +1,90 @@
-/* A compact music invitation within the existing white home introduction. */
-.hero.hero-with-music{display:grid;grid-template-columns:minmax(0,1fr) 240px;align-items:center;gap:28px}
+/* Convite musical na abertura do portal: altura controlada, sem faixa adicional. */
+.hero.hero-with-music{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(190px,215px);
+  align-items:center;
+  gap:20px;
+  padding-top:18px;
+  padding-bottom:18px;
+  margin-bottom:16px;
+}
 .hero-copy{min-width:0}
-.hero .mbb-music-callout{min-width:0;padding-left:24px;border-left:1px solid #d6e0ee}
-.hero .mbb-music-eyebrow{display:block;color:#607089;font-size:10px;font-weight:750;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.hero .mbb-music-callout h3{margin:0;color:#114b9e;font:750 18px/1.25 "Segoe UI",Arial,sans-serif}
-.hero .mbb-music-callout p{margin:3px 0 10px;color:#52647c;font-size:13px;line-height:1.4}
-.hero .mbb-music-callout a{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:7px 13px;border:1px solid #b9cce5;border-radius:999px;background:#eaf2ff;color:#114b9e;text-decoration:none;font:750 12px/1.2 "Segoe UI",Arial,sans-serif;white-space:nowrap}
-.hero .mbb-music-callout a:hover{background:#dceaff;border-color:#1967d2}
-.hero .mbb-music-callout a:focus-visible{outline:3px solid #1967d2;outline-offset:3px}
+.hero .mbb-music-callout{
+  min-width:0;
+  padding:2px 0 2px 17px;
+  border-left:1px solid #d6e0ee;
+}
+.hero .mbb-music-eyebrow{
+  display:block;
+  color:#607089;
+  font-size:10px;
+  font-weight:750;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  line-height:1.3;
+  margin-bottom:2px;
+}
+.hero .mbb-music-callout h3{
+  margin:0;
+  color:#114b9e;
+  font:750 17px/1.2 "Segoe UI",Arial,sans-serif;
+}
+.hero .mbb-music-callout p{
+  margin:3px 0 8px;
+  color:#52647c;
+  font-size:12px;
+  line-height:1.3;
+}
+.hero .mbb-music-callout a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:32px;
+  padding:6px 12px;
+  border:1px solid #b9cce5;
+  border-radius:999px;
+  background:#eaf2ff;
+  color:#114b9e;
+  text-decoration:none;
+  font:750 12px/1.2 "Segoe UI",Arial,sans-serif;
+  white-space:nowrap;
+}
+.hero .mbb-music-callout a:hover{
+  background:#dceaff;
+  border-color:#1967d2;
+}
+.hero .mbb-music-callout a:focus-visible{
+  outline:3px solid #1967d2;
+  outline-offset:3px;
+}
 .mbb-music-callout[hidden]{display:none!important}
-@media(max-width:800px){.hero.hero-with-music{grid-template-columns:1fr;gap:18px}.hero .mbb-music-callout{padding:15px 0 0;border-left:0;border-top:1px solid #d6e0ee;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:10px}.hero .mbb-music-eyebrow{grid-column:1}.hero .mbb-music-callout h3{grid-column:1;font-size:17px}.hero .mbb-music-callout p{grid-column:1;margin-bottom:0}.hero .mbb-music-callout a{grid-column:2;grid-row:1/4}}
-@media(max-width:380px){.hero .mbb-music-callout{display:block}.hero .mbb-music-callout p{margin-bottom:10px}}
+
+/* No notebook estreito e no celular, o convite vira uma linha compacta. */
+@media(max-width:740px){
+  .hero.hero-with-music{
+    grid-template-columns:minmax(0,1fr);
+    gap:12px;
+    padding:16px 18px;
+    margin-bottom:16px;
+  }
+  .hero .mbb-music-callout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"eyebrow button" "heading button" "artist button";
+    align-items:center;
+    column-gap:12px;
+    row-gap:0;
+    padding:10px 0 0;
+    border-left:0;
+    border-top:1px solid #d6e0ee;
+  }
+  .hero .mbb-music-eyebrow{grid-area:eyebrow;font-size:9px;margin:0}
+  .hero .mbb-music-callout h3{grid-area:heading;font-size:16px}
+  .hero .mbb-music-callout p{grid-area:artist;margin:1px 0 0;font-size:11px}
+  .hero .mbb-music-callout a{grid-area:button;min-height:34px}
+}
+@media(max-width:350px){
+  .hero .mbb-music-callout{column-gap:7px}
+  .hero .mbb-music-callout a{font-size:11px;padding:6px 9px}
+  .hero .mbb-music-callout h3{font-size:15px}
+}
