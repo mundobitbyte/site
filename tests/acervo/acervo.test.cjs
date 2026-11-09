@@ -7,19 +7,20 @@ const root = path.resolve(__dirname, '../..');
 const read = p => fs.readFileSync(path.join(root,p),'utf8');
 const dados = JSON.parse(read('data/acervo-musical.json'));
 const html = read('ronaldo-lavestein/index.html');
-test('acervo aprovado tem 18 faixas, duas versões distintas e apenas a demonstração autorizada', () => {
+test('acervo aprovado tem 18 faixas, duas versões e duas gravações autorizadas', () => {
  assert.equal(dados.faixas.length,18);
  assert.equal(new Set(dados.faixas.map(f=>f.id)).size,18);
  assert.equal(dados.faixas[0].titulo,'Esperando Manuela');
  assert.equal(dados.faixas.at(-1).titulo,'Caipirinha');
  assert.equal(dados.faixas.filter(f=>f.titulo.startsWith('Como o Vento na Janela')).length,2);
- assert.deepEqual(dados.faixas.filter(f=>f.audio).map(f=>f.titulo),['Você na Canção do Rádio']);
- assert.equal((html.match(/<audio\b/g)||[]).length,1);
+ assert.deepEqual(dados.faixas.filter(f=>f.audio).map(f=>f.titulo),['Olhos no Espelho','Você na Canção do Rádio']);
+ assert.equal((html.match(/<audio\b/g)||[]).length,2);
  assert.match(html,/preload="none"/);
  assert.doesNotMatch(html,/<iframe\b|class="lyrics"|\bautoplay\b|suno\.com\/embed/);
  for (const faixa of dados.faixas) {
   assert.ok(html.includes(`id="${faixa.id}"`));
   if(faixa.audio) assert.ok(fs.existsSync(path.resolve(root,'ronaldo-lavestein',faixa.audio)));
+  if (faixa.capa) assert.ok(fs.existsSync(path.resolve(root,'ronaldo-lavestein',faixa.capa)));
   assert.deepEqual(faixa.plataformas,{});
  }
 });
@@ -64,4 +65,19 @@ test('convite ao acervo fica no bloco branco inicial, sem faixa grande no fim da
  assert.match(hero[1],/href="ronaldo-lavestein\/">Conhecer acervo/);
  assert.doesNotMatch(home,/mbb-music-banner/);
  assert.equal((home.match(/id="mbb-music-title"/g)||[]).length,1);
+});
+
+test('nova música preserva áudio e não expõe letra ou prompt nos metadados', () => {
+ const nova='assets/audio/olhos-no-espelho.mp3';
+ const info=JSON.parse(execFileSync('ffprobe',['-v','error','-show_entries','format=duration:format_tags','-of','json',path.join(root,nova)],{encoding:'utf8'}));
+ assert.ok(Number(info.format.duration)>150);
+ assert.ok(Object.keys(info.format.tags || {}).every(k=>!k.toLowerCase().includes('lyrics')));
+ assert.doesNotMatch(JSON.stringify(info.format.tags),/suno; created|Instrumental Intro|Preserve original/i);
+ for (const id of ['olhos-no-espelho','voce-na-cancao-do-radio']) {
+   const faixa=dados.faixas.find(f=>f.id===id);
+   assert.ok(faixa.capa);
+   assert.ok(fs.existsSync(path.resolve(root,'ronaldo-lavestein',faixa.capa)));
+ }
+ assert.match(html,/id="ouvir-olhos-no-espelho"/);
+ assert.match(html,/id="rl-audio-olhos"/);
 });
