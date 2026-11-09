@@ -61,7 +61,7 @@ test('convite ao acervo fica no bloco branco inicial, sem faixa grande no fim da
  const hero=/<section class="hero hero-with-music">([\s\S]*?)<\/section>/.exec(home);
  assert.ok(hero);
  assert.match(hero[1],/id="mbb-music-callout"/);
- assert.match(hero[1],/href="ronaldo-lavestein\\/" aria-label="Conhecer o acervo musical de Ronaldo Lavestein">Conhecer/);
+ assert.ok(hero[1].includes('href="ronaldo-lavestein/" aria-label="Conhecer o acervo musical de Ronaldo Lavestein">Conhecer'));
  assert.doesNotMatch(home,/mbb-music-banner/);
  assert.equal((home.match(/id="mbb-music-title"/g)||[]).length,1);
 });
