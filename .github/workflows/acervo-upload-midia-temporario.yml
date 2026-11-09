@@ -1,0 +1,39 @@
+name: Transferência temporária das mídias do acervo
+on:
+  push:
+    branches:
+      - feat/acervo-musical-20261109
+    paths:
+      - '.github/workflows/acervo-upload-midia-temporario.yml'
+permissions:
+  contents: write
+jobs:
+  transferir-midia:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Baixar ZIP do acervo e validar
+        env:
+          MEDIA_PACKAGE_URL: https://at.adobe.com/uzqhpTx3uFNXcOk7
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 --connect-timeout 20 --max-time 180 "$MEDIA_PACKAGE_URL" -o /tmp/acervo.zip
+          test "$(stat -c '%s' /tmp/acervo.zip)" -gt 1000000
+          unzip -t /tmp/acervo.zip >/dev/null
+          unzip -o /tmp/acervo.zip 'mbb-atualizacao-acervo/assets/*' -d /tmp/acervo-staging >/dev/null
+          cp -a /tmp/acervo-staging/mbb-atualizacao-acervo/assets/. assets/
+          for f in assets/audio/olhos-no-espelho.mp3 assets/imagens/acervo/ronaldo-perfil.webp assets/imagens/acervo/acervo-musical.webp assets/imagens/acervo/olhos-no-espelho.webp assets/imagens/acervo/voce-na-cancao-do-radio.webp; do test -s "$f"; done
+          file assets/audio/olhos-no-espelho.mp3 assets/imagens/acervo/*.webp
+      - name: Validar catálogo e mídia
+        run: |
+          python3 scripts/gerar-acervo.py
+          node --test tests/acervo/acervo.test.cjs
+      - name: Adicionar mídias à branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/audio/olhos-no-espelho.mp3 assets/imagens/acervo/ronaldo-perfil.webp assets/imagens/acervo/acervo-musical.webp assets/imagens/acervo/olhos-no-espelho.webp assets/imagens/acervo/voce-na-cancao-do-radio.webp
+          git diff --cached --quiet || git commit -m "Adicionar capas, retrato e MP3 ao acervo musical"
+          git push
