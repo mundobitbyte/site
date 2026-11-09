@@ -14,3 +14,22 @@
 .rl-card:has(img.rl-art){transition:border-color .18s ease}
 .rl-card:has(img.rl-art):hover{border-color:#e8bc786b}
 @media(max-width:600px){.rl-hero-inner{gap:16px;align-items:flex-start}.rl-portrait{width:88px;border-width:2px}.rl-hero .rl-wrap{padding:28px 0}.rl-hero h1{font-size:clamp(30px,8vw,45px)}.rl-hero .rl-roles{font-size:12px}.rl-featured img.rl-art{max-width:210px}}
+
+/* Fundo panorâmico do acervo. O retrato original fica visível nas telas estreitas. */
+.rl-hero{
+  background:#101924 url("../assets/imagens/acervo/ronaldo-topo.webp") left center / cover no-repeat;
+}
+@media(min-width:1101px){
+  .rl-hero{
+    background-image:linear-gradient(90deg,#10192466,transparent 62%),url("../assets/imagens/acervo/ronaldo-topo.webp");
+    background-position:center,right 12%;
+  }
+  .rl-hero-copy{max-width:56%}
+  .rl-portrait{display:none}
+}
+@media(max-width:1100px){
+  .rl-hero{
+    background-image:linear-gradient(90deg,#10192466,#10192499),url("../assets/imagens/acervo/ronaldo-topo.webp");
+    background-size:cover,auto 145%;
+  }
+}
