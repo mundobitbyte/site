@@ -15,10 +15,10 @@
       "id": "olhos-no-espelho",
       "titulo": "Olhos no Espelho",
       "autor": "Ronaldo Lavestein",
-      "estilo": null,
-      "capa": null,
-      "status": "em-preparacao",
-      "audio": null,
+      "estilo": "Pop-rock brasileiro · Anos 80/90",
+      "capa": "../assets/imagens/acervo/olhos-no-espelho.webp",
+      "status": "audio-site",
+      "audio": "../assets/audio/olhos-no-espelho.mp3",
       "plataformas": {}
     },
     {
@@ -36,7 +36,7 @@
       "titulo": "Você na Canção do Rádio",
       "autor": "Ronaldo Lavestein",
       "estilo": null,
-      "capa": null,
+      "capa": "../assets/imagens/acervo/voce-na-cancao-do-radio.webp",
       "status": "demo-site",
       "audio": "../assets/audio/voce-na-cancao-do-radio.mp3",
       "plataformas": {}
