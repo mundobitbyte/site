@@ -373,6 +373,10 @@ const styles = StyleSheet.create({
     ['nav-cep-completo', 'Tela após abrir Busca CEP'],
   ]);
 
+  const mediaEscolarIlustrativa = new Set([
+    'state-8-eventos', 'state-9-calculo', 'state-10-limpar', 'mbb-react-condicional'
+  ]);
+
   function adjustResultLabel(id) {
     const title = document.querySelector('#resultCard > .panel-title');
     if (!title || typeof currentModuleKey === 'undefined') return;
@@ -385,6 +389,17 @@ const styles = StyleSheet.create({
     if (outputLabels.has(String(id))) {
       title.textContent = outputLabels.get(String(id));
       return;
+    }
+
+    if (currentModuleKey === 'state') {
+      if (document.querySelector('#preview .media-escolar-interativa')) {
+        title.textContent = 'Prévia interativa';
+        return;
+      }
+      if (mediaEscolarIlustrativa.has(id)) {
+        title.textContent = 'Prévia ilustrativa';
+        return;
+      }
     }
 
     title.textContent = 'Tela do snack.expo.dev';

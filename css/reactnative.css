@@ -1900,6 +1900,66 @@
   margin: 4px 10px 8px;
 }
 
+.media-escolar-interativa {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  height: 100%;
+  padding: clamp(14px, 8%, 30px);
+  overflow-y: auto;
+  background: #fff;
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.media-escolar-titulo {
+  font-size: 21px;
+}
+
+.media-escolar-interativa input {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  margin-top: 5px;
+  padding: 8px;
+  border: 1px solid #64748b;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 16px;
+}
+
+.media-escolar-botoes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.media-escolar-botoes button {
+  min-height: 44px;
+  padding: 4px;
+  border: 0;
+  border-radius: 4px;
+  background: #1967d2;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.media-escolar-interativa input:focus,
+.media-escolar-botoes button:focus-visible {
+  outline: 2px solid #142c48;
+  outline-offset: 2px;
+}
+
+.media-escolar-erro,
+.media-escolar-resultado strong {
+  color: #b91c1c;
+}
+
+.media-escolar-resultado strong.media-escolar-aprovado {
+  color: #166534;
+}
+
 .layout {
   height: calc(100vh - 92px);
 }
