@@ -840,7 +840,7 @@ ${estiloLaboratorio}`,
       {
         id: 'mbb-effect-cleanup',
         menu: '32. Limpeza (cleanup)',
-        title: 'Encerrando o que o Effect iniciou',
+        title: 'Encerrando o que o Effect iniciou (cleanup)',
         objective: 'Verificar que o intervalo é encerrado quando o temporizador sai da tela.',
         code: codigoTemporizador(),
         addedTitle: 'Setup e cleanup em pares',

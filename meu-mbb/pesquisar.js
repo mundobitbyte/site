@@ -64,7 +64,7 @@
 
   try {
     const [principalResposta, segurancaResposta] = await Promise.all([
-      fetch('catalogo.json?v=mbb-busca-4'),
+      fetch('catalogo.json?v=20261116-react-native'),
       fetch('catalogo-seguranca-dados.json?v=mbb-sdi-1').catch(() => null)
     ]);
     if (!principalResposta.ok) throw new Error('Catálogo indisponível');

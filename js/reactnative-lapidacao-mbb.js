@@ -273,7 +273,7 @@ campoNota2.current?.focus()
     const effectIntro = reactModule.steps.find(s => s.id === 'mbb-effect-intro');
     if (effectIntro) {
       effectIntro.menu = 'Sincronizar (useEffect)';
-      effectIntro.title = 'Quando o componente precisa acompanhar algo de fora do React';
+      effectIntro.title = 'useEffect — quando o componente precisa acompanhar algo de fora do React';
       effectIntro.objective = 'Entender a necessidade que leva ao uso de useEffect.';
       effectIntro.kicker = 'Uma necessidade diferente';
       effectIntro.lead = 'Algumas tarefas não acontecem apenas porque o usuário clicou ou porque um cálculo foi feito. O componente pode precisar manter algo sincronizado com um temporizador, uma assinatura, uma conexão ou outro sistema externo ao React.';

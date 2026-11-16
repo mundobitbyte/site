@@ -55,6 +55,29 @@ test('destinos de seções reais cobrem Banco de Dados, React Native e Análise'
   }
 });
 
+test('React e Hooks indexa a sequência publicada e preserva a mesma unidade de estudo', () => {
+  const unidade = catalogo.unidades.find(item => item.localizacao_atual === 'pages/reactnative.html');
+  const topicos = unidade.topicos_busca.filter(item => item.ancora.startsWith('rn-state-'));
+  const visitas = require('./visitas-diretas.json')['pages/reactnative.html'];
+  assert.equal(topicos.length, 41);
+  assert.deepEqual(topicos.slice(1).map(item => Number(item.titulo.match(/ — (\d+) — /)?.[1])),
+    [...Array.from({ length: 39 }, (_, i) => i + 1), 99]);
+  assert.equal(unidade.conteudo_id, 'mod-pages-reactnative');
+  assert.equal(visitas.conteudo_id, unidade.conteudo_id);
+  for (const topico of topicos) assert.ok(visitas.ancoras.includes(topico.ancora));
+  const exemplos = [
+    ['useEffect', 'rn-state-mbb-effect-intro'],
+    ['cleanup', 'rn-state-mbb-effect-cleanup'],
+    ['dependências useEffect', 'rn-state-mbb-effect-dependencias'],
+    ['Média Escolar', 'rn-state-state-12-final']
+  ];
+  for (const [consulta, ancora] of exemplos) {
+    const resultado = core.pesquisar(catalogo, consulta).find(item => item.conteudo_id === unidade.conteudo_id);
+    assert.equal(resultado.localizacao_pesquisa, `pages/reactnative.html#${ancora}`);
+    assert.match(resultado.titulo_pesquisa, /^2\. React e Hooks — /);
+  }
+});
+
 test('campo de pesquisa usa exemplo geral do portal, não o exemplo do piloto Git', () => {
   const html = fs.readFileSync(path.resolve(__dirname, 'pesquisar.html'), 'utf8');
   const placeholder = html.match(/placeholder="([^"]+)"/)?.[1] || '';

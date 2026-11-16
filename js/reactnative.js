@@ -4096,7 +4096,7 @@ const styles = StyleSheet.create({
                     "modulePage": true,
                     "kicker": "Aplicativo do módulo",
                     "lead": "O aplicativo Média Escolar calcula a média de duas notas e informa a situação do aluno.",
-                    "highlight": "Este módulo prepara o caminho para o próximo: no módulo 3 o resultado vem de um cálculo dentro do app; no módulo 4 o resultado virá de um serviço na internet.",
+                    "highlight": "No módulo 2, React e Hooks, o resultado vem de um cálculo dentro do app. No módulo 3, Web Services/APIs, o resultado virá de um serviço na internet.",
                     "boxes": [
                               [
                                         "1. Digitar",
@@ -5115,18 +5115,52 @@ const styles = StyleSheet.create({
       document.getElementById('preview').innerHTML = step.preview ? step.preview : previewHTML(id);
     }
 
-    function copyText(id) {
-      const text = document.getElementById(id).textContent;
-      navigator.clipboard.writeText(text);
+    function copiarComSelecao(texto, botao) {
+      const campo = document.createElement('textarea');
+      campo.value = texto;
+      campo.readOnly = true;
+      campo.style.position = 'fixed';
+      campo.style.opacity = '0';
+      document.body.appendChild(campo);
+      try {
+        campo.select();
+        return document.execCommand('copy');
+      } catch {
+        return false;
+      } finally {
+        campo.remove();
+        botao.focus({ preventScroll: true });
+      }
+    }
+
+    async function copiarConteudo(texto, botao) {
+      const rotulo = botao.dataset.rotuloCopia ??= botao.textContent;
+      const tentativa = {};
+      botao._mbbTentativaCopia = tentativa;
+      botao.setAttribute('aria-live', 'polite');
+      clearTimeout(botao._mbbCopiarTimer);
+      botao.textContent = 'Copiando…';
+
+      let copiado = false;
+      try {
+        await navigator.clipboard.writeText(texto);
+        copiado = true;
+      } catch {
+        if (botao._mbbTentativaCopia === tentativa && botao.isConnected) {
+          copiado = copiarComSelecao(texto, botao);
+        }
+      }
+      if (botao._mbbTentativaCopia !== tentativa) return;
+      botao.textContent = copiado ? 'Copiado!' : 'Falha ao copiar';
+      botao._mbbCopiarTimer = setTimeout(() => { botao.textContent = rotulo; }, 2200);
+    }
+
+    function copyText(id, botao) {
+      return copiarConteudo(document.getElementById(id).textContent, botao);
     }
 
     function copyImageLink(url, botao) {
-      navigator.clipboard.writeText(url);
-      const textoOriginal = botao.innerHTML;
-      botao.innerHTML = '✅ Copiado!';
-      setTimeout(() => {
-        botao.innerHTML = textoOriginal;
-      }, 1800);
+      return copiarConteudo(url, botao);
     }
 
     window.copyImageLink = copyImageLink;

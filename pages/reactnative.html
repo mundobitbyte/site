@@ -34,7 +34,7 @@
 <section class="code-card card" id="codeCard" style="display:none !important;">
 <div class="panel-title">
 <span>Código completo — App.js</span>
-<button class="btn-copy" onclick="copyText('fullCode'); const botao = this; clearTimeout(botao._mbbCopiarTimer); botao.textContent = 'Copiado!'; botao._mbbCopiarTimer = setTimeout(() => { botao.textContent = 'Copiar'; }, 1500)">Copiar</button>
+<button type="button" class="btn-copy" onclick="copyText('fullCode', this)">Copiar</button>
 </div>
 <pre id="fullCode"></pre>
 </section>
@@ -63,7 +63,7 @@
 <aside class="side-bottom" id="noteWrap" style="display:grid !important;"><div class="note" id="note"><strong>Observação:</strong> Nesta introdução, o foco é entender a lógica estrutural das interfaces: componentes, containers, estilos e caixas dentro de caixas.</div></aside>
 </section>
 <section class="new-code card" id="newCodeCard" style="display:none !important;">
-<div class="panel-title"><span>O que foi adicionado</span><button class="btn-copy" onclick="copyText('newCode'); const botao = this; clearTimeout(botao._mbbCopiarTimer); botao.textContent = 'Copiado!'; botao._mbbCopiarTimer = setTimeout(() => { botao.textContent = 'Copiar'; }, 1500)">Copiar</button></div>
+<div class="panel-title"><span>O que foi adicionado</span><button type="button" class="btn-copy" onclick="copyText('newCode', this)">Copiar</button></div>
 <pre id="newCode"></pre>
 </section>
 <section class="intro-view" id="introView">
@@ -87,15 +87,13 @@
 </div>
 </main>
 </div>
-<script src="../js/reactnative.js?v=20261115-media-escolar"></script>
-<script src="../js/reactnative-hooks-mbb.js?v=20261116-effects"></script>
-<script src="../js/reactnative-lapidacao-mbb.js?v=20261116-effects"></script>
+<script src="../js/reactnative.js?v=20261116-busca-copiar"></script>
+<script src="../js/reactnative-hooks-mbb.js?v=20261116-busca-copiar"></script>
+<script src="../js/reactnative-lapidacao-mbb.js?v=20261116-busca-copiar"></script>
 <script src="../js/reactnative-ajustes-finais-mbb.js"></script>
 <script src="../js/reactnative-navegacao-mbb.js?v=20261026-ex99-base-unificado"></script>
 <script src="../js/reactnative-navegacao-ajustes-finais.js?v=20260921-4"></script>
-<script src="../js/reactnative-codigo-didatico-mbb.js?v=20260919-3"></script>
-<script src="../js/reactnative-livro-dados-cap0.js?v=20260919-3"></script>
-<script src="../js/reactnative-livro-dados-cap1a.js?v=20260919-3"></script>
+<script src="../js/reactnative-codigo-didatico-mbb.js?v=20261116-busca-copiar"></script>
 <script src="../js/reactnative-livro-dados-cap1b.js?v=20260919-3"></script>
 <script src="../js/reactnative-navegacao-iniciante-mbb.js?v=20261026-ex99-tipografia-1"></script>
 <script src="../js/reactnative-navegacao-layout-mbb.js?v=20260921-2"></script>
