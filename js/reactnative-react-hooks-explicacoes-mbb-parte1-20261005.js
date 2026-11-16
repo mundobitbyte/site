@@ -80,27 +80,24 @@ Quando setNota1 recebe um novo valor, React registra a mudança e renderiza nova
 
 Pergunta prática: este valor pode mudar durante o uso e essa mudança precisa participar da interface? Se sim, state provavelmente entra na conversa.`],
 
-    'state-8-eventos': ['Eventos: ligando uma ação do usuário a uma função', `Agora já temos dados guardados em state. O próximo problema é decidir quando executar uma ação.
+    'state-8-eventos': ['Eventos: ligando uma ação do usuário a uma função', `As notas já ficam guardadas no state. Agora precisamos escolher quando uma ação deve acontecer.
 
-onPress recebe uma função para ser chamada quando o usuário toca no botão. O evento é o gatilho; a função contém o trabalho.
+Em onPress={calcularMedia}, entregamos a função ao botão. Ela será chamada no toque. O botão Limpar chama a função limpar.
 
-Em onPress={calcular}, estamos passando calcular para ser executada depois, no momento do toque.
+Nesta etapa, cada função atualiza apenas o state mensagem. Se a mensagem mudar ao tocar, você sabe qual função foi chamada. Na próxima etapa, Calcular passará a usar as notas guardadas nos campos.`],
 
-Esse modelo aparece por toda a interface: digitação dispara onChangeText; toque dispara onPress; conclusão da edição pode disparar onSubmitEditing.`],
+    'state-9-calculo': ['Validando as notas antes de calcular', `TextInput entrega texto. Um campo vazio precisa ser detectado antes da conversão, pois Number('') devolve 0.
 
-    'state-9-calculo': ['Transformando os dados digitados em uma regra do aplicativo', `As notas estão guardadas como state. Agora usamos esses valores para calcular a média e determinar a situação.
+A função lerNota remove espaços nas pontas com trim() e troca a vírgula por ponto. A expressão regular aceita inteiros e decimais. Depois, Number converte o texto. A função aceita apenas notas de 0 a 10 e devolve null para indicar entrada inválida. Zero continua sendo uma nota válida.
 
-TextInput trabalha com texto, por isso Number(...) converte os valores antes da soma.
+Se uma nota é inválida, mostramos uma mensagem, apagamos o resultado anterior e retornamos sem calcular. Com duas notas válidas, calculamos a média. O if/else decide a situação: média 6 ou mais aprova.
 
-Depois do cálculo, as funções de atualização gravam média e situação. React então renderiza novamente a parte da interface que depende desses states.
+O botão Limpar fica desabilitado até a próxima etapa.`],
 
-Fluxo completo: usuário digita → state recebe os valores → evento chama calcular → a função aplica a regra → state muda → a interface mostra o resultado.`],
+    'state-10-limpar': ['Limpar também significa atualizar o estado da aplicação', `Limpar devolve notas, média, situação e mensagem aos seus valores iniciais. Como os campos e os textos dependem desses states, a interface acompanha a mudança.
 
-    'state-10-limpar': ['Limpar também significa atualizar o estado da aplicação', `O botão Limpar reforça uma ideia central: a interface reflete o state.
+Os rótulos Média e Situação ainda ficam visíveis, mesmo quando os valores estão vazios. Na próxima etapa, vamos mostrar essa área só quando existir um resultado.`]
 
-Em vez de apagar manualmente elementos da tela, atualizamos os states para seus valores iniciais. Como campos e resultados dependem desses valores, React redesenha a interface.
-
-Na próxima parte acrescentaremos uma melhoria de uso: devolver o foco ao primeiro campo. Para esse problema, state não é a ferramenta adequada; entra useRef.`]
   };
 
   function apply() {

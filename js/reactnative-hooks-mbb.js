@@ -287,29 +287,18 @@ value={nota1} mostra o valor atual.
 onChangeText={setNota1} atualiza o state conforme o usuário digita.`;
     }
 
-    const eventStep = mediaCore.find(s => s.id === 'state-8-eventos');
-    if (eventStep) {
-      eventStep.note = 'Um botão não executa uma ação sozinho. O evento onPress recebe uma função. Quando o usuário toca, essa função é chamada. Isso é diferente de um efeito automático, assunto que veremos mais adiante.';
-    }
-
     const postState = [
-      mkPage(
-        'mbb-react-condicional',
-        '16. Interface condicional',
-        'Renderização condicional — a interface também toma decisões',
-        'Mostrar ou esconder elementos conforme o estado.',
-        'O resultado nem sempre deve aparecer',
-        'Depois de calcular a média, podemos decidir quais elementos entram no JSX. A lógica de decisão continua importante; agora ela também controla o que é exibido.',
-        'if continua útil para regras do programa. No JSX, && e o operador ternário são formas comuns de escolher o que aparece.',
-        [
-          ['&&', 'condicao && <Text>...</Text> mostra o elemento somente quando a condição é verdadeira.'],
-          ['Ternário', 'condicao ? <A /> : <B /> escolhe entre duas possibilidades visuais.'],
-          ['if', 'Continua adequado para cálculos, validações e decisões fora do JSX.'],
-          ['Exemplo', 'media !== "" && <Text>Média: {media}</Text>.'],
-          ['Outro exemplo', 'aprovado ? <Text>Aprovado</Text> : <Text>Reprovado</Text>.'],
-          ['Como decidir', 'Primeiro pergunte o que precisa aparecer; depois escolha a forma de expressar essa decisão.']
-        ]
-      ),
+      {
+        id: 'mbb-react-condicional',
+        menu: '16. Interface condicional',
+        title: 'Mostrando o resultado somente quando ele existe',
+        objective: 'Aplicar && e operador ternário na própria Média Escolar.',
+        code: codigoMediaEscolar('condicional'),
+        addedTitle: 'Duas decisões na interface',
+        added: "media !== '' decide se a área de resultado aparece. O ternário escolhe o estilo a partir de situacao.",
+        preview: previaMediaEscolar({ nota: '6', resultado: true, destacarSituacao: true }),
+        note: 'Antes do cálculo e depois de Limpar, a área de resultado fica oculta.'
+      },
       {
         id: 'mbb-react-map',
         menu: '17. Array → tela',
@@ -640,7 +629,6 @@ O && aplica o segundo estilo somente durante o toque.`,
       refStep.menu = '27. useRef';
       refStep.title = 'useRef — devolvendo o foco à primeira nota';
       refStep.objective = 'Usar uma referência para acessar o TextInput sem transformar isso em state.';
-      refStep.code = String(refStep.code || '').replaceAll('campoNota1.current.focus()', 'campoNota1.current?.focus()');
       refStep.added = `1. Importe useRef:
 import React, { useState, useRef } from 'react';
 
@@ -661,7 +649,7 @@ focus() -> coloca o cursor no TextInput.
 state × ref
 state participa da renderização.
 ref mantém uma referência sem provocar renderização quando current muda.`;
-      refStep.note = 'A forma campoNota1.current?.focus() evita tentar chamar focus() se a referência ainda não estiver disponível.';
+      refStep.note = 'A prévia ilustra o cursor após Limpar. O ?. só deixa chamar focus() quando a referência está disponível.';
     }
 
     const refOptional = {
@@ -707,8 +695,7 @@ Este exemplo amplia a mesma ideia de referência usada no botão Limpar.`,
       finalMedia.menu = '29. Média final';
       finalMedia.title = 'Média Escolar — consolidação de state, eventos e ref';
       finalMedia.objective = 'Revisar o aplicativo completo usando foco seguro no primeiro campo.';
-      finalMedia.code = String(finalMedia.code || '').replaceAll('campoNota1.current.focus()', 'campoNota1.current?.focus()');
-      finalMedia.note = 'A Média Escolar reúne useState, TextInput controlado, eventos, funções, if/else e useRef. Agora o próximo problema será sincronizar o componente com algo externo.';
+      finalMedia.note = 'A prévia mostra o resultado no limite de aprovação. O próximo problema será sincronizar o componente com algo externo.';
     }
 
     const effectSteps = [

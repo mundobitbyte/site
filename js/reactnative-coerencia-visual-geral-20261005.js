@@ -339,18 +339,6 @@ const styles = StyleSheet.create({
       </div>
     </div>`);
 
-  setPreview('state', 'mbb-react-condicional', `
-    <div style="height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:16px;box-sizing:border-box;font-family:Arial,sans-serif;">
-      <div style="width:88%;max-width:280px;border:1px solid #cbd5e1;border-radius:14px;padding:18px;">
-        <div style="font-weight:800;font-size:20px;margin-bottom:12px;">Média Escolar</div>
-        <div style="border:1px solid #cbd5e1;border-radius:8px;padding:10px;margin-bottom:10px;color:#94a3b8;">Nota 1</div>
-        <div style="border:1px solid #cbd5e1;border-radius:8px;padding:10px;margin-bottom:10px;color:#94a3b8;">Nota 2</div>
-        <div style="background:#1967d2;color:white;border-radius:5px;padding:9px;text-align:center;font-weight:700;">CALCULAR</div>
-        <div style="margin-top:18px;">Média: 8</div>
-        <div style="font-weight:800;color:#166534;margin-top:4px;">Aprovado</div>
-      </div>
-    </div>`);
-
   // ---------------------------------------------------------------------
   // NAVEGAÇÃO — saída real onde há app; esquema identificado onde é guia.
   // ---------------------------------------------------------------------
