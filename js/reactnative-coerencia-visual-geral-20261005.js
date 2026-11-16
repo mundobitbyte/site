@@ -326,20 +326,6 @@ const styles = StyleSheet.create({
 });`);
 
   // ---------------------------------------------------------------------
-  // REACT E HOOKS — mantém o código pedagógico e torna a prévia fiel.
-  // ---------------------------------------------------------------------
-
-  setPreview('state', 'mbb-effect-cleanup', `
-    <div style="height:100%;display:flex;align-items:center;justify-content:center;background:#eef4fb;padding:16px;box-sizing:border-box;">
-      <div style="width:88%;max-width:290px;background:#fff;border:1px solid #cbd5e1;border-radius:18px;padding:20px;box-shadow:0 8px 24px rgba(15,23,42,.12);font-family:Arial,sans-serif;">
-        <div style="font-size:21px;font-weight:800;color:#0f172a;margin-bottom:14px;text-align:center;">Effect + cleanup</div>
-        <div style="font-size:20px;text-align:center;">Temporizador ativo</div>
-        <div style="font-size:26px;font-weight:800;text-align:center;margin-top:8px;">12 s</div>
-        <div style="margin-top:10px;color:#166534;text-align:center;">cleanup preparado</div>
-      </div>
-    </div>`);
-
-  // ---------------------------------------------------------------------
   // NAVEGAÇÃO — saída real onde há app; esquema identificado onde é guia.
   // ---------------------------------------------------------------------
 

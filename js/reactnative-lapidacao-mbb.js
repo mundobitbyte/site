@@ -288,46 +288,6 @@ campoNota2.current?.focus()
       ];
     }
 
-    const cleanup = reactModule.steps.find(s => s.id === 'mbb-effect-cleanup');
-    if (cleanup) {
-      cleanup.menu = 'Limpeza (cleanup)';
-      cleanup.title = 'Encerrando o que o Effect iniciou';
-      cleanup.objective = 'Entender por que uma sincronização também precisa saber como ser encerrada.';
-      cleanup.note = 'Se o Effect inicia algo que continua ativo, como um intervalo, a função de cleanup deve encerrar esse trabalho quando ele deixar de ser necessário.';
-    }
-
-    const dependencies = reactModule.steps.find(s => s.id === 'mbb-effect-dependencias');
-    if (dependencies) {
-      dependencies.title = 'Dependências: quais valores a sincronização acompanha?';
-      dependencies.objective = 'Relacionar o array de dependências aos valores reativos usados pelo Effect.';
-      dependencies.kicker = 'O Effect depende de quê?';
-      dependencies.lead = 'O array de dependências registra os valores reativos usados pela sincronização. Quando um desses valores muda, React pode precisar limpar a sincronização anterior e configurá-la novamente.';
-      dependencies.highlight = 'Não pense em [] como um comando para “rodar uma vez”. Pense primeiro: quais props ou states este Effect usa para manter a sincronização correta?';
-      dependencies.boxes = [
-        ['Sem segundo argumento', 'O Effect é considerado depois de cada renderização.'],
-        ['[]', 'Nenhuma prop ou state foi declarada como dependência da sincronização. O setup ocorre na montagem e o cleanup na desmontagem, com verificações extras possíveis em desenvolvimento.'],
-        ['[cidade]', 'Se o Effect usa cidade como valor reativo, uma mudança em cidade pode exigir nova sincronização.'],
-        ['Antes de refazer', 'React executa o cleanup da sincronização anterior.'],
-        ['Regra prática', 'As dependências devem corresponder aos valores reativos realmente usados pelo Effect.'],
-        ['Objetivo', 'Manter o componente e o sistema externo coerentes entre si.']
-      ];
-    }
-
-    const strict = reactModule.steps.find(s => s.id === 'mbb-effect-strict');
-    if (strict) {
-      strict.title = 'Strict Mode: por que o Effect pode parecer repetir no desenvolvimento?';
-      strict.objective = 'Reconhecer uma verificação comum do ambiente de desenvolvimento.';
-      strict.kicker = 'Uma observação importante';
-      strict.lead = 'Se Strict Mode estiver ativo no desenvolvimento, você pode observar uma sequência extra de setup e cleanup.';
-      strict.highlight = 'Essa verificação ajuda a revelar Effects que não limpam corretamente o que iniciaram. Por isso, o código deve funcionar mesmo quando setup e cleanup forem executados em sequência.';
-      strict.boxes = [
-        ['Desenvolvimento', 'Pode ocorrer uma verificação extra de setup e cleanup.'],
-        ['Produção', 'Essa verificação extra não deve ser tomada como o comportamento normal da aplicação publicada.'],
-        ['Temporizador', 'Se um intervalo foi criado, ele deve ser removido no cleanup.'],
-        ['Boa prática', 'Em vez de tentar impedir a verificação, escreva um cleanup correto.']
-      ];
-    }
-
     const effectEvent = reactModule.steps.find(s => s.id === 'mbb-effect-evento');
     if (effectEvent) {
       effectEvent.title = 'O que dispara a ação: evento ou Effect?';
@@ -340,23 +300,6 @@ campoNota2.current?.focus()
       noEffect.kicker = 'Nem toda lógica precisa de Effect';
       noEffect.lead = 'useEffect não é um lugar genérico para colocar qualquer lógica automática.';
       noEffect.highlight = 'Se um valor pode ser calculado diretamente a partir de props/state, calcule-o. Se algo acontece por causa de um toque, trate no evento correspondente.';
-    }
-
-    const apiBridgeEffect = reactModule.steps.find(s => s.id === 'mbb-effect-api-ponte');
-    if (apiBridgeEffect) {
-      apiBridgeEffect.title = 'Uma sincronização externa usando API';
-      apiBridgeEffect.objective = 'Aplicar o conceito de Effect a uma fonte externa de dados sem antecipar o estudo completo de APIs.';
-      apiBridgeEffect.addedTitle = 'Observe apenas a ligação com o Effect';
-      apiBridgeEffect.added = `Neste exemplo, a API é apenas a fonte externa de dados.
-
-Observe a sequência:
-1. o componente é renderizado;
-2. o Effect configura a consulta;
-3. a resposta atualiza o state;
-4. o novo state aparece na interface.
-
-Cliente, servidor, HTTP, request, response, JSON e fetch serão estudados com detalhes no próximo módulo.`;
-      apiBridgeEffect.note = 'O temporizador mostrou primeiro o conceito de sincronização. Agora a mesma ideia aparece ligada a uma fonte externa de dados.';
     }
 
     const hookSummary = reactModule.steps.find(s => s.id === 'mbb-hooks-resumo');

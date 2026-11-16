@@ -698,6 +698,92 @@ Este exemplo amplia a mesma ideia de referência usada no botão Limpar.`,
       finalMedia.note = 'A prévia mostra o resultado no limite de aprovação. O próximo problema será sincronizar o componente com algo externo.';
     }
 
+    const estiloLaboratorio = `const styles = StyleSheet.create({
+  container: {
+    flex: 1, justifyContent: 'center', alignItems: 'center',
+    padding: 16, backgroundColor: '#EEF4FB',
+  },
+  painel: {
+    width: '100%', maxWidth: 320, padding: 20, gap: 10,
+    backgroundColor: '#FFFFFF', borderRadius: 18,
+    borderWidth: 1, borderColor: '#CBD5E1',
+  },
+  titulo: { fontSize: 21, fontWeight: 'bold', textAlign: 'center' },
+  valor: { fontSize: 25, fontWeight: 'bold', textAlign: 'center' },
+  texto: { fontSize: 14, color: '#334155', textAlign: 'center' },
+});`;
+
+    const codigoTemporizador = ({ dependencias = false, strict = false } = {}) => {
+      const temporizador = `<Temporizador registrar={setRegistro}${dependencias ? ' intervaloMs={intervaloMs}' : ''} />`;
+      return `import React, { useEffect, useState${strict ? ', StrictMode' : ''} } from 'react';
+import { Button, View, Text, StyleSheet } from 'react-native';
+
+function Temporizador({ registrar${dependencias ? ', intervaloMs' : ''} }) {
+  const [batidas, setBatidas] = useState(0);
+${dependencias ? '' : '  const intervaloMs = 1000;\n'}
+  useEffect(() => {
+    registrar(atual => [...atual.slice(-3), 'Setup de ' + intervaloMs + ' ms']);
+    const intervalo = setInterval(() => {
+      setBatidas(valorAtual => valorAtual + 1);
+    }, intervaloMs);
+
+    return () => {
+      clearInterval(intervalo);
+      registrar(atual => [...atual.slice(-3), 'Cleanup de ' + intervaloMs + ' ms']);
+    };
+  }, [${dependencias ? 'intervaloMs, ' : ''}registrar]);
+
+  return <Text style={styles.valor}>Batidas: {batidas}</Text>;
+}
+
+export default function App() {
+  const [visivel, setVisivel] = useState(${strict ? 'false' : 'true'});
+  const [registro, setRegistro] = useState([]);${dependencias ? `
+  const [intervaloMs, setIntervaloMs] = useState(1000);
+  const [cliques, setCliques] = useState(0);` : ''}
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.painel}>
+        <Text style={styles.titulo}>Temporizador</Text>
+        <Button
+          title={visivel ? 'Ocultar temporizador' : 'Mostrar temporizador'}
+          onPress={() => setVisivel(atual => !atual)}
+        />
+        ${strict ? `<StrictMode>
+          {visivel && ${temporizador}}
+        </StrictMode>` : `{visivel && ${temporizador}}`}
+        {!visivel && <Text style={styles.texto}>Temporizador desmontado</Text>}${dependencias ? `
+        <Text style={styles.texto}>Intervalo: {intervaloMs} ms</Text>
+        <Button
+          title="Trocar frequência"
+          onPress={() => setIntervaloMs(atual => atual === 1000 ? 500 : 1000)}
+        />
+        <Button
+          title={'Contador à parte: ' + cliques}
+          onPress={() => setCliques(atual => atual + 1)}
+        />` : ''}
+        <Text style={styles.texto} accessibilityLiveRegion="polite">
+          {registro.length ? registro.join('\\n') : 'Aguardando setup'}
+        </Text>
+      </View>
+    </View>
+  );
+}
+
+${estiloLaboratorio}`;
+    };
+
+    const botaoLaboratorio = texto => `<div style="margin:8px 0;padding:8px;background:#1967d2;color:#fff;border-radius:4px;text-align:center;font-size:12px;font-weight:700;">${texto}</div>`;
+    const textoLaboratorio = texto => `<div style="margin-top:8px;text-align:center;color:#334155;font-size:14px;">${texto}</div>`;
+    const previaTemporizador = (visivel, registro, controles = '') => phonePreview(
+      'Temporizador',
+      botaoLaboratorio(visivel ? 'OCULTAR TEMPORIZADOR' : 'MOSTRAR TEMPORIZADOR') +
+        (visivel ? '<div style="font-size:25px;font-weight:800;text-align:center;">Batidas: 3</div>' : textoLaboratorio('Temporizador desmontado')) +
+        controles + textoLaboratorio(registro)
+    );
+    const previaCleanup = previaTemporizador(false, 'Setup de 1000 ms<br>Cleanup de 1000 ms');
+
     const effectSteps = [
       mkPage(
         'mbb-effect-intro',
@@ -725,135 +811,87 @@ Este exemplo amplia a mesma ideia de referência usada no botão Limpar.`,
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function App() {
-  const [segundos, setSegundos] = useState(0);
+  const [batidas, setBatidas] = useState(0);
 
   useEffect(() => {
-    const intervalo = setInterval(() => {
-      setSegundos(valorAtual => valorAtual + 1);
+    setInterval(() => {
+      setBatidas(valorAtual => valorAtual + 1);
     }, 1000);
 
-    // Ainda falta encerrar o intervalo.
+    // Na próxima etapa, vamos guardar e cancelar este intervalo.
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Tempo</Text>
-      <Text style={styles.valor}>{segundos} s</Text>
+      <View style={styles.painel}>
+        <Text style={styles.titulo}>Temporizador</Text>
+        <Text style={styles.valor}>Batidas: {batidas}</Text>
+      </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  titulo: { fontSize: 22, fontWeight: 'bold' },
-  valor: { fontSize: 34, marginTop: 12 },
-});`,
-        addedTitle: 'O que está acontecendo',
-        added: `setInterval pertence ao ambiente externo ao React.
-Ele dispara a função a cada 1000 ms.
-
-setSegundos(...) altera o state.
-React renderiza o novo valor.
-
-Esta versão mostra a necessidade do Effect,
-mas ainda está incompleta:
-se iniciamos um intervalo, precisamos também saber encerrá-lo.`,
-        preview: phonePreview('Tempo', '<div style="font-size:38px;font-weight:800;text-align:center;">12 s</div>', 'O valor cresce a cada segundo'),
-        note: 'Esta é uma etapa intermediária. O código será completado imediatamente com cleanup.'
+${estiloLaboratorio}`,
+        addedTitle: 'Do relógio externo para a tela',
+        added: 'setInterval chama a função a cada 1000 ms. O atualizador recebe o valor anterior do state e devolve esse valor mais 1.',
+        preview: phonePreview('Temporizador', '<div style="font-size:25px;font-weight:800;text-align:center;">Batidas: 3</div>'),
+        note: 'Exemplo intermediário. Na etapa 32, o intervalo será encerrado ao desmontar o temporizador.'
       },
       {
         id: 'mbb-effect-cleanup',
-        menu: '32. Cleanup',
-        title: 'Cleanup — desfazendo o que o Effect iniciou',
-        objective: 'Encerrar o intervalo quando o componente deixar de usar aquela sincronização.',
-        code: `import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
-
-export default function App() {
-  const [segundos, setSegundos] = useState(0);
-
-  useEffect(() => {
-    const intervalo = setInterval(() => {
-      setSegundos(valorAtual => valorAtual + 1);
-    }, 1000);
-
-    return () => {
-      clearInterval(intervalo);
-    };
-  }, []);
-
-  return (
-    <View>
-      <Text>Tempo: {segundos} s</Text>
-    </View>
-  );
-}`,
-        addedTitle: 'Trecho em foco',
-        added: `return () => {
-  clearInterval(intervalo);
-};
-
-setup:
-criamos o intervalo.
-
-cleanup:
-encerramos o intervalo.
-
-Regra mental:
-se o Effect inicia algo externo que precisa ser encerrado,
-a função de cleanup desfaz esse trabalho.`,
-        preview: phonePreview('Effect + cleanup', '<div style="font-size:20px;text-align:center;">Temporizador ativo</div><div style="margin-top:10px;color:#166534;text-align:center;">cleanup preparado</div>'),
-        note: 'Cleanup faz parte do conceito porque encerra aquilo que o Effect deixou ativo.'
+        menu: '32. Limpeza (cleanup)',
+        title: 'Encerrando o que o Effect iniciou',
+        objective: 'Verificar que o intervalo é encerrado quando o temporizador sai da tela.',
+        code: codigoTemporizador(),
+        addedTitle: 'Setup e cleanup em pares',
+        added: 'O Effect cria o intervalo. A função retornada chama clearInterval para encerrar o mesmo intervalo.',
+        preview: previaCleanup,
+        note: 'O painel conserva as últimas mensagens mesmo depois que o temporizador sai da tela.'
       },
-      mkPage(
-        'mbb-effect-ciclo',
-        '33. Montar/desmontar',
-        'Montagem, sincronização e desmontagem',
-        'Criar um modelo mental simples do ciclo do Effect.',
-        'Sem decorar jargão',
-        'Precisamos apenas acompanhar o que acontece quando o componente entra, mantém uma sincronização e depois sai.',
-        'Componente entra → React renderiza → Effect configura a sincronização → quando necessário o cleanup desfaz a configuração.',
-        [
-          ['Montagem', 'O componente entra na árvore e passa a existir na interface.'],
-          ['Setup', 'O Effect configura a sincronização externa necessária.'],
-          ['Enquanto existe', 'State e props podem provocar novas renderizações.'],
-          ['Dependências', 'Determinadas mudanças podem exigir refazer a sincronização.'],
-          ['Cleanup', 'Antes de refazer um Effect ou quando o componente sai, limpamos o que foi configurado.'],
-          ['Desmontagem', 'O componente deixa de existir na árvore da interface.']
-        ]
-      ),
-      mkPage(
-        'mbb-effect-dependencias',
-        '34. Dependências',
-        'O array de dependências acompanha valores reativos',
-        'Entender a relação entre valores reativos e sincronização.',
-        'O Effect depende de quê?',
-        'As dependências informam quais valores usados pelo Effect pertencem ao fluxo reativo do componente e podem exigir uma nova sincronização.',
-        'Em vez de decorar [] como “uma vez”, pergunte quais valores reativos esta sincronização usa.',
-        [
-          ['Sem segundo argumento', 'O Effect é considerado após cada renderização.'],
-          ['[]', 'O Effect não declara dependência de props/state. O setup ocorre após a montagem e o cleanup na desmontagem; em desenvolvimento pode haver verificação extra.'],
-          ['[cidade]', 'Se a sincronização usa cidade, ela pode ser refeita quando cidade muda.'],
-          ['Antes de refazer', 'React executa o cleanup da sincronização anterior.'],
-          ['Regra prática', 'Dependências devem refletir os valores reativos realmente usados pelo Effect.'],
-          ['Por quê?', 'O objetivo é manter correta a sincronização entre o componente e o sistema externo.']
-        ]
-      ),
-      mkPage(
-        'mbb-effect-strict',
-        '35. Strict Mode',
-        'Por que em desenvolvimento um Effect pode parecer executar mais de uma vez?',
-        'Reconhecer uma verificação comum do ambiente de desenvolvimento.',
-        'Uma observação curta',
-        'Se Strict Mode estiver ativo no desenvolvimento, você pode observar uma sequência extra de setup e cleanup.',
-        'Essa verificação ajuda a detectar Effects que não limpam corretamente aquilo que iniciaram.',
-        [
-          ['Desenvolvimento', 'Pode haver uma execução extra de setup/cleanup para verificar a robustez.'],
-          ['Produção', 'Essa verificação extra não deve ser tomada como o comportamento normal da aplicação publicada.'],
-          ['Solução correta', 'Escreva o cleanup de forma que a sincronização possa ser montada e desmontada com segurança.'],
-          ['Timer', 'Se criamos um intervalo, devemos removê-lo no cleanup.']
-        ]
-      ),
+      {
+        id: 'mbb-effect-ciclo',
+        menu: '33. Montar/desmontar',
+        title: 'Montagem, sincronização e desmontagem',
+        objective: 'Prever o que acontece com o state e o Effect ao tirar e recolocar o temporizador na tela.',
+        code: codigoTemporizador(),
+        addedTitle: 'O que muda ao desmontar',
+        added: `Em {visivel && <Temporizador ... />}, mudar visivel para false tira Temporizador da árvore. O cleanup cancela o intervalo correspondente.
+
+Ao mostrar novamente, uma nova instância é montada. O useState(0) começa de novo, e o Effect cria outro intervalo. O registro fica no componente pai, por isso conserva as mensagens mesmo quando o filho é desmontado.`,
+        preview: previaTemporizador(true, 'Cleanup de 1000 ms<br>Setup de 1000 ms'),
+        note: 'Observe a diferença entre atualizar o contador de um componente que continua na tela e montar uma nova instância.'
+      },
+      {
+        id: 'mbb-effect-dependencias',
+        menu: '34. Dependências',
+        title: 'Dependências: quais valores a sincronização acompanha?',
+        objective: 'Verificar quando uma mudança pede a limpeza e a configuração de outro intervalo.',
+        code: codigoTemporizador({ dependencias: true }),
+        addedTitle: 'Uma mudança relevante e outra independente',
+        added: `intervaloMs é uma prop lida pelo Effect. Na troca de 1000 para 500 ms, o React executa o cleanup do intervalo de 1000 ms antes do setup do novo. As batidas continuam a partir do valor atual porque o mesmo Temporizador permanece montado.
+
+A função registrar também entra no array. Ela é o setter setRegistro, cuja identidade se mantém. O Contador à parte muda outro state sem mudar o intervalo nem o setter, então o registro de setup e cleanup fica igual.
+
+Leia os três formatos. Sem o segundo argumento, o Effect é executado após cada renderização confirmada. Com [], o Effect não declara valores reativos que mudem e exijam nova sincronização. Com dependências, o React compara seus valores e refaz a sincronização quando algum deles muda. Declare as props, os states e os demais valores reativos que o Effect usa.`,
+        preview: previaTemporizador(true, 'Cleanup de 1000 ms<br>Setup de 500 ms',
+          textoLaboratorio('Intervalo: 500 ms') + botaoLaboratorio('TROCAR FREQUÊNCIA') + botaoLaboratorio('CONTADOR À PARTE: 0')),
+        note: 'Trocar a frequência muda o recurso externo. Registrar um clique independente só atualiza a interface.'
+      },
+      {
+        id: 'mbb-effect-strict',
+        menu: '35. Strict Mode',
+        title: 'Strict Mode: por que o Effect pode parecer repetir no desenvolvimento?',
+        objective: 'Conferir se a sequência de setup e cleanup deixa um único intervalo ativo.',
+        code: codigoTemporizador({ strict: true }),
+        addedTitle: 'Um teste de desenvolvimento para o cleanup',
+        added: `O exemplo começa com o temporizador desmontado. O botão Mostrar monta o filho dentro de StrictMode. Em um ambiente de desenvolvimento que aplica a verificação, o registro pode mostrar setup → cleanup → setup antes da primeira batida. O segundo setup deixa apenas um intervalo ativo.
+
+StrictMode na raiz da aplicação permite observar a verificação extra já na primeira montagem. O que aparece com uma fronteira interna depende do ambiente e do momento da montagem. Se seu preview mostrar apenas um setup, oculte e mostre o temporizador para conferir separadamente que cada cleanup corresponde ao intervalo anterior. A remontagem pelo botão é uma ação do usuário.
+
+Em produção, o React não executa essa verificação extra. O cleanup normal continua sendo executado ao desmontar ou antes de sincronizar de novo.`,
+        preview: previaTemporizador(false, 'Aguardando setup'),
+        note: 'A prévia mostra a tela antes de montar o temporizador. Execute o App.js em desenvolvimento para observar as mensagens.'
+      },
       mkPage(
         'mbb-effect-evento',
         '36. Effect × Evento',
@@ -891,40 +929,79 @@ a função de cleanup desfaz esse trabalho.`,
       {
         id: 'mbb-effect-api-ponte',
         menu: '38. Ponte API',
-        title: 'Ponte conceitual: useEffect com uma API',
-        objective: 'Ver uma aplicação externa do Effect sem antecipar o estudo completo de APIs.',
+        title: 'Uma sincronização externa usando API',
+        objective: 'Observar carregamento, sucesso e erro em uma consulta disparada na montagem.',
         code: `import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { Button, View, Text, StyleSheet } from 'react-native';
 
-export default function App() {
-  const [preco, setPreco] = useState('Carregando...');
+const URL_COTACAO = 'https://economia.awesomeapi.com.br/json/last/BTC-BRL';
+
+function Cotacao() {
+  const [cotacao, setCotacao] = useState({ estado: 'carregando' });
 
   useEffect(() => {
+    const controle = new AbortController();
+
     async function consultarBitcoin() {
-      const resposta = await fetch(
-        'https://economia.awesomeapi.com.br/json/last/BTC-BRL'
-      );
-      const dados = await resposta.json();
-      setPreco(dados.BTCBRL.bid);
+      try {
+        const resposta = await fetch(URL_COTACAO, { signal: controle.signal });
+        if (!resposta.ok) {
+          throw new Error('HTTP ' + resposta.status);
+        }
+
+        const dados = await resposta.json();
+        const preco = dados?.BTCBRL?.bid;
+        const valor = Number(preco);
+        if (typeof preco !== 'string' || !Number.isFinite(valor) || valor <= 0) {
+          throw new Error('Cotação inválida');
+        }
+
+        if (!controle.signal.aborted) {
+          setCotacao({ estado: 'sucesso', preco });
+        }
+      } catch {
+        if (!controle.signal.aborted) {
+          setCotacao({ estado: 'erro' });
+        }
+      }
     }
 
     consultarBitcoin();
+    return () => controle.abort();
   }, []);
 
+  if (cotacao.estado === 'carregando') {
+    return <Text style={styles.texto}>Carregando cotação...</Text>;
+  }
+  if (cotacao.estado === 'erro') {
+    return <Text style={styles.texto}>Não foi possível consultar a cotação.</Text>;
+  }
+  return <Text style={styles.valor}>R$ {cotacao.preco}</Text>;
+}
+
+export default function App() {
+  const [visivel, setVisivel] = useState(true);
+
   return (
-    <View>
-      <Text>Bitcoin: R$ {preco}</Text>
+    <View style={styles.container}>
+      <View style={styles.painel}>
+        <Text style={styles.titulo}>Cotação do Bitcoin</Text>
+        <Button
+          title={visivel ? 'Ocultar cotação' : 'Mostrar cotação'}
+          onPress={() => setVisivel(atual => !atual)}
+        />
+        {visivel && <Cotacao />}
+      </View>
     </View>
   );
-}`,
-        addedTitle: 'O foco ainda é Effect',
-        added: `Aqui aparece uma API apenas como sistema externo.
+}
 
-Observe a relação entre o Effect, a consulta e a atualização do state.
-
-Cliente e servidor, request e response, HTTP, JSON e tratamento completo da requisição serão estudados no próximo módulo.`,
-        preview: phonePreview('Bitcoin', '<div style="font-size:13px;color:#64748b;text-align:center;">Cotação recebida de serviço externo</div><div style="font-size:25px;font-weight:800;color:#166534;text-align:center;margin-top:12px;">R$ ...</div>'),
-        note: 'Depois do temporizador, a mesma ideia de sincronização aparece ligada a uma fonte externa de dados.'
+${estiloLaboratorio}`,
+        addedTitle: 'O Effect acompanha a presença da cotação na tela',
+        added: 'Mostrar Cotacao monta o componente. Seu Effect consulta a API. Ocultar Cotacao desmonta o componente e cancela uma consulta pendente.',
+        preview: phonePreview('Cotação do Bitcoin',
+          botaoLaboratorio('OCULTAR COTAÇÃO') + textoLaboratorio('Carregando cotação...')),
+        note: 'A prévia ilustra o carregamento. A resposta real depende do serviço externo.'
       },
       mkPage(
         'mbb-hooks-resumo',

@@ -181,7 +181,7 @@
 (() => {
   const files = [
     '../js/reactnative-react-hooks-explicacoes-mbb-parte1-20261005.js?v=20261115-media-escolar',
-    '../js/reactnative-react-hooks-explicacoes-mbb-parte2-20261005.js?v=20261115-media-escolar'
+    '../js/reactnative-react-hooks-explicacoes-mbb-parte2-20261005.js?v=20261116-effects'
   ];
 
   files.forEach((src, index) => {

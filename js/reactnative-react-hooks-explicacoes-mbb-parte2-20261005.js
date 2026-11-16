@@ -72,33 +72,24 @@ Nenhum desses recursos existe isoladamente em um aplicativo real. Cada peça man
 
 Tente explicar o fluxo sem olhar o código: o que acontece quando o usuário digita, calcula e depois limpa? Se esse caminho estiver claro, os Hooks deixam de parecer comandos soltos.`],
 
-    'mbb-effect-timer': ['useEffect aparece porque surgiu uma sincronização externa', `Até agora quase tudo aconteceu porque o usuário digitou ou tocou em algo. O temporizador é diferente: ele precisa continuar trabalhando com a passagem do tempo, mesmo sem um novo toque.
+    'mbb-effect-timer': ['Do relógio externo para a tela', `Depois da renderização, o Effect configura o intervalo. setInterval chama a função a cada 1000 ms. Cada chamada conta como uma batida.
 
-useEffect configura essa relação depois que o componente é renderizado. Dentro dele, setInterval pertence ao ambiente externo ao React e chama uma função a cada 1000 ms.
+Em setBatidas(valorAtual => valorAtual + 1), entregamos ao React uma função. O React fornece o valor anterior, e a função devolve o próximo. Assim o contador pode crescer sem o Effect ter de ler batidas e recriar o intervalo a cada atualização.
 
-A cada disparo, setSegundos atualiza state. React recebe o novo valor e renderiza novamente o número mostrado na tela.
+O intervalo continua ativo por conta própria. Na próxima etapa, vamos guardar seu identificador e cancelar o intervalo quando o componente for desmontado.`],
 
-O fluxo é: componente renderiza → Effect configura o intervalo → relógio externo dispara → state muda → interface atualiza.
+    'mbb-effect-cleanup': ['Setup e cleanup em pares', `Ao montar Temporizador, o Effect cria um intervalo e registra o setup. Seu return entrega ao React uma função de limpeza. Ela guarda o identificador criado pelo setup e chama clearInterval para cancelar aquele intervalo.
 
-Ainda falta uma parte importante: se iniciamos um intervalo, também precisamos saber como encerrá-lo.`],
+O botão Ocultar muda o state visivel do componente pai. A condição retira Temporizador da tela, o React executa o cleanup e o pai continua mostrando o registro. A prop registrar recebe setRegistro, a função que atualiza esse registro.
 
-    'mbb-effect-cleanup': ['Cleanup: toda sincronização precisa saber como terminar', `O Effect anterior criou um intervalo que continua ativo. Se o componente deixar de precisar dele, esse trabalho não deve ficar rodando sem controle.
+Confira a ordem das mensagens. O registro guarda as quatro mais recentes para facilitar a comparação.`],
 
-A função retornada pelo useEffect é o cleanup. Neste caso ela chama clearInterval(intervalo), encerrando o recurso que o setup criou.
+    'mbb-effect-api-ponte': ['A tela acompanha o resultado da consulta', `Quando Cotacao entra na tela, o Effect chama fetch. resposta.ok indica se a resposta HTTP foi bem-sucedida. Mesmo assim, conferimos se o JSON traz uma cotação válida antes de atualizar o state. Cada estado produz um texto diferente, com carregamento, preço ou erro.
 
-Uma regra mental útil é observar pares: iniciou intervalo → limpa intervalo; adicionou assinatura ou listener → remove quando deixar de ser necessário.
+Use Ocultar e Mostrar para desmontar e montar Cotacao. Ao ocultar, o cleanup chama abort() pelo AbortController usado no fetch. Se uma resposta ou erro chegar depois do cancelamento, o teste de signal.aborted impede que altere a interface. Mostrar monta outra instância e inicia uma nova consulta.
 
-Cleanup não é um detalhe estético. Ele faz parte da correção do Effect e evita recursos permanecendo ativos indevidamente.`],
+A API é a fonte externa deste exemplo. O módulo 3 aprofunda HTTP, JSON e requisições, inclusive consultas que partem de um evento do usuário.`]
 
-    'mbb-effect-api-ponte': ['A mesma ideia de Effect aplicada a uma fonte externa de dados', `Depois do temporizador, usamos uma API apenas para enxergar outro tipo de sistema externo. O foco desta etapa ainda é o Effect, não o estudo completo de HTTP.
-
-Quando o componente entra, o Effect inicia a consulta. fetch solicita os dados; await aguarda as etapas assíncronas; resposta.json() transforma a resposta em objeto JavaScript; setPreco atualiza o state.
-
-Quando preco muda, React renderiza novamente e a cotação aparece na interface.
-
-O modelo mental continua: renderização → sistema externo → resposta → atualização de state → nova interface.
-
-No próximo módulo entram cliente, servidor, request, response, HTTP, JSON e tratamento da requisição com mais profundidade.`]
   };
 
   function apply() {
