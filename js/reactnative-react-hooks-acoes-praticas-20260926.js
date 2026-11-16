@@ -89,9 +89,12 @@ O que mudou foi a organização: o componente agora possui seu próprio arquivo 
       ['state-11-useref', '<b>Use o botão Limpar</b> e <b>confira</b> se o foco retorna com segurança ao primeiro campo.'],
       ['mbb-react-ref-avancar', '<b>Conclua a edição da Nota 1</b> e <b>confira</b> se o foco avança para a Nota 2.'],
       ['state-12-final', '<b>Teste a Média Escolar completa</b>: digite notas, calcule, limpe e <b>confira</b> o retorno do foco ao primeiro campo.'],
-      ['mbb-effect-timer', '<b>Execute o exemplo</b> e <b>observe</b> o valor mudar com o temporizador sem precisar de um toque do usuário.'],
-      ['mbb-effect-cleanup', '<b>Execute o exemplo</b> e <b>observe</b> como a função de cleanup encerra o trabalho iniciado pelo Effect quando ele deixa de ser necessário.'],
-      ['mbb-effect-api-ponte', '<b>Execute o exemplo</b> e <b>acompanhe a sequência</b>: renderização → Effect → resposta externa → atualização do state → interface.']
+      ['mbb-effect-timer', '<b>Execute o exemplo.</b> Preveja o valor após três disparos do intervalo e acompanhe as batidas. Ao avançar para a etapa 32, recarregue o preview do Snack para encerrar o intervalo deste exemplo.'],
+      ['mbb-effect-cleanup', '<b>Espere uma batida e toque em Ocultar temporizador.</b> Confira se a última mensagem é Cleanup de 1000 ms.'],
+      ['mbb-effect-ciclo', '<b>Oculte e mostre o temporizador.</b> Confira se aparecem cleanup e novo setup, nessa ordem, e se o contador recomeça em zero.'],
+      ['mbb-effect-dependencias', '<b>Toque em Contador à parte e confira o registro.</b> Depois toque em Trocar frequência e confira a ordem Cleanup de 1000 ms → Setup de 500 ms.'],
+      ['mbb-effect-strict', '<b>Toque em Mostrar temporizador e observe o registro em desenvolvimento.</b> Se aparecer a sequência extra, confira se as batidas crescem de uma em uma. Oculte e confira o último cleanup.'],
+      ['mbb-effect-api-ponte', '<b>Execute a consulta.</b> Depois, troque BTC-BRL por ZZZ-BRL na URL para provocar uma falha e observar a mensagem de erro. Restaure BTC-BRL e repita a consulta.']
     ]);
 
     const addAction = (step, acao) => {
