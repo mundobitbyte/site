@@ -25,69 +25,24 @@
 
     const react = modules.state;
 
-    // Evolução pedagógica: primeiro o componente no App.js; depois, separado em arquivo próprio.
-    const componentStep = react.steps.find(step => step?.id === 'mbb-react-componente-titulo');
-    if (componentStep) {
-      componentStep.addedTitle = 'Evolução: componente em arquivo separado';
-      componentStep.added = `Até aqui, Titulo foi criado dentro do App.js.
-Isso está correto e ajuda a entender primeiro o que é um componente.
-
-Agora vamos organizar o projeto como acontece em aplicações maiores.
-
-1. Crie uma pasta chamada components.
-
-2. Dentro dela, crie o arquivo components/Titulo.js:
-
-import React from 'react';
-import { Text, StyleSheet } from 'react-native';
-
-export default function Titulo() {
-  return (
-    <Text style={styles.titulo}>
-      Clima das Cidades
-    </Text>
-  );
-}
-
-const styles = StyleSheet.create({
-  titulo: {
-    fontSize: 21,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#0F172A',
-    marginBottom: 14,
-  },
-});
-
-3. No App.js, remova a função Titulo que estava no próprio arquivo e importe o componente:
-
-import Titulo from './components/Titulo';
-
-4. Continue usando normalmente no JSX:
-
-<Titulo />
-
-A saída visual permanece a mesma.
-O que mudou foi a organização: o componente agora possui seu próprio arquivo e pode ser reutilizado por outras telas.`;
-      componentStep.note = 'Começamos com o componente no App.js para entender a ideia sem criar complexidade desnecessária. Depois o separamos em components/Titulo.js para introduzir organização, reutilização e separação de responsabilidades.';
-    }
-
     const actions = new Map([
       ['mbb-react-jsx', '<b>Altere</b> os valores de <code>nome</code> e <code>pontos</code> e <b>confira no preview</b> onde essas mudanças aparecem no JSX.'],
-      ['mbb-react-componente-titulo', '<b>Crie</b> <code>components/Titulo.js</code>, mova o componente para esse arquivo, <b>importe-o no App.js</b> e confira que a saída visual continua igual.'],
+      ['mbb-react-componente-titulo', '<b>Troque o texto dentro de <code>Titulo</code></b> e confira onde a mudança aparece. Se quiser praticar imports, siga a extensão de dois arquivos na explicação.'],
       ['mbb-react-cartao-fixo', '<b>Altere</b> a cidade e a temperatura fixas dentro de <code>CartaoClima</code> e <b>observe o preview</b>.'],
       ['mbb-react-props', '<b>Altere</b> as props de uma das chamadas de <code>CartaoClima</code> e <b>compare no preview</b> os dois cartões reutilizando o mesmo componente.'],
-      ['state-7-state', '<b>Digite valores diferentes</b> nos campos e <b>observe</b> como o conteúdo controlado acompanha o state.'],
+      ['state-7-state', '<b>Acrescente <code>&lt;Text&gt;Nota digitada: {nota1}&lt;/Text&gt;</code> abaixo da Nota 1.</b> Digite notas diferentes no primeiro campo e confira a mudança no segundo texto.'],
       ['state-8-eventos', '<b>Toque em Calcular e depois em Limpar.</b> Compare as mensagens que identificam as duas funções chamadas.'],
       ['state-9-calculo', '<b>Teste</b> 6 e 6, depois 5,5 e 6. Confira a situação em cada caso. Por fim, deixe uma nota vazia e observe a mensagem.'],
       ['state-10-limpar', '<b>Calcule e toque em Limpar.</b> Confira se as notas e os valores do resultado somem. Repita depois de provocar um erro de entrada.'],
       ['mbb-react-condicional', '<b>Abra o app e procure a área do resultado.</b> Calcule com 0 e 0 e depois com 6 e 6. Compare os estilos. Toque em Limpar e confira se a área some.'],
       ['mbb-react-map', '<b>Adicione mais uma cidade</b> ao array e <b>confira no preview</b> se um novo cartão é criado pelo <code>map()</code>.'],
+      ['mbb-react-key', '<b>Anote “visitar” no cartão de Campinas e inverta a ordem.</b> Com ID, a anotação acompanha a cidade. Troque para <code>key={indice}</code>, reinicie o exemplo, repita o teste e restaure <code>key={item.id}</code>.'],
+      ['mbb-react-scrollview', '<b>Role até Ribeirão Preto.</b> Depois aumente <code>paddingHorizontal</code> em <code>styles.conteudo</code>. Compare o recuo das cidades e a altura que você enxerga.'],
       ['mbb-react-flatlist', '<b>Adicione um novo item</b> ao array <code>cidades</code> e <b>confira</b> se a <code>FlatList</code> passa a exibi-lo.'],
-      ['mbb-react-pressable', '<b>Toque no cartão</b> e <b>confira</b> se a função ligada ao <code>onPress</code> é acionada.'],
-      ['mbb-react-pressed', '<b>Pressione e mantenha</b> o botão por um instante e <b>observe</b> a mudança visual enquanto <code>pressed</code> está ativo.'],
+      ['mbb-react-pressable', '<b>Toque no cartão inteiro.</b> Confira se aparece Temperatura: 26 °C. Toque outra vez e verifique se o detalhe some.'],
+      ['mbb-react-pressed', '<b>Pressione e segure Campinas.</b> Observe a opacidade enquanto mantém o toque. Solte e confira a cor e o texto Cidade selecionada. Toque outra vez para desmarcar.'],
       ['state-11-useref', '<b>Use o botão Limpar</b> e <b>confira</b> se o foco retorna com segurança ao primeiro campo.'],
-      ['mbb-react-ref-avancar', '<b>Conclua a edição da Nota 1</b> e <b>confira</b> se o foco avança para a Nota 2.'],
+      ['mbb-react-ref-avancar', '<b>Com o cursor na Nota 1, pressione Enter ou Próximo.</b> Digite uma letra ou número e confira se o texto entra na Nota 2.'],
       ['state-12-final', '<b>Teste a Média Escolar completa</b>: digite notas, calcule, limpe e <b>confira</b> o retorno do foco ao primeiro campo.'],
       ['mbb-effect-timer', '<b>Execute o exemplo.</b> Preveja o valor após três disparos do intervalo e acompanhe as batidas. Ao avançar para a etapa 32, recarregue o preview do Snack para encerrar o intervalo deste exemplo.'],
       ['mbb-effect-cleanup', '<b>Espere uma batida e toque em Ocultar temporizador.</b> Confira se a última mensagem é Cleanup de 1000 ms.'],

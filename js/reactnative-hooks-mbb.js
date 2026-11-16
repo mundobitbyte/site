@@ -352,23 +352,72 @@ O map() percorre os dados e gera componentes para a tela.`,
         preview: phonePreview('Cidades', '<div style="display:grid;gap:8px;"><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;"><b>São Paulo</b> — 26 °C</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;"><b>Campinas</b> — 28 °C</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;"><b>Santos</b> — 24 °C</div></div>'),
         note: 'O mesmo map() estudado em JavaScript agora transforma dados em elementos visuais.'
       },
-      mkPage(
-        'mbb-react-key',
-        '18. key',
-        'Por que uma lista precisa de key?',
-        'Entender por que cada elemento gerado precisa ser identificado.',
-        'Vários componentes parecidos',
-        'Quando o React recebe uma lista de elementos, ele precisa acompanhar qual item corresponde a qual dado entre uma renderização e outra.',
-        'key fornece uma identidade estável para cada item da lista. Quando existe um id real no dado, ele costuma ser a melhor escolha.',
-        [
-          ['Exemplo', '<CartaoClima key={item.id} ... />'],
-          ['Por quê?', 'Ajuda o React a relacionar cada componente ao item correspondente.'],
-          ['ID estável', 'Prefira um identificador que pertença ao próprio dado.'],
-          ['Índice', 'Evite usar o índice como solução automática quando a lista pode mudar de ordem.'],
-          ['Não aparece na tela', 'key é usada pelo React; não é um texto mostrado ao usuário.'],
-          ['Próximo problema', 'Com muitos cartões, a tela pode ficar maior que o espaço disponível.']
-        ]
-      ),
+      {
+        id: 'mbb-react-key',
+        menu: '18. Identificar itens (key)',
+        title: 'Identificando cada item da lista com key',
+        objective: 'Verificar se o estado de um cartão acompanha a cidade quando a lista muda de ordem.',
+        code: `import React, { useState } from 'react';
+import { Button, Text, TextInput, View, StyleSheet } from 'react-native';
+
+const cidadesIniciais = [
+  { id: 'sp', cidade: 'São Paulo', temperatura: 26 },
+  { id: 'campinas', cidade: 'Campinas', temperatura: 28 },
+];
+
+function CartaoClima({ cidade, temperatura }) {
+  const [anotacao, setAnotacao] = useState('');
+
+  return (
+    <View style={styles.cartao}>
+      <Text>{cidade} — {temperatura} °C</Text>
+      <TextInput
+        accessibilityLabel={'Anotação de ' + cidade}
+        placeholder="Anotação"
+        style={styles.campo}
+        value={anotacao}
+        onChangeText={setAnotacao}
+      />
+    </View>
+  );
+}
+
+export default function App() {
+  const [cidades, setCidades] = useState(cidadesIniciais);
+
+  function inverterOrdem() {
+    setCidades(atuais => [...atuais].reverse());
+  }
+
+  return (
+    <View style={styles.tela}>
+      <View style={styles.painel}>
+        <Text style={styles.titulo}>Cidades</Text>
+        <Button title="Inverter ordem" onPress={inverterOrdem} />
+        {cidades.map((item, indice) => (
+          <CartaoClima key={item.id} cidade={item.cidade} temperatura={item.temperatura} />
+        ))}
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  tela: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16, backgroundColor: '#EEF4FB' },
+  painel: { width: '88%', maxWidth: 290, padding: 20, gap: 8, borderRadius: 18, backgroundColor: '#FFF', borderWidth: 1, borderColor: '#CBD5E1' },
+  titulo: { fontSize: 21, fontWeight: 'bold', textAlign: 'center' },
+  cartao: { padding: 10, borderRadius: 9, borderWidth: 1, borderColor: '#CBD5E1' },
+  campo: { marginTop: 6, padding: 6, borderWidth: 1, borderColor: '#94A3B8', borderRadius: 6 },
+});`,
+        addedTitle: 'A anotação acompanha a cidade?',
+        added: `Como na etapa 17, cada cidade vira um CartaoClima. Agora cada cartão guarda sua própria anotação. O botão inverte uma cópia do array para mudar a ordem dos cartões.
+
+Com key={item.id}, o React reconhece cada cidade pela mesma chave antes e depois da troca. Ao usar key={indice}, as chaves continuam ligadas à primeira e à segunda posições. O estado do cartão fica na posição e pode aparecer sob o nome de outra cidade.
+
+Use o índice apenas para reproduzir o erro deste teste. Ao terminar, restaure key={item.id}. A chave deve ser estável e única entre os itens irmãos da lista.`,
+        preview: phonePreview('Cidades', '<div style="display:grid;gap:8px;"><div style="padding:8px;background:#1967d2;color:#fff;text-align:center;">INVERTER ORDEM</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;">São Paulo — 26 °C<br>Anotação</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:9px;">Campinas — 28 °C<br>Anotação</div></div>'),
+        note: 'A próxima etapa reaproveita a lista para investigar o que acontece quando os itens ocupam mais espaço que a tela.'
+      },
       {
         id: 'mbb-react-scrollview',
         menu: '19. ScrollView',
@@ -377,35 +426,73 @@ O map() percorre os dados e gera componentes para a tela.`,
         code: `import React from 'react';
 import { ScrollView, Text, View, StyleSheet } from 'react-native';
 
+const cidades = ['São Paulo', 'Campinas', 'Santos', 'Sorocaba', 'Jundiaí', 'Ribeirão Preto'];
+
 export default function App() {
   return (
-    <ScrollView contentContainerStyle={styles.conteudo}>
-      <Text style={styles.titulo}>Cidades</Text>
-
-      <View style={styles.cartao}><Text>São Paulo</Text></View>
-      <View style={styles.cartao}><Text>Campinas</Text></View>
-      <View style={styles.cartao}><Text>Santos</Text></View>
-      <View style={styles.cartao}><Text>Sorocaba</Text></View>
-      <View style={styles.cartao}><Text>Ribeirão Preto</Text></View>
-    </ScrollView>
+    <View style={styles.container}>
+      <View style={styles.painel}>
+        <Text style={styles.titulo}>Cidades</Text>
+        <ScrollView style={styles.area} contentContainerStyle={styles.conteudo}>
+          {cidades.map((cidade, index) => (
+            <View key={cidade}>
+              <Text style={styles.item}>{cidade}</Text>
+              {index < cidades.length - 1 && <View style={styles.separador} />}
+            </View>
+          ))}
+        </ScrollView>
+        <Text style={styles.rodape}>A lista continua para baixo</Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  conteudo: { padding: 24, gap: 10 },
-  titulo: { fontSize: 24, fontWeight: 'bold' },
-  cartao: { padding: 18, borderWidth: 1, borderRadius: 10 },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#EEF4FB',
+  },
+  painel: {
+    width: '88%',
+    maxWidth: 290,
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
+    borderRadius: 18,
+    elevation: 4,
+  },
+  titulo: {
+    fontSize: 21,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#0F172A',
+    marginBottom: 14,
+  },
+  area: {
+    height: 135,
+    flexGrow: 0,
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
+    borderRadius: 10,
+  },
+  conteudo: { paddingHorizontal: 10, paddingVertical: 6 },
+  item: { paddingVertical: 9 },
+  separador: { height: 1, backgroundColor: '#E2E8F0' },
+  rodape: {
+    fontSize: 12,
+    color: '#64748B',
+    textAlign: 'center',
+    marginTop: 14,
+  },
 });`,
-        addedTitle: 'Necessidade',
-        added: `Problema:
-o conteúdo ficou maior que a tela.
-
-ScrollView cria uma área rolável.
-
-Importante:
-todos os filhos declarados dentro dela são renderizados.`,
-        preview: phonePreview('Cidades', '<div style="height:175px;overflow:hidden;border:1px solid #cbd5e1;border-radius:10px;padding:8px;"><div>São Paulo</div><hr><div>Campinas</div><hr><div>Santos</div><hr><div>Sorocaba</div><hr><div>Ribeirão Preto</div></div>', 'A lista continua para baixo'),
-        note: 'ScrollView é ótimo para conteúdo finito e de tamanho controlado.'
+        addedTitle: 'A altura da área e o espaçamento dos itens',
+        added: 'style limita a altura da área rolável. contentContainerStyle muda o espaço interno dos itens. A lista continua fora da parte visível.',
+        preview: phonePreview('Cidades', '<div style="border:1px solid #cbd5e1;border-radius:10px;padding:10px;line-height:2.2;">São Paulo<br>Campinas<br>Santos</div>', 'Role no Snack para chegar a Ribeirão Preto.'),
+        note: 'A prévia ilustra o topo da lista. Faça o teste de rolagem no App.js executado.'
       },
       mkPage(
         'mbb-react-scroll-limite',
@@ -502,40 +589,75 @@ keyExtractor
         menu: '23. Pressable',
         title: 'Pressable — quando uma área inteira precisa reagir ao toque',
         objective: 'Criar uma interação personalizada além do Button.',
-        code: `import React from 'react';
-import { Pressable, Text, StyleSheet } from 'react-native';
+        code: `import React, { useState } from 'react';
+import { View, Pressable, Text, StyleSheet } from 'react-native';
 
 export default function App() {
-  function abrirDetalhes() {
-    console.log('Abrir detalhes');
+  const [detalhesVisiveis, setDetalhesVisiveis] = useState(false);
+
+  function alternarDetalhes() {
+    setDetalhesVisiveis(atual => !atual);
   }
 
   return (
-    <Pressable style={styles.cartao} onPress={abrirDetalhes}>
-      <Text style={styles.titulo}>São Paulo</Text>
-      <Text>Toque para ver detalhes</Text>
-    </Pressable>
+    <View style={styles.container}>
+      <View style={styles.painel}>
+        <Text style={styles.tituloPainel}>Cartão clicável</Text>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityState={{ expanded: detalhesVisiveis }}
+          style={styles.cartao}
+          onPress={alternarDetalhes}
+        >
+          <Text style={styles.cidade}>São Paulo</Text>
+          <Text style={styles.dica}>
+            {detalhesVisiveis ? 'Toque para ocultar detalhes' : 'Toque para ver detalhes'}
+          </Text>
+          {detalhesVisiveis && <Text style={styles.dica}>Temperatura: 26 °C</Text>}
+        </Pressable>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#EEF4FB',
+  },
+  painel: {
+    width: '88%',
+    maxWidth: 290,
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
+    borderRadius: 18,
+    elevation: 4,
+  },
+  tituloPainel: {
+    fontSize: 21,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#0F172A',
+    marginBottom: 14,
+  },
   cartao: {
-    margin: 24,
     padding: 18,
     borderWidth: 1,
+    borderColor: '#94A3B8',
     borderRadius: 12,
   },
-  titulo: { fontSize: 18, fontWeight: 'bold' },
+  cidade: { fontSize: 18, fontWeight: 'bold' },
+  dica: { marginTop: 6, color: '#64748B' },
 });`,
-        addedTitle: 'Necessidade',
-        added: `Button resolve uma ação simples.
-TouchableOpacity continua válido.
-Pressable é útil quando queremos controlar melhor uma área clicável personalizada.
-
-onPress recebe uma função:
-onPress={abrirDetalhes}`,
-        preview: phonePreview('Cartão clicável', '<div style="border:1px solid #94a3b8;border-radius:12px;padding:18px;"><b>São Paulo</b><div style="margin-top:6px;color:#64748b;">Toque para ver detalhes</div></div>'),
-        note: 'Pressable é apresentado pela necessidade de tornar uma área personalizada interativa.'
+        addedTitle: 'O toque muda o que o cartão mostra',
+        added: 'Pressable torna toda a área do cartão interativa. O onPress alterna detalhesVisiveis e o JSX mostra ou oculta a temperatura.',
+        preview: phonePreview('Cartão clicável', '<div style="padding:14px;border:1px solid #94a3b8;border-radius:12px;"><b>São Paulo</b><br>Toque para ocultar detalhes<br>Temperatura: 26 °C</div>'),
+        note: 'A prévia mostra o cartão depois do primeiro toque.'
       },
       mkPage(
         'mbb-react-botoes-compare',
@@ -559,50 +681,84 @@ onPress={abrirDetalhes}`,
         menu: '25. pressed',
         title: 'O estado pressed do Pressable',
         objective: 'Alterar a aparência enquanto o usuário está pressionando.',
-        code: `import React from 'react';
-import { Pressable, Text, StyleSheet } from 'react-native';
+        code: `import React, { useState } from 'react';
+import { View, Pressable, Text, StyleSheet } from 'react-native';
 
 export default function App() {
+  const [selecionada, setSelecionada] = useState(false);
+
   return (
-    <Pressable
-      onPress={() => console.log('Salvou')}
-      style={({ pressed }) => [
-        styles.botao,
-        pressed && styles.botaoPressionado,
-      ]}
-    >
-      <Text style={styles.texto}>Salvar</Text>
-    </Pressable>
+    <View style={styles.container}>
+      <View style={styles.painel}>
+        <Text style={styles.titulo}>Pressable</Text>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityState={{ selected: selecionada }}
+          onPress={() => setSelecionada(atual => !atual)}
+          style={({ pressed }) => [
+            styles.botao,
+            selecionada && styles.botaoSelecionado,
+            pressed && styles.botaoPressionado,
+          ]}
+        >
+          <Text style={styles.texto}>Campinas</Text>
+        </Pressable>
+        <Text style={styles.rodape} accessibilityLiveRegion="polite">
+          {selecionada ? 'Cidade selecionada' : 'Cidade não selecionada'}
+        </Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#EEF4FB',
+  },
+  painel: {
+    width: '88%',
+    maxWidth: 290,
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
+    borderRadius: 18,
+    elevation: 4,
+  },
+  titulo: {
+    fontSize: 21,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#0F172A',
+    marginBottom: 14,
+  },
   botao: {
-    margin: 24,
-    padding: 14,
+    padding: 13,
     borderRadius: 10,
     backgroundColor: '#1967D2',
   },
-  botaoPressionado: {
-    opacity: 0.6,
-  },
+  botaoSelecionado: { backgroundColor: '#166534' },
+  botaoPressionado: { opacity: 0.6 },
   texto: {
     color: '#FFFFFF',
     textAlign: 'center',
     fontWeight: 'bold',
   },
+  rodape: {
+    fontSize: 12,
+    color: '#64748B',
+    textAlign: 'center',
+    marginTop: 14,
+  },
 });`,
-        addedTitle: 'Trecho em foco',
-        added: `style={({ pressed }) => [
-  styles.botao,
-  pressed && styles.botaoPressionado,
-]}
-
-pressed informa se a área está sendo pressionada.
-
-O && aplica o segundo estilo somente durante o toque.`,
-        preview: phonePreview('Pressable', '<div style="background:#1967d2;color:#fff;border-radius:10px;padding:13px;text-align:center;font-weight:700;">Salvar</div>', 'Durante o toque, a opacidade muda'),
-        note: 'Aqui reaparece a renderização condicional em um contexto real de interação.'
+        addedTitle: 'Toque atual e seleção guardada',
+        added: 'pressed altera a opacidade durante o toque. O state selecionada controla a cor e o texto depois que o toque termina.',
+        preview: phonePreview('Pressable', '<div style="background:#166534;color:#fff;border-radius:10px;padding:13px;text-align:center;font-weight:700;">Campinas</div>', 'Cidade selecionada'),
+        note: 'A prévia ilustra a seleção depois de soltar o botão.'
       },
       mkPage(
         'mbb-react-arrow-eventos',
@@ -615,7 +771,8 @@ O && aplica o segundo estilo somente durante o toque.`,
         [
           ['Direto', 'onPress={salvar}: use quando não precisa preparar argumentos naquele ponto.'],
           ['Arrow', 'onPress={() => salvar(id)}: útil para chamar algo com argumento depois do toque.'],
-          ['Evite', 'onPress={salvar(id)} executa a chamada durante a renderização.'],
+          ['Diagnostique', 'Se onPress={salvar(id)} já escreveu no console antes do toque, a chamada aconteceu ao montar a interface. Corrija para onPress={() => salvar(id)} e confira de novo.'],
+          ['Experimente', 'No cartão da etapa 23, substitua temporariamente o manipulador por uma função registrar(cidade) que use console.log. Faça o log aparecer apenas após o toque e inclua o nome da cidade.'],
           ['JavaScript', 'Arrow function já foi estudada no JS Essencial; aqui vemos por que ela aparece no React.'],
           ['Evento', 'O clique é o gatilho. A função passada ao evento é executada quando o gatilho ocorre.'],
           ['Ponte', 'Essa diferença será importante quando compararmos Evento × Effect.']
@@ -658,37 +815,71 @@ ref mantém uma referência sem provocar renderização quando current muda.`;
       title: 'Complemento — avançar o foco para o próximo campo',
       objective: 'Ver uma segunda aplicação prática de referência no formulário.',
       code: `import React, { useRef } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 
 export default function App() {
   const campoNota2 = useRef(null);
 
   return (
-    <View>
-      <TextInput
-        placeholder="Nota 1"
-        returnKeyType="next"
-        onSubmitEditing={() => campoNota2.current?.focus()}
-      />
-
-      <TextInput
-        ref={campoNota2}
-        placeholder="Nota 2"
-        keyboardType="numeric"
-      />
+    <View style={styles.container}>
+      <View style={styles.painel}>
+        <Text style={styles.titulo}>Notas</Text>
+        <TextInput
+          style={styles.campo}
+          accessibilityLabel="Nota 1"
+          placeholder="Nota 1"
+          returnKeyType="next"
+          onSubmitEditing={() => campoNota2.current?.focus()}
+        />
+        <TextInput
+          ref={campoNota2}
+          style={styles.campo}
+          accessibilityLabel="Nota 2"
+          placeholder="Nota 2"
+          keyboardType="numeric"
+        />
+      </View>
     </View>
   );
-}`,
-      addedTitle: 'Complemento',
-      added: `onSubmitEditing
--> evento disparado ao concluir a edição do primeiro campo.
+}
 
-campoNota2.current?.focus()
--> move o cursor para o próximo TextInput.
-
-Este exemplo amplia a mesma ideia de referência usada no botão Limpar.`,
-      preview: phonePreview('Notas', '<div style="border:1px solid #cbd5e1;padding:10px;border-radius:8px;margin-bottom:10px;">Nota 1</div><div style="border:2px solid #1967d2;padding:10px;border-radius:8px;">Nota 2 — foco</div>'),
-      note: 'A referência também pode ajudar a organizar a navegação entre campos de um formulário.'
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#EEF4FB',
+  },
+  painel: {
+    width: '88%',
+    maxWidth: 290,
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
+    borderRadius: 18,
+    elevation: 4,
+  },
+  titulo: {
+    fontSize: 21,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#0F172A',
+    marginBottom: 14,
+  },
+  campo: {
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+});`,
+      addedTitle: 'Ao enviar a primeira nota',
+      added: 'Pressione Enter ou Próximo na primeira entrada. onSubmitEditing chama focus() na referência do segundo campo.',
+      preview: phonePreview('Notas', '<div style="border:1px solid #cbd5e1;padding:10px;border-radius:8px;margin-bottom:10px;">Nota 1</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:8px;">Nota 2</div>', 'No Snack, confirme onde o cursor aparece.'),
+      note: 'O envio do campo é o gatilho. Use Enter no teclado físico ou Próximo no teclado do dispositivo quando estiver disponível.'
     };
 
     if (finalMedia) {
@@ -1032,14 +1223,20 @@ ${estiloLaboratorio}`,
   </div>
   <div class="panel brief"><div class="panel-body">
     <h3>Consolidação integrada</h3>
+    <p>Antes de executar um teste, anote o que você espera ver. Use as atividades do seletor abaixo e entregue os resultados que observou.</p>
     <ol>
-      <li><strong>Painel de cidades:</strong> crie CartaoClima com props e gere vários cartões a partir de um array usando map() e key.</li>
-      <li><strong>Lista de contatos:</strong> comece com ScrollView e depois reescreva usando FlatList com data, renderItem e keyExtractor. Explique qual versão é mais adequada se a lista crescer.</li>
-      <li><strong>Card interativo:</strong> transforme um cartão em Pressable e altere o estilo enquanto pressed for verdadeiro.</li>
-      <li><strong>Formulário escolar:</strong> use state controlado, botão Salvar e useRef para devolver o foco ao primeiro campo após limpar.</li>
-      <li><strong>Temporizador:</strong> use useEffect + setInterval + cleanup. Explique por que esse caso é Effect e não evento.</li>
-      <li><strong>Decisão de arquitetura:</strong> para cada situação, diga se usaria evento ou Effect: consultar CEP por botão, atualizar relógio, calcular desconto, buscar dados automaticamente ao trocar uma cidade.</li>
+      <li><strong>Modificar e testar.</strong> Faça a Média de 3 Notas. Confira <code>6, 6, 6</code> (Aprovado), <code>0, 0, 0</code> (Reprovado), uma nota vazia com mensagem de erro e Limpar voltando à tela inicial.</li>
+      <li><strong>Investigar e corrigir.</strong> Escolha um erro: usar o índice como chave na lista reordenável, chamar a função no JSX em vez de esperar o toque ou esquecer de cancelar o intervalo. Registre o sintoma, explique a causa e repita o mesmo teste após corrigir. Consulte as etapas 18, 26 ou 32.</li>
+      <li><strong>Combinar os recursos.</strong> Escolha dois dos desafios abaixo. Para cada um, mostre o resultado e explique qual comportamento você verificou.</li>
     </ol>
+    <ul>
+      <li><strong>Painel de cidades.</strong> Crie CartaoClima com props e gere os cartões com <code>map()</code> e <code>key</code>. Inverta a ordem e comprove que cada cartão continua associado à mesma cidade.</li>
+      <li><strong>Lista de contatos.</strong> Monte primeiro com <code>ScrollView</code> e reescreva com <code>FlatList</code>, <code>data</code>, <code>renderItem</code> e <code>keyExtractor</code>. Chegue ao último contato em ambas e explique qual escolheria se a lista crescesse.</li>
+      <li><strong>Cartão interativo.</strong> Use <code>Pressable</code> e <code>pressed</code>. Registre a diferença entre a aparência durante o toque e a seleção que permanece depois de soltar.</li>
+      <li><strong>Formulário escolar.</strong> Adicione Salvar a um formulário com campos controlados e use <code>useRef</code> para voltar ao primeiro campo após Limpar. Verifique o cursor e os dados apagados.</li>
+      <li><strong>Temporizador.</strong> Use <code>useEffect</code>, <code>setInterval</code> e cleanup. Mostre a última mensagem de cleanup ao desmontar o temporizador.</li>
+      <li><strong>Escolha do gatilho.</strong> Classifique e justifique cada caso: consultar CEP por botão, atualizar um relógio, calcular desconto na tela e buscar dados quando a cidade muda.</li>
+    </ul>
   </div></div>
 </div>`;
       exercise.html = integrated + (exercise.html || '');
