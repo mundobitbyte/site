@@ -44,6 +44,7 @@
 .mbb6-panel .mbb6-teste h4{margin:16px 13px 0;color:var(--dark)}
 .mbb6-panel .mbb6-teste .mbb6-table-scroll{margin:13px}
 .mbb6-panel .mbb6-teste td,.mbb6-panel .mbb6-teste th{overflow-wrap:anywhere}
+.mbb6-panel .mbb6-teste tr > :first-child{width:1%;white-space:nowrap}
 
 .mbb6-lesson-figure{margin:0;display:grid;gap:10px;justify-items:center}
 .mbb6-lesson-figure img{display:block;width:100%;max-width:860px;height:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
@@ -670,11 +671,11 @@ void loop() {
       <h3>Como saber se deu certo</h3>
       <div class="mbb6-table-scroll">
         <table aria-label="Comandos e resultados na ordem do teste">
-          <thead><tr><th scope="col">Envie</th><th scope="col">Leia no Monitor Serial</th><th scope="col">Observe o LED</th></tr></thead>
+          <thead><tr><th scope="col">Envie</th><th scope="col">Confira no Wokwi</th></tr></thead>
           <tbody>
-            <tr><th scope="row"><code>L</code></th><td><code>OK: LED ligado</code></td><td>Acende.</td></tr>
-            <tr><th scope="row"><code>X</code></th><td><code>Comando invalido. O LED manteve o estado.</code></td><td>Continua aceso.</td></tr>
-            <tr><th scope="row"><code>D</code></th><td><code>OK: LED desligado</code></td><td>Apaga.</td></tr>
+            <tr><th scope="row"><code>L</code></th><td><strong>Serial:</strong> <code>OK: LED ligado</code><br><strong>LED:</strong> acende.</td></tr>
+            <tr><th scope="row"><code>X</code></th><td><strong>Serial:</strong> <code>Comando invalido. O LED manteve o estado.</code><br><strong>LED:</strong> continua aceso.</td></tr>
+            <tr><th scope="row"><code>D</code></th><td><strong>Serial:</strong> <code>OK: LED desligado</code><br><strong>LED:</strong> apaga.</td></tr>
           </tbody>
         </table>
       </div>
@@ -829,10 +830,10 @@ void loop() {
       <p>Comece com o LED apagado. Envie <code>X</code> primeiro. Espere o separador <code>---</code> no Monitor Serial e só então envie <code>L</code>.</p>
       <div class="mbb6-table-scroll">
         <table aria-label="Resultados dos dois pedidos HTTP">
-          <thead><tr><th scope="col">Envie</th><th scope="col">Leia no Monitor Serial</th><th scope="col">Veja no LED</th></tr></thead>
+          <thead><tr><th scope="col">Envie</th><th scope="col">Confira no Wokwi</th></tr></thead>
           <tbody>
-            <tr><th scope="row"><code>X</code></th><td><code>Pedido: GET /ausente</code>, seguido de <code>HTTP/1.1 404 Not Found</code>. No corpo aparece <code>Rota inexistente</code>.</td><td>Continua apagado.</td></tr>
-            <tr><th scope="row"><code>L</code></th><td><code>Pedido: GET /ligar</code>, seguido de <code>HTTP/1.1 200 OK</code>. No corpo aparece <code>LED ligado</code>.</td><td>Acende.</td></tr>
+            <tr><th scope="row"><code>X</code></th><td><strong>Serial:</strong> <code>Pedido: GET /ausente</code>, seguido de <code>HTTP/1.1 404 Not Found</code>. No corpo aparece <code>Rota inexistente</code>.<br><strong>LED:</strong> continua apagado.</td></tr>
+            <tr><th scope="row"><code>L</code></th><td><strong>Serial:</strong> <code>Pedido: GET /ligar</code>, seguido de <code>HTTP/1.1 200 OK</code>. No corpo aparece <code>LED ligado</code>.<br><strong>LED:</strong> acende.</td></tr>
           </tbody>
         </table>
       </div>
@@ -997,7 +998,7 @@ void loop() {
       <h3>Como saber se deu certo</h3>
       <div class="mbb6-table-scroll">
         <table aria-label="Sequência e resultados do modelo de túnel">
-          <thead><tr><th scope="col">Envie nesta ordem</th><th scope="col">Leia no Monitor Serial</th></tr></thead>
+          <thead><tr><th scope="col">Passo</th><th scope="col">Leia no Monitor Serial</th></tr></thead>
           <tbody>
             <tr><th scope="row">1. <code>L</code></th><td><code>200 | Aviso fixo do Ambiente MbB</code></td></tr>
             <tr><th scope="row">2. <code>E</code></th><td><code>Sem caminho ate o servico. Nenhuma resposta HTTP.</code></td></tr>
