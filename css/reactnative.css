@@ -1871,6 +1871,35 @@
   box-shadow: 0 2px 7px rgba(25,103,210,.28);
 }
 
+#moduleMenu button:focus-visible,
+#menu button:focus-visible,
+#workspace .btn-copy:focus-visible,
+#preview .mbb-visualizador-trigger:focus-visible,
+#mbbVisualizador button:focus-visible {
+  outline: 2px solid #142c48;
+  outline-offset: -2px;
+  box-shadow: inset 0 0 0 4px #fff;
+}
+
+.media-escolar-captura {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  justify-items: center;
+  height: 100%;
+}
+
+.media-escolar-captura img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+}
+
+#preview .media-escolar-captura .mbb-visualizador-trigger {
+  justify-self: end;
+  margin: 4px 10px 8px;
+}
+
 .layout {
   height: calc(100vh - 92px);
 }
