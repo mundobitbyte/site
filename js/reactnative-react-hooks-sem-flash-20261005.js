@@ -180,8 +180,8 @@
 // São arquivos de dados/texto; não instalam CSS nem substituem showStep.
 (() => {
   const files = [
-    '../js/reactnative-react-hooks-explicacoes-mbb-parte1-20261005.js?v=20261005-1',
-    '../js/reactnative-react-hooks-explicacoes-mbb-parte2-20261005.js?v=20261005-1'
+    '../js/reactnative-react-hooks-explicacoes-mbb-parte1-20261005.js?v=20261115-media-escolar',
+    '../js/reactnative-react-hooks-explicacoes-mbb-parte2-20261005.js?v=20261115-media-escolar'
   ];
 
   files.forEach((src, index) => {

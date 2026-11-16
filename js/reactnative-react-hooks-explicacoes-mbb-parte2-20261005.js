@@ -2,13 +2,11 @@
 // Somente conteúdo pedagógico do painel inferior. Não altera código, preview, layout ou navegação.
 (() => {
   const guides = {
-    'mbb-react-condicional': ['Quando a própria interface depende de uma condição', `Até aqui usamos decisões para calcular valores. Agora a decisão também controla o que aparece na tela.
+    'mbb-react-condicional': ['Quando a própria interface depende de uma condição', `O cálculo, a regra de aprovação e o botão Limpar continuam como na etapa anterior. Agora a condição também decide o que aparece na tela.
 
-media !== '' && (...) significa: só inclua este bloco no JSX quando já existir uma média. Antes do cálculo, o resultado não precisa ocupar a interface.
+Em media !== '' && (...), a parte depois de && entra no JSX só quando existe uma média. A comparação distingue o valor inicial vazio da nota 0, que deve aparecer quando foi calculada.
 
-Já media >= 7 ? styles.aprovado : styles.reprovado escolhe entre duas possibilidades de estilo.
-
-Isso não torna if/else desnecessário. No exemplo, if/else continua adequado para a regra do cálculo, enquanto && e o ternário resolvem decisões diretamente ligadas à renderização.`],
+O if/else decide a situação usando média 6 como corte. No JSX, situacao === 'Aprovado' ? styles.aprovado : styles.reprovado reaproveita essa decisão e escolhe apenas o estilo. Ao limpar, media volta ao valor vazio e a área some.`],
 
     'mbb-react-map': ['Do array de dados para vários componentes', `No JavaScript Essencial, map() já servia para percorrer um array e produzir novos valores. No React, a mesma ideia ganha um uso visual: cada item pode produzir um componente.
 
@@ -50,7 +48,7 @@ pressed && styles.botaoPressionado reaproveita a lógica condicional: o segundo 
 
 A aparência passa a ser consequência do estado atual da interação, em vez de ser alterada manualmente por comandos separados.`],
 
-    'state-11-useref': ['useRef: acessar um elemento sem transformar isso em state', `Depois de limpar o formulário queremos devolver o cursor ao primeiro TextInput. Esse problema não é um valor que precisa aparecer na interface; precisamos de uma referência ao próprio campo.
+    'state-11-useref': ['useRef: acessar um elemento sem transformar isso em state', `O formulário já limpa os campos e esconde o resultado. Agora queremos devolver o cursor ao primeiro TextInput depois de tocar em Limpar. Esse problema não é um valor que precisa aparecer na interface; precisamos de uma referência ao próprio campo.
 
 useRef(null) cria a referência. ref={campoNota1} liga a referência ao TextInput. Depois, campoNota1.current?.focus() pede foco ao elemento referenciado.
 
@@ -68,7 +66,7 @@ Não precisamos criar state apenas para controlar esse foco.`],
 
     'state-12-final': ['Consolidação: várias peças formando um comportamento único', `A Média Escolar final reúne conceitos que foram apresentados separadamente.
 
-TextInput recebe os dados; useState acompanha os valores; eventos respondem aos botões; a função calcular aplica a regra; if/else decide a situação; a renderização apresenta o resultado; useRef melhora o fluxo de foco.
+O evento de Calcular chama calcularMedia. A função valida as notas e usa if/else para decidir a situação. O JSX mostra o resultado apenas quando existe uma média. Limpar apaga campos, resultado e mensagem, e useRef devolve o foco à primeira nota.
 
 Nenhum desses recursos existe isoladamente em um aplicativo real. Cada peça mantém uma responsabilidade e, juntas, formam o comportamento da tela.
 

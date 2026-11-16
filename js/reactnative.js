@@ -1447,6 +1447,149 @@ btnVermelho: {
       },
     ];
 
+function codigoMediaEscolar(etapa) {
+  const soEventos = etapa === 'eventos';
+  const podeLimpar = etapa !== 'calculo';
+  const resultadoCondicional = etapa === 'condicional' || etapa === 'foco';
+  const usaRef = etapa === 'foco';
+
+  const validacao = String.raw`
+function lerNota(entrada) {
+  const texto = entrada.trim().replace(',', '.');
+  const formatoValido = /^(\d+(\.\d+)?|\.\d+)$/.test(texto);
+
+  if (!formatoValido) {
+    return null;
+  }
+
+  const nota = Number(texto);
+  return nota <= 10 ? nota : null;
+}
+`;
+
+  return `import React, { useState${usaRef ? ', useRef' : ''} } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+${soEventos ? '' : validacao}
+export default function App() {
+  const [nota1, setNota1] = useState('');
+  const [nota2, setNota2] = useState('');${soEventos ? '' : `
+  const [media, setMedia] = useState('');
+  const [situacao, setSituacao] = useState('');`}
+  const [mensagem, setMensagem] = useState('');${usaRef ? '\n  const campoNota1 = useRef(null);' : ''}
+
+  function calcularMedia() {${soEventos ? `
+    setMensagem('O botão Calcular chamou calcularMedia.');` : `
+    const primeira = lerNota(nota1);
+    const segunda = lerNota(nota2);
+
+    if (primeira === null || segunda === null) {
+      setMedia('');
+      setSituacao('');
+      setMensagem('Informe duas notas de 0 a 10. Exemplo: 7,5.');
+      return;
+    }
+
+    setMensagem('');
+    const resultado = (primeira + segunda) / 2;
+    setMedia(resultado);
+
+    if (resultado >= 6) {
+      setSituacao('Aprovado');
+    } else {
+      setSituacao('Reprovado');
+    }`}
+  }
+
+  function limpar() {${soEventos ? `
+    setMensagem('O botão Limpar chamou limpar.');` : podeLimpar ? `
+    setNota1('');
+    setNota2('');
+    setMedia('');
+    setSituacao('');
+    setMensagem('');${usaRef ? '\n    campoNota1.current?.focus();' : ''}` : `
+    // O botão será habilitado na próxima etapa.`}
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.titulo}>Média Escolar</Text>
+
+      <Text>Nota 1:</Text>
+      <TextInput${usaRef ? '\n        ref={campoNota1}' : ''}
+        accessibilityLabel="Nota 1"
+        style={styles.campo}
+        value={nota1}
+        onChangeText={setNota1}
+        keyboardType="decimal-pad"
+      />
+
+      <Text>Nota 2:</Text>
+      <TextInput
+        accessibilityLabel="Nota 2"
+        style={styles.campo}
+        value={nota2}
+        onChangeText={setNota2}
+        keyboardType="decimal-pad"
+      />
+
+      <View style={styles.botoes}>
+        <View style={styles.botao}>
+          <Button title="Calcular" onPress={calcularMedia} />
+        </View>
+        <View style={styles.botao}>
+          <Button title="Limpar" onPress={limpar}${podeLimpar ? '' : ' disabled'} />
+        </View>
+      </View>
+
+      <Text style={styles.mensagem} accessibilityLiveRegion="polite">{mensagem}</Text>
+${resultadoCondicional ? `
+      {media !== '' && (
+        <View style={styles.resultado}>
+          <Text>Média: {media}</Text>
+          <Text style={situacao === 'Aprovado' ? styles.aprovado : styles.reprovado}>
+            Situação: {situacao}
+          </Text>
+        </View>
+      )}` : `      <View style={styles.resultado}>
+        <Text>Média:${soEventos ? '' : ' {media}'}</Text>
+        <Text>Situação:${soEventos ? '' : ' {situacao}'}</Text>
+      </View>`}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 30, marginTop: 50, backgroundColor: '#FFFFFF' },
+  titulo: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
+  campo: { borderWidth: 1, borderColor: '#999', padding: 10, marginVertical: 10 },
+  botoes: { flexDirection: 'row', gap: 10, marginTop: 10 },
+  botao: { flex: 1 },
+  mensagem: { color: '${soEventos ? '#194A96' : '#B91C1C'}', marginTop: 12 },
+  resultado: { gap: 6, marginTop: 8 },${resultadoCondicional ? `
+  aprovado: { color: '#166534', fontWeight: 'bold' },
+  reprovado: { color: '#B91C1C', fontWeight: 'bold' },` : ''}
+});`;
+}
+
+function previaMediaEscolar({ nota = '', mensagem = '', resultado = false, mostrarRotulos = true, podeLimpar = true, foco = false, destacarSituacao = false } = {}) {
+  const campo = (numero, destaque = false) => `
+    <div>Nota ${numero}:</div>
+    <div style="min-height:36px;padding:8px;box-sizing:border-box;margin:6px 0 10px;border:1px solid ${destaque ? '#1967d2' : '#999'};">${destaque ? '│' : nota}</div>`;
+  const botao = (titulo, ativo = true) => `<span style="flex:1;padding:8px 4px;text-align:center;background:${ativo ? '#1967d2' : '#64748b'};color:white;border-radius:4px;font-size:12px;">${titulo}</span>`;
+
+  return `<div style="height:100%;padding:clamp(14px, 8%, 30px);padding-top:clamp(20px, 12%, 48px);box-sizing:border-box;background:#fff;font-family:Arial,sans-serif;color:#0f172a;font-size:14px;">
+    <div style="font-size:21px;font-weight:800;margin-bottom:14px;">Média Escolar</div>
+    ${campo(1, foco)}
+    ${campo(2)}
+    <div style="display:flex;gap:8px;margin-top:10px;">${botao('CALCULAR')}${botao('LIMPAR', podeLimpar)}</div>
+    ${mensagem ? `<div style="color:#194a96;margin-top:12px;">${mensagem}</div>` : ''}
+    ${mostrarRotulos || resultado ? `<div style="line-height:1.5;margin-top:12px;">
+      <div>Média: ${resultado ? nota : ''}</div>
+      <div>Situação: ${resultado ? (destacarSituacao ? '<strong style="color:#166534;">Aprovado</strong>' : 'Aprovado') : ''}</div>
+    </div>` : ''}
+  </div>`;
+}
+
     const modules = {
       fundamentosMobile: {
         title: '0. Fundamentos',
@@ -4052,55 +4195,55 @@ const styles = StyleSheet.create({
                     "menu": "8. Eventos",
                     "title": "8 — Ligando os botões às funções",
                     "objective": "Fazer o clique do botão chamar uma função.",
-                    "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [nota1, setNota1] = useState('');\n  const [nota2, setNota2] = useState('');\n  const [media, setMedia] = useState('');\n  const [situacao, setSituacao] = useState('');\n\n  function calcularMedia() {\n\n  }\n\n  function limpar() {\n\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Média Escolar</Text>\n\n      <Text>Nota 1:</Text>\n      <TextInput\n        style={styles.campo}\n        value={nota1}\n        onChangeText={setNota1}\n        keyboardType=\"numeric\"\n      />\n\n      <Text>Nota 2:</Text>\n      <TextInput\n        style={styles.campo}\n        value={nota2}\n        onChangeText={setNota2}\n        keyboardType=\"numeric\"\n      />\n\n      <View style={styles.botoes}>\n        <View style={styles.botao}>\n          <Button title=\"Calcular\" onPress={calcularMedia} />\n        </View>\n\n        <View style={styles.botao}>\n          <Button title=\"Limpar\" onPress={limpar} />\n        </View>\n      </View>\n\n      <Text style={styles.resultado}>Média: {media}</Text>\n      <Text style={styles.resultado}>Situação: {situacao}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  botoes: {\n    flexDirection: 'row',\n    marginTop: 10,\n  },\n  botao: {\n    flex: 1,\n    marginHorizontal: 5,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                    "code": codigoMediaEscolar('eventos'),
                     "addedTitle": "Trecho em foco",
-                    "added": "function calcularMedia() {\n\n}\n\nfunction limpar() {\n\n}\n\n<Button title=\"Calcular\" onPress={calcularMedia} />\n<Button title=\"Limpar\" onPress={limpar} />",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_05_resultado_vazio.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
-                    "note": "onPress é um evento. Quando o usuário clica no botão, o React Native executa a função indicada."
+                    "added": "onPress={calcularMedia} entrega a função ao botão. O texto de confirmação aparece depois do toque.",
+                    "preview": previaMediaEscolar({ mensagem: 'O botão Calcular chamou calcularMedia.' }),
+                    "note": "As mensagens mostram qual função foi chamada. O cálculo e a limpeza dos campos entram nas próximas etapas."
           },
           {
                     "id": "state-9-calculo",
                     "menu": "9. Cálculo e if",
                     "title": "9 — Calculando a média e decidindo a situação",
                     "objective": "Processar os dados digitados e tomar uma decisão simples.",
-                    "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [nota1, setNota1] = useState('');\n  const [nota2, setNota2] = useState('');\n  const [media, setMedia] = useState('');\n  const [situacao, setSituacao] = useState('');\n\n  function calcularMedia() {\n    const resultado = (Number(nota1) + Number(nota2)) / 2;\n\n    setMedia(resultado);\n\n    if (resultado >= 6) {\n      setSituacao('Aprovado');\n    } else {\n      setSituacao('Reprovado');\n    }\n  }\n\n  function limpar() {\n\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Média Escolar</Text>\n\n      <Text>Nota 1:</Text>\n      <TextInput\n        style={styles.campo}\n        value={nota1}\n        onChangeText={setNota1}\n        keyboardType=\"numeric\"\n      />\n\n      <Text>Nota 2:</Text>\n      <TextInput\n        style={styles.campo}\n        value={nota2}\n        onChangeText={setNota2}\n        keyboardType=\"numeric\"\n      />\n\n      <View style={styles.botoes}>\n        <View style={styles.botao}>\n          <Button title=\"Calcular\" onPress={calcularMedia} />\n        </View>\n\n        <View style={styles.botao}>\n          <Button title=\"Limpar\" onPress={limpar} />\n        </View>\n      </View>\n\n      <Text style={styles.resultado}>Média: {media}</Text>\n      <Text style={styles.resultado}>Situação: {situacao}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  botoes: {\n    flexDirection: 'row',\n    marginTop: 10,\n  },\n  botao: {\n    flex: 1,\n    marginHorizontal: 5,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                    "code": codigoMediaEscolar('calculo'),
                     "addedTitle": "Trecho em foco",
-                    "added": "function calcularMedia() {\n  const resultado = (Number(nota1) + Number(nota2)) / 2;\n\n  setMedia(resultado);\n\n  if (resultado >= 6) {\n    setSituacao('Aprovado');\n  } else {\n    setSituacao('Reprovado');\n  }\n}",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_06_aprovado.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
-                    "note": "Number transforma o texto digitado em número. O if/else decide entre Aprovado e Reprovado."
+                    "added": "lerNota valida a entrada antes do cálculo. O if/else usa média 6 como corte.",
+                    "preview": previaMediaEscolar({ nota: '6', resultado: true, podeLimpar: false }),
+                    "note": "O botão Limpar está desabilitado nesta etapa. A próxima etapa implementa a limpeza do estado."
           },
           {
                     "id": "state-10-limpar",
                     "menu": "10. Limpar",
                     "title": "10 — Limpando os dados da tela",
                     "objective": "Fazer o botão Limpar apagar os campos e os resultados.",
-                    "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [nota1, setNota1] = useState('');\n  const [nota2, setNota2] = useState('');\n  const [media, setMedia] = useState('');\n  const [situacao, setSituacao] = useState('');\n\n  function calcularMedia() {\n    const resultado = (Number(nota1) + Number(nota2)) / 2;\n\n    setMedia(resultado);\n\n    if (resultado >= 6) {\n      setSituacao('Aprovado');\n    } else {\n      setSituacao('Reprovado');\n    }\n  }\n\n  function limpar() {\n    setNota1('');\n    setNota2('');\n    setMedia('');\n    setSituacao('');\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Média Escolar</Text>\n\n      <Text>Nota 1:</Text>\n      <TextInput\n        style={styles.campo}\n        value={nota1}\n        onChangeText={setNota1}\n        keyboardType=\"numeric\"\n      />\n\n      <Text>Nota 2:</Text>\n      <TextInput\n        style={styles.campo}\n        value={nota2}\n        onChangeText={setNota2}\n        keyboardType=\"numeric\"\n      />\n\n      <View style={styles.botoes}>\n        <View style={styles.botao}>\n          <Button title=\"Calcular\" onPress={calcularMedia} />\n        </View>\n\n        <View style={styles.botao}>\n          <Button title=\"Limpar\" onPress={limpar} />\n        </View>\n      </View>\n\n      <Text style={styles.resultado}>Média: {media}</Text>\n      <Text style={styles.resultado}>Situação: {situacao}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  botoes: {\n    flexDirection: 'row',\n    marginTop: 10,\n  },\n  botao: {\n    flex: 1,\n    marginHorizontal: 5,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                    "code": codigoMediaEscolar('limpar'),
                     "addedTitle": "Trecho em foco",
-                    "added": "function limpar() {\n  setNota1('');\n  setNota2('');\n  setMedia('');\n  setSituacao('');\n}",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_05_resultado_vazio.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
-                    "note": "Limpar também é atualização de state. Ao voltar os valores para vazio, a tela fica limpa automaticamente."
+                    "added": "Limpar devolve entradas, média, situação e mensagem aos valores iniciais.",
+                    "preview": previaMediaEscolar(),
+                    "note": "As notas e o resultado são apagados. Os rótulos ainda aparecem; na próxima etapa, a exibição vai depender do estado."
           },
           {
                     "id": "state-11-useref",
                     "menu": "11. useRef",
                     "title": "11 — Melhorando o app com useRef",
                     "objective": "Fazer o botão Limpar devolver o foco ao campo da primeira nota.",
-                    "code": "import React, { useState, useRef } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [nota1, setNota1] = useState('');\n  const [nota2, setNota2] = useState('');\n  const [media, setMedia] = useState('');\n  const [situacao, setSituacao] = useState('');\n\n  const campoNota1 = useRef(null);\n\n  function calcularMedia() {\n    const resultado = (Number(nota1) + Number(nota2)) / 2;\n\n    setMedia(resultado);\n\n    if (resultado >= 6) {\n      setSituacao('Aprovado');\n    } else {\n      setSituacao('Reprovado');\n    }\n  }\n\n  function limpar() {\n    setNota1('');\n    setNota2('');\n    setMedia('');\n    setSituacao('');\n    campoNota1.current.focus();\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Média Escolar</Text>\n\n      <Text>Nota 1:</Text>\n      <TextInput\n        ref={campoNota1}\n        style={styles.campo}\n        value={nota1}\n        onChangeText={setNota1}\n        keyboardType=\"numeric\"\n      />\n\n      <Text>Nota 2:</Text>\n      <TextInput\n        style={styles.campo}\n        value={nota2}\n        onChangeText={setNota2}\n        keyboardType=\"numeric\"\n      />\n\n      <View style={styles.botoes}>\n        <View style={styles.botao}>\n          <Button title=\"Calcular\" onPress={calcularMedia} />\n        </View>\n\n        <View style={styles.botao}>\n          <Button title=\"Limpar\" onPress={limpar} />\n        </View>\n      </View>\n\n      <Text style={styles.resultado}>Média: {media}</Text>\n      <Text style={styles.resultado}>Situação: {situacao}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  botoes: {\n    flexDirection: 'row',\n    marginTop: 10,\n  },\n  botao: {\n    flex: 1,\n    marginHorizontal: 5,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                    "code": codigoMediaEscolar('foco'),
                     "addedTitle": "Trecho em foco",
-                    "added": "1. Importe useRef junto com useState:\n\nimport React, { useState, useRef } from 'react';\n\n2. Crie uma referência para o primeiro campo:\n\nconst campoNota1 = useRef(null);\n\n3. Ligue a referência ao TextInput da Nota 1:\n\nref={campoNota1}\n\n4. Ao final da função limpar(), devolva o foco:\n\ncampoNota1.current.focus();\n\nuseState × useRef\n- useState guarda dados que participam da interface e sua atualização provoca nova renderização.\n- useRef permite manter uma referência ao TextInput sem precisar atualizar a interface quando current muda.",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_05_resultado_vazio.webp\" alt=\"Tela do app Média Escolar limpa, pronta para receber a primeira nota\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
-                    "note": "Agora, ao tocar em Limpar, os dados são apagados e o cursor volta para o campo Nota 1. O useRef não substitui o useState: aqui ele é usado para acessar diretamente o TextInput e aplicar focus()."
+                    "added": "Ligue campoNota1 ao primeiro TextInput e chame campoNota1.current?.focus() após limpar.",
+                    "preview": previaMediaEscolar({ mostrarRotulos: false, foco: true }),
+                    "note": "A prévia ilustra o cursor após Limpar. Execute o App.js para conferir a mudança de foco."
           },
           {
                     "id": "state-12-final",
                     "menu": "12. Final",
                     "title": "12 — Código completo",
                     "objective": "Revisar a versão final do aplicativo Média Escolar com useState e useRef.",
-                    "code": "import React, { useState, useRef } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [nota1, setNota1] = useState('');\n  const [nota2, setNota2] = useState('');\n  const [media, setMedia] = useState('');\n  const [situacao, setSituacao] = useState('');\n\n  const campoNota1 = useRef(null);\n\n  function calcularMedia() {\n    const resultado = (Number(nota1) + Number(nota2)) / 2;\n\n    setMedia(resultado);\n\n    if (resultado >= 6) {\n      setSituacao('Aprovado');\n    } else {\n      setSituacao('Reprovado');\n    }\n  }\n\n  function limpar() {\n    setNota1('');\n    setNota2('');\n    setMedia('');\n    setSituacao('');\n    campoNota1.current.focus();\n  }\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Média Escolar</Text>\n\n      <Text>Nota 1:</Text>\n      <TextInput\n        ref={campoNota1}\n        style={styles.campo}\n        value={nota1}\n        onChangeText={setNota1}\n        keyboardType=\"numeric\"\n      />\n\n      <Text>Nota 2:</Text>\n      <TextInput\n        style={styles.campo}\n        value={nota2}\n        onChangeText={setNota2}\n        keyboardType=\"numeric\"\n      />\n\n      <View style={styles.botoes}>\n        <View style={styles.botao}>\n          <Button title=\"Calcular\" onPress={calcularMedia} />\n        </View>\n\n        <View style={styles.botao}>\n          <Button title=\"Limpar\" onPress={limpar} />\n        </View>\n      </View>\n\n      <Text style={styles.resultado}>Média: {media}</Text>\n      <Text style={styles.resultado}>Situação: {situacao}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  botoes: {\n    flexDirection: 'row',\n    marginTop: 10,\n  },\n  botao: {\n    flex: 1,\n    marginHorizontal: 5,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
+                    "code": codigoMediaEscolar('foco'),
                     "addedTitle": "Resumo do app",
-                    "added": "Código final do app Média Escolar.\n\nO aplicativo agora possui:\n- campos controlados por state;\n- botões com onPress;\n- função de cálculo;\n- decisão com if/else;\n- função limpar;\n- useRef ligado ao campo Nota 1;\n- foco automático na primeira nota após a limpeza;\n- atualização automática da tela.",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_06_aprovado.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
-                    "note": "A Média Escolar agora consolida useState e introduz useRef dentro do próprio aplicativo. O próximo Hook será useEffect, aplicado em um projeto com atualização automática."
+                    "added": "A versão final reúne validação, cálculo, exibição condicional, limpeza e retorno do foco.",
+                    "preview": previaMediaEscolar({ nota: '6', resultado: true, destacarSituacao: true }),
+                    "note": "A Média Escolar reúne estado, eventos e referência. Em seguida, o temporizador apresenta a necessidade de sincronização externa."
           },
           {
                     "id": "exercicios-state",
