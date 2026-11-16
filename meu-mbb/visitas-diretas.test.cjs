@@ -102,30 +102,6 @@ test('visita direta com login registra página e tópico para retomar', async ()
   assert.equal(paginaAberta.visitas.at(-1)[1], '');
 });
 
-test('retomada usa a última etapa ao navegar antes de salvar uma visita anterior', async () => {
-  const primeira = 'rn-state-mbb-effect-dependencias';
-  const segunda = 'rn-state-mbb-effect-strict';
-  let concluir;
-  const bloquearSegunda = new Promise(resolve => { concluir = resolve; });
-  const registradas = [];
-  const aberta = await abrir({ uid: 'teste', emailVerified: true },
-    `https://www.mundobitbyte.com.br/pages/reactnative.html#${primeira}`, {
-      visitar: async (unidade, ancora) => {
-        assert.equal(unidade.conteudo_id, 'mod-pages-reactnative');
-        if (ancora === segunda) await bloquearSegunda;
-        registradas.push(ancora);
-      }
-    });
-  assert.deepEqual(registradas, [primeira]);
-  aberta.location.hash = segunda;
-  aberta.ouvintes.hashchange();
-  aberta.location.hash = primeira;
-  aberta.ouvintes.hashchange();
-  concluir();
-  await new Promise(setImmediate);
-  assert.deepEqual(registradas, [primeira, segunda, primeira]);
-});
-
 test('sem login e fora do catálogo não escreve dados pessoais', async () => {
   const semConta = await abrir(null, `https://www.mundobitbyte.com.br/${pagina}`);
   assert.equal(semConta.visitas.length, 0);

@@ -7,7 +7,7 @@
 
   let unidade;
   try {
-    const resposta = await fetch(new URL('visitas-diretas.json?v=20261116-react-native', origem));
+    const resposta = await fetch(new URL('visitas-diretas.json?v=mbb-recursos-1', origem));
     if (resposta.ok) unidade = (await resposta.json())[pagina];
     if (!unidade && pagina.startsWith('pages/seguranca-dados/')) {
       const extraResposta = await fetch(new URL('catalogo-seguranca-dados.json?v=mbb-sdi-1', origem));
@@ -40,12 +40,11 @@
     function registrar() {
       const hash = location.hash.slice(1);
       const ancora = unidade.ancoras.includes(hash) ? hash : '';
-      if (ancora === ultima?.ancora) return;
-      const visita = { ancora };
-      ultima = visita;
-      fila = fila.then(() => conta.visitar(unidade, ancora)).catch(() => {
-        if (ultima === visita) ultima = null;
-      });
+      if (ancora === ultima) return;
+      fila = fila.then(async () => {
+        await conta.visitar(unidade, ancora);
+        ultima = ancora;
+      }).catch(() => {});
     }
     window.addEventListener('hashchange', registrar);
     window.addEventListener('popstate', registrar);
