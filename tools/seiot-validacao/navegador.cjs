@@ -30,6 +30,12 @@ fs.mkdirSync(dest,{recursive:true});
      if(hash!=='#topo'){
       if(await page.locator('#stageToggle').isVisible())await page.locator('#stageToggle').click();
       await page.locator(`#stageMenu a[href="${hash}"]`).click();
+      // A página de exercícios é contínua: o link rola até uma seção e
+      // a gaveta móvel conserva seu controle de fechamento por Escape.
+      if(name==='exercicios'){
+       await page.waitForURL(url=>url.hash===hash);
+       if(await page.locator('#arduinoLayout').evaluate(e=>e.classList.contains('drawer-open')))await page.keyboard.press('Escape');
+      }
      }
      await page.waitForTimeout(330);
      const result=await page.evaluate(({name,width,hash})=>{
@@ -37,7 +43,8 @@ fs.mkdirSync(dest,{recursive:true});
       const fixedBottom=Math.max(...[...document.querySelectorAll('body>header,body>.module-menu')].map(e=>e.getBoundingClientRect().bottom));
       const duplicates=[...document.querySelectorAll('[id]')].map(e=>e.id).filter((id,i,a)=>a.indexOf(id)!==i);
       const spilled=[...panel.querySelectorAll('*')].filter(e=>e.getBoundingClientRect().width>0&&e.getBoundingClientRect().right>innerWidth+3&&!e.closest('pre,.mbb-table-scroll,.mbb8-table-scroll,.mbb10-table-scroll,.mbb9-audit')).map(e=>e.tagName+'.'+e.className).slice(0,5);
-      return {name,width,hash,overflow:document.documentElement.scrollWidth-innerWidth,top:Math.round(panel.getBoundingClientRect().top),fixedBottom:Math.round(fixedBottom),duplicates,spilled,active:hash==='#topo'||panel.classList.contains('active-panel'),drawer:document.querySelector('#arduinoLayout').classList.contains('drawer-open')};
+      const active=hash==='#topo'||(name==='exercicios'?panel.getClientRects().length>0:panel.classList.contains('active-panel'));
+      return {name,width,hash,overflow:document.documentElement.scrollWidth-innerWidth,top:Math.round(panel.getBoundingClientRect().top),fixedBottom:Math.round(fixedBottom),duplicates,spilled,active,drawer:document.querySelector('#arduinoLayout').classList.contains('drawer-open')};
      },{name,width,hash});
      summary.etapas.push(result);
      assert(result.active&&!result.drawer,JSON.stringify(result));
