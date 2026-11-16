@@ -156,25 +156,34 @@ const styles = StyleSheet.create({
 });`);
 
   setCode('mbb-react-props', `import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Button, View, Text, StyleSheet } from 'react-native';
 
-function CartaoClima({ cidade, temperatura }) {
+function CartaoClima({ cidade, temperatura, aoConsultar }) {
   return (
     <View style={styles.cartao}>
       <Text style={styles.cidade}>{cidade}</Text>
       <Text style={styles.temperatura}>{temperatura} °C</Text>
+      <Button title="Consultar" onPress={aoConsultar} />
     </View>
   );
 }
 
 export default function App() {
+  function consultarSaoPaulo() {
+    console.log('Consulta solicitada: São Paulo');
+  }
+
+  function consultarCampinas() {
+    console.log('Consulta solicitada: Campinas');
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.painel}>
         <Text style={styles.titulo}>Clima</Text>
         <View style={styles.lista}>
-          <CartaoClima cidade="São Paulo" temperatura={26} />
-          <CartaoClima cidade="Campinas" temperatura={28} />
+          <CartaoClima cidade="São Paulo" temperatura={26} aoConsultar={consultarSaoPaulo} />
+          <CartaoClima cidade="Campinas" temperatura={28} aoConsultar={consultarCampinas} />
         </View>
       </View>
     </View>

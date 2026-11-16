@@ -217,24 +217,33 @@ Não. No próximo passo entram as props.`,
         id: 'mbb-react-props',
         menu: '4. Props',
         title: '4 — Passando dados com props',
-        objective: 'Permitir que o mesmo componente receba valores diferentes.',
+        objective: 'Reutilizar um cartão com dados diferentes e passar uma função de pai para filho por props.',
         code: `import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Button, View, Text, StyleSheet } from 'react-native';
 
-function CartaoClima({ cidade, temperatura }) {
+function CartaoClima({ cidade, temperatura, aoConsultar }) {
   return (
     <View style={styles.cartao}>
       <Text style={styles.cidade}>{cidade}</Text>
       <Text style={styles.temperatura}>{temperatura} °C</Text>
+      <Button title="Consultar" onPress={aoConsultar} />
     </View>
   );
 }
 
 export default function App() {
+  function consultarSaoPaulo() {
+    console.log('Consulta solicitada: São Paulo');
+  }
+
+  function consultarCampinas() {
+    console.log('Consulta solicitada: Campinas');
+  }
+
   return (
     <View style={styles.container}>
-      <CartaoClima cidade="São Paulo" temperatura={26} />
-      <CartaoClima cidade="Campinas" temperatura={28} />
+      <CartaoClima cidade="São Paulo" temperatura={26} aoConsultar={consultarSaoPaulo} />
+      <CartaoClima cidade="Campinas" temperatura={28} aoConsultar={consultarCampinas} />
     </View>
   );
 }
@@ -245,15 +254,14 @@ const styles = StyleSheet.create({
   cidade: { fontSize: 18, fontWeight: 'bold' },
   temperatura: { fontSize: 26, marginTop: 8 },
 });`,
-        addedTitle: 'Trecho em foco',
-        added: `function CartaoClima({ cidade, temperatura }) { ... }
+        addedTitle: 'Dados e callback passam pelo mesmo caminho',
+        added: `// App passa dados e uma função ao CartaoClima.
+<CartaoClima cidade="Campinas" temperatura={28} aoConsultar={consultarCampinas} />
 
-<CartaoClima cidade="São Paulo" temperatura={26} />
-<CartaoClima cidade="Campinas" temperatura={28} />
-
-props = informações que o componente recebe de fora.`,
-        preview: phonePreview('Clima', '<div style="display:grid;gap:10px;"><div style="border:1px solid #cbd5e1;border-radius:10px;padding:12px;"><b>São Paulo</b><div>26 °C</div></div><div style="border:1px solid #cbd5e1;border-radius:10px;padding:12px;"><b>Campinas</b><div>28 °C</div></div></div>'),
-        note: 'Agora a mesma peça visual pode ser reutilizada com dados diferentes.'
+// Dentro do cartão, onPress recebe a função que será chamada no toque.
+<Button title="Consultar" onPress={aoConsultar} />`,
+        preview: phonePreview('Clima', '<div style="display:grid;gap:8px;"><div style="border:1px solid #cbd5e1;padding:8px;border-radius:10px;"><b>São Paulo</b><div>26 °C</div><div style="color:#174b86;">CONSULTAR</div></div><div style="border:1px solid #cbd5e1;padding:8px;border-radius:10px;"><b>Campinas</b><div>28 °C</div><div style="color:#174b86;">CONSULTAR</div></div></div>'),
+        note: 'O botão registra a cidade no console do Snack. Na etapa 5, a função recebida pelo cartão também vai atualizar o state do pai.'
       },
       mkPage(
         'mbb-react-props-state',
@@ -277,6 +285,7 @@ props = informações que o componente recebe de fora.`,
             <pre><code>const [nota1, setNota1] = useState('');
 &lt;TextInput value={nota1} onChangeText={setNota1} /&gt;</code></pre>
           </section>
+          <p>Na prática abaixo, cartão e resumo precisam exibir a mesma temperatura. O pai guarda o dado e passa o valor aos dois, além da função <code>aumentar</code> ao cartão. No toque, o cartão chama a função. O pai pede a atualização com <code>setTemperatura</code> e o React renderiza novamente os componentes com o valor novo. Mover o state compartilhado para o pai comum é chamado de <strong>elevação de estado</strong>.</p>
           <details>
             <summary>Confira quem guarda cada valor</summary>
             <p>Se o formulário passar <code>nota1</code> para um cartão, o formulário atualiza a nota com <code>setNota1</code> e o cartão exibe o valor que recebeu. Na <a href="#rn-state-state-7-state">etapa 12</a>, você poderá ver a nota mudar enquanto digita.</p>
@@ -894,10 +903,14 @@ ref mantém uma referência sem provocar renderização quando current muda.`;
       title: 'Complemento — avançar o foco para o próximo campo',
       objective: 'Ver uma segunda aplicação prática de referência no formulário.',
       code: `import React, { useRef } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { Button, View, Text, TextInput, StyleSheet } from 'react-native';
 
 export default function App() {
   const campoNota2 = useRef(null);
+
+  function avancar() {
+    campoNota2.current?.focus();
+  }
 
   return (
     <View style={styles.container}>
@@ -908,7 +921,8 @@ export default function App() {
           accessibilityLabel="Nota 1"
           placeholder="Nota 1"
           returnKeyType="next"
-          onSubmitEditing={() => campoNota2.current?.focus()}
+          submitBehavior="submit"
+          onSubmitEditing={avancar}
         />
         <TextInput
           ref={campoNota2}
@@ -917,6 +931,7 @@ export default function App() {
           placeholder="Nota 2"
           keyboardType="numeric"
         />
+        <Button title="Ir para Nota 2" onPress={avancar} />
       </View>
     </View>
   );
@@ -956,16 +971,16 @@ const styles = StyleSheet.create({
   },
 });`,
       addedTitle: 'Ao enviar a primeira nota',
-      added: 'Pressione Enter ou Próximo na primeira entrada. onSubmitEditing chama focus() na referência do segundo campo.',
-      preview: phonePreview('Notas', '<div style="border:1px solid #cbd5e1;padding:10px;border-radius:8px;margin-bottom:10px;">Nota 1</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:8px;">Nota 2</div>', 'No Snack, confirme onde o cursor aparece.'),
-      note: 'O envio do campo é o gatilho. Use Enter no teclado físico ou Próximo no teclado do dispositivo quando estiver disponível.'
+      added: 'returnKeyType sugere a ação Próximo ao teclado. onSubmitEditing chama avancar quando a primeira entrada é enviada. Em React Native nativo, submitBehavior="submit" envia sem pedir a perda automática do foco. avancar direciona o foco para a Nota 2.',
+      preview: phonePreview('Notas', '<div style="border:1px solid #cbd5e1;padding:10px;border-radius:8px;margin-bottom:10px;">Nota 1</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:8px;">Nota 2</div><div style="margin-top:10px;color:#174b86;text-align:center;">IR PARA NOTA 2</div>', 'No Snack, confirme onde o cursor aparece.'),
+      note: 'No Web, use Enter. No Android e no iOS, o teclado pode mostrar Próximo, um ícone ou outra tecla de ação conforme o dispositivo. O primeiro campo usa o teclado padrão para favorecer o envio. Se a ação estiver indisponível, use Ir para Nota 2.'
     };
 
     if (finalMedia) {
       finalMedia.menu = '29. Média final';
       finalMedia.title = 'Média Escolar — consolidação de state, eventos e ref';
       finalMedia.objective = 'Revisar o aplicativo completo usando foco seguro no primeiro campo.';
-      finalMedia.note = 'A prévia mostra o resultado no limite de aprovação. O próximo problema será sincronizar o componente com algo externo.';
+      finalMedia.note = 'Calcule com 6 e 6 na prévia interativa para observar o limite de aprovação. Em seguida, use Limpar para verificar o retorno à Nota 1.';
     }
 
     const estiloLaboratorio = `const styles = StyleSheet.create({
@@ -1161,9 +1176,21 @@ Leia os três formatos. Sem o segundo argumento, o Effect é executado após cad
         addedTitle: 'Um teste de desenvolvimento para o cleanup',
         added: `O exemplo começa com o temporizador desmontado. O botão Mostrar monta o filho dentro de StrictMode. Em um ambiente de desenvolvimento que aplica a verificação, o registro pode mostrar setup → cleanup → setup antes da primeira batida. O segundo setup deixa apenas um intervalo ativo.
 
-StrictMode na raiz da aplicação permite observar a verificação extra já na primeira montagem. O que aparece com uma fronteira interna depende do ambiente e do momento da montagem. Se seu preview mostrar apenas um setup, oculte e mostre o temporizador para conferir separadamente que cada cleanup corresponde ao intervalo anterior. A remontagem pelo botão é uma ação do usuário.
+No Snack, toque em Mostrar, aguarde uma batida e toque em Ocultar. Confira o último cleanup. Mostre novamente e veja a contagem recomeçar, avançando de um em um. A fronteira interna do exemplo e a configuração do host podem produzir apenas um setup. Ocultar e mostrar testa a limpeza em qualquer configuração.
 
-Em produção, o React não executa essa verificação extra. O cleanup normal continua sendo executado ao desmontar ou antes de sincronizar de novo.`,
+Para reproduzir a verificação na montagem inicial, use um projeto Expo local com o template blank. Coloque o exemplo em App.js, troque apenas useState(false) de visivel por useState(true) e defina "main": "index.js" em package.json. Crie index.js com:
+
+import React, { StrictMode } from 'react';
+import { registerRootComponent } from 'expo';
+import App from './App';
+
+function Raiz() {
+  return <StrictMode><App /></StrictMode>;
+}
+
+registerRootComponent(Raiz);
+
+Inicie em desenvolvimento com npx expo start. Na montagem inicial, procure setup → cleanup → setup. A contagem deve avançar de um em um. Ao ocultar, deve surgir mais um cleanup e as batidas devem parar. A execução adicional pertence ao ambiente de desenvolvimento. Em uma compilação de produção, espere um setup na montagem e o cleanup ao desmontar.`,
         preview: previaTemporizador(false, 'Aguardando setup'),
         note: 'A prévia mostra a tela antes de montar o temporizador. Execute o App.js em desenvolvimento para observar as mensagens.'
       },
@@ -1347,6 +1374,16 @@ campoTarefa.current?.focus();</code></pre>
             </ol>
             <p><strong>Conferência.</strong> 1. Evento e state. 2. Evento e ref. 3. Cálculo a partir da lista no state. 4. Cleanup do Effect.</p>
           </details>
+          <section>
+            <h4>O cartão solicita, e o pai atualiza a lista</h4>
+            <p>Na prática abaixo, o pai guarda o array de tarefas em <a href="#rn-state-state-7-state">state (etapa 12)</a>. O cartão recebe a tarefa e funções de concluir e remover. Ao tocar, ele chama a função com o <a href="#rn-state-mbb-react-key">ID estável (etapa 18)</a>. O pai usa esse ID para decidir o que muda e passa a nova lista à <a href="#rn-state-mbb-react-flatlist">FlatList (etapa 21)</a>.</p>
+            <p>Os dados descem por props. O filho comunica a ação chamando a função que recebeu. A atualização fica com o dono do state. Esse percurso mantém o fluxo unidirecional e permite calcular o total de pendências usando a mesma lista.</p>
+          </section>
+          <section>
+            <h4>Como criar a próxima versão do state</h4>
+            <p>Para incluir, <code>[...atuais, tarefa]</code> cria um array com os itens anteriores e o novo. Para concluir, <a href="#rn-state-mbb-react-map"><code>map()</code> (etapa 17)</a> cria outro array e <code>{ ...tarefa, concluida: true }</code> cria um objeto novo só para o ID escolhido. Para remover, <code>filter()</code> devolve um novo array sem o item escolhido.</p>
+            <p>Em Testar mutação direta, o código altera um objeto e reapresenta o mesmo array a <code>setTarefas</code>. A referência permanece igual e o React pode deixar de renderizar. Uma atualização posterior pode expor a alteração inesperadamente. Reinicie e compare com o botão Concluir 2, que entrega uma nova referência e atualiza a tela no toque.</p>
+          </section>
           <p>Leve essas decisões para o <a href="#rn-state-exercicios-state">projeto da etapa 99</a>. Se o app passar a buscar dados de um serviço ao abrir uma tela, o próximo módulo explica como o aplicativo faz o pedido e interpreta a resposta.</p>
         </div>`
       )
@@ -1383,7 +1420,7 @@ campoTarefa.current?.focus();</code></pre>
       <h4>Construa em três passagens</h4>
       <ol>
         <li><strong>Da tarefa ao cartão.</strong> Crie um <code>CartaoTarefa</code> reutilizável. Comece exibindo duas tarefas fixas e passe o título e o estado de conclusão por <a href="#rn-state-mbb-react-props">props (etapa 4)</a>. Use texto para distinguir “Pendente” de “Concluída”.</li>
-        <li><strong>Do cartão à lista.</strong> Guarde as tarefas em <code>useState</code> e exiba-as com <a href="#rn-state-mbb-react-flatlist">FlatList (etapa 21)</a>. Gere um <a href="#rn-state-mbb-react-key">ID estável (etapa 18)</a> ao adicionar cada tarefa e use-o como chave. Rejeite títulos vazios ou formados só por espaços. Passe ao cartão a ação de concluir para que apenas a tarefa tocada mude, usando <a href="#rn-state-mbb-react-pressable">Pressable (etapa 23)</a>.</li>
+        <li><strong>Do cartão à lista.</strong> Guarde as tarefas em <code>useState</code> no componente pai e exiba-as com <a href="#rn-state-mbb-react-flatlist">FlatList (etapa 21)</a>. Gere um <a href="#rn-state-mbb-react-key">ID estável (etapa 18)</a> ao adicionar cada tarefa e use-o como chave. Rejeite títulos vazios ou formados só por espaços. Ao pressionar o cartão, chame a função <code>aoConcluir</code> que ele recebeu por props e passe o ID. O pai usa <code>map()</code> e spread para criar um novo array e um novo objeto apenas para esse ID. Use spread ao incluir e consulte a <a href="#rn-state-mbb-hooks-resumo">prática da etapa 39</a> para conferir a atualização imutável.</li>
         <li><strong>Da lista ao fluxo de uso.</strong> Depois de adicionar uma tarefa válida, limpe o campo e devolva o foco com <a href="#rn-state-state-11-useref">useRef (etapa 27)</a>. Use uma mensagem para orientar a primeira inclusão quando a lista estiver vazia.</li>
       </ol>
 
@@ -1393,9 +1430,16 @@ campoTarefa.current?.focus();</code></pre>
         <li>Adicione duas tarefas chamadas “Revisar Hooks”. Após cada inclusão, digite de novo sem tocar no campo. Conclua só a segunda e verifique que a primeira continua pendente.</li>
         <li>Adicione tarefas até ter de rolar a lista. Chegue à última, volte e confira se as duas primeiras ainda têm as situações esperadas.</li>
       </ul>
+      <h4>Critérios para aceitar a entrega</h4>
+      <ul>
+        <li>O título inválido gera mensagem; a lista vazia orienta o aluno; cada inclusão válida limpa o campo e devolve seu foco.</li>
+        <li>As duas tarefas de mesmo título permanecem identificáveis pelo comportamento. Ao tocar na segunda, apenas ela muda. O componente pai controla a lista e o cartão chama uma função recebida do pai com o ID correto.</li>
+        <li>As inclusões e conclusões criam novas versões do state. Confirme no código que a inclusão usa um array novo e a conclusão preserva os demais itens.</li>
+      </ul>
+      <p><strong>Se o teste falhar.</strong> Confira o ID enviado pelo cartão e o usado em <code>keyExtractor</code>. Se a tela deixar de acompanhar a alteração, verifique se o setter recebeu um array novo e um objeto novo para a tarefa concluída. Se a ação ocorrer ao abrir a lista, revise a forma de passar a função a <code>onPress</code>.</p>
 
       <h4>Adapte o app a uma nova necessidade</h4>
-      <p>Depois da primeira versão, escolha uma melhoria, como filtrar as pendentes ou exibir quantas faltam. Explique quem precisa dela, descreva o resultado esperado e escreva um teste que um colega consiga repetir.</p>
+      <p>Depois da primeira versão, escolha uma melhoria, como filtrar as pendentes, exibir quantas faltam ou remover uma tarefa usando <code>filter()</code>. Explique quem precisa dela, descreva o resultado esperado e escreva um teste que um colega consiga repetir.</p>
 
       <p><strong>Desafio avançado — temporizador de estudo.</strong> Adicione um componente que conte os segundos enquanto estiver visível. Use <a href="#rn-state-mbb-effect-cleanup"><code>useEffect</code> com limpeza do intervalo (etapa 32)</a>. Registre no console cada avanço e o encerramento. Oculte o componente, espere dois segundos e confirme que os avanços param. Mostre-o de novo e confira a contagem voltando a avançar uma vez por segundo.</p>
       <p><strong>Entrega.</strong> Envie o link do Snack e, para cada teste, registre o que fez, o que esperava e o que observou. Explique por que a lista usa state e por que o foco usa ref. Se fizer o temporizador, inclua a evidência da limpeza.</p>
@@ -1417,6 +1461,183 @@ campoTarefa.current?.focus();</code></pre>
       ...effectSteps,
       ...(exercise ? [exercise] : [])
     ];
+
+    const praticas = {
+      'mbb-react-props-state': {
+        title: 'Prática no Snack — uma temperatura para duas partes da tela',
+        instruction: 'Preveja o que acontece ao tocar em Aumentar temperatura dentro do cartão. Execute e confira o cartão e o resumo. Depois toque em Restaurar no componente pai e compare as duas leituras.',
+        code: `import React, { useState } from 'react';
+import { Button, Text, View, StyleSheet } from 'react-native';
+
+function CartaoClima({ temperatura, aoAumentar }) {
+  return (
+    <View>
+      <Text>Campinas: {temperatura} °C</Text>
+      <Button title="Aumentar temperatura" onPress={aoAumentar} />
+    </View>
+  );
+}
+
+function ResumoClima({ temperatura }) {
+  return <Text>Resumo: {temperatura} °C</Text>;
+}
+
+export default function App() {
+  const [temperatura, setTemperatura] = useState(28);
+
+  function aumentar() {
+    setTemperatura(temperatura + 1);
+  }
+
+  function restaurar() {
+    setTemperatura(28);
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.painel}>
+        <Text style={styles.titulo}>Clima</Text>
+        <CartaoClima temperatura={temperatura} aoAumentar={aumentar} />
+        <ResumoClima temperatura={temperatura} />
+        <Button title="Restaurar" onPress={restaurar} />
+      </View>
+    </View>
+  );
+}
+
+${estiloLaboratorio}`
+      },
+      'mbb-react-botoes-compare': {
+        title: 'Prática no Snack — três controles, uma contagem',
+        instruction: 'Toque uma vez em cada controle e confira o total 3. Segure TouchableOpacity e Pressable para comparar a resposta visual. Solte o Pressable e confira que o último controle e o total continuam registrados.',
+        code: `import React, { useState } from 'react';
+import { Button, TouchableOpacity, Pressable, Text, View, StyleSheet } from 'react-native';
+
+export default function App() {
+  const [total, setTotal] = useState(0);
+  const [ultimo, setUltimo] = useState('Nenhum');
+
+  function contar(origem) {
+    setTotal(atual => atual + 1);
+    setUltimo(origem);
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.painel}>
+        <Text style={styles.titulo}>Total: {total}</Text>
+        <Text>Último controle: {ultimo}</Text>
+        <Button title="Button" onPress={() => contar('Button')} />
+        <TouchableOpacity
+          accessibilityRole="button"
+          style={styles.controle}
+          activeOpacity={0.55}
+          onPress={() => contar('TouchableOpacity')}
+        >
+          <Text style={styles.rotulo}>TouchableOpacity</Text>
+        </TouchableOpacity>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Pressable"
+          style={({ pressed }) => [styles.controle, pressed && styles.pressionado]}
+          onPress={() => contar('Pressable')}
+        >
+          {({ pressed }) => <Text style={styles.rotulo}>{pressed ? 'Pressionando' : 'Pressable'}</Text>}
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 },
+  painel: { width: '100%', maxWidth: 320, gap: 12, padding: 20, backgroundColor: '#EEF4FB' },
+  titulo: { fontSize: 22, fontWeight: 'bold' },
+  controle: { padding: 12, backgroundColor: '#174B86', borderRadius: 8 },
+  pressionado: { backgroundColor: '#166534' },
+  rotulo: { color: '#FFFFFF', textAlign: 'center' },
+});`
+      },
+      'mbb-hooks-resumo': {
+        title: 'Prática no Snack — atualizar tarefas pelo ID',
+        instruction: 'Primeiro toque em Testar mutação direta e veja se a tela muda. Reinicie o exemplo. Depois conclua apenas a segunda tarefa de nome igual, acrescente uma nova e remova a primeira. Compare a lista e o total de pendências a cada toque.',
+        code: `import React, { useRef, useState } from 'react';
+import { Button, FlatList, Text, View, StyleSheet } from 'react-native';
+
+function criarTarefas() {
+  return [
+    { id: '1', titulo: 'Revisar Hooks', concluida: false },
+    { id: '2', titulo: 'Revisar Hooks', concluida: false },
+  ];
+}
+
+function CartaoTarefa({ tarefa, aoConcluir, aoRemover }) {
+  return (
+    <View style={styles.item}>
+      <Text>{tarefa.titulo} · {tarefa.id} · {tarefa.concluida ? 'Concluída' : 'Pendente'}</Text>
+      <Button title={'Concluir ' + tarefa.id} onPress={() => aoConcluir(tarefa.id)} />
+      <Button title={'Remover ' + tarefa.id} onPress={() => aoRemover(tarefa.id)} />
+    </View>
+  );
+}
+
+export default function App() {
+  const [tarefas, setTarefas] = useState(criarTarefas);
+  const proximoId = useRef(3);
+  const pendentes = tarefas.filter(tarefa => !tarefa.concluida).length;
+
+  function adicionar() {
+    const tarefa = { id: String(proximoId.current), titulo: 'Nova revisão', concluida: false };
+    proximoId.current += 1;
+    setTarefas(atuais => [...atuais, tarefa]);
+  }
+
+  function concluir(id) {
+    setTarefas(atuais => atuais.map(tarefa =>
+      tarefa.id === id ? { ...tarefa, concluida: true } : tarefa
+    ));
+  }
+
+  function remover(id) {
+    setTarefas(atuais => atuais.filter(tarefa => tarefa.id !== id));
+  }
+
+  function testarMutacaoDireta() {
+    if (tarefas.length === 0) return;
+    // Contraexemplo intencional. Reinicie para seguir com a prática.
+    tarefas[0].concluida = true;
+    setTarefas(tarefas);
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.titulo}>Pendentes: {pendentes}</Text>
+      <Button title="Adicionar nova revisão" onPress={adicionar} />
+      <Button title="Testar mutação direta" onPress={testarMutacaoDireta} />
+      <Button title="Reiniciar exemplo" onPress={() => setTarefas(criarTarefas())} />
+      <FlatList
+        data={tarefas}
+        keyExtractor={tarefa => tarefa.id}
+        renderItem={({ item }) => (
+          <CartaoTarefa tarefa={item} aoConcluir={concluir} aoRemover={remover} />
+        )}
+        ListEmptyComponent={<Text>Nenhuma tarefa na lista.</Text>}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 20, gap: 8, backgroundColor: '#EEF4FB' },
+  titulo: { fontSize: 22, fontWeight: 'bold' },
+  item: { padding: 12, marginBottom: 8, gap: 6, backgroundColor: '#FFFFFF' },
+});`
+      }
+    };
+
+    for (const etapa of modules.state.steps) {
+      if (praticas[etapa.id]) etapa.snackPractice = praticas[etapa.id];
+    }
   }
 
   if (modules.apiCep) {
