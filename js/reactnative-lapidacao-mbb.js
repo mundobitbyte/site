@@ -212,15 +212,6 @@ O map() percorre os dados e devolve componentes para a interface.`;
       mapStep.note = 'A mesma ideia de array e map() estudada em JavaScript agora produz elementos visuais no React.';
     }
 
-    const keyStep = reactModule.steps.find(s => s.id === 'mbb-react-key');
-    if (keyStep) {
-      keyStep.menu = 'Identificar itens (key)';
-      keyStep.title = 'Identificando cada item da lista com key';
-      keyStep.kicker = 'Cada item precisa ter identidade';
-      keyStep.lead = 'Quando vários componentes são criados a partir de uma lista, o React precisa distinguir um item do outro entre as renderizações.';
-      keyStep.highlight = 'A propriedade key fornece uma identidade estável para cada item. Quando o dado já possui um id próprio, ele costuma ser a melhor escolha.';
-    }
-
     const scrollCompare = reactModule.steps.find(s => s.id === 'mbb-react-listas-compare');
     if (scrollCompare && Array.isArray(scrollCompare.boxes)) {
       scrollCompare.boxes = scrollCompare.boxes.map(([label, text]) =>
@@ -253,21 +244,6 @@ O map() percorre os dados e devolve componentes para a interface.`;
       pressed.menu = 'Toque ativo (pressed)';
       pressed.title = 'Mudando a aparência enquanto o botão está pressionado';
       pressed.objective = 'Usar o estado de toque pressed para alterar o estilo durante a interação.';
-    }
-
-    const refOptional = reactModule.steps.find(s => s.id === 'mbb-react-ref-avancar');
-    if (refOptional) {
-      refOptional.title = 'Complemento: avançando o foco para a Nota 2';
-      refOptional.objective = 'Mover o foco para o próximo campo quando a edição da primeira nota terminar.';
-      refOptional.addedTitle = 'Ao pressionar Avançar';
-      refOptional.added = `onSubmitEditing
--> é disparado quando a edição do primeiro campo é concluída.
-
-campoNota2.current?.focus()
--> coloca o cursor no segundo TextInput.
-
-É outra aplicação prática da mesma ideia de referência usada no botão Limpar.`;
-      refOptional.note = 'A referência permite controlar o foco do formulário sem transformar o foco em um state.';
     }
 
     const effectIntro = reactModule.steps.find(s => s.id === 'mbb-effect-intro');

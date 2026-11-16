@@ -16,13 +16,11 @@ Isso evita escrever manualmente um cartão para cada cidade. Se os dados mudarem
 
 O React também precisa identificar cada elemento dessa sequência. Por isso aparece key={item.id}. A próxima etapa aprofunda essa necessidade.`],
 
-    'mbb-react-scrollview': ['ScrollView resolve o problema de conteúdo que ultrapassa a tela', `Quando aumentamos a quantidade de conteúdo, surge um limite físico: a tela do celular tem altura finita.
+    'mbb-react-scrollview': ['A janela de rolagem e os itens dentro dela', `A lista de cidades é maior que a área disponível. O style={styles.area} limita a altura da janela de rolagem. contentContainerStyle={styles.conteudo} ajusta a parte interna que leva os itens consigo durante a rolagem.
 
-ScrollView cria uma região rolável. Tudo o que colocamos como filho dentro dela passa a fazer parte desse conteúdo que continua para baixo.
+Role até Ribeirão Preto para conferir que os itens continuam abaixo da parte visível. Alterar paddingHorizontal aproxima ou afasta os nomes da borda, enquanto a altura da área permanece 135.
 
-contentContainerStyle estiliza o container interno que reúne os filhos da rolagem.
-
-Para conteúdo pequeno e controlado, ScrollView é simples e adequado. Quando o problema passa a ser uma lista grande ou dinâmica, FlatList entra por uma necessidade diferente.`],
+ScrollView é simples para conteúdo pequeno e controlado. O limite muda quando a lista cresce, o que prepara a escolha de FlatList.`],
 
     'mbb-react-flatlist': ['FlatList: quando o problema é uma lista de dados', `ScrollView mostrou como tornar uma área rolável. FlatList parte de outra necessidade: exibir uma coleção de dados que pode crescer.
 
@@ -32,37 +30,27 @@ CartaoClima continua sendo reutilizado. FlatList não substitui o componente: el
 
 É um bom exemplo de composição: os dados ficam no array, FlatList administra a lista e CartaoClima cuida de como cada item aparece.`],
 
-    'mbb-react-pressable': ['Pressable transforma uma área personalizada em interação', `Button resolve ações simples, mas às vezes queremos que um cartão inteiro, uma linha ou outra área personalizada responda ao toque.
+    'mbb-react-pressable': ['Pressable torna o cartão inteiro interativo', `A área do cartão, incluindo o texto São Paulo, recebe o toque. Pressable chama alternarDetalhes no onPress. A função muda detalhesVisiveis, e a condição no JSX decide se Temperatura: 26 °C aparece.
 
-Pressable envolve o conteúdo que deve ser interativo e recebe onPress.
+Toque de novo e confira que a temperatura desaparece. O mesmo cartão pode conter texto, imagens ou outros componentes. Na próxima prática, você também vai observar a aparência enquanto o toque está ativo.`],
 
-No exemplo, abrirDetalhes ainda apenas registra uma mensagem. O objetivo é separar duas responsabilidades: o cartão define a aparência; Pressable acrescenta comportamento de interação.
+    'mbb-react-pressed': ['O toque passa, a seleção fica', `Pressable fornece pressed ao callback de style. A expressão pressed && styles.botaoPressionado reduz a opacidade durante o toque. Ao soltar, a opacidade volta.
 
-Essa escolha faz sentido quando precisamos de mais controle visual e estrutural do que um Button pronto oferece.`],
+A variável selecionada pertence ao app e foi criada com useState. O onPress alterna a seleção depois que o toque é concluído. A cor selecionada e o texto Cidade selecionada ficam visíveis até um novo toque.
 
-    'mbb-react-pressed': ['O próprio estado do toque pode influenciar o estilo', `Pressable também informa se está sendo pressionado naquele instante. É daí que vem pressed.
-
-Em style={({ pressed }) => [...]}, pressed é fornecido pelo próprio Pressable. Enquanto o toque está ativo ele é verdadeiro; depois volta a ser falso.
-
-pressed && styles.botaoPressionado reaproveita a lógica condicional: o segundo estilo só entra quando a condição é verdadeira.
-
-A aparência passa a ser consequência do estado atual da interação, em vez de ser alterada manualmente por comandos separados.`],
+onPress espera receber uma função. A arrow () => adia a chamada do setter até o evento. A próxima etapa compara esse formato com chamar a função ao renderizar.`],
 
     'state-11-useref': ['useRef: acessar um elemento sem transformar isso em state', `O formulário já limpa os campos e esconde o resultado. Agora queremos devolver o cursor ao primeiro TextInput depois de tocar em Limpar. Esse problema não é um valor que precisa aparecer na interface; precisamos de uma referência ao próprio campo.
 
-useRef(null) cria a referência. ref={campoNota1} liga a referência ao TextInput. Depois, campoNota1.current?.focus() pede foco ao elemento referenciado.
+Como na etapa 12, o Hook é chamado no nível superior do componente. useRef(null) cria a referência. ref={campoNota1} liga a referência ao TextInput. Depois, campoNota1.current?.focus() pede foco ao elemento referenciado.
 
 current guarda o valor atual da referência. O ?. evita tentar executar focus() se a referência ainda não estiver disponível.
 
 Compare com useState: alterar state participa da renderização. Alterar current em uma ref não provoca uma nova renderização. Por isso useRef é adequado para foco e referências a elementos.`],
 
-    'mbb-react-ref-avancar': ['A mesma referência pode melhorar o fluxo entre campos', `Agora aplicamos useRef a uma situação de experiência do usuário: ao terminar a Nota 1, o foco avança para a Nota 2.
+    'mbb-react-ref-avancar': ['Do envio da primeira nota ao foco na segunda', `Na Nota 1, pressione Enter ou a tecla Próximo. onSubmitEditing recebe o evento de envio da entrada. O callback usa campoNota2.current?.focus() para mover o cursor ao segundo TextInput.
 
-A referência é ligada ao segundo TextInput. O evento onSubmitEditing do primeiro chama campoNota2.current?.focus().
-
-Perceba como conceitos diferentes trabalham juntos: o evento diz QUANDO agir; a ref informa QUAL elemento deve receber a ação; focus() executa a operação.
-
-Não precisamos criar state apenas para controlar esse foco.`],
+Digite em seguida para verificar onde o valor aparece. O ref indica qual campo recebe o foco. As bordas dos dois campos têm o mesmo estilo inicial.`],
 
     'state-12-final': ['Consolidação: várias peças formando um comportamento único', `A Média Escolar final reúne conceitos que foram apresentados separadamente.
 

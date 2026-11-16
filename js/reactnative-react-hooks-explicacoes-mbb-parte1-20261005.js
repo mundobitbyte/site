@@ -10,13 +10,11 @@ Quando aparecem {nome} e {pontos}, as chaves dizem ao JSX para usar naquele pont
 
 Uma boa leitura mental é: JavaScript prepara dados e regras; JSX descreve como essas informações aparecem na tela. JSX lembra HTML, mas aqui estamos usando componentes React Native dentro do código JavaScript.`],
 
-    'mbb-react-componente-titulo': ['Por que criar um componente próprio', `Poderíamos escrever o título diretamente dentro de App, mas conforme a tela cresce isso mistura responsabilidades.
+    'mbb-react-componente-titulo': ['Por que criar um componente próprio', `A função Titulo retorna o JSX de uma parte da interface. Como seu nome começa com maiúscula, React reconhece <Titulo /> como um componente personalizado. Troque o texto na função e observe que muda somente o título.
 
-A função Titulo transforma aquela parte da interface em uma peça com nome próprio. Como ela retorna JSX, depois podemos usá-la como <Titulo />. Componentes personalizados começam com letra maiúscula para serem reconhecidos como componentes React.
+Extensão com dois arquivos. No Snack, crie components/Titulo.js. No novo arquivo, importe React e importe Text e StyleSheet de 'react-native'. Mova a função Titulo e a definição styles.titulo para lá, dentro de um StyleSheet.create({ titulo: ... }). Escreva export default function Titulo() no início da declaração movida.
 
-No primeiro contato, manter Titulo no App.js ajuda a enxergar a ideia. Depois podemos mover a peça para components/Titulo.js e importá-la no App.js. A saída visual não muda; o que melhora é a organização.
-
-Não é preciso criar um arquivo para qualquer detalhe. A separação faz sentido quando uma parte ganha identidade própria, pode crescer ou ser reutilizada.`],
+Em App.js, remova a função local e a entrada titulo de styles. Acrescente import Titulo from './components/Titulo'; e mantenha <Titulo /> no JSX. Ao executar, o título e seu estilo devem aparecer como antes. O JS Essencial tem a prática de importação e exportação que sustenta esse passo.`],
 
     'mbb-react-cartao-fixo': ['Do componente simples para uma peça realmente útil', `CartaoClima reúne estrutura, conteúdo e estilo de uma parte da tela. Neste momento os valores São Paulo e 26 °C estão escritos dentro dele de propósito.
 
@@ -70,15 +68,13 @@ Até aqui estamos completando a camada visual. Falta guardar o que o usuário di
 
 É exatamente nesse ponto que state deixa de ser abstrato e passa a resolver uma necessidade concreta.`],
 
-    'state-7-state': ['useState: quando a interface precisa lembrar de um valor', `useState cria uma memória reativa para o componente.
+    'state-7-state': ['useState: quando a interface precisa lembrar de um valor', `Leia const [nota1, setNota1] = useState('') em três partes. nota1 é o valor atual, setNota1 é a função que pede uma atualização e '' é o valor inicial.
 
-Leia const [nota1, setNota1] = useState('') em três partes: nota1 é o valor atual; setNota1 é a função que o atualiza; '' é o valor inicial.
+No TextInput, value={nota1} mostra o valor atual e onChangeText={setNota1} atualiza o state. O Text temporário da prática depende do mesmo valor. Se você digitar 7, confira que ele mostra Nota digitada: 7.
 
-No TextInput, value={nota1} mostra o valor atual e onChangeText={setNota1} atualiza o state conforme o usuário digita.
+Regras dos Hooks deste módulo. Chame useState, useRef e useEffect no nível superior de componentes de função ou de Hooks personalizados. Deixe as chamadas antes de qualquer retorno antecipado. Colocá-las dentro de um if, laço ou função de evento quebra a regra, pois o React precisa reconhecer as chamadas durante a renderização.
 
-Quando setNota1 recebe um novo valor, React registra a mudança e renderiza novamente o que depende desse state.
-
-Pergunta prática: este valor pode mudar durante o uso e essa mudança precisa participar da interface? Se sim, state provavelmente entra na conversa.`],
+Ao ler function calcularMedia(), preveja onde deve ficar a chamada de useState. Declare o estado no início de App e use o setter dentro do evento. A etapa 13 mostra essa ligação na prática.`],
 
     'state-8-eventos': ['Eventos: ligando uma ação do usuário a uma função', `As notas já ficam guardadas no state. Agora precisamos escolher quando uma ação deve acontecer.
 
