@@ -524,7 +524,7 @@
 <section class="project mbb6-panel" id="b6-prep">
   <div class="projectHead"><span class="badge">Preparação</span><div><h2>Do primeiro programa ao circuito-base</h2><p>Monte uma vez e valide o LED antes de estudar a comunicação.</p></div></div>
   <div class="cards">
-    <article class="card wide mbb6-teste"><h3>Monte e confira o circuito</h3><ol><li>Com o <a href="https://wokwi.com/projects/new/esp32" target="_blank" rel="noopener">projeto ESP32 no Wokwi</a> aberto, selecione a aba <code>diagram.json</code>. Selecione todo o texto existente e cole o diagrama abaixo.</li><li>Na aba <code>sketch.ino</code>, substitua todo o texto pelo programa de piscar o LED. O Wokwi desenha a montagem descrita em <code>diagram.json</code>. O <code>sketch.ino</code> contém as instruções que o ESP32 simulado executa.</li><li>Clique no botão de iniciar (▶) na área da simulação. Aguarde a compilação e observe o LED na área do circuito. O Monitor Serial aparece junto à simulação por causa da configuração <code>"display": "always"</code> do diagrama. Antes de alterar arquivos em outra etapa, clique no botão de parar (■).</li></ol>
+    <article class="card wide mbb6-teste"><h3>Monte e confira o circuito</h3><ol><li>Mantenha o <a href="https://wokwi.com/projects/new/esp32" target="_blank" rel="noopener">projeto ESP32 no Wokwi</a> em outra aba. <strong>Aqui na apostila</strong>, clique em <strong>Copiar</strong> no <a href="#b6-prep-diagrama">quadro <code>diagram.json</code></a>. Isso copia o texto JSON entre <code>{</code> e <code>}</code>, que descreve as peças e os fios. <strong>No Wokwi</strong>, abra a aba <code>diagram.json</code>, clique dentro do editor, selecione todo o texto que já está ali e cole o novo. Na área do circuito, confirme que aparecem o ESP32, o LED vermelho, o resistor e os fios. O Wokwi desenha a montagem ao ler o arquivo.</li><li>Na aba <code>sketch.ino</code>, substitua todo o texto pelo programa de piscar o LED. O Wokwi desenha a montagem descrita em <code>diagram.json</code>. O <code>sketch.ino</code> contém as instruções que o ESP32 simulado executa.</li><li>Clique no botão de iniciar (▶) na área da simulação. Aguarde a compilação e observe o LED na área do circuito. O Monitor Serial aparece junto à simulação por causa da configuração <code>"display": "always"</code> do diagrama. Antes de alterar arquivos em outra etapa, clique no botão de parar (■).</li></ol>
     <figure class="circuitFigure" data-mbb-circuito="b6-prep"><img class="circuitPhoto" src="../img/arduino/esp32-led-gpio23.webp?v=20261008-2" alt="Diagrama do ESP32 ligado a um LED e a um resistor de 220 ohms pelo GPIO 23 e pelo GND." loading="lazy" decoding="async"><figcaption>Na montagem do arquivo, o GPIO 23 vai ao ânodo do LED. O cátodo passa pelo resistor de 220 Ω até o GND. O resistor limita a corrente.</figcaption></figure></article>
     <article class="card code wide">
       <h3>diagram.json <button type="button" onclick="copyCode('b6-prep-diagrama',this)" aria-label="Copiar diagram.json">Copiar</button></h3>
@@ -760,8 +760,8 @@ void loop() { delay(10); }</pre>
 <section class="project mbb6-panel" id="b6-3">
   <div class="projectHead"><span class="badge">6.3</span><div><h2>HTTP: pedidos e respostas na Web</h2><p>Observe um pedido real e sua resposta na pilha de rede do ESP32 simulado.</p></div></div>
   <div class="cards">
-    <article class="card wide"><h3>O cliente pede. O servidor atende.</h3><p>O cliente envia um pedido HTTP. O método <code>GET</code> solicita um recurso e o caminho indica qual. O servidor procura uma função que atenda aquele caminho. A primeira linha da resposta traz um código. <code>200</code> indica sucesso; <code>404</code> indica que o caminho não existe.</p><p>O ESP32 executa cliente e servidor no mesmo simulador. O cliente liga ao endereço <code>127.0.0.1</code>, que aponta para o próprio dispositivo. A resposta é HTTP de verdade. O caminho local permite praticar também o papel do servidor sem depender do gateway público. <code>WiFi.mode(WIFI_STA)</code> inicializa a interface, e o endereço local permite que cliente e servidor se comuniquem dentro do simulador.</p></article>
-    <article class="card wide"><h3>Faça no Wokwi</h3><p>Pare a simulação, cole o código desta etapa no <code>sketch.ino</code> e mantenha o <code>diagram.json</code> da preparação. Inicie e espere o Monitor Serial mostrar <code>Servidor iniciado. Envie L ou X.</code>. Digite os comandos no campo do Monitor Serial, um de cada vez, com <strong>Enter</strong>. O próprio código envia os pedidos HTTP. Leia os resultados nessa mesma tela do Wokwi.</p></article>
+    <article class="card wide"><h3>O cliente pede. O servidor atende.</h3><p>O cliente envia um pedido HTTP. O <strong>método</strong> indica a intenção. Nesta prática, <code>GET /estado</code> consulta o LED e <code>POST /ligar</code> pede que ele acenda. O <strong>caminho</strong> indica o recurso ou a ação. O servidor usa o método e o caminho para escolher o que executar. Na primeira linha da resposta, <code>200</code> indica sucesso e <code>404</code> indica que o recurso solicitado não foi encontrado.</p><p>O ESP32 executa cliente e servidor no mesmo simulador. O cliente liga ao endereço <code>127.0.0.1</code>, que aponta para o próprio dispositivo. A resposta é HTTP de verdade. O caminho local permite praticar também o papel do servidor sem depender do gateway público. <code>WiFi.mode(WIFI_STA)</code> inicializa a interface, e o endereço local permite que cliente e servidor se comuniquem dentro do simulador.</p></article>
+    <article class="card wide"><h3>Faça no Wokwi</h3><p>Pare a simulação, cole o código desta etapa no <code>sketch.ino</code> e mantenha o <code>diagram.json</code> da preparação. Inicie e espere o Monitor Serial mostrar <code>Servidor iniciado. Envie C, X ou L.</code>. Digite os comandos no campo do Monitor Serial, um de cada vez, com <strong>Enter</strong>. O próprio código envia os pedidos HTTP. Leia os resultados nessa mesma tela do Wokwi.</p></article>
     <article class="card code wide">
       <h3>sketch.ino — pedido e resposta HTTP <button type="button" onclick="copyCode('b6-3-client-wokwi-code',this)" aria-label="Copiar sketch.ino — pedido e resposta HTTP">Copiar</button></h3>
       <pre id="b6-3-client-wokwi-code" tabindex="0" aria-label="sketch.ino — pedido e resposta HTTP">#include &lt;WiFi.h&gt;
@@ -770,18 +770,21 @@ void loop() { delay(10); }</pre>
 const int PINO_LED = 23;
 WebServer servidor(80);
 WiFiClient cliente;
+bool ledLigado = false;
 bool aguardando = false;
 unsigned long inicioPedido = 0;
 
-void pedir(const char* caminho) {
+void pedir(const char* metodo, const char* caminho) {
   if (aguardando) return;
   if (!cliente.connect(IPAddress(127, 0, 0, 1), 80)) {
     Serial.println("Falha: servidor local indisponivel.");
     return;
   }
 
-  Serial.printf("Pedido: GET %s\n", caminho);
-  cliente.printf("GET %s HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n", caminho);
+  Serial.printf("Pedido: %s %s\n", metodo, caminho);
+  const char* tamanho = strcmp(metodo, "POST") == 0 ? "Content-Length: 0\r\n" : "";
+  cliente.printf("%s %s HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n%s\r\n",
+                 metodo, caminho, tamanho);
   inicioPedido = millis();
   aguardando = true;
 }
@@ -791,7 +794,11 @@ void setup() {
   pinMode(PINO_LED, OUTPUT);
   digitalWrite(PINO_LED, LOW);
   WiFi.mode(WIFI_STA);
-  servidor.on("/ligar", []() {
+  servidor.on("/estado", HTTP_GET, []() {
+    servidor.send(200, "text/plain", ledLigado ? "LED ligado" : "LED apagado");
+  });
+  servidor.on("/ligar", HTTP_POST, []() {
+    ledLigado = true;
     digitalWrite(PINO_LED, HIGH);
     servidor.send(200, "text/plain", "LED ligado");
   });
@@ -799,7 +806,7 @@ void setup() {
     servidor.send(404, "text/plain", "Rota inexistente");
   });
   servidor.begin();
-  Serial.println("Servidor iniciado. Envie L ou X.");
+  Serial.println("Servidor iniciado. Envie C, X ou L.");
 }
 
 void loop() {
@@ -819,40 +826,43 @@ void loop() {
 
   if (Serial.available()) {
     const char comando = Serial.read();
-    if (comando == 'L') pedir("/ligar");
-    if (comando == 'X') pedir("/ausente");
+    if (comando == 'C') pedir("GET", "/estado");
+    if (comando == 'X') pedir("GET", "/ausente");
+    if (comando == 'L') pedir("POST", "/ligar");
   }
   delay(10);
 }</pre>
     </article>
     <article class="card wide mbb6-teste">
       <h3>Como saber se deu certo</h3>
-      <p>Comece com o LED apagado. Envie <code>X</code> primeiro. Espere o separador <code>---</code> no Monitor Serial e só então envie <code>L</code>.</p>
+      <p>Comece com o LED apagado. No Monitor Serial, envie <code>C</code>, <code>X</code>, <code>L</code> e <code>C</code> novamente, nessa ordem. Pressione <strong>Enter</strong> após cada letra e espere o separador <code>---</code> antes da próxima.</p>
       <div class="mbb6-table-scroll">
-        <table aria-label="Resultados dos dois pedidos HTTP">
+        <table aria-label="Pedidos HTTP e resultados na ordem do teste">
           <thead><tr><th scope="col">Envie</th><th scope="col">Confira no Wokwi</th></tr></thead>
           <tbody>
+            <tr><th scope="row"><code>C</code></th><td><strong>Serial:</strong> <code>Pedido: GET /estado</code>, <code>HTTP/1.1 200 OK</code> e <code>LED apagado</code>.<br><strong>LED:</strong> continua apagado.</td></tr>
             <tr><th scope="row"><code>X</code></th><td><strong>Serial:</strong> <code>Pedido: GET /ausente</code>, seguido de <code>HTTP/1.1 404 Not Found</code>. No corpo aparece <code>Rota inexistente</code>.<br><strong>LED:</strong> continua apagado.</td></tr>
-            <tr><th scope="row"><code>L</code></th><td><strong>Serial:</strong> <code>Pedido: GET /ligar</code>, seguido de <code>HTTP/1.1 200 OK</code>. No corpo aparece <code>LED ligado</code>.<br><strong>LED:</strong> acende.</td></tr>
+            <tr><th scope="row"><code>L</code></th><td><strong>Serial:</strong> <code>Pedido: POST /ligar</code>, <code>HTTP/1.1 200 OK</code> e <code>LED ligado</code>.<br><strong>LED:</strong> acende.</td></tr>
+            <tr><th scope="row"><code>C</code></th><td><strong>Serial:</strong> <code>Pedido: GET /estado</code>, <code>HTTP/1.1 200 OK</code> e <code>LED ligado</code>.<br><strong>LED:</strong> continua aceso.</td></tr>
           </tbody>
         </table>
       </div>
-      <p>O <code>404</code> faz parte do teste. Ele mostra que o servidor recebeu o pedido, respondeu e informou que o caminho solicitado não existe. O <code>200</code> junto com o LED aceso confirma que a rota <code>/ligar</code> executou a ação.</p>
+      <p>O <code>404</code> faz parte do teste. O servidor recebeu o pedido e respondeu que a rota <code>/ausente</code> não existe. As duas consultas retornam <code>200</code>, cada uma com o estado daquele momento. O LED muda de estado no <code>POST /ligar</code>. É por isso que vale conferir o código de status, o conteúdo e o circuito juntos.</p>
       <h4>O que são todas essas linhas no Monitor Serial?</h4>
       <ol>
-        <li><strong>Pedido:</strong> <code>Pedido: GET /ligar</code> é o registro que o cliente imprime antes de enviar o pedido. <code>GET</code> é o método HTTP e <code>/ligar</code> é o caminho solicitado.</li>
+        <li><strong>Pedido:</strong> <code>Pedido: POST /ligar</code> é o registro que o cliente imprime antes de enviar o pedido. <code>POST</code> é o método HTTP e <code>/ligar</code> é o caminho. Esse pedido leva <code>Content-Length: 0</code> porque o próprio caminho já identifica a ação e o pedido tem corpo vazio.</li>
         <li><strong>Status da resposta:</strong> a primeira linha que começa com <code>HTTP/1.1</code> vem do servidor. Leia o número para descobrir o resultado do pedido.</li>
         <li><strong>Cabeçalhos:</strong> <code>Content-Type: text/plain</code> informa que o conteúdo é texto simples. <code>Content-Length</code>, quando exibido, indica o tamanho do corpo em bytes. A linha vazia separa os cabeçalhos do corpo.</li>
-        <li><strong>Corpo:</strong> depois da linha vazia, leia <code>LED ligado</code> ou <code>Rota inexistente</code>. A linha <code>---</code> é uma marca que o nosso programa imprime quando termina de ler a resposta.</li>
+        <li><strong>Corpo:</strong> depois da linha vazia, leia <code>LED apagado</code>, <code>LED ligado</code> ou <code>Rota inexistente</code>. A linha <code>---</code> é uma marca que o nosso programa imprime quando termina de ler a resposta.</li>
       </ol>
-      <p><strong>Se aparecerem tags como <code>&lt;html&gt;</code> ou <code>&lt;body&gt;</code>:</strong> elas descrevem a estrutura de uma página. O Monitor Serial mostra os caracteres como foram recebidos. Um navegador interpreta essas tags para desenhar uma página. Neste exercício, o corpo esperado é texto simples. Confira o <code>Content-Type</code>. Na aba do Wokwi, pare a simulação, cole de novo o <code>sketch.ino</code> desta etapa, reinicie e repita <code>X</code> e <code>L</code>. Um site aberto na barra de endereço do navegador não faz parte do teste.</p>
-      <p class="mbb6-checkpoint"><strong>Na placa física.</strong> Imagine um ESP32 conectado ao roteador com IP <code>192.168.1.50</code> e rodando um servidor HTTP que acende um LED. Em um computador na mesma rede, você poderia abrir <code>http://192.168.1.50/ligar</code>. O navegador faria o <code>GET</code>. Se a rota devolvesse <code>Content-Type: text/html</code> e um corpo com <code>&lt;h1&gt;LED ligado&lt;/h1&gt;</code>, você veria <strong>LED ligado</strong> como título na página e a luz acesa na bancada. Quem imprimisse o corpo bruto em um monitor veria as tags. <strong>No Wokwi.</strong> O sketch faz o papel do navegador ao enviar o <code>GET</code> para <code>127.0.0.1</code>, dentro do ESP32 simulado. Você lê a resposta HTTP bruta, com corpo em texto simples, no Monitor Serial, e vê a luz no circuito virtual.</p>
+      <p><strong>Se aparecerem tags como <code>&lt;html&gt;</code> ou <code>&lt;body&gt;</code>:</strong> elas descrevem a estrutura de uma página. O Monitor Serial mostra os caracteres como foram recebidos. Um navegador interpreta essas tags para desenhar uma página. Neste exercício, o corpo esperado é texto simples. Confira o <code>Content-Type</code>. Na aba do Wokwi, pare a simulação, cole de novo o <code>sketch.ino</code> desta etapa, reinicie e repita <code>C</code>, <code>X</code>, <code>L</code> e <code>C</code>. Um site aberto na barra de endereço do navegador não faz parte do teste.</p>
+      <p class="mbb6-checkpoint"><strong>Na placa física.</strong> Imagine um ESP32 conectado ao roteador com IP <code>192.168.1.50</code> e rodando um servidor HTTP que acende um LED. Em um computador na mesma rede, você poderia abrir <code>http://192.168.1.50/estado</code> para consultar o LED com <code>GET</code>. Uma página de controle poderia ter um botão <strong>Ligar</strong> que envia <code>POST /ligar</code>. Se o servidor devolvesse <code>Content-Type: text/html</code> e um corpo com <code>&lt;h1&gt;LED ligado&lt;/h1&gt;</code>, você veria <strong>LED ligado</strong> como título na página e a luz acesa na bancada. Quem imprimisse o corpo bruto em um monitor veria as tags. <strong>No Wokwi.</strong> O próprio sketch faz o papel de cliente ao enviar <code>GET</code> e <code>POST</code> para <code>127.0.0.1</code>, dentro do ESP32 simulado. Você lê a resposta HTTP bruta, com corpo em texto simples, no Monitor Serial, e vê a luz no circuito virtual.</p>
       <p><strong>Se aparecer <code>Falha: servidor local indisponivel.</code>:</strong> observe se a mensagem de início apareceu e reinicie o sketch completo. Nesse caso, a conexão local falhou antes de existir uma resposta HTTP para ler.</p>
-      <p><code>cliente.connect()</code> abre a conexão na porta 80. <code>servidor.on()</code> associa a rota à ação e <code>servidor.handleClient()</code> atende o pedido. A cada passagem pelo <code>loop()</code>, o sketch atende o servidor e lê os bytes disponíveis no cliente. É por isso que as duas partes conseguem trabalhar no mesmo ESP32.</p>
+      <p><code>cliente.connect()</code> abre a conexão na porta 80. <code>servidor.on()</code> associa cada rota e método à sua função. <code>ledLigado</code> guarda o estado usado nas consultas, e <code>servidor.handleClient()</code> atende o pedido. A cada passagem pelo <code>loop()</code>, o sketch atende o servidor e lê os bytes disponíveis no cliente. É por isso que as duas partes conseguem trabalhar no mesmo ESP32.</p>
     </article>
     <article class="card wide">
       <h3>Terminei o HTTP. E agora?</h3>
-      <p>Quando conseguir apontar as duas linhas de status e dizer em qual pedido o LED acendeu, pare a simulação. Abra <a href="#b6-4">6.4 — Identificar um serviço por nome</a> na apostila. No Wokwi, você vai trocar o sketch e conferir o nome e a porta no Monitor Serial.</p>
+      <p>Quando conseguir apontar um <code>404</code> e explicar como o <code>GET</code> e o <code>POST</code> produziram respostas <code>200</code> com efeitos diferentes no LED, pare a simulação. Abra <a href="#b6-4">6.4 — Identificar um serviço por nome</a> na apostila. No Wokwi, você vai trocar o sketch e conferir o nome e a porta no Monitor Serial.</p>
     </article>
   </div>
 </section>
@@ -860,7 +870,7 @@ void loop() {
 <section class="project mbb6-panel" id="b6-4">
   <div class="projectHead"><span class="badge">6.4</span><div><h2>mDNS: um nome para encontrar o Ambiente MbB</h2><p>Pratique dar um nome local ao ESP32 e configurar o anúncio do serviço.</p></div></div>
   <div class="cards">
-    <article class="card wide"><h3>Nome, endereço e serviço</h3><p>O IP indica onde o ESP32 pode ser alcançado. O <strong>mDNS</strong>, DNS por multicast, leva perguntas e anúncios de nomes à rede local. Um nome como <code>ambiente-mbb.local</code> identifica o dispositivo nessa rede. Um anúncio de serviço acrescenta o tipo e a porta, como <code>_http._tcp</code> na porta 80. Pense em <code>ambiente-mbb.local</code> como o nome do equipamento, em <code>_http._tcp</code> como a descrição do serviço e em 80 como a porta que o servidor usa.</p><p><code>MDNS.begin(NOME)</code> inicia o respondedor mDNS com o nome escolhido. <code>MDNS.addService()</code> configura o tipo de serviço e a porta que coincidem com o servidor HTTP. O Serial confirma a inicialização e a configuração no ESP32, e a resolução pelo navegador exigiria que outro dispositivo alcançasse a mesma rede de anúncios.</p></article>
+    <article class="card wide"><h3>Nome, endereço e serviço</h3><p>O IP indica onde o ESP32 pode ser alcançado. O <strong>mDNS</strong>, DNS por multicast, leva perguntas e anúncios de nomes à rede local. Um nome como <code>ambiente-mbb.local</code> identifica o dispositivo nessa rede. Um anúncio de serviço acrescenta o tipo e a porta, como <code>_http._tcp</code> na porta 80. Resolver <code>ambiente-mbb.local</code> responde à pergunta “Qual é o IP deste equipamento?”. Descobrir serviços pelo DNS-SD responde a outra pergunta: “Quais equipamentos oferecem HTTP e em qual porta?”. Na rede local, a descoberta pode usar mDNS. Aqui <code>_http._tcp</code> identifica o tipo de serviço, e <code>80</code> é a porta deste servidor.</p><p><code>MDNS.begin(NOME)</code> inicia o respondedor mDNS com o nome escolhido. <code>MDNS.addService()</code> configura o tipo de serviço e a porta que coincidem com o servidor HTTP. O Serial confirma a inicialização e a configuração no ESP32, e a resolução pelo navegador exigiria que outro dispositivo alcançasse a mesma rede de anúncios.</p></article>
     <article class="card wide"><h3>Faça no Wokwi</h3><p>Pare a simulação, cole o código desta etapa no <code>sketch.ino</code> e mantenha o <code>diagram.json</code> da preparação. Inicie e acompanhe o Monitor Serial. Esta atividade verifica a configuração pelas mensagens do Wokwi. Quando o roteiro pedir para consultar um nome no modelo, digite no campo do Monitor Serial e pressione <strong>Enter</strong>. Os nomes com <code>.local</code> aqui servem como entrada do modelo, na própria aba do Wokwi.</p></article>
     <article class="card code wide">
       <h3>sketch.ino — configurar mDNS <button type="button" onclick="copyCode('b6-4-wokwi-code',this)" aria-label="Copiar sketch.ino — configurar mDNS">Copiar</button></h3>
@@ -933,7 +943,7 @@ void loop() {
         <li>Pare, mude <code>USAR_MODELO</code> para <code>true</code>, comece com <code>NOME = "ambiente-mbb"</code> e reinicie. No campo do Monitor Serial, envie <code>ambiente-mbb.local</code>. Se aparecer <code>MODELO: ambiente-mbb.local -&gt; _http._tcp, porta 80</code>, o nome correspondeu ao registro do modelo. Envie <code>ambiente-sala.local</code> e confira <code>MODELO: nome ausente.</code>.</li>
         <li>Pare, troque <code>NOME</code> para <code>"ambiente-sala"</code> e reinicie. Envie os dois nomes novamente. Agora <code>ambiente-mbb.local</code> deve resultar em <code>MODELO: nome ausente.</code>, e <code>ambiente-sala.local</code> deve devolver <code>_http._tcp, porta 80</code>.</li>
       </ol>
-      <p><code>consulta.trim()</code> remove espaços e quebras de linha nas pontas. O modelo compara o nome enviado com o registro do próprio sketch. A troca dos resultados confirma que o programa passou a encontrar o nome novo e manteve o mesmo serviço.</p>
+      <p><code>consulta.trim()</code> remove espaços e quebras de linha nas pontas. O modelo compara o nome enviado com o registro do próprio sketch e mostra o tipo de serviço e a porta associados. A consulta digitada no Monitor Serial é uma comparação de texto dentro do programa. A troca dos resultados confirma que o programa passou a encontrar o nome novo e manteve o mesmo serviço.</p>
       <p class="mbb6-checkpoint"><strong>Na placa física.</strong> Em um computador na mesma rede local, com suporte a mDNS, você poderia abrir <code>http://ambiente-mbb.local/</code> para ver <code>Ambiente MbB</code> no navegador. O computador consultaria o nome para descobrir o IP e então faria o pedido HTTP. <strong>No Wokwi.</strong> Com rede disponível, o próprio ESP32 imprime que configurou o nome e o serviço. No modo didático, digitar o nome no Monitor Serial representa a consulta e mostra a correspondência com o registro do sketch. A prática termina no Monitor Serial.</p>
     </article>
     <article class="card wide"><h3>Próximo passo</h3><p>Quando conseguir dizer qual nome mudou e qual porta permaneceu igual, pare a simulação e abra <a href="#b6-5">6.5 — Modelar a abertura e o fechamento de um caminho externo</a> na apostila. Os comandos voltarão a ser enviados pelo Monitor Serial do mesmo projeto.</p></article>
@@ -1016,13 +1026,18 @@ void loop() {
       <p><strong>Se a ordem se perder:</strong> reinicie para fechar a entrada e refaça a tabela a partir do passo 1. Use letras maiúsculas, com <strong>Enter</strong> depois de cada uma.</p>
     </article>
     <article class="card wide mbb6-teste">
-      <h3>Consolidação — refaça uma falha e confira a correção</h3>
+      <h3>Consolidação — descubra onde a comunicação parou</h3>
+      <p><strong>Situação.</strong> Você precisa localizar o problema antes de trocar o sketch ou o circuito. Em um sistema conectado, o ESP32 pode ter recebido um IP e, mesmo assim, o cliente receber <code>404</code>. Antes de abrir a resposta, diga o que cada evidência confirma e em que parte você procuraria a falha.</p>
+      <details>
+        <summary>Conferir o diagnóstico</summary>
+        <p>O IP mostra que o ESP32 entrou na rede. O <code>404</code> mostra que, para aquele pedido, o cliente conseguiu alcançar um servidor HTTP e receber resposta. Primeiro confira o caminho solicitado. Na prática de HTTP deste tópico, o cliente usa o endereço interno do ESP32, então o <code>404</code> confirma o funcionamento do HTTP local. O IP da rede virtual é verificado separadamente, na etapa de Wi-Fi.</p>
+      </details>
       <ol>
-        <li>Na apostila, volte à <a href="#b6-3">etapa HTTP</a>. No mesmo projeto do Wokwi, pare e recoloque o sketch de HTTP. Inicie e espere a mensagem do servidor.</li>
-        <li>No Monitor Serial, envie <code>X</code> e aguarde <code>---</code>. Aponte a linha <code>HTTP/1.1 404 Not Found</code> e confirme que o LED ficou apagado. Depois envie <code>L</code>. Aponte <code>HTTP/1.1 200 OK</code> e confira que o LED acendeu agora.</li>
-        <li>O teste está concluído quando você consegue explicar a partir dessas duas respostas qual pedido chegou a uma rota existente, o que o servidor devolveu e qual ação o LED confirmou. Use o próprio Monitor Serial para conferir as duas linhas, sem enviar arquivos ou usar outra ferramenta.</li>
+        <li>Na apostila, volte à <a href="#b6-3">etapa HTTP</a>. No mesmo projeto do Wokwi, pare a simulação, recoloque o sketch dessa etapa e inicie.</li>
+        <li>No Monitor Serial, envie <code>X</code> e espere <code>---</code>. Localize o caminho <code>/ausente</code> e o status <code>404</code>. Envie <code>C</code> e compare: a rota <code>/estado</code> devolve <code>200</code> e <code>LED apagado</code>. O circuito continua igual. Agora envie <code>L</code> e depois <code>C</code> novamente, esperando o separador entre eles. Aponte qual pedido acendeu o LED e qual apenas confirmou o novo estado.</li>
+        <li>Compare com o teste que acabou de fazer no modelo de túnel. O que o Monitor Serial mostrou quando você enviou <code>E</code> com o caminho fechado? Explique por que o modelo diz que não há resposta HTTP e por que <code>404</code> é, por sua vez, uma resposta do servidor.</li>
       </ol>
-      <p>Antes de seguir, associe o que observou a cada etapa. O GPIO controlou o LED conforme o comando, o Wi-Fi mostrou o IP recebido ou o IP de exemplo, o HTTP respondeu ao pedido, o mDNS mostrou um nome associado ao serviço e o modelo de túnel mostrou quando o caminho externo permitiria chegar ao serviço. Depois, pare a simulação e acesse o <a href="arduino-iot.html">tópico 7 — Internet das Coisas</a> na apostila.</p>
+      <p><strong>Você pode avançar quando</strong> conseguir usar a mensagem exibida para distinguir três situações: rota desconhecida, pedido atendido e caminho que não levou a um servidor. Antes de sair, recupere as evidências anteriores: o GPIO acendeu o LED, o Serial levou um comando ao programa, o IP identificou a placa na rede e o mDNS deu um nome ao dispositivo. Use o próprio Wokwi para comparar o circuito e as mensagens. Depois, pare a simulação e abra o <a href="arduino-iot.html">tópico 7 — Internet das Coisas</a> na apostila.</p>
     </article>
   </div>
 </section>
