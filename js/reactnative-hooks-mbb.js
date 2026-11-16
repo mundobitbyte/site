@@ -1237,6 +1237,30 @@ ${estiloLaboratorio}`,
       <li><strong>Temporizador.</strong> Use <code>useEffect</code>, <code>setInterval</code> e cleanup. Mostre a última mensagem de cleanup ao desmontar o temporizador.</li>
       <li><strong>Escolha do gatilho.</strong> Classifique e justifique cada caso: consultar CEP por botão, atualizar um relógio, calcular desconto na tela e buscar dados quando a cidade muda.</li>
     </ul>
+    <details class="exercise-study-project">
+      <summary>Projeto final opcional — Meu Tempo de Estudos</summary>
+      <p>Você quer organizar o que precisa estudar e acompanhar o que já concluiu. Construa no Snack uma tela com um campo para o nome da tarefa, o botão Adicionar e uma lista que mostre o que está pendente e o que foi concluído.</p>
+
+      <h4>Construa em três passagens</h4>
+      <ol>
+        <li><strong>Da tarefa ao cartão.</strong> Crie um <code>CartaoTarefa</code> reutilizável. Comece exibindo duas tarefas fixas e passe o título e o estado de conclusão por <a href="#rn-state-mbb-react-props">props (etapa 4)</a>. Use texto para distinguir “Pendente” de “Concluída”.</li>
+        <li><strong>Do cartão à lista.</strong> Guarde as tarefas em <code>useState</code> e exiba-as com <a href="#rn-state-mbb-react-flatlist">FlatList (etapa 21)</a>. Gere um <a href="#rn-state-mbb-react-key">ID estável (etapa 18)</a> ao adicionar cada tarefa e use-o como chave. Rejeite títulos vazios ou formados só por espaços. Passe ao cartão a ação de concluir para que apenas a tarefa tocada mude, usando <a href="#rn-state-mbb-react-pressable">Pressable (etapa 23)</a>.</li>
+        <li><strong>Da lista ao fluxo de uso.</strong> Depois de adicionar uma tarefa válida, limpe o campo e devolva o foco com <a href="#rn-state-state-11-useref">useRef (etapa 27)</a>. Use uma mensagem para orientar a primeira inclusão quando a lista estiver vazia.</li>
+      </ol>
+
+      <h4>Preveja, teste e registre</h4>
+      <ul>
+        <li>Abra o app sem tarefas e confira a mensagem inicial. Tente adicionar com o campo vazio e com três espaços. Em ambos os casos, mostre a mensagem de validação e confira que nenhuma tarefa entrou na lista.</li>
+        <li>Adicione duas tarefas chamadas “Revisar Hooks”. Após cada inclusão, digite de novo sem tocar no campo. Conclua só a segunda e verifique que a primeira continua pendente.</li>
+        <li>Adicione tarefas até ter de rolar a lista. Chegue à última, volte e confira se as duas primeiras ainda têm as situações esperadas.</li>
+      </ul>
+
+      <h4>Adapte o app a uma nova necessidade</h4>
+      <p>Depois da primeira versão, escolha uma melhoria, como filtrar as pendentes ou exibir quantas faltam. Explique quem precisa dela, descreva o resultado esperado e escreva um teste que um colega consiga repetir.</p>
+
+      <p><strong>Desafio avançado — temporizador de estudo.</strong> Adicione um componente que conte os segundos enquanto estiver visível. Use <a href="#rn-state-mbb-effect-cleanup"><code>useEffect</code> com limpeza do intervalo (etapa 32)</a>. Registre no console cada avanço e o encerramento. Oculte o componente, espere dois segundos e confirme que os avanços param. Mostre-o de novo e confira a contagem voltando a avançar uma vez por segundo.</p>
+      <p><strong>Entrega.</strong> Envie o link do Snack e, para cada teste, registre o que fez, o que esperava e o que observou. Explique por que a lista usa state e por que o foco usa ref. Se fizer o temporizador, inclua a evidência da limpeza.</p>
+    </details>
   </div></div>
 </div>`;
       exercise.html = integrated + (exercise.html || '');
