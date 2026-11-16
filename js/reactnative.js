@@ -4096,7 +4096,7 @@ const styles = StyleSheet.create({
                     "modulePage": true,
                     "kicker": "Aplicativo do módulo",
                     "lead": "O aplicativo Média Escolar calcula a média de duas notas e informa a situação do aluno.",
-                    "highlight": "Este módulo prepara o caminho para o próximo: no módulo 3 o resultado vem de um cálculo dentro do app; no módulo 4 o resultado virá de um serviço na internet.",
+                    "highlight": "No módulo 2, React e Hooks, o resultado vem de um cálculo dentro do app. No módulo 3, Web Services/APIs, o resultado virá de um serviço na internet.",
                     "boxes": [
                               [
                                         "1. Digitar",
@@ -4545,10 +4545,14 @@ const styles = StyleSheet.create({
         btn.className = 'module-btn';
         btn.textContent = module.title;
         btn.onclick = () => {
+          const estavaEmHooks = currentModuleKey === 'state';
           currentModuleKey = key;
           renderModuleMenu();
           renderStepMenu();
-          showStep(modules[currentModuleKey].steps[0].id);
+          const primeiraEtapa = module.steps[0].id;
+          showStep(primeiraEtapa);
+          if (key === 'state') atualizarAncoraHooks(primeiraEtapa);
+          else if (estavaEmHooks) atualizarAncoraHooks('');
         };
         btn.id = `module-${key}`;
         if (key === currentModuleKey) btn.classList.add('active');
@@ -4562,7 +4566,10 @@ const styles = StyleSheet.create({
         const btn = document.createElement('button');
         btn.className = 'nav-btn';
         btn.textContent = step.menu;
-        btn.onclick = () => showStep(step.id);
+        btn.onclick = () => {
+          showStep(step.id);
+          if (currentModuleKey === 'state') atualizarAncoraHooks(step.id);
+        };
         btn.id = `btn-${currentModuleKey}-${step.id}`;
         menu.appendChild(btn);
       });
@@ -5115,18 +5122,52 @@ const styles = StyleSheet.create({
       document.getElementById('preview').innerHTML = step.preview ? step.preview : previewHTML(id);
     }
 
-    function copyText(id) {
-      const text = document.getElementById(id).textContent;
-      navigator.clipboard.writeText(text);
+    function copiarComSelecao(texto, botao) {
+      const campo = document.createElement('textarea');
+      campo.value = texto;
+      campo.readOnly = true;
+      campo.style.position = 'fixed';
+      campo.style.opacity = '0';
+      document.body.appendChild(campo);
+      try {
+        campo.select();
+        return document.execCommand('copy');
+      } catch {
+        return false;
+      } finally {
+        campo.remove();
+        botao.focus({ preventScroll: true });
+      }
+    }
+
+    async function copiarConteudo(texto, botao) {
+      const rotulo = botao.dataset.rotuloCopia ??= botao.textContent;
+      const tentativa = {};
+      botao._mbbTentativaCopia = tentativa;
+      botao.setAttribute('aria-live', 'polite');
+      clearTimeout(botao._mbbCopiarTimer);
+      botao.textContent = 'Copiando…';
+
+      let copiado = false;
+      try {
+        await navigator.clipboard.writeText(texto);
+        copiado = true;
+      } catch {
+        if (botao._mbbTentativaCopia === tentativa && botao.isConnected) {
+          copiado = copiarComSelecao(texto, botao);
+        }
+      }
+      if (botao._mbbTentativaCopia !== tentativa) return;
+      botao.textContent = copiado ? 'Copiado!' : 'Falha ao copiar';
+      botao._mbbCopiarTimer = setTimeout(() => { botao.textContent = rotulo; }, 2200);
+    }
+
+    function copyText(id, botao) {
+      return copiarConteudo(document.getElementById(id).textContent, botao);
     }
 
     function copyImageLink(url, botao) {
-      navigator.clipboard.writeText(url);
-      const textoOriginal = botao.innerHTML;
-      botao.innerHTML = '✅ Copiado!';
-      setTimeout(() => {
-        botao.innerHTML = textoOriginal;
-      }, 1800);
+      return copiarConteudo(url, botao);
     }
 
     window.copyImageLink = copyImageLink;
@@ -5134,6 +5175,15 @@ const styles = StyleSheet.create({
     renderModuleMenu();
     renderStepMenu();
     showStep(modules[currentModuleKey].steps[0].id);
+
+    function atualizarAncoraHooks(id) {
+      const hash = id ? `#rn-state-${id}` : '';
+      if (hash === location.hash) return;
+      const oldURL = location.href;
+      history.replaceState(history.state, '', location.pathname + location.search + hash);
+      // Mantém a rolagem no lugar e avisa o registro de visitas da etapa.
+      window.dispatchEvent(new HashChangeEvent('hashchange', { oldURL, newURL: location.href }));
+    }
 
     // A pesquisa usa as etapas já existentes, sem criar unidades de progresso.
     function abrirEtapaDaUrl() {
@@ -5145,6 +5195,7 @@ const styles = StyleSheet.create({
       if (!encontrado) return;
       const [chave, modulo] = encontrado;
       const etapa = modulo.steps.find(item => destino === `rn-${chave}-${item.id}`);
+      if (currentModuleKey === chave && document.getElementById(`btn-${chave}-${etapa.id}`)?.classList.contains('active')) return;
       currentModuleKey = chave;
       renderModuleMenu();
       renderStepMenu();

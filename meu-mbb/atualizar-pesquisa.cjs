@@ -101,13 +101,29 @@ function topicosReactNative() {
   const fonte = fs.readFileSync(path.join(raiz, 'js/reactnative.js'), 'utf8');
   const inicio = fonte.split('    let currentModuleKey')[0];
   if (inicio === fonte) throw new Error('Não foi possível ler as etapas de React Native');
-  const modulos = vm.runInNewContext(`${inicio}\nmodules`, {}, { timeout: 5000 });
-  return Object.entries(modulos).flatMap(([chave, modulo]) => modulo.steps.map(etapa => ({
+  const contexto = vm.createContext({});
+  const modulos = vm.runInContext(`${inicio}\nmodules`, contexto, { timeout: 5000 });
+  const unidades = Object.entries(modulos);
+  const topicos = (chave, modulo) => modulo.steps.map(etapa => ({
     titulo: `${modulo.title} — ${etapa.title}`,
     ancora: `rn-${chave}-${etapa.id}`,
-    texto_busca: limpar([etapa.title, etapa.objective, etapa.lead, etapa.added, etapa.note,
-      etapa.highlight, etapa.html, etapa.code].filter(Boolean).join(' '), 3300)
-  })));
+    texto_busca: limpar([etapa.title, etapa.objective, etapa.lead, etapa.added, etapa.note, etapa.highlight,
+      chave === 'state' ? etapa.boxes?.flat().join(' ') : '', etapa.html, etapa.code].filter(Boolean).join(' '), 3300)
+  }));
+  const anteriores = new Map(unidades.filter(([chave]) => chave !== 'state')
+    .map(([chave, modulo]) => [chave, topicos(chave, modulo)]));
+  // Os complementos de conteúdo também são usados pela apostila. Eles reorganizam
+  // e numeram as etapas antes dos scripts que dependem do DOM.
+  for (const nome of [
+    'reactnative-hooks-mbb.js',
+    'reactnative-lapidacao-mbb.js',
+    'reactnative-react-hooks-coerencia-visual-20261005.js',
+    'reactnative-react-hooks-explicacoes-mbb-parte1-20261005.js',
+    'reactnative-react-hooks-explicacoes-mbb-parte2-20261005.js'
+  ]) {
+    vm.runInContext(fs.readFileSync(path.join(raiz, 'js', nome), 'utf8'), contexto, { timeout: 2000, filename: nome });
+  }
+  return unidades.flatMap(([chave]) => chave === 'state' ? topicos(chave, modulos.state) : anteriores.get(chave));
 }
 
 function topicosNavegacao(html) {

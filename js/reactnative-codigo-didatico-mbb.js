@@ -154,30 +154,6 @@
     }
   }
 
-  async function copyPlainCode(pre, button) {
-    const text = pre.textContent;
-
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch (_) {
-      const helper = document.createElement('textarea');
-      helper.value = text;
-      helper.setAttribute('readonly', '');
-      helper.style.position = 'fixed';
-      helper.style.opacity = '0';
-      document.body.appendChild(helper);
-      helper.select();
-      document.execCommand('copy');
-      helper.remove();
-    }
-
-    if (button) {
-      const original = button.textContent;
-      button.textContent = 'Copiado!';
-      window.setTimeout(() => { button.textContent = original; }, 1100);
-    }
-  }
-
   function hasExistingCopyButton(pre) {
     if (pre.id === 'fullCode' || pre.id === 'newCode') return true;
     const container = pre.closest('.card, .panel, section, article');
@@ -198,8 +174,7 @@
       button.type = 'button';
       button.className = 'mbb-code-copy-btn';
       button.textContent = 'Copiar';
-      button.setAttribute('aria-label', 'Copiar código');
-      button.addEventListener('click', () => copyPlainCode(pre, button));
+      button.addEventListener('click', () => copiarConteudo(pre.textContent, button));
       wrapper.insertBefore(button, pre);
     });
   }
