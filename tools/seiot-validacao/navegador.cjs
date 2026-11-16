@@ -67,7 +67,7 @@ fs.mkdirSync(dest,{recursive:true});
      if(width===390&&hash==='#b6-1'){
       assert.equal(await page.locator('[data-mbb6-leitura="bluetooth"]').count(),1);
       assert.equal(await page.locator('[data-mbb6-leitura="bluetooth"]').evaluate(e=>e.parentElement.tagName),'ARTICLE');
-      assert.match(await page.locator('h3').allTextContents().then(a=>a.join(' ')),/BluetoothSerial\.h/);
+      assert.match(await page.locator('#b6-1-wokwi-header').textContent(), /BluetoothSerial\.h/);
      }
      if(width===390&&['#b6-1','#b8-1','#b8-2','#b10-5','#b10-7','#b9-2'].includes(hash)){
       await page.locator(hash).screenshot({path:`${dest}/${name}-${hash.slice(1)}-${width}.png`});
