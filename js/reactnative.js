@@ -4827,6 +4827,27 @@ const styles = StyleSheet.create({
         `;
 
         workspace.appendChild(intro);
+        if (step.snackPractice) {
+          const practice = document.createElement('section');
+          practice.className = 'rn-pratica-snack';
+          practice.innerHTML = `
+            <h4></h4>
+            <p></p>
+            <details>
+              <summary>App.js da prática</summary>
+              <button type="button" class="btn-copy">Copiar</button>
+              <pre tabindex="0" aria-label="Código completo da prática"></pre>
+            </details>
+          `;
+          const { title, instruction, code } = step.snackPractice;
+          practice.querySelector('h4').textContent = title;
+          practice.querySelector('p').textContent = instruction;
+          practice.querySelector('pre').textContent = code;
+          practice.querySelector('button').addEventListener('click', event => {
+            copiarConteudo(code, event.currentTarget);
+          });
+          intro.appendChild(practice);
+        }
         return;
       }
 

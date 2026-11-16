@@ -190,14 +190,6 @@ As chaves { } permitem usar uma expressão JavaScript dentro da interface.`;
     if (propsState) {
       propsState.lead = 'Props e state aparecem juntos em muitos aplicativos, mas têm origens diferentes.';
       propsState.highlight = 'Props chegam ao componente. State pertence ao componente e pode mudar enquanto o aplicativo está sendo usado.';
-      propsState.boxes = [
-        ['props', 'Exemplo: cidade e temperatura recebidas por CartaoClima.'],
-        ['state', 'Exemplo: nota digitada, resultado calculado ou texto que muda.'],
-        ['Props chegam de fora', 'O componente recebe os valores definidos por quem o utiliza.'],
-        ['State muda por dentro', 'O próprio componente atualiza o valor com uma função como setNota1.'],
-        ['Na interface', 'Props e state podem ser usados dentro do JSX.'],
-        ['Próxima necessidade', 'Na Média Escolar, as notas mudam enquanto você digita. É um caso natural para state.']
-      ];
     }
 
     const mapStep = reactModule.steps.find(s => s.id === 'mbb-react-map');

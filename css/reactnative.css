@@ -2045,6 +2045,47 @@
   outline-offset: 2px;
 }
 
+.rn-pratica-snack {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 14px;
+  border: 1px solid #c7d8ed;
+  border-radius: 10px;
+  line-height: 1.55;
+}
+
+.rn-pratica-snack h4,
+.rn-pratica-snack summary {
+  color: #123b73;
+  font-weight: 800;
+}
+
+.rn-pratica-snack summary {
+  cursor: pointer;
+}
+
+.rn-pratica-snack summary:focus-visible {
+  outline: 2px solid #142c48;
+  outline-offset: 2px;
+}
+
+.rn-pratica-snack button {
+  margin: 8px 0;
+  color: #fff;
+  background: #174b86;
+}
+
+.rn-pratica-snack pre {
+  max-height: 25rem;
+  padding: 12px;
+  overflow: auto;
+  background: #171717;
+  color: #f3f4f6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 850px) {
   .react-hooks-lesson {
     grid-template-columns: minmax(0, 1fr);

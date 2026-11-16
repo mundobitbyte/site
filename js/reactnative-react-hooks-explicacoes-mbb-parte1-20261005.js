@@ -22,13 +22,11 @@ Primeiro comprovamos que a peça funciona. Depois percebemos seu limite: se quis
 
 O desenho do cartão é o mesmo; apenas os dados mudam. É dessa necessidade que surgem as props na próxima etapa.`],
 
-    'mbb-react-props': ['Props: a mesma peça recebendo dados diferentes', `Na etapa anterior, CartaoClima sabia mostrar apenas os valores escritos dentro dele. Agora separamos responsabilidades: o componente decide COMO os dados aparecem; quem usa o componente informa QUAIS dados serão mostrados.
+    'mbb-react-props': ['Props levam dados e ações ao cartão', `App é o pai que monta os cartões. CartaoClima é o filho que escolhe como mostrar a cidade, a temperatura e o botão. Cada cartão recebe pelas props tanto os seus dados quanto a função aoConsultar.
 
-Em function CartaoClima({ cidade, temperatura }), cidade e temperatura são valores recebidos pelo componente. Depois eles aparecem no JSX como {cidade} e {temperatura}.
+No cartão de Campinas, aoConsultar={consultarCampinas} entrega a função ainda disponível para uso. Os parênteses em consultarCampinas() fariam a chamada naquele momento, durante a criação do cartão. Dentro do filho, onPress={aoConsultar} entrega ao botão a função que ele deve chamar ao receber o toque.
 
-Nas chamadas <CartaoClima cidade="São Paulo" temperatura={26} /> e <CartaoClima cidade="Campinas" temperatura={28} />, o componente é o mesmo, mas os dados são diferentes.
-
-Uma boa forma de pensar é: props são informações de entrada do componente. Elas vêm de fora. A comparação com state, que pertence ao componente e pode mudar, vem logo depois.`],
+Abra o console no Snack e toque em cada cartão. A função definida pelo pai registra a cidade do cartão escolhido. Alterar os dados de um cartão muda sua apresentação, e trocar a função recebida muda o comportamento no toque. A etapa 5 usa a mesma passagem de função para atualizar um dado guardado pelo pai.`],
 
     'state-1-app': ['Começando a Média Escolar pelo alicerce', `Agora iniciamos um aplicativo que crescerá em várias etapas. A intenção não é jogar toda a lógica de uma vez, mas acompanhar como uma interface estática ganha comportamento.
 
