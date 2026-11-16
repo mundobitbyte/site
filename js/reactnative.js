@@ -4132,7 +4132,7 @@ const styles = StyleSheet.create({
                     "code": "import React from 'react';\nimport { View, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n});",
                     "addedTitle": "Trecho em foco",
                     "added": "<View style={styles.container}>\n\n</View>\n\ncontainer: {\n  flex: 1,\n  padding: 30,\n  marginTop: 50,\n},",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_01_tela_vazia.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
+                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_01_tela_vazia.webp\" alt=\"Tela em branco do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
                     "note": "Começamos com uma View principal. Ela é o container da tela inteira."
           },
           {
@@ -4143,7 +4143,7 @@ const styles = StyleSheet.create({
                     "code": "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Média Escolar</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n});",
                     "addedTitle": "Trecho em foco",
                     "added": "import { View, Text, StyleSheet } from 'react-native';\n\n<Text style={styles.titulo}>Média Escolar</Text>\n\ntitulo: {\n  fontSize: 24,\n  fontWeight: 'bold',\n  marginBottom: 20,\n},",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_02_titulo.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
+                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_02_titulo.webp\" alt=\"Tela com o título Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
                     "note": "O componente Text exibe textos na tela. O style define tamanho, negrito e espaçamento."
           },
           {
@@ -4154,7 +4154,7 @@ const styles = StyleSheet.create({
                     "code": "import React from 'react';\nimport { View, Text, TextInput, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Média Escolar</Text>\n\n      <Text>Nota 1:</Text>\n      <TextInput\n        style={styles.campo}\n        keyboardType=\"numeric\"\n      />\n\n      <Text>Nota 2:</Text>\n      <TextInput\n        style={styles.campo}\n        keyboardType=\"numeric\"\n      />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n});",
                     "addedTitle": "Trecho em foco",
                     "added": "import { View, Text, TextInput, StyleSheet } from 'react-native';\n\n<Text>Nota 1:</Text>\n<TextInput\n  style={styles.campo}\n  keyboardType=\"numeric\"\n/>\n\n<Text>Nota 2:</Text>\n<TextInput\n  style={styles.campo}\n  keyboardType=\"numeric\"\n/>\n\ncampo: {\n  borderWidth: 1,\n  borderColor: '#999',\n  padding: 10,\n  marginVertical: 10,\n},",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_03_campos.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
+                    "preview": "<div class=\"media-escolar-captura\">\n  <img src=\"../img/reactnative/media_escolar_03_campos.webp\" alt=\"Captura de tela da Média Escolar com os campos Nota 1 e Nota 2\" loading=\"lazy\" decoding=\"async\">\n</div>",
                     "note": "TextInput cria um campo de digitação. keyboardType=\"numeric\" indica que o campo será usado para números."
           },
           {
@@ -4165,7 +4165,7 @@ const styles = StyleSheet.create({
                     "code": "import React from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Média Escolar</Text>\n\n      <Text>Nota 1:</Text>\n      <TextInput\n        style={styles.campo}\n        keyboardType=\"numeric\"\n      />\n\n      <Text>Nota 2:</Text>\n      <TextInput\n        style={styles.campo}\n        keyboardType=\"numeric\"\n      />\n\n      <View style={styles.botoes}>\n        <View style={styles.botao}>\n          <Button title=\"Calcular\" />\n        </View>\n\n        <View style={styles.botao}>\n          <Button title=\"Limpar\" />\n        </View>\n      </View>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  botoes: {\n    flexDirection: 'row',\n    marginTop: 10,\n  },\n  botao: {\n    flex: 1,\n    marginHorizontal: 5,\n  },\n});",
                     "addedTitle": "Trecho em foco",
                     "added": "import { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\n<View style={styles.botoes}>\n  <View style={styles.botao}>\n    <Button title=\"Calcular\" />\n  </View>\n\n  <View style={styles.botao}>\n    <Button title=\"Limpar\" />\n  </View>\n</View>\n\nbotoes: {\n  flexDirection: 'row',\n  marginTop: 10,\n},\n\nbotao: {\n  flex: 1,\n  marginHorizontal: 5,\n},",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_04_botoes.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
+                    "preview": "<div class=\"media-escolar-captura\">\n  <img src=\"../img/reactnative/media_escolar_04_botoes.webp\" alt=\"Captura de tela da Média Escolar com os botões Calcular e Limpar abaixo das notas\" loading=\"lazy\" decoding=\"async\">\n</div>",
                     "note": "Os botões ainda não fazem nada. Nesta etapa, eles são apenas parte da interface."
           },
           {
@@ -4176,7 +4176,7 @@ const styles = StyleSheet.create({
                     "code": "import React from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Média Escolar</Text>\n\n      <Text>Nota 1:</Text>\n      <TextInput\n        style={styles.campo}\n        keyboardType=\"numeric\"\n      />\n\n      <Text>Nota 2:</Text>\n      <TextInput\n        style={styles.campo}\n        keyboardType=\"numeric\"\n      />\n\n      <View style={styles.botoes}>\n        <View style={styles.botao}>\n          <Button title=\"Calcular\" />\n        </View>\n\n        <View style={styles.botao}>\n          <Button title=\"Limpar\" />\n        </View>\n      </View>\n\n      <Text style={styles.resultado}>Média:</Text>\n      <Text style={styles.resultado}>Situação:</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  botoes: {\n    flexDirection: 'row',\n    marginTop: 10,\n  },\n  botao: {\n    flex: 1,\n    marginHorizontal: 5,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
                     "addedTitle": "Trecho em foco",
                     "added": "<Text style={styles.resultado}>Média:</Text>\n<Text style={styles.resultado}>Situação:</Text>\n\nresultado: {\n  fontSize: 18,\n  marginTop: 20,\n},",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_05_resultado_vazio.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
+                    "preview": "<div class=\"media-escolar-captura\">\n  <img src=\"../img/reactnative/media_escolar_05_resultado_vazio.webp\" alt=\"Captura de tela da Média Escolar com os rótulos Média e Situação abaixo dos botões\" loading=\"lazy\" decoding=\"async\">\n</div>",
                     "note": "Até aqui, construímos a tela. A inteligência do aplicativo começa nas próximas etapas."
           },
           {
@@ -4187,7 +4187,7 @@ const styles = StyleSheet.create({
                     "code": "import React, { useState } from 'react';\nimport { View, Text, TextInput, Button, StyleSheet } from 'react-native';\n\nexport default function App() {\n  const [nota1, setNota1] = useState('');\n  const [nota2, setNota2] = useState('');\n  const [media, setMedia] = useState('');\n  const [situacao, setSituacao] = useState('');\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.titulo}>Média Escolar</Text>\n\n      <Text>Nota 1:</Text>\n      <TextInput\n        style={styles.campo}\n        value={nota1}\n        onChangeText={setNota1}\n        keyboardType=\"numeric\"\n      />\n\n      <Text>Nota 2:</Text>\n      <TextInput\n        style={styles.campo}\n        value={nota2}\n        onChangeText={setNota2}\n        keyboardType=\"numeric\"\n      />\n\n      <View style={styles.botoes}>\n        <View style={styles.botao}>\n          <Button title=\"Calcular\" />\n        </View>\n\n        <View style={styles.botao}>\n          <Button title=\"Limpar\" />\n        </View>\n      </View>\n\n      <Text style={styles.resultado}>Média: {media}</Text>\n      <Text style={styles.resultado}>Situação: {situacao}</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 30,\n    marginTop: 50,\n  },\n  titulo: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n  campo: {\n    borderWidth: 1,\n    borderColor: '#999',\n    padding: 10,\n    marginVertical: 10,\n  },\n  botoes: {\n    flexDirection: 'row',\n    marginTop: 10,\n  },\n  botao: {\n    flex: 1,\n    marginHorizontal: 5,\n  },\n  resultado: {\n    fontSize: 18,\n    marginTop: 20,\n  },\n});",
                     "addedTitle": "Trecho em foco",
                     "added": "import React, { useState } from 'react';\n\nconst [nota1, setNota1] = useState('');\nconst [nota2, setNota2] = useState('');\nconst [media, setMedia] = useState('');\nconst [situacao, setSituacao] = useState('');\n\nvalue={nota1}\nonChangeText={setNota1}\n\nvalue={nota2}\nonChangeText={setNota2}",
-                    "preview": "<div style=\"height:100%;display:flex;align-items:center;justify-content:center;background:#fff;padding:0;box-sizing:border-box;\">\n  <img src=\"../img/reactnative/media_escolar_05_resultado_vazio.webp\" alt=\"Tela do app Média Escolar\" style=\"max-width:100%;max-height:100%;object-fit:contain;display:block;\" loading=\"lazy\" decoding=\"async\">\n</div>",
+                    "preview": "<div class=\"media-escolar-captura\">\n  <img src=\"../img/reactnative/media_escolar_05_resultado_vazio.webp\" alt=\"Captura de tela da Média Escolar com os rótulos Média e Situação abaixo dos botões\" loading=\"lazy\" decoding=\"async\">\n</div>",
                     "note": "State é a memória do app. nota1 e nota2 guardam o que o usuário digita. media e situacao guardam o que será mostrado como resultado."
           },
           {
@@ -4538,6 +4538,14 @@ const styles = StyleSheet.create({
     const moduleMenu = document.getElementById('moduleMenu');
     const menu = document.getElementById('menu');
 
+    function setCurrentButton(group, button, current) {
+      const previous = group.querySelector('[aria-current]');
+      previous?.classList.remove('active');
+      previous?.removeAttribute('aria-current');
+      button?.classList.add('active');
+      button?.setAttribute('aria-current', current);
+    }
+
     function renderModuleMenu() {
       moduleMenu.innerHTML = '';
       Object.entries(modules).forEach(([key, module]) => {
@@ -4546,13 +4554,13 @@ const styles = StyleSheet.create({
         btn.textContent = module.title;
         btn.onclick = () => {
           currentModuleKey = key;
-          renderModuleMenu();
+          setCurrentButton(moduleMenu, btn, 'true');
           renderStepMenu();
           showStep(modules[currentModuleKey].steps[0].id);
         };
         btn.id = `module-${key}`;
-        if (key === currentModuleKey) btn.classList.add('active');
         moduleMenu.appendChild(btn);
+        if (key === currentModuleKey) setCurrentButton(moduleMenu, btn, 'true');
       });
     }
 
@@ -4650,9 +4658,8 @@ const styles = StyleSheet.create({
     function showStep(id) {
       const activeModule = modules[currentModuleKey];
       const step = activeModule.steps.find(s => s.id === id);
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       const activeBtn = document.getElementById(`btn-${currentModuleKey}-${id}`);
-      if (activeBtn) activeBtn.classList.add('active');
+      setCurrentButton(menu, activeBtn, 'step');
       document.getElementById('stepTitle').textContent = step.title;
       document.getElementById('objective').innerHTML = `<strong>Objetivo:</strong> ${step.objective}`;
       const resultTitle = document.querySelector('#resultCard .panel-title');
