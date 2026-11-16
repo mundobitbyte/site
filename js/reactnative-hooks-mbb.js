@@ -3,8 +3,8 @@
 // Fluxo: Contextualizar -> Necessidade -> Conceito -> Exemplo -> Aplicação -> Consolidação.
 
 if (typeof modules !== 'undefined') {
-  const mkPage = (id, menu, title, objective, kicker, lead, highlight, boxes) => ({
-    id, menu, title, objective, modulePage: true, kicker, lead, highlight, boxes
+  const mkPage = (id, menu, title, objective, kicker, lead, highlight, boxes, html = '') => ({
+    id, menu, title, objective, modulePage: true, kicker, lead, highlight, boxes, html
   });
 
   const phonePreview = (title, body, footer = '') => `
@@ -103,6 +103,18 @@ if (typeof modules !== 'undefined') {
         ['Eventos', 'Respondem a ações como toque, digitação e envio de formulário.'],
         ['Hooks', 'Recursos do React que permitem trabalhar com estado, referências e sincronização.']
       ];
+      intro.html = `<div class="react-hooks-lesson">
+        <section>
+          <h4>Da tela pronta à tela que reage</h4>
+          <p>Na Agenda de Contatos você montou campos e botões. Pense agora em uma versão que atualiza o nome mostrado na tela quando a pessoa digita. O campo dispara um evento ao receber texto. O aplicativo guarda o novo valor em state, e o React usa esse valor para atualizar o que a tela mostra.</p>
+          <p>Esse ciclo aparece de novo na Média Escolar. Primeiro você monta os campos, depois guarda as notas, liga Calcular a uma função e mostra o resultado. Cada etapa acrescenta uma parte que você consegue testar.</p>
+        </section>
+        <section>
+          <h4>Como acompanhar os exemplos</h4>
+          <p>Abra o Snack nos passos com <code>App.js</code>. Antes de executar, anote o que espera ver. Depois altere um valor por vez. Na próxima etapa, troque um nome no JavaScript e localize o texto que muda na tela. Nos passos de explicação, use os casos para prever o comportamento do código.</p>
+          <p>Comece pela <a href="#rn-state-mbb-react-jsx">etapa 1 — JSX</a>. Ao final, você vai reunir as decisões no projeto de estudos da <a href="#rn-state-exercicios-state">etapa 99</a>.</p>
+        </section>
+      </div>`;
     }
 
     const reactBasics = [
@@ -251,14 +263,25 @@ props = informações que o componente recebe de fora.`,
         'Duas origens diferentes',
         'Props e state aparecem juntos em muitos aplicativos, mas não resolvem o mesmo problema.',
         'Props vêm de fora do componente. State pertence ao componente e pode mudar durante o uso.',
-        [
-          ['props', 'Exemplo: cidade e temperatura recebidas por CartaoClima.'],
-          ['state', 'Exemplo: nota digitada, resultado calculado ou texto que muda.'],
-          ['Quem altera props?', 'O componente que envia os valores decide quais props serão passadas.'],
-          ['Quem acompanha state?', 'O próprio componente usa uma função de atualização, como setNota1.'],
-          ['Renderização', 'Tanto props quanto state podem participar do JSX.'],
-          ['Próximo passo', 'A Média Escolar cria a necessidade natural de state: as notas mudam enquanto você digita.']
-        ]
+        [],
+        `<div class="react-hooks-lesson">
+          <section>
+            <h4>A temperatura chega ao cartão</h4>
+            <p>Na <a href="#rn-state-mbb-react-props">etapa 4</a>, cada uso de <code>CartaoClima</code> recebe uma cidade e uma temperatura. Se quem monta o cartão trocar somente a temperatura de Campinas, é esse cartão que passa a exibir o novo valor.</p>
+            <pre><code>&lt;CartaoClima cidade="Campinas" temperatura={28} /&gt;
+&lt;CartaoClima cidade="Santos" temperatura={24} /&gt;</code></pre>
+          </section>
+          <section>
+            <h4>A nota muda durante o uso</h4>
+            <p>Na Média Escolar, a Nota 1 começa vazia e muda a cada digitação. O próprio formulário guarda esse valor com <code>useState</code>. Se ele passar a nota a um cartão de resultado, o mesmo dado será state no formulário e prop no cartão.</p>
+            <pre><code>const [nota1, setNota1] = useState('');
+&lt;TextInput value={nota1} onChangeText={setNota1} /&gt;</code></pre>
+          </section>
+          <details>
+            <summary>Confira quem guarda cada valor</summary>
+            <p>Se o formulário passar <code>nota1</code> para um cartão, o formulário atualiza a nota com <code>setNota1</code> e o cartão exibe o valor que recebeu. Na <a href="#rn-state-state-7-state">etapa 12</a>, você poderá ver a nota mudar enquanto digita.</p>
+          </details>
+        </div>`
       )
     ];
 
@@ -268,6 +291,22 @@ props = informações que o componente recebe de fora.`,
       const m = String(s.id).match(/^state-(\d+)/);
       return m && Number(m[1]) <= 10;
     });
+
+    const mediaIntro = mediaCore.find(s => s.id === 'state-1-app');
+    if (mediaIntro) {
+      mediaIntro.html = `<div class="react-hooks-lesson">
+        <section>
+          <h4>Planeje o que deve aparecer</h4>
+          <p>Na abertura, os dois campos ficam vazios. Preencher as notas prepara os dados. Ao tocar em Calcular, a função usa as duas notas e mostra média e situação. Mais adiante, você vai validar valores de 0 a 10 e tratar uma nota que ficou em branco.</p>
+          <p>Calcule à mão com 7 e 5. A soma é 12, a média é 6 e a situação é Aprovado, pois 6 já atende à regra. Com 5 e 6, a média é 5,5 e a situação é Reprovado.</p>
+        </section>
+        <section>
+          <h4>Guarde os casos para testar a versão final</h4>
+          <p>Registre o que espera ao abrir o app, calcular com as duas notas preenchidas, deixar uma nota vazia e tocar em Limpar. Você começa montando a tela nas próximas etapas e volta a essas previsões à medida que acrescenta ações.</p>
+          <p>Na <a href="#rn-state-state-12-final">etapa 29</a>, compare as previsões com o resultado e teste também 0 e 0. A média zero é um resultado válido.</p>
+        </section>
+      </div>`;
+    }
 
     const useStateStep = mediaCore.find(s => s.id === 'state-7-state');
     if (useStateStep && !String(useStateStep.added || '').includes('valor atual')) {
@@ -502,14 +541,22 @@ const styles = StyleSheet.create({
         'Funciona, mas pode não escalar bem',
         'ScrollView renderiza seus filhos de uma vez. Em uma tela com poucos itens isso é simples e adequado. Em listas grandes ou que crescem bastante, existe uma solução própria para listas.',
         'A próxima etapa apresenta FlatList. A decisão não é “novo substitui velho”: cada componente resolve uma necessidade diferente.',
-        [
-          ['ScrollView', 'Boa para conteúdo pequeno ou finito que precisa de rolagem.'],
-          ['Todos os filhos', 'O conteúdo declarado dentro dela é renderizado.'],
-          ['Lista grande', 'Pode consumir recursos desnecessariamente quando há muitos itens.'],
-          ['Lista dinâmica', 'Pode crescer, mudar ou receber muitos registros.'],
-          ['FlatList', 'Foi criada para trabalhar com listas e renderização mais eficiente.'],
-          ['Como escolher', 'Escolha pela necessidade da tela, não pela novidade do componente.']
-        ]
+        [],
+        `<div class="react-hooks-lesson">
+          <section>
+            <h4>Seis cidades em uma área curta</h4>
+            <p>Na <a href="#rn-state-mbb-react-scrollview">etapa 19</a>, você chegou a Ribeirão Preto rolando. A <code>ScrollView</code> já tinha renderizado todas as linhas, inclusive as que estavam abaixo da parte visível. Para seis cidades, preparar todas as linhas é simples.</p>
+          </section>
+          <section>
+            <h4>O mesmo problema com centenas de cidades</h4>
+            <p>Se a coleção crescer para centenas de cartões, a tela vai montar muitos itens que o usuário talvez nunca veja. Isso aumenta o trabalho inicial e o uso de memória. A <code>FlatList</code> trabalha com uma janela de itens próximos da área visível e prepara novas linhas à medida que você rola.</p>
+            <p>Na <a href="#rn-state-mbb-react-flatlist">etapa 21</a>, reaproveite a ideia do cartão. Repare que a lista recebe os dados em <code>data</code> e chama <code>renderItem</code> para gerar cada linha.</p>
+          </section>
+          <details>
+            <summary>Preveja o que muda ao crescer a lista</summary>
+            <p>Se as cidades passarem de seis para centenas, a apresentação de cada cidade pode continuar igual. O ponto que merece revisão é como a tela monta e mantém essas linhas durante a rolagem.</p>
+          </details>
+        </div>`
       ),
       {
         id: 'mbb-react-flatlist',
@@ -575,14 +622,32 @@ keyExtractor
         'Não existe vencedor universal',
         'As duas permitem rolagem, mas foram pensadas para situações diferentes.',
         'Use ScrollView quando o conteúdo é pequeno e controlado; use FlatList quando o problema é uma lista maior, dinâmica ou que precisa crescer.',
-        [
-          ['ScrollView', 'Conteúdo pequeno/finito. Estrutura direta com filhos dentro do componente.'],
-          ['FlatList', 'Lista maior/dinâmica. Recebe data e renderItem.'],
-          ['key', 'Com map() usamos key; com FlatList podemos usar keyExtractor.'],
-          ['Eficiência', 'FlatList é preparada para não tratar toda lista como um bloco único já renderizado.'],
-          ['Caminho', 'Primeiro entendemos uma área rolável simples; depois usamos a ferramenta especializada.'],
-          ['Decisão', 'Pergunte: é uma página rolável ou é uma lista de dados que pode crescer?']
-        ]
+        [],
+        `<div class="react-hooks-lesson">
+          <section>
+            <h4>Uma página com seções diferentes</h4>
+            <p>Uma ficha de contato com cabeçalho, foto e formulário pode colocar esses componentes diretamente dentro de uma <code>ScrollView</code>. Cada bloco tem uma função própria na tela e o conjunto é curto e conhecido.</p>
+          </section>
+          <section>
+            <h4>Uma coleção com o mesmo tipo de item</h4>
+            <p>Para um catálogo de contatos que cresce, use <code>FlatList</code>. Na etapa 21, <code>data</code> recebe a coleção, <code>renderItem</code> cria o cartão e <code>keyExtractor</code> indica o ID estável de cada registro.</p>
+            <pre><code>&lt;FlatList
+  data={cidades}
+  keyExtractor={item =&gt; item.id}
+  renderItem={({ item }) =&gt; (
+    &lt;CartaoClima
+      cidade={item.cidade}
+      temperatura={item.temperatura}
+    /&gt;
+  )}
+/&gt;</code></pre>
+            <p>Use a <a href="#rn-state-mbb-react-key">etapa 18</a> para relembrar por que a chave acompanha o item após uma reordenação.</p>
+          </section>
+          <details>
+            <summary>Compare com os exemplos no Snack</summary>
+            <p>Nas etapas <a href="#rn-state-mbb-react-scrollview">19</a> e <a href="#rn-state-mbb-react-flatlist">21</a>, acrescente cidades se precisar forçar a rolagem. Vá até a última e volte ao topo. Identifique em qual versão o JSX declara os filhos da área rolável e em qual a lista chama uma função para gerar cada item.</p>
+          </details>
+        </div>`
       ),
       {
         id: 'mbb-react-pressable',
@@ -667,14 +732,19 @@ const styles = StyleSheet.create({
         'Escolha pela necessidade',
         'Todos podem responder ao toque, mas oferecem níveis diferentes de controle visual e estrutural.',
         'TouchableOpacity continua válido e aparece na Agenda de Contatos. Pressable oferece mais controle sobre estados da interação.',
-        [
-          ['Button', 'Bom para uma ação simples com aparência definida pela plataforma.'],
-          ['TouchableOpacity', 'Área clicável personalizável que reduz opacidade durante o toque.'],
-          ['Pressable', 'Oferece mais controle sobre estados de interação e aparência.'],
-          ['Não é moda', 'A escolha depende da experiência que a interface precisa oferecer.'],
-          ['Na prática', 'A Agenda de Contatos já usa TouchableOpacity em áreas clicáveis personalizadas.'],
-          ['Próximo passo', 'Vamos usar o estado pressed do Pressable para reagir visualmente ao toque.']
-        ]
+        [],
+        `<div class="react-hooks-lesson">
+          <section>
+            <h4>Calcular, abrir um cartão ou personalizar o toque</h4>
+            <p>Na Média Escolar, <code>Button</code> resolve a ação Calcular com um título e uma função. Na Agenda de Contatos, <code>TouchableOpacity</code> permite montar sua própria área com texto ou imagem e dá retorno visual diminuindo a opacidade durante o toque.</p>
+            <p>No cartão de clima da <a href="#rn-state-mbb-react-pressable">etapa 23</a>, <code>Pressable</code> transforma todo o cartão em área de toque. Ele também permite usar <code>pressed</code> para escolher o estilo enquanto o dedo está pressionando.</p>
+          </section>
+          <section>
+            <h4>O que continua depois de soltar?</h4>
+            <p>O estilo de pressão é momentâneo. Se o app precisa manter uma cidade selecionada, guarde a seleção em state e atualize-a em <code>onPress</code>. Assim, depois que a opacidade volta ao normal, o cartão ainda pode mostrar “Cidade selecionada”.</p>
+            <p>Na <a href="#rn-state-mbb-react-pressed">etapa 25</a>, pressione e segure o cartão, solte e toque outra vez. Observe separadamente a resposta enquanto pressiona e a confirmação que fica na tela.</p>
+          </section>
+        </div>`
       ),
       {
         id: 'mbb-react-pressed',
@@ -768,15 +838,24 @@ const styles = StyleSheet.create({
         'Não é decoração',
         'Em React, onPress espera receber uma função para executar depois. Por isso precisamos distinguir passar uma função de executar uma função imediatamente.',
         'onPress={salvar} passa uma função já existente. onPress={() => salvar(id)} cria uma função para que salvar(id) seja executado somente no toque.',
-        [
-          ['Direto', 'onPress={salvar}: use quando não precisa preparar argumentos naquele ponto.'],
-          ['Arrow', 'onPress={() => salvar(id)}: útil para chamar algo com argumento depois do toque.'],
-          ['Diagnostique', 'Se onPress={salvar(id)} já escreveu no console antes do toque, a chamada aconteceu ao montar a interface. Corrija para onPress={() => salvar(id)} e confira de novo.'],
-          ['Experimente', 'No cartão da etapa 23, substitua temporariamente o manipulador por uma função registrar(cidade) que use console.log. Faça o log aparecer apenas após o toque e inclua o nome da cidade.'],
-          ['JavaScript', 'Arrow function já foi estudada no JS Essencial; aqui vemos por que ela aparece no React.'],
-          ['Evento', 'O clique é o gatilho. A função passada ao evento é executada quando o gatilho ocorre.'],
-          ['Ponte', 'Essa diferença será importante quando compararmos Evento × Effect.']
-        ]
+        [],
+        `<div class="react-hooks-lesson">
+          <section>
+            <h4>A função precisa receber o nome da cidade</h4>
+            <p>Imagine dois cartões que registram qual cidade foi escolhida. Passe uma função que chama <code>registrar</code> com o nome certo. O React Native chama essa função quando ocorre o toque.</p>
+            <pre><code>function registrar(cidade) {
+  console.log('Cidade escolhida:', cidade);
+}
+
+&lt;Button title="Campinas" onPress={() =&gt; registrar('Campinas')} /&gt;
+&lt;Button title="Santos" onPress={() =&gt; registrar('Santos')} /&gt;</code></pre>
+          </section>
+          <section>
+            <h4>Diagnostique uma chamada antecipada</h4>
+            <p>Ao escrever <code>onPress={registrar('Campinas')}</code>, os parênteses executam a função assim que o JSX é avaliado. Essa função escreve no console e retorna <code>undefined</code>, que é o valor recebido pelo botão.</p>
+            <p>No exemplo da <a href="#rn-state-mbb-react-pressable">etapa 23</a>, acrescente <code>registrar</code> e troque temporariamente o manipulador por uma das duas formas. Limpe o console, recarregue e observe o que aparece antes e depois de tocar. Restaure o manipulador do cartão ao terminar.</p>
+          </section>
+        </div>`
       )
     ];
 
@@ -984,14 +1063,19 @@ ${estiloLaboratorio}`;
         'Uma necessidade diferente',
         'Até agora, as mudanças vieram de dados, cálculos e ações do usuário. Alguns comportamentos precisam permanecer sincronizados com algo que existe fora do fluxo de renderização do React, como um temporizador, uma assinatura ou uma comunicação externa.',
         'useEffect é usado para sincronizar o componente com sistemas externos ao React.',
-        [
-          ['Externo ao React', 'Temporizador, conexão, assinatura, API, recurso do navegador/dispositivo etc.'],
-          ['Effect', 'Configura a sincronização necessária depois que a renderização foi confirmada.'],
-          ['Evento', 'Responde diretamente a uma ação do usuário, como clicar em Calcular.'],
-          ['Não confundir', 'Cálculo simples derivado de state não precisa virar Effect.'],
-          ['Primeiro laboratório', 'Usaremos um temporizador porque ele deixa a sincronização externa visível sem misturar API.'],
-          ['Depois', 'Somente após entender Effect, cleanup e dependências faremos a ponte conceitual com API.']
-        ]
+        [],
+        `<div class="react-hooks-lesson">
+          <section>
+            <h4>A tela entra e o relógio começa a contar</h4>
+            <p>Imagine um cronômetro em uma tela de estudo. Ao entrar, o React monta o componente e apresenta os segundos iniciais. O Effect configura um intervalo do ambiente JavaScript. Cada disparo pede uma atualização de state e o React apresenta o novo valor.</p>
+            <p>A tela inicia o ciclo com <code>useEffect</code>, o ambiente marca o tempo com <code>setInterval</code> e o state permite mostrar o resultado. Na <a href="#rn-state-mbb-effect-timer">etapa 31</a>, você poderá observar esses passos no aplicativo.</p>
+          </section>
+          <section>
+            <h4>A tela sai e a contagem precisa parar</h4>
+            <p>O intervalo continua disparando até ser cancelado. A função de limpeza do Effect guarda o identificador do intervalo e o entrega a <code>clearInterval</code> ao desmontar o componente. Esse encerramento aparecerá no registro do <a href="#rn-state-mbb-effect-cleanup">laboratório da etapa 32</a>.</p>
+            <p>Antes de executar, preveja a contagem após três disparos e o que deve acontecer ao ocultar o temporizador. Use o número exibido e o registro para conferir suas previsões nas duas etapas seguintes.</p>
+          </section>
+        </div>`
       ),
       {
         id: 'mbb-effect-timer',
@@ -1091,31 +1175,55 @@ Em produção, o React não executa essa verificação extra. O cleanup normal c
         'O gatilho muda tudo',
         'Muitos erros acontecem quando colocamos dentro de useEffect algo que deveria acontecer diretamente em resposta ao usuário.',
         'Clique do usuário → evento. Sincronização com sistema externo → Effect.',
-        [
-          ['Calcular média', 'O usuário toca em Calcular. Isso pertence ao onPress.'],
-          ['Limpar', 'O usuário toca em Limpar. Isso pertence ao onPress.'],
-          ['Temporizador', 'Precisa existir enquanto o componente está sincronizado com o relógio. Isso é Effect.'],
-          ['API por botão', 'ViaCEP continua correto dentro do evento Pesquisar.'],
-          ['API automática', 'Se a aplicação realmente precisa sincronizar automaticamente com dados externos, um Effect pode fazer sentido.'],
-          ['Pergunta', 'Isso acontece porque o usuário fez algo agora ou porque o componente precisa permanecer sincronizado?']
-        ]
+        [],
+        `<div class="react-hooks-lesson">
+          <section>
+            <h4>Pesquisar quando o usuário pede</h4>
+            <p>Em uma busca de CEP, digitar prepara o texto para a consulta. O enunciado diz que a consulta começa ao tocar em Pesquisar. Ligue a função ao botão com <code>onPress={consultarCep}</code>. Ao corrigir um dígito, o aluno pode continuar digitando e fazer o pedido quando estiver pronto.</p>
+            <p>Usar a entrada do CEP como dependência de um Effect mudaria essa regra. Cada alteração passaria a disparar a lógica de consulta, inclusive durante a digitação.</p>
+          </section>
+          <section>
+            <h4>Sincronizar enquanto um componente aparece</h4>
+            <p>Na <a href="#rn-state-mbb-effect-api-ponte">cotação da etapa 38</a>, o requisito pede a consulta já na abertura. O Effect inicia o pedido quando <code>Cotacao</code> é montado. O botão Ocultar muda a visibilidade e, ao desmontar, o componente cancela o pedido pendente.</p>
+            <p>Depois de ocultar, Mostrar monta outra instância e abre uma nova consulta. O botão controla qual componente aparece. A consulta pertence ao ciclo desse componente.</p>
+          </section>
+          <details>
+            <summary>Conferência sobre o gatilho</summary>
+            <p>Se a tela tem um botão Atualizar que deve consultar naquele instante, o evento pode chamar a função. Se a tela precisa carregar na abertura, o Effect pode iniciar a consulta independentemente de um toque.</p>
+          </details>
+        </div>`
       ),
       mkPage(
         'mbb-effect-nao-usar',
         '37. Quando não usar',
-        'Quando NÃO usar useEffect',
-        'Evitar Effects desnecessários.',
-        'Menos código, melhor modelo mental',
-        'useEffect não é um lugar genérico para colocar qualquer lógica que “precisa acontecer”.',
-        'Se um valor pode ser calculado diretamente a partir de props/state durante a renderização, calcule-o. Se algo acontece por causa de um clique, trate no evento.',
-        [
-          ['Cálculo simples', 'total = quantidade * preco não precisa de Effect.'],
-          ['Média', '(nota1 + nota2) / 2 pode ser calculada na função acionada pelo botão.'],
-          ['Clique', 'Salvar, excluir e pesquisar por botão pertencem ao evento correspondente.'],
-          ['Effect', 'Reserve para sincronizações externas necessárias ao componente.'],
-          ['Sinal de alerta', 'Effect que apenas copia um state para outro frequentemente pode ser evitado.'],
-          ['Objetivo', 'Entender a origem da necessidade antes de escolher useEffect.']
-        ]
+        'Quando useEffect não é necessário',
+        'Escolher onde fazer um cálculo, executar uma ação ou sincronizar com um serviço externo.',
+        'Decida pelo que dispara a ação',
+        'Imagine duas versões da Média Escolar. Uma atualiza a média à medida que você digita. A outra só mostra a média ao tocar em Calcular. A fórmula é a mesma e a atualização acontece em momentos diferentes.',
+        'Se a tela depende apenas dos dados atuais, calcule durante a renderização. Se a regra depende de um toque, execute no evento. Se o componente precisa acompanhar algo externo, configure a sincronização com useEffect.',
+        [],
+        `<div class="react-hooks-lesson">
+          <section>
+            <h4>Cálculo que acompanha a digitação</h4>
+            <p>As notas digitadas já estão em state. Em uma versão com cálculo ao vivo, converta e valide as duas entradas antes de calcular. Cada digitação provoca uma renderização, que usa as notas mais recentes.</p>
+            <pre><code>const primeira = lerNota(nota1);
+const segunda = lerNota(nota2);
+const notasValidas = primeira !== null &amp;&amp; segunda !== null;
+const media = notasValidas ? (primeira + segunda) / 2 : null;</code></pre>
+            <p>A função <code>lerNota</code> vem da <a href="#rn-state-state-12-final">Média Escolar</a> e retorna <code>null</code> para uma entrada inválida. A tela pode exibir o resultado quando <code>media !== null</code>, de modo que a média <code>0</code> também aparece.</p>
+            <p>Guardar essa média em outro state e atualizá-la com um Effect cria um segundo lugar para manter o mesmo dado. Quando o valor muda, a tela pode renderizar primeiro com a média anterior e renderizar novamente após o Effect.</p>
+          </section>
+          <section>
+            <h4>Cálculo sob demanda e consulta externa</h4>
+            <p>Na Média Escolar da etapa 29, <code>onPress={calcularMedia}</code> valida as entradas e guarda o último resultado confirmado. Se você calcular com 6 e 6 e depois trocar a Nota 2 para 8, a média exibida fica em 6 até tocar em Calcular outra vez.</p>
+            <p>O mesmo raciocínio vale para buscar um CEP ao tocar em Pesquisar. Já a <a href="#rn-state-mbb-effect-api-ponte">cotação do Bitcoin da etapa 38</a> começa quando o componente aparece. Nesse caso, o Effect inicia a consulta e o cleanup cancela uma requisição pendente quando o componente sai da tela.</p>
+          </section>
+          <details>
+            <summary>Preveja e confira</summary>
+            <p>Com notas 6 e 8, o que aparece ao mudar a segunda nota para 10 em cada versão?</p>
+            <p><strong>Conferência.</strong> A versão ao vivo passa de 7 para 8 ao digitar. A versão sob demanda continua mostrando 7 até o próximo toque em Calcular. Experimente a segunda versão na prévia interativa da <a href="#rn-state-state-12-final">etapa 29</a>.</p>
+          </details>
+        </div>`
       ),
       {
         id: 'mbb-effect-api-ponte',
@@ -1126,6 +1234,10 @@ Em produção, o React não executa essa verificação extra. O cleanup normal c
 import { Button, View, Text, StyleSheet } from 'react-native';
 
 const URL_COTACAO = 'https://economia.awesomeapi.com.br/json/last/BTC-BRL';
+const formatoReal = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+});
 
 function Cotacao() {
   const [cotacao, setCotacao] = useState({ estado: 'carregando' });
@@ -1148,7 +1260,7 @@ function Cotacao() {
         }
 
         if (!controle.signal.aborted) {
-          setCotacao({ estado: 'sucesso', preco });
+          setCotacao({ estado: 'sucesso', valor });
         }
       } catch {
         if (!controle.signal.aborted) {
@@ -1167,7 +1279,7 @@ function Cotacao() {
   if (cotacao.estado === 'erro') {
     return <Text style={styles.texto}>Não foi possível consultar a cotação.</Text>;
   }
-  return <Text style={styles.valor}>R$ {cotacao.preco}</Text>;
+  return <Text style={styles.valor}>{formatoReal.format(cotacao.valor)}</Text>;
 }
 
 export default function App() {
@@ -1192,24 +1304,51 @@ ${estiloLaboratorio}`,
         added: 'Mostrar Cotacao monta o componente. Seu Effect consulta a API. Ocultar Cotacao desmonta o componente e cancela uma consulta pendente.',
         preview: phonePreview('Cotação do Bitcoin',
           botaoLaboratorio('OCULTAR COTAÇÃO') + textoLaboratorio('Carregando cotação...')),
-        note: 'A prévia ilustra o carregamento. A resposta real depende do serviço externo.'
+        note: 'A prévia ilustra o carregamento. No Snack, a cotação recebida da API é exibida em reais no padrão brasileiro. Por exemplo, 234567.89 aparece como R$ 234.567,89.'
       },
       mkPage(
         'mbb-hooks-resumo',
         '39. Consolidação',
         'useState × useRef × useEffect',
-        'Consolidar quando usar cada Hook estudado.',
-        'Três problemas diferentes',
-        'Os Hooks não são três versões de uma mesma solução. Cada um aparece porque surgiu uma necessidade diferente.',
-        'Antes de escolher um Hook, descreva o problema em português simples.',
-        [
-          ['useState', 'Preciso guardar um valor que participa da interface e pode mudar.'],
-          ['useRef', 'Preciso manter uma referência sem que a mudança de current provoque renderização.'],
-          ['useEffect', 'Preciso sincronizar o componente com algo externo ao React.'],
-          ['Evento', 'Não é Hook, mas é essencial na comparação: responde diretamente a ações do usuário.'],
-          ['Exemplos', 'nota → state; foco do campo → ref; temporizador → Effect; botão Calcular → evento.'],
-          ['Próximo módulo', 'Agora estamos prontos para estudar cliente, servidor, HTTP, JSON, fetch e APIs conscientemente.']
-        ]
+        'Justificar o uso de state, ref, evento e Effect em um mesmo aplicativo.',
+        'As decisões de um app de estudos',
+        'Você já usou estado e foco na Média Escolar e observou o ciclo de um temporizador. Agora reúna essas decisões em um app com tarefas e uma sessão de estudo cronometrada.',
+        'A tarefa aparece na tela e pode mudar. O campo recebe foco quando o aluno adiciona uma tarefa. O relógio avança enquanto a sessão está visível. Cada necessidade indica onde colocar a lógica.',
+        [],
+        `<div class="react-hooks-lesson">
+          <section>
+            <h4>Ao adicionar uma tarefa</h4>
+            <p><code>useState</code> guarda o título digitado e a lista de tarefas. O evento do botão Adicionar valida o título, atualiza a lista e limpa o campo. Na mesma função, a referência do campo coloca o cursor de volta para a próxima digitação.</p>
+            <pre><code>const campoTarefa = useRef(null);
+
+// Dentro da função que adiciona uma tarefa válida:
+setTitulo('');
+campoTarefa.current?.focus();</code></pre>
+            <p>Ligue essa referência ao <code>TextInput</code> com <code>ref={campoTarefa}</code>. A atualização de state faz a lista e o texto do campo mudarem na tela. A ação de foco usa o campo já montado, como na <a href="#rn-state-state-11-useref">etapa 27</a>.</p>
+          </section>
+          <section>
+            <h4>Enquanto a sessão de estudo está visível</h4>
+            <p>O botão Iniciar mostra o componente Temporizador. Ao montar, ele usa um Effect para criar o intervalo. Cada disparo atualiza <code>segundos</code> em state e a tela passa a mostrar o novo valor.</p>
+            <pre><code>useEffect(() => {
+  const intervalo = setInterval(() => {
+    setSegundos(anterior => anterior + 1);
+  }, 1000);
+  return () => clearInterval(intervalo);
+}, []);</code></pre>
+            <p>O botão Encerrar remove o Temporizador da tela e o cleanup para a contagem. Para observar o encerramento e a remontagem, reveja o <a href="#rn-state-mbb-effect-cleanup">laboratório da etapa 32</a>.</p>
+          </section>
+          <details>
+            <summary>Classifique antes de conferir</summary>
+            <ol>
+              <li>O aluno conclui uma tarefa e ela muda de situação na tela.</li>
+              <li>Ao adicionar uma tarefa, o cursor volta para o campo.</li>
+              <li>O número de pendências muda quando uma tarefa é concluída.</li>
+              <li>O intervalo precisa parar quando o temporizador sai da tela.</li>
+            </ol>
+            <p><strong>Conferência.</strong> 1. Evento e state. 2. Evento e ref. 3. Cálculo a partir da lista no state. 4. Cleanup do Effect.</p>
+          </details>
+          <p>Leve essas decisões para o <a href="#rn-state-exercicios-state">projeto da etapa 99</a>. Se o app passar a buscar dados de um serviço ao abrir uma tela, o próximo módulo explica como o aplicativo faz o pedido e interpreta a resposta.</p>
+        </div>`
       )
     ];
 

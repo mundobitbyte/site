@@ -270,20 +270,6 @@ O map() percorre os dados e devolve componentes para a interface.`;
       effectEvent.highlight = 'Se acontece porque o usuário fez algo agora, normalmente é evento. Se o componente precisa permanecer sincronizado com algo externo, use Effect.';
     }
 
-    const noEffect = reactModule.steps.find(s => s.id === 'mbb-effect-nao-usar');
-    if (noEffect) {
-      noEffect.title = 'Quando useEffect não é necessário';
-      noEffect.kicker = 'Nem toda lógica precisa de Effect';
-      noEffect.lead = 'useEffect não é um lugar genérico para colocar qualquer lógica automática.';
-      noEffect.highlight = 'Se um valor pode ser calculado diretamente a partir de props/state, calcule-o. Se algo acontece por causa de um toque, trate no evento correspondente.';
-    }
-
-    const hookSummary = reactModule.steps.find(s => s.id === 'mbb-hooks-resumo');
-    if (hookSummary) {
-      hookSummary.lead = 'useState, useRef e useEffect resolvem necessidades diferentes dentro do mesmo componente.';
-      hookSummary.highlight = 'Antes de escolher um Hook, descreva o problema em uma frase simples: guardar um valor que muda, manter uma referência ou sincronizar com algo externo.';
-    }
-
     const exercise = reactModule.steps.find(isExercise);
     if (exercise && exercise.html) {
       exercise.html = exercise.html.replace(
