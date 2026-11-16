@@ -2813,6 +2813,36 @@
   margin:4px 0 8px !important;
 }
 
+.exercise-study-project {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid #c7d8ed;
+  border-radius: 10px;
+}
+
+.exercise-study-project summary {
+  color: #123b73;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.exercise-study-project h4 {
+  margin: 12px 0 5px;
+}
+
+.exercise-study-project :is(ol, ul) {
+  padding-inline-start: 20px;
+}
+
+.exercise-study-project li + li {
+  margin-top: 4px;
+}
+
+.exercise-study-project :is(summary, a):focus-visible {
+  outline: 2px solid #142c48;
+  outline-offset: 2px;
+}
+
 .exercise-clean .exercise-guide-inline{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
