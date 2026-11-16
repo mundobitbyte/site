@@ -4817,9 +4817,8 @@ const styles = StyleSheet.create({
                 : 'Use estes desafios para praticar os mesmos conceitos do módulo em situações novas. Observe o resultado esperado, divida a tela em blocos, escolha as propriedades Flexbox adequadas e só depois monte o código no App.js.'}
           </div>
 
-          <div class="module-page-grid">
-            ${cards}
-          </div>
+          ${cards ? `<div class="module-page-grid">${cards}</div>` : ''}
+          ${step.html || ''}
 
           ${step.snackGuide ? `
             ${snackIntroPreview()}

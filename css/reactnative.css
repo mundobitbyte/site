@@ -1992,6 +1992,66 @@
   font-size: 13px;
 }
 
+.react-hooks-lesson {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+  margin-top: 20px;
+  line-height: 1.55;
+}
+
+.react-hooks-lesson > :not(section) {
+  grid-column: 1 / -1;
+}
+
+.react-hooks-lesson h4 {
+  color: #0f3f86;
+  font-size: 17px;
+}
+
+.react-hooks-lesson p,
+.react-hooks-lesson pre {
+  margin-block: 8px 0;
+}
+
+.react-hooks-lesson pre {
+  padding: 12px;
+  border-radius: 8px;
+  background: #eef4fb;
+  color: #132033;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.react-hooks-lesson details {
+  padding: 10px 12px;
+  border: 1px solid #c7d8ed;
+  border-radius: 8px;
+}
+
+.react-hooks-lesson ol {
+  padding-inline-start: 22px;
+  margin-top: 8px;
+}
+
+.react-hooks-lesson summary {
+  color: #123b73;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.react-hooks-lesson :is(a, summary):focus-visible {
+  outline: 2px solid #142c48;
+  outline-offset: 2px;
+}
+
+@media (max-width: 850px) {
+  .react-hooks-lesson {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+}
+
 @media (max-width: 1050px) {
   .layout {
     height: auto;
@@ -3694,6 +3754,14 @@
   content:"";
   display:block;
   height:70px;
+}
+
+#introView:has(.react-hooks-lesson) {
+  padding-bottom: 24px !important;
+}
+
+#introView:has(.react-hooks-lesson)::after {
+  content: none;
 }
 
 /* corrige grids da intro */
