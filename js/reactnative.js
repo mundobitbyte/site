@@ -1447,13 +1447,6 @@ btnVermelho: {
       },
     ];
 
-function codigoMediaEscolar(etapa) {
-  const soEventos = etapa === 'eventos';
-  const podeLimpar = etapa !== 'calculo';
-  const resultadoCondicional = etapa === 'condicional' || etapa === 'foco';
-  const usaRef = etapa === 'foco';
-
-  const validacao = String.raw`
 function lerNota(entrada) {
   const texto = entrada.trim().replace(',', '.');
   const formatoValido = /^(\d+(\.\d+)?|\.\d+)$/.test(texto);
@@ -1465,7 +1458,13 @@ function lerNota(entrada) {
   const nota = Number(texto);
   return nota <= 10 ? nota : null;
 }
-`;
+
+function codigoMediaEscolar(etapa) {
+  const soEventos = etapa === 'eventos';
+  const podeLimpar = etapa !== 'calculo';
+  const resultadoCondicional = etapa === 'condicional' || etapa === 'foco';
+  const usaRef = etapa === 'foco';
+  const validacao = `\n${lerNota.toString()}\n`;
 
   return `import React, { useState${usaRef ? ', useRef' : ''} } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
@@ -1571,23 +1570,72 @@ const styles = StyleSheet.create({
 });`;
 }
 
-function previaMediaEscolar({ nota = '', mensagem = '', resultado = false, mostrarRotulos = true, podeLimpar = true, foco = false, destacarSituacao = false } = {}) {
-  const campo = (numero, destaque = false) => `
+function previaMediaEscolar({ nota = '', mensagem = '', resultado = false, podeLimpar = true, destacarSituacao = false } = {}) {
+  const campo = numero => `
     <div>Nota ${numero}:</div>
-    <div style="min-height:36px;padding:8px;box-sizing:border-box;margin:6px 0 10px;border:1px solid ${destaque ? '#1967d2' : '#999'};">${destaque ? '│' : nota}</div>`;
+    <div style="min-height:36px;padding:8px;box-sizing:border-box;margin:6px 0 10px;border:1px solid #999;">${nota}</div>`;
   const botao = (titulo, ativo = true) => `<span style="flex:1;padding:8px 4px;text-align:center;background:${ativo ? '#1967d2' : '#64748b'};color:white;border-radius:4px;font-size:12px;">${titulo}</span>`;
 
   return `<div style="height:100%;padding:clamp(14px, 8%, 30px);padding-top:clamp(20px, 12%, 48px);box-sizing:border-box;background:#fff;font-family:Arial,sans-serif;color:#0f172a;font-size:14px;">
     <div style="font-size:21px;font-weight:800;margin-bottom:14px;">Média Escolar</div>
-    ${campo(1, foco)}
+    ${campo(1)}
     ${campo(2)}
     <div style="display:flex;gap:8px;margin-top:10px;">${botao('CALCULAR')}${botao('LIMPAR', podeLimpar)}</div>
     ${mensagem ? `<div style="color:#194a96;margin-top:12px;">${mensagem}</div>` : ''}
-    ${mostrarRotulos || resultado ? `<div style="line-height:1.5;margin-top:12px;">
+    <div style="line-height:1.5;margin-top:12px;">
       <div>Média: ${resultado ? nota : ''}</div>
       <div>Situação: ${resultado ? (destacarSituacao ? '<strong style="color:#166534;">Aprovado</strong>' : 'Aprovado') : ''}</div>
-    </div>` : ''}
+    </div>
   </div>`;
+}
+
+function previaMediaEscolarInterativa() {
+  return `<form class="media-escolar-interativa" autocomplete="off">
+    <strong class="media-escolar-titulo">Média Escolar</strong>
+    <label>Nota 1:<input name="nota1" inputmode="decimal"></label>
+    <label>Nota 2:<input name="nota2" inputmode="decimal"></label>
+    <div class="media-escolar-botoes">
+      <button type="submit">Calcular</button>
+      <button type="reset">Limpar</button>
+    </div>
+    <div aria-live="polite" role="status">
+      <p class="media-escolar-erro" hidden>Informe duas notas de 0 a 10. Exemplo: 7,5.</p>
+      <div class="media-escolar-resultado" hidden>
+        <div>Média: <span></span></div>
+        <div>Situação: <strong></strong></div>
+      </div>
+    </div>
+  </form>`;
+}
+
+function prepararPreviaMediaEscolar(form) {
+  const { nota1, nota2 } = form.elements;
+  const erro = form.querySelector('.media-escolar-erro');
+  const resultado = form.querySelector('.media-escolar-resultado');
+  const media = resultado.querySelector('span');
+  const situacao = resultado.querySelector('strong');
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const primeira = lerNota(nota1.value);
+    const segunda = lerNota(nota2.value);
+    const valido = primeira !== null && segunda !== null;
+    erro.hidden = valido;
+    resultado.hidden = !valido;
+    if (!valido) return;
+
+    const valor = (primeira + segunda) / 2;
+    const aprovado = valor >= 6;
+    media.textContent = valor;
+    situacao.textContent = aprovado ? 'Aprovado' : 'Reprovado';
+    situacao.classList.toggle('media-escolar-aprovado', aprovado);
+  });
+
+  form.addEventListener('reset', () => {
+    erro.hidden = true;
+    resultado.hidden = true;
+    nota1.focus();
+  });
 }
 
     const modules = {
@@ -4231,8 +4279,8 @@ const styles = StyleSheet.create({
                     "code": codigoMediaEscolar('foco'),
                     "addedTitle": "Trecho em foco",
                     "added": "Ligue campoNota1 ao primeiro TextInput e chame campoNota1.current?.focus() após limpar.",
-                    "preview": previaMediaEscolar({ mostrarRotulos: false, foco: true }),
-                    "note": "A prévia ilustra o cursor após Limpar. Execute o App.js para conferir a mudança de foco."
+                    "preview": previaMediaEscolarInterativa(),
+                    "note": "Depois de testar a prévia interativa, execute o App.js no Snack para observar o useRef em ação."
           },
           {
                     "id": "state-12-final",
@@ -4242,7 +4290,7 @@ const styles = StyleSheet.create({
                     "code": codigoMediaEscolar('foco'),
                     "addedTitle": "Resumo do app",
                     "added": "A versão final reúne validação, cálculo, exibição condicional, limpeza e retorno do foco.",
-                    "preview": previaMediaEscolar({ nota: '6', resultado: true, destacarSituacao: true }),
+                    "preview": previaMediaEscolarInterativa(),
                     "note": "A Média Escolar reúne estado, eventos e referência. Em seguida, o temporizador apresenta a necessidade de sincronização externa."
           },
           {
@@ -5119,7 +5167,10 @@ const styles = StyleSheet.create({
       document.getElementById('fullCode').textContent = step.code;
       document.getElementById('newCode').textContent = step.added;
       document.getElementById('note').innerHTML = `<strong>Observação:</strong> ${step.note}`;
-      document.getElementById('preview').innerHTML = step.preview ? step.preview : previewHTML(id);
+      const preview = document.getElementById('preview');
+      preview.innerHTML = step.preview ? step.preview : previewHTML(id);
+      const mediaEscolar = preview.querySelector('.media-escolar-interativa');
+      if (mediaEscolar) prepararPreviaMediaEscolar(mediaEscolar);
     }
 
     function copiarComSelecao(texto, botao) {

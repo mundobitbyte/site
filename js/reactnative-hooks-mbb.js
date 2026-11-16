@@ -806,7 +806,7 @@ focus() -> coloca o cursor no TextInput.
 state × ref
 state participa da renderização.
 ref mantém uma referência sem provocar renderização quando current muda.`;
-      refStep.note = 'A prévia ilustra o cursor após Limpar. O ?. só deixa chamar focus() quando a referência está disponível.';
+      refStep.note = 'Repita o teste no Snack para observar o useRef em ação. No App.js, o ?. só deixa chamar focus() quando a referência está disponível.';
     }
 
     const refOptional = {
