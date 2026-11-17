@@ -33,7 +33,7 @@ const dest=process.env.MBB_EVIDENCIAS||'/tmp/seiot-evidencias';
    const tituloAnterior=await diagramaCard.evaluate(e=>e.previousElementSibling?.querySelector('h3')?.textContent);
    const tituloSeguinte=await diagramaCard.evaluate(e=>e.nextElementSibling?.querySelector('h3')?.textContent);
    assert.match(tituloAnterior,/7\. Montando o circuito-base/);
-   assert.match(tituloSeguinte,/8\. Código do LED/);
+   assert.match(tituloSeguinte,/Entenda o diagram\.json/);
    assert.match(await diagramaCard.textContent(),/diagram\.json/);
    assert.match(await diagramaCard.textContent(),/sketch\.ino/);
    assert.match(await diagramaCard.textContent(),/Ctrl\+A/);
@@ -46,6 +46,7 @@ const dest=process.env.MBB_EVIDENCIAS||'/tmp/seiot-evidencias';
    assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),await page.locator('#b6-prep-diagrama-extra').textContent());
    const guiaCard=page.locator('#b6-prep [data-mbb6-acrescimo="guia-json"]');
    assert.equal(await guiaCard.count(),1);
+   assert.match(await guiaCard.evaluate(e=>e.nextElementSibling?.querySelector('h3')?.textContent),/8\. Código do LED/);
    assert.match(await guiaCard.evaluate(e=>e.previousElementSibling?.querySelector('h3')?.textContent),/Opção 2/);
    assert.match(await guiaCard.evaluate(e=>e.nextElementSibling?.querySelector('h3')?.textContent),/8\. Código do LED/);
    for(const token of ['version','author','editor','parts','connections','serialMonitor','left','top','rotate','hide','attrs','color','value','newline','Ctrl']) {
