@@ -53,6 +53,21 @@ const dest=process.env.MBB_EVIDENCIAS||'/tmp/seiot-evidencias';
      assert((await guiaCard.textContent()).includes(token),'Falta explicação JSON: '+token);
    }
    assert.equal(await guiaCard.locator('details').count(),5);
+
+   // A faixa inteira precisa indicar que abre/fecha, inclusive para uso por teclado.
+   for(const accordion of await guiaCard.locator('details').all()){
+     const summary=accordion.locator('summary');
+     assert.match(await summary.evaluate(e=>getComputedStyle(e,'::after').content),/Clique para abrir/);
+     assert.equal(await summary.evaluate(e=>getComputedStyle(e).cursor),'pointer');
+     assert.equal(await accordion.evaluate(e=>e.open),false);
+     await summary.click();
+     assert.equal(await accordion.evaluate(e=>e.open),true);
+     assert.match(await summary.evaluate(e=>getComputedStyle(e,'::after').content),/Clique para fechar/);
+     await summary.focus();
+     await page.keyboard.press('Enter');
+     assert.equal(await accordion.evaluate(e=>e.open),false);
+   }
+
    assert.equal(await guiaCard.locator('table').count(),4);
    assert.match(await guiaCard.textContent(),/não aceita comentários/);
    assert.match(await guiaCard.textContent(),/não simula a transmissão por rádio/);
