@@ -23,6 +23,8 @@ assert(page.includes('mbb-busca-global.js'));
 assert.equal(diagram.parts.length, 9);
 assert.equal(diagram.connections.length, 24);
 const ids = new Set(diagram.parts.map(p => p.id));
+const pinoDHT = firmware.match(/const uint8_t DHT_PIN = (\d+);/)[1];
+assert(diagram.connections.some(c => c[0] === 'esp:' + pinoDHT && c[1] === 'dht1:SDA'));
 assert(diagram.connections.some(c => c[0] === "resDht:2" && c[1] === "dht1:SDA"));
 assert.equal(ids.size, diagram.parts.length);
 for (const c of diagram.connections)

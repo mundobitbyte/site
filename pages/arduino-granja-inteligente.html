@@ -63,7 +63,7 @@
 <div class="tablewrap"><table>
 <thead><tr><th>Peça</th><th>O que faz</th><th>Ligação ao ESP32</th></tr></thead><tbody>
 <tr><td>ESP32</td><td>Executa o programa e conecta-se ao Wi-Fi.</td><td>Controlador central</td></tr>
-<tr><td>DHT22</td><td>Fornece temperatura e umidade; aqui controlamos somente pela temperatura.</td><td>SDA → GPIO 4; VCC → 3V3; GND → GND. O resistor de 10 kΩ mantém SDA em nível alto entre as leituras.</td></tr>
+<tr><td>DHT22</td><td>Fornece temperatura e umidade; aqui controlamos somente pela temperatura.</td><td>SDA → GPIO 15; VCC → 3V3; GND → GND. O resistor de 10 kΩ mantém SDA em nível alto entre as leituras.</td></tr>
 <tr><td>HC-SR04</td><td>Mede a distância até a superfície da água.</td><td>TRIG → GPIO 26; ECHO → GPIO 27; VCC → 5V; GND → GND</td></tr>
 <tr><td>MFRC522</td><td>Lê o código de identificação de cartões (UID) via SPI.</td><td>SDA/SS → 5; RST → 21; SCK → 18; MISO → 19; MOSI → 23; 3.3V e GND</td></tr>
 <tr><td>LED azul + resistor 220 Ω</td><td>Representa ventilador ligado.</td><td>Ânodo → GPIO 32; cátodo → resistor → GND</td></tr>
@@ -79,7 +79,7 @@
 <li>Abra a aba <code>diagram.json</code>, selecione <strong>todo</strong> o texto existente (Ctrl+A, ou selecionar tudo no celular) e substitua pelo <strong>diagram.json completo</strong> disponibilizado ao final desta página. Esse arquivo declara peças, posições, pinos e conexões.</li>
 <li>Abra <code>sketch.ino</code>, apague seu conteúdo e cole o <strong>sketch.ino completo</strong>. Este é o programa que roda no ESP32.</li>
 <li>Se <code>libraries.txt</code> ainda não estiver nas abas, abra o menu de arquivos ao lado delas, escolha <strong>New file...</strong>, digite <code>libraries.txt</code> e clique em <strong>Create</strong>. Abra a aba e cole a lista de quatro bibliotecas abaixo. Você também pode adicioná-las pelo <strong>Library Manager</strong>.</li>
-<li>Inicie a simulação ▶. Abra o Serial Monitor e procure <code>[PRONTO] Granja IoT</code>. Na configuração inicial, a temperatura é 24 °C e a distância 8 cm. Aguarde os primeiros ciclos de medição e confira os dois LEDs apagados.</li>
+<li>Para enquadrar toda a montagem, clique no fundo da área do circuito e pressione <strong>F</strong>. Inicie a simulação ▶. Abra o Serial Monitor e procure <code>[PRONTO] Granja IoT</code>. Na configuração inicial, a temperatura é 24 °C e a distância 8 cm. Aguarde os primeiros ciclos de medição e confira os dois LEDs apagados.</li>
 </ol>
 <p><strong>O que é JSON?</strong> É um formato de dados estruturados em pares de chave e valor. Por exemplo, <code>"type": "wokwi-dht22"</code> indica o tipo de componente; <code>"id": "dht1"</code> permite referenciá-lo; cada item de <code>connections</code> liga dois pinos. O JSON monta o circuito virtual; o programa C++ determina seu comportamento.</p>
 <p class="evidence"><strong>Resultado observável:</strong> o circuito exibe ESP32, os três dispositivos de entrada e dois LEDs, e o Serial Monitor mostra o modo demonstração.</p>

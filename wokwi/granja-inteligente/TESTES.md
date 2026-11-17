@@ -6,6 +6,21 @@
 - A validação atual do GitHub Actions repete a compilação de demonstração e inclui o ramo HTTPS com credenciais fictícias. Consulte os resultados no commit em revisão.
 - Compilação, execução no Wokwi, confirmação da API do Telegram e recebimento no aparelho são evidências distintas.
 
+## Resultados observados na revisão
+
+| Ação | Esperado | Observado | Evidência |
+| --- | --- | --- | --- |
+| Compilar demonstração e HTTPS com configuração fictícia | O ESP32 compila nos dois modos | Ambos aprovados | [GitHub Actions](https://github.com/mundobitbyte/site/actions/runs/44066830959) |
+| Navegar e copiar em 390 e 1366 px | Etapas acessíveis e arquivos copiados integralmente | Percursos completos, seis cópias idênticas e ausência de transbordamento | [GitHub Actions](https://github.com/mundobitbyte/site/actions/runs/44066830959) |
+| Iniciar o projeto no Wokwi | Registrar evento local e tentativa Wi-Fi | `[PRONTO] Granja IoT`, `[DEMO]` e `[REDE] Wi-Fi conectado` | Monitor Serial, projeto temporário |
+| Ajustar o reservatório para 25 cm e depois para 7 cm, já sem Wi-Fi | Bomba liga por nível baixo e desliga por nível cheio mesmo sem rede | `Nivel de agua baixo: bomba ligada` e `Reservatorio abastecido: bomba desligada` | Serial aos 9.456 e 12.805 ms; Wi-Fi desligado antes do segundo evento |
+| Apresentar cartões azul e vermelho | Reconhecer Ana e rejeitar desconhecido | UIDs `01:02:03:04` e `AA:BB:CC:DD` confirmados pelo Serial | Serial aos 14.539 e 13.185 ms |
+| Desligar Wi-Fi com w e restaurar com r | Registrar queda e nova associação | `Wi-Fi desconectado; controle local ativo` e nova conexão ao Wokwi-GUEST | Serial, projeto temporário |
+| Ajustar DHT22 de 24 para 34 °C, com Wi-Fi desligado | Ventilador permanece apagado a 24 °C e liga com a temperatura alta | GPIO 4 apresentou `TIMEOUT`; após remapear para GPIO 15, modo normal na partida e evento de temperatura alta durante a queda de Wi-Fi | Wokwi, evento no Serial aos 6.661 ms com GPIO 15 |
+| Enviar alerta verdadeiro por HTTPS | Evento gerado, mensagem aceita pela API e visível no aparelho | Demonstração gerou o evento; envio e entrega reais pendentes de bot e chat privados | Serial e compilação do ramo HTTPS com configuração fictícia |
+
+O ensaio controlado em C++ exerceu histerese, repetição de leituras, timeout e bloqueio da bomba e respostas a falhas. Esses casos não equivalem a executar as mesmas transições com os sensores e o relógio do Wokwi.
+
 ## Casos para executar no Wokwi
 
 | Numero | Acao do aluno | Esperado |

@@ -26,7 +26,7 @@
 #endif
 
 // Os numeros abaixo correspondem EXATAMENTE aos fios de diagram.json.
-const uint8_t DHT_PIN = 4;
+const uint8_t DHT_PIN = 15;
 const uint8_t TRIG_PIN = 26;
 const uint8_t ECHO_PIN = 27;
 const uint8_t LED_VENTILADOR = 32;
