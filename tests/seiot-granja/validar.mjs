@@ -20,9 +20,10 @@ const match = [...page.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)];
 for (const m of match) if (m[1].trim()) new Script(m[1]);
 assert(page.includes('arduino-iot.html#b7-5'));
 assert(page.includes('mbb-busca-global.js'));
-assert.equal(diagram.parts.length, 8);
-assert.equal(diagram.connections.length, 22);
+assert.equal(diagram.parts.length, 9);
+assert.equal(diagram.connections.length, 24);
 const ids = new Set(diagram.parts.map(p => p.id));
+assert(diagram.connections.some(c => c[0] === "resDht:2" && c[1] === "dht1:SDA"));
 assert.equal(ids.size, diagram.parts.length);
 for (const c of diagram.connections)
   for (const endpoint of c.slice(0, 2))

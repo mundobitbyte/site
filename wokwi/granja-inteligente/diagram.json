@@ -73,6 +73,15 @@
       "attrs": {
         "value": "220"
       }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "resDht",
+      "top": -98,
+      "left": -165,
+      "attrs": {
+        "value": "10000"
+      }
     }
   ],
   "connections": [
@@ -207,7 +216,23 @@
       "esp:GND.2",
       "black",
       []
+    ],
+    [
+      "resDht:1",
+      "dht1:VCC",
+      "red",
+      []
+    ],
+    [
+      "resDht:2",
+      "dht1:SDA",
+      "orange",
+      []
     ]
   ],
-  "dependencies": {}
+  "dependencies": {},
+  "serialMonitor": {
+    "display": "always",
+    "newline": "lf"
+  }
 }

@@ -130,7 +130,10 @@ void conferirTemperatura() {
   if (isnan(dado.temperature) || isnan(dado.humidity)) {
     temperatura = NAN;
     umidade = NAN;
-    if (!falhaTemperatura && ventilador) notificar("Falha de leitura DHT22: verificar sensor");
+    if (!falhaTemperatura) {
+      Serial.printf("[DHT22] Diagnostico da biblioteca: %s\n", dht.getStatusString());
+      if (ventilador) notificar("Falha de leitura DHT22: verificar sensor");
+    }
     falhaTemperatura = true;
     // Politica didatica: ventilacao mantida ligada enquanto falta leitura.
     ligarVentilador(true);
@@ -309,6 +312,7 @@ void setup() {
   "demonstracao sem envio"
 #endif
   );
+  ultimaTemp = millis(); // aguarda um intervalo completo antes da primeira leitura
   notificar("Controlador iniciado");
 }
 void loop() {
