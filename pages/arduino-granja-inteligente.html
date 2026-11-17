@@ -42,7 +42,7 @@
 <body>
 <header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Sistemas Embarcados e IoT</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header>
 <main class="granja" id="topo">
-<nav class="nav7" aria-label="Trilha"><a href="arduino-iot.html#b7-5">← Voltar ao Tópico 7</a><a href="arduino-conectividade.html">Revisar Tópico 6</a><a href="#arquivos">Arquivos completos</a></nav>
+<nav class="nav7" aria-label="Trilha"><a href="arduino-iot.html#b7-5">← Voltar ao Tópico 7</a><a href="arduino-conectividade.html#b6-3">Revisar Tópico 6</a><a href="#arquivos">Arquivos completos</a></nav>
 <section class="hero7">
 <span class="eyebrow">Prática 7.5 · Granja Inteligente</span>
 <h1>O aviário cuida das condições locais e avisa o responsável</h1>
@@ -136,12 +136,12 @@
 <p><strong>Três coisas diferentes:</strong> gerar JSON no Serial, pedir à API que envie um aviso e receber o aviso de fato no celular. Uma não comprova automaticamente a outra.</p>
 <h3>Primeiro: testar sem credenciais</h3>
 <p>No código entregue, a linha <code>// #define ENABLE_TELEGRAM</code> está comentada. O programa mostra <code>[DEMO] ... NAO entregue</code>. Isso permite aprender e testar todas as automações sem conta no Telegram.</p>
-<h3>Depois: envio real em um projeto privado</h3>
+<h3>Depois: envio real com um bot de teste e rede privada</h3>
 <ol>
 <li>Abra o Telegram, procure o perfil oficial <strong>@BotFather</strong>, use <code>/newbot</code> e siga as instruções. Copie o token apenas para local seguro.</li>
 <li>Abra uma conversa com o bot que criou e envie <code>/start</code>. O bot normalmente não pode iniciar uma conversa particular antes disso.</li>
 <li>Para encontrar seu <code>chat_id</code>, consulte <code>getUpdates</code> na Bot API com seu token, em contexto privado, depois de enviar uma mensagem ao bot. No resultado JSON, procure <code>message.chat.id</code>. Não compartilhe a URL, o resultado completo nem capturas que revelem token ou dados pessoais.</li>
-<li>Crie um <strong>projeto privado</strong> no Wokwi. Nele, adicione o arquivo <code>secrets.h</code> a partir de <code>secrets.example.h</code> e insira os dois valores, somente nesse projeto privado.</li>
+<li>Use um <strong>projeto privado com o gateway privado</strong> do Wokwi ou um ESP32 de bancada em uma rede própria. Adicione o arquivo <code>secrets.h</code> a partir de <code>secrets.example.h</code> e insira os dois valores, somente nesse projeto privado.</li>
 <li>Retire apenas os dois caracteres <code>//</code> da linha <code>// #define ENABLE_TELEGRAM</code> no início de <code>sketch.ino</code>. Reinicie a simulação.</li>
 <li>Provoque uma ocorrência (por exemplo, DHT22 em 34 °C). Verifique se o Serial mostra <code>[TELEGRAM] API confirmou</code> e, principalmente, se a mensagem realmente apareceu no celular. Registre ambos separadamente.</li>
 </ol>
@@ -150,9 +150,9 @@
 </section>
 <section class="step7" id="etapa8">
 <h2>8. Integração → os três controles coexistem</h2>
-<p>O <code>setup()</code> configura pinos, biblioteca do DHT22, leitor RFID e Wi-Fi. O <code>loop()</code> verifica periodicamente temperatura e água, consulta o RFID e tenta enviar avisos pendentes. O recurso <code>millis()</code> permite saber quando repetir tarefas, sem depender de uma pausa fixa longa.</p>
-<p><strong>Por que a rede não pode mandar na granja?</strong> O programa liga ou desliga as saídas antes de tentar enviar o aviso. Se o Wi-Fi falha, a decisão local continua. Os eventos ficam em uma fila limitada; após voltar a conexão, o envio pode ser tentado novamente.</p>
-<p><strong>Limitação transparente:</strong> uma tentativa HTTPS ainda pode causar pausas breves no programa. A versão didática não é um controlador de tempo real nem possui persistência da fila após reinício.</p>
+<p>O <code>setup()</code> configura pinos, biblioteca do DHT22, leitor RFID e Wi-Fi. O <code>loop()</code> verifica periodicamente temperatura e água, consulta o RFID e acompanha o Wi-Fi. A tarefa de comunicação envia os avisos no modo real. O recurso <code>millis()</code> permite saber quando repetir tarefas, sem depender de uma pausa fixa longa.</p>
+<p><strong>Por que a rede não pode mandar na granja?</strong> O programa decide as saídas no loop e entrega os avisos a uma tarefa separada. Se o Wi-Fi falha, a decisão local continua. No modo real, os eventos ficam em uma fila limitada; após voltar a conexão, o envio pode ser tentado novamente.</p>
+<p><strong>Limitação transparente:</strong> o envio HTTPS ocorre em uma tarefa separada. A fila comporta oito avisos em espera, além do aviso em envio. Se estiver cheia, o Serial indica que o aviso novo foi descartado. Reiniciar o ESP32 limpa a fila.</p>
 <p class="evidence"><strong>Desafio:</strong> ligue o ventilador, depois abaixe a água e identifique no Serial os dois eventos. Nenhum deles depende de o outro ter acontecido primeiro.</p>
 </section>
 <section class="step7" id="etapa9">
@@ -165,7 +165,14 @@
 <tr><td>Sem token Telegram</td><td>Modo [DEMO] sem entrega</td><td>Mensagem explícita do Serial</td></tr>
 <tr><td>Token privado válido</td><td>API confirma e celular recebe</td><td>Confirmar ambos: não presumir</td></tr>
 </tbody></table></div>
-<p>Para testar falha de rede, interrompa a conectividade de forma controlada ou execute a versão sem envio real e compare os controles locais. <strong>Modo demonstração não equivale a uma queda de Wi-Fi.</strong> Testes de falha de sensor podem requerer interromper/desconectar o componente no simulador e não devem ser registrados como concluídos sem execução.</p>
+<h3>Antes do teste de falhas, faça uma previsão</h3>
+<p>Se a rede cair e o DHT22 indicar 34 °C, o LED azul deve acender? O responsável recebe a mensagem naquele momento? Anote sua previsão antes de alterar o simulador.</p>
+<ol>
+<li>Abra o <strong>Monitor Serial</strong> da simulação em modo demonstração. Digite <code>w</code> no campo de entrada e pressione <strong>Enter</strong>. O ESP32 desliga a interface e registra <code>[ENSAIO] Wi-Fi desligado</code>.</li>
+<li>Com a rede desligada, ajuste o DHT22 primeiro a 24 °C e depois a 34 °C. Confira o LED azul e o registro <code>[EVENTO JSON]</code>. A indicação <code>[DEMO]</code> corresponde ao evento de demonstração.</li>
+<li>Envie <code>r</code> e procure <code>[REDE] Wi-Fi conectado</code>. O estado do ventilador continua seguindo a temperatura.</li>
+<li>Digite <code>f</code> para injetar uma leitura inválida do DHT22 com o ESP32 ligado. Confira o aviso único de falha e a ventilação preventiva. Volte o sensor para 24 °C e envie <code>v</code> para restaurar a leitura normal. Para testar o ultrassônico, ajuste o sensor acima de 30 cm com a bomba ligada e confirme que o LED verde apaga.</li>
+</ol>
 <p class="evidence"><strong>Entrega do aluno:</strong> circuito, código, captura dos LEDs e Serial, tabela dos testes com resultado observado e explicação de por que isso é IoT. Envio real ao Telegram é uma etapa opcional supervisionada, que exige credenciais particulares.</p>
 </section>
 <section class="step7" id="etapa10">
@@ -179,7 +186,7 @@
 <li><strong>Retorno:</strong> reveja histerese, distância inversa ao nível, identificação RFID e confirmação da API.</li>
 </ol>
 <p><strong>Conclusão:</strong> uma granja inteligente não precisa de dezenas de sensores para demonstrar IoT. Ela deve tomar decisões locais coerentes e informar algo útil a uma pessoa distante.</p>
-<p><a href="arduino-iot.html#b7-5">Retornar à etapa 7.5</a> · <a href="arduino-protocolos.html">Continuar para o Tópico 8</a></p>
+<p><a href="arduino-iot.html#b7-5">Retornar à etapa 7.5</a> · <a href="arduino-protocolos.html#b8-prep">Continuar para o Tópico 8</a></p>
 </section>
 <section class="step7" id="arquivos">
 <h2>Arquivos completos para copiar</h2>

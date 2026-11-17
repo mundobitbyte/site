@@ -6,7 +6,6 @@ on:
       - 'wokwi/granja-inteligente/**'
       - 'pages/arduino-granja-inteligente.html'
       - 'pages/arduino-iot.html'
-      - 'js/arduino-granja-integracao.js'
       - '.github/workflows/seiot-granja-validacao.yml'
       - 'tests/seiot-granja/**'
   workflow_dispatch:
@@ -41,8 +40,14 @@ jobs:
           arduino-cli lib install "MFRC522"
           arduino-cli lib install "UniversalTelegramBot"
           arduino-cli lib install "ArduinoJson"
-      - name: Compilar projeto real (modo sem Telegram)
+      - name: Compilar ESP32 no modo demonstração
         run: |
           mkdir -p "$RUNNER_TEMP/GranjaInteligente"
           cp wokwi/granja-inteligente/sketch.ino "$RUNNER_TEMP/GranjaInteligente/GranjaInteligente.ino"
           arduino-cli compile --fqbn esp32:esp32:esp32 "$RUNNER_TEMP/GranjaInteligente"
+      - name: Compilar ramo HTTPS com configuração fictícia
+        run: |
+          pasta="$RUNNER_TEMP/GranjaInteligente"
+          sed -i 's|^// #define ENABLE_TELEGRAM$|#define ENABLE_TELEGRAM|' "$pasta/GranjaInteligente.ino"
+          cp wokwi/granja-inteligente/secrets.example.h "$pasta/secrets.h"
+          arduino-cli compile --fqbn esp32:esp32:esp32 "$pasta"

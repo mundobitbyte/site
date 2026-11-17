@@ -16,13 +16,13 @@
 #include <ArduinoJson.h>
 #include <UniversalTelegramBot.h>
 #include <time.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/queue.h>
+#include <freertos/task.h>
 #include <math.h>
 
 #ifdef ENABLE_TELEGRAM
   #include "secrets.h"
-#else
-  #define BOT_TOKEN ""
-  #define CHAT_ID ""
 #endif
 
 // Os numeros abaixo correspondem EXATAMENTE aos fios de diagram.json.
@@ -47,33 +47,41 @@ const uint32_t INTERVALO_TEMP_MS = 2500UL;
 const uint32_t INTERVALO_AGUA_MS = 1100UL;
 const uint32_t INTERVALO_STATUS_MS = 10000UL;
 const uint32_t INTERVALO_REDE_MS = 15000UL;
-const uint32_t INTERVALO_NOTIFICACAO_MS = 7000UL;
+
 const uint32_t COOLDOWN_RFID_MS = 8000UL;
 
 DHTesp dht;
 MFRC522 leitor(RFID_SS, RFID_RST);
+#ifdef ENABLE_TELEGRAM
 WiFiClientSecure clienteSeguro;
 UniversalTelegramBot bot(BOT_TOKEN, clienteSeguro);
+#else
+bool testeFalhaDHT = false;
+#endif
 
 bool ventilador = false;
 bool bomba = false;
 bool falhaTemperatura = false;
 bool falhaAgua = false;
 bool bloqueioBomba = false;
+bool redeAtiva = true;
+bool redeConectada = false;
 float temperatura = NAN;
 float umidade = NAN;
 float distancia = NAN;
 uint32_t inicioBomba = 0;
 uint32_t ultimaTemp = 0, ultimaAgua = 0, ultimoStatus = 0;
-uint32_t ultimaRede = 0, ultimaTentativaBot = 0;
+uint32_t ultimaRede = 0;
 uint32_t ultimoRFID = 0;
 String ultimoUID = "";
 
-// Fila pequena para evitar perder imediatamente um aviso durante queda da rede.
-// Quando enche, descarta o mais antigo e registra o descarte no Serial.
-const uint8_t CAPACIDADE_FILA = 8;
-String fila[CAPACIDADE_FILA];
-uint8_t quantidadeFila = 0;
+#ifdef ENABLE_TELEGRAM
+// O envio tem fila própria e roda em outra tarefa. O loop nunca espera pela rede.
+struct Aviso {
+  char texto[112];
+};
+QueueHandle_t filaTelegram = nullptr;
+#endif
 
 void notificar(const String &evento) {
   JsonDocument registro;
@@ -83,12 +91,16 @@ void notificar(const String &evento) {
   Serial.print("[EVENTO JSON] ");
   serializeJson(registro, Serial);
   Serial.println();
-  if (quantidadeFila == CAPACIDADE_FILA) {
-    Serial.println("[FILA] cheia: aviso mais antigo descartado");
-    for (uint8_t i = 1; i < quantidadeFila; i++) fila[i - 1] = fila[i];
-    quantidadeFila--;
+#ifdef ENABLE_TELEGRAM
+  if (!filaTelegram) return;
+  Aviso aviso{};
+  evento.toCharArray(aviso.texto, sizeof(aviso.texto));
+  if (xQueueSend(filaTelegram, &aviso, 0) != pdTRUE) {
+    Serial.println("[TELEGRAM] Fila cheia: novo aviso descartado");
   }
-  fila[quantidadeFila++] = evento;
+#else
+  Serial.println("[DEMO] Telegram desativado. Evento simulado, NAO entregue: " + evento);
+#endif
 }
 void ligarVentilador(bool ligar) {
   if (ventilador == ligar) return;
@@ -99,7 +111,7 @@ void ligarVentilador(bool ligar) {
                     "Temperatura alta: ventilador ligado") :
                     "Temperatura normalizada: ventilador desligado");
 }
-void ligarBomba(bool ligar) {
+void ligarBomba(bool ligar, const char *motivoParada = "") {
   if (bomba == ligar) return;
   bomba = ligar;
   digitalWrite(LED_BOMBA, ligar ? HIGH : LOW);
@@ -107,15 +119,18 @@ void ligarBomba(bool ligar) {
     inicioBomba = millis();
     notificar("Nivel de agua baixo: bomba ligada");
   } else {
-    notificar("Bomba desligada");
+    notificar(motivoParada);
   }
 }
 void conferirTemperatura() {
   TempAndHumidity dado = dht.getTempAndHumidity();
+#ifndef ENABLE_TELEGRAM
+  if (testeFalhaDHT) dado.temperature = NAN;
+#endif
   if (isnan(dado.temperature) || isnan(dado.humidity)) {
     temperatura = NAN;
     umidade = NAN;
-    if (!falhaTemperatura) notificar("Falha de leitura DHT22: verificar sensor");
+    if (!falhaTemperatura && ventilador) notificar("Falha de leitura DHT22: verificar sensor");
     falhaTemperatura = true;
     // Politica didatica: ventilacao mantida ligada enquanto falta leitura.
     ligarVentilador(true);
@@ -142,15 +157,15 @@ void conferirAgua() {
   distancia = medirDistanciaCm();
   if (isnan(distancia) || distancia < 2.0f ||
       distancia > ALTURA_RESERVATORIO_CM) {
-    if (!falhaAgua) notificar("Falha no ultrassonico: bomba parada por seguranca");
+    if (bomba) ligarBomba(false, "Falha no ultrassonico: bomba desligada");
+    else if (!falhaAgua) notificar("Falha no ultrassonico: bomba parada por seguranca");
     falhaAgua = true;
-    ligarBomba(false);
     return;
   }
   if (falhaAgua) notificar("Leitura do reservatorio recuperada");
   falhaAgua = false;
   if (distancia <= DISTANCIA_NIVEL_CHEIO) {
-    ligarBomba(false);
+    ligarBomba(false, "Reservatorio abastecido: bomba desligada");
     if (bloqueioBomba) notificar("Bloqueio da bomba liberado: reservatorio cheio");
     bloqueioBomba = false;
   } else if (distancia >= DISTANCIA_NIVEL_BAIXO &&
@@ -160,9 +175,8 @@ void conferirAgua() {
 }
 void conferirTempoDaBomba() {
   if (bomba && millis() - inicioBomba >= TEMPO_MAX_BOMBA_MS) {
-    ligarBomba(false);
     bloqueioBomba = true;
-    notificar("ALERTA: tempo maximo de bomba excedido; bloqueada ate nivel cheio");
+    ligarBomba(false, "ALERTA: tempo maximo excedido; bomba desligada e bloqueada ate nivel cheio");
   }
 }
 String uidDoCartao() {
@@ -194,42 +208,59 @@ void conferirRFID() {
   leitor.PCD_StopCrypto1();
 }
 void verificarWiFi() {
-  if (WiFi.status() == WL_CONNECTED) return;
+  bool conectadaAgora = redeAtiva && WiFi.status() == WL_CONNECTED;
+  if (conectadaAgora != redeConectada) {
+    redeConectada = conectadaAgora;
+    Serial.println(redeConectada ? "[REDE] Wi-Fi conectado" :
+                                   "[REDE] Wi-Fi desconectado; controle local ativo");
+  }
+  if (!redeAtiva || redeConectada) return;
   if (ultimaRede != 0 && millis() - ultimaRede < INTERVALO_REDE_MS) return;
   ultimaRede = millis();
   Serial.println("[REDE] Tentando Wi-Fi Wokwi-GUEST; controles locais continuam");
-  WiFi.begin("Wokwi-GUEST", "", 6); // Sem espera bloqueante
+  WiFi.begin("Wokwi-GUEST", "", 6);
 }
-void tentarEnviarTelegram() {
-  if (quantidadeFila == 0) return;
-  if (ultimaTentativaBot != 0 &&
-      millis() - ultimaTentativaBot < INTERVALO_NOTIFICACAO_MS) return;
-  ultimaTentativaBot = millis();
-#ifndef ENABLE_TELEGRAM
-  Serial.println("[DEMO] Telegram desativado. Evento simulado, NAO entregue: " + fila[0]);
-  for (uint8_t i = 1; i < quantidadeFila; i++) fila[i - 1] = fila[i];
-  quantidadeFila--;
+
+#ifdef ENABLE_TELEGRAM
+void enviarTelegram(void *) {
+  Aviso aviso{};
+  for (;;) {
+    if (xQueueReceive(filaTelegram, &aviso, portMAX_DELAY) != pdTRUE) continue;
+    for (;;) {
+      if (WiFi.status() == WL_CONNECTED && time(nullptr) >= 1700000000) {
+        if (bot.sendMessage(String(CHAT_ID), aviso.texto, "")) {
+          Serial.printf("[TELEGRAM] API confirmou a mensagem: %s\n", aviso.texto);
+          break;
+        }
+        Serial.println("[TELEGRAM] Sem confirmacao; nova tentativa em 7 s");
+      } else {
+        Serial.println("[TELEGRAM] Aguardando Wi-Fi e hora valida para TLS");
+      }
+      vTaskDelay(pdMS_TO_TICKS(7000));
+    }
+  }
+}
 #else
-  if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("[TELEGRAM] Sem rede; evento guardado na fila");
-    return;
+// Comandos da bancada para reproduzir falhas enquanto o ESP32 continua ligado.
+void controlarEnsaio() {
+  if (!Serial.available()) return;
+  const char comando = Serial.read();
+  if (comando == 'w' && redeAtiva) {
+    redeAtiva = false;
+    WiFi.mode(WIFI_OFF);
+    Serial.println("[ENSAIO] Wi-Fi desligado");
+  } else if (comando == 'r' && !redeAtiva) {
+    WiFi.mode(WIFI_STA);
+    redeAtiva = true;
+    ultimaRede = 0;
+    Serial.println("[ENSAIO] Wi-Fi reativado");
+  } else if (comando == 'f' || comando == 'v') {
+    testeFalhaDHT = comando == 'f';
+    Serial.println(testeFalhaDHT ? "[ENSAIO] Falha de DHT22 injetada" :
+                                  "[ENSAIO] Leitura de DHT22 restaurada");
   }
-  // Certificados TLS precisam da hora correta para validar a validade.
-  if (time(nullptr) < 1700000000) {
-    Serial.println("[TELEGRAM] Aguardando sincronizacao NTP sem bloquear o controle");
-    return;
-  }
-  // O bot usa HTTPS/TLS com certificado raiz (nao usa setInsecure).
-  bool confirmado = bot.sendMessage(String(CHAT_ID), fila[0], "");
-  if (!confirmado) {
-    Serial.println("[TELEGRAM] Sem confirmacao; tentar novamente depois");
-    return;
-  }
-  Serial.println("[TELEGRAM] API confirmou a mensagem: " + fila[0]);
-  for (uint8_t i = 1; i < quantidadeFila; i++) fila[i - 1] = fila[i];
-  quantidadeFila--;
-#endif
 }
+#endif
 void mostrarEstado() {
   Serial.print("[ESTADO] temperatura=");
   if (isnan(temperatura)) Serial.print("invalida");
@@ -243,8 +274,7 @@ void mostrarEstado() {
   Serial.print(bomba ? "ligada" : "desligada");
   Serial.print("; WiFi=");
   Serial.print(WiFi.status() == WL_CONNECTED ? "conectado" : "offline");
-  Serial.print("; fila=");
-  Serial.println(quantidadeFila);
+  Serial.println();
 }
 void setup() {
   Serial.begin(115200);
@@ -258,9 +288,20 @@ void setup() {
   SPI.begin(18, 19, 23, RFID_SS);
   leitor.PCD_Init();
   WiFi.mode(WIFI_STA);
+#ifdef ENABLE_TELEGRAM
   configTime(0, 0, "pool.ntp.org");
   clienteSeguro.setCACert(TELEGRAM_CERTIFICATE_ROOT);
+  clienteSeguro.setHandshakeTimeout(5);
   clienteSeguro.setTimeout(1500);
+  filaTelegram = xQueueCreate(8, sizeof(Aviso));
+  if (!filaTelegram || xTaskCreate(enviarTelegram, "Telegram", 8192, nullptr, 1, nullptr) != pdPASS) {
+    if (filaTelegram) vQueueDelete(filaTelegram);
+    filaTelegram = nullptr;
+    Serial.println("[TELEGRAM] Envio indisponivel; controle local ativo");
+  }
+#else
+  Serial.println("[ENSAIO] w: desligar Wi-Fi | r: religar | f: falha DHT22 | v: restaurar");
+#endif
   Serial.println("[PRONTO] Granja IoT / Modo: "
 #ifdef ENABLE_TELEGRAM
   "Telegram real privado"
@@ -283,7 +324,9 @@ void loop() {
   conferirTempoDaBomba();
   conferirRFID();
   verificarWiFi();
-  tentarEnviarTelegram(); // HTTPS pode causar pequenas pausas; prototipo didatico
+#ifndef ENABLE_TELEGRAM
+  controlarEnsaio();
+#endif
   if (agora - ultimoStatus >= INTERVALO_STATUS_MS) {
     ultimoStatus = agora;
     mostrarEstado();
