@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Pratica guiada de IoT: granja inteligente no Wokwi com ESP32, temperatura, nivel de agua, RFID e avisos Telegram.">
+<title>7.5 — Granja Inteligente | Mundo bit Byte</title>
+<link rel="stylesheet" href="../css/arduino.css?v=20261005-2">
+<style>
+.granja{max-width:1040px;margin:24px auto 72px;padding:0 18px;color:#223449;line-height:1.68}
+.granja *{box-sizing:border-box}.granja h1,.granja h2,.granja h3{color:#183e57}
+.granja h1{font-size:clamp(27px,4vw,38px);line-height:1.19;margin:10px 0}
+.granja h2{font-size:23px;margin:0 0 12px}.granja h3{font-size:18px}
+.granja p{margin:9px 0}.granja a{color:#09658a;text-decoration:underline;text-underline-offset:3px}
+.granja .hero7{background:linear-gradient(120deg,#e7f5f3,#edf4fe);padding:24px;border:1px solid #c7dce2;border-radius:18px}
+.granja .eyebrow{font-size:13px;font-weight:800;color:#0a6466;letter-spacing:.045em;text-transform:uppercase}
+.granja .steps{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.granja .steps span{background:#fff;border:1px solid #cadee8;padding:8px 12px;border-radius:20px;font-weight:700;font-size:13px}
+.granja > .step7[id]{display:block;margin:24px 0;border:1px solid #d5e3e9;background:#fff;padding:22px;border-radius:16px;scroll-margin-top:130px}
+.granja .step7>p:first-of-type{margin-top:0}
+.granja .why{border-left:4px solid #11817b;padding:12px 14px;background:#effaf7;border-radius:0 10px 10px 0}
+.granja .warning{border-left:4px solid #b96b18;padding:12px 14px;background:#fff8e9;border-radius:0 10px 10px 0}
+.granja .evidence{border:1px dashed #6fa2ab;background:#f1fafb;border-radius:10px;padding:11px 14px;margin-top:16px}
+.granja .flow7{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0}
+.granja .flow7 span{padding:10px;background:#edf5fa;border:1px solid #d0e2ec;border-radius:8px;font-weight:700}
+.granja .tablewrap{overflow-x:auto;max-width:100%}
+.granja table{border-collapse:collapse;width:100%;font-size:14px}
+.granja th,.granja td{border:1px solid #d8e5ec;text-align:left;padding:9px;vertical-align:top}
+.granja th{background:#e9f3f7}.granja code{background:#edf3f8;padding:2px 4px;border-radius:4px}
+.granja details{border:1px solid #d7e3e8;border-radius:10px;margin:12px 0;padding:12px;background:#fbfdff}
+.granja summary{font-weight:800;cursor:pointer}
+.granja pre{font-size:12px;line-height:1.5;background:#eff5f8;color:#0e2434;border:1px solid #d5e4ec;padding:15px;overflow:auto;max-height:560px;white-space:pre}
+.granja pre code{background:none;padding:0;color:inherit}
+.granja .copyrow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.granja button{cursor:pointer;border:1px solid #145d77;border-radius:9px;background:#145d77;color:#fff;padding:9px 13px;font-weight:700}
+.granja button:focus-visible,.granja a:focus-visible{outline:3px solid #f8a735;outline-offset:3px}
+.granja .filelink{font-size:13px}.granja .nav7{position:static;height:auto;overflow:visible;padding:0;background:transparent;border:0;display:flex;gap:15px;flex-wrap:wrap;margin:16px 0}
+.granja .tip{font-size:14px;color:#475569}
+@media(max-width:720px){.granja{padding:0 12px}.granja .hero7,.granja .step7{padding:15px}.granja table{font-size:13px}}
+</style>
+</head>
+<body>
+<header><div class="header-left"><a class="portal-link" href="../index.html">← Mundo bit Byte</a><h1>Sistemas Embarcados e IoT</h1></div><div class="brand">Professor Ronaldo Lavestein</div></header>
+<main class="granja" id="topo">
+<nav class="nav7" aria-label="Trilha"><a href="arduino-iot.html#b7-5">← Voltar ao Tópico 7</a><a href="arduino-conectividade.html#b6-3">Revisar Tópico 6</a><a href="#arquivos">Arquivos completos</a></nav>
+<section class="hero7">
+<span class="eyebrow">Prática 7.5 · Granja Inteligente</span>
+<h1>O aviário cuida das condições locais e avisa o responsável</h1>
+<p>Uma granja de frangos precisa acompanhar temperatura e abastecimento de água. Os funcionários precisam ser reconhecidos quando fazem inspeções. Se o responsável estiver longe, <strong>como saber que algo mudou?</strong> É aí que entra a Internet das Coisas.</p>
+<div class="steps"><span>Temperatura</span><span>Água</span><span>RFID</span><span>ESP32</span><span>Wi-Fi → Telegram</span></div>
+<p><strong>Meta:</strong> alterar dois sensores no Wokwi, ler cartões RFID, observar as decisões automáticas e identificar a diferença entre um evento exibido no Serial e uma mensagem realmente enviada pela Internet.</p>
+<p class="warning"><strong>Protótipo exclusivamente didático.</strong> O LED representa o comando do ventilador ou da bomba; ele não movimenta ar nem água. Uma granja real exige projeto elétrico, equipamentos e parâmetros de manejo validados por profissionais.</p>
+</section>
+<section class="step7" id="etapa1">
+<h2>1. Necessidade → o que acontece quando ninguém está perto?</h2>
+<p>Imagine que o aviário esquente durante a madrugada. Sem automação, alguém teria de perceber e ligar a ventilação. Com automação local, o ESP32 faz isso quando o sensor ultrapassa o limite. Com <strong>IoT</strong>, ele também informa a ocorrência ao responsável por uma rede.</p>
+<div class="flow7" aria-label="Fluxo da informação"><span>Ambiente</span>→<span>Sensores</span>→<span>ESP32</span>→<span>Ação local</span> e <span>Wi-Fi</span>→<span>Telegram</span>→<span>Responsável</span></div>
+<p><strong>Conceito-chave:</strong> a bomba e o ventilador devem continuar funcionando mesmo se a Internet falhar. A Internet serve para <em>avisar</em>, não para decidir se o animal pode receber água.</p>
+<p class="evidence"><strong>Pense:</strong> o que para de funcionar se retirarmos o Wi-Fi? A resposta correta é: os avisos remotos, não o controle local.</p>
+</section>
+<section class="step7" id="etapa2">
+<h2>2. Componentes → cada peça tem uma tarefa</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Peça</th><th>O que faz</th><th>Ligação ao ESP32</th></tr></thead><tbody>
+<tr><td>ESP32</td><td>Executa o programa e conecta-se ao Wi-Fi.</td><td>Controlador central</td></tr>
+<tr><td>DHT22</td><td>Fornece temperatura e umidade; aqui controlamos somente pela temperatura.</td><td>SDA → GPIO 15; VCC → 3V3; GND → GND. O resistor de 10 kΩ mantém SDA em nível alto entre as leituras.</td></tr>
+<tr><td>HC-SR04</td><td>Mede a distância até a superfície da água.</td><td>TRIG → GPIO 26; ECHO → GPIO 27; VCC → 5V; GND → GND</td></tr>
+<tr><td>MFRC522</td><td>Lê o código de identificação de cartões (UID) via SPI.</td><td>SDA/SS → 5; RST → 21; SCK → 18; MISO → 19; MOSI → 23; 3.3V e GND</td></tr>
+<tr><td>LED azul + resistor 220 Ω</td><td>Representa ventilador ligado.</td><td>Ânodo → GPIO 32; cátodo → resistor → GND</td></tr>
+<tr><td>LED verde + resistor 220 Ω</td><td>Representa bomba ligada.</td><td>Ânodo → GPIO 33; cátodo → resistor → GND</td></tr>
+</tbody></table></div>
+<p class="warning"><strong>Na montagem física:</strong> o ECHO do HC-SR04 convencional pode operar em 5 V, enquanto os GPIOs do ESP32 usam 3,3 V. Use adaptação de nível. Para motores reais, empregue drivers, relés apropriados e proteção elétrica; nunca ligue bomba ou ventilador diretamente ao GPIO.</p>
+<p class="evidence"><strong>Verificação:</strong> identifique no circuito o fio de dados do DHT22, os dois fios de sinal do HC-SR04 e os cinco sinais SPI do RFID.</p>
+</section>
+<section class="step7" id="etapa3">
+<h2>3. Montagem no Wokwi → não é necessário desenhar fio por fio</h2>
+<ol>
+<li>Abra <a href="https://wokwi.com/projects/new/esp32" target="_blank" rel="noopener noreferrer">Novo projeto ESP32 no Wokwi</a>. O projeto abre com uma placa e os arquivos de edição.</li>
+<li>Abra a aba <code>diagram.json</code>, selecione <strong>todo</strong> o texto existente (Ctrl+A, ou selecionar tudo no celular) e substitua pelo <strong>diagram.json completo</strong> disponibilizado ao final desta página. Esse arquivo declara peças, posições, pinos e conexões.</li>
+<li>Abra <code>sketch.ino</code>, apague seu conteúdo e cole o <strong>sketch.ino completo</strong>. Este é o programa que roda no ESP32.</li>
+<li>Se <code>libraries.txt</code> ainda não estiver nas abas, abra o menu de arquivos ao lado delas, escolha <strong>New file...</strong>, digite <code>libraries.txt</code> e clique em <strong>Create</strong>. Abra a aba e cole a lista de quatro bibliotecas abaixo. Você também pode adicioná-las pelo <strong>Library Manager</strong>.</li>
+<li>Para enquadrar toda a montagem, clique no fundo da área do circuito e pressione <strong>F</strong>. Inicie a simulação ▶. Abra o Serial Monitor e procure <code>[PRONTO] Granja IoT</code>. Na configuração inicial, a temperatura é 24 °C e a distância 8 cm. Aguarde os primeiros ciclos de medição e confira os dois LEDs apagados.</li>
+</ol>
+<p><strong>O que é JSON?</strong> É um formato de dados estruturados em pares de chave e valor. Por exemplo, <code>"type": "wokwi-dht22"</code> indica o tipo de componente; <code>"id": "dht1"</code> permite referenciá-lo; cada item de <code>connections</code> liga dois pinos. O JSON monta o circuito virtual; o programa C++ determina seu comportamento.</p>
+<p class="evidence"><strong>Resultado observável:</strong> o circuito exibe ESP32, os três dispositivos de entrada e dois LEDs, e o Serial Monitor mostra o modo demonstração.</p>
+</section>
+<section class="step7" id="etapa4">
+<h2>4. Temperatura → ligar, manter e desligar</h2>
+<p><strong>Exemplo:</strong> um termômetro marcando 34 °C provoca o comando do ventilador. Mas se a temperatura oscilar 29,9 ↔ 30,1 °C, um controle ingênuo pode ligar e desligar a cada leitura. Por isso usamos <strong>histerese</strong>: dois limites diferentes.</p>
+<div class="tablewrap"><table><thead><tr><th>Temperatura no DHT22</th><th>Ação esperada</th><th>Por quê?</th></tr></thead><tbody>
+<tr><td>24 °C, inicial</td><td>LED azul apagado</td><td>Dentro da faixa didática</td></tr>
+<tr><td>34 °C</td><td>LED azul aceso</td><td>Maior que 30 °C</td></tr>
+<tr><td>29 °C, após 34 °C</td><td>Permanece aceso</td><td>Ainda não atingiu o limite de desligar</td></tr>
+<tr><td>27 °C</td><td>LED azul apagado</td><td>Menor que 28 °C</td></tr>
+</tbody></table></div>
+<p><strong>Prática:</strong> clique no DHT22 enquanto a simulação roda, altere a temperatura nessa ordem e espere cerca de três segundos entre ajustes. Confira LED e mensagens. A umidade aparece na leitura, mas não aciona nenhum dispositivo.</p>
+<p class="evidence"><strong>Explique com suas palavras:</strong> por que 29 °C não desliga o ventilador imediatamente? Os valores de 30 °C e 28 °C são exemplos de programação, <strong>não</strong> parâmetros universais para frangos de todas as idades.</p>
+</section>
+<section class="step7" id="etapa5">
+<h2>5. Água → medir distância não é medir litros diretamente</h2>
+<p>O HC-SR04 envia um pulso ultrassônico e mede o tempo até receber o eco. Seu <code>TRIG</code> dispara a medição; o pulso de <code>ECHO</code> representa o tempo de retorno. No programa, a distância em centímetros é aproximada por <code>duração_em_microssegundos ÷ 58</code>.</p>
+<p><strong>Reservatório didático de 30 cm:</strong> se a superfície está a 25 cm do sensor superior, restam aproximadamente 5 cm de coluna de água. Se está a 7 cm, há aproximadamente 23 cm de água. Portanto, <strong>distância maior significa menos água</strong>.</p>
+<div class="tablewrap"><table><thead><tr><th>Ajuste no HC-SR04</th><th>Ação esperada</th></tr></thead><tbody>
+<tr><td>25 cm</td><td>Água baixa → LED verde acende (bomba)</td></tr>
+<tr><td>15 cm, após 25 cm</td><td>Bomba permanece ligada até encher</td></tr>
+<tr><td>7 cm</td><td>Reservatório cheio → LED verde apaga</td></tr>
+<tr><td>25 cm por mais de 30 s</td><td>Tempo máximo → bomba desliga e fica bloqueada até simular nível cheio</td></tr>
+<tr><td>Distância ausente, menor que 2 cm ou maior que 30 cm</td><td>Leitura considerada inválida → bomba parada</td></tr>
+</tbody></table></div>
+<p><strong>Prática:</strong> clique no HC-SR04, ajuste a distância e observe o LED verde. <strong>Não espere que o nível aumente sozinho</strong> quando a bomba ligar: no Wokwi, a bomba é apenas um comando representado por LED. Você precisa alterar a distância manualmente para representar o abastecimento.</p>
+<p class="evidence"><strong>Checkpoint:</strong> explique por que 25 cm representa pouca água e 7 cm representa reservatório cheio, sem confundir distância do sensor com altura da água.</p>
+</section>
+<section class="step7" id="etapa6">
+<h2>6. RFID → qual funcionário apresentou o cartão?</h2>
+<p><strong>RFID</strong> significa identificação por radiofrequência. O MFRC522 utiliza comunicação <strong>SPI</strong> com o ESP32. No simulador, cada cartão tem um <strong>UID</strong>, sequência de bytes apresentada em hexadecimal.</p>
+<div class="tablewrap"><table><thead><tr><th>Cartão Wokwi</th><th>UID</th><th>Resultado</th></tr></thead><tbody>
+<tr><td>Azul</td><td><code>01:02:03:04</code></td><td>Ana — autorizada</td></tr>
+<tr><td>Verde</td><td><code>11:22:33:44</code></td><td>João — supervisor</td></tr>
+<tr><td>Vermelho</td><td><code>AA:BB:CC:DD</code></td><td>Desconhecido — rejeitado</td></tr>
+</tbody></table></div>
+<p><strong>Prática:</strong> clique no MFRC522, escolha o cartão e pressione <em>Tap</em>. O ESP32 lê o UID, compara com os cadastrados e registra o resultado no Serial. Aguarde oito segundos antes de apresentar novamente o mesmo cartão para observar outro registro.</p>
+<p><strong>Limite de segurança:</strong> UID identifica um cartão, mas não comprova sozinho que ele é autêntico. O protótipo não bloqueia portas: a recusa é apenas da identificação administrativa.</p>
+<p class="evidence"><strong>Evidência:</strong> capture um cartão reconhecido e um desconhecido, explicando a diferença entre identificação e autorização.</p>
+</section>
+<section class="step7" id="etapa7">
+<h2>7. IoT → o aviso sai do aviário e chega ao celular</h2>
+<p>O ESP32 usa o Wi-Fi virtual <code>Wokwi-GUEST</code> para chegar à Internet. Um <strong>evento</strong> é convertido em informação (por exemplo, "Temperatura alta: ventilador ligado") e enviado ao serviço de mensagens por <strong>HTTPS</strong>. O <strong>Telegram</strong> apresenta a mensagem ao destinatário, depois que o bot for configurado.</p>
+<div class="flow7" aria-label="Caminho do aviso"><span>DHT22 ou HC-SR04</span>→<span>ESP32 decide</span>→<span>Wi-Fi</span>→<span>HTTPS / Bot API</span>→<span>Telegram do responsável</span></div>
+<h3>JSON: o registro estruturado antes do envio</h3>
+<p>O programa escreve no Serial um evento JSON como o exemplo abaixo. Ele contém o identificador do aviário, o evento e o tempo transcorrido desde o início do programa, em milissegundos. O texto do evento é enviado ao Telegram pela biblioteca do bot.</p>
+<pre><code>{
+  "aviario": "aviario_01",
+  "evento": "Temperatura alta: ventilador ligado",
+  "tempo_ms": 15000
+}</code></pre>
+<p><strong>Três coisas diferentes:</strong> gerar JSON no Serial, pedir à API que envie um aviso e receber o aviso de fato no celular. Uma não comprova automaticamente a outra.</p>
+<h3>Primeiro: testar sem credenciais</h3>
+<p>No código entregue, a linha <code>// #define ENABLE_TELEGRAM</code> está comentada. O programa mostra <code>[DEMO] ... NAO entregue</code>. Isso permite aprender e testar todas as automações sem conta no Telegram.</p>
+<h3>Depois: envio real com um bot de teste e rede privada</h3>
+<ol>
+<li>Abra o Telegram, procure o perfil oficial <strong>@BotFather</strong>, use <code>/newbot</code> e siga as instruções. Copie o token apenas para local seguro.</li>
+<li>Abra uma conversa com o bot que criou e envie <code>/start</code>. O bot normalmente não pode iniciar uma conversa particular antes disso.</li>
+<li>Para encontrar seu <code>chat_id</code>, consulte <code>getUpdates</code> na Bot API com seu token, em contexto privado, depois de enviar uma mensagem ao bot. No resultado JSON, procure <code>message.chat.id</code>. Não compartilhe a URL, o resultado completo nem capturas que revelem token ou dados pessoais.</li>
+<li>Use um <strong>projeto privado com o gateway privado</strong> do Wokwi ou um ESP32 de bancada em uma rede própria. Adicione o arquivo <code>secrets.h</code> a partir de <code>secrets.example.h</code> e insira os dois valores, somente nesse projeto privado.</li>
+<li>Retire apenas os dois caracteres <code>//</code> da linha <code>// #define ENABLE_TELEGRAM</code> no início de <code>sketch.ino</code>. Reinicie a simulação.</li>
+<li>Provoque uma ocorrência (por exemplo, DHT22 em 34 °C). Verifique se o Serial mostra <code>[TELEGRAM] API confirmou</code> e, principalmente, se a mensagem realmente apareceu no celular. Registre ambos separadamente.</li>
+</ol>
+<p class="warning"><strong>Segurança:</strong> não copie tokens para o GitHub, projetos públicos do Wokwi, prints ou respostas de atividades. O gateway público do Wokwi é monitorado e não é indicado para dados sensíveis. Prefira executar o teste com um bot exclusivo para a aula em ambiente privado. O código usa a raiz de confiança TLS da biblioteca do bot e sincronização de horário; uma falha de certificado ou rede deve ser registrada, não contornada com <code>setInsecure()</code>.</p>
+<p class="evidence"><strong>Comprovação:</strong> sem credenciais, demonstre um evento local. Com bot privado configurado, registre o recebimento no Telegram. Não declare "entregue" apenas porque apareceu texto no Serial.</p>
+</section>
+<section class="step7" id="etapa8">
+<h2>8. Integração → os três controles coexistem</h2>
+<p>O <code>setup()</code> configura pinos, biblioteca do DHT22, leitor RFID e Wi-Fi. O <code>loop()</code> verifica periodicamente temperatura e água, consulta o RFID e acompanha o Wi-Fi. A tarefa de comunicação envia os avisos no modo real. O recurso <code>millis()</code> permite saber quando repetir tarefas, sem depender de uma pausa fixa longa.</p>
+<p><strong>Por que a rede não pode mandar na granja?</strong> O programa decide as saídas no loop e entrega os avisos a uma tarefa separada. Se o Wi-Fi falha, a decisão local continua. No modo real, os eventos ficam em uma fila limitada; após voltar a conexão, o envio pode ser tentado novamente.</p>
+<p><strong>Limitação transparente:</strong> o envio HTTPS ocorre em uma tarefa separada. A fila comporta oito avisos em espera, além do aviso em envio. Se estiver cheia, o Serial indica que o aviso novo foi descartado. Reiniciar o ESP32 limpa a fila.</p>
+<p class="evidence"><strong>Desafio:</strong> ligue o ventilador, depois abaixe a água e identifique no Serial os dois eventos. Nenhum deles depende de o outro ter acontecido primeiro.</p>
+</section>
+<section class="step7" id="etapa9">
+<h2>9. Testes → provoque situações, observe consequências</h2>
+<div class="tablewrap"><table><thead><tr><th>Experimento</th><th>Resultado esperado</th><th>Evidência a guardar</th></tr></thead><tbody>
+<tr><td>24 → 34 → 29 → 27 °C</td><td>LED azul apaga → acende → mantém → apaga</td><td>Valores e estados no Serial</td></tr>
+<tr><td>8 → 25 → 15 → 7 cm</td><td>LED verde apaga → acende → mantém → apaga</td><td>Distâncias e estados</td></tr>
+<tr><td>25 cm por 30 s</td><td>Bomba interrompida por tempo máximo</td><td>Alerta e bloqueio</td></tr>
+<tr><td>RFID azul, verde e vermelho</td><td>Ana, João e desconhecido</td><td>UIDs e resultados</td></tr>
+<tr><td>Sem token Telegram</td><td>Modo [DEMO] sem entrega</td><td>Mensagem explícita do Serial</td></tr>
+<tr><td>Token privado válido</td><td>API confirma e celular recebe</td><td>Confirmar ambos: não presumir</td></tr>
+</tbody></table></div>
+<h3>Antes do teste de falhas, faça uma previsão</h3>
+<p>Se a rede cair e o DHT22 indicar 34 °C, o LED azul deve acender? O responsável recebe a mensagem naquele momento? Anote sua previsão antes de alterar o simulador.</p>
+<ol>
+<li>Abra o <strong>Monitor Serial</strong> da simulação em modo demonstração. Digite <code>w</code> no campo de entrada e pressione <strong>Enter</strong>. O ESP32 desliga a interface e registra <code>[ENSAIO] Wi-Fi desligado</code>.</li>
+<li>Com a rede desligada, ajuste o DHT22 primeiro a 24 °C e depois a 34 °C. Confira o LED azul e o registro <code>[EVENTO JSON]</code>. A indicação <code>[DEMO]</code> corresponde ao evento de demonstração.</li>
+<li>Envie <code>r</code> e procure <code>[REDE] Wi-Fi conectado</code>. O estado do ventilador continua seguindo a temperatura.</li>
+<li>Digite <code>f</code> para injetar uma leitura inválida do DHT22 com o ESP32 ligado. Confira o aviso único de falha e a ventilação preventiva. Volte o sensor para 24 °C e envie <code>v</code> para restaurar a leitura normal. Para testar o ultrassônico, ajuste o sensor acima de 30 cm com a bomba ligada e confirme que o LED verde apaga.</li>
+</ol>
+<p class="evidence"><strong>Entrega do aluno:</strong> circuito, código, captura dos LEDs e Serial, tabela dos testes com resultado observado e explicação de por que isso é IoT. Envio real ao Telegram é uma etapa opcional supervisionada, que exige credenciais particulares.</p>
+</section>
+<section class="step7" id="etapa10">
+<h2>10. Revisão circular MbB → explique o projeto inteiro</h2>
+<ol>
+<li><strong>Necessidade:</strong> por que medir temperatura e água mesmo sem internet?</li>
+<li><strong>Conceito:</strong> qual a diferença entre sensor, atuador, microcontrolador e IoT?</li>
+<li><strong>Prática:</strong> identifique no circuito os pinos e a função de cada ligação.</li>
+<li><strong>Evidência:</strong> interprete uma mensagem JSON e diga quem a gerou e quem a utiliza.</li>
+<li><strong>Falha:</strong> o que acontece com a bomba, o ventilador e os avisos se o Wi-Fi cair?</li>
+<li><strong>Retorno:</strong> reveja histerese, distância inversa ao nível, identificação RFID e confirmação da API.</li>
+</ol>
+<p><strong>Conclusão:</strong> uma granja inteligente não precisa de dezenas de sensores para demonstrar IoT. Ela deve tomar decisões locais coerentes e informar algo útil a uma pessoa distante.</p>
+<p><a href="arduino-iot.html#b7-5">Retornar à etapa 7.5</a> · <a href="arduino-protocolos.html#b8-prep">Continuar para o Tópico 8</a></p>
+</section>
+<section class="step7" id="arquivos">
+<h2>Arquivos completos para copiar</h2>
+<p>O código e o circuito abaixo são carregados dos <strong>arquivos reais deste mesmo portal</strong>, evitando trechos incompletos. Use os três botões para copiar cada arquivo integralmente para o Wokwi. O modelo de segredos é apenas um exemplo, nunca coloque credenciais nele quando o arquivo estiver público.</p>
+<details open><summary>1. diagram.json — componentes e conexões</summary><div class="copyrow"><button type="button" data-copy="diagrama">Copiar diagram.json</button><a class="filelink" href="../wokwi/granja-inteligente/diagram.json">Abrir arquivo original</a></div><pre><code id="diagrama" data-src="../wokwi/granja-inteligente/diagram.json">Carregando...</code></pre></details>
+<details><summary>2. sketch.ino — programa completo com explicações nos comentários</summary><div class="copyrow"><button type="button" data-copy="programa">Copiar sketch.ino</button><a class="filelink" href="../wokwi/granja-inteligente/sketch.ino">Abrir arquivo original</a></div><pre><code id="programa" data-src="../wokwi/granja-inteligente/sketch.ino">Carregando...</code></pre></details>
+<details><summary>3. libraries.txt — bibliotecas necessárias</summary><div class="copyrow"><button type="button" data-copy="bibliotecas">Copiar libraries.txt</button><a class="filelink" href="../wokwi/granja-inteligente/libraries.txt">Abrir arquivo original</a></div><pre><code id="bibliotecas" data-src="../wokwi/granja-inteligente/libraries.txt">Carregando...</code></pre></details>
+<p role="status" aria-live="polite" id="copystatus"></p>
+<p class="tip">Se não carregar, abra os links diretos dos arquivos e copie o texto. Os arquivos também constam na branch e no Pull Request do projeto, até a integração na main.</p>
+</section>
+<footer class="tip">Mundo bit Byte · Sistemas Embarcados e IoT · Protótipo Wokwi para aprendizagem</footer>
+</main>
+<script>
+(function () {
+  var status = document.getElementById('copystatus');
+  var codes = document.querySelectorAll('code[data-src]');
+  codes.forEach(function (code) {
+    fetch(code.dataset.src).then(function (response) {
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      return response.text();
+    }).then(function (value) {
+      code.textContent = value;
+      code.dataset.loaded = 'true';
+    }).catch(function () {
+      code.textContent = 'Falha ao carregar. Use o link Abrir arquivo original.';
+      code.dataset.loaded = 'false';
+    });
+  });
+  document.querySelectorAll('button[data-copy]').forEach(function (button) {
+    button.addEventListener('click', async function () {
+      var code = document.getElementById(button.dataset.copy);
+      if (!code || code.dataset.loaded !== 'true') {
+        status.textContent = 'O arquivo ainda nao foi carregado; use o link de abrir.';
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(code.textContent);
+        status.textContent = button.textContent.replace('Copiar', 'Copiado:');
+      } catch (error) {
+        status.textContent = 'Copia automatica indisponivel. Selecione o texto do arquivo.';
+      }
+    });
+  });
+})();
+</script>
+<script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+</body>
+</html>

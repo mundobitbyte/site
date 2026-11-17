@@ -4,18 +4,21 @@
 const int PINO_LED = 23;
 WebServer servidor(80);
 WiFiClient cliente;
+bool ledLigado = false;
 bool aguardando = false;
 unsigned long inicioPedido = 0;
 
-void pedir(const char* caminho) {
+void pedir(const char* metodo, const char* caminho) {
   if (aguardando) return;
   if (!cliente.connect(IPAddress(127, 0, 0, 1), 80)) {
     Serial.println("Falha: servidor local indisponivel.");
     return;
   }
 
-  Serial.printf("Pedido: GET %s\n", caminho);
-  cliente.printf("GET %s HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n", caminho);
+  Serial.printf("Pedido: %s %s\n", metodo, caminho);
+  const char* tamanho = strcmp(metodo, "POST") == 0 ? "Content-Length: 0\r\n" : "";
+  cliente.printf("%s %s HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n%s\r\n",
+                 metodo, caminho, tamanho);
   inicioPedido = millis();
   aguardando = true;
 }
@@ -25,7 +28,11 @@ void setup() {
   pinMode(PINO_LED, OUTPUT);
   digitalWrite(PINO_LED, LOW);
   WiFi.mode(WIFI_STA);
-  servidor.on("/ligar", []() {
+  servidor.on("/estado", HTTP_GET, []() {
+    servidor.send(200, "text/plain", ledLigado ? "LED ligado" : "LED apagado");
+  });
+  servidor.on("/ligar", HTTP_POST, []() {
+    ledLigado = true;
     digitalWrite(PINO_LED, HIGH);
     servidor.send(200, "text/plain", "LED ligado");
   });
@@ -33,7 +40,7 @@ void setup() {
     servidor.send(404, "text/plain", "Rota inexistente");
   });
   servidor.begin();
-  Serial.println("Servidor iniciado. Envie L ou X.");
+  Serial.println("Servidor iniciado. Envie C, X ou L.");
 }
 
 void loop() {
@@ -53,8 +60,9 @@ void loop() {
 
   if (Serial.available()) {
     const char comando = Serial.read();
-    if (comando == 'L') pedir("/ligar");
-    if (comando == 'X') pedir("/ausente");
+    if (comando == 'C') pedir("GET", "/estado");
+    if (comando == 'X') pedir("GET", "/ausente");
+    if (comando == 'L') pedir("POST", "/ligar");
   }
   delay(10);
 }

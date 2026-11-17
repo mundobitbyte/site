@@ -1,0 +1,72 @@
+name: Validacao pratica 7.5 - Granja IoT
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'wokwi/granja-inteligente/**'
+      - 'pages/arduino-granja-inteligente.html'
+      - 'pages/arduino-iot.html'
+      - '.github/workflows/seiot-granja-validacao.yml'
+      - 'tests/seiot-granja/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analise-estatica:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/seiot-granja/validar.mjs
+
+  compilacao-esp32:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Preparar plataforma ESP32
+        run: |
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+      - name: Instalar bibliotecas usadas
+        run: |
+          arduino-cli lib install "DHT sensor library for ESPx"
+          arduino-cli lib install "MFRC522"
+          arduino-cli lib install "UniversalTelegramBot"
+          arduino-cli lib install "ArduinoJson"
+      - name: Compilar ESP32 no modo demonstração
+        run: |
+          mkdir -p "$RUNNER_TEMP/GranjaInteligente"
+          cp wokwi/granja-inteligente/sketch.ino "$RUNNER_TEMP/GranjaInteligente/GranjaInteligente.ino"
+          arduino-cli compile --fqbn esp32:esp32:esp32 "$RUNNER_TEMP/GranjaInteligente"
+      - name: Compilar ramo HTTPS com configuração fictícia
+        run: |
+          pasta="$RUNNER_TEMP/GranjaInteligente"
+          sed -i 's|^// #define ENABLE_TELEGRAM$|#define ENABLE_TELEGRAM|' "$pasta/GranjaInteligente.ino"
+          cp wokwi/granja-inteligente/secrets.example.h "$pasta/secrets.h"
+          arduino-cli compile --fqbn esp32:esp32:esp32 "$pasta"
+
+  navegador:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar Chromium de teste
+        run: |
+          npm install --prefix "$RUNNER_TEMP/granja" playwright
+          "$RUNNER_TEMP/granja/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Validar a navegação, os arquivos e a cópia em desktop e celular
+        run: |
+          python3 -m http.server 38763 --bind 127.0.0.1 >/tmp/granja-http.log 2>&1 &
+          trap 'kill $!' EXIT
+          curl --retry 10 --retry-connrefused --silent --fail http://127.0.0.1:38763/pages/arduino-iot.html >/dev/null
+          NODE_PATH="$RUNNER_TEMP/granja/node_modules" node tests/seiot-granja/navegador.cjs
