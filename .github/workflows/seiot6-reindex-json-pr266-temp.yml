@@ -1,0 +1,35 @@
+name: Reindexar JSON de circuito na branch PR266 (temporário)
+on:
+  push:
+    branches: [fix/seiot6-json-circuito-copiavel-visivel-20261117]
+    paths:
+      - '.github/workflows/seiot6-reindex-json-pr266-temp.yml'
+permissions:
+  contents: write
+jobs:
+  reindexar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Gerar o índice de pesquisa pela ferramenta oficial
+        run: |
+          node meu-mbb/atualizar-pesquisa.cjs
+          node meu-mbb/atualizar-pesquisa.cjs --check
+          node meu-mbb/gerar-visitas.cjs --check
+      - name: Atualizar somente a branch, sem alterar IDs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add meu-mbb/catalogo.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(meu-mbb): indexar JSON visível do circuito-base"
+            git push origin HEAD:"$GITHUB_REF_NAME"
+          else
+            echo "O catálogo já está atualizado."
+          fi
