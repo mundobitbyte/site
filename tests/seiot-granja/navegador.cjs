@@ -17,7 +17,8 @@ const base=process.env.MBB_BASE_URL || 'http://127.0.0.1:38763';
    await page.locator('#b7-5.active-panel').waitFor();
    await page.getByRole('link',{name:'Abrir a prática 7.5 — Granja Inteligente',exact:true}).click();
    await page.waitForURL('**/arduino-granja-inteligente.html');
-   assert.equal(await page.locator('main .step7').count(),11);
+   assert.equal(await page.locator('main .step7:visible').count(),11);
+   assert((await page.locator('.nav7').boundingBox()).height < 170,'trilha sem altura natural');
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),'laboratório excede largura');
    for(const [id,file] of [['diagrama','diagram.json'],['programa','sketch.ino'],['bibliotecas','libraries.txt']]){
      const code=page.locator('#'+id+'[data-loaded=true]');
