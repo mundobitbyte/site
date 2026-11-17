@@ -274,22 +274,23 @@ const styles = StyleSheet.create({
         [],
         `<div class="react-hooks-lesson">
           <section>
-            <h4>A temperatura chega ao cartão</h4>
-            <p>Na <a href="#rn-state-mbb-react-props">etapa 4</a>, cada uso de <code>CartaoClima</code> recebe uma cidade e uma temperatura. Se quem monta o cartão trocar somente a temperatura de Campinas, é esse cartão que passa a exibir o novo valor.</p>
-            <pre><code>&lt;CartaoClima cidade="Campinas" temperatura={28} /&gt;
-&lt;CartaoClima cidade="Santos" temperatura={24} /&gt;</code></pre>
+            <h4>Props: o cartão recebe a temperatura</h4>
+            <p>Na <a href="#rn-state-mbb-react-props">etapa 4</a>, <code>App</code> informa a cidade e a temperatura de cada <code>CartaoClima</code>. O cartão usa as props que recebeu para montar seu texto.</p>
           </section>
           <section>
-            <h4>A nota muda durante o uso</h4>
-            <p>Na Média Escolar, a Nota 1 começa vazia e muda a cada digitação. O próprio formulário guarda esse valor com <code>useState</code>. Se ele passar a nota a um cartão de resultado, o mesmo dado será state no formulário e prop no cartão.</p>
-            <pre><code>const [nota1, setNota1] = useState('');
-&lt;TextInput value={nota1} onChangeText={setNota1} /&gt;</code></pre>
+            <h4>State: o App guarda a temperatura</h4>
+            <p>Nesta prática, o cartão de Campinas e o resumo precisam acompanhar a mesma temperatura. Por isso, <code>App</code> guarda o valor com <code>useState(28)</code> e passa <code>temperatura</code> por props a <code>CartaoClima</code> e a <code>ResumoClima</code>. O mesmo valor é state em <code>App</code> e prop nos dois filhos. Colocar o estado compartilhado no componente pai comum é chamado de <strong>elevação de estado</strong>.</p>
           </section>
-          <p>Na prática abaixo, cartão e resumo precisam exibir a mesma temperatura. O pai guarda o dado e passa o valor aos dois, além da função <code>aumentar</code> ao cartão. No toque, o cartão chama a função. O pai pede a atualização com <code>setTemperatura</code> e o React renderiza novamente os componentes com o valor novo. Mover o state compartilhado para o pai comum é chamado de <strong>elevação de estado</strong>.</p>
-          <details>
-            <summary>Confira quem guarda cada valor</summary>
-            <p>Se o formulário passar <code>nota1</code> para um cartão, o formulário atualiza a nota com <code>setNota1</code> e o cartão exibe o valor que recebeu. Na <a href="#rn-state-state-7-state">etapa 12</a>, você poderá ver a nota mudar enquanto digita.</p>
-          </details>
+          <p>Ao tocar em <strong>Aumentar temperatura</strong>, <code>CartaoClima</code> executa a função que recebeu na prop <code>aoAumentar</code>. Essa função chama <code>setTemperatura</code> em <code>App</code>. O React renderiza a tela com o novo valor e os dois textos mudam juntos.</p>
+          <section>
+            <h4>Prepare a prática do Clima</h4>
+            <ol>
+              <li><a href="https://snack.expo.dev/" target="_blank" rel="noopener noreferrer">Abra um novo projeto no Expo Snack</a> e selecione <strong>Web</strong> na área de prévia.</li>
+              <li>Abra <strong>App.js da prática</strong> abaixo e clique em <strong>Copiar</strong> para copiar o arquivo completo.</li>
+              <li>No Snack, abra <code>App.js</code>, selecione todo o conteúdo do arquivo e substitua pelo código copiado. Use os botões na prévia para testar a atualização da temperatura simulada.</li>
+            </ol>
+          </section>
+          <p>Na <a href="#rn-state-state-1-app">etapa 6</a>, você começa outro aplicativo, a Média Escolar. Na <a href="#rn-state-state-7-state">etapa 12</a>, vai usar <code>useState</code> para guardar o que o usuário digita.</p>
         </div>`
       )
     ];
@@ -1465,7 +1466,7 @@ campoTarefa.current?.focus();</code></pre>
     const praticas = {
       'mbb-react-props-state': {
         title: 'Prática no Snack — uma temperatura para duas partes da tela',
-        instruction: 'Preveja o que acontece ao tocar em Aumentar temperatura dentro do cartão. Execute e confira o cartão e o resumo. Depois toque em Restaurar no componente pai e compare as duas leituras.',
+        instruction: 'Antes de tocar nos botões, preveja qual leitura vai mudar. Confira 28 °C no cartão e no resumo. Toque duas vezes em Aumentar temperatura e verifique se os dois mostram 29 °C e depois 30 °C. Toque em Restaurar e confirme que ambos voltam a 28 °C. Localize no código a única chamada a useState e as duas props que recebem a temperatura.',
         code: `import React, { useState } from 'react';
 import { Button, Text, View, StyleSheet } from 'react-native';
 
@@ -1486,7 +1487,7 @@ export default function App() {
   const [temperatura, setTemperatura] = useState(28);
 
   function aumentar() {
-    setTemperatura(temperatura + 1);
+    setTemperatura(atual => atual + 1);
   }
 
   function restaurar() {
