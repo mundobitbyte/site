@@ -15,7 +15,12 @@ const base=process.env.MBB_BASE_URL || 'http://127.0.0.1:38763';
    await page.locator('#b7-4.active-panel').waitFor();
    await page.getByRole('link',{name:'Ir para 7.5 — Granja Inteligente',exact:true}).click();
    await page.locator('#b7-5.active-panel').waitFor();
-   await page.getByRole('link',{name:'Abrir a prática 7.5 — Granja Inteligente',exact:true}).click();
+   const linkPratica = page.locator('#b7-5.active-panel .mbb7-pratica-link');
+   assert.equal(await linkPratica.count(), 1);
+   const area = await linkPratica.boundingBox();
+   assert(area && area.height >= 44 && area.y >= 0 && area.y + area.height <= 900,
+          'botão da prática precisa aparecer na primeira tela e ter altura para toque');
+   await linkPratica.click();
    await page.waitForURL('**/arduino-granja-inteligente.html');
    assert.equal(await page.locator('main .step7:visible').count(),11);
    assert((await page.locator('.nav7').boundingBox()).height < 170,'trilha sem altura natural');
