@@ -18,3 +18,71 @@
 #mdns-pcap-resultado td{vertical-align:top}
 :is(#b6-4,#b6-5) :focus-visible{outline:3px solid #087d9b;outline-offset:3px}
 @media(max-width:640px){:is(#b6-4,#b6-5) details{padding:.65rem}.mbb6-pcap-scroll{border:1px solid #d0dee4}:is(#b6-4,#b6-5) .mbb6-terminal{padding:.5rem}}
+
+/* Guia diagram.json (6 / Preparação): cinco seções expansíveis claramente clicáveis.
+   Mantém o comportamento nativo e acessível de <details>/<summary>. */
+#b6-prep [data-mbb6-acrescimo="guia-json"] details{
+  margin:.65rem 0 1rem;
+}
+#b6-prep [data-mbb6-acrescimo="guia-json"] details > summary{
+  position:relative;
+  display:list-item;
+  list-style-position:inside;
+  cursor:pointer;
+  padding:.85rem 9.75rem .85rem 1rem;
+  background:#edf6fd;
+  color:#123b59;
+  border:1px solid #b5d4ea;
+  border-radius:8px;
+  line-height:1.5;
+  transition:background-color .15s ease,border-color .15s ease;
+}
+#b6-prep [data-mbb6-acrescimo="guia-json"] details > summary::marker{
+  color:#096991;
+  font-size:1.2em;
+}
+#b6-prep [data-mbb6-acrescimo="guia-json"] details > summary::after{
+  content:"Clique para abrir";
+  position:absolute;
+  top:50%;
+  right:.7rem;
+  transform:translateY(-50%);
+  background:#fff;
+  color:#095984;
+  border:1px solid #a9cce5;
+  border-radius:5px;
+  padding:.22rem .5rem;
+  font-size:.82rem;
+  font-weight:700;
+  line-height:1.5;
+  white-space:nowrap;
+}
+#b6-prep [data-mbb6-acrescimo="guia-json"] details[open] > summary::after{
+  content:"Clique para fechar";
+}
+#b6-prep [data-mbb6-acrescimo="guia-json"] details > summary:hover{
+  background:#d9edfb;
+  border-color:#78b1d7;
+}
+#b6-prep [data-mbb6-acrescimo="guia-json"] details > summary:focus-visible{
+  outline:3px solid #0d7eaa;
+  outline-offset:3px;
+}
+#b6-prep [data-mbb6-acrescimo="guia-json"] details[open] > summary{
+  background:#e2f0fa;
+  margin-bottom:.8rem;
+}
+@media(max-width:680px){
+  #b6-prep [data-mbb6-acrescimo="guia-json"] details > summary{
+    padding:.75rem .8rem;
+  }
+  #b6-prep [data-mbb6-acrescimo="guia-json"] details > summary::after{
+    display:block;
+    position:static;
+    transform:none;
+    width:max-content;
+    max-width:100%;
+    margin:.4rem 0 0 1rem;
+    white-space:normal;
+  }
+}
