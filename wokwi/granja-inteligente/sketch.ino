@@ -94,7 +94,9 @@ void ligarVentilador(bool ligar) {
   if (ventilador == ligar) return;
   ventilador = ligar;
   digitalWrite(LED_VENTILADOR, ligar ? HIGH : LOW);
-  notificar(ligar ? "Temperatura alta: ventilador ligado" :
+  notificar(ligar ? (falhaTemperatura ?
+                    "Falha DHT22: ventilador ligado preventivamente" :
+                    "Temperatura alta: ventilador ligado") :
                     "Temperatura normalizada: ventilador desligado");
 }
 void ligarBomba(bool ligar) {
