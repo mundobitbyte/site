@@ -26,15 +26,20 @@ document.addEventListener('DOMContentLoaded', function () {
     cards.insertBefore(card, ponte || null);
   }
 
-  function anexo(etapa, nome, titulo, arquivo, id, explicacao, lista) {
-    inserir(etapa, nome,
-      '<h3>' + titulo + '</h3>' +
-      '<p>' + explicacao + '</p>' +
-      '<details><summary>Ver código completo e copiar</summary>' +
+  function anexo(etapa, nome, titulo, arquivo, id, explicacao, lista, codigoVisivel = false) {
+    const fonte =
       '<div class="mbb6-aux-toolbar"><button type="button" disabled data-mbb6-carregando="' + id +
       '" onclick="copyCode(\'' + id + '\',this)">Carregando código...</button></div>' +
       '<pre tabindex="0" id="' + id + '" class="mbb6-recuperado-code">Carregando o arquivo original...</pre>' +
-      '<p><a href="' + arquivo + '">Abrir arquivo-fonte diretamente</a>.</p></details>' +
+      '<p><a href="' + arquivo + '">Abrir arquivo-fonte diretamente</a>.</p>';
+    inserir(etapa, nome,
+      '<h3>' + titulo + '</h3>' +
+      '<p>' + explicacao + '</p>' +
+      (codigoVisivel
+        ? '<div class="mbb6-json-direto" role="group" aria-label="Código JSON completo do circuito-base">' +
+          '<p><strong>JSON completo do circuito-base — pronto para copiar e colar:</strong></p>' +
+          fonte + '</div>'
+        : '<details><summary>Ver código completo e copiar</summary>' + fonte + '</details>') +
       lista
     );
     const painel = document.getElementById(etapa);
@@ -47,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }).then(codigoFonte => {
       caixa.textContent = codigoFonte;
       botao.disabled = false;
-      botao.textContent = 'Copiar';
+      botao.textContent = codigoVisivel ? 'Copiar JSON completo' : 'Copiar';
     }).catch(() => {
       caixa.textContent = 'Arquivo temporariamente indisponível. Use o link Abrir arquivo-fonte diretamente.';
       botao.disabled = true;
@@ -61,12 +66,12 @@ document.addEventListener('DOMContentLoaded', function () {
     '<p><strong>Para que serve?</strong> O arquivo <code>diagram.json</code> é um texto que informa ao Wokwi quais componentes desenhar e quais pinos ligar. Em <code>parts</code> estão as peças; em <code>connections</code>, os fios. Ele <strong>não contém o programa</strong> do ESP32 e não substitui o <code>sketch.ino</code>.</p>' +
     '<p><strong>Escolha um caminho:</strong> você pode montar LED e resistor manualmente no passo 7 <em>ou</em> usar este diagrama pronto. Os dois caminhos resultam no mesmo circuito-base. <strong>Não precisa fazer as duas montagens.</strong></p>' +
     '<ol><li>No <a href="https://wokwi.com/projects/new/esp32" target="_blank" rel="noopener noreferrer">projeto ESP32 do Wokwi</a>, pare a simulação (■) se ela estiver em execução.</li>' +
-    '<li>Nesta apostila, abra <strong>Ver código completo e copiar</strong> logo abaixo e clique em <strong>Copiar</strong> para copiar o JSON inteiro.</li>' +
+    '<li>Nesta apostila, o <strong>código JSON completo já está visível logo abaixo</strong>. Clique no botão <strong>Copiar JSON completo</strong> para copiar todo o conteúdo.</li>' +
     '<li><strong>Na aba do Wokwi</strong>, abra o arquivo <code>diagram.json</code> (não <code>sketch.ino</code>). Clique dentro do editor de texto, pressione <strong>Ctrl+A</strong> para selecionar tudo e depois <strong>Ctrl+V</strong> para colar. Se preferir, use os comandos Selecionar tudo e Colar do seu dispositivo.</li>' +
     '<li>Volte à área do circuito. Verifique que aparecem <strong>ESP32, LED vermelho, resistor de 220 Ω e fios</strong>. O GPIO 23 liga-se ao ânodo (A) do LED; o cátodo (C) passa pelo resistor até o GND. O Monitor Serial também fica configurado.</li>' +
     '<li>Agora, na aba <code>sketch.ino</code>, utilize o <strong>código de piscar o LED do passo 8</strong> e inicie a simulação (▶). Observe o LED acender e apagar: <strong>o JSON monta o circuito; o sketch programa seu comportamento.</strong></li></ol>',
     '<p class="mbb6-checkpoint"><strong>Quando usar de novo?</strong> Guarde este circuito no mesmo projeto Wokwi. Ele será reutilizado nas etapas de Bluetooth, Wi-Fi, HTTP, mDNS e tunelamento, trocando o <code>sketch.ino</code> conforme cada prática. Na simulação do Bluetooth (6.1), crie também o arquivo auxiliar <code>BluetoothSerial.h</code> solicitado na própria etapa.</p>' +
-    '<p><strong>Se não aparecer a montagem:</strong> confira se colou no <code>diagram.json</code>, se copiou desde a primeira <code>{</code> até a última <code>}</code> e se não apagou aspas, vírgulas ou colchetes. O código fonte também está disponível pelo link abaixo do quadro.</p>');
+    '<p><strong>Se não aparecer a montagem:</strong> confira se colou no <code>diagram.json</code>, se copiou desde a primeira <code>{</code> até a última <code>}</code> e se não apagou aspas, vírgulas ou colchetes. O código fonte também está disponível pelo link abaixo do quadro.</p>', true);
 
   // Pequeno manual contextual: não remove o circuito-base nem altera o sketch aprovado.
   inserir('b6-prep', 'guia-json', `
