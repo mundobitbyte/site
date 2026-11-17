@@ -69,9 +69,9 @@ document.addEventListener('DOMContentLoaded', function () {
     '<p><strong>Se não aparecer a montagem:</strong> confira se colou no <code>diagram.json</code>, se copiou desde a primeira <code>{</code> até a última <code>}</code> e se não apagou aspas, vírgulas ou colchetes. O código fonte também está disponível pelo link abaixo do quadro.</p>');
 
   // Pequeno manual contextual: não remove o circuito-base nem altera o sketch aprovado.
-  inserir('b6-prep', 'guia-json', \`
+  inserir('b6-prep', 'guia-json', `
     <h3>Entenda o diagram.json — dicionário dos campos mais usados</h3>
-    <p>O quadro anterior fornece um circuito pronto. <strong>Aqui você aprende a ler e modificar o JSON</strong>, sem precisar decorar seus comandos. Ele descreve as peças, sua posição e as conexões; quem programa o comportamento da placa continua sendo o <code>sketch.ino</code>.</p>
+    <p>O quadro anterior fornece um circuito pronto. <strong>Aqui você aprende a ler e modificar o JSON</strong>, sem precisar decorar seus comandos. Ele descreve as peças, sua posição e as conexões; quem programa o comportamento da placa continua sendo o <code>sketch.ino</code>. Para substituir o diagrama inteiro no editor, use <strong>Ctrl+A</strong> antes de colar.</p>
     <p><strong>Leia primeiro o básico:</strong> <code>{ }</code> delimitam um objeto; <code>[ ]</code> representam uma lista; <code>"texto"</code> indica texto; <code>220</code> é número e <code>true</code>/<code>false</code> são valores lógicos. Cada propriedade usa <code>"nome": valor</code>, e os itens são separados por vírgulas. <strong>JSON não aceita comentários</strong> com <code>//</code> nem vírgula depois do último item.</p>
     <details>
       <summary><strong>1. Estrutura geral do arquivo</strong> — os campos da primeira camada</summary>
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
     </details>
     <p class="mbb6-note"><strong>Onde descobrir mais componentes e campos?</strong> Use <strong>+</strong> no editor visual do Wokwi, inspecione o <code>diagram.json</code> gerado e consulte as referências oficiais: <a href="https://docs.wokwi.com/diagram-format" target="_blank" rel="noopener noreferrer">formato diagram.json</a>, <a href="https://docs.wokwi.com/parts/wokwi-led" target="_blank" rel="noopener noreferrer">LED e atributos</a>, <a href="https://docs.wokwi.com/parts/wokwi-resistor" target="_blank" rel="noopener noreferrer">resistor</a>, <a href="https://docs.wokwi.com/guides/serial-monitor" target="_blank" rel="noopener noreferrer">Monitor Serial</a> e <a href="https://docs.wokwi.com/guides/diagram-editor" target="_blank" rel="noopener noreferrer">editor visual</a>. Esta é uma seleção dos campos mais úteis para começar, não a lista de todos os componentes do simulador.</p>
     <p class="mbb6-checkpoint"><strong>Conferência final:</strong> você consegue explicar qual parte do JSON cria o LED, qual linha liga o GPIO 23 ao LED e por que alterar <code>diagram.json</code> não substitui modificar <code>sketch.ino</code>? Se sim, avance para o código de piscar do passo 8.</p>
-  \`);
+  `);
 
   inserir('b6-1', 'prova-bluetooth',
     '<h3>Conferência complementar — rádio real ou interface simulada?</h3>' +
