@@ -24,7 +24,7 @@ const requisites={
  'b6-1':['Bluetooth Classic','SPP','BluetoothSerial SerialBT;','SerialBT.begin','SerialBT.available()', 'SerialBT.read()', 'SerialBT.println', 'Android', 'iPhone'],
  'b6-2':['WiFi.h','Wokwi','ESP32 físico','NOME_DA_REDE','WiFi.localIP'],
  'b6-3':['HTTPClient.h','WebServer.h','ESP32 físico','servidor HTTP','cliente HTTP'],
- 'b6-4':['ESPmDNS.h','zeroconf','mdns-pcap-arquivo','MDNS.begin','mdns-fisico'],
+ 'b6-4':['ESPmDNS.h','zeroconf','mdns-pcap-arquivo','MDNS.begin','MDNS.addService'],
  'b6-5':['cloudflared','servidor.py','túnel','encaminhador_local']
 };
 for(const [id,tokens] of Object.entries(requisites)){
