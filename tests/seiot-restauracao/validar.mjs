@@ -34,4 +34,5 @@ for(const [id,tokens] of Object.entries(requisites)){
 for(const token of ['b6-1-wokwi-header','class BluetoothSerial','return Serial.available()','return Serial.read()','remova do projeto a aba auxiliar']) assert(js.includes(token),'Biblioteca simulada perdida: '+token);
 for(const asset of ['arduino-conectividade-aprofundamento-mbb-20261026.js','arduino-mdns-pcap.js','arduino-conectividade-mbb-wokwi-20261005.js','arduino-conectividade-acrescimos-20261117.js']) assert(html.includes(asset),'script original ausente: '+asset);
 for(const file of ['diagram.json','http-local.ino','tunel-modelo.ino']) assert(extras.includes(file),'melhoria posterior perdida: '+file);
+for(const token of ['Entenda o diagram.json','serialMonitor','connections','rotate','hide','Não altere o GPIO 23','docs.wokwi.com/diagram-format']) assert(extras.includes(token),'Guia JSON perdeu recurso: '+token);
 console.log('OK: sete etapas e práticas ESP32 físicas/Wokwi preservadas; adições separadas.');
