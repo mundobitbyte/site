@@ -1,0 +1,62 @@
+name: Validação de recuperação do Tópico 6
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'pages/arduino-conectividade.html'
+      - 'js/arduino-conectividade*.js'
+      - 'materiais/arduino/conectividade/**'
+      - 'tests/seiot-restauracao/**'
+      - 'tests/seiot-rede/**'
+      - '.github/workflows/seiot6-restauracao.yml'
+permissions:
+  contents: read
+jobs:
+  conteudo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node tests/seiot-restauracao/validar.mjs
+      - run: python3 tests/seiot-rede/conteudo.py
+  compilacao:
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/setup-arduino-cli@v2
+      - run: |
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+      - run: node tests/seiot-restauracao/gerar-bluetooth.mjs "$RUNNER_TEMP"
+      - name: Compilar código Bluetooth real (ESP32 original)
+        run: arduino-cli compile --fqbn esp32:esp32:esp32 "$RUNNER_TEMP/BTFisico"
+      - name: Compilar o mesmo sketch com biblioteca Wokwi
+        run: arduino-cli compile --fqbn esp32:esp32:esp32 "$RUNNER_TEMP/BTWokwi"
+      - name: Compilar HTTP local complementar
+        run: arduino-cli compile --fqbn esp32:esp32:esp32 "$RUNNER_TEMP/HTTPLocal"
+  navegador:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: |
+          npm install --no-save --prefix "$RUNNER_TEMP/mbb-browser" playwright@1.62.1
+          node "$RUNNER_TEMP/mbb-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - run: |
+          export NODE_PATH="$RUNNER_TEMP/mbb-browser/node_modules"
+          export MBB_EVIDENCIAS="$RUNNER_TEMP/seiot-restauracao"
+          mkdir -p "$MBB_EVIDENCIAS"
+          python3 -m http.server 4179 --bind 127.0.0.1 > "$RUNNER_TEMP/site.log" 2>&1 &
+          srv_pid=$!
+          trap 'kill "$srv_pid"' EXIT
+          node tests/seiot-restauracao/navegador.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidencias-seiot6-restauracao
+          path: /tmp/seiot-restauracao/
