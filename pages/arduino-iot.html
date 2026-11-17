@@ -74,6 +74,7 @@
     <a class="stage-link module-visible" href="#b7-2">7.2 Histórico</a>
     <a class="stage-link module-visible" href="#b7-3">7.3 Conceitos e definições</a>
     <a class="stage-link module-visible" href="#b7-4">7.4 Aplicações</a>
+    <a class="stage-link module-visible" href="#b7-5">7.5 Granja Inteligente (prática)</a>
   </div>
 </aside>
 <div class="stage-backdrop" id="stageBackdrop" hidden></div>
@@ -88,7 +89,7 @@
   <p>No bloco anterior, fizemos o ESP32 se comunicar. Agora vamos dar um passo diferente: em vez de perguntar apenas <strong>“como conectar?”</strong>, vamos perguntar <strong>“para que conectar e que sistema estamos construindo?”</strong></p>
   <div class="hero-flow"><div>Objeto físico</div><span>→</span><div>Dados e ações</div><span>→</span><div>Rede</div><span>→</span><div>Aplicação</div><span>→</span><div>Finalidade</div></div>
   <div class="mbb7-summary">
-    <div><strong>Sem novo circuito obrigatório</strong><span>Vamos interpretar sistemas que já conhecemos antes de acrescentar novos componentes.</span></div>
+    <div><strong>Conceitos antes da prática</strong><span>Começamos interpretando sistemas conhecidos; a etapa 7.5 oferece um circuito integrador guiado.</span></div>
     <div><strong>Foco</strong><span>Entender o conjunto, não decorar uma definição isolada.</span></div>
     <div><strong>Objetivo</strong><span>Reconhecer, comparar e explicar aplicações de IoT em diferentes contextos.</span></div>
   </div>
@@ -144,7 +145,19 @@
     <article class="card"><h3>4. A pergunta que evita exemplos rasos</h3><p>Não basta dizer “sensor conectado”. Pergunte sempre: <strong>qual dado é produzido, quem precisa dele e que decisão ou ação ele permite?</strong></p></article>
     <article class="card wide"><h3>5. Aplicando ao que já construímos</h3><p>Escolha um projeto anterior — LDR, HC-SR04, servo ou lixeira automática — e imagine uma evolução conectada. Não acrescente Wi-Fi apenas porque ele existe: primeiro defina <strong>que necessidade a conexão resolverá</strong>.</p><div class="mbb7-transfer"><ol><li><strong>Objeto físico:</strong> o que será observado ou controlado?</li><li><strong>Sensor ou atuador:</strong> que parte percebe ou age?</li><li><strong>Dado ou comando:</strong> o que precisa circular?</li><li><strong>Comunicação:</strong> por que uma rede é necessária nesse caso?</li><li><strong>Aplicação e finalidade:</strong> quem usará a informação ou enviará o comando, e para quê?</li></ol></div><div class="mbb7-checkpoint"><strong>Resultado esperado:</strong> sua proposta deve continuar fazendo sentido mesmo se retirarmos as palavras “IoT” e “inteligente”. A necessidade, o fluxo de dados e a finalidade precisam explicar por que o sistema deve ser conectado.</div></article>
     <article class="card worked wide"><h3>6. O que você precisa conseguir fazer ao final</h3><ul><li>Reconhecer quando um projeto é apenas eletrônico, embarcado, automatizado ou conectado.</li><li>Explicar por que Wi-Fi sozinho não transforma um equipamento em IoT.</li><li>Identificar objeto físico, sensor/atuador, processamento, comunicação, aplicação e finalidade.</li><li>Propor uma evolução conectada para um projeto já conhecido sem adicionar tecnologia sem propósito.</li></ul></article>
-    <article class="card wide mbb7-bridge"><h3>7. Ponte para o próximo bloco</h3><p>Nos exemplos deste bloco, sensores, microcontroladores, atuadores, computadores e redes precisam trocar informações — e nem todos se comunicam da mesma maneira. Além disso, algumas tarefas precisam acontecer dentro de um tempo previsível. <strong>Como organizar essas comunicações e essas tarefas?</strong> O próximo bloco entra em RTOS, interfaces e protocolos.</p></article>
+    <article class="card wide mbb7-bridge"><h3>7. Antes de avançar: vamos experimentar?</h3><p>Você já identificou como um sistema IoT funciona. Na <a href="#b7-5">etapa 7.5</a>, terá uma prática opcional guiada de granja inteligente com temperatura, água, RFID e notificações remotas. Depois, o bloco 8 aprofunda tarefas e protocolos.</p></article>
+  </div>
+</section>
+
+<section class="project mbb7-panel" id="b7-5">
+  <div class="projectHead"><span class="badge">7.5</span><div><h2>Prática integradora — Granja Inteligente com ESP32</h2><p>Três funções, uma finalidade: controlar localmente e avisar o responsável quando for necessário.</p></div></div>
+  <div class="mbb7-context"><strong>A necessidade apareceu nas aplicações:</strong> um aviso só é útil quando há um evento real, alguém que o recebe e uma ação possível. Vamos construir um circuito simples para demonstrar essa ideia, sem substituir as explicações das etapas 7.1–7.4.</div>
+  <div class="cards">
+    <article class="card wide"><h3>1. O desafio</h3><p>O DHT22 acompanha a temperatura e o ESP32 aciona a ventilação; o HC-SR04 acompanha o nível de água e o ESP32 aciona a bomba; o leitor RFID identifica funcionários. Os eventos são registrados em JSON e podem ser enviados ao responsável pelo Telegram. <strong>Sem Internet, a automação local continua.</strong></p></article>
+    <article class="card"><h3>2. O que você verá no simulador</h3><p>Dois LEDs representam os comandos de ventilador e bomba. Os valores dos sensores são ajustados manualmente no Wokwi. Um cartão azul ou verde é reconhecido; um desconhecido é rejeitado.</p></article>
+    <article class="card"><h3>3. Onde entra a Internet das Coisas</h3><p>O ESP32 usa Wi-Fi e HTTPS para tentar entregar avisos ao Telegram. No modo padrão, as mensagens ficam explicitamente marcadas como <strong>demonstração não entregue</strong>. O envio real exige um bot e configuração privada.</p></article>
+    <article class="card worked wide"><h3>4. Acesse a prática guiada completa</h3><p>O passo a passo explica todos os componentes, o <code>diagram.json</code>, o código integral, as situações de teste, os riscos e as evidências de aprendizagem. <a href="arduino-granja-inteligente.html"><strong>Abrir a prática 7.5 — Granja Inteligente</strong></a>.</p><div class="mbb7-checkpoint"><strong>Resultado esperado:</strong> compreender por que a leitura do sensor, a decisão local e o envio de mensagens são partes distintas de um mesmo sistema IoT.</div></article>
+    <article class="card wide mbb7-bridge"><h3>5. Ponte para o próximo bloco</h3><p>Para que sensores, atuadores e rede convivam, o programa precisa organizar tarefas e comunicação. <a href="arduino-protocolos.html">No Tópico 8</a>, estudaremos protocolos e RTOS sem aumentar artificialmente o escopo desta prática.</p></article>
   </div>
 </section>
 
