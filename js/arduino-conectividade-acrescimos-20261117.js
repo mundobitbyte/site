@@ -13,11 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
     card.innerHTML = conteudo;
     // O JSON é uma alternativa de montagem: aparece logo após o passo 7,
     // antes do sketch, sem substituir a montagem manual nem suas instruções.
-    if (codigo === 'diagrama' && etapa === 'b6-prep') {
-      const montagem = [...cards.children].find(el =>
-        el.querySelector('h3')?.textContent.includes('7. Montando o circuito-base'));
-      if (montagem) {
-        cards.insertBefore(card, montagem.nextSibling);
+    if (etapa === 'b6-prep' && (codigo === 'diagrama' || codigo === 'guia-json')) {
+      const referencia = codigo === 'diagrama'
+        ? [...cards.children].find(el => el.querySelector('h3')?.textContent.includes('7. Montando o circuito-base'))
+        : cards.querySelector('[data-mbb6-acrescimo="diagrama"]');
+      if (referencia) {
+        cards.insertBefore(card, referencia.nextSibling);
         return;
       }
     }
@@ -66,6 +67,79 @@ document.addEventListener('DOMContentLoaded', function () {
     '<li>Agora, na aba <code>sketch.ino</code>, utilize o <strong>código de piscar o LED do passo 8</strong> e inicie a simulação (▶). Observe o LED acender e apagar: <strong>o JSON monta o circuito; o sketch programa seu comportamento.</strong></li></ol>',
     '<p class="mbb6-checkpoint"><strong>Quando usar de novo?</strong> Guarde este circuito no mesmo projeto Wokwi. Ele será reutilizado nas etapas de Bluetooth, Wi-Fi, HTTP, mDNS e tunelamento, trocando o <code>sketch.ino</code> conforme cada prática. Na simulação do Bluetooth (6.1), crie também o arquivo auxiliar <code>BluetoothSerial.h</code> solicitado na própria etapa.</p>' +
     '<p><strong>Se não aparecer a montagem:</strong> confira se colou no <code>diagram.json</code>, se copiou desde a primeira <code>{</code> até a última <code>}</code> e se não apagou aspas, vírgulas ou colchetes. O código fonte também está disponível pelo link abaixo do quadro.</p>');
+
+  // Pequeno manual contextual: não remove o circuito-base nem altera o sketch aprovado.
+  inserir('b6-prep', 'guia-json', \`
+    <h3>Entenda o diagram.json — dicionário dos campos mais usados</h3>
+    <p>O quadro anterior fornece um circuito pronto. <strong>Aqui você aprende a ler e modificar o JSON</strong>, sem precisar decorar seus comandos. Ele descreve as peças, sua posição e as conexões; quem programa o comportamento da placa continua sendo o <code>sketch.ino</code>.</p>
+    <p><strong>Leia primeiro o básico:</strong> <code>{ }</code> delimitam um objeto; <code>[ ]</code> representam uma lista; <code>"texto"</code> indica texto; <code>220</code> é número e <code>true</code>/<code>false</code> são valores lógicos. Cada propriedade usa <code>"nome": valor</code>, e os itens são separados por vírgulas. <strong>JSON não aceita comentários</strong> com <code>//</code> nem vírgula depois do último item.</p>
+    <details>
+      <summary><strong>1. Estrutura geral do arquivo</strong> — os campos da primeira camada</summary>
+      <div class="mbb6-table-scroll" tabindex="0" aria-label="Tabela de campos principais do diagram.json">
+        <table><thead><tr><th>Campo</th><th>Para que serve</th><th>Valor neste circuito / opções</th></tr></thead><tbody>
+          <tr><th scope="row"><code>version</code></th><td>Versão do formato usado pelo Wokwi.</td><td><code>1</code> — mantenha esse valor.</td></tr>
+          <tr><th scope="row"><code>author</code></th><td>Identifica o autor do arquivo.</td><td><code>"Mundo bit Byte"</code> — pode ser outro texto.</td></tr>
+          <tr><th scope="row"><code>editor</code></th><td>Identifica o editor do circuito.</td><td><code>"wokwi"</code> — mantenha esse valor.</td></tr>
+          <tr><th scope="row"><code>parts</code></th><td>Lista dos componentes (placa, LED, resistor etc.).</td><td><code>[ { ... }, { ... } ]</code>: cada <code>{ }</code> descreve uma peça.</td></tr>
+          <tr><th scope="row"><code>connections</code></th><td>Lista dos fios entre os pinos.</td><td><code>[ [origem, destino, cor, trajeto], ... ]</code>.</td></tr>
+          <tr><th scope="row"><code>serialMonitor</code></th><td>Configura a exibição e a entrada de texto do Monitor Serial.</td><td><code>{ "display": "always", "newline": "lf" }</code> neste circuito.</td></tr>
+        </tbody></table>
+      </div>
+    </details>
+    <details>
+      <summary><strong>2. Campos de cada componente em parts</strong> — posição, tipo e atributos</summary>
+      <div class="mbb6-table-scroll" tabindex="0" aria-label="Tabela de campos dos componentes Wokwi">
+        <table><thead><tr><th>Campo</th><th>Significado</th><th>Exemplos e valores possíveis</th></tr></thead><tbody>
+          <tr><th scope="row"><code>id</code></th><td>Identificador único; é usado para localizar a peça nas conexões.</td><td><code>"esp"</code>, <code>"led"</code>, <code>"resistor"</code>; você pode escolher o texto, sem repetir IDs.</td></tr>
+          <tr><th scope="row"><code>type</code></th><td>Modelo de peça reconhecido pelo Wokwi.</td><td><code>"board-esp32-devkit-c-v4"</code>, <code>"wokwi-led"</code>, <code>"wokwi-resistor"</code>. Outros exemplos: <code>"wokwi-pushbutton"</code>, <code>"wokwi-dht22"</code>, <code>"wokwi-hc-sr04"</code>. Não invente nomes.</td></tr>
+          <tr><th scope="row"><code>left</code></th><td>Posição horizontal na tela, em pixels.</td><td><code>0</code>, <code>220</code>, <code>-50</code>; aumente ou diminua para mover a peça.</td></tr>
+          <tr><th scope="row"><code>top</code></th><td>Posição vertical na tela, em pixels.</td><td><code>0</code>, <code>-50</code>, <code>110</code>; valores negativos são possíveis.</td></tr>
+          <tr><th scope="row"><code>rotate</code></th><td>Gira a representação da peça; é opcional.</td><td><code>0</code>, <code>90</code>, <code>180</code>, <code>270</code> (graus).</td></tr>
+          <tr><th scope="row"><code>hide</code></th><td>Oculta a peça no desenho; não significa excluir o componente.</td><td><code>true</code> ou <code>false</code> (sem aspas). Normalmente não é necessário.</td></tr>
+          <tr><th scope="row"><code>attrs</code></th><td>Propriedades específicas daquela peça; não são iguais para todos os tipos.</td><td>LED: <code>{ "color": "red" }</code>; resistor: <code>{ "value": "220" }</code>.</td></tr>
+        </tbody></table>
+      </div>
+      <p><strong>Obrigatórios para uma peça:</strong> <code>id</code> e <code>type</code>. <code>left</code>, <code>top</code>, <code>attrs</code>, <code>rotate</code> e <code>hide</code> são opcionais. <strong>Atenção:</strong> se trocar um <code>id</code>, atualize também as referências a ele em <code>connections</code>.</p>
+      <p><strong>Atributos que você usará agora:</strong> para o LED, <code>color</code> pode ser <code>"red"</code>, <code>"green"</code>, <code>"blue"</code>, <code>"white"</code> ou uma cor hexadecimal como <code>"#FFFF00"</code>; <code>label</code> acrescenta um texto sob o LED, como <code>"Teste"</code>. Para o resistor, <code>value</code> define a resistência em ohms, por exemplo <code>"220"</code> ou <code>"330"</code>. Os nomes e valores admitidos dependem do <code>type</code> de cada componente.</p>
+    </details>
+    <details>
+      <summary><strong>3. Como entender connections</strong> — fios, pinos e Monitor Serial</summary>
+      <p>Cada fio tem <strong>quatro informações, nesta ordem</strong>: <code>[ "origem:pino", "destino:pino", "cor", [] ]</code>. O <code>id</code> é o nome da peça declarado em <code>parts</code>; depois de <code>:</code> vem o pino daquela peça.</p>
+      <div class="mbb6-table-scroll" tabindex="0" aria-label="Tabela das conexões do circuito-base">
+        <table><thead><tr><th>Trecho do arquivo</th><th>O que significa</th></tr></thead><tbody>
+          <tr><th scope="row"><code>"esp:23"</code> → <code>"led:A"</code></th><td>GPIO 23 do ESP32 ligado ao ânodo (A) do LED.</td></tr>
+          <tr><th scope="row"><code>"led:C"</code> → <code>"resistor:1"</code></th><td>Cátodo (C) do LED ligado a uma ponta do resistor.</td></tr>
+          <tr><th scope="row"><code>"resistor:2"</code> → <code>"esp:GND.1"</code></th><td>Outra ponta do resistor ligada ao GND da placa.</td></tr>
+          <tr><th scope="row"><code>"esp:TX"</code> → <code>"$serialMonitor:RX"</code></th><td>Saída serial da placa ligada à entrada virtual do monitor.</td></tr>
+          <tr><th scope="row"><code>"esp:RX"</code> → <code>"$serialMonitor:TX"</code></th><td>Entrada serial da placa ligada à saída virtual do monitor.</td></tr>
+        </tbody></table>
+      </div>
+      <p><strong>Cor do fio:</strong> <code>"green"</code>, <code>"black"</code>, <code>"red"</code>, <code>"blue"</code> etc. mudam o desenho do fio, não o pino onde ele está ligado. A cor vazia <code>""</code> oculta a linha (usada nas ligações virtuais do Monitor Serial). O último <code>[]</code> deixa o Wokwi desenhar o trajeto automaticamente; em exemplos avançados, pode receber comandos de percurso, como <code>["v10", "h20"]</code>.</p>
+      <p>Os nomes dos pinos não são universais: dependem de cada peça. Para descobri-los, passe o mouse sobre um pino no Wokwi ou consulte a referência oficial do componente.</p>
+    </details>
+    <details>
+      <summary><strong>4. Opções do serialMonitor</strong> — quando aparece e como recebe texto</summary>
+      <div class="mbb6-table-scroll" tabindex="0" aria-label="Tabela de opções do Monitor Serial">
+        <table><thead><tr><th>Campo</th><th>Valores usuais</th><th>Efeito</th></tr></thead><tbody>
+          <tr><th scope="row"><code>display</code></th><td><code>"auto"</code>, <code>"always"</code>, <code>"never"</code>, <code>"plotter"</code>, <code>"terminal"</code></td><td>Abre quando há saída; abre sempre; não abre; mostra gráfico; ou usa um terminal.</td></tr>
+          <tr><th scope="row"><code>newline</code></th><td><code>"lf"</code>, <code>"cr"</code>, <code>"crlf"</code>, <code>"none"</code></td><td>Escolhe qual caractere de fim de linha é enviado junto com a entrada digitada.</td></tr>
+          <tr><th scope="row"><code>collapse</code></th><td><code>true</code>, <code>false</code></td><td>Define se o monitor inicia recolhido.</td></tr>
+        </tbody></table>
+      </div>
+      <p>Neste circuito usamos <code>"display": "always"</code> para deixar o Monitor Serial visível e <code>"newline": "lf"</code> para enviar uma quebra de linha. Na prática Bluetooth com arquivo auxiliar, essa entrada é usada para representar comandos recebidos; isso <strong>não simula a transmissão por rádio</strong>.</p>
+    </details>
+    <details>
+      <summary><strong>5. Faça pequenas experiências e saiba o que comprovar</strong></summary>
+      <ol>
+        <li><strong>Cor:</strong> no <code>diagram.json</code>, mude somente <code>"color": "red"</code> para <code>"color": "green"</code>. O LED desenhado muda de cor; o código que liga e desliga continua igual.</li>
+        <li><strong>Posição:</strong> mude <code>"top": -50</code> do LED para <code>"top": -90</code>. A peça muda de posição no desenho, mas permanece ligada ao GPIO 23.</li>
+        <li><strong>Monitor Serial:</strong> troque <code>"display": "always"</code> por <code>"display": "auto"</code>. Ele aparecerá quando houver saída serial, em vez de ser aberto sempre.</li>
+      </ol>
+      <p><strong>Como realizar:</strong> salve uma cópia do JSON original; pare a simulação, altere um campo por vez, volte ao circuito, inicie a simulação e compare com o resultado esperado. Depois, restaure o JSON para continuar as próximas etapas. <strong>Não altere o GPIO 23 nem elimine o resistor nesta atividade.</strong></p>
+    </details>
+    <p class="mbb6-note"><strong>Onde descobrir mais componentes e campos?</strong> Use <strong>+</strong> no editor visual do Wokwi, inspecione o <code>diagram.json</code> gerado e consulte as referências oficiais: <a href="https://docs.wokwi.com/diagram-format" target="_blank" rel="noopener noreferrer">formato diagram.json</a>, <a href="https://docs.wokwi.com/parts/wokwi-led" target="_blank" rel="noopener noreferrer">LED e atributos</a>, <a href="https://docs.wokwi.com/parts/wokwi-resistor" target="_blank" rel="noopener noreferrer">resistor</a>, <a href="https://docs.wokwi.com/guides/serial-monitor" target="_blank" rel="noopener noreferrer">Monitor Serial</a> e <a href="https://docs.wokwi.com/guides/diagram-editor" target="_blank" rel="noopener noreferrer">editor visual</a>. Esta é uma seleção dos campos mais úteis para começar, não a lista de todos os componentes do simulador.</p>
+    <p class="mbb6-checkpoint"><strong>Conferência final:</strong> você consegue explicar qual parte do JSON cria o LED, qual linha liga o GPIO 23 ao LED e por que alterar <code>diagram.json</code> não substitui modificar <code>sketch.ino</code>? Se sim, avance para o código de piscar do passo 8.</p>
+  \`);
 
   inserir('b6-1', 'prova-bluetooth',
     '<h3>Conferência complementar — rádio real ou interface simulada?</h3>' +
