@@ -1,0 +1,213 @@
+{
+  "version": 1,
+  "author": "Mundo bit Byte - pratica didatica",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 20,
+      "left": 30,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -163,
+      "left": -205,
+      "attrs": {
+        "temperature": "24",
+        "humidity": "55"
+      }
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultra",
+      "top": -165,
+      "left": 260,
+      "attrs": {
+        "distance": "8"
+      }
+    },
+    {
+      "type": "board-mfrc522",
+      "id": "rfid1",
+      "top": 270,
+      "left": 255,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledFan",
+      "top": 183,
+      "left": -228,
+      "attrs": {
+        "color": "blue",
+        "label": "VENTILADOR"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "resFan",
+      "top": 235,
+      "left": -235,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledPump",
+      "top": 185,
+      "left": -115,
+      "attrs": {
+        "color": "green",
+        "label": "BOMBA"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "resPump",
+      "top": 237,
+      "left": -120,
+      "attrs": {
+        "value": "220"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "esp:3V3",
+      "dht1:VCC",
+      "red",
+      []
+    ],
+    [
+      "esp:GND.1",
+      "dht1:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:4",
+      "dht1:SDA",
+      "orange",
+      []
+    ],
+    [
+      "esp:5V",
+      "ultra:VCC",
+      "red",
+      []
+    ],
+    [
+      "esp:GND.2",
+      "ultra:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:26",
+      "ultra:TRIG",
+      "green",
+      []
+    ],
+    [
+      "esp:27",
+      "ultra:ECHO",
+      "blue",
+      []
+    ],
+    [
+      "esp:3V3",
+      "rfid1:3.3V",
+      "red",
+      []
+    ],
+    [
+      "esp:GND.3",
+      "rfid1:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:5",
+      "rfid1:SDA",
+      "orange",
+      []
+    ],
+    [
+      "esp:21",
+      "rfid1:RST",
+      "orange",
+      []
+    ],
+    [
+      "esp:18",
+      "rfid1:SCK",
+      "green",
+      []
+    ],
+    [
+      "esp:19",
+      "rfid1:MISO",
+      "blue",
+      []
+    ],
+    [
+      "esp:23",
+      "rfid1:MOSI",
+      "purple",
+      []
+    ],
+    [
+      "esp:32",
+      "ledFan:A",
+      "blue",
+      []
+    ],
+    [
+      "ledFan:C",
+      "resFan:1",
+      "black",
+      []
+    ],
+    [
+      "resFan:2",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "esp:33",
+      "ledPump:A",
+      "green",
+      []
+    ],
+    [
+      "ledPump:C",
+      "resPump:1",
+      "black",
+      []
+    ],
+    [
+      "resPump:2",
+      "esp:GND.2",
+      "black",
+      []
+    ]
+  ],
+  "dependencies": {}
+}
