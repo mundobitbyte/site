@@ -38,9 +38,15 @@ const dest=process.env.MBB_EVIDENCIAS||'/tmp/seiot-evidencias';
    assert.match(await diagramaCard.textContent(),/sketch\.ino/);
    assert.match(await diagramaCard.textContent(),/Ctrl\+A/);
    assert.match(await diagramaCard.textContent(),/mesmo circuito-base/);
-   const details=diagramaCard.locator('details');
-   await details.locator('summary').click();
+   // O JSON do circuito deve estar visível e copiável, sem abrir qualquer acordeão.
+   assert.equal(await diagramaCard.locator('details').count(),0);
+   assert.equal(await diagramaCard.locator('.mbb6-json-direto').count(),1);
+   assert(await diagramaCard.locator('#b6-prep-diagrama-extra').isVisible());
+   assert.equal((await diagramaCard.locator('pre').textContent()).trim().startsWith('{'),true);
    const copiar=diagramaCard.locator('button[onclick*="b6-prep-diagrama-extra"]');
+   assert(await copiar.isVisible());
+   assert(await copiar.isEnabled());
+   assert.match(await copiar.textContent(),/Copiar JSON completo/);
    await copiar.click();
    await page.waitForFunction(()=>document.querySelector('[data-mbb6-acrescimo="diagrama"] button')?.textContent==='Copiado');
    assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),await page.locator('#b6-prep-diagrama-extra').textContent());
