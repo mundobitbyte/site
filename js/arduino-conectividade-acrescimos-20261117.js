@@ -11,6 +11,16 @@ document.addEventListener('DOMContentLoaded', function () {
     card.className = 'card wide mbb6-acrescimo';
     card.setAttribute('data-mbb6-acrescimo', codigo);
     card.innerHTML = conteudo;
+    // O JSON é uma alternativa de montagem: aparece logo após o passo 7,
+    // antes do sketch, sem substituir a montagem manual nem suas instruções.
+    if (codigo === 'diagrama' && etapa === 'b6-prep') {
+      const montagem = [...cards.children].find(el =>
+        el.querySelector('h3')?.textContent.includes('7. Montando o circuito-base'));
+      if (montagem) {
+        cards.insertBefore(card, montagem.nextSibling);
+        return;
+      }
+    }
     const ponte = [...cards.children].reverse().find(el => el.matches('.mbb6-bridge'));
     cards.insertBefore(card, ponte || null);
   }
@@ -45,10 +55,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   anexo('b6-prep', 'diagrama',
-    'Acréscimo útil — montar automaticamente com diagram.json',
+    'Opção 2 (facultativa) — montar o mesmo circuito colando o diagram.json',
     '../materiais/arduino/conectividade/wokwi/diagram.json', 'b6-prep-diagrama-extra',
-    'Você já aprendeu a montar os fios pelo botão +. Há outra opção: o Wokwi permite descrever a mesma montagem em JSON. Pare a simulação, abra a aba <code>diagram.json</code>, selecione todo o texto existente (Ctrl+A) e cole o arquivo abaixo. Ao voltar à área do circuito, confira ESP32, LED, resistor e fios. <strong>Isso altera a montagem, não o programa em sketch.ino.</strong> Se preferir, mantenha a montagem manual ensinada acima.',
-    '<p class="mbb6-checkpoint"><strong>Verificação:</strong> o GPIO 23 vai ao ânodo do LED; o cátodo passa por 220 Ω até o GND. Um JSON válido descreve peças e conexões; é o <code>sketch.ino</code> que programa a placa.</p>');
+    '<p><strong>Para que serve?</strong> O arquivo <code>diagram.json</code> é um texto que informa ao Wokwi quais componentes desenhar e quais pinos ligar. Em <code>parts</code> estão as peças; em <code>connections</code>, os fios. Ele <strong>não contém o programa</strong> do ESP32 e não substitui o <code>sketch.ino</code>.</p>' +
+    '<p><strong>Escolha um caminho:</strong> você pode montar LED e resistor manualmente no passo 7 <em>ou</em> usar este diagrama pronto. Os dois caminhos resultam no mesmo circuito-base. <strong>Não precisa fazer as duas montagens.</strong></p>' +
+    '<ol><li>No <a href="https://wokwi.com/projects/new/esp32" target="_blank" rel="noopener noreferrer">projeto ESP32 do Wokwi</a>, pare a simulação (■) se ela estiver em execução.</li>' +
+    '<li>Nesta apostila, abra <strong>Ver código completo e copiar</strong> logo abaixo e clique em <strong>Copiar</strong> para copiar o JSON inteiro.</li>' +
+    '<li><strong>Na aba do Wokwi</strong>, abra o arquivo <code>diagram.json</code> (não <code>sketch.ino</code>). Clique dentro do editor de texto, pressione <strong>Ctrl+A</strong> para selecionar tudo e depois <strong>Ctrl+V</strong> para colar. Se preferir, use os comandos Selecionar tudo e Colar do seu dispositivo.</li>' +
+    '<li>Volte à área do circuito. Verifique que aparecem <strong>ESP32, LED vermelho, resistor de 220 Ω e fios</strong>. O GPIO 23 liga-se ao ânodo (A) do LED; o cátodo (C) passa pelo resistor até o GND. O Monitor Serial também fica configurado.</li>' +
+    '<li>Agora, na aba <code>sketch.ino</code>, utilize o <strong>código de piscar o LED do passo 8</strong> e inicie a simulação (▶). Observe o LED acender e apagar: <strong>o JSON monta o circuito; o sketch programa seu comportamento.</strong></li></ol>',
+    '<p class="mbb6-checkpoint"><strong>Quando usar de novo?</strong> Guarde este circuito no mesmo projeto Wokwi. Ele será reutilizado nas etapas de Bluetooth, Wi-Fi, HTTP, mDNS e tunelamento, trocando o <code>sketch.ino</code> conforme cada prática. Na simulação do Bluetooth (6.1), crie também o arquivo auxiliar <code>BluetoothSerial.h</code> solicitado na própria etapa.</p>' +
+    '<p><strong>Se não aparecer a montagem:</strong> confira se colou no <code>diagram.json</code>, se copiou desde a primeira <code>{</code> até a última <code>}</code> e se não apagou aspas, vírgulas ou colchetes. O código fonte também está disponível pelo link abaixo do quadro.</p>');
 
   inserir('b6-1', 'prova-bluetooth',
     '<h3>Conferência complementar — rádio real ou interface simulada?</h3>' +
