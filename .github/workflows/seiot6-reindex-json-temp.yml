@@ -1,0 +1,37 @@
+name: Reindexar roteiro diagram JSON na branch do PR264 (temporário)
+on:
+  push:
+    branches: [feat/seiot6-diagrama-base-opcional-20261117]
+    paths:
+      - '.github/workflows/seiot6-reindex-json-temp.yml'
+      - 'js/arduino-conectividade-acrescimos-20261117.js'
+      - 'tests/seiot-restauracao/**'
+permissions:
+  contents: write
+jobs:
+  reindexar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Atualizar índice pela ferramenta oficial do Meu MbB
+        run: |
+          node meu-mbb/atualizar-pesquisa.cjs
+          node meu-mbb/atualizar-pesquisa.cjs --check
+          node meu-mbb/gerar-visitas.cjs --check
+      - name: Salvar somente na branch de desenvolvimento
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add meu-mbb/catalogo.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(meu-mbb): incluir guia JSON no índice de pesquisa"
+            git push origin HEAD:"$GITHUB_REF_NAME"
+          else
+            echo "Catálogo já atualizado."
+          fi
