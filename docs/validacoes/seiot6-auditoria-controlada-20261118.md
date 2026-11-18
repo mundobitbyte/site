@@ -43,3 +43,19 @@
 - Aplicação do teste do aluno sozinho em todos os assuntos.
 
 **Conclusão parcial e explícita:** esta branch contém melhorias iniciais seguras; **não** representa ainda a missão integral como concluída. Nenhum merge ou deploy foi feito.
+
+## Auditoria adicional do comportamento integrado dos scripts
+A revisão não ficou restrita ao HTML. Foram examinados os seguintes fluxos de código e suas dependências:
+- `js/arduino-conectividade.js`: navegação por âncoras, habilitação de etapas, botões Copiar, montagem do circuito, inserção do arquivo auxiliar Bluetooth e construção do exemplo Wi-Fi.
+- `js/arduino-conectividade-mbb-wokwi-20261005.js`: revisões posteriores por `innerHTML`. **Defeito confirmado por leitura de código:** ele apagava a orientação já introduzida em 4A e a explicação dos parâmetros `WiFi.begin(...)`. **Corrigido:** acréscimos não destrutivos com identificadores para evitar duplicações.
+- `js/arduino-conectividade-aprofundamento-mbb-20261026.js`: inserção de leitura comentada junto ao código. **Defeito confirmado por leitura de código:** removia `.explain` original. **Corrigido:** conserva a explicação já presente e acrescenta a leitura.
+- `js/arduino-conectividade-acrescimos-20261117.js`: análise do carregamento assíncrono e cópia do JSON `diagram.json`, do programa HTTP local e do modelo de túnel; nenhuma alteração nesta passagem.
+- `js/arduino-mdns-pcap.js`: inspeção da leitura local de PCAP clássico, IPv4/UDP e registros DNS; existem testes específicos com capturas de referência; nenhuma alteração nesta passagem.
+- `materiais/arduino/conectividade/wokwi/http-local.ino`: inspeção das rotas GET/POST e do cliente loopback; não houve compilação nesta passagem.
+- `materiais/arduino/conectividade/mdns-fisico.ino`, `wokwi/mdns.ino`: inspeção das inicializações mDNS e dos caminhos físico/simulado; sem executar hardware.
+- `materiais/arduino/conectividade/rede-local/servidor.py` e `encaminhador_local.py`: inspeção dos servidores de teste com bind em 127.0.0.1; não foram executados.
+- `tests/seiot-restauracao/validar.mjs`, `navegador.cjs`, `gerar-bluetooth.mjs`, `tests/seiot-rede/pcap.test.cjs` e `conteudo.py`: verificação dos testes existentes. Foram adicionadas afirmações estáticas de não regressão em `validar.mjs`.
+
+**Nota sobre validação:** as correções descritas são confirmadas pela análise de origem e comparação dos trechos modificados, mas os novos testes ainda não foram executados num navegador nesta sessão. Conferências com Wokwi e aluno real seguem pendentes.
+
+**Limitação importante da proteção:** a preservação de linhas de HTML e de arquivos Arduino não basta. Também é necessário verificar que o DOM final mantém as explicações após o carregamento e que os scripts posteriores não removem conteúdo válido. Esta revisão acrescentou proteção específica para dois mecanismos de sobrescrita, mas não certifica ainda todo o DOM final.
