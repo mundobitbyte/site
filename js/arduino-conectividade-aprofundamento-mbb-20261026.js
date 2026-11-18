@@ -24,10 +24,8 @@
           '<div class="mbb6-depth-check"><strong>Agora é com você</strong><p>'+roteiro.checkpoint+'</p></div>'+
           '<p class="mbb6-depth-caution"><strong>Importante:</strong> '+roteiro.caution+'</p>'+
         '</div>';
-      // A leitura ocupa o lugar da explicação resumida que repetia os comandos.
-      // Nos cartões de código, entra após o programa, preservando pre e Copiar.
-      const explicacao = ancora.querySelector(':scope > .explain');
-      if (explicacao) explicacao.remove();
+      // A leitura complementa a explicação original, sem removê-la.
+      // Preserva os blocos de comandos, os botões Copiar e toda explicação prévia.
       card.querySelector('h3').remove();
       card.className = 'mbb6-leitura-integrada';
       ancora.appendChild(card);
