@@ -62,3 +62,15 @@ A revisão não ficou restrita ao HTML. Foram examinados os seguintes fluxos de 
 
 ## Coerência da sequência HTTP
 O roteiro de leitura comentada invertia as legendas da Parte A (cliente) e da Parte B (servidor), contrariando o HTML da aula. A nomenclatura foi corrigida no script de aprofundamento, e foi acrescentada uma asserção de regressão. Nenhuma rota, biblioteca ou sketch foi modificada.
+
+## Execução real da CI após revisão dos scripts
+No commit `27b85e2713a78b95e2c32aed257e9531e93576d5`, o GitHub Actions concluiu:
+- **Sucesso:** [recuperação do tópico 6](https://github.com/mundobitbyte/site/actions/runs/44300218218), incluindo jobs `compilacao`, `navegador` e `conteudo`.
+- **Sucesso:** [validação visual global](https://github.com/mundobitbyte/site/actions/runs/44300218229).
+- **Sucesso:** [prática real mDNS e servidor local](https://github.com/mundobitbyte/site/actions/runs/44300218225). A expressão “real” refere-se à prática de rede no ambiente CI, **não** a hardware ESP32 físico.
+- **Sucesso:** [segurança do repositório](https://github.com/mundobitbyte/site/actions/runs/44300218213).
+- **Falha:** [pesquisa global](https://github.com/mundobitbyte/site/actions/runs/44300218192), na etapa `node meu-mbb/atualizar-pesquisa.cjs --check`: **“1 unidade(s) com índice desatualizado.”**. A regeneração envolve `meu-mbb/catalogo.json`, arquivo de aproximadamente 5,6 MB; correção pendente, sem substituição manual arriscada do catálogo.
+
+Os testes de navegação foram reforçados em commit posterior para detectar perda de textos após a aplicação dos scripts. O sucesso dos testes anteriores **não valida automaticamente esse novo teste**; aguardar conclusão da CI do novo commit.
+
+**Decisão de escopo:** não alterar tópicos 1–5 nem 7+ para sanar a busca; confirmar que a única unidade afetada pelo índice é Conectividade antes de atualizar o catálogo.
