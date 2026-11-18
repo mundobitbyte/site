@@ -74,3 +74,9 @@ No commit `27b85e2713a78b95e2c32aed257e9531e93576d5`, o GitHub Actions concluiu:
 Os testes de navegação foram reforçados em commit posterior para detectar perda de textos após a aplicação dos scripts. O sucesso dos testes anteriores **não valida automaticamente esse novo teste**; aguardar conclusão da CI do novo commit.
 
 **Decisão de escopo:** não alterar tópicos 1–5 nem 7+ para sanar a busca; confirmar que a única unidade afetada pelo índice é Conectividade antes de atualizar o catálogo.
+
+## Terceira regressão de conteúdo corrigida: teste do cliente HTTP
+O script `arduino-conectividade-mbb-wokwi-20261005.js` também substituía integralmente o elemento `ol` da etapa `5. Testando o cliente` por meio de `innerHTML`. A lista já tinha instruções e evidências úteis. A substituição foi removida: agora o complemento é um parágrafo separado com `data-mbb6-http-cliente-complemento`. As verificações estática e Playwright agora cobrem este comportamento.
+
+## Resultado adicional dos testes de DOM
+O primeiro teste novo exigia o texto do título do aprofundamento HTTP no DOM final, mas o renderizador elimina especificamente o `h3` dessa leitura. Essa exigência era incorreta. O teste foi corrigido para localizar os blocos `data-mbb6-leitura=http-cliente` e `http-servidor` e validar as explicações efetivamente inseridas. No job `navegador` do [run 44304676176](https://github.com/mundobitbyte/site/actions/runs/44304676176), a versão corrigida do teste de DOM passou. As alterações posteriores do teste de preservação do HTTP ainda exigem a sua própria execução e conferência.
