@@ -145,6 +145,102 @@
     <article class="card"><h3>4. Por que GPIO 34?</h3><p>No ESP32 clássico, o GPIO 34 é uma entrada do <strong>ADC1</strong> e é somente entrada. Isso combina com o LDR e traz outra vantagem importante: os canais ADC2 possuem restrições quando o Wi-Fi está em uso, enquanto o ADC1 evita esse conflito neste projeto.</p></article>
     <article class="card"><h3>5. Por que manter GPIO 23?</h3><p>É o mesmo pino do LED usado no percurso com ESP32. Reutilizar a montagem reduz mudanças desnecessárias e facilita a comparação com os blocos anteriores.</p></article>
     <article class="card wide"><h3>6. Montagem equivalente no Wokwi</h3><p>Abra um projeto com <strong>ESP32 original</strong> (DevKit v1 ou DevKit C V4) no <a href="https://wokwi.com/projects/new/esp32" target="_blank" rel="noopener noreferrer">Wokwi</a>. O simulador não precisa reproduzir o divisor com componentes passivos discretos: use o componente <strong>Photoresistor (LDR) Sensor</strong>, que já possui LDR e resistor interno.</p><table class="mbb10-compare"><thead><tr><th>Pino do sensor Wokwi</th><th>ESP32</th></tr></thead><tbody><tr><td>VCC</td><td>3V3</td></tr><tr><td>GND</td><td>GND</td></tr><tr><td>AO</td><td>GPIO 34</td></tr></tbody></table><p>O circuito do LED permanece o mesmo. No simulador, altere o controle de luminosidade do fotoresistor para produzir leituras claras e escuras.</p><p class="mbb10-warning"><strong>Uma diferença importante:</strong> no divisor físico desenhado acima, a leitura tende a aumentar com mais luz. No módulo de fotoresistor do Wokwi, a leitura tende a aumentar no escuro. O código abaixo possui uma configuração explícita para lidar com essa diferença sem esconder o que está acontecendo.</p></article>
+    <article class="card wide" data-mbb10-wokwi-json="1"><h3>Montagem pronta em JSON — alternativa à ligação manual</h3><p>Se preferir não montar os fios um por um, o arquivo <code>diagram.json</code> descreve a mesma ESP32 DevKit C V4, o sensor de luminosidade, o LED e seu resistor de 220 Ω. Esse arquivo <strong>desenha o circuito</strong>; o programa Arduino continua em <code>sketch.ino</code>. Não substitua um pelo outro.</p><ol><li>Abra o <a href="https://wokwi.com/projects/new/esp32" target="_blank" rel="noopener noreferrer">projeto ESP32 do Wokwi</a>.</li><li>Selecione a aba <code>diagram.json</code>, apague <strong>somente</strong> o texto dessa aba e cole o conteúdo integral abaixo. Salve a alteração para atualizar o circuito.</li><li>Volte para a aba <code>sketch.ino</code>; na etapa 10.3, cole o código local para testar o sensor e o LED. Na 10.5, substitua pelo programa integrado. No Wokwi, ajuste <code>LEITURA_MAIOR_NO_ESCURO = true</code> e <code>ssid = "Wokwi-GUEST"</code>, com senha vazia; calibre o limiar.</li><li>Inicie a simulação e observe o Monitor Serial. A presença do desenho não comprova que os componentes ou o programa funcionaram: verifique as leituras e o LED.</li></ol><p>Você também pode <a href="../wokwi/ambiente-inteligente/diagram.json" target="_blank" rel="noopener noreferrer">abrir o arquivo JSON original</a> para consultar ou salvar. Abaixo está exatamente o mesmo conteúdo, pronto para copiar.</p><details><summary><strong>Mostrar o diagram.json completo para copiar</strong></summary><div class="card code"><h3>Diagrama completo <button type="button" onclick="copyCode('b10-wokwi-diagram', this)" aria-label="Copiar diagrama JSON do projeto integrador">Copiar</button></h3><pre id="b10-wokwi-diagram">{
+  "version": 1,
+  "author": "Mundo bit Byte - projeto integrador",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 15,
+      "left": 20,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr1",
+      "top": -130,
+      "left": -210,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 160,
+      "left": 275,
+      "attrs": {
+        "color": "yellow",
+        "label": "ILUMINACAO"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "res1",
+      "top": 215,
+      "left": 280,
+      "attrs": {
+        "value": "220"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "esp:3V3",
+      "ldr1:VCC",
+      "red",
+      []
+    ],
+    [
+      "esp:GND.1",
+      "ldr1:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:34",
+      "ldr1:AO",
+      "green",
+      []
+    ],
+    [
+      "esp:23",
+      "led1:A",
+      "orange",
+      []
+    ],
+    [
+      "led1:C",
+      "res1:1",
+      "orange",
+      []
+    ],
+    [
+      "res1:2",
+      "esp:GND.2",
+      "black",
+      []
+    ]
+  ],
+  "dependencies": {},
+  "serialMonitor": {
+    "display": "always",
+    "newline": "lf"
+  }
+}
+</pre></div></details><div class="mbb10-checkpoint"><strong>Confira antes de prosseguir:</strong> o AO do sensor vai ao GPIO 34; o LED e o resistor estão em série no GPIO 23; VCC do sensor recebe 3V3 e GND compartilha a referência. Esta é a montagem do Wokwi, não a montagem física do divisor LDR com resistor de 10 kΩ.</div></article>
     <article class="card worked wide mbb10-bridge"><h3>7. Próximo passo</h3><p>Antes de Wi-Fi, navegador ou página Web, precisamos responder algo mais simples: <strong>o ESP32 consegue medir a luz e controlar o LED corretamente?</strong></p></article>
   </div>
 </section>
