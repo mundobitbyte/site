@@ -123,8 +123,14 @@ document.addEventListener('DOMContentLoaded', function(){
     if(toggle) toggle.setAttribute('aria-expanded', 'true');
   }
 
+  function resolverPainel(hash){
+    if(!hash || !hash.startsWith('#')) return null;
+    try { return document.getElementById(decodeURIComponent(hash.slice(1))); }
+    catch { return null; }
+  }
+
   function showPanel(hash, updateUrl){
-    const panel = document.querySelector(hash);
+    const panel = resolverPainel(hash);
     if(!panel || !panel.classList.contains('mbb5-panel')) return;
 
     panels.forEach(item => item.classList.toggle('active-panel', item === panel));
@@ -158,11 +164,13 @@ document.addEventListener('DOMContentLoaded', function(){
     if(event.key === 'Escape') closeDrawer();
   });
 
-  const initialHash = location.hash && document.querySelector(location.hash)
-    ? location.hash
-    : '#b5-1';
-
+  const initialHash = resolverPainel(location.hash) ? location.hash : '#b5-1';
   showPanel(initialHash, false);
+
+  // Navegação por histórico ou alteração de hash na mesma página.
+  window.addEventListener('hashchange', () => {
+    if(resolverPainel(location.hash)) showPanel(location.hash, false);
+  });
 });
 
 function manterModuloAtivoVisivel(){
