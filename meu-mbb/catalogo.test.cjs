@@ -69,7 +69,7 @@ test('React e Hooks indexa a sequência publicada e preserva a mesma unidade de 
     ['useEffect', 'rn-state-mbb-effect-intro'],
     ['cleanup', 'rn-state-mbb-effect-cleanup'],
     ['dependências useEffect', 'rn-state-mbb-effect-dependencias'],
-    ['Média Escolar', 'rn-state-state-12-final']
+    ['Média Escolar', 'rn-state-state-11-useref']
   ];
   for (const [consulta, ancora] of exemplos) {
     const resultado = core.pesquisar(catalogo, consulta).find(item => item.conteudo_id === unidade.conteudo_id);
