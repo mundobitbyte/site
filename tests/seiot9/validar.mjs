@@ -7,8 +7,9 @@ for(const panel of ['b9-prep','b9-1','b9-2']){
   assert(page.includes('id="'+panel+'"'),'Painel perdido: '+panel);
   assert(page.includes('href="#'+panel+'"'),'Navegação perdida: '+panel);
 }
-for(const token of ['LGPD','Confidencialidade','Integridade','Disponibilidade','Autenticar','Autorizar','HTTPS','TLS','arduino-projeto-iot.html'])
+for(const token of ['LGPD','Confidencialidade','Integridade','Disponibilidade','Autenticar','Autorizar','HTTPS','TLS'])
   assert(page.includes(token),'Fundamento ou conexão original ausente: '+token);
+assert(read('js/arduino-seguranca.js').includes('arduino-projeto-iot.html'), 'Navegação para o projeto final removida');
 assert(page.includes('data-mbb9-caso-granja="1"'),'Estudo de caso não encontrado');
 for(const v of ['arduino-granja-inteligente.html','UID','[DEMO]','token','Exercício autônomo'])
   assert(page.includes(v),'Falta elo conceitual: '+v);
