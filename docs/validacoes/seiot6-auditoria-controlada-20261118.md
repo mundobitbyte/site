@@ -80,3 +80,37 @@ O script `arduino-conectividade-mbb-wokwi-20261005.js` também substituía integ
 
 ## Resultado adicional dos testes de DOM
 O primeiro teste novo exigia o texto do título do aprofundamento HTTP no DOM final, mas o renderizador elimina especificamente o `h3` dessa leitura. Essa exigência era incorreta. O teste foi corrigido para localizar os blocos `data-mbb6-leitura=http-cliente` e `http-servidor` e validar as explicações efetivamente inseridas. No job `navegador` do [run 44304676176](https://github.com/mundobitbyte/site/actions/runs/44304676176), a versão corrigida do teste de DOM passou. As alterações posteriores do teste de preservação do HTTP ainda exigem a sua própria execução e conferência.
+
+## Síntese consolidada da revisão circular e em espiral MbB — oito perspectivas
+
+As situações registradas acima descrevem a evolução desta branch. As primeiras marcações de “pendente” são históricas, anteriores às execuções de CI citadas abaixo; não devem ser lidas como situação final dessas execuções. A análise do conteúdo completo incluiu os sete painéis `b6-0`, `b6-prep`, `b6-1`, `b6-2`, `b6-3`, `b6-4` e `b6-5`, assim como seus scripts de montagem dinâmica.
+
+1. **Inventário e diagnóstico:** identificado o percurso ESP32 → circuito-base → Bluetooth → Wi-Fi → HTTP → mDNS → túnel. Inspecionados os arquivos de aplicação, sketches, `diagram.json`, leitor PCAP, scripts Python, ZIP e testes. Falha transversal relevante: reescritas de trechos do DOM por scripts complementares, apagando orientações previamente inseridas.
+2. **Fundamentação conceitual:** verificadas as distinções entre simulação lógica e rádio Bluetooth real; associação Wi-Fi e atribuição de IP; cliente e servidor HTTP; anúncio mDNS e resolução externa; encaminhamento local e túnel público. Acrescentados mapa de evidências e esclarecimentos de SSID, DHCP, IP e faixa de 2,4 GHz. Corrigidos rótulos da Parte A/B de HTTP.
+3. **Práticas e execução:** verificados visualmente os passos de preparação, arquivos `sketch.ino` / `diagram.json`, cabeçalho auxiliar `BluetoothSerial.h`, códigos Wi-Fi, rotas HTTP, PCAP mDNS e túnel demonstrativo. A CI possui compilação do Bluetooth real, do stub Wokwi e de HTTP local; os testes reais de rede executam Python/PCAP/túnel em ambiente isolado. **Não houve sessão manual do simulador Wokwi nem execução em uma placa física nesta missão.**
+4. **Aprendizagem autônoma:** os quadros existentes de orientação, erros frequentes, código copiável e resultados foram preservados. Acrescentada tarefa autônoma de comparação do IP e o caderno de evidências por prática. Os testes de navegador conferem a presença das explicações no DOM após scripts, evitando que o aluno receba um roteiro incompleto.
+5. **Encadeamento e integração:** a preparação oferece o circuito reaproveitado ao longo do percurso; Bluetooth introduz recepção de comandos; Wi-Fi introduz acesso à rede; HTTP explica pedidos; mDNS diferencia localização por nome; túnel distingue serviço local de acesso externo. Nenhuma alteração foi feita aos tópicos 1–5 nem 7+.
+6. **Verificação da aprendizagem:** inspecionados checkpoints, tabelas de interpretação e exercícios existentes. A complementação de Wi-Fi exige previsão, execução, comparação e diagnóstico. O teste mDNS requer reconhecer registros A/SRV no PCAP; o túnel compara quatro estados de acesso. Os resultados e suas limitações estão descritos, em vez de tratar mensagens de Serial como prova de acesso externo.
+7. **Regressão e consistência:** todos os painéis e os sketches/circuitos originais permanecem intactos. Corrigidas três reescritas indevidas: instruções Wi-Fi, explicação aprofundada e lista de teste HTTP. Testes estáticos e Playwright foram fortalecidos. A pesquisa global foi regenerada automaticamente **somente para a unidade `pages/arduino-conectividade.html`**, com bloqueio se qualquer outra unidade fosse modificada. O workflow temporário de geração foi retirado em seguida.
+8. **Revisão integral:** o percurso foi reexaminado do primeiro painel ao encerramento do túnel. As propostas novas foram deliberadamente pequenas para não reintroduzir a perda histórica de materiais. A coerência técnica é apoiada por testes automatizados, **não** por experimento com alunos iniciantes; a validação pedagógica presencial permanece uma etapa recomendada, não realizada.
+
+### Rastreabilidade resumida
+
+| Item | Situação original | Intervenção | Preservação | Validação |
+| --- | --- | --- | --- | --- |
+| Percurso das cinco tecnologias | Evidências dispersas no texto | Quadro transversal de quem envia, quem recebe e o que comprova | Práticas de Bluetooth, Wi-Fi, HTTP, mDNS e túnel | Presença do HTML e testes de conteúdo |
+| Wi-Fi | Explicação de parâmetros era sobrescrita por script | Notas adicionais sem substituir o card original; SSID/DHCP/IP contextualizados | Os dois códigos Wi-Fi e circuitos | Asserções estáticas e DOM no Playwright |
+| HTTP | Lista de teste do cliente sobrescrita; partes A/B inconsistentes na leitura | Preservação da lista; complemento isolado; ordem A cliente/B servidor | Sketches cliente e servidor, rotas e botões Copiar | Asserções estáticas e DOM |
+| Aprofundamento | Script removia `.explain` anterior | Leitura comentada passa a complementar o texto preexistente | Comandos e exemplos anteriores | Asserções estáticas e DOM |
+| Bluetooth Wokwi / físico | Interface comum com cabeçalho auxiliar Wokwi | Nenhuma alteração dos programas | Sketch compartilhado e necessidade de remover stub na placa física | Compilação automatizada de ambos |
+| JSON e mDNS | Diagramas, leitura PCAP e evidências existentes | Preservados sem reescrever | JSON, parser, capturas e guias | Validações automatizadas e testes PCAP existentes |
+| Túnel | Servidor demonstrativo e cliente cloudflared | Preservados sem mudança do procedimento | Servidor Python, encaminhador e proibição de expor rotas inseguras | Execuções da CI de rede (não hardware) |
+| Pesquisa global | Catálogo deixou de refletir a página e seus scripts atualizados | Regeneração por tarefa controlada, limitada à única unidade | Todas as demais unidades e seus metadados | `node meu-mbb/atualizar-pesquisa.cjs --check` aprovado na CI |
+
+### Limites que devem acompanhar a publicação
+- **Testado em CI:** páginas em Chromium, responsividade coberta pelos testes, sintaxe, programas compilados, mecanismos de cópia, ZIP/capturas, exemplos Python e testes de rede conforme jobs executados.
+- **Validado por inspeção:** conceitos, clareza das instruções, compatibilidade prevista com ESP32 físico e conservação das interfaces didáticas.
+- **Não executado nesta missão:** montagem manual e execução interativa no site do Wokwi, placas ESP32 físicas, teste nativo Windows e avaliação com alunos reais.
+- **Sem propostas de exclusão estrutural:** nenhuma remoção de projetos, práticas, bibliotecas ou páginas; propostas de estudos presenciais e revisões dos tópicos adjacentes ficam para etapa independente.
+
+O critério “aluno sozinho” foi aplicado **como inspeção pedagógica de instruções e evidências**; não é correto classificá-lo como validação empírica com estudantes. A versão publicada, se autorizada, deve continuar distinguindo estes dois níveis.
