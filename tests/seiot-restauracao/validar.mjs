@@ -38,6 +38,8 @@ for(const token of ['Entenda o diagram.json','serialMonitor','connections','rota
 // Regressões pedagógicas: scripts complementares não podem apagar explicações anteriores.
 const leitura = read('js/arduino-conectividade-aprofundamento-mbb-20261026.js');
 assert(!/explicacao\.remove\(\)/.test(leitura), 'Aprofundamento apagou uma explicação original.');
+assert(leitura.includes('HTTP — parte A: o ESP32 faz uma solicitação') && leitura.includes('HTTP — parte B: o ESP32 atende ao navegador'),
+  'Leituras HTTP inverteram a ordem didática cliente A / servidor B.');
 assert(!/wifi\.innerHTML\s*=/.test(wokwi), 'Complemento Wokwi apagou orientações de Wi-Fi.');
 assert(!/wifiCodigo\.innerHTML\s*=/.test(wokwi), 'Complemento Wokwi apagou explicações dos parâmetros de Wi-Fi.');
 assert(wokwi.includes("data-mbb6-wifi-observacao") && wokwi.includes("data-mbb6-wifi-evidencia"),
