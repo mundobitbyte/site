@@ -46,7 +46,7 @@ Como na etapa 12, o Hook é chamado no nível superior do componente. useRef(nul
 
 current guarda o valor atual da referência. O ?. evita tentar executar focus() se a referência ainda não estiver disponível.
 
-Compare com useState: alterar state participa da renderização. Alterar current em uma ref não provoca uma nova renderização. Por isso useRef é adequado para foco e referências a elementos.`],
+Compare com useState: alterar state participa da renderização. Alterar current em uma ref não provoca uma nova renderização. Por isso useRef é adequado para foco e referências a elementos.\n\nConsolidação da Média Escolar: o evento de Calcular chama calcularMedia, que valida as notas e usa if/else para decidir a situação. O JSX apresenta o resultado quando existe uma média. Limpar apaga campos, resultado e mensagem; useRef devolve o foco à primeira nota. Explique o fluxo completo: digitar, calcular, exibir e limpar.`],
 
     'mbb-react-ref-avancar': ['Do envio da primeira nota ao foco na segunda', `Na Nota 1, pressione Enter ou a tecla Próximo. onSubmitEditing recebe o evento de envio da entrada. O callback usa campoNota2.current?.focus() para mover o cursor ao segundo TextInput.
 
