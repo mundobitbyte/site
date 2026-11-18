@@ -42,6 +42,7 @@ assert(leitura.includes('HTTP — parte A: o ESP32 faz uma solicitação') && le
   'Leituras HTTP inverteram a ordem didática cliente A / servidor B.');
 assert(!/wifi\.innerHTML\s*=/.test(wokwi), 'Complemento Wokwi apagou orientações de Wi-Fi.');
 assert(!/wifiCodigo\.innerHTML\s*=/.test(wokwi), 'Complemento Wokwi apagou explicações dos parâmetros de Wi-Fi.');
+assert(!/ol\.innerHTML\s*=/.test(wokwi), 'Complemento Wokwi apagou a lista de execução do cliente HTTP.');
 assert(wokwi.includes("data-mbb6-wifi-observacao") && wokwi.includes("data-mbb6-wifi-evidencia"),
   'As notas complementares de Wi-Fi estão ausentes.');
 assert(html.includes('Como acompanhar a missão: quatro perguntas antes de cada prática'),
