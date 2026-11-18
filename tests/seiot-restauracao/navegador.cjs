@@ -25,6 +25,34 @@ const dest=process.env.MBB_EVIDENCIAS||'/tmp/seiot-evidencias';
     await page.waitForFunction(id=>document.querySelector('button[onclick*="'+id+'"]').textContent==='Copiado',id);
     assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),await page.locator('#'+id).textContent());
    }
+   // Verificar o DOM final após a execução dos complementos didáticos.
+   await page.goto(base+'/pages/arduino-conectividade.html#b6-2');
+   await page.locator('#b6-2.active-panel').waitFor();
+   const wifiTexto=await page.locator('#b6-2').textContent();
+   assert.match(wifiTexto,/Entenda os parâmetros/);
+   assert.match(wifiTexto,/o primeiro texto é o nome da rede/);
+   assert.match(wifiTexto,/Como interpretar a evidência/);
+   assert.match(wifiTexto,/Experimento de verificação/);
+   assert.match(wifiTexto,/Antes de avançar — entenda o endereço que apareceu/);
+   assert.equal(await page.locator('#b6-2 [data-mbb6-wifi-observacao]').count(),1);
+   assert.equal(await page.locator('#b6-2 [data-mbb6-wifi-evidencia]').count(),1);
+   assert.equal(await page.locator('#b6-2-code').count(),1);
+   assert.equal(await page.locator('#b6-2-wokwi-code').count(),1);
+   await page.goto(base+'/pages/arduino-conectividade.html#b6-3');
+   await page.locator('#b6-3.active-panel').waitFor();
+   const httpTexto=await page.locator('#b6-3').textContent();
+   // Os títulos internos são removidos intencionalmente no renderizador;
+   // a prova funcional é a presença de AMBAS as leituras nos cartões corretos.
+   const clienteExplicacao=page.locator('#b6-3 .mbb6-leitura-integrada[data-mbb6-leitura="http-cliente"]');
+   const servidorExplicacao=page.locator('#b6-3 .mbb6-leitura-integrada[data-mbb6-leitura="http-servidor"]');
+   assert.equal(await clienteExplicacao.count(),1);
+   assert.equal(await servidorExplicacao.count(),1);
+   assert.match(await clienteExplicacao.textContent(),/O ESP32 vira cliente quando consulta uma página/);
+   assert.match(await servidorExplicacao.textContent(),/o navegador é o cliente/);
+   const testeCliente=page.locator('#b6-3 .card').filter({has:page.locator('h3', {hasText:'5. Testando o cliente'})});
+   assert.equal(await testeCliente.count(),1);
+   assert.match(await testeCliente.textContent(),/O endereço example.com é usado apenas como destino simples/);
+   assert.equal(await testeCliente.locator('[data-mbb6-http-cliente-complemento]').count(),1);
    await page.goto(base+'/pages/arduino-conectividade.html#b6-prep');
    await page.locator('#b6-prep.active-panel').waitFor();
    await page.waitForFunction(()=>document.querySelector('#b6-prep-diagrama-extra')?.textContent.includes('"version": 1'));

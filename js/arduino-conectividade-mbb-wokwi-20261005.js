@@ -69,22 +69,19 @@
 
     // Wi-Fi — prática completa no Wokwi.
     const wifi = document.querySelector('[data-mbb6-wifi-wokwi="1"]');
-    if (wifi) {
-      wifi.innerHTML = `
-        <h3>9. No Wokwi — agora o ESP32 entra em uma rede</h3>
-        <p>Na placa física o ESP32 entra em uma rede Wi-Fi disponível no local. No Wokwi usamos a rede virtual <code>Wokwi-GUEST</code>, criada justamente para permitir experiências de conectividade.</p>
-        <p>Ela não usa senha. O canal 6 pode ser informado para tornar a conexão mais rápida.</p>
-        <p class="mbb6-note"><strong>O que queremos comprovar:</strong> o ESP32 consegue se conectar e recebe um endereço IP. Esse endereço será a evidência desta etapa.</p>
-      `;
+    if (wifi && !wifi.querySelector('[data-mbb6-wifi-observacao]')) {
+      // Preserva as instruções 4A originais inseridas pelo script principal.
+      wifi.insertAdjacentHTML('beforeend', `
+        <p class="mbb6-note" data-mbb6-wifi-observacao="1"><strong>Como interpretar a evidência:</strong> a rede virtual <code>Wokwi-GUEST</code> permite observar a conexão e o IP no Monitor Serial; isso ainda não comprova que outro dispositivo conseguiu acessar o ESP32.</p>
+      `);
     }
 
     const wifiCodigo = document.querySelector('[data-mbb6-wifi-wokwi="codigo"] .explain');
-    if (wifiCodigo) {
-      wifiCodigo.innerHTML = `
-        <p><strong>Faça agora:</strong> execute a simulação e abra o Monitor Serial em 115200.</p>
-        <p><strong>Observe:</strong> aparecem os pontos enquanto a conexão é tentada; depois surgem a confirmação de conexão e um endereço IP.</p>
-        <p><strong>Evidência:</strong> se o IP apareceu, o ESP32 entrou na rede virtual. No próximo tópico veremos que <em>estar na rede</em> e <em>receber uma conexão do navegador</em> são problemas diferentes.</p>
-      `;
+    if (wifiCodigo && !wifiCodigo.querySelector('[data-mbb6-wifi-evidencia]')) {
+      // Não apagar a explicação de WiFi.begin(SSID, senha, canal) do script principal.
+      wifiCodigo.insertAdjacentHTML('beforeend', `
+        <p class="mbb6-note" data-mbb6-wifi-evidencia="1"><strong>Experimento de verificação:</strong> acompanhe no Monitor Serial a tentativa de conexão e o IP obtido. Esse IP é evidência de entrada na rede virtual, não de que o navegador consiga iniciar uma conexão com o ESP32.</p>
+      `);
     }
 
     // HTTP — Wokwi prioriza o papel de cliente, que funciona no gateway padrão.
@@ -177,11 +174,13 @@ void loop() {
     }
 
     const testeCliente = acharCard('b6-3', '5. Testando o cliente');
-    if (testeCliente) {
-      const ol = testeCliente.querySelector('ol');
-      if (ol) {
-        ol.innerHTML = '<li><strong>Escolha apenas um código:</strong> 3A para Wokwi com <code>Wokwi-GUEST</code> ou 3B para a placa física, substituindo SSID e senha da rede real.</li><li>Execute a simulação ou envie o programa para a placa.</li><li>Abra o Monitor Serial em 115200 e acompanhe a conexão.</li><li>Observe o código retornado pelo pedido GET e, quando disponível, o conteúdo recebido. Um valor negativo indica erro da biblioteca; uma resposta HTTP positiva não é necessariamente o status 200.</li>';
-      }
+    if (testeCliente && !testeCliente.querySelector('[data-mbb6-http-cliente-complemento]')) {
+      // Não substituir a lista de execução original, que contém critérios de evidência.
+      const complemento = document.createElement('p');
+      complemento.className = 'mbb6-note';
+      complemento.dataset.mbb6HttpClienteComplemento = '1';
+      complemento.innerHTML = '<strong>Escolha o código para seu ambiente:</strong> 3A usa a rede virtual <code>Wokwi-GUEST</code>; 3B usa o SSID e a senha da rede autorizada da placa física. Código negativo indica falha da biblioteca; status HTTP positivo não significa necessariamente resposta 200.';
+      testeCliente.appendChild(complemento);
     }
 
     // 6.4 e 6.5 possuem práticas estáticas; não substituir seus resultados observáveis.

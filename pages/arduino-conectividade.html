@@ -415,6 +415,23 @@
       </table>
     </div>
   </div>
+  <div class="mbb6-lab-map" aria-labelledby="mbb6-percurso-diagnostico">
+    <h3 id="mbb6-percurso-diagnostico">Como acompanhar a missão: quatro perguntas antes de cada prática</h3>
+    <p>O circuito-base é o mesmo, mas a comunicação muda. Em cada etapa, identifique <strong>quem envia</strong>, <strong>quem recebe</strong>, <strong>qual caminho a informação percorre</strong> e <strong>qual evidência comprova o resultado</strong>. Uma mensagem impressa pelo programa não prova, por si só, que outro dispositivo recebeu algo.</p>
+    <div class="mbb6-table-scroll" tabindex="0" aria-label="Mapa de observação da conectividade">
+      <table>
+        <thead><tr><th scope="col">Etapa</th><th scope="col">Problema que resolvemos</th><th scope="col">O que realmente observamos</th><th scope="col">O que não podemos concluir apenas daí</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">6.1 Bluetooth</th><td>Enviar L/D de perto para controlar o LED.</td><td>No ESP32 físico, comandos recebidos por Bluetooth Classic; no Wokwi, somente lógica exercitada pelo Monitor Serial e arquivo auxiliar.</td><td>Um teste no Wokwi não comprova pareamento nem transmissão pelo rádio Bluetooth.</td></tr>
+          <tr><th scope="row">6.2 Wi-Fi</th><td>Entrar em uma rede e receber endereço IP.</td><td>Status de conexão e IP informado pelo ESP32.</td><td>Estar conectado ao Wi-Fi não significa que um servidor HTTP esteja funcionando.</td></tr>
+          <tr><th scope="row">6.3 HTTP</th><td>Trocar pedidos e respostas entre cliente e servidor.</td><td>Código de resposta e conteúdo no cliente; na prática de servidor físico, resposta no navegador e ação sobre o LED.</td><td>Uma requisição de saída no Wokwi público não comprova acesso de entrada pelo navegador.</td></tr>
+          <tr><th scope="row">6.4 mDNS</th><td>Identificar um serviço local por nome.</td><td>Anúncios capturados no PCAP ou consulta efetiva, conforme o ambiente.</td><td>Emitir anúncio não garante resolução do nome em todos os computadores e navegadores.</td></tr>
+          <tr><th scope="row">6.5 Tunelamento</th><td>Permitir acesso externo controlado a um serviço local.</td><td>Serviço acessível pelo endereço temporário do túnel e indisponível quando o túnel é encerrado.</td><td>Acesso externo ao servidor demonstrativo não autoriza expor comandos reais ou dados privados.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Seu caderno de evidências:</strong> em cada prática, anote o comportamento esperado, o que ocorreu de fato e uma explicação da diferença, se houver. Se o teste depender de hardware, rede ou recurso pago que você não possui, marque-o como <strong>não executado</strong>; nunca registre uma simulação como teste físico.</p>
+  </div>
 </section>
 
 <section class="project mbb6-panel active-panel" id="b6-0">
@@ -664,6 +681,12 @@ Wi-Fi conectado.
 Endereco IP: 192.168.1.37</pre><p>O endereço será diferente em cada rede.</p></article>
     <article class="card errors wide"><h3>8. Erros comuns</h3><table><tr><th>Problema</th><th>O que conferir</th></tr><tr><td>Fica somente nos pontos</td><td>Nome da rede, senha, sinal e compatibilidade com 2,4 GHz.</td></tr><tr><td>Rede da escola aparece, mas não conecta</td><td>Ela pode usar página de login, WPA2/WPA3-Enterprise ou outra política que este exemplo simples não trata. Para o primeiro teste, use uma rede 2,4 GHz simples ou um hotspot de teste.</td></tr><tr><td>Monitor Serial mostra caracteres ilegíveis</td><td>Configure o Monitor Serial para 115200.</td></tr><tr><td>Wokwi não mostra a conexão</td><td>Confirme que selecionou o código <strong>4A</strong>, criou um projeto ESP32 e iniciou a simulação. Verifique a rede <code>Wokwi-GUEST</code> e o Monitor Serial.</td></tr></table></article>
     <article class="card wide" data-mbb6-role="wifi-wokwi"><h3>4A. Wi-Fi no Wokwi</h3><p>Vamos começar pelo simulador, com a rede <code>Wokwi-GUEST</code>, e observar a confirmação no Monitor Serial.</p></article>
+    <article class="card wide" aria-labelledby="mbb6-wifi-endereco-fundamentos">
+      <h3 id="mbb6-wifi-endereco-fundamentos">Antes de avançar — entenda o endereço que apareceu</h3>
+      <p>O <strong>SSID</strong> é o nome usado para identificar a rede Wi-Fi; ele não é o endereço do ESP32. A senha, quando necessária, autoriza a entrada na rede. Em uma rede doméstica comum, um serviço chamado <strong>DHCP</strong> fornece automaticamente ao dispositivo parâmetros de rede, incluindo um endereço IP. O <strong>IP local</strong> identifica o dispositivo naquela rede; pode mudar em outra conexão. A frequência de <strong>2,4 GHz</strong> descreve a faixa de rádio da rede e não é o endereço IP nem a velocidade de comunicação.</p>
+      <p><strong>Conexão não é a mesma coisa que serviço.</strong> O programa desta etapa comprova que a interface Wi-Fi se conectou e recebeu um IP, mas ainda não abre uma página para o celular. Para isso, na etapa seguinte, precisaremos iniciar um servidor HTTP ou enviar um pedido a outro servidor.</p>
+      <div class="mbb6-checkpoint"><strong>Experimente sozinho:</strong> anote o SSID utilizado (nunca a senha), o IP mostrado e o ambiente escolhido. Reinicie a execução e compare os dados. <strong>Como conferir:</strong> o mesmo SSID e um IP válido demonstram nova conexão; o IP pode ser igual ou diferente. <strong>Se falhar:</strong> verifique primeiro se você escolheu o código do seu ambiente, depois observe o Monitor Serial e consulte a tabela de erros anterior. Não altere várias configurações de uma vez.</div>
+    </article>
     <article class="card worked wide"><h3>9. Conferência da etapa</h3><p><strong>ESP32 física:</strong> o Monitor Serial deve mostrar “Wi-Fi conectado” e um IP da rede usada. <strong>Wokwi:</strong> o Monitor Serial deve mostrar a conexão ao <code>Wokwi-GUEST</code> e, no gateway público, normalmente o IP <code>10.10.0.2</code>.</p><div class="mbb6-checkpoint"><strong>Se chegou até aqui:</strong> o ESP32 já participa de uma rede. Agora falta escolher como ele vai trocar informações com outros dispositivos.</div></article>
     <article class="card worked wide mbb6-bridge"><h3>10. Próximo problema</h3><p>Conseguimos colocar o ESP32 na rede e identificá-lo por um endereço IP. Isso é necessário, mas ainda não entrega nenhuma interface ao usuário. <strong>Agora precisamos escolher uma forma de conversa que o navegador já entenda.</strong> É aí que entra o HTTP.</p></article>
   </div>
