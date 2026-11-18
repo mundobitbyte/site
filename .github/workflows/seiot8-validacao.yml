@@ -1,0 +1,22 @@
+name: Validação específica do tópico 8 - RTOS e protocolos
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'pages/arduino-protocolos.html'
+      - 'js/arduino-protocolos.js'
+      - 'js/arduino-espiral-mbb-7a10-20261026.js'
+      - 'tests/seiot8/**'
+      - '.github/workflows/seiot8-validacao.yml'
+permissions:
+  contents: read
+jobs:
+  conteudo-e-scripts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/seiot8/validar.mjs
