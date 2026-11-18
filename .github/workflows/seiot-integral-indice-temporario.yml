@@ -34,7 +34,7 @@ jobs:
               changes.push(x.localizacao_atual);
             }
           }
-          if(changes.length!==1||changes[0]!=='pages/arduino.html')throw Error('Alterações inesperadas: '+JSON.stringify(changes));
+          if(changes.length<1||changes.some(p=>p!=='pages/arduino.html'))throw Error('Alterações inesperadas: '+JSON.stringify(changes));
           console.log('OK: somente campos pesquisáveis da página Arduino alterados.');
           NODE
           node meu-mbb/atualizar-pesquisa.cjs --check
