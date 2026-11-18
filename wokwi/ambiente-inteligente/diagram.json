@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "author": "Mundo bit Byte - projeto integrador",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 15,
+      "left": 20,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr1",
+      "top": -130,
+      "left": -210,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 160,
+      "left": 275,
+      "attrs": {
+        "color": "yellow",
+        "label": "ILUMINACAO"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "res1",
+      "top": 215,
+      "left": 280,
+      "attrs": {
+        "value": "220"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "esp:3V3",
+      "ldr1:VCC",
+      "red",
+      []
+    ],
+    [
+      "esp:GND.1",
+      "ldr1:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:34",
+      "ldr1:AO",
+      "green",
+      []
+    ],
+    [
+      "esp:23",
+      "led1:A",
+      "orange",
+      []
+    ],
+    [
+      "led1:C",
+      "res1:1",
+      "orange",
+      []
+    ],
+    [
+      "res1:2",
+      "esp:GND.2",
+      "black",
+      []
+    ]
+  ],
+  "dependencies": {},
+  "serialMonitor": {
+    "display": "always",
+    "newline": "lf"
+  }
+}
