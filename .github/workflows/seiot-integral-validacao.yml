@@ -20,3 +20,21 @@ jobs:
         with: {node-version: '22'}
       - name: Auditar percurso integral
         run: node tests/seiot-integral/links-e-preservacao.mjs
+
+  navegador-primeiros-topicos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Preparar Chromium
+        run: |
+          npm install --prefix "$RUNNER_TEMP/seiot-integral" playwright
+          "$RUNNER_TEMP/seiot-integral/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Verificar percurso de fundamentos e programação aplicada
+        run: |
+          python3 -m http.server 38765 --bind 127.0.0.1 >/tmp/seiot-integral-http.log 2>&1 &
+          trap 'kill $!' EXIT
+          curl --retry 10 --retry-connrefused --silent --fail http://127.0.0.1:38765/pages/arduino.html >/dev/null
+          NODE_PATH="$RUNNER_TEMP/seiot-integral/node_modules" node tests/seiot-integral/navegador-fundamentos.cjs
