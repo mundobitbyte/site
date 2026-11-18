@@ -1,0 +1,58 @@
+name: Auditoria integral SEIoT - topicos 1 a 10
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tests/seiot-integral/**'
+      - '.github/workflows/seiot-integral-validacao.yml'
+      - 'pages/arduino*.html'
+      - 'js/arduino*.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  links-estrutura-e-scripts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Auditar percurso integral
+        run: node tests/seiot-integral/links-e-preservacao.mjs
+
+  navegador-primeiros-topicos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Preparar Chromium
+        run: |
+          npm install --prefix "$RUNNER_TEMP/seiot-integral" playwright
+          "$RUNNER_TEMP/seiot-integral/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Verificar percurso de fundamentos e programação aplicada
+        run: |
+          python3 -m http.server 38765 --bind 127.0.0.1 >/tmp/seiot-integral-http.log 2>&1 &
+          trap 'kill $!' EXIT
+          curl --retry 10 --retry-connrefused --silent --fail http://127.0.0.1:38765/pages/arduino.html >/dev/null
+          NODE_PATH="$RUNNER_TEMP/seiot-integral/node_modules" node tests/seiot-integral/navegador-fundamentos.cjs
+
+  navegador-integracao-6a10:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Preparar Chromium
+        run: |
+          npm install --prefix "$RUNNER_TEMP/seiot-e2e" playwright
+          "$RUNNER_TEMP/seiot-e2e/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Navegação completa dos módulos 6 a 10
+        run: |
+          python3 -m http.server 4179 --bind 127.0.0.1 >/tmp/seiot-e2e-http.log 2>&1 &
+          trap 'kill $!' EXIT
+          curl --retry 10 --retry-connrefused --silent --fail http://127.0.0.1:4179/pages/arduino-conectividade.html >/dev/null
+          NODE_PATH="$RUNNER_TEMP/seiot-e2e/node_modules" node tools/seiot-validacao/navegador.cjs

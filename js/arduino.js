@@ -110,8 +110,14 @@ function iniciarNavegacaoArduino(){
     const stageHash = hash.startsWith('#ex-') ? '#exercicios' : hash;
     stageLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === stageHash));
   }
+  // Localizar pelo ID evita erros em hashes malformados ou com caracteres especiais.
+  function buscarAlvo(hash){
+    if(!hash || !hash.startsWith('#')) return null;
+    try { return document.getElementById(decodeURIComponent(hash.slice(1))); }
+    catch { return null; }
+  }
   function showPanel(hash, updateUrl){
-    const target = document.querySelector(hash);
+    const target = buscarAlvo(hash);
     if(!target) return;
     const topPanel = target.matches('main > section[id]') ? target : target.closest('main > section[id]');
     if(!topPanel) return;
@@ -120,7 +126,7 @@ function iniciarNavegacaoArduino(){
     setActiveStage(hash);
     if(updateUrl) history.replaceState(null,'',hash);
     window.scrollTo(0,0);
-    if(hash !== '#' + topPanel.id){ requestAnimationFrame(() => { const nested=document.querySelector(hash); if(nested) nested.scrollIntoView({block:'start'}); }); }
+    if(hash !== '#' + topPanel.id){ requestAnimationFrame(() => { const nested=buscarAlvo(hash); if(nested) nested.scrollIntoView({block:'start'}); }); }
   }
   function activateModule(moduleName, targetHash, updateUrl){ setModule(moduleName); showPanel(targetHash || modules[moduleName].first, updateUrl); }
 
@@ -145,13 +151,23 @@ function iniciarNavegacaoArduino(){
   if(stageBackdrop) stageBackdrop.addEventListener('click',closeDrawer);
   document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
 
-  const initialHash = location.hash && document.querySelector(location.hash) ? location.hash : '#intro';
-  let initialModule = sectionModule[initialHash];
-  if(!initialModule){
-    const t=document.querySelector(initialHash); const top=t && (t.matches('main > section[id]') ? t : t.closest('main > section[id]'));
-    if(top && top.id==='exercicios') initialModule='io';
+  function moduloDoAlvo(hash){
+    const target=buscarAlvo(hash);
+    if(!target) return null;
+    const top=target.matches('main > section[id]') ? target : target.closest('main > section[id]');
+    return sectionModule[hash] || (top && sectionModule['#'+top.id]) || (top?.id==='exercicios' ? 'io' : null);
   }
-  activateModule(initialModule || 'fundamentos', initialHash, false);
+
+  const initialHash = buscarAlvo(location.hash) ? location.hash : '#intro';
+  activateModule(moduloDoAlvo(initialHash) || 'fundamentos', initialHash, false);
+
+  // Links, voltar/avançar e trocas de âncora sem recarregar também devem ativar o painel.
+  window.addEventListener('hashchange', () => {
+    const hash=location.hash;
+    if(!buscarAlvo(hash)) return;
+    const modulo=moduloDoAlvo(hash);
+    if(modulo) activateModule(modulo, hash, false);
+  });
 }
 
 function manterModuloAtivoVisivel(){
