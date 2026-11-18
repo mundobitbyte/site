@@ -35,4 +35,15 @@ for(const token of ['b6-1-wokwi-header','class BluetoothSerial','return Serial.a
 for(const asset of ['arduino-conectividade-aprofundamento-mbb-20261026.js','arduino-mdns-pcap.js','arduino-conectividade-mbb-wokwi-20261005.js','arduino-conectividade-acrescimos-20261117.js']) assert(html.includes(asset),'script original ausente: '+asset);
 for(const file of ['diagram.json','http-local.ino','tunel-modelo.ino']) assert(extras.includes(file),'melhoria posterior perdida: '+file);
 for(const token of ['Entenda o diagram.json','serialMonitor','connections','rotate','hide','Não altere o GPIO 23','docs.wokwi.com/diagram-format']) assert(extras.includes(token),'Guia JSON perdeu recurso: '+token);
+// Regressões pedagógicas: scripts complementares não podem apagar explicações anteriores.
+const leitura = read('js/arduino-conectividade-aprofundamento-mbb-20261026.js');
+assert(!/explicacao\.remove\(\)/.test(leitura), 'Aprofundamento apagou uma explicação original.');
+assert(!/wifi\.innerHTML\s*=/.test(wokwi), 'Complemento Wokwi apagou orientações de Wi-Fi.');
+assert(!/wifiCodigo\.innerHTML\s*=/.test(wokwi), 'Complemento Wokwi apagou explicações dos parâmetros de Wi-Fi.');
+assert(wokwi.includes("data-mbb6-wifi-observacao") && wokwi.includes("data-mbb6-wifi-evidencia"),
+  'As notas complementares de Wi-Fi estão ausentes.');
+assert(html.includes('Como acompanhar a missão: quatro perguntas antes de cada prática'),
+  'Mapa de evidências transversal ausente.');
+assert(html.includes('Antes de avançar — entenda o endereço que apareceu'),
+  'Fundamentação de redes da etapa Wi-Fi ausente.');
 console.log('OK: sete etapas e práticas ESP32 físicas/Wokwi preservadas; adições separadas.');
