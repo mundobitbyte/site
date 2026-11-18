@@ -415,6 +415,23 @@
       </table>
     </div>
   </div>
+  <div class="mbb6-lab-map" aria-labelledby="mbb6-percurso-diagnostico">
+    <h3 id="mbb6-percurso-diagnostico">Como acompanhar a missão: quatro perguntas antes de cada prática</h3>
+    <p>O circuito-base é o mesmo, mas a comunicação muda. Em cada etapa, identifique <strong>quem envia</strong>, <strong>quem recebe</strong>, <strong>qual caminho a informação percorre</strong> e <strong>qual evidência comprova o resultado</strong>. Uma mensagem impressa pelo programa não prova, por si só, que outro dispositivo recebeu algo.</p>
+    <div class="mbb6-table-scroll" tabindex="0" aria-label="Mapa de observação da conectividade">
+      <table>
+        <thead><tr><th scope="col">Etapa</th><th scope="col">Problema que resolvemos</th><th scope="col">O que realmente observamos</th><th scope="col">O que não podemos concluir apenas daí</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">6.1 Bluetooth</th><td>Enviar L/D de perto para controlar o LED.</td><td>No ESP32 físico, comandos recebidos por Bluetooth Classic; no Wokwi, somente lógica exercitada pelo Monitor Serial e arquivo auxiliar.</td><td>Um teste no Wokwi não comprova pareamento nem transmissão pelo rádio Bluetooth.</td></tr>
+          <tr><th scope="row">6.2 Wi-Fi</th><td>Entrar em uma rede e receber endereço IP.</td><td>Status de conexão e IP informado pelo ESP32.</td><td>Estar conectado ao Wi-Fi não significa que um servidor HTTP esteja funcionando.</td></tr>
+          <tr><th scope="row">6.3 HTTP</th><td>Trocar pedidos e respostas entre cliente e servidor.</td><td>Código de resposta e conteúdo no cliente; na prática de servidor físico, resposta no navegador e ação sobre o LED.</td><td>Uma requisição de saída no Wokwi público não comprova acesso de entrada pelo navegador.</td></tr>
+          <tr><th scope="row">6.4 mDNS</th><td>Identificar um serviço local por nome.</td><td>Anúncios capturados no PCAP ou consulta efetiva, conforme o ambiente.</td><td>Emitir anúncio não garante resolução do nome em todos os computadores e navegadores.</td></tr>
+          <tr><th scope="row">6.5 Tunelamento</th><td>Permitir acesso externo controlado a um serviço local.</td><td>Serviço acessível pelo endereço temporário do túnel e indisponível quando o túnel é encerrado.</td><td>Acesso externo ao servidor demonstrativo não autoriza expor comandos reais ou dados privados.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Seu caderno de evidências:</strong> em cada prática, anote o comportamento esperado, o que ocorreu de fato e uma explicação da diferença, se houver. Se o teste depender de hardware, rede ou recurso pago que você não possui, marque-o como <strong>não executado</strong>; nunca registre uma simulação como teste físico.</p>
+  </div>
 </section>
 
 <section class="project mbb6-panel active-panel" id="b6-0">
