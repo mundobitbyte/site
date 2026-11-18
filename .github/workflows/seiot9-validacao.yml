@@ -1,0 +1,16 @@
+name: Validacao topico 9 - protecao e seguranca IoT
+on:
+  pull_request:
+    branches: [main]
+    paths: ['pages/arduino-seguranca.html','js/arduino-seguranca.js','tests/seiot9/**','.github/workflows/seiot9-validacao.yml']
+permissions:
+  contents: read
+jobs:
+  conteudo-e-scripts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node tests/seiot9/validar.mjs
