@@ -52,14 +52,6 @@ Compare com useState: alterar state participa da renderização. Alterar current
 
 Digite em seguida para verificar onde o valor aparece. O ref indica qual campo recebe o foco. As bordas dos dois campos têm o mesmo estilo inicial.`],
 
-    'state-12-final': ['Consolidação: várias peças formando um comportamento único', `A Média Escolar final reúne conceitos que foram apresentados separadamente.
-
-O evento de Calcular chama calcularMedia. A função valida as notas e usa if/else para decidir a situação. O JSX mostra o resultado apenas quando existe uma média. Limpar apaga campos, resultado e mensagem, e useRef devolve o foco à primeira nota.
-
-Nenhum desses recursos existe isoladamente em um aplicativo real. Cada peça mantém uma responsabilidade e, juntas, formam o comportamento da tela.
-
-Tente explicar o fluxo sem olhar o código: o que acontece quando o usuário digita, calcula e depois limpa? Se esse caminho estiver claro, os Hooks deixam de parecer comandos soltos.`],
-
     'mbb-effect-timer': ['Do relógio externo para a tela', `Depois da renderização, o Effect configura o intervalo. setInterval chama a função a cada 1000 ms. Cada chamada conta como uma batida.
 
 Em setBatidas(valorAtual => valorAtual + 1), entregamos ao React uma função. O React fornece o valor anterior, e a função devolve o próximo. Assim o contador pode crescer sem o Effect ter de ler batidas e recriar o intervalo a cada atualização.
