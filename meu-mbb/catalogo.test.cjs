@@ -59,9 +59,11 @@ test('React e Hooks indexa a sequência publicada e preserva a mesma unidade de 
   const unidade = catalogo.unidades.find(item => item.localizacao_atual === 'pages/reactnative.html');
   const topicos = unidade.topicos_busca.filter(item => item.ancora.startsWith('rn-state-'));
   const visitas = require('./visitas-diretas.json')['pages/reactnative.html'];
-  assert.equal(topicos.length, 41);
+  // O PR #269 removeu a etapa repetida "29. Média final" e renumerou
+  // o percurso: 38 passos, mais introdução e atividade final (99).
+  assert.equal(topicos.length, 40);
   assert.deepEqual(topicos.slice(1).map(item => Number(item.titulo.match(/ — (\d+) — /)?.[1])),
-    [...Array.from({ length: 39 }, (_, i) => i + 1), 99]);
+    [...Array.from({ length: 38 }, (_, i) => i + 1), 99]);
   assert.equal(unidade.conteudo_id, 'mod-pages-reactnative');
   assert.equal(visitas.conteudo_id, unidade.conteudo_id);
   for (const topico of topicos) assert.ok(visitas.ancoras.includes(topico.ancora));
@@ -69,8 +71,11 @@ test('React e Hooks indexa a sequência publicada e preserva a mesma unidade de 
     ['useEffect', 'rn-state-mbb-effect-intro'],
     ['cleanup', 'rn-state-mbb-effect-cleanup'],
     ['dependências useEffect', 'rn-state-mbb-effect-dependencias'],
-    ['Média Escolar', 'rn-state-state-11-useref']
+    ['Média Escolar', 'rn-state-state-9-calculo']
   ];
+  // A etapa de useRef continua indexada, embora a busca por "Média Escolar"
+  // priorize a explicação de cálculo apresentada antes no percurso.
+  assert.ok(topicos.some(item => item.ancora === 'rn-state-state-11-useref'));
   for (const [consulta, ancora] of exemplos) {
     const resultado = core.pesquisar(catalogo, consulta).find(item => item.conteudo_id === unidade.conteudo_id);
     assert.equal(resultado.localizacao_pesquisa, `pages/reactnative.html#${ancora}`);
