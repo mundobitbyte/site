@@ -1,0 +1,46 @@
+name: Validacao topico 10 - projeto integrador IoT
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'pages/arduino-projeto-iot.html'
+      - 'wokwi/ambiente-inteligente/**'
+      - 'tests/seiot10/**'
+      - '.github/workflows/seiot10-validacao.yml'
+permissions:
+  contents: read
+jobs:
+  conteudo-e-json:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node tests/seiot10/validar.mjs
+  logica-local:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install beautifulsoup4
+      - run: python tools/seiot-validacao/logica-projeto.py
+  navegador:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Preparar Chromium
+        run: |
+          npm install --prefix "$RUNNER_TEMP/seiot10" playwright
+          "$RUNNER_TEMP/seiot10/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Conferir montagem e copia no navegador
+        run: |
+          python3 -m http.server 38764 --bind 127.0.0.1 >/tmp/seiot10-http.log 2>&1 &
+          trap 'kill $!' EXIT
+          curl --retry 10 --retry-connrefused --silent --fail http://127.0.0.1:38764/pages/arduino-projeto-iot.html >/dev/null
+          NODE_PATH="$RUNNER_TEMP/seiot10/node_modules" node tests/seiot10/navegador.cjs
