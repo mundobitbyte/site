@@ -110,5 +110,24 @@
 <script src="../js/reactnative-layout-seguro-20261007.js?v=20261007-1"></script>
 <script src="../js/reactnative-navegacao-resultado-fiel-20261014.js?v=20261014-3"></script>
 <script src="../js/reactnative-preview-ready-20261016.js?v=20261016-1"></script>
+<script>
+/* Teste isolado: etapa 5 (Props × state), rolagem curta ao abrir App.js. */
+document.addEventListener('toggle', function (event) {
+  const details = event.target;
+  if (!(details instanceof HTMLDetailsElement) || !details.open) return;
+  const pratica = details.closest('.rn-pratica-snack');
+  if (!pratica || !pratica.querySelector('h4')?.textContent.includes('uma temperatura para duas partes da tela')) return;
+  requestAnimationFrame(function () {
+    if (!details.isConnected || !details.open) return;
+    const painel = details.closest('.intro-view');
+    const usaPainel = painel && painel.scrollHeight > painel.clientHeight + 2 &&
+      ['auto', 'scroll'].includes(getComputedStyle(painel).overflowY);
+    const linhas = parseFloat(getComputedStyle(details).lineHeight) || 24;
+    const distancia = linhas * 5;
+    const comportamento = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+    (usaPainel ? painel : window).scrollBy({ top: distancia, behavior: comportamento });
+  });
+}, true);
+</script>
 </body>
 </html>
