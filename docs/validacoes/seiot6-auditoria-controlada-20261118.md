@@ -18,9 +18,9 @@
 2. Fundamentação de SSID, DHCP, IP local e 2,4 GHz, seguida de investigação autônoma, na etapa Wi-Fi.
 
 ## Preservação verificada
-- Diff da branch em relação ao commit de referência: **um arquivo modificado; 23 linhas adicionadas; nenhuma linha removida**.
+- No primeiro commit de conteúdo, o diff registrou **23 linhas adicionadas ao HTML, nenhuma removida**. Os commits posteriores corrigiram dois scripts complementares e acrescentaram testes. Consulte o diff atual do PR para a relação completa de arquivos e linhas.
 - Contagens de seções existentes, blocos `pre`, botões `copyCode`, referências `href` e scripts preservadas.
-- Não foram alterados códigos Arduino, arquivos JSON, biblioteca Bluetooth, estilos, recursos de busca nem scripts.
+- Não foram alterados códigos Arduino, arquivos JSON, biblioteca Bluetooth, estilos nem recursos de busca. **Dois scripts complementares foram corrigidos** para preservar textos didáticos, sem modificar o código executável dos exemplos Arduino.
 - Nenhum tópico fora do 6 foi modificado.
 
 ## Validação: alcance real
@@ -59,3 +59,6 @@ A revisão não ficou restrita ao HTML. Foram examinados os seguintes fluxos de 
 **Nota sobre validação:** as correções descritas são confirmadas pela análise de origem e comparação dos trechos modificados, mas os novos testes ainda não foram executados num navegador nesta sessão. Conferências com Wokwi e aluno real seguem pendentes.
 
 **Limitação importante da proteção:** a preservação de linhas de HTML e de arquivos Arduino não basta. Também é necessário verificar que o DOM final mantém as explicações após o carregamento e que os scripts posteriores não removem conteúdo válido. Esta revisão acrescentou proteção específica para dois mecanismos de sobrescrita, mas não certifica ainda todo o DOM final.
+
+## Coerência da sequência HTTP
+O roteiro de leitura comentada invertia as legendas da Parte A (cliente) e da Parte B (servidor), contrariando o HTML da aula. A nomenclatura foi corrigida no script de aprofundamento, e foi acrescentada uma asserção de regressão. Nenhuma rota, biblioteca ou sketch foi modificada.
