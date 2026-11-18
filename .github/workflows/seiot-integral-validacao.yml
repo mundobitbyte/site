@@ -1,0 +1,22 @@
+name: Auditoria integral SEIoT - topicos 1 a 10
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tests/seiot-integral/**'
+      - '.github/workflows/seiot-integral-validacao.yml'
+      - 'pages/arduino*.html'
+      - 'js/arduino*.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  links-estrutura-e-scripts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Auditar percurso integral
+        run: node tests/seiot-integral/links-e-preservacao.mjs
