@@ -35,9 +35,10 @@ jobs:
               changed.push(a.localizacao_atual);
             }
           }
-          if(changed.length!==1||changed[0]!=='pages/arduino-protocolos.html')
-            throw Error('Fora do escopo do topico 8: '+JSON.stringify(changed));
-          console.log('OK: somente a unidade RTOS/Protocolos foi sincronizada.');
+          const permitidos=new Set(['pages/arduino-protocolos.html','pages/reactnative.html']);
+          if(changed.length!==2||changed.some(p=>!permitidos.has(p)))
+            throw Error('Divergencia inesperada: '+JSON.stringify(changed));
+          console.log('OK: somente indices de RTOS/Protocolos e React Native sincronizados. Nenhum codigo ou metadado foi alterado.');
           NODE
           node meu-mbb/atualizar-pesquisa.cjs --check
           test "$(git diff --name-only)" = "meu-mbb/catalogo.json"
