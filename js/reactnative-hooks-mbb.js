@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
         <section>
           <h4>Guarde os casos para testar a versão final</h4>
           <p>Registre o que espera ao abrir o app, calcular com as duas notas preenchidas, deixar uma nota vazia e tocar em Limpar. Você começa montando a tela nas próximas etapas e volta a essas previsões à medida que acrescenta ações.</p>
-          <p>Na <a href="#rn-state-state-12-final">etapa 29</a>, compare as previsões com o resultado e teste também 0 e 0. A média zero é um resultado válido.</p>
+          <p>Na <a href="#rn-state-state-11-useref">etapa 27</a>, compare as previsões com o resultado e teste também 0 e 0. A média zero é um resultado válido.</p>
         </section>
       </div>`;
     }
@@ -870,7 +870,6 @@ const styles = StyleSheet.create({
     ];
 
     const refStep = original.find(s => s.id === 'state-11-useref');
-    const finalMedia = original.find(s => s.id === 'state-12-final');
     if (refStep) {
       refStep.menu = '27. useRef';
       refStep.title = 'useRef — devolvendo o foco à primeira nota';
@@ -896,6 +895,8 @@ state × ref
 state participa da renderização.
 ref mantém uma referência sem provocar renderização quando current muda.`;
       refStep.note = 'Repita o teste no Snack para observar o useRef em ação. No App.js, o ?. só deixa chamar focus() quando a referência está disponível.';
+      refStep.added += '\n\nConsolidação da Média Escolar: teste 6 e 6 (Aprovado), 0 e 0 (Reprovado), uma nota inválida e Limpar. Confirme a limpeza dos campos e o retorno do foco à Nota 1. Explique como state, eventos, validação, if/else e ref trabalham juntos.';
+      refStep.note += ' Esta é a versão completa da Média Escolar: não há necessidade de reconstruí-la numa etapa posterior.';
     }
 
     const refOptional = {
@@ -976,13 +977,6 @@ const styles = StyleSheet.create({
       preview: phonePreview('Notas', '<div style="border:1px solid #cbd5e1;padding:10px;border-radius:8px;margin-bottom:10px;">Nota 1</div><div style="border:1px solid #cbd5e1;padding:10px;border-radius:8px;">Nota 2</div><div style="margin-top:10px;color:#174b86;text-align:center;">IR PARA NOTA 2</div>', 'No Snack, confirme onde o cursor aparece.'),
       note: 'No Web, use Enter. No Android e no iOS, o teclado pode mostrar Próximo, um ícone ou outra tecla de ação conforme o dispositivo. O primeiro campo usa o teclado padrão para favorecer o envio. Se a ação estiver indisponível, use Ir para Nota 2.'
     };
-
-    if (finalMedia) {
-      finalMedia.menu = '29. Média final';
-      finalMedia.title = 'Média Escolar — consolidação de state, eventos e ref';
-      finalMedia.objective = 'Revisar o aplicativo completo usando foco seguro no primeiro campo.';
-      finalMedia.note = 'Calcule com 6 e 6 na prévia interativa para observar o limite de aprovação. Em seguida, use Limpar para verificar o retorno à Nota 1.';
-    }
 
     const estiloLaboratorio = `const styles = StyleSheet.create({
   container: {
@@ -1073,7 +1067,7 @@ ${estiloLaboratorio}`;
     const effectSteps = [
       mkPage(
         'mbb-effect-intro',
-        '30. useEffect',
+        '29. useEffect',
         'useEffect — sincronizando o componente com algo externo',
         'Compreender o papel do Effect antes de escrever código.',
         'Uma necessidade diferente',
@@ -1084,18 +1078,18 @@ ${estiloLaboratorio}`;
           <section>
             <h4>A tela entra e o relógio começa a contar</h4>
             <p>Imagine um cronômetro em uma tela de estudo. Ao entrar, o React monta o componente e apresenta os segundos iniciais. O Effect configura um intervalo do ambiente JavaScript. Cada disparo pede uma atualização de state e o React apresenta o novo valor.</p>
-            <p>A tela inicia o ciclo com <code>useEffect</code>, o ambiente marca o tempo com <code>setInterval</code> e o state permite mostrar o resultado. Na <a href="#rn-state-mbb-effect-timer">etapa 31</a>, você poderá observar esses passos no aplicativo.</p>
+            <p>A tela inicia o ciclo com <code>useEffect</code>, o ambiente marca o tempo com <code>setInterval</code> e o state permite mostrar o resultado. Na <a href="#rn-state-mbb-effect-timer">etapa 30</a>, você poderá observar esses passos no aplicativo.</p>
           </section>
           <section>
             <h4>A tela sai e a contagem precisa parar</h4>
-            <p>O intervalo continua disparando até ser cancelado. A função de limpeza do Effect guarda o identificador do intervalo e o entrega a <code>clearInterval</code> ao desmontar o componente. Esse encerramento aparecerá no registro do <a href="#rn-state-mbb-effect-cleanup">laboratório da etapa 32</a>.</p>
+            <p>O intervalo continua disparando até ser cancelado. A função de limpeza do Effect guarda o identificador do intervalo e o entrega a <code>clearInterval</code> ao desmontar o componente. Esse encerramento aparecerá no registro do <a href="#rn-state-mbb-effect-cleanup">laboratório da etapa 31</a>.</p>
             <p>Antes de executar, preveja a contagem após três disparos e o que deve acontecer ao ocultar o temporizador. Use o número exibido e o registro para conferir suas previsões nas duas etapas seguintes.</p>
           </section>
         </div>`
       ),
       {
         id: 'mbb-effect-timer',
-        menu: '31. Temporizador',
+        menu: '30. Temporizador',
         title: 'Primeiro Effect: um temporizador',
         objective: 'Sincronizar state com um relógio externo usando setInterval.',
         code: `import React, { useEffect, useState } from 'react';
@@ -1126,11 +1120,11 @@ ${estiloLaboratorio}`,
         addedTitle: 'Do relógio externo para a tela',
         added: 'setInterval chama a função a cada 1000 ms. O atualizador recebe o valor anterior do state e devolve esse valor mais 1.',
         preview: phonePreview('Temporizador', '<div style="font-size:25px;font-weight:800;text-align:center;">Batidas: 3</div>'),
-        note: 'Exemplo intermediário. Na etapa 32, o intervalo será encerrado ao desmontar o temporizador.'
+        note: 'Exemplo intermediário. Na etapa 31, o intervalo será encerrado ao desmontar o temporizador.'
       },
       {
         id: 'mbb-effect-cleanup',
-        menu: '32. Limpeza (cleanup)',
+        menu: '31. Limpeza (cleanup)',
         title: 'Encerrando o que o Effect iniciou (cleanup)',
         objective: 'Verificar que o intervalo é encerrado quando o temporizador sai da tela.',
         code: codigoTemporizador(),
@@ -1141,7 +1135,7 @@ ${estiloLaboratorio}`,
       },
       {
         id: 'mbb-effect-ciclo',
-        menu: '33. Montar/desmontar',
+        menu: '32. Montar/desmontar',
         title: 'Montagem, sincronização e desmontagem',
         objective: 'Prever o que acontece com o state e o Effect ao tirar e recolocar o temporizador na tela.',
         code: codigoTemporizador(),
@@ -1154,7 +1148,7 @@ Ao mostrar novamente, uma nova instância é montada. O useState(0) começa de n
       },
       {
         id: 'mbb-effect-dependencias',
-        menu: '34. Dependências',
+        menu: '33. Dependências',
         title: 'Dependências: quais valores a sincronização acompanha?',
         objective: 'Verificar quando uma mudança pede a limpeza e a configuração de outro intervalo.',
         code: codigoTemporizador({ dependencias: true }),
@@ -1170,7 +1164,7 @@ Leia os três formatos. Sem o segundo argumento, o Effect é executado após cad
       },
       {
         id: 'mbb-effect-strict',
-        menu: '35. Strict Mode',
+        menu: '34. Strict Mode',
         title: 'Strict Mode: por que o Effect pode parecer repetir no desenvolvimento?',
         objective: 'Conferir se a sequência de setup e cleanup deixa um único intervalo ativo.',
         code: codigoTemporizador({ strict: true }),
@@ -1197,7 +1191,7 @@ Inicie em desenvolvimento com npx expo start. Na montagem inicial, procure setup
       },
       mkPage(
         'mbb-effect-evento',
-        '36. Effect × Evento',
+        '35. Effect × Evento',
         'Effect × Event',
         'Distinguir ação do usuário de sincronização externa.',
         'O gatilho muda tudo',
@@ -1212,7 +1206,7 @@ Inicie em desenvolvimento com npx expo start. Na montagem inicial, procure setup
           </section>
           <section>
             <h4>Sincronizar enquanto um componente aparece</h4>
-            <p>Na <a href="#rn-state-mbb-effect-api-ponte">cotação da etapa 38</a>, o requisito pede a consulta já na abertura. O Effect inicia o pedido quando <code>Cotacao</code> é montado. O botão Ocultar muda a visibilidade e, ao desmontar, o componente cancela o pedido pendente.</p>
+            <p>Na <a href="#rn-state-mbb-effect-api-ponte">cotação da etapa 37</a>, o requisito pede a consulta já na abertura. O Effect inicia o pedido quando <code>Cotacao</code> é montado. O botão Ocultar muda a visibilidade e, ao desmontar, o componente cancela o pedido pendente.</p>
             <p>Depois de ocultar, Mostrar monta outra instância e abre uma nova consulta. O botão controla qual componente aparece. A consulta pertence ao ciclo desse componente.</p>
           </section>
           <details>
@@ -1223,7 +1217,7 @@ Inicie em desenvolvimento com npx expo start. Na montagem inicial, procure setup
       ),
       mkPage(
         'mbb-effect-nao-usar',
-        '37. Quando não usar',
+        '36. Quando não usar',
         'Quando useEffect não é necessário',
         'Escolher onde fazer um cálculo, executar uma ação ou sincronizar com um serviço externo.',
         'Decida pelo que dispara a ação',
@@ -1238,24 +1232,24 @@ Inicie em desenvolvimento com npx expo start. Na montagem inicial, procure setup
 const segunda = lerNota(nota2);
 const notasValidas = primeira !== null &amp;&amp; segunda !== null;
 const media = notasValidas ? (primeira + segunda) / 2 : null;</code></pre>
-            <p>A função <code>lerNota</code> vem da <a href="#rn-state-state-12-final">Média Escolar</a> e retorna <code>null</code> para uma entrada inválida. A tela pode exibir o resultado quando <code>media !== null</code>, de modo que a média <code>0</code> também aparece.</p>
+            <p>A função <code>lerNota</code> vem da <a href="#rn-state-state-11-useref">Média Escolar</a> e retorna <code>null</code> para uma entrada inválida. A tela pode exibir o resultado quando <code>media !== null</code>, de modo que a média <code>0</code> também aparece.</p>
             <p>Guardar essa média em outro state e atualizá-la com um Effect cria um segundo lugar para manter o mesmo dado. Quando o valor muda, a tela pode renderizar primeiro com a média anterior e renderizar novamente após o Effect.</p>
           </section>
           <section>
             <h4>Cálculo sob demanda e consulta externa</h4>
-            <p>Na Média Escolar da etapa 29, <code>onPress={calcularMedia}</code> valida as entradas e guarda o último resultado confirmado. Se você calcular com 6 e 6 e depois trocar a Nota 2 para 8, a média exibida fica em 6 até tocar em Calcular outra vez.</p>
-            <p>O mesmo raciocínio vale para buscar um CEP ao tocar em Pesquisar. Já a <a href="#rn-state-mbb-effect-api-ponte">cotação do Bitcoin da etapa 38</a> começa quando o componente aparece. Nesse caso, o Effect inicia a consulta e o cleanup cancela uma requisição pendente quando o componente sai da tela.</p>
+            <p>Na Média Escolar da etapa 27, <code>onPress={calcularMedia}</code> valida as entradas e guarda o último resultado confirmado. Se você calcular com 6 e 6 e depois trocar a Nota 2 para 8, a média exibida fica em 6 até tocar em Calcular outra vez.</p>
+            <p>O mesmo raciocínio vale para buscar um CEP ao tocar em Pesquisar. Já a <a href="#rn-state-mbb-effect-api-ponte">cotação do Bitcoin da etapa 37</a> começa quando o componente aparece. Nesse caso, o Effect inicia a consulta e o cleanup cancela uma requisição pendente quando o componente sai da tela.</p>
           </section>
           <details>
             <summary>Preveja e confira</summary>
             <p>Com notas 6 e 8, o que aparece ao mudar a segunda nota para 10 em cada versão?</p>
-            <p><strong>Conferência.</strong> A versão ao vivo passa de 7 para 8 ao digitar. A versão sob demanda continua mostrando 7 até o próximo toque em Calcular. Experimente a segunda versão na prévia interativa da <a href="#rn-state-state-12-final">etapa 29</a>.</p>
+            <p><strong>Conferência.</strong> A versão ao vivo passa de 7 para 8 ao digitar. A versão sob demanda continua mostrando 7 até o próximo toque em Calcular. Experimente a segunda versão na prévia interativa da <a href="#rn-state-state-11-useref">etapa 27</a>.</p>
           </details>
         </div>`
       ),
       {
         id: 'mbb-effect-api-ponte',
-        menu: '38. Ponte API',
+        menu: '37. Ponte API',
         title: 'Uma sincronização externa usando API',
         objective: 'Observar carregamento, sucesso e erro em uma consulta disparada na montagem.',
         code: `import React, { useEffect, useState } from 'react';
@@ -1336,7 +1330,7 @@ ${estiloLaboratorio}`,
       },
       mkPage(
         'mbb-hooks-resumo',
-        '39. Consolidação',
+        '38. Consolidação',
         'useState × useRef × useEffect',
         'Justificar o uso de state, ref, evento e Effect em um mesmo aplicativo.',
         'As decisões de um app de estudos',
@@ -1363,7 +1357,7 @@ campoTarefa.current?.focus();</code></pre>
   }, 1000);
   return () => clearInterval(intervalo);
 }, []);</code></pre>
-            <p>O botão Encerrar remove o Temporizador da tela e o cleanup para a contagem. Para observar o encerramento e a remontagem, reveja o <a href="#rn-state-mbb-effect-cleanup">laboratório da etapa 32</a>.</p>
+            <p>O botão Encerrar remove o Temporizador da tela e o cleanup para a contagem. Para observar o encerramento e a remontagem, reveja o <a href="#rn-state-mbb-effect-cleanup">laboratório da etapa 31</a>.</p>
           </section>
           <details>
             <summary>Classifique antes de conferir</summary>
@@ -1421,7 +1415,7 @@ campoTarefa.current?.focus();</code></pre>
       <h4>Construa em três passagens</h4>
       <ol>
         <li><strong>Da tarefa ao cartão.</strong> Crie um <code>CartaoTarefa</code> reutilizável. Comece exibindo duas tarefas fixas e passe o título e o estado de conclusão por <a href="#rn-state-mbb-react-props">props (etapa 4)</a>. Use texto para distinguir “Pendente” de “Concluída”.</li>
-        <li><strong>Do cartão à lista.</strong> Guarde as tarefas em <code>useState</code> no componente pai e exiba-as com <a href="#rn-state-mbb-react-flatlist">FlatList (etapa 21)</a>. Gere um <a href="#rn-state-mbb-react-key">ID estável (etapa 18)</a> ao adicionar cada tarefa e use-o como chave. Rejeite títulos vazios ou formados só por espaços. Ao pressionar o cartão, chame a função <code>aoConcluir</code> que ele recebeu por props e passe o ID. O pai usa <code>map()</code> e spread para criar um novo array e um novo objeto apenas para esse ID. Use spread ao incluir e consulte a <a href="#rn-state-mbb-hooks-resumo">prática da etapa 39</a> para conferir a atualização imutável.</li>
+        <li><strong>Do cartão à lista.</strong> Guarde as tarefas em <code>useState</code> no componente pai e exiba-as com <a href="#rn-state-mbb-react-flatlist">FlatList (etapa 21)</a>. Gere um <a href="#rn-state-mbb-react-key">ID estável (etapa 18)</a> ao adicionar cada tarefa e use-o como chave. Rejeite títulos vazios ou formados só por espaços. Ao pressionar o cartão, chame a função <code>aoConcluir</code> que ele recebeu por props e passe o ID. O pai usa <code>map()</code> e spread para criar um novo array e um novo objeto apenas para esse ID. Use spread ao incluir e consulte a <a href="#rn-state-mbb-hooks-resumo">prática da etapa 38</a> para conferir a atualização imutável.</li>
         <li><strong>Da lista ao fluxo de uso.</strong> Depois de adicionar uma tarefa válida, limpe o campo e devolva o foco com <a href="#rn-state-state-11-useref">useRef (etapa 27)</a>. Use uma mensagem para orientar a primeira inclusão quando a lista estiver vazia.</li>
       </ol>
 
@@ -1442,7 +1436,7 @@ campoTarefa.current?.focus();</code></pre>
       <h4>Adapte o app a uma nova necessidade</h4>
       <p>Depois da primeira versão, escolha uma melhoria, como filtrar as pendentes, exibir quantas faltam ou remover uma tarefa usando <code>filter()</code>. Explique quem precisa dela, descreva o resultado esperado e escreva um teste que um colega consiga repetir.</p>
 
-      <p><strong>Desafio avançado — temporizador de estudo.</strong> Adicione um componente que conte os segundos enquanto estiver visível. Use <a href="#rn-state-mbb-effect-cleanup"><code>useEffect</code> com limpeza do intervalo (etapa 32)</a>. Registre no console cada avanço e o encerramento. Oculte o componente, espere dois segundos e confirme que os avanços param. Mostre-o de novo e confira a contagem voltando a avançar uma vez por segundo.</p>
+      <p><strong>Desafio avançado — temporizador de estudo.</strong> Adicione um componente que conte os segundos enquanto estiver visível. Use <a href="#rn-state-mbb-effect-cleanup"><code>useEffect</code> com limpeza do intervalo (etapa 31)</a>. Registre no console cada avanço e o encerramento. Oculte o componente, espere dois segundos e confirme que os avanços param. Mostre-o de novo e confira a contagem voltando a avançar uma vez por segundo.</p>
       <p><strong>Entrega.</strong> Envie o link do Snack e, para cada teste, registre o que fez, o que esperava e o que observou. Explique por que a lista usa state e por que o foco usa ref. Se fizer o temporizador, inclua a evidência da limpeza.</p>
     </details>
   </div></div>
@@ -1458,7 +1452,6 @@ campoTarefa.current?.focus();</code></pre>
       ...postState,
       ...(refStep ? [refStep] : []),
       refOptional,
-      ...(finalMedia ? [finalMedia] : []),
       ...effectSteps,
       ...(exercise ? [exercise] : [])
     ];

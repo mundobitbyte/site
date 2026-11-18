@@ -46,19 +46,11 @@ Como na etapa 12, o Hook é chamado no nível superior do componente. useRef(nul
 
 current guarda o valor atual da referência. O ?. evita tentar executar focus() se a referência ainda não estiver disponível.
 
-Compare com useState: alterar state participa da renderização. Alterar current em uma ref não provoca uma nova renderização. Por isso useRef é adequado para foco e referências a elementos.`],
+Compare com useState: alterar state participa da renderização. Alterar current em uma ref não provoca uma nova renderização. Por isso useRef é adequado para foco e referências a elementos.\n\nConsolidação da Média Escolar: o evento de Calcular chama calcularMedia, que valida as notas e usa if/else para decidir a situação. O JSX apresenta o resultado quando existe uma média. Limpar apaga campos, resultado e mensagem; useRef devolve o foco à primeira nota. Explique o fluxo completo: digitar, calcular, exibir e limpar.`],
 
     'mbb-react-ref-avancar': ['Do envio da primeira nota ao foco na segunda', `Na Nota 1, pressione Enter ou a tecla Próximo. onSubmitEditing recebe o evento de envio da entrada. O callback usa campoNota2.current?.focus() para mover o cursor ao segundo TextInput.
 
 Digite em seguida para verificar onde o valor aparece. O ref indica qual campo recebe o foco. As bordas dos dois campos têm o mesmo estilo inicial.`],
-
-    'state-12-final': ['Consolidação: várias peças formando um comportamento único', `A Média Escolar final reúne conceitos que foram apresentados separadamente.
-
-O evento de Calcular chama calcularMedia. A função valida as notas e usa if/else para decidir a situação. O JSX mostra o resultado apenas quando existe uma média. Limpar apaga campos, resultado e mensagem, e useRef devolve o foco à primeira nota.
-
-Nenhum desses recursos existe isoladamente em um aplicativo real. Cada peça mantém uma responsabilidade e, juntas, formam o comportamento da tela.
-
-Tente explicar o fluxo sem olhar o código: o que acontece quando o usuário digita, calcula e depois limpa? Se esse caminho estiver claro, os Hooks deixam de parecer comandos soltos.`],
 
     'mbb-effect-timer': ['Do relógio externo para a tela', `Depois da renderização, o Effect configura o intervalo. setInterval chama a função a cada 1000 ms. Cada chamada conta como uma batida.
 
