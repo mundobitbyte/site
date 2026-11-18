@@ -1,0 +1,55 @@
+name: SEIoT7 - sincronizacao controlada do indice (temporario)
+on:
+  push:
+    branches: [audit/seiot7-revisao-espiral-20261118]
+    paths: ['.github/workflows/seiot7-indice-temporario.yml']
+permissions:
+  contents: write
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: audit/seiot7-revisao-espiral-20261118
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Gerar catalogo e restringir alteracao a unidade IoT
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs');
+          const {execFileSync}=require('node:child_process');
+          const path='meu-mbb/catalogo.json';
+          const before=JSON.parse(fs.readFileSync(path,'utf8'));
+          execFileSync('node',['meu-mbb/atualizar-pesquisa.cjs'],{stdio:'inherit'});
+          const after=JSON.parse(fs.readFileSync(path,'utf8'));
+          if(before.unidades.length!==after.unidades.length)throw Error('Contagem de unidades alterada');
+          const changed=[];
+          for(let i=0;i<before.unidades.length;i++){
+            const old=before.unidades[i],next=after.unidades[i];
+            if(JSON.stringify(old)!==JSON.stringify(next)){
+              if(old.localizacao_atual!==next.localizacao_atual)throw Error('Destino mudou');
+              const keys=new Set([...Object.keys(old),...Object.keys(next)]);
+              for(const key of keys){
+                if(!['texto_busca','topicos_busca'].includes(key)&&JSON.stringify(old[key])!==JSON.stringify(next[key]))
+                  throw Error('Metadado protegido mudou: '+key);
+              }
+              changed.push(old.localizacao_atual);
+            }
+          }
+          if(changed.length!==1||changed[0]!=='pages/arduino-iot.html')
+            throw Error('Alteracao fora da unidade IoT: '+JSON.stringify(changed));
+          console.log('OK: somente texto de busca do topico 7 atualizado.');
+          NODE
+          node meu-mbb/atualizar-pesquisa.cjs --check
+          test "$(git diff --name-only)" = "meu-mbb/catalogo.json"
+      - name: Registrar sincronizacao na branch de auditoria
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add meu-mbb/catalogo.json
+          git commit -m "chore(seiot7): atualizar busca da unidade Internet das Coisas"
+          git push origin HEAD:audit/seiot7-revisao-espiral-20261118
