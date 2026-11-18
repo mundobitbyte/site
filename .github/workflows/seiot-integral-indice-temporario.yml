@@ -46,3 +46,5 @@ jobs:
           git add meu-mbb/catalogo.json
           git commit -m "chore(seiot): sincronizar pesquisa após numeração dos projetos"
           git push origin HEAD:audit/seiot-1a10-integral-20261118
+
+# Segunda execução: índices após correções de navegação dos módulos 1–5.
