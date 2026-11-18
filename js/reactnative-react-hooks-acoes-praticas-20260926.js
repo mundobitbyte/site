@@ -43,7 +43,7 @@
       ['mbb-react-pressed', '<b>Pressione e segure Campinas.</b> Observe a opacidade enquanto mantém o toque. Solte e confira a cor e o texto Cidade selecionada. Toque outra vez para desmarcar.'],
       ['state-11-useref', '<b>Na prévia interativa, calcule, volte à Nota 2 e toque em Limpar.</b> Confira os dois campos vazios e o resultado oculto. Digite em seguida para verificar o foco na Nota 1. Repita com 6 e 6, com 0 e 0 e com uma nota vazia. Depois faça os mesmos ciclos com o App.js no Snack.'],
       ['mbb-react-ref-avancar', '<b>No Snack, digite na Nota 1 e pressione Enter ou a tecla de ação disponível.</b> Digite um número e confira se entra na Nota 2. Repita usando Ir para Nota 2 para comparar os dois gatilhos.'],
-      ['mbb-effect-timer', '<b>Execute o exemplo.</b> Preveja o valor após três disparos do intervalo e acompanhe as batidas. Ao avançar para a etapa 32, recarregue o preview do Snack para encerrar o intervalo deste exemplo.'],
+      ['mbb-effect-timer', '<b>Execute o exemplo.</b> Preveja o valor após três disparos do intervalo e acompanhe as batidas. Ao avançar para a etapa 31, recarregue o preview do Snack para encerrar o intervalo deste exemplo.'],
       ['mbb-effect-cleanup', '<b>Espere uma batida e toque em Ocultar temporizador.</b> Confira se a última mensagem é Cleanup de 1000 ms.'],
       ['mbb-effect-ciclo', '<b>Oculte e mostre o temporizador.</b> Confira se aparecem cleanup e novo setup, nessa ordem, e se o contador recomeça em zero.'],
       ['mbb-effect-dependencias', '<b>Toque em Contador à parte e confira o registro.</b> Depois toque em Trocar frequência e confira a ordem Cleanup de 1000 ms → Setup de 500 ms.'],
