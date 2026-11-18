@@ -34,8 +34,8 @@ jobs:
               changes.push(x.localizacao_atual);
             }
           }
-          if(changes.length<1||changes.some(p=>p!=='pages/arduino.html'))throw Error('Alterações inesperadas: '+JSON.stringify(changes));
-          console.log('OK: somente campos pesquisáveis da página Arduino alterados.');
+          if(changes.length<1||changes.some(p=>!['pages/arduino.html','pages/arduino-programacao-aplicada.html'].includes(p)))throw Error('Alterações inesperadas: '+JSON.stringify(changes));
+          console.log('OK: somente índices de Fundamentos e Programação Aplicada, sem modificar conteúdo');
           NODE
           node meu-mbb/atualizar-pesquisa.cjs --check
           test "$(git diff --name-only)" = "meu-mbb/catalogo.json"
