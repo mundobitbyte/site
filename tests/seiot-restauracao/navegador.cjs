@@ -41,8 +41,14 @@ const dest=process.env.MBB_EVIDENCIAS||'/tmp/seiot-evidencias';
    await page.goto(base+'/pages/arduino-conectividade.html#b6-3');
    await page.locator('#b6-3.active-panel').waitFor();
    const httpTexto=await page.locator('#b6-3').textContent();
-   assert.match(httpTexto,/HTTP — parte A: o ESP32 faz uma solicitação/);
-   assert.match(httpTexto,/HTTP — parte B: o ESP32 atende ao navegador/);
+   // Os títulos internos são removidos intencionalmente no renderizador;
+   // a prova funcional é a presença de AMBAS as leituras nos cartões corretos.
+   const clienteExplicacao=page.locator('#b6-3 .mbb6-leitura-integrada[data-mbb6-leitura="http-cliente"]');
+   const servidorExplicacao=page.locator('#b6-3 .mbb6-leitura-integrada[data-mbb6-leitura="http-servidor"]');
+   assert.equal(await clienteExplicacao.count(),1);
+   assert.equal(await servidorExplicacao.count(),1);
+   assert.match(await clienteExplicacao.textContent(),/O ESP32 vira cliente quando consulta uma página/);
+   assert.match(await servidorExplicacao.textContent(),/o navegador é o cliente/);
    await page.goto(base+'/pages/arduino-conectividade.html#b6-prep');
    await page.locator('#b6-prep.active-panel').waitFor();
    await page.waitForFunction(()=>document.querySelector('#b6-prep-diagrama-extra')?.textContent.includes('"version": 1'));
