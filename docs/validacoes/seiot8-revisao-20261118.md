@@ -13,6 +13,6 @@ A sequência do módulo já estabelece problema, conceito, exemplos, execução 
 
 ## Testes e limites
 - Adicionado `tests/seiot8/validar.mjs` para proteger a estrutura, os conceitos e a sintaxe dos scripts; workflow `.github/workflows/seiot8-validacao.yml`.
-- O índice de pesquisa global necessita sincronização com o texto acrescido e deve alterar **somente** a unidade `pages/arduino-protocolos.html`.
+- O índice de pesquisa global foi sincronizado em execução controlada. O gerador revelou **duas unidades** com índices defasados: `pages/arduino-protocolos.html` (esta alteração) e `pages/reactnative.html` (já defasada na `main`). Foram modificados exclusivamente `texto_busca` e/ou `topicos_busca` dessas duas unidades; nenhum código, conteúdo de página ou metadado estável de React Native foi alterado. A primeira tentativa bloqueou a atualização ao detectar a segunda unidade inesperada; após auditoria dos campos, a execução restrita a essas duas unidades foi aprovada. O workflow temporário foi removido.
 - Validar antes do merge as rotinas do GitHub Actions: pesquisa, validação visual, segurança e teste do tópico 8; verificar em seguida o deploy do GitHub Pages.
 - Execução física de CAN, I2C, RS-232 e Bluetooth e avaliação com alunos não foram realizadas nesta missão. O exercício CAN é conceitual e não autoriza conexão elétrica direta CAN_H/CAN_L ao ESP32.
