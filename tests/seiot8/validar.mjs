@@ -13,7 +13,7 @@ for(const p of ['arduino-protocolos.js','arduino-espiral-mbb-7a10-20261026.js','
   assert(html.includes(p),'Script da aula ausente: '+p);
 assert(html.includes('data-mbb8-can-arbitragem="1"'), 'Exercício de arbitragem CAN ausente');
 assert(html.includes('0x120') && html.includes('0x080'), 'Cenário de identificadores CAN incompleto');
-assert(html.includes('bit dominante') && html.includes('não prova'), 'Orientação de evidência da prática CAN ausente');
+assert(html.includes('bit dominante') && html.includes('não uma transmissão CAN física'), 'Orientação de evidência da prática CAN ausente');
 for(const marker of ['MAX3232','TWAI','ESP32-WROOM-32','vTaskDelay','GPIO 21','GPIO 22'])
   assert(html.includes(marker), 'Fundamento existente perdido: '+marker);
 new Script(script,{filename:'js/arduino-protocolos.js'});
