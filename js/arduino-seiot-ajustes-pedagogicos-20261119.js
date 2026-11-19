@@ -4,7 +4,11 @@
 document.addEventListener('DOMContentLoaded', function () {
   function inserir(elemento, conteudo, posicao = 'afterbegin') {
     if (elemento && !elemento.querySelector('[data-mbb-explica="1"]') && !elemento.previousElementSibling?.matches?.('[data-mbb-explica="1"]')) {
-      elemento.insertAdjacentHTML(posicao, conteudo);
+      if (posicao === 'afterbegin' && elemento.matches('article') && elemento.querySelector('h3')) {
+        elemento.querySelector('h3').insertAdjacentHTML('afterend', conteudo);
+      } else {
+        elemento.insertAdjacentHTML(posicao, conteudo);
+      }
     }
   }
   function bloco(titulo, dentro) {
