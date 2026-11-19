@@ -202,25 +202,25 @@ fimalgoritmo</pre>
     <section class="exercise-level" id="${arquivosExercicios}">
       <h3>Arquivos</h3>
       <ol>
-        <li>Crie um algoritmo que leia quatro quantidades de livros devolvidos e mostre o total. Grave 3, 7, 0 e 4 em <code>devolucoes.txt</code> durante a primeira execução. Confira os dados no arquivo e execute outra vez com as mesmas entradas.</li>
-        <li>Crie um algoritmo que leia três quantidades de envelopes recebidos e informe o total. Faça uma execução com um <code>.txt</code> que contenha apenas 5 e 8. Identifique qual entrada foi solicitada pelo teclado e forneça 2 para concluir.</li>
-        <li>Crie um algoritmo que leia quatro resultados de uma vistoria, com 1 para aprovado e 0 para reprovado, e informe quantos itens foram aprovados. Execute com um arquivo em que todos os itens foram aprovados e com outro em que nenhum foi aprovado.</li>
+        <li>Uma biblioteca registra quantos livros voltam ao balcão em quatro períodos do dia e precisa repetir o teste com os mesmos dados. Crie um algoritmo que leia quatro quantidades de livros devolvidos e mostre o total. Grave 3, 7, 0 e 4 em <code>devolucoes.txt</code> durante a primeira execução. Confira os dados no arquivo e execute outra vez com as mesmas entradas.</li>
+        <li>Uma portaria confere os envelopes recebidos em três horários. O arquivo do turno tem apenas os dois primeiros registros. Crie um algoritmo que leia três quantidades de envelopes recebidos e informe o total. Faça uma execução com um <code>.txt</code> que contenha apenas 5 e 8. Identifique qual entrada foi solicitada pelo teclado e forneça 2 para concluir.</li>
+        <li>Uma equipe de manutenção quer testar seu resumo nos dois extremos de uma vistoria. Crie um algoritmo que leia quatro resultados de uma vistoria, com 1 para aprovado e 0 para reprovado, e informe quantos itens foram aprovados. Execute com um arquivo em que todos os itens foram aprovados e com outro em que nenhum foi aprovado.</li>
       </ol>
     </section>
     <section class="exercise-level" id="${tecnicasExercicios}">
       <h3>Técnicas de Programação</h3>
       <h4>Básico</h4>
       <ol>
-        <li>Leia a quantidade de mudas plantadas em cada um de cinco canteiros. Informe o total plantado e quantos canteiros ficaram vazios.</li>
-        <li>Leia dois números de página e mostre-os em ordem decrescente. Teste com os números nas duas ordens e com páginas iguais.</li>
-        <li>Peça uma distância de 1 a 30 quilômetros até receber um valor válido. Informe se a entrega pertence à faixa de até 10 km ou à faixa acima de 10 km.</li>
+        <li>Uma horta comunitária precisa saber quantas mudas plantou e quantos canteiros ainda precisam ser preenchidos. Leia a quantidade de mudas plantadas em cada um de cinco canteiros. Informe o total plantado e quantos canteiros ficaram vazios.</li>
+        <li>Uma gráfica organiza duas páginas começando pela de maior número. Leia dois números de página e mostre-os em ordem decrescente. Teste com os números nas duas ordens e com páginas iguais.</li>
+        <li>Uma empresa de entregas classifica os pedidos em duas faixas: até 10 km e acima de 10 km. Faça um algoritmo que solicite a distância da entrega, aceitando também valores decimais, como 7,5 km. Aceite apenas distâncias de 1 a 30 km, inclusive. Se a distância for inválida, solicite-a novamente. Depois, informe a faixa da entrega.</li>
       </ol>
       <h4>Intermediário</h4>
       <ol>
-        <li>Leia os tempos positivos de seis atletas na ordem de inscrição. Informe o menor tempo e a posição do primeiro atleta a registrá-lo. Repita o teste com um <code>.txt</code> que contenha empate no menor tempo.</li>
-        <li>Leia oito códigos de material. Informe se o código 25 aparece e quantas vezes aparece. Teste com o código na primeira posição, na última e com um conjunto em que ele esteja ausente.</li>
-        <li>Simule até quatro tentativas de encaixar uma peça. A cada tentativa, leia 1 para encaixou ou 0 para falhou. Encerre ao encaixar ou atingir o limite e informe o resultado e a quantidade de tentativas.</li>
-        <li>Leia os valores de pedidos pagos até receber zero. Informe quantos pedidos ultrapassaram cem reais e o valor médio desses pedidos. Se nenhum passar desse limite, mostre uma mensagem informando isso.</li>
+        <li>A organização de uma corrida premia o atleta que registrou o menor tempo. Em caso de empate, tem prioridade quem se inscreveu primeiro. Leia os tempos positivos de seis atletas na ordem de inscrição. Informe o menor tempo e a posição do primeiro atleta a registrá-lo. Repita o teste com um <code>.txt</code> que contenha empate no menor tempo.</li>
+        <li>Um almoxarifado confere se um material específico chegou no lote e quantas unidades dele foram registradas. Leia oito códigos de material. Informe se o código 25 aparece e quantas vezes aparece. Teste com o código na primeira posição, na última e com um conjunto em que ele esteja ausente.</li>
+        <li>Uma oficina testa se uma peça encaixa em um gabarito e encerra o teste após quatro tentativas. Simule até quatro tentativas de encaixar uma peça. A cada tentativa, leia 1 para encaixou ou 0 para falhou. Encerre ao encaixar ou atingir o limite e informe o resultado e a quantidade de tentativas.</li>
+        <li>Uma loja quer avaliar os pedidos pagos acima de cem reais antes de definir uma promoção. Leia os valores de pedidos pagos até receber zero. Informe quantos pedidos ultrapassaram cem reais e o valor médio desses pedidos. Se nenhum passar desse limite, mostre uma mensagem informando isso.</li>
       </ol>
       <h4>Desafio</h4>
       <ol>
