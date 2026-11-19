@@ -1019,7 +1019,7 @@ ${estiloLaboratorio}`;
     const effectSteps = [
       mkPage(
         'mbb-effect-intro',
-        '29. useEffect',
+        '28. useEffect',
         'useEffect — sincronizando o componente com algo externo',
         'Compreender o papel do Effect antes de escrever código.',
         'Uma necessidade diferente',
@@ -1130,7 +1130,7 @@ Inicie em desenvolvimento com npx expo start. Na montagem inicial, procure setup
       },
       mkPage(
         'mbb-effect-evento',
-        '35. Effect × Evento',
+        '33. Effect × Evento',
         'Effect × Event',
         'Distinguir ação do usuário de sincronização externa.',
         'O gatilho muda tudo',
@@ -1156,7 +1156,7 @@ Inicie em desenvolvimento com npx expo start. Na montagem inicial, procure setup
       ),
       mkPage(
         'mbb-effect-nao-usar',
-        '36. Quando não usar',
+        '34. Quando não usar',
         'Quando useEffect não é necessário',
         'Escolher onde fazer um cálculo, executar uma ação ou sincronizar com um serviço externo.',
         'Decida pelo que dispara a ação',
@@ -1269,7 +1269,7 @@ ${estiloLaboratorio}`,
       },
       mkPage(
         'mbb-hooks-resumo',
-        '38. Consolidação',
+        '36. Consolidação',
         'useState × useRef × useEffect',
         'Justificar o uso de state, ref, evento e Effect em um mesmo aplicativo.',
         'As decisões de um app de estudos',
