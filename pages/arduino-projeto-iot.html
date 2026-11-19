@@ -311,7 +311,6 @@ void loop() {
   <div class="mbb10-context"><strong>A integração é onde aparecem conflitos reais.</strong> O modo manual precisa parar de obedecer ao sensor; o modo automático precisa retomar a decisão pelo LDR; e uma falha de Wi-Fi não deve impedir a automação local. O programa final organiza exatamente essas responsabilidades.</div>
   <div class="cards">
     <article class="card wide"><h3>1. Antes de carregar</h3><p><strong>ESP32 física:</strong> troque <code>NOME_DA_REDE</code> e <code>SENHA_DA_REDE</code> pela rede de laboratório e mantenha <code>LEITURA_MAIOR_NO_ESCURO = false</code> para a montagem do diagrama. <strong>Wokwi:</strong> use <code>Wokwi-GUEST</code>, senha vazia e <code>LEITURA_MAIOR_NO_ESCURO = true</code>. Nos dois casos, ajuste <code>LIMIAR</code> com base nas leituras obtidas no teste local.</p></article>
-    <article class="card wide"><h3>Antes do código completo — as peças que vamos reunir</h3><p><code>#include &lt;WiFi.h&gt;</code> e <code>#include &lt;WebServer.h&gt;</code> trazem recursos para entrar na rede e responder ao navegador. <code>analogRead(LDR)</code> lê um número do circuito de luminosidade; <code>ambienteEscuro(...)</code> compara o resultado com o limite definido, e <code>definirLed(...)</code> reúne a ação de alterar a saída. Esse número é uma leitura elétrica, não uma medida pronta em lux.</p><p><code>enum Modo { MANUAL, AUTOMATICO }</code> define dois estados do sistema. No automático, o sensor orienta a decisão; no manual, a página controla o LED. A expressão <code>estado ? HIGH : LOW</code> escolhe um de dois valores, de modo semelhante a um <code>if/else</code>. <code>servidor.on(...)</code> associa endereços a ações, e <code>servidor.handleClient()</code> verifica pedidos no <code>loop()</code>.</p><p><strong>Por que há um tempo máximo de Wi-Fi?</strong> Se a rede falhar, a placa precisa continuar controlando a luz. Durante a tentativa, o programa ainda chama <code>atualizarAutomacao()</code>; depois, o <code>loop()</code> mantém essa decisão local. O painel remoto pode ficar indisponível, mas o controle do LED não depende dele.</p></article>
     <article class="card wide code"><h3>Código completo — projeto integrado <button type="button" onclick="copyCode('b10-final', this)">Copiar</button></h3><pre id="b10-final">#include &lt;WiFi.h&gt;
 #include &lt;WebServer.h&gt;
 
@@ -509,5 +508,6 @@ void loop() {
 <script src="../js/arduino-espiral-mbb-7a10-20261026.js?v=20261027-1"></script>
 <script src="../js/arduino-header-5a10-20261005.js?v=20261005-3"></script>
 <script src="../js/mbb-busca-global.js?v=mbb-busca-2"></script>
+<script src="../js/arduino-seiot-ajustes-pedagogicos-20261119.js?v=20261119-1"></script>
 </body>
 </html>
