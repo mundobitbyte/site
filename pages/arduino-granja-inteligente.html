@@ -125,9 +125,11 @@
 </section>
 <section class="step7" id="etapa7">
 <h2>7. IoT → o aviso sai do aviário e chega ao celular</h2>
+<p><strong>Quem faz cada parte?</strong> O sensor mede, o ESP32 decide, o Wi-Fi permite acessar a rede e a API do Telegram recebe uma solicitação para enviar a mensagem. Uma <strong>API</strong> é uma forma definida de um programa pedir um serviço a outro. <strong>HTTPS</strong> protege a comunicação em trânsito quando configurado corretamente; não garante por si só que a mensagem foi exibida no celular.</p>
 <p>O ESP32 usa o Wi-Fi virtual <code>Wokwi-GUEST</code> para chegar à Internet. Um <strong>evento</strong> é convertido em informação (por exemplo, "Temperatura alta: ventilador ligado") e enviado ao serviço de mensagens por <strong>HTTPS</strong>. O <strong>Telegram</strong> apresenta a mensagem ao destinatário, depois que o bot for configurado.</p>
 <div class="flow7" aria-label="Caminho do aviso"><span>DHT22 ou HC-SR04</span>→<span>ESP32 decide</span>→<span>Wi-Fi</span>→<span>HTTPS / Bot API</span>→<span>Telegram do responsável</span></div>
 <h3>JSON: o registro estruturado antes do envio</h3>
+<p><strong>Por que organizar os dados?</strong> Imagine vários aviários enviando alertas. Em vez de receber apenas “temperatura alta”, o responsável precisa saber onde e o que ocorreu. No JSON, o nome antes dos dois-pontos é uma <em>chave</em>; depois vem seu valor. As vírgulas separam os campos, textos ficam entre aspas duplas e <code>15000</code>, sem aspas, representa 15 segundos desde o início do programa — não um horário no relógio.</p>
 <p>O programa escreve no Serial um evento JSON como o exemplo abaixo. Ele contém o identificador do aviário, o evento e o tempo transcorrido desde o início do programa, em milissegundos. O texto do evento é enviado ao Telegram pela biblioteca do bot.</p>
 <pre><code>{
   "aviario": "aviario_01",
