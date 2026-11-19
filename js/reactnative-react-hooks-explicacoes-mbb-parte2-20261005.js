@@ -40,17 +40,13 @@ A variável selecionada pertence ao app e foi criada com useState. O onPress alt
 
 onPress espera receber uma função. A arrow () => adia a chamada do setter até o evento. A próxima etapa compara esse formato com chamar a função ao renderizar.`],
 
-    'state-11-useref': ['useRef: acessar um elemento sem transformar isso em state', `O formulário já limpa os campos e esconde o resultado. Agora queremos devolver o cursor ao primeiro TextInput depois de tocar em Limpar. Esse problema não é um valor que precisa aparecer na interface; precisamos de uma referência ao próprio campo.
+    'state-11-useref': ['De um texto digitado ao próximo assunto', `Na etapa 16, a Média Escolar foi concluída. Agora surge outra necessidade: o estudante registra um assunto e quer continuar digitando sem tocar novamente no campo.
 
-Como na etapa 12, o Hook é chamado no nível superior do componente. useRef(null) cria a referência. ref={campoNota1} liga a referência ao TextInput. Depois, campoNota1.current?.focus() pede foco ao elemento referenciado.
+useState guarda o assunto digitado e o último assunto registrado. useRef(null) guarda uma referência ao TextInput. ref={campoAssunto} liga a referência ao campo.
 
-current guarda o valor atual da referência. O ?. evita tentar executar focus() se a referência ainda não estiver disponível.
+Ao tocar em Registrar, a função verifica se há texto válido, guarda o último assunto, limpa o campo e chama campoAssunto.current?.focus(). current guarda a referência atual, e ?. evita tentar chamar focus() quando ela não está disponível.
 
-Compare com useState: alterar state participa da renderização. Alterar current em uma ref não provoca uma nova renderização. Por isso useRef é adequado para foco e referências a elementos.\n\nConsolidação da Média Escolar: o evento de Calcular chama calcularMedia, que valida as notas e usa if/else para decidir a situação. O JSX apresenta o resultado quando existe uma média. Limpar apaga campos, resultado e mensagem; useRef devolve o foco à primeira nota. Explique o fluxo completo: digitar, calcular, exibir e limpar.`],
-
-    'mbb-react-ref-avancar': ['Do envio da primeira nota ao foco na segunda', `Na Nota 1, pressione Enter ou a tecla Próximo. onSubmitEditing recebe o evento de envio da entrada. O callback usa campoNota2.current?.focus() para mover o cursor ao segundo TextInput.
-
-Digite em seguida para verificar onde o valor aparece. O ref indica qual campo recebe o foco. As bordas dos dois campos têm o mesmo estilo inicial.`],
+No Snack, registre Revisar JSX e digite um segundo assunto sem tocar no campo. O assunto registrado fica na tela enquanto o campo volta a ficar livre para a próxima entrada.`],
 
     'mbb-effect-timer': ['Do relógio externo para a tela', `Depois da renderização, o Effect configura o intervalo. setInterval chama a função a cada 1000 ms. Cada chamada conta como uma batida.
 
