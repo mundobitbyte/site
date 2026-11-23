@@ -163,3 +163,20 @@ header h1,.topbar h1{margin:0;font-size:18px;font-weight:900;line-height:1.15;wh
   .nav-group.open .nav-tree{display:block}
   .nav-sub{font-size:12px;margin:4px 0;padding:9px 10px}
 }
+
+.visualg-assessment-download {
+  display: block;
+  color: var(--dark);
+  background: #eaf2ff;
+  text-decoration: none;
+}
+
+.visualg-assessment-download:hover {
+  background: #dbeafe;
+  text-decoration: underline;
+}
+
+.visualg-assessment-download:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}

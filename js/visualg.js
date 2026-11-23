@@ -633,6 +633,13 @@ function toggleExerciseMenu(){
 function buildMenu(){
   steps.forEach(s=>{
     if(s.id===99){
+      const assessment=document.createElement('a');
+      assessment.className='nav-btn visualg-assessment-download';
+      assessment.href='../downloads/visualg/avaliacao-pratica-visualg-2.pdf';
+      assessment.download='avaliacao-pratica-visualg-2.pdf';
+      assessment.textContent='Baixar avaliação (PDF)';
+      menu.appendChild(assessment);
+
       const group=document.createElement('div');
       group.className='nav-group visualg-exercises-group';
 
