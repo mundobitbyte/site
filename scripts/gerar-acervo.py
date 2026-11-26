@@ -18,7 +18,12 @@ for i, song in enumerate(data['faixas'], 1):
         destino = '#ouvir' if song['status'] == 'demo-site' else '#ouvir-' + song['id']
         texto = 'Ouvir demonstração ↑' if song['status'] == 'demo-site' else 'Ouvir esta faixa ↑'
         links.insert(0, f'<a class="rl-link" href="{e(destino)}">{texto}</a>')
-    status = ('Áudio demonstrativo no site' if song['status'] == 'demo-site' else 'Ouça no site') if song['audio'] else 'Disponível em plataforma digital' if links else 'Disponibilidade em preparação'
+    if song['status'] == 'em-breve':
+        from datetime import date
+        data_lancamento = date.fromisoformat(song['lancamento']).strftime('%d/%m/%Y')
+        destino = '#ouvir' if song['id'] == 'voce-na-cancao-do-radio' else '#ouvir-' + song['id']
+        links.insert(0, f'<a class="rl-link" href="{e(destino)}">Ver lançamento ↑</a>')
+    status = ('Áudio demonstrativo no site' if song['status'] == 'demo-site' else 'Ouça no site') if song['audio'] else 'Disponível em plataforma digital' if song['plataformas'] else 'Lançamento em ' + data_lancamento if song['status'] == 'em-breve' else 'Disponibilidade em preparação'
     art = f'<img class="rl-art" src="{e(song["capa"])}" alt="Capa de {e(song["titulo"])}" loading="lazy" width="300" height="300">' if song['capa'] else '<div class="rl-art" aria-hidden="true"><div class="rl-disc">RL</div></div>'
     style = f'<p class="rl-credit">{e(song["estilo"])}</p>' if song['estilo'] else ''
     filter_status = 'disponivel' if song['plataformas'] and not song['audio'] else song['status']
