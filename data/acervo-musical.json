@@ -17,9 +17,10 @@
       "autor": "Ronaldo Lavestein",
       "estilo": "Pop-rock brasileiro",
       "capa": "../assets/imagens/acervo/olhos-no-espelho.webp",
-      "status": "audio-site",
-      "audio": "../assets/audio/olhos-no-espelho.mp3",
-      "plataformas": {}
+      "status": "em-breve",
+      "audio": null,
+      "plataformas": {},
+      "lancamento": "2026-11-29"
     },
     {
       "id": "sou-nada-sem-voce",
@@ -37,9 +38,10 @@
       "autor": "Ronaldo Lavestein",
       "estilo": null,
       "capa": "../assets/imagens/acervo/voce-na-cancao-do-radio.webp",
-      "status": "demo-site",
-      "audio": "../assets/audio/voce-na-cancao-do-radio.mp3",
-      "plataformas": {}
+      "status": "em-breve",
+      "audio": null,
+      "plataformas": {},
+      "lancamento": "2026-11-29"
     },
     {
       "id": "olhar-ao-redor",

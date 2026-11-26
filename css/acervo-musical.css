@@ -33,3 +33,6 @@
     background-size:cover,auto 145%;
   }
 }
+
+/* Pré-lançamentos: aviso no espaço antes reservado ao player. */
+.rl-release{margin:16px 0;padding:16px 20px;border:1px solid #e8bc7870;border-radius:12px;background:#10182080}.rl-release p{margin:4px 0 0}.rl-release strong{font-size:1.3rem;color:#f4f1e9}.rl-release small{color:#c6cfd6}

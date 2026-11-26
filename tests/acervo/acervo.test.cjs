@@ -7,15 +7,18 @@ const root = path.resolve(__dirname, '../..');
 const read = p => fs.readFileSync(path.join(root,p),'utf8');
 const dados = JSON.parse(read('data/acervo-musical.json'));
 const html = read('ronaldo-lavestein/index.html');
-test('acervo aprovado tem 18 faixas, duas versões e duas gravações autorizadas', () => {
+test('acervo aprovado tem 18 faixas, duas versões e dois lançamentos agendados', () => {
  assert.equal(dados.faixas.length,18);
  assert.equal(new Set(dados.faixas.map(f=>f.id)).size,18);
  assert.equal(dados.faixas[0].titulo,'Esperando Manuela');
  assert.equal(dados.faixas.at(-1).titulo,'Caipirinha');
  assert.equal(dados.faixas.filter(f=>f.titulo.startsWith('Como o Vento na Janela')).length,2);
- assert.deepEqual(dados.faixas.filter(f=>f.audio).map(f=>f.titulo),['Olhos no Espelho','Você na Canção do Rádio']);
- assert.equal((html.match(/<audio\b/g)||[]).length,2);
- assert.match(html,/preload="none"/);
+ assert.deepEqual(dados.faixas.filter(f=>f.audio),[]);
+ assert.deepEqual(dados.faixas.filter(f=>f.status==='em-breve').map(f=>f.titulo),['Olhos no Espelho','Você na Canção do Rádio']);
+ assert.ok(dados.faixas.filter(f=>f.status==='em-breve').every(f=>f.lancamento==='2026-11-29'));
+ assert.equal((html.match(/<audio\b/g)||[]).length,0);
+ assert.equal((html.match(/<time datetime="2026-11-29">/g)||[]).length,2);
+ assert.equal((html.match(/data-status="em-breve"/g)||[]).length,2);
  assert.doesNotMatch(html,/<iframe\b|class="lyrics"|\bautoplay\b|suno\.com\/embed/);
  for (const faixa of dados.faixas) {
   assert.ok(html.includes(`id="${faixa.id}"`));
@@ -38,12 +41,11 @@ test('home, portal de IA e pesquisa global alcançam as novas páginas',()=>{
  assert.ok(core.pesquisar(catalogo,'vinheta').some(u=>u.localizacao_atual==='pages/ia/musica/index.html'));
  assert.equal(core.progresso(catalogo,{}).total,12);
 });
-test('MP3 público não carrega letras ou instruções privadas nos metadados',()=>{
- const probe=JSON.parse(execFileSync('ffprobe',['-v','error','-show_entries','format_tags:stream=codec_type','-of','json',path.join(root,'assets/audio/voce-na-cancao-do-radio.mp3')],{encoding:'utf8'}));
- assert.equal(probe.streams.length,1);
- assert.equal(probe.streams[0].codec_type,'audio');
- assert.ok(Object.keys(probe.format.tags).every(k=>!k.toLowerCase().includes('lyrics')));
- assert.doesNotMatch(JSON.stringify(probe.format.tags),/Instrumental Intro|Preserve original|63f0fab1/);
+test('MP3 de pré-lançamento não integra a versão publicada',()=>{
+ for (const id of ['olhos-no-espelho','voce-na-cancao-do-radio']) {
+  assert.ok(!fs.existsSync(path.join(root,'assets/audio',id+'.mp3')));
+  assert.ok(!html.includes(id+'.mp3'));
+ }
 });
 
 test('acervo separa a pesquisa musical dos recursos educacionais',()=>{
@@ -67,19 +69,16 @@ test('convite ao acervo fica no bloco branco inicial, sem faixa grande no fim da
  assert.equal((home.match(/id="mbb-music-title"/g)||[]).length,1);
 });
 
-test('nova música preserva áudio e não expõe letra ou prompt nos metadados', () => {
- const nova='assets/audio/olhos-no-espelho.mp3';
- const info=JSON.parse(execFileSync('ffprobe',['-v','error','-show_entries','format=duration:format_tags','-of','json',path.join(root,nova)],{encoding:'utf8'}));
- assert.ok(Number(info.format.duration)>150);
- assert.ok(Object.keys(info.format.tags || {}).every(k=>!k.toLowerCase().includes('lyrics')));
- assert.doesNotMatch(JSON.stringify(info.format.tags),/suno; created|Instrumental Intro|Preserve original/i);
+test('pré-lançamentos preservam capas e pré-save', () => {
  for (const id of ['olhos-no-espelho','voce-na-cancao-do-radio']) {
    const faixa=dados.faixas.find(f=>f.id===id);
    assert.ok(faixa.capa);
    assert.ok(fs.existsSync(path.resolve(root,'ronaldo-lavestein',faixa.capa)));
+   assert.ok(html.includes('https://ffm.to/'+id));
  }
  assert.match(html,/id="ouvir-olhos-no-espelho"/);
- assert.match(html,/id="rl-audio-olhos"/);
+ assert.match(html,/id="ouvir"/);
+ assert.doesNotMatch(html,/Ouça no site|Áudio demonstrativo no site/);
 });
 
 test('convite musical é compacto e horizontal no notebook', () => {
