@@ -74,8 +74,10 @@ test('pré-lançamentos preservam capas e pré-save', () => {
    const faixa=dados.faixas.find(f=>f.id===id);
    assert.ok(faixa.capa);
    assert.ok(fs.existsSync(path.resolve(root,'ronaldo-lavestein',faixa.capa)));
-   assert.ok(html.includes('https://ffm.to/'+id));
+
  }
+ assert.equal((html.match(/href="https:\/\/ffm\.to\/olhos-no-espelho"/g)||[]).length,2);
+ assert.ok(!html.includes("https://ffm.to/voce-na-cancao-do-radio"));
  assert.match(html,/id="ouvir-olhos-no-espelho"/);
  assert.match(html,/id="ouvir"/);
  assert.doesNotMatch(html,/Ouça no site|Áudio demonstrativo no site/);
