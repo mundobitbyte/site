@@ -78,6 +78,9 @@ test('pré-lançamentos preservam capas e pré-save', () => {
  }
  assert.equal((html.match(/href="https:\/\/ffm\.to\/olhos-no-espelho"/g)||[]).length,2);
  assert.ok(!html.includes("https://ffm.to/voce-na-cancao-do-radio"));
+ const home=read('index.html');
+ assert.ok(!home.includes('https://ffm.to/voce-na-cancao-do-radio'));
+ assert.ok(home.includes('https://ffm.to/olhos-no-espelho'));
  assert.match(html,/id="ouvir-olhos-no-espelho"/);
  assert.match(html,/id="ouvir"/);
  assert.doesNotMatch(html,/Ouça no site|Áudio demonstrativo no site/);
